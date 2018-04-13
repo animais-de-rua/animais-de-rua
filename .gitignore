@@ -18,3 +18,5 @@ yarn-error.log
 /public/vendor/adminlte/dist/img/user*
 *.map
 /public/vendor/backpack/colorbox/content/*.jpg
+/public/css/app.css
+/public/js/app.js

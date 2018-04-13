@@ -14,10 +14,13 @@
         "backpack/pagemanager": "^1.1",
         "backpack/permissionmanager": "^2.1",
         "backpack/settings": "^2.0",
+        "barryvdh/laravel-debugbar": "^3.1",
         "barryvdh/laravel-elfinder": "^0.3.12",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.6.*",
-        "laravel/tinker": "^1.0"
+        "laravel/socialite": "^3.0",
+        "laravel/tinker": "^1.0",
+        "umpirsky/country-list": "^2.0"
     },
     "require-dev": {
         "backpack/generators": "^1.1",

@@ -32,8 +32,20 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
     <!-- BackPack Base CSS -->
-    <link rel="stylesheet" href="{{ asset('vendor/backpack/backpack.base.min.css') }}?v=2">
+    <link rel="stylesheet" href="{{ asset('vendor/backpack/backpack.base.min.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/backpack/overlays/backpack.bold.min.css') }}">
+
+    <style type="text/css">
+        .skin-red .main-header .navbar,
+        .skin-red .main-header .navbar .sidebar-toggle:hover,
+        .skin-red .main-header .logo,
+        .skin-red .main-header li.user-header {
+          background-color: #E53625;
+        }
+        .skin-red .sidebar-menu > li.active > a {
+          border-color: #E53625;
+        }
+    </style>
 
     @yield('after_styles')
     @stack('after_styles')
@@ -62,9 +74,9 @@
         <!-- Logo -->
         <a href="{{ url('') }}" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini">{!! config('backpack.base.logo_mini') !!}</span>
+          <span class="logo-mini"><img style="width: 220px; margin-left: 8px; filter: brightness(0) invert(1) opacity(0.9);" src="/img/logo-txt.svg" /></span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg">{!! config('backpack.base.logo_lg') !!}</span>
+          <span class="logo-lg"><img style="width: 80%; filter: brightness(0) invert(1) opacity(0.9);" src="/img/logo-txt.svg" /></span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">

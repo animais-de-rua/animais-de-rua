@@ -11,6 +11,23 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+// Home
+Route::get('/', 								'HomeController@welcome')->name('welcome');
+Route::get('/terms-of-service', 				'HomeController@termsOfService')->name('terms');
+Route::get('/privacy-policy', 					'HomeController@privacyPolicy')->name('privacy');
+
+
+// Auth
+Auth::routes();
+
+Route::get('login/facebook', 					'Auth\LoginController@facebookLogin');
+Route::get('login/facebook/callback', 			'Auth\LoginController@facebookCallback');
+
+Route::get('login/google', 						'Auth\LoginController@googleLogin');
+Route::get('login/google/callback', 			'Auth\LoginController@googleCallback');
+
+
+// Auth middleware
+Route::group(['middleware' => ['auth']], function() {
+	Route::get('/dashboard', 					'HomeController@index')->name('dashboard');
 });
