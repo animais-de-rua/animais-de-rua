@@ -19,10 +19,10 @@ return [
     'logo_mini' => '<b>AR</b>',
 
     // Developer or company name. Shown in footer.
-    'developer_name' => 'António Almeida',
+    'developer_name' => 'Animais de Rua',
 
     // Developer website. Link in footer.
-    'developer_link' => 'http://promatik.pt',
+    'developer_link' => 'https://animaisderua.org',
 
     // Show powered by Laravel Backpack in the footer?
     'show_powered_by' => false,
