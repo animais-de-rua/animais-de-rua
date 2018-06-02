@@ -7,15 +7,11 @@
 
         <title>Animais de Rua</title>
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
-
-        <!-- Styles -->
         <style>
             html, body {
-                background-color: #fff;
+                background-color: #222d32;
                 color: #636b6f;
-                font-family: 'Raleway', sans-serif;
+                font-family: sans-serif;
                 font-weight: 100;
                 height: 100vh;
                 margin: 0;
@@ -45,22 +41,28 @@
                 text-align: center;
             }
 
-            .title {
-                font-size: 84px;
+            .logo {
+                width: 58px;
+                margin-bottom: 12px;
+                animation: logo 1s 0.4s 1 forwards;
+                overflow: hidden;
+            }
+            .logo img {
+                width: 380px;
+                filter: brightness(0) invert(1) opacity(0.9);
+            }
+            @keyframes logo {
+                from { width: 58px; }
+                to { width: 380px; }
             }
 
             .links > a {
-                color: #636b6f;
-                padding: 0 25px;
+                color: #FFF;
                 font-size: 12px;
                 font-weight: 600;
                 letter-spacing: .1rem;
                 text-decoration: none;
                 text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
             }
         </style>
     </head>
@@ -78,8 +80,8 @@
             @endif
 
             <div class="content">
-                <div class="title m-b-md">
-                    Animais de Rua
+                <div class="logo">
+                    <img src="img/logo/logo-text.svg" />
                 </div>
 
                 <div class="links">
