@@ -1,4 +1,6 @@
 {
+    "desc": "Animais de Rua",
+
     "Login": "Entrar",
     "Register": "Registar",
     "Logout": "Sair",
@@ -23,6 +25,10 @@
     "Postal Code": "Código Postal",
     "Country": "País",
     "Update": "Atualizar",
+
+    "Processes": "Processos",
+    "Appointments": "Marcações",
+    "Vets": "Veterinários",
 
     "Jan": "Jan",
     "Feb": "Fev",
