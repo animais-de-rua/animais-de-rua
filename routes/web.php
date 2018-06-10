@@ -31,3 +31,15 @@ Route::get('login/google/callback', 			'Auth\LoginController@googleCallback');
 Route::group(['middleware' => ['auth']], function() {
 	Route::get('/dashboard', 					'HomeController@index')->name('dashboard');
 });
+
+
+// Admin
+Route::group(['prefix' => config('backpack.base.route_prefix'), 'middleware' => ['admin'], 'namespace' => 'Admin'], function() {
+
+	// Terminal
+	Route::get('/terminal', 					'\App\Http\Controllers\UserController@terminal')->name('terminal');
+	Route::post('/terminal/run', 				'\App\Http\Controllers\UserController@terminal_run')->name('terminal_run');
+
+	// CRUD
+	CRUD::resource('headquarter', 'HeadquarterCrudController');
+});

@@ -1,7 +1,8 @@
 {
 	"folders": [
 		{
-			"path": "."
+			"path": ".",
+			"name": "Animais de Rua"
 		}
 	],
 	"settings": {

@@ -20,5 +20,12 @@
 	  	@endif
 	  	><a href="{{ route('backpack.account.password') }}">{{ trans('backpack::base.change_password') }}</a></li>
 
+	  @if (Auth::user()->is_superadmin())
+	  <li role="presentation"
+		@if (Request::route()->getName() == 'terminal')
+	  	class="active"
+	  	@endif
+	  	><a href="{{ route('terminal') }}">{{ trans('Artisan Terminal') }}</a></li>
+	  @endif
 	</ul>
 </div>
