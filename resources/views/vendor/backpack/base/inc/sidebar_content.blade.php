@@ -10,7 +10,15 @@
 <li><a href="{{ backpack_url('vets') }}"><i class="fa fa-file-o"></i> <span class="text-capitalize">{{ __("vets") }}</span></a></li>
 
 <li class="header">Animais de Rua</li>
-<li><a href="{{ backpack_url('headquarter') }}"><i class="fa fa-university"></i> <span class="text-capitalize">{{ __("headquarters") }}</span></a></li>
+<li><a href="{{ backpack_url('headquarter') }}"><i class="fa fa-building"></i> <span class="text-capitalize">{{ __("headquarters") }}</span></a></li>
+<li class="treeview">
+	<a href="#"><i class="fa fa-university"></i> <span class="text-capitalize">{{ __("territories") }}</span> <i class="fa fa-angle-left pull-right"></i></a>
+	<ul class="treeview-menu">
+		<li><a href="{{ url(config('backpack.base.route_prefix', 'admin') . '/territory?level=1') }}"><i class="fa fa-file-o"></i> <span>{{ __("Distritos") }}</span></a></li>
+		<li><a href="{{ url(config('backpack.base.route_prefix', 'admin') . '/territory?level=2') }}"><i class="fa fa-file-o"></i> <span>{{ __("Concelhos") }}</span></a></li>
+		<li><a href="{{ url(config('backpack.base.route_prefix', 'admin') . '/territory?level=3') }}"><i class="fa fa-file-o"></i> <span>{{ __("Freguesias") }}</span></a></li>
+	</ul>
+</li>
 
 <li class="header">Admin</li>
 <li class="treeview">

@@ -26,6 +26,7 @@
     "Country": "País",
     "Update": "Atualizar",
     "Management": "Gestão",
+    "Location": "Localização",
 
     "headquarters": "núcleos",
     "processes": "processos",
@@ -34,6 +35,7 @@
     "adoptions": "adoções",
     "godfathers": "padrinhos",
     "vets": "veterinários",
+    "territories": "territórios",
 
     "headquarter": "núcleo",
     "processe": "processo",
@@ -42,6 +44,7 @@
     "adoption": "adoção",
     "godfather": "padrinho",
     "vet": "veterinário",
+    "territory": "território",
 
     "Users": "Utilizadores",
     "Pages": "Páginas",

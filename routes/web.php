@@ -40,6 +40,11 @@ Route::group(['prefix' => config('backpack.base.route_prefix'), 'middleware' => 
 	Route::get('/terminal', 					'\App\Http\Controllers\UserController@terminal')->name('terminal');
 	Route::post('/terminal/run', 				'\App\Http\Controllers\UserController@terminal_run')->name('terminal_run');
 
+	// API
+	Route::get('/territory/list/{level?}', 		'TerritoryCrudController@ajax_list');
+	Route::get('/territory/search', 			'TerritoryCrudController@ajax_search');
+
 	// CRUD
-	CRUD::resource('headquarter', 'HeadquarterCrudController');
+	CRUD::resource('headquarter', 				'HeadquarterCrudController');
+	CRUD::resource('territory', 				'TerritoryCrudController');
 });
