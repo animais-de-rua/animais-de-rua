@@ -32,14 +32,17 @@ class HeadquarterCrudController extends CrudController
 
         // ------ CRUD FIELDS
         $this->crud->addField([
+            'label' => __('Name'),
             'name' => 'name',
             'type' => 'text'
         ]);
         $this->crud->addField([
+            'label' => __('Address'),
             'name' => 'address',
             'type' => 'address'
         ]);
         $this->crud->addField([
+            'label' => __('Phone'),
             'name' => 'phone',
             'type' => 'text',
             'attributes' => [
@@ -48,12 +51,21 @@ class HeadquarterCrudController extends CrudController
             ]
         ]);
         $this->crud->addField([
+            'label' => __('E-Mail Address'),
             'name' => 'mail',
             'type' => 'email',
         ]);
         $this->crud->addField([
+            'label' => __('Description'),
             'name' => 'description',
             'type' => 'textarea'
+        ]);
+        $this->crud->addField([
+            'label' => __("Location"),
+            'name' => 'territory_id',
+            'type' => 'select2_from_array',
+            'options' => app('App\Http\Controllers\Admin\TerritoryCrudController')->ajax_list(),
+            'allows_null' => true,
         ]);
 
         // ------ CRUD COLUMNS

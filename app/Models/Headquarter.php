@@ -16,10 +16,10 @@ class Headquarter extends Model
     */
 
     protected $table = 'headquarters';
-    // protected $primaryKey = 'id';
+    protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = [];
+    protected $fillable = ['name', 'address', 'phone', 'mail', 'description', 'territory_id'];
     // protected $hidden = [];
     // protected $dates = [];
 
@@ -34,6 +34,11 @@ class Headquarter extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+
+    public function territory()
+    {
+        return $this->belongsTo('App\Models\Territory', 'id');
+    }
 
     /*
     |--------------------------------------------------------------------------
