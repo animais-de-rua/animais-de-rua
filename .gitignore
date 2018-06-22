@@ -20,3 +20,4 @@ yarn-error.log
 /public/vendor/backpack/colorbox/content/*.jpg
 /public/css/app.css
 /public/js/app.js
+/sftp-config.json
