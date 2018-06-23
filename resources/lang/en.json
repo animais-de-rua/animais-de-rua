@@ -1,3 +1,12 @@
 {
-	"desc": "Animais de Rua"
+	"desc": "Animais de Rua",
+
+	"dog": "Dog",
+	"cat": "Cat",
+	"approving": "Approving",
+	"waiting_godfather": "Waiting for godfather",
+	"waiting_capture": "Waiting for capture",
+	"open": "Open",
+	"closed": "Closed",
+	"archived": "Archived",
 }

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-// VALIDATION: change the requests to match your own file names if you need form validation
 use App\Http\Requests\TerritoryRequest as StoreRequest;
 use App\Http\Requests\TerritoryRequest as UpdateRequest;
+
 use App\Models\Territory;
 use DB;
 

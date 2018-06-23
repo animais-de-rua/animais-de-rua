@@ -15,6 +15,7 @@
     "Dashboard": "Painel",
     "Cancel": "Cancelar",
     "Name": "Nome",
+    "Date": "Data",
     "Type": "Tipo",
     "Phone": "Telefone",
     "URL": "URL",
@@ -27,6 +28,15 @@
     "Update": "Atualizar",
     "Management": "Gestão",
     "Location": "Localização",
+    "Specie": "Espécie",
+    "Males Amount": "Nº Machos",
+    "Females Amount": "Nº Fêmeas",
+    "Others Amount": "Nº Outros",
+    "Status": "Estado",
+    "Contact": "Contacto",
+    "History": "História",
+    "Notes": "Notas",
+    "Images": "Imagens",
 
     "headquarters": "núcleos",
     "processes": "processos",
@@ -38,7 +48,7 @@
     "territories": "territórios",
 
     "headquarter": "núcleo",
-    "processe": "processo",
+    "process": "processo",
     "appointment": "marcação",
     "counter": "contador",
     "adoption": "adoção",
@@ -48,6 +58,15 @@
 
     "Users": "Utilizadores",
     "Pages": "Páginas",
+    
+    "dog": "Cão",
+    "cat": "Gato",
+    "approving": "Em aprovação",
+    "waiting_godfather": "A aguardar padrinhos",
+    "waiting_capture": "A aguardar captura",
+    "open": "Aberto",
+    "closed": "Encerrado",
+    "archived": "Arquivado",
 
     "Jan": "Jan",
     "Feb": "Fev",

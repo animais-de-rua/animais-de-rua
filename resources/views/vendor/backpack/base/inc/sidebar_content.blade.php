@@ -1,13 +1,13 @@
 <li><a href="{{ backpack_url('dashboard') }}"><i class="fa fa-dashboard"></i> <span>{{ trans('backpack::base.dashboard') }}</span></a></li>
 
 <li class="header">{{ __("Management") }}</li>
-<li><a href="{{ backpack_url('processes') }}"><i class="fa fa-file-o"></i> <span class="text-capitalize">{{ __("processes") }}</span></a></li>
-<li><a href="{{ backpack_url('appointments') }}"><i class="fa fa-file-o"></i> <span class="text-capitalize">{{ __("appointments") }}</span></a></li>
-<li><a href="{{ backpack_url('counters') }}"><i class="fa fa-file-o"></i> <span class="text-capitalize">{{ __("counters") }}</span></a></li>
-<li><a href="{{ backpack_url('adoptions') }}"><i class="fa fa-file-o"></i> <span class="text-capitalize">{{ __("adoptions") }}</span></a></li>
-<li><a href="{{ backpack_url('godfathers') }}"><i class="fa fa-file-o"></i> <span class="text-capitalize">{{ __("godfathers") }}</span></a></li>
-<li><a href="{{ backpack_url('protocols') }}"><i class="fa fa-file-o"></i> <span class="text-capitalize">{{ __("protocols") }}</span></a></li>
-<li><a href="{{ backpack_url('vets') }}"><i class="fa fa-file-o"></i> <span class="text-capitalize">{{ __("vets") }}</span></a></li>
+<li><a href="{{ backpack_url('process') }}"><i class="fa fa-file-o"></i> <span class="text-capitalize">{{ __("processes") }}</span></a></li>
+<li><a href="{{ backpack_url('appointment') }}"><i class="fa fa-file-o"></i> <span class="text-capitalize">{{ __("appointments") }}</span></a></li>
+<li><a href="{{ backpack_url('counter') }}"><i class="fa fa-file-o"></i> <span class="text-capitalize">{{ __("counters") }}</span></a></li>
+<li><a href="{{ backpack_url('adoption') }}"><i class="fa fa-file-o"></i> <span class="text-capitalize">{{ __("adoptions") }}</span></a></li>
+<li><a href="{{ backpack_url('godfather') }}"><i class="fa fa-file-o"></i> <span class="text-capitalize">{{ __("godfathers") }}</span></a></li>
+<li><a href="{{ backpack_url('protocol') }}"><i class="fa fa-file-o"></i> <span class="text-capitalize">{{ __("protocols") }}</span></a></li>
+<li><a href="{{ backpack_url('vet') }}"><i class="fa fa-file-o"></i> <span class="text-capitalize">{{ __("vets") }}</span></a></li>
 
 <li class="header">Animais de Rua</li>
 <li><a href="{{ backpack_url('headquarter') }}"><i class="fa fa-building"></i> <span class="text-capitalize">{{ __("headquarters") }}</span></a></li>

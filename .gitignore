@@ -21,3 +21,4 @@ yarn-error.log
 /public/css/app.css
 /public/js/app.js
 /sftp-config.json
+/public/uploads/

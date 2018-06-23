@@ -43,8 +43,11 @@ Route::group(['prefix' => config('backpack.base.route_prefix'), 'middleware' => 
 	// API
 	Route::get('/territory/list/{level?}', 		'TerritoryCrudController@ajax_list');
 	Route::get('/territory/search', 			'TerritoryCrudController@ajax_search');
+	Route::post('/dropzone/{column}/{entity}', 			'CrudController@handleDropzoneUploadRaw');
+	Route::post('/dropzone/{column}/{entity}/remove', 	'CrudController@handleDropzoneRemoveRaw');
 
 	// CRUD
 	CRUD::resource('headquarter', 				'HeadquarterCrudController');
 	CRUD::resource('territory', 				'TerritoryCrudController');
+	CRUD::resource('process', 					'ProcessCrudController');
 });
