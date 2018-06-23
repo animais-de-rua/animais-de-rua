@@ -109,7 +109,7 @@ class ProcessCrudController extends CrudController
             'type' => 'latlng',
             'name' => 'latlong',
             'map_style' => 'width:100%; height:320px;',
-            'google_api_key' => 'AIzaSyAci5Qy72upCoNCJTjcY9h9pkYj-TPJkqU',
+            'google_api_key' => env('GOOGLE_API_KEY'),
             'default_zoom' => '9'
         ]);
 
