@@ -11,10 +11,4 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function json($data)
-    {
-        return response($data, 200)
-            ->header('Access-Control-Allow-Origin', '*')
-            ->header('Content-Type', 'application/json');
-    }
 }
