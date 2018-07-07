@@ -10,6 +10,7 @@ use DB;
 
 class TerritoryCrudController extends CrudController
 {
+
     public function setup()
     {
 
@@ -81,39 +82,51 @@ class TerritoryCrudController extends CrudController
         });
     }
 
-    public function ajax_list($level = 0)
+    public function list($level = Territory::ALL)
     {
         $data = [];
 
-        if($level == 0 || $level == 1) {
+        if($level & Territory::DISTRITO) {
             $dataC = DB::table('territories as a')
                 ->select(DB::raw("a.id, a.name"))
                 ->where([['a.level', '=', 1]])->get();
-            
+
             foreach ($dataC as $v)
-                $data[$v->id] = $v->name;
+                $data[] = $v;
         }
 
-        if($level == 0 || $level == 2) {
+        if($level & Territory::CONCELHO) {
             $dataB = DB::table('territories as a')
-                ->join ('territories as b', 'a.parent_id', '=' , 'b.id')
+                ->join('territories as b', 'a.parent_id', '=' , 'b.id')
                 ->select(DB::raw("a.id, CONCAT(a.name, ', ', b.name) name"))
                 ->where([['a.level', '=', 2]])->get();
             
             foreach ($dataB as $v)
-                $data[$v->id] = $v->name;
+                $data[] = $v;
         }
 
-        if($level == 0 || $level == 3) {
+        if($level & Territory::FREGUESIA) {
             $dataA = DB::table('territories as a')
-                ->join ('territories as b', 'a.parent_id', '=' , 'b.id')
-                ->join ('territories as c', 'b.parent_id', '=' , 'c.id')
+                ->join('territories as b', 'a.parent_id', '=' , 'b.id')
+                ->join('territories as c', 'b.parent_id', '=' , 'c.id')
                 ->select(DB::raw("a.id, CONCAT(a.name, ', ', b.name, ', ', c.name) name"))
                 ->where([['a.level', '=', 3]])->get();
             
             foreach ($dataA as $v)
-                $data[$v->id] = $v->name;
+                $data[] = $v;
         }
+
+        $data = \App\Models\Territory::hydrate($data);
+
+        return $data;
+    }
+
+    public function ajax_list($level = Territory::ALL)
+    {
+        $data = [];
+
+        foreach ($this->list($level) as $elem)
+            $data[$elem->id] = $elem->name;
 
         return $data;
     }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\HeadquarterRequest as StoreRequest;
 use App\Http\Requests\HeadquarterRequest as UpdateRequest;
+use App\Models\Territory;
 
 class HeadquarterCrudController extends CrudController
 {
@@ -57,12 +58,14 @@ class HeadquarterCrudController extends CrudController
             'name' => 'description',
             'type' => 'textarea'
         ]);
+
         $this->crud->addField([
-            'label' => __("Location"),
-            'name' => 'territory_id',
-            'type' => 'select2_from_array',
-            'options' => app('App\Http\Controllers\Admin\TerritoryCrudController')->ajax_list(),
-            'allows_null' => true,
+            'label' => __("Acting Zone"),
+            'type' => 'select2_multiple_data_source',
+            'name' => 'territories',
+            'attribute' => "name",
+            'model' => app('App\Http\Controllers\Admin\TerritoryCrudController')->list(Territory::CONCELHO),
+            'pivot' => true,
         ]);
 
         // ------ CRUD COLUMNS

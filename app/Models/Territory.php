@@ -7,6 +7,12 @@ use Backpack\CRUD\CrudTrait;
 
 class Territory extends Model
 {
+    const
+        DISTRITO = 1,
+        CONCELHO = 2,
+        FREGUESIA = 4,
+        ALL = 7;
+
     use CrudTrait;
 
     /*
@@ -22,6 +28,9 @@ class Territory extends Model
     protected $fillable = [];
     // protected $hidden = [];
     // protected $dates = [];
+    protected $casts = [
+        'id' => 'string'
+    ];
 
     /*
     |--------------------------------------------------------------------------
@@ -42,12 +51,7 @@ class Territory extends Model
 
     public function parent()
     {
-        return $this->belongsTo('App\Models\Territory', 'id');
-    }
-
-    public function headquarter()
-    {
-        return $this->hasMany('App\Models\Headquarter', 'territory_id');
+        return $this->belongsTo('App\Models\Territory', 'parent_id');
     }
 
     /*
@@ -61,6 +65,11 @@ class Territory extends Model
     | ACCESORS
     |--------------------------------------------------------------------------
     */
+
+    public function getFullnameAttribute()
+    {
+        return $this->name . ($this->parent()->exists() ? ", " . $this->parent()->first()->fullname : '');
+    }
 
     /*
     |--------------------------------------------------------------------------

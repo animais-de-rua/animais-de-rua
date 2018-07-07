@@ -19,7 +19,7 @@ class Headquarter extends Model
     protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['name', 'address', 'phone', 'mail', 'description', 'territory_id'];
+    protected $fillable = ['name', 'address', 'phone', 'mail', 'description'];
     // protected $hidden = [];
     // protected $dates = [];
 
@@ -35,9 +35,9 @@ class Headquarter extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function territory()
+    public function territories()
     {
-        return $this->belongsTo('App\Models\Territory', 'id');
+        return $this->belongsToMany('App\Models\Territory', 'headquarters_territories', 'headquarter_id', 'territory_id')->where('level', 2);
     }
 
     /*
