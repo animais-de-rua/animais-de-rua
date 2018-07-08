@@ -4,13 +4,14 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="{{ __('desc') }}">
+    <meta name="description" content="{{ __('description') }}">
+    <meta name="keywords" content="{{ __('keywords') }}">
+    <meta name="author" content="promatik.pt">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta http-equiv="refresh" content="3600">
 
     <title>{{ config('app.name') }}</title>
 
-    <!-- Icons -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="apple-touch-icon" sizes="57x57" href="/img/icons/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="/img/icons/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="/img/icons/apple-icon-72x72.png">
@@ -25,51 +26,24 @@
     <link rel="icon" type="image/png" sizes="96x96" href="/img/icons/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="192x192" href="/img/icons/android-icon-192x192.png">
     <link rel="icon" type="image/png" sizes="256x256" href="/img/icons/android-icon-256x256.png">
-    <link rel="manifest" href="{{ $manifest_base ?? '' }}/manifest.json">
-    <meta name="msapplication-TileColor" content="#3C8C93">
+    <link rel="manifest" href="manifest.json">
+    <meta name="msapplication-TileColor" content="#E43524">
     <meta name="msapplication-TileImage" content="/img/icons/ms-icon-144x144.png">
-    <meta name="theme-color" content="#3C8C93">
+    <meta name="theme-color" content="#E43524">
 
     <meta property="og:url" content="{{ env('APP_URL') }}"/>
     <meta property="og:type" content="website"/>
     <meta property="og:title" content="{{ config('app.name') }}"/>
-    <meta property="og:description" content="{{ __('desc') }}"/>
+    <meta property="og:description" content="{{ __('description') }}"/>
     <meta property="og:image" content="{{ env('APP_URL') }}/img/logo.png"/>
-    <meta property="fb:app_id" content="1863540353738559"/>
 
-    <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
-    @hasSection('ld+json')
-        @yield('ld+json')
-    @else
-    <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            "legalName": "tik.pt",
-            "url": "{{ env('APP_URL') }}",
-            "logo": "{{ env('APP_URL') }}/img/logo.png",
-            "description": "{{ __('desc') }}",
-            "foundingDate": "2018-01-01",
-            "contactPoint": [
-                {
-                    "@type": "ContactPoint",
-                    "telephone": "+351 968422730",
-                    "contactType": "customer service"
-                }
-            ]
-        }
-    </script>
-    @endif
-
     @yield('style')
 </head>
 <body class="@yield('bodyClass')">
-    <p class="hide">{{ __('desc') }}</p>
+    <p style="display:none">{{ __('description') }}</p>
     <div id="app">
         @include('layouts.navbar')
         
@@ -95,13 +69,12 @@
     </script>
     @yield('script')
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-26516943-10"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-118312120-1"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        gtag('config', 'UA-26516943-10');
+        gtag('config', 'UA-118312120-1');
     </script>
 </body>
 </html>

@@ -51,3 +51,7 @@ Route::group(['prefix' => config('backpack.base.route_prefix'), 'middleware' => 
 	CRUD::resource('territory', 				'TerritoryCrudController');
 	CRUD::resource('process', 					'ProcessCrudController');
 });
+
+// Pages
+Route::get('{page}/{subs?}', ['uses' => 'PageController@index'])
+    ->where(['page' => '^((?!admin).)*$', 'subs' => '.*']);

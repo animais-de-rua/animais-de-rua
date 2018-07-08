@@ -2,7 +2,6 @@
 // ----------
 // Load Modules
 
-window.Vue = require('vue');
 window.utils = require('./utils.js');
 
 
@@ -13,9 +12,3 @@ window.utils = require('./utils.js');
 document.addEventListener("DOMContentLoaded", e => {
 
 });
-
-
-// ----------
-// Vue components
-
-new Vue({el: '#app'});

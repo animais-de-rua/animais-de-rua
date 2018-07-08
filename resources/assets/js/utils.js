@@ -31,32 +31,4 @@ module.exports = {
         xhr.send(params);
         return xhr;
     },
-
-    dateDiff: (d1, d2) =>
-    {
-        return Math.abs(Math.round( (new Date(Date.parse(d2))) - (new Date(Date.parse(d1))) ));
-    },
-
-    timestampBeautify: (timestamp) =>
-    {
-        var d = new Date(Date.parse(timestamp));
-        return d.getDate() + " " + window.translations.month[d.getMonth()] + ", " + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
-    },
-
-    timestampToClock: (timestamp) =>
-    {
-        var d = new Date(Date.parse(timestamp));
-        return ("0" + d.getHours()).slice(-2) + "h" + ("0" + d.getMinutes()).slice(-2);
-    },
-
-    getLatLong: (address, success) =>
-    {
-        window.utils.ajax("https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyA_SPrS2FbV7zUJhHB-mljKo8LsdvjktJg&address=" + address, {}, e => {
-            e = JSON.parse(e);
-            success(e.results.length > 0 ? {
-                formatted_address: e.results[0].formatted_address,
-                location: e.results[0].geometry.location
-            } : {});
-        });
-    }
 };
