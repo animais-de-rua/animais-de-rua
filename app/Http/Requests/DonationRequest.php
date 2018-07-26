@@ -6,7 +6,7 @@ use App\Http\Requests\Request;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Helpers\EnumHelper;
 
-class ProcessRequest extends FormRequest
+class DonationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,9 +27,10 @@ class ProcessRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:3|max:255',
-            'specie' => 'in:'.EnumHelper::keys('process.specie'),
-            'status' => 'in:'.EnumHelper::keys('process.status'),
+            'value' => 'required|numeric',
+            'status' => 'in:'.EnumHelper::keys('donation.status'),
+            'process_id' => 'exists:processes,id',
+            'godfather_id' => 'exists:godfathers,id'
         ];
     }
 

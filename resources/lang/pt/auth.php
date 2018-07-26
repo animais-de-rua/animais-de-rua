@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'failed' => 'Password errada. Tente novamente ou clique em \'Esqueci-me da password\' para a repor.',
-    'throttle' => 'Demasiadas tentativas de login. Por favor, tente novamente em :seconds segundos.',
+    'failed' => 'As credenciais não estão associadas a nenhum registo.',
+    'throttle' => 'Demasiadas tentativas de login. Por favor tente novamente dentro de :seconds segundos.',
 
 ];

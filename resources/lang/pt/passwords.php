@@ -13,10 +13,10 @@ return [
     |
     */
 
-    'password' => 'A Password deve ter pelo menos seis letras e deve combinar com a verificação de password.',
-    'reset' => 'A sua password foi redefinida!',
-    'sent' => 'Foi enviado por email um link para redefinir a sua password!',
-    'token' => 'O token para redefinir a password é inválido.',
-    'user' => 'Esse email não está associado a nenhum utilizador.',
+    'password' => 'Passwords devem ter pelo menos seis caracteres e corresponder ao pedido.',
+    'reset' => 'A tua password foi redefinida!',
+    'sent' => 'Foi enviado por email um link para redefinir a password!',
+    'token' => 'O token para redefenir a password não é válido.',
+    'user' => 'Não foi encontrado nenhum utilizador com esse endereço de email.',
 
 ];

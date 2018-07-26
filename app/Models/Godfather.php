@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Backpack\CRUD\CrudTrait;
 
-class Territory extends Model
+class Godfather extends Model
 {
     use CrudTrait;
 
@@ -15,22 +15,13 @@ class Territory extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'territories';
+    protected $table = 'godfathers';
     protected $primaryKey = 'id';
-    public $timestamps = false;
+    // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = [];
+    protected $fillable = ['name', 'alias', 'email', 'phone', 'territory_id'];
     // protected $hidden = [];
     // protected $dates = [];
-    protected $casts = [
-        'id' => 'string'
-    ];
-
-    const
-        DISTRITO = 1,
-        CONCELHO = 2,
-        FREGUESIA = 4,
-        ALL = 7;
 
     /*
     |--------------------------------------------------------------------------
@@ -44,14 +35,14 @@ class Territory extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function children()
+    public function donations()
     {
-        return $this->hasMany('App\Models\Territory', 'parent_id');
+        return $this->hasMany('App\Models\Donation', 'godfather_id');
     }
 
-    public function parent()
+    public function territory()
     {
-        return $this->belongsTo('App\Models\Territory', 'parent_id');
+        return $this->belongsTo('App\Models\Territory', 'territory_id');
     }
 
     /*
@@ -66,9 +57,13 @@ class Territory extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function getFullnameAttribute()
-    {
-        return $this->name . ($this->parent()->exists() ? ", " . $this->parent()->first()->fullname : '');
+    public function getTotalDonatedValue() {
+        $value = data_get($this, 'donations');
+        return (sizeof($value) ? $value[0]->total : 0) . "€";
+    }
+
+    public function getDetailAttribute() {
+        return "{$this->name} ({$this->email})";
     }
 
     /*
@@ -76,4 +71,12 @@ class Territory extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
+   
+    public function toArray() {
+        $data = parent::toArray();
+
+        $data['detail'] = $this->detail;
+
+        return $data;
+    }
 }

@@ -40,16 +40,28 @@ Route::group(['prefix' => config('backpack.base.route_prefix'), 'middleware' => 
 	Route::get('/terminal', 					'\App\Http\Controllers\UserController@terminal')->name('terminal');
 	Route::post('/terminal/run', 				'\App\Http\Controllers\UserController@terminal_run')->name('terminal_run');
 
-	// API
-	Route::get('/territory/list/{level?}', 		'TerritoryCrudController@ajax_list');
-	Route::get('/territory/search', 			'TerritoryCrudController@ajax_search');
-	Route::post('/dropzone/{column}/{entity}', 			'CrudController@handleDropzoneUploadRaw');
-	Route::post('/dropzone/{column}/{entity}/remove', 	'CrudController@handleDropzoneRemoveRaw');
-
 	// CRUD
+	CRUD::resource('donation', 					'DonationCrudController');
+	CRUD::resource('godfather', 				'GodfatherCrudController');
 	CRUD::resource('headquarter', 				'HeadquarterCrudController');
-	CRUD::resource('territory', 				'TerritoryCrudController');
 	CRUD::resource('process', 					'ProcessCrudController');
+	CRUD::resource('territory', 				'TerritoryCrudController');
+
+	// API
+	Route::get('godfather/ajax/filter', 				'APICrudController@godfatherFilter');
+	Route::get('godfather/ajax/search', 				'APICrudController@godfatherSearch');
+
+	Route::get('headquarter/ajax/filter', 				'APICrudController@headquarterFilter');
+	Route::get('headquarter/ajax/search', 				'APICrudController@headquarterSearch');
+	
+	Route::get('process/ajax/filter', 					'APICrudController@processFilter');
+	Route::get('process/ajax/search', 					'APICrudController@processSearch');
+	
+	Route::get('territory/ajax/filter/{level?}', 		'APICrudController@territoryFilter');
+	Route::get('territory/ajax/search/{level?}', 		'APICrudController@territorySearch');
+
+	Route::post('dropzone/{column}/{entity}', 			'CrudController@handleDropzoneUploadRaw');
+	Route::post('dropzone/{column}/{entity}/remove', 	'CrudController@handleDropzoneRemoveRaw');
 });
 
 // Pages

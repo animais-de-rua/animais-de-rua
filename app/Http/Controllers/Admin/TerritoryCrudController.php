@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use DB;
+use App\Models\Territory;
+use App\Helpers\EnumHelper;
 use App\Http\Requests\TerritoryRequest as StoreRequest;
 use App\Http\Requests\TerritoryRequest as UpdateRequest;
-
-use App\Models\Territory;
-use DB;
 
 class TerritoryCrudController extends CrudController
 {
@@ -50,118 +50,34 @@ class TerritoryCrudController extends CrudController
         $this->crud->addFilter([
             'name' => 'level',
             'type' => 'select2',
-            'label'=> ucwords(__("territory")),
-        ], [
-            1 => __("Distrito"),
-            2 => __("Concelho"),
-            3 => __("Freguesia"),
-        ], function($value) {
+            'label'=> ucfirst(__("territory")),
+        ],
+        EnumHelper::translate('territory.levels'),
+        function($value) {
             $this->crud->addClause('where', 'level', $value);
         });
 
         $this->crud->addFilter([
-            'name' => 'distrito',
+            'name' => 'district',
             'type' => 'select2_ajax',
-            'label'=> 'Distrito',
-            'placeholder' => 'Escolha um distrito'
+            'label'=> ucfirst(__('district')),
+            'placeholder' => __('Select a district')
         ],
-        url('admin/territory/list/1'),
+        url('admin/territory/ajax/filter/1'),
         function($value) {
             $this->crud->addClause('where', 'parent_id', $value);
         });
 
         $this->crud->addFilter([
-            'name' => 'concelho',
+            'name' => 'county',
             'type' => 'select2_ajax',
-            'label'=> 'Concelho',
-            'placeholder' => 'Escolha um concelho'
+            'label'=> ucfirst(__('county')),
+            'placeholder' => __('Select a county')
         ],
-        url('admin/territory/list/2'),
+        url('admin/territory/ajax/filter/2'),
         function($value) {
             $this->crud->addClause('where', 'parent_id', $value);
         });
-    }
-
-    public function list($level = Territory::ALL)
-    {
-        $data = [];
-
-        if($level & Territory::DISTRITO) {
-            $dataC = DB::table('territories as a')
-                ->select(DB::raw("a.id, a.name"))
-                ->where([['a.level', '=', 1]])->get();
-
-            foreach ($dataC as $v)
-                $data[] = $v;
-        }
-
-        if($level & Territory::CONCELHO) {
-            $dataB = DB::table('territories as a')
-                ->join('territories as b', 'a.parent_id', '=' , 'b.id')
-                ->select(DB::raw("a.id, CONCAT(a.name, ', ', b.name) name"))
-                ->where([['a.level', '=', 2]])->get();
-            
-            foreach ($dataB as $v)
-                $data[] = $v;
-        }
-
-        if($level & Territory::FREGUESIA) {
-            $dataA = DB::table('territories as a')
-                ->join('territories as b', 'a.parent_id', '=' , 'b.id')
-                ->join('territories as c', 'b.parent_id', '=' , 'c.id')
-                ->select(DB::raw("a.id, CONCAT(a.name, ', ', b.name, ', ', c.name) name"))
-                ->where([['a.level', '=', 3]])->get();
-            
-            foreach ($dataA as $v)
-                $data[] = $v;
-        }
-
-        $data = \App\Models\Territory::hydrate($data);
-
-        return $data;
-    }
-
-    public function ajax_list($level = Territory::ALL)
-    {
-        $data = [];
-
-        foreach ($this->list($level) as $elem)
-            $data[$elem->id] = $elem->name;
-
-        return $data;
-    }
-
-    public function ajax_search(\Illuminate\Http\Request $request)
-    {
-        $search_term = $request->input('q');
-        $data = [];
-
-        $dataC = DB::table('territories as a')
-            ->select(DB::raw("a.id, a.name"))
-            ->where([['a.level', '=', 1], ['a.name', 'LIKE', "%$search_term%"]])
-            ->limit(2)
-            ->get();
-
-        $dataB = DB::table('territories as a')
-            ->join('territories as b', 'a.parent_id', '=' , 'b.id')
-            ->select(DB::raw("a.id, CONCAT(a.name, ', ', b.name) name"))
-            ->where([['a.level', '=', 2], ['a.name', 'LIKE', "%$search_term%"]])
-            ->limit(4)
-            ->get();
-
-        $dataA = DB::table('territories as a')
-            ->join('territories as b', 'a.parent_id', '=' , 'b.id')
-            ->join('territories as c', 'b.parent_id', '=' , 'c.id')
-            ->select(DB::raw("a.id, CONCAT(a.name, ', ', b.name, ', ', c.name) name"))
-            ->where([['a.level', '=', 3], ['a.name', 'LIKE', "%$search_term%"]])
-            ->limit(8)
-            ->get();
-            
-        foreach ($dataC as $v) $data[] = $v;
-        foreach ($dataB as $v) $data[] = $v;
-        foreach ($dataA as $v) $data[] = $v;
-
-        return ["data" => $data];
     }
 
     public function store(StoreRequest $request)

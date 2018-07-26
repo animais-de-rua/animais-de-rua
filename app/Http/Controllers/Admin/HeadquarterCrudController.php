@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Territory;
+use Illuminate\Http\Request;
 use App\Http\Requests\HeadquarterRequest as StoreRequest;
 use App\Http\Requests\HeadquarterRequest as UpdateRequest;
-use App\Models\Territory;
 
 class HeadquarterCrudController extends CrudController
 {
@@ -64,7 +65,7 @@ class HeadquarterCrudController extends CrudController
             'type' => 'select2_multiple_data_source',
             'name' => 'territories',
             'attribute' => "name",
-            'model' => app('App\Http\Controllers\Admin\TerritoryCrudController')->list(Territory::CONCELHO),
+            'model' => api()->territoryList(Territory::CONCELHO),
             'pivot' => true,
         ]);
 
@@ -80,7 +81,7 @@ class HeadquarterCrudController extends CrudController
 
     public function store(StoreRequest $request)
     {
-        return parent::storeCrud($request);;
+        return parent::storeCrud($request);
     }
 
     public function update(UpdateRequest $request)

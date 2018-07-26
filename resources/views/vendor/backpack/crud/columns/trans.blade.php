@@ -1,6 +1,6 @@
 {{-- regular object attribute --}}
 @php
-	$value = __($entry->{$column['name']});
+	$value = ucfirst(__($entry->{$column['name']}));
 @endphp
 
 <span>

@@ -4,9 +4,8 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 use Illuminate\Foundation\Http\FormRequest;
-use App\Helpers\EnumHelper;
 
-class ProcessRequest extends FormRequest
+class GodfatherRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,9 +26,8 @@ class ProcessRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:3|max:255',
-            'specie' => 'in:'.EnumHelper::keys('process.specie'),
-            'status' => 'in:'.EnumHelper::keys('process.status'),
+            'name' => 'required|min:5|max:255',
+            'phone' => 'nullable|min:9|max:14'
         ];
     }
 

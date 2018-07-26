@@ -38,12 +38,17 @@ class Process extends Model
 
     public function headquarter()
     {
-        return $this->belongsTo('App\Models\Headquarter', 'id');
+        return $this->belongsTo('App\Models\Headquarter', 'headquarter_id');
     }
 
     public function territory()
     {
-        return $this->belongsTo('App\Models\Territory', 'id');
+        return $this->belongsTo('App\Models\Territory', 'territory_id');
+    }
+
+    public function donations()
+    {
+        return $this->hasMany('App\Models\Donation', 'process_id');
     }
 
     /*
@@ -58,9 +63,24 @@ class Process extends Model
     |--------------------------------------------------------------------------
     */
 
+    public function getLinkAttribute()
+    {
+        return "<a href='".url('/admin/process/'.$this->id.'/edit')."'>".$this->name."</a>";
+    }
+
     public function getDateAttribute()
     {
         return $this->created_at ? explode(' ', $this->created_at)[0] : '';
+    }
+
+    public function getDetailAttribute() {
+        $hq = $this->headquarter;
+        return "{$this->name} (" . (isset($hq) ? $hq['name'].', ' : '') ."{$this->date})";
+    }
+
+    public function getTotalDonatedValue() {
+        $value = data_get($this, 'donations');
+        return (sizeof($value) ? $value[0]->total : 0) . "€";
     }
 
     /*
@@ -68,4 +88,12 @@ class Process extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
+   
+    public function toArray() {
+        $data = parent::toArray();
+
+        $data['detail'] = $this->detail;
+
+        return $data;
+    }
 }

@@ -18,7 +18,7 @@
                         @if (( old($field['name']) &&  old($field['name']) == $possible_value) || (isset($field['value']) && $field['value']==$possible_value))
                             selected
                         @endif
-                    >{{ __($possible_value) }}</option>
+                    >{{ ucfirst(__($possible_value)) }}</option>
                 @endforeach
             @endif
     </select>

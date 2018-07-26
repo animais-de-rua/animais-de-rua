@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Backpack\CRUD\CrudTrait;
 
-class Territory extends Model
+class Donation extends Model
 {
     use CrudTrait;
 
@@ -15,22 +15,13 @@ class Territory extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'territories';
+    protected $table = 'donations';
     protected $primaryKey = 'id';
-    public $timestamps = false;
+    // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = [];
+    protected $fillable = ['process_id', 'godfather_id', 'value', 'status', 'date'];
     // protected $hidden = [];
     // protected $dates = [];
-    protected $casts = [
-        'id' => 'string'
-    ];
-
-    const
-        DISTRITO = 1,
-        CONCELHO = 2,
-        FREGUESIA = 4,
-        ALL = 7;
 
     /*
     |--------------------------------------------------------------------------
@@ -44,14 +35,14 @@ class Territory extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function children()
+    public function process()
     {
-        return $this->hasMany('App\Models\Territory', 'parent_id');
+        return $this->belongsTo('App\Models\Process', 'process_id');
     }
 
-    public function parent()
+    public function godfather()
     {
-        return $this->belongsTo('App\Models\Territory', 'parent_id');
+        return $this->belongsTo('App\Models\Godfather', 'godfather_id');
     }
 
     /*
@@ -66,9 +57,25 @@ class Territory extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function getFullnameAttribute()
-    {
-        return $this->name . ($this->parent()->exists() ? ", " . $this->parent()->first()->fullname : '');
+    public function getProcessLinkAttribute() {
+        return "<a href='/admin/process/{$this->process->id}/edit'>".str_limit($this->process->name, 60, "...")."</a>";
+    }
+
+    public function getGodfatherLinkAttribute() {
+        return "<a href='/admin/godfather/{$this->godfather->id}/edit'>".str_limit($this->godfather->name, 60, "...")."</a>";
+    }
+
+    public function getFullValueAttribute() {
+        return $this->value . "€";
+    }
+
+    public function getFullStatusAttribute() {
+        $label = ucfirst(__($this->status));
+
+        if($this->status == "unconfirmed")
+            $label = "<b style='color:#A00'>$label</b>";
+
+        return $label;
     }
 
     /*

@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use DB;
+use Carbon\Carbon;
+use App\Helpers\EnumHelper;
+use App\Models\Process;
 use App\Http\Requests\ProcessRequest as StoreRequest;
 use App\Http\Requests\ProcessRequest as UpdateRequest;
 
@@ -28,7 +32,7 @@ class ProcessCrudController extends CrudController
         //$this->crud->setFromDb();
 
         // ------ CRUD FIELDS
-        $this->crud->addFields(['name', 'contact', 'phone', 'email', 'latlong',/* 'address',*/ 'territory_id', 'headquarter_id', 'specie', 'amount_males', 'amount_females', 'amount_other', 'status', 'images', 'history', 'notes']);
+        $this->crud->addFields(['name', 'contact', 'phone', 'email', 'latlong',/* 'address',*/ 'territory_id', 'headquarter_id', 'specie', 'amount_males', 'amount_females', 'amount_other', 'status', 'images', 'history', 'notes', 'donations']);
 
         $this->crud->addField([
             'label' => __('Name'),
@@ -61,7 +65,7 @@ class ProcessCrudController extends CrudController
             'label' => ucfirst(__("territory")),
             'name' => 'territory_id',
             'type' => 'select2_from_array',
-            'options' => app('App\Http\Controllers\Admin\TerritoryCrudController')->ajax_list(),
+            'options' => $this->wantsJSON() ? null : api()->territoryList(),
             'allows_null' => true,
         ]);
 
@@ -132,9 +136,35 @@ class ProcessCrudController extends CrudController
             'upload-url' => '/admin/dropzone/images/process',
         ]);
 
+        $this->separator();
+
+        $this->crud->addField([
+            'label' => ucfirst(__('donations')),
+            'name' => 'donations',
+            'type' => 'relation_table',
+            'route' => '/admin/donation',
+            'columns' => [
+                'name' => [
+                    'label' => ucfirst(__('godfather')),
+                    'name' => 'godfatherLink',
+                ],
+                'value' => [
+                    'label' => __('Value'),
+                    'name' => 'fullValue',
+                ],
+                'status' => [
+                    'label' => __('Status'),
+                    'name' => 'fullStatus',
+                ],
+                'date' => [
+                    'label' => __('Date'),
+                    'name' => 'date',
+                ]
+            ]
+        ]);
 
         // ------ CRUD COLUMNS
-        $this->crud->addColumns(['name', 'created_at', 'territory_id', 'Headquarter', 'specie', 'amount_males', 'amount_females', 'amount_other', 'status']);
+        $this->crud->addColumns(['name', 'territory_id', 'headquarter', 'created_at', 'specie', 'amount_males', 'amount_females', 'amount_other', 'donations', 'status']);
 
         $this->crud->setColumnDetails('name', [
             'label' => __('Name')
@@ -150,17 +180,15 @@ class ProcessCrudController extends CrudController
             'type' => "select",
             'entity' => 'territory',
             'attribute' => "name",
-            'model' => "App\Models\Territory",
-            'link' => true
+            'model' => "App\Models\Territory"
         ]);
 
-        $this->crud->setColumnDetails('Headquarter', [
+        $this->crud->setColumnDetails('headquarter', [
             'label' => ucfirst(__('headquarter')),
             'type' => "select",
             'entity' => 'headquarter',
             'attribute' => "name",
-            'model' => "App\Models\Headquarter",
-            'link' => true
+            'model' => "App\Models\Headquarter"
         ]);
 
         $this->crud->setColumnDetails('specie', [
@@ -185,12 +213,120 @@ class ProcessCrudController extends CrudController
             'label' => __('Status')
         ]);
 
+        $this->crud->setColumnDetails('donations', [
+            'name' => 'donations',
+            'label' => __("Total Donated"),
+            'type' => "model_function",
+            'function_name' => 'getTotalDonatedValue'
+        ]);
 
         // ------ CRUD DETAILS ROW
         $this->crud->enableDetailsRow();
         $this->crud->allowAccess('details_row');
 
         $this->crud->enableExportButtons();
+
+        // Filtrers
+        $this->crud->addFilter([
+            'name' => 'territory_id',
+            'type' => 'select2_multiple',
+            'label'=> ucfirst(__("territory")),
+            'placeholder' => __('Select a territory')
+        ],
+        $this->wantsJSON() ? null : api()->territoryList(),
+        function($values) {
+            $values = json_decode($values);
+            $where = join(' OR ', array_fill(0, count($values), "territory_id LIKE ?"));
+            $values = array_map(function($field) { return $field . "%"; }, $values);
+
+            $this->crud->query->whereRaw($where, $values);
+        });
+
+        $this->crud->addFilter([
+            'name' => 'headquarter_id',
+            'type' => 'select2_multiple',
+            'label'=> ucfirst(__("headquarter")),
+            'placeholder' => __('Select a headquarter')
+        ],
+        $this->wantsJSON() ? null : api()->headquarterList(),
+        function($values) {
+            $this->crud->addClause('whereIn', 'headquarter_id', json_decode($values));
+        });
+
+        $this->crud->addFilter([
+            'type' => 'date_range',
+            'name' => 'from_to',
+            'label'=> __('Date range')
+        ],
+        false,
+        function($value) {
+            $dates = json_decode($value);
+            $this->crud->query->whereRaw("created_at >= ? AND created_at <= DATE_ADD(?, INTERVAL 1 DAY)", [$dates->from, $dates->to]);
+        });
+
+        $this->crud->addFilter([
+            'name' => 'status',
+            'type' => 'select2_multiple',
+            'label'=> __("Status"),
+            'placeholder' => __('Select a status')
+        ],
+        EnumHelper::translate('process.status'),
+        function($values) {
+            $this->crud->addClause('whereIn', 'status', json_decode($values));
+        });
+
+        $this->crud->addFilter([
+            'name' => 'specie',
+            'type' => 'select2_multiple',
+            'label'=> __("Specie"),
+            'placeholder' => __('Select a specie')
+        ],
+        EnumHelper::translate('process.specie'),
+        function($values) {
+            $this->crud->addClause('whereIn', 'specie', json_decode($values));
+        });
+
+        $this->crud->addFilter([
+            'name' => 'value',
+            'type' => 'range',
+            'label'=> __('Animal count'),
+            'label_from' => __('Min value'),
+            'label_to' => __('Max value')
+        ],
+        true,
+        function($value) {
+            $range = json_decode($value);
+            if ($range->from) $this->crud->addClause('where', DB::raw('amount_males + amount_females + amount_other'), '>=', $range->from);
+            if ($range->to) $this->crud->addClause('where', DB::raw('amount_males + amount_females + amount_other'), '<=', $range->to);
+        });
+
+        $this->crud->addFilter([
+            'name' => 'donations',
+            'type' => 'range',
+            'label'=> ucfirst(__('donations')) . ' €',
+            'label_from' => __('Min value'),
+            'label_to' => __('Max value')
+        ],
+        true,
+        function($value) {
+            $range = json_decode($value);
+
+            $this->crud->query->whereHas('donations', function ($query) use ($range) {
+                $query->selectRaw("process_id, sum(value) as total")
+                    ->where('donations.status', 'LIKE', 'confirmed')
+                    ->groupBy(['process_id']);
+
+                if ($range->from) $query->having('total', '>=', $range->from);
+                if ($range->to) $query->having('total', '<=', $range->to);
+            });
+        });
+
+        // ------ ADVANCED QUERIES
+        $this->crud->addClause('with', ['donations' => function ($query) {
+            $query->selectRaw("process_id, sum(value) as total")
+                ->where('donations.status', 'LIKE', 'confirmed')
+                ->groupBy(['process_id']);
+        }]);
     }
 
     public function showDetailsRow($id)
@@ -206,7 +342,7 @@ class ProcessCrudController extends CrudController
 
     public function store(StoreRequest $request)
     {
-        return parent::storeCrud($request);;
+        return parent::storeCrud($request);
     }
 
     public function update(UpdateRequest $request)
