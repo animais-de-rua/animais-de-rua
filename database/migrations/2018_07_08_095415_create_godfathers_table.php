@@ -51,7 +51,7 @@ class CreateGodfathersTable extends Migration
                 ->on('godfathers')
                 ->onDelete('cascade');
 
-            $table->unique(['process_id', 'godfather_id']);
+            // $table->unique(['process_id', 'godfather_id']);
 
             $table->timestamps();
         });

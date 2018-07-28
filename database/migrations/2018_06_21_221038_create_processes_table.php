@@ -18,7 +18,7 @@ class CreateProcessesTable extends Migration
 
             $table->string('name', 127);
             $table->string('contact', 127)->nullable();
-            $table->integer('phone')->unsigned()->nullable();
+            $table->string('phone')->nullable();
             $table->string('email', 127)->nullable();
             $table->string('address', 127)->nullable();
             $table->string('territory_id', 6)->nullable();

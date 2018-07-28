@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -11,11 +12,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        Schema::disableForeignKeyConstraints();
 
-        $this->call(TerritoriesSeeder::class);
-        $this->call(LanguagesSeeder::class);
+        $this->call([
+            TerritoriesSeeder::class,
+            LanguagesSeeder::class,
+            UsersSeeder::class,
+            HeadquartersSeeder::class,
+            FakeSeeder::class
+        ]);
 
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        Schema::enableForeignKeyConstraints();
     }
 }

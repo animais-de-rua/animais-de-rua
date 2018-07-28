@@ -3,23 +3,23 @@
 use Faker\Generator as Faker;
 use Carbon\Carbon;
 
-use App\User;
+use App\Models\Godfather;
+use App\Models\Territory;
 
 /*
 |--------------------------------------------------------------------------
-| Use Model Factories
+| Model Factories
 |--------------------------------------------------------------------------
 */
 
-$factory->define(User::class, function (Faker $faker) {
+$factory->define(Godfather::class, function (Faker $faker) {
     $date = $faker->dateTimeBetween('-2 months', 'now');
 
     return [
         'name' => $faker->firstName.' '.$faker->lastName,
         'email' => $faker->unique()->safeEmail,
-        'password' => '$2y$10$ZoyR5TtV3.V.QCMvYVRL2.LFaO13PGl50Bfxxz629zY.fY8BzoIfe',
-        'remember_token' => str_random(10),
+        'territory_id' => $faker->randomElement(Territory::all()->pluck('id')->toArray()),
         'created_at' => $date,
-        'updated_at' => $date
+        'updated_at' => $date,
     ];
 });

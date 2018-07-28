@@ -13,7 +13,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        // Set up Faker default languages
+        $this->app->singleton(\Faker\Generator::class, function () {
+            return \Faker\Factory::create('pt_PT');
+        });
+
     }
 
     /**
