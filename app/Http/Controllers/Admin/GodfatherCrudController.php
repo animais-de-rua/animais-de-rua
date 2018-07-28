@@ -59,8 +59,8 @@ class GodfatherCrudController extends CrudController
         $this->crud->addField([
             'label' => ucfirst(__("territory")),
             'name' => 'territory_id',
-                'type' => 'select2_from_array',
-                'options' => api()->territoryList(),
+            'type' => 'select2_from_array',
+            'options' => api()->territoryList(),
             'allows_null' => true,
         ]);
 

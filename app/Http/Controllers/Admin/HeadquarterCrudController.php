@@ -65,7 +65,7 @@ class HeadquarterCrudController extends CrudController
             'type' => 'select2_multiple_data_source',
             'name' => 'territories',
             'attribute' => "name",
-            'model' => api()->territoryList(Territory::CONCELHO),
+            'model' => api()->territorySearch(Territory::DISTRITO | Territory::CONCELHO, new Request()),
             'pivot' => true,
         ]);
 

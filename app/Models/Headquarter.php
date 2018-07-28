@@ -37,7 +37,7 @@ class Headquarter extends Model
 
     public function territories()
     {
-        return $this->belongsToMany('App\Models\Territory', 'headquarters_territories', 'headquarter_id', 'territory_id')->where('level', 2);
+        return $this->belongsToMany('App\Models\Territory', 'headquarters_territories', 'headquarter_id', 'territory_id')->where('level', [1, 2]);
     }
 
     /*
