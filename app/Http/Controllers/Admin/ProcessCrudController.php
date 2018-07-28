@@ -13,7 +13,6 @@ class ProcessCrudController extends CrudController
 {
     public function setup()
     {
-
         /*
         |--------------------------------------------------------------------------
         | BASIC CRUD INFORMATION
@@ -87,19 +86,22 @@ class ProcessCrudController extends CrudController
         $this->crud->addField([
             'label' => __('Males Amount'),
             'type' => 'number',
-            'name' => 'amount_males'
+            'name' => 'amount_males',
+            'default' => 0
         ]);
 
         $this->crud->addField([
             'label' => __('Females Amount'),
             'type' => 'number',
-            'name' => 'amount_females'
+            'name' => 'amount_females',
+            'default' => 0
         ]);
 
         $this->crud->addField([
             'label' => __('Others Amount'),
             'type' => 'number',
-            'name' => 'amount_other'
+            'name' => 'amount_other',
+            'default' => 0
         ]);
 
         $this->crud->addField([
@@ -256,7 +258,9 @@ class ProcessCrudController extends CrudController
         $this->crud->addFilter([
             'type' => 'date_range',
             'name' => 'from_to',
-            'label'=> __('Date range')
+            'label'=> __('Date range'),
+            'format'=> "DD/MM/YYYY",
+            'firstDay'=> 1
         ],
         false,
         function($value) {
