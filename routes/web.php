@@ -46,6 +46,7 @@ Route::group(['prefix' => config('backpack.base.route_prefix'), 'middleware' => 
 	CRUD::resource('headquarter', 				'HeadquarterCrudController');
 	CRUD::resource('process', 					'ProcessCrudController');
 	CRUD::resource('territory', 				'TerritoryCrudController');
+	CRUD::resource('vet', 						'VetCrudController');
 
 	// API
 	Route::get('godfather/ajax/filter', 				'APICrudController@godfatherFilter');

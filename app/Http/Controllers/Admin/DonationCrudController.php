@@ -33,7 +33,7 @@ class DonationCrudController extends CrudController
         */
 
         // ------ CRUD FIELDS
-        $this->crud->addFields(['process_id', 'godfather_id', 'value', 'status', 'date']);
+        $this->crud->addFields(['godfather_id', 'process_id', 'value', 'status', 'date']);
 
         $this->crud->addField([
             'label' => __("Value"),
@@ -160,6 +160,10 @@ class DonationCrudController extends CrudController
             if ($range->from) $this->crud->addClause('where', 'value', '>=', (float) $range->from);
             if ($range->to) $this->crud->addClause('where', 'value', '<=', (float) $range->to);
         });
+
+        // Add asterisk for fields that are required
+        $this->crud->setRequiredFields(StoreRequest::class, 'create');
+        $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
     }
 
     public function store(StoreRequest $request)

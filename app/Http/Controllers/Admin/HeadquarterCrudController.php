@@ -27,8 +27,6 @@ class HeadquarterCrudController extends CrudController
         |--------------------------------------------------------------------------
         */
 
-        //$this->crud->setFromDb();
-
         // ------ CRUD FIELDS
         $this->crud->addField([
             'label' => __('Name'),
@@ -77,6 +75,10 @@ class HeadquarterCrudController extends CrudController
 
         // ------ DATATABLE EXPORT BUTTONS
         $this->crud->enableExportButtons();
+
+        // Add asterisk for fields that are required
+        $this->crud->setRequiredFields(StoreRequest::class, 'create');
+        $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
     }
 
     public function store(StoreRequest $request)

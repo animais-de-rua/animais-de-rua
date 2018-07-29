@@ -12,4 +12,6 @@
     "archived": "Archived",
     "confirmed": "Confirmed",
     "unconfirmed": "Unconfirmed",
+    "active": "Active",
+    "inactive": "Inactive",
 }

@@ -8,7 +8,7 @@
 <li><a href="{{ backpack_url('godfather') }}"><i class="fa fa-file-o"></i> <span class="text-capitalize">{{ __("godfathers") }}</span></a></li>
 <li><a href="{{ backpack_url('donation') }}"><i class="fa fa-file-o"></i> <span class="text-capitalize">{{ __("donations") }}</span></a></li>
 {{--<li><a href="{{ backpack_url('protocol') }}"><i class="fa fa-file-o"></i> <span class="text-capitalize">{{ __("protocols") }}</span></a></li>--}}
-{{--<li><a href="{{ backpack_url('vet') }}"><i class="fa fa-file-o"></i> <span class="text-capitalize">{{ __("vets") }}</span></a></li>--}}
+<li><a href="{{ backpack_url('vet') }}"><i class="fa fa-file-o"></i> <span class="text-capitalize">{{ __("vets") }}</span></a></li>
 
 <li class="header">Animais de Rua</li>
 <li><a href="{{ backpack_url('headquarter') }}"><i class="fa fa-building"></i> <span class="text-capitalize">{{ __("headquarters") }}</span></a></li>

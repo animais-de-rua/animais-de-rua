@@ -30,5 +30,12 @@ return [
             2 => 'county',
             3 => 'parish'
         ]
+    ],
+
+    'vet' => [
+        'status' => [
+            'active' => 'active',
+            'inactive' => 'inactive'
+        ]
     ]
 ];

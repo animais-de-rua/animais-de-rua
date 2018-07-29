@@ -331,6 +331,10 @@ class ProcessCrudController extends CrudController
                 ->where('donations.status', 'LIKE', 'confirmed')
                 ->groupBy(['process_id']);
         }]);
+
+        // Add asterisk for fields that are required
+        $this->crud->setRequiredFields(StoreRequest::class, 'create');
+        $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
     }
 
     public function showDetailsRow($id)
