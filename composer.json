@@ -20,6 +20,7 @@
         "laravel/framework": "5.6.*",
         "laravel/socialite": "^3.0",
         "laravel/tinker": "^1.0",
+        "spatie/laravel-translatable": "^2.2",
         "umpirsky/country-list": "^2.0"
     },
     "require-dev": {

@@ -8,6 +8,8 @@
 <li><a href="{{ backpack_url('godfather') }}"><i class="fa fa-file-o"></i> <span class="text-capitalize">{{ __("godfathers") }}</span></a></li>
 <li><a href="{{ backpack_url('donation') }}"><i class="fa fa-file-o"></i> <span class="text-capitalize">{{ __("donations") }}</span></a></li>
 {{--<li><a href="{{ backpack_url('protocol') }}"><i class="fa fa-file-o"></i> <span class="text-capitalize">{{ __("protocols") }}</span></a></li>--}}
+<li><a href="{{ backpack_url('treatment') }}"><i class="fa fa-file-o"></i> <span class="text-capitalize">{{ __("treatments") }}</span></a></li>
+<li><a href="{{ backpack_url('treatmenttype') }}"><i class="fa fa-file-o"></i> <span class="text-capitalize">{{ __("treatment types") }}</span></a></li>
 <li><a href="{{ backpack_url('vet') }}"><i class="fa fa-file-o"></i> <span class="text-capitalize">{{ __("vets") }}</span></a></li>
 
 <li class="header">Animais de Rua</li>

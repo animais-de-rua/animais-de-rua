@@ -44,6 +44,7 @@
     "Max value": "Máximo",
     "Animal count": "Número de Animais",
     "Date range": "Datas",
+    "Expense": "Custo",
 
     "headquarters": "núcleos",
     "processes": "processos",
@@ -54,6 +55,8 @@
     "vets": "veterinários",
     "territories": "territórios",
     "donations": "donativos",
+    "treatments": "tratamentos",
+    "treatment types": "tipos de tratamento",
 
     "headquarter": "núcleo",
     "process": "processo",
@@ -64,6 +67,8 @@
     "vet": "veterinário",
     "territory": "território",
     "donation": "donativo",
+    "treatment": "tratamento",
+    "treatment type": "tipo de tratamento",
 
     "Select a godfather": "Selecione um padinho",
     "Select a process": "Selecione um processo",
@@ -73,6 +78,9 @@
     "Select a status": "Selecione um estado",
     "Select a specie": "Selecione um espécie",
     "Select a headquarter": "Selecione um núcleo",
+    "Select a treatment": "Selecione um tratamento",
+    "Select a treatment type": "Selecione um tipo de tratamento",
+    "Select a vet": "Selecione um veterinário",
 
     "Users": "Utilizadores",
     "Pages": "Páginas",
@@ -92,9 +100,13 @@
     "entry": "entrada",
     "donations": "donativos",
     "Total Donated": "Total doado",
+    "Total Expenses": "Custos totais",
+    "Total Operations": "Número de operações",
+    "Average Expense": "Custo médio por operação",
     "district": "distrito",
     "county": "concelho",
     "parish": "freguesia",
+    "Operation Time": "Tempo médio de operação",
 
     "Today": "Hoje",
     "Yesterday": "Ontem",

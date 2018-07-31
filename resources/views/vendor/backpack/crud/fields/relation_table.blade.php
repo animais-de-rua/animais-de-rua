@@ -32,7 +32,7 @@
                 <tr class="array-row">
                     @foreach( $field['columns'] as $column)
                     <td>
-                        {!! (isset($column['pivot']) ? $item->pivot : $item)->{$column['name']} !!}
+                        {!! isset($column['attribute']) ? $item->{$column['name']}->{$column['attribute']} : $item->{$column['name']} !!}
                     </td>
                     @endforeach
                     <td>

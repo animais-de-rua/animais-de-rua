@@ -113,7 +113,33 @@ class VetCrudController extends CrudController
             'default_zoom' => '9'
         ]);
 
-        // Filtrers\
+        $this->crud->addField([
+            'label' => ucfirst(__('treatments')),
+            'name' => 'treatments',
+            'type' => 'relation_table',
+            'route' => '/admin/treatment',
+            'columns' => [
+                'treatment_type' => [
+                    'label' => ucfirst(__('treatment type')),
+                    'name' => 'treatment_type',
+                    'attribute' => 'name'
+                ],
+                'process' => [
+                    'label' => ucfirst(__('process')),
+                    'name' => 'processLink',
+                ],
+                'expense' => [
+                    'label' => __('Expense'),
+                    'name' => 'fullExpense',
+                ],
+                'date' => [
+                    'label' => __('Date'),
+                    'name' => 'date',
+                ]
+            ]
+        ]);
+
+        // Filtrers
         $this->crud->addFilter([
             'name' => 'headquarter_id',
             'type' => 'select2_multiple',

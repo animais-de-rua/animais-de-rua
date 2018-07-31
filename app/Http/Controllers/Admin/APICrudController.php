@@ -8,6 +8,9 @@ use App\Models\Godfather;
 use App\Models\Headquarter;
 use App\Models\Process;
 use App\Models\Territory;
+use App\Models\Treatment;
+use App\Models\TreatmentType;
+use App\Models\Vet;
 
 class APICrudController extends CrudController
 {
@@ -84,6 +87,38 @@ class APICrudController extends CrudController
     public function processFilter(Request $request)
     {
         return $this->processSearch($request)->pluck('name', 'id');
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Vet
+    |--------------------------------------------------------------------------
+    */
+    public function vetSearch(Request $request)
+    {
+        $search_term = $this->getSearchParam($request);
+
+        if ($search_term)
+            $results = Vet::where('name', 'LIKE', "%$search_term%")->paginate(10);
+        else
+            $results = Vet::paginate(10);
+
+        return $results;
+    }
+
+    public function vetFilter(Request $request)
+    {
+        return $this->vetSearch($request)->pluck('name', 'id');
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Treatment Type
+    |--------------------------------------------------------------------------
+    */
+    public function treatmentTypeList()
+    {
+        return TreatmentType::get()->pluck('name', 'id')->toArray();
     }
 
     /*

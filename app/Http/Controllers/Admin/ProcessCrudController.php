@@ -31,7 +31,7 @@ class ProcessCrudController extends CrudController
         //$this->crud->setFromDb();
 
         // ------ CRUD FIELDS
-        $this->crud->addFields(['name', 'contact', 'phone', 'email', 'latlong',/* 'address',*/ 'territory_id', 'headquarter_id', 'specie', 'amount_males', 'amount_females', 'amount_other', 'status', 'images', 'history', 'notes', 'donations']);
+        $this->crud->addFields(['name', 'contact', 'phone', 'email', 'latlong',/* 'address',*/ 'territory_id', 'headquarter_id', 'specie', 'amount_males', 'amount_females', 'amount_other', 'status', 'images', 'history', 'notes', 'donations', 'treatments']);
 
         $this->crud->addField([
             'label' => __('Name'),
@@ -157,6 +157,32 @@ class ProcessCrudController extends CrudController
                 'status' => [
                     'label' => __('Status'),
                     'name' => 'fullStatus',
+                ],
+                'date' => [
+                    'label' => __('Date'),
+                    'name' => 'date',
+                ]
+            ]
+        ]);
+
+        $this->crud->addField([
+            'label' => ucfirst(__('treatments')),
+            'name' => 'treatments',
+            'type' => 'relation_table',
+            'route' => '/admin/treatment',
+            'columns' => [
+                'treatment_type' => [
+                    'label' => ucfirst(__('treatment type')),
+                    'name' => 'treatment_type',
+                    'attribute' => 'name'
+                ],
+                'vet' => [
+                    'label' => ucfirst(__('vet')),
+                    'name' => 'vetLink',
+                ],
+                'expense' => [
+                    'label' => __('Expense'),
+                    'name' => 'fullExpense',
                 ],
                 'date' => [
                     'label' => __('Date'),

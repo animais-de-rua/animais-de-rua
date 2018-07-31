@@ -35,7 +35,7 @@ class CreateGodfathersTable extends Migration
             $table->integer('process_id')->unsigned();
             $table->integer('godfather_id')->unsigned();
 
-            $table->integer('value')->unsigned()->default(0);
+            $table->decimal('value', 8, 2)->unsigned()->default(0);
             $table->enum('status', ['confirmed', 'unconfirmed'])->default('confirmed');
             $table->date('date');
 

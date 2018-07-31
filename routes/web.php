@@ -47,6 +47,8 @@ Route::group(['prefix' => config('backpack.base.route_prefix'), 'middleware' => 
 	CRUD::resource('process', 					'ProcessCrudController');
 	CRUD::resource('territory', 				'TerritoryCrudController');
 	CRUD::resource('vet', 						'VetCrudController');
+	CRUD::resource('treatment', 				'TreatmentCrudController');
+	CRUD::resource('treatmenttype', 			'TreatmentTypeCrudController');
 
 	// API
 	Route::get('godfather/ajax/filter', 				'APICrudController@godfatherFilter');
@@ -58,6 +60,9 @@ Route::group(['prefix' => config('backpack.base.route_prefix'), 'middleware' => 
 	Route::get('process/ajax/filter', 					'APICrudController@processFilter');
 	Route::get('process/ajax/search', 					'APICrudController@processSearch');
 	
+	Route::get('vet/ajax/filter', 						'APICrudController@vetFilter');
+	Route::get('vet/ajax/search', 						'APICrudController@vetSearch');
+
 	Route::get('territory/ajax/filter/{level?}', 		'APICrudController@territoryFilter');
 	Route::get('territory/ajax/search/{level?}', 		'APICrudController@territorySearch');
 

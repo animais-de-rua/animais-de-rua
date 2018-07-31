@@ -8,6 +8,7 @@ use App\Models\Process;
 use App\Models\Godfather;
 use App\Models\Donation;
 use App\Models\Vet;
+use App\Models\Treatment;
 
 class FakeSeeder extends Seeder
 {
@@ -35,5 +36,8 @@ class FakeSeeder extends Seeder
 
         // Vets
         factory(Vet::class, 50)->create();
+
+        // Treatments
+        factory(Treatment::class, 120)->create();
     }
 }

@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             LanguagesSeeder::class,
             UsersSeeder::class,
             HeadquartersSeeder::class,
+            TreatmentTypesSeeder::class,
             FakeSeeder::class
         ]);
 

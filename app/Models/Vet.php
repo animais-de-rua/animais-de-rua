@@ -40,6 +40,11 @@ class Vet extends Model
         return $this->belongsTo('App\Models\Headquarter', 'headquarter_id');
     }
 
+    public function treatments()
+    {
+        return $this->hasMany('App\Models\Treatment', 'vet_id');
+    }
+
     /*
     |--------------------------------------------------------------------------
     | SCOPES

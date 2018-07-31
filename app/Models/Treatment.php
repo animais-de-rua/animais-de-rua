@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Backpack\CRUD\CrudTrait;
 
-class Process extends Model
+class Treatment extends Model
 {
     use CrudTrait;
 
@@ -15,12 +15,11 @@ class Process extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'processes';
+    protected $table = 'treatments';
     protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['name', 'contact', 'phone', 'email', 'address', 'territory_id', 'headquarter_id', 'specie', 'amount_males', 'amount_females', 'amount_other', 'status', 'history', 'notes', 'latlong', 'images'];
-    protected $casts = ['images' => 'array'];
+    protected $fillable = ['treatment_type_id', 'vet_id', 'expense', 'date'];
     // protected $hidden = [];
     // protected $dates = [];
 
@@ -36,24 +35,19 @@ class Process extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function headquarter()
+    public function process()
     {
-        return $this->belongsTo('App\Models\Headquarter', 'headquarter_id');
+        return $this->belongsTo('App\Models\Process', 'process_id');
     }
 
-    public function territory()
+    public function vet()
     {
-        return $this->belongsTo('App\Models\Territory', 'territory_id');
+        return $this->belongsTo('App\Models\Vet', 'vet_id');
     }
 
-    public function donations()
+    public function treatment_type()
     {
-        return $this->hasMany('App\Models\Donation', 'process_id');
-    }
-
-    public function treatments()
-    {
-        return $this->hasMany('App\Models\Treatment', 'process_id');
+        return $this->belongsTo('App\Models\TreatmentType', 'treatment_type_id');
     }
 
     /*
@@ -68,24 +62,16 @@ class Process extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function getLinkAttribute()
-    {
-        return "<a href='".url('/admin/process/'.$this->id.'/edit')."'>".$this->name."</a>";
+    public function getProcessLinkAttribute() {
+        return "<a href='/admin/process/{$this->process->id}/edit'>".str_limit($this->process->name, 60, "...")."</a>";
     }
 
-    public function getDateAttribute()
-    {
-        return $this->created_at ? explode(' ', $this->created_at)[0] : '';
+    public function getVetLinkAttribute() {
+        return "<a href='/admin/vet/{$this->vet->id}/edit'>".str_limit($this->vet->name, 60, "...")."</a>";
     }
 
-    public function getDetailAttribute() {
-        $hq = $this->headquarter;
-        return "{$this->name} (" . (isset($hq) ? $hq['name'].', ' : '') ."{$this->date})";
-    }
-
-    public function getTotalDonatedValue() {
-        $value = data_get($this, 'donations');
-        return (sizeof($value) ? $value[0]->total : 0) . "€";
+    public function getFullExpenseAttribute() {
+        return $this->expense . "€";
     }
 
     /*
@@ -93,12 +79,4 @@ class Process extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
-   
-    public function toArray() {
-        $data = parent::toArray();
-
-        $data['detail'] = $this->detail;
-
-        return $data;
-    }
 }
