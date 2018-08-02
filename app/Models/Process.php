@@ -79,13 +79,44 @@ class Process extends Model
     }
 
     public function getDetailAttribute() {
-        $hq = $this->headquarter;
-        return "{$this->name} (" . (isset($hq) ? $hq['name'].', ' : '') ."{$this->date})";
+        $headquarter = (isset($this->headquarter) ? $this->headquarter['name'].', ' : '');
+
+        return "{$this->name} ({$headquarter}{$this->date})";
     }
 
     public function getTotalDonatedValue() {
-        $value = data_get($this, 'donations');
-        return (sizeof($value) ? $value[0]->total : 0) . "€";
+        $donations = data_get_first($this, 'donations', 'total_donations', 0);
+
+        return $donations != 0 ? $donations . "€" : '-';
+    }
+
+    public function getTotalExpensesValue() {
+        $expenses = data_get_first($this, 'treatments', 'total_expenses', 0);
+
+        return $expenses != 0 ? $expenses . "€" : '-';
+    }
+
+    public function getTotalOperationsValue() {
+        $operations = data_get_first($this, 'treatments', 'total_operations', 0);
+
+        return $operations;
+    }
+
+    public function getBalanceValue() {
+        $donations = data_get_first($this, 'donations', 'total_donations', 0);
+        $expenses = data_get_first($this, 'treatments', 'total_expenses', 0);
+        $balance = $donations - $expenses;
+
+        if(!$balance)
+            return "-";
+        else if($balance > 0)
+            return "+{$balance}€";
+        else 
+            return "<span style='color:#A00'>{$balance}€</span>";
+    }
+
+    public function getTotalAnimalsValue() {
+        return $this->amount_males + $this->amount_females + $this->amount_other;
     }
 
     /*

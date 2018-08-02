@@ -157,8 +157,8 @@ class DonationCrudController extends CrudController
         true,
         function($value) {
             $range = json_decode($value);
-            if ($range->from) $this->crud->addClause('where', 'value', '>=', (float) $range->from);
-            if ($range->to) $this->crud->addClause('where', 'value', '<=', (float) $range->to);
+            if (is_numeric($range->from)) $this->crud->addClause('where', 'value', '>=', (float) $range->from);
+            if (is_numeric($range->to)) $this->crud->addClause('where', 'value', '<=', (float) $range->to);
         });
 
         // Add asterisk for fields that are required

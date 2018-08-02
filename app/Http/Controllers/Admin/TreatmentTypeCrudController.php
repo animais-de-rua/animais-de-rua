@@ -91,8 +91,8 @@ class TreatmentTypeCrudController extends CrudController
                 $query->selectRaw("treatment_type_id, sum(expense) as total_expenses")
                     ->groupBy(['treatment_type_id']);
 
-                if ($range->from) $query->having('total_expenses', '>=', $range->from);
-                if ($range->to) $query->having('total_expenses', '<=', $range->to);
+                if (is_numeric($range->from)) $query->having('total_expenses', '>=', $range->from);
+                if (is_numeric($range->to)) $query->having('total_expenses', '<=', $range->to);
             });
         });
 
@@ -111,8 +111,8 @@ class TreatmentTypeCrudController extends CrudController
                 $query->selectRaw("treatment_type_id, count(*) as total_operations")
                     ->groupBy(['treatment_type_id']);
 
-                if ($range->from) $query->having('total_operations', '>=', $range->from);
-                if ($range->to) $query->having('total_operations', '<=', $range->to);
+                if (is_numeric($range->from)) $query->having('total_operations', '>=', $range->from);
+                if (is_numeric($range->to)) $query->having('total_operations', '<=', $range->to);
             });
         });
 

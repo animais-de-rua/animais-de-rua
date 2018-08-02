@@ -171,8 +171,8 @@ class TreatmentCrudController extends CrudController
         function($value) {
             $range = json_decode($value);
 
-            if ($range->from) $this->crud->addClause('where', 'expense', '>=', $range->from);
-            if ($range->to) $this->crud->addClause('where', 'expense', '<=', $range->from);
+            if (is_numeric($range->from)) $this->crud->addClause('where', 'expense', '>=', $range->from);
+            if (is_numeric($range->to)) $this->crud->addClause('where', 'expense', '<=', $range->from);
         });
 
         $this->crud->addFilter([

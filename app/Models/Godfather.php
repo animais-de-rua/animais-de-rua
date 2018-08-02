@@ -58,8 +58,9 @@ class Godfather extends Model
     */
 
     public function getTotalDonatedValue() {
-        $value = data_get($this, 'donations');
-        return (sizeof($value) ? $value[0]->total : 0) . "€";
+        $donations = data_get_first($this, 'donations', 'total', 0);
+
+        return $donations != 0 ? $donations . "€" : '-';
     }
 
     public function getDetailAttribute() {
