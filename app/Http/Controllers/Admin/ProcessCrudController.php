@@ -443,7 +443,7 @@ class ProcessCrudController extends CrudController
         $process = Process::select(['history', 'notes', 'contact', 'phone', 'email'])->where("id", "=", $id)->first();
         
         return "<div style='margin:5px 8px'>
-                <p>$process->contact, $process->phone<br />$process->email</p>
+                <p>$process->contact, <a href='tel:$process->phone'>$process->phone</a><br /><a href='tel:$process->email'>$process->email</a></p>
                 <p>$process->history</p>
                 <p>$process->notes</p>
             </div>";

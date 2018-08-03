@@ -57,6 +57,16 @@ class Vet extends Model
     |--------------------------------------------------------------------------
     */
 
+    public function getTotalExpensesValue() {
+        $expenses = data_get_first($this, 'treatments', 'total_expenses', 0);
+        return $expenses != 0 ? $expenses . "€" : '-';
+    }
+
+    public function getTotalOperationsValue() {
+        $operations = data_get_first($this, 'treatments', 'total_operations', 0);
+        return $operations;
+    }
+
     /*
     |--------------------------------------------------------------------------
     | MUTATORS

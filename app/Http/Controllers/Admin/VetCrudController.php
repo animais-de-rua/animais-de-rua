@@ -31,14 +31,14 @@ class VetCrudController extends CrudController
         */
 
         // ------ CRUD COLUMNS
-        $this->crud->setColumns(['name', 'phone', 'url', 'headquarter', 'status']);
+        $this->crud->setColumns(['name', 'phone', 'url', 'headquarter', 'status', 'total_expenses', 'total_operations']);
 
         $this->crud->setColumnDetails('name', [
             'label' => __('Name')
         ]);
 
         $this->crud->setColumnDetails('phone', [
-            'type' => "phone",
+            'type' => "tel",
             'label' => __('Phone'),
         ]);
 
@@ -58,6 +58,20 @@ class VetCrudController extends CrudController
         $this->crud->setColumnDetails('status', [
             'type' => 'trans',
             'label' => __('Status')
+        ]);
+
+        $this->crud->setColumnDetails('total_expenses', [
+            'name' => 'total_expenses',
+            'label' => __("Total Expenses"),
+            'type' => "model_function",
+            'function_name' => 'getTotalExpensesValue'
+        ]);
+
+        $this->crud->setColumnDetails('total_operations', [
+            'name' => 'total_operations',
+            'label' => __("Total Operations"),
+            'type' => "model_function",
+            'function_name' => 'getTotalOperationsValue'
         ]);
 
         // ------ CRUD FIELDS
@@ -82,12 +96,6 @@ class VetCrudController extends CrudController
             'label' => __('Website'),
             'name' => 'url'
         ]);
-
-        /*$this->crud->addField([
-            'label' => __('Address'),
-            'type' => 'textarea',
-            'name' => 'address'
-        ]);*/
 
         $this->crud->addField([
             'label' => ucfirst(__("headquarter")),
@@ -161,6 +169,52 @@ class VetCrudController extends CrudController
         function($values) {
             $this->crud->addClause('whereIn', 'status', json_decode($values));
         });
+
+        $this->crud->addFilter([
+            'name' => 'total_expenses',
+            'type' => 'range',
+            'label'=> __('Total Expenses') . ' €',
+            'label_from' => __('Min value'),
+            'label_to' => __('Max value')
+        ],
+        true,
+        function($value) {
+            $range = json_decode($value);
+
+            $this->crud->query->whereHas('treatments', function ($query) use ($range) {
+                $query->selectRaw("vet_id, sum(expense) as total_expenses")
+                    ->groupBy('vet_id');
+
+                if (is_numeric($range->from)) $query->having('total_expenses', '>=', $range->from);
+                if (is_numeric($range->to)) $query->having('total_expenses', '<=', $range->to);
+            });
+        });
+
+        $this->crud->addFilter([
+            'name' => 'total_operations',
+            'type' => 'range',
+            'label'=> __('Total Operations'),
+            'label_from' => __('Min value'),
+            'label_to' => __('Max value')
+        ],
+        true,
+        function($value) {
+            $range = json_decode($value);
+
+            $this->crud->query->whereHas('treatments', function ($query) use ($range) {
+                $query->selectRaw("vet_id, count(*) as total_operations")
+                    ->groupBy('vet_id');
+
+                if (is_numeric($range->from)) $query->having('total_operations', '>=', $range->from);
+                if (is_numeric($range->to)) $query->having('total_operations', '<=', $range->to);
+            });
+        });
+
+        // ------ ADVANCED QUERIES
+        $this->crud->addClause('with', ['treatments' => function ($query) {
+            $query->selectRaw("vet_id, sum(expense) as total_expenses, count(*) as total_operations")
+                ->groupBy('vet_id');
+        }]);
 
         // ------ DATATABLE EXPORT BUTTONS
         $this->crud->enableExportButtons();
