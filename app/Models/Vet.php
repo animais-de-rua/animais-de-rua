@@ -67,6 +67,15 @@ class Vet extends Model
         return $operations;
     }
 
+    public function getTotalExpensesStats() {
+        $expenses =  $this->treatments->reduce(function ($carry, $item) { return $carry + $item->expense; });
+        return $expenses != 0 ? $expenses . "€" : '-';
+    }
+
+    public function getTotalOperationsStats() {
+        return sizeof($this->treatments);
+    }
+
     /*
     |--------------------------------------------------------------------------
     | MUTATORS

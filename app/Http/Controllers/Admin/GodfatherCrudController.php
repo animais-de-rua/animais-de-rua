@@ -91,6 +91,22 @@ class GodfatherCrudController extends CrudController
             ]
         ]);
 
+        $this->crud->addField([
+            'label' => __('Stats'),
+            'name' => 'stats',
+            'type' => 'stats',
+            'rows' => [
+                'donated' => [
+                    'label' => __('Total Donated'),
+                    'value' => 'getTotalDonatedStats',
+                ],
+                'donations' => [
+                    'label' => __('Total Donations'),
+                    'value' => 'getTotalDonationsStats',
+                ]
+            ]
+        ]);
+
         // ------ CRUD COLUMNS
         $this->crud->addColumns(['name', 'email', 'phone', 'donations']);
 

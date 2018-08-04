@@ -147,6 +147,22 @@ class VetCrudController extends CrudController
             ]
         ]);
 
+        $this->crud->addField([
+            'label' => __('Stats'),
+            'name' => 'stats',
+            'type' => 'stats',
+            'rows' => [
+                'expenses' => [
+                    'label' => __('Total Expenses'),
+                    'value' => 'getTotalExpensesStats',
+                ],
+                'operations' => [
+                    'label' => __('Total Operations'),
+                    'value' => 'getTotalOperationsStats',
+                ]
+            ]
+        ]);
+
         // Filtrers
         $this->crud->addFilter([
             'name' => 'headquarter_id',

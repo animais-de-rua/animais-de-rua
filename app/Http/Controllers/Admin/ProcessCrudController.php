@@ -29,7 +29,7 @@ class ProcessCrudController extends CrudController
         */
 
         // ------ CRUD FIELDS
-        $this->crud->addFields(['name', 'contact', 'phone', 'email', 'latlong', 'territory_id', 'headquarter_id', 'specie', 'amount_males', 'amount_females', 'amount_other', 'status', 'images', 'history', 'notes', 'donations', 'treatments']);
+        $this->crud->addFields(['name', 'contact', 'phone', 'email', 'latlong', 'territory_id', 'headquarter_id', 'specie', 'amount_males', 'amount_females', 'amount_other', 'status', 'images', 'history', 'notes', 'donations', 'treatments', 'stats']);
 
         $this->crud->addField([
             'label' => __('Name'),
@@ -179,6 +179,30 @@ class ProcessCrudController extends CrudController
                 'date' => [
                     'label' => __('Date'),
                     'name' => 'date',
+                ]
+            ]
+        ]);
+
+        $this->crud->addField([
+            'label' => __('Stats'),
+            'name' => 'stats',
+            'type' => 'stats',
+            'rows' => [
+                'expenses' => [
+                    'label' => __('Total Expenses'),
+                    'value' => 'getTotalExpensesStats',
+                ],
+                'operations' => [
+                    'label' => __('Total Operations'),
+                    'value' => 'getTotalOperationsStats',
+                ],
+                'donated' => [
+                    'label' => __('Total Donated'),
+                    'value' => 'getTotalDonatedStats',
+                ],
+                'donations' => [
+                    'label' => __('Total Donations'),
+                    'value' => 'getTotalDonationsStats',
                 ]
             ]
         ]);

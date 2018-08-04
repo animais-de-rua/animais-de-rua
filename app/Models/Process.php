@@ -119,6 +119,25 @@ class Process extends Model
         return $this->amount_males + $this->amount_females + $this->amount_other;
     }
 
+    // Stats
+    public function getTotalDonatedStats() {
+        $donations =  $this->donations->reduce(function ($carry, $item) { return $carry + $item->value; });
+        return $donations != 0 ? $donations . "€" : '-';
+    }
+
+    public function getTotalDonationsStats() {
+        return sizeof($this->donations);
+    }
+
+    public function getTotalExpensesStats() {
+        $expenses =  $this->treatments->reduce(function ($carry, $item) { return $carry + $item->expense; });
+        return $expenses != 0 ? $expenses . "€" : '-';
+    }
+
+    public function getTotalOperationsStats() {
+        return sizeof($this->treatments);
+    }
+
     /*
     |--------------------------------------------------------------------------
     | MUTATORS

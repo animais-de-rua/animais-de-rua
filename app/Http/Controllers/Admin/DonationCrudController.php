@@ -107,8 +107,10 @@ class DonationCrudController extends CrudController
         ]);
 
         $this->crud->setColumnDetails('status', [
-            'type' => 'trans',
-            'label' => __('Status')
+            'name' => 'status',
+            'label' => __("Status"),
+            'type' => "model_function",
+            'function_name' => 'getFullStatusAttribute'
         ]);
 
         // ------ DATATABLE EXPORT BUTTONS
