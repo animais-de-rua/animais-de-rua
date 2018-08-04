@@ -24,10 +24,10 @@ class LoginController extends Controller
     */
 
     const
-        Facebook = 'facebook',
-        Google = 'google',
-        Github = 'github',
-        Twitter = 'twitter';
+        FACEBOOK = 'facebook',
+        GOOGLE = 'google',
+        GITHUB = 'github',
+        TWITTER = 'twitter';
 
     use AuthenticatesUsers;
 
@@ -36,7 +36,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/dashboard';
+    protected $redirectTo = '/admin';
 
     /**
      * Create a new controller instance.
@@ -53,12 +53,12 @@ class LoginController extends Controller
      */
     public function googleLogin()
     {
-        return $this->providerLogin(LoginController::Google);
+        return $this->providerLogin(self::GOOGLE);
     }
 
     public function googleCallback()
     {
-        return $this->providerCallback(LoginController::Google);
+        return $this->providerCallback(self::GOOGLE);
     }
 
     /**
@@ -66,12 +66,12 @@ class LoginController extends Controller
      */
     public function facebookLogin()
     {
-        return $this->providerLogin(LoginController::Facebook);
+        return $this->providerLogin(self::FACEBOOK);
     }
 
     public function facebookCallback()
     {
-        return $this->providerCallback(LoginController::Facebook);
+        return $this->providerCallback(self::FACEBOOK);
     }
 
     /**
@@ -95,7 +95,7 @@ class LoginController extends Controller
         $user = $this->createOrGetUser($social_user, $provider);
         auth()->login($user);
 
-        return redirect()->to('/dashboard');
+        return redirect()->to($this->redirectTo);
     }
 
     public function createOrGetUser(ProviderUser $providerUser, $provider)
@@ -107,14 +107,11 @@ class LoginController extends Controller
         $avatar = $providerUser->getAvatar();
 
         switch ($provider) {
-            case self::Facebook:
+            case self::FACEBOOK:
                 $avatar = str_replace("normal", "large", $avatar);
                 $avatar.= "&type=square";
-
-                // TODO: use Hey\Traits\Models\FacebookLoginHelper; 
-
                 break;
-            case self::Google:
+            case self::GOOGLE:
                 $avatar = str_replace("?sz=50", "", $avatar);
                 break;
         }

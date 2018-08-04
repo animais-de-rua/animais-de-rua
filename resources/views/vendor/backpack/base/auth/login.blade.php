@@ -1,5 +1,35 @@
 @extends('backpack::layout')
 
+@section('before_styles')
+<style>
+.social-logins {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+.btn.btn-social {
+    display: flex;
+    margin: 5px 10px 0 0;
+    padding: 10px 0 10px 56px!important;
+    border: 0;
+    border-radius: 3px!important;
+    width: 50%;
+    max-width: 240px;
+}
+.btn-facebook {
+    color: #fff;
+    background-color: #3b5998;
+    border-color: rgba(0,0,0,0.2);
+}
+.btn-social>:first-child {
+    border: 0;
+    padding: 4px;
+    width: 42px!important;
+    border-right: 0!important;
+}
+</style>
+@endsection
+
 @section('content')
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -61,6 +91,12 @@
                             </div>
                         </div>
                     </form>
+
+                    <hr />
+
+                    <div>
+                        @include('layouts.social_login')
+                    </div>
                 </div>
             </div>
         </div>

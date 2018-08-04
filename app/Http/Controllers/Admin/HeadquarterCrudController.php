@@ -70,6 +70,21 @@ class HeadquarterCrudController extends CrudController
         // ------ CRUD COLUMNS
         $this->crud->addColumns(['name', 'address', 'phone']);
 
+        $this->crud->setColumnDetails('name', [
+            'name' => 'name',
+            'label' => __("Name")
+        ]);
+
+        $this->crud->setColumnDetails('address', [
+            'name' => 'address',
+            'label' => __("Address")
+        ]);
+
+        $this->crud->setColumnDetails('phone', [
+            'name' => 'phone',
+            'label' => __("Phone")
+        ]);
+
         // ------ CRUD ACCESS
         $this->crud->denyAccess(['delete']);
 
