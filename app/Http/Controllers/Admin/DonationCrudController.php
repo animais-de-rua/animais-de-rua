@@ -33,7 +33,7 @@ class DonationCrudController extends CrudController
         */
 
         // ------ CRUD FIELDS
-        $this->crud->addFields(['godfather_id', 'process_id', 'value', 'status', 'date']);
+        $this->crud->addFields(['godfather_id', 'process_id', 'value', 'date']);
 
         $this->crud->addField([
             'label' => __("Value"),
@@ -68,12 +68,6 @@ class DonationCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'label' => __("Status"),
-            'name' => 'status',
-            'type' => 'enum'
-        ]);
-
-        $this->crud->addField([
             'label' => __("Date"),
             'name' => 'date',
             'type' => 'date',
@@ -81,7 +75,7 @@ class DonationCrudController extends CrudController
         ]);
 
         // ------ CRUD COLUMNS
-        $this->crud->addColumns(['godfather', 'process', 'value', 'status']);
+        $this->crud->addColumns(['godfather', 'process', 'value']);
 
         $this->crud->setColumnDetails('godfather', [
             'name' => 'godfather',
@@ -104,13 +98,6 @@ class DonationCrudController extends CrudController
             'label' => __("Value"),
             'type' => "model_function",
             'function_name' => 'getFullValueAttribute'
-        ]);
-
-        $this->crud->setColumnDetails('status', [
-            'name' => 'status',
-            'label' => __("Status"),
-            'type' => "model_function",
-            'function_name' => 'getFullStatusAttribute'
         ]);
 
         // ------ DATATABLE EXPORT BUTTONS
@@ -137,16 +124,6 @@ class DonationCrudController extends CrudController
         url('admin/process/ajax/filter'),
         function($value) {
             $this->crud->addClause('where', 'process_id', $value);
-        });
-
-        $this->crud->addFilter([
-            'name' => 'status',
-            'type' => 'select2',
-            'label'=> __("Status"),
-        ],
-        EnumHelper::translate('donation.status'),
-        function($value) {
-            $this->crud->addClause('where', 'status', $value);
         });
 
         $this->crud->addFilter([

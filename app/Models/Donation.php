@@ -69,15 +69,6 @@ class Donation extends Model
         return $this->value . "€";
     }
 
-    public function getFullStatusAttribute() {
-        $label = ucfirst(__($this->status));
-
-        if($this->status == "unconfirmed")
-            $label = "<b style='color:#A00'>$label</b>";
-
-        return $label;
-    }
-
     /*
     |--------------------------------------------------------------------------
     | MUTATORS

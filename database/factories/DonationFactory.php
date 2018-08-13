@@ -21,7 +21,6 @@ $factory->define(Donation::class, function (Faker $faker) {
         'process_id' => $faker->randomElement(Process::all()->pluck('id')->toArray()),
         'godfather_id' => $faker->randomElement(Godfather::all()->pluck('id')->toArray()),
         'value' => $faker->randomElement([5, 10, 20, 50]),
-        'status' => $faker->randomElement(EnumHelper::get('donation.status')),
         'date' => $date,
         'created_at' => $date,
         'updated_at' => $date,

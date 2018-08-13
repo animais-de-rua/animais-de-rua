@@ -28,7 +28,6 @@ class DonationRequest extends FormRequest
     {
         return [
             'value' => 'required|numeric',
-            'status' => 'in:'.EnumHelper::keys('donation.status'),
             'process_id' => 'exists:processes,id',
             'godfather_id' => 'required|exists:godfathers,id'
         ];

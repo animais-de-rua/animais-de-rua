@@ -1,13 +1,6 @@
 <?php
 
 return [
-    'donation' => [
-        'status' => [
-            'confirmed' => 'confirmed',
-            'unconfirmed' => 'unconfirmed',
-        ]
-    ],
-
     'process' => [
         'specie' => [
             'dog' => 'dog',

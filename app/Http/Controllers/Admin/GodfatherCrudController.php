@@ -80,10 +80,6 @@ class GodfatherCrudController extends CrudController
                     'label' => __('Value'),
                     'name' => 'fullValue',
                 ],
-                'status' => [
-                    'label' => __('Status'),
-                    'name' => 'fullStatus',
-                ],
                 'date' => [
                     'label' => __('Date'),
                     'name' => 'date',
@@ -133,7 +129,6 @@ class GodfatherCrudController extends CrudController
         // ------ ADVANCED QUERIES
         $this->crud->addClause('with', ['donations' => function ($query) {
             $query->selectRaw("godfather_id, sum(value) as total")
-                ->where('donations.status', 'LIKE', 'confirmed')
                 ->groupBy(['godfather_id']);
         }]);
 

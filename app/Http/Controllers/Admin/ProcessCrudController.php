@@ -146,10 +146,6 @@ class ProcessCrudController extends CrudController
                     'label' => __('Value'),
                     'name' => 'fullValue',
                 ],
-                'status' => [
-                    'label' => __('Status'),
-                    'name' => 'fullStatus',
-                ],
                 'date' => [
                     'label' => __('Date'),
                     'name' => 'date',
@@ -375,7 +371,6 @@ class ProcessCrudController extends CrudController
 
             $this->crud->query->whereHas('donations', function ($query) use ($range) {
                 $query->selectRaw("process_id, sum(value) as total_donations")
-                    ->where('donations.status', 'LIKE', 'confirmed')
                     ->groupBy('process_id');
 
                 if (is_numeric($range->from)) $query->having('total_donations', '>=', $range->from);
@@ -448,7 +443,6 @@ class ProcessCrudController extends CrudController
         // ------ ADVANCED QUERIES
         $this->crud->addClause('with', ['donations' => function ($query) {
             $query->selectRaw("process_id, sum(value) as total_donations")
-                ->where('donations.status', 'LIKE', 'confirmed')
                 ->groupBy('process_id');
         }]);
 
