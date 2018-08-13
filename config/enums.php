@@ -37,5 +37,28 @@ return [
             'active' => 'active',
             'inactive' => 'inactive'
         ]
+    ],
+
+    'user' => [
+        'status' => [
+            1 => 'active',
+            0 => 'inactive'
+        ],
+        'roles' => [
+            1 => 'admin', 
+            2 => 'volunteer'
+        ],
+        'permissions' => [
+            1 => 'processes',
+            2 => 'counters',
+            3 => 'adoptions',
+            4 => 'accountancy',
+            5 => 'website',
+            6 => 'store',
+            7 => 'friend card',
+            8 => 'vets',
+            9 => 'protocols',
+            10 => 'council'
+        ]
     ]
 ];

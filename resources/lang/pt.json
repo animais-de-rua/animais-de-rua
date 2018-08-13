@@ -73,6 +73,13 @@
     "donation": "donativo",
     "treatment": "tratamento",
     "treatment type": "tipo de tratamento",
+    "protocols": "protocolos",
+
+    "volunteer": "voluntário",
+    "council": "câmara municipal",
+    "accountancy": "contabilidade",
+    "store": "loja",
+    "friend card": "cartão amigo",
 
     "Select a godfather": "Selecione um padinho",
     "Select a process": "Selecione um processo",
@@ -85,6 +92,8 @@
     "Select a treatment": "Selecione um tratamento",
     "Select a treatment type": "Selecione um tipo de tratamento",
     "Select a vet": "Selecione um veterinário",
+    "Select a role": "Selecione um cargo",
+    "Select a permission": "Selecione uma permissão",
 
     "Users": "Utilizadores",
     "Pages": "Páginas",

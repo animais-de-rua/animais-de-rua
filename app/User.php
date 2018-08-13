@@ -21,6 +21,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name', 'email', 'password',
+        'phone', 'headquarter_id', 'status'
     ];
 
     /**
@@ -43,26 +44,14 @@ class User extends Authenticatable
         $this->notify(new ResetPasswordNotification($token));
     }
 
-    /**
-     * User Roles
-     */
-    public function has_role($roles) {
-        if(is_string($roles)) {
-            return $this->roles->contains('name', $roles);
-        }
-        else if(is_array($roles)) {
-            foreach ($roles as $role)
-                if($this->roles->contains('name', $role))
-                    return true;
-            return false;
-        }
-    }
+    /*
+    |--------------------------------------------------------------------------
+    | RELATIONS
+    |--------------------------------------------------------------------------
+    */
 
-    public function is_admin() {
-        return $this->has_role('admin') || $this->has_role('superadmin');
-    }
-
-    public function is_superadmin() {
-        return $this->has_role('superadmin');
+    public function headquarter()
+    {
+        return $this->belongsTo('App\Models\Headquarter', 'headquarter_id');
     }
 }

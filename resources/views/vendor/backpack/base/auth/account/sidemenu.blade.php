@@ -20,7 +20,7 @@
 	  	@endif
 	  	><a href="{{ route('backpack.account.password') }}">{{ trans('backpack::base.change_password') }}</a></li>
 
-	  @if (Auth::user()->is_superadmin())
+	  @if (admin())
 	  <li role="presentation"
 		@if (Request::route()->getName() == 'terminal')
 	  	class="active"

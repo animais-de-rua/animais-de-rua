@@ -27,9 +27,9 @@ return [
     | - creating and updating should be disabled
     */
 
-    'allow_permission_create' => true,
-    'allow_permission_update' => true,
-    'allow_permission_delete' => true,
+    'allow_permission_create' => false,
+    'allow_permission_update' => false,
+    'allow_permission_delete' => false,
     'allow_role_create'       => true,
     'allow_role_update'       => true,
     'allow_role_delete'       => true,

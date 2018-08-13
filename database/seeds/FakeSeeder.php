@@ -3,12 +3,14 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Factory as EloquentFactory;
 
-use App\User;
+use Backpack\Base\app\Models\BackpackUser as User;
 use App\Models\Process;
 use App\Models\Godfather;
 use App\Models\Donation;
 use App\Models\Vet;
 use App\Models\Treatment;
+use Backpack\PermissionManager\app\Models\Role;
+use Backpack\PermissionManager\app\Models\Permission;
 
 class FakeSeeder extends Seeder
 {
@@ -20,7 +22,19 @@ class FakeSeeder extends Seeder
     public function run()
     {
         // Users
-        factory(User::class, 24)->create();
+        factory(User::class, 24)->create()->each(function($user) {
+            // 66% change to be a volunteer
+            if(rand(0, 2)) {
+                $user->roles()->save(Role::where('id', 2)->first());
+
+                // Permission
+                $permissions = Permission::inRandomOrder();
+                $user->permissions()->save($permissions->get()[0]);
+                if(rand(0, 1)) { // 50% change to have extra permissions
+                    $user->permissions()->save($permissions->get()[1]);
+                }
+            }
+        });
 
         // Processes
         factory(Process::class, 50)->create();

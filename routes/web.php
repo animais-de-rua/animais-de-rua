@@ -37,10 +37,11 @@ Route::group(['middleware' => ['auth']], function() {
 Route::group(['prefix' => config('backpack.base.route_prefix'), 'middleware' => ['admin'], 'namespace' => 'Admin'], function() {
 
 	// Terminal
-	Route::get('/terminal', 					'\App\Http\Controllers\UserController@terminal')->name('terminal');
-	Route::post('/terminal/run', 				'\App\Http\Controllers\UserController@terminal_run')->name('terminal_run');
+	Route::get('/terminal', 					'UserCrudController@terminal')->name('terminal');
+	Route::post('/terminal/run', 				'UserCrudController@terminal_run')->name('terminal_run');
 
 	// CRUD
+	CRUD::resource('user', 						'UserCrudController');
 	CRUD::resource('donation', 					'DonationCrudController');
 	CRUD::resource('godfather', 				'GodfatherCrudController');
 	CRUD::resource('headquarter', 				'HeadquarterCrudController');
