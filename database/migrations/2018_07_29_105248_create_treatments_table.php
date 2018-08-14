@@ -15,8 +15,8 @@ class CreateTreatmentsTable extends Migration
     {
         Schema::create('treatment_types', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 127);
-            $table->integer('operation_time')->unsigned()->default(0);
+            $table->string('name', 255);
+            $table->integer('operation_time')->nullable()->unsigned()->default(0);
             $table->timestamps();
         });
 
@@ -25,7 +25,7 @@ class CreateTreatmentsTable extends Migration
             $table->integer('process_id')->unsigned();
             $table->integer('treatment_type_id')->unsigned();
             $table->integer('vet_id')->unsigned();
-            $table->decimal('expense', 8, 2)->unsigned()->default(0);
+            $table->decimal('expense', 8, 2)->nullable()->unsigned()->default(0);
             $table->date('date');
             $table->timestamps();
 

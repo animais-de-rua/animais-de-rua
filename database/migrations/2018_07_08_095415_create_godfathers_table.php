@@ -15,10 +15,10 @@ class CreateGodfathersTable extends Migration
     {
         Schema::create('godfathers', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 127);
-            $table->string('alias', 127)->nullable();
+            $table->string('name', 255);
+            $table->string('alias', 255)->nullable();
             $table->string('email', 127)->nullable()->unique();
-            $table->string('phone', 31)->nullable();
+            $table->string('phone', 255)->nullable();
             $table->string('territory_id', 6)->nullable();
 
             $table->index(['territory_id']);
@@ -32,11 +32,11 @@ class CreateGodfathersTable extends Migration
 
         Schema::create('donations', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('process_id')->unsigned();
+            $table->integer('process_id')->nullable()->unsigned();
             $table->integer('godfather_id')->unsigned();
 
-            $table->decimal('value', 8, 2)->unsigned()->default(0);
-            $table->date('date');
+            $table->decimal('value', 8, 2)->nullable()->unsigned()->default(0);
+            $table->date('date')->nullable();
 
             $table->index(['process_id']);
             $table->foreign('process_id')

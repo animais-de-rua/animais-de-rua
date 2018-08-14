@@ -28,8 +28,19 @@ class ProcessRequest extends FormRequest
     {
         return [
             'name' => 'required|min:3|max:255',
+            'contact' => 'nullable|min:3|max:255',
+            'phone' => 'nullable|min:9|max:14',
+            'email' => 'nullable|email',
+            'latlong' => 'nullable|min:3|max:255',
+            'territory_id' => 'nullable|exists:territories,id',
+            'headquarter_id' => 'nullable|exists:headquarters,id',
+            'amount_males' => 'required|numeric|min:0|max:100',
+            'amount_females' => 'required|numeric|min:0|max:100',
+            'amount_other' => 'required|numeric|min:0|max:100',
             'specie' => 'in:'.EnumHelper::keys('process.specie'),
             'status' => 'in:'.EnumHelper::keys('process.status'),
+            'donation_id' => 'exists:donations,id',
+            'treatment_id' => 'exists:treatments,id'
         ];
     }
 

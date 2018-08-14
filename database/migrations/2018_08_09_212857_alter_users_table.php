@@ -14,7 +14,7 @@ class AlterUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('phone', 31)->after('email')->unique()->nullable();
+            $table->string('phone', 127)->after('email')->unique()->nullable();
             $table->integer('headquarter_id')->after('phone')->unsigned()->nullable();
             $table->boolean('status')->after('headquarter_id')->default(1);
 

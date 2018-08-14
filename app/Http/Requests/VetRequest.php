@@ -30,7 +30,8 @@ class VetRequest extends FormRequest
             'name' => 'required|min:3|max:255',
             'phone' => 'nullable|min:9|max:14',
             'email' => 'nullable|email',
-            'headquarter_id' => 'exists:headquarters,id',
+            'url' => 'nullable|url',
+            'headquarter_id' => 'nullable|exists:headquarters,id',
             'status' => 'in:'.EnumHelper::keys('vet.status')
         ];
     }

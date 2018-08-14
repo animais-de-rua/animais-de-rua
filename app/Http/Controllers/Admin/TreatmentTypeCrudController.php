@@ -37,8 +37,7 @@ class TreatmentTypeCrudController extends CrudController
         ]);
 
         $this->crud->setColumnDetails('operation_time', [
-            'label' => __("Operation Time"),
-            'suffix' => ' min'
+            'label' => __("Operation Time")
         ]);
 
         $this->crud->setColumnDetails('total_expenses', [
@@ -70,9 +69,11 @@ class TreatmentTypeCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'label' => __('Operation Time'),
+            'label' => __('Operation Time') . " (hh:mm)",
             'name' => 'operation_time',
-            'type' => 'number'
+            'type' => 'time',
+            'default' => 0,
+            'attributes' => ['min' => 0, 'max' => 24*60],
         ]);
 
         // Filter

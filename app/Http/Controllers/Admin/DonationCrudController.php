@@ -38,7 +38,9 @@ class DonationCrudController extends CrudController
         $this->crud->addField([
             'label' => __("Value"),
             'name' => 'value',
-            'type' => 'number'
+            'type' => 'number',
+            'default' => 0,
+            'attributes' => ['min' => 0, 'max' => 1000000],
         ]);
 
         $this->crud->addField([

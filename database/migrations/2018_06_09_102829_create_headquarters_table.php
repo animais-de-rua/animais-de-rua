@@ -15,10 +15,10 @@ class CreateHeadquartersTable extends Migration
     {
         Schema::create('headquarters', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 31);
-            $table->string('address', 127)->nullable();
-            $table->string('phone', 31)->nullable();
-            $table->string('mail', 127)->nullable();
+            $table->string('name', 255);
+            $table->string('address', 255)->nullable();
+            $table->string('phone', 255)->nullable();
+            $table->string('mail', 255)->nullable();
             $table->text('description')->nullable();
             $table->timestamps();
         });

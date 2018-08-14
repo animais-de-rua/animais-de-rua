@@ -79,4 +79,14 @@ class TreatmentType extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
+   
+    public function setOperationTimeAttribute($value) {
+        $parts = explode(':', $value);
+        if(count($parts) >= 2)
+            $this->attributes['operation_time'] = $parts[0] * 60 + $parts[1];
+    }
+   
+    public function getOperationTimeAttribute($value) {
+        return sprintf('%02d:%02d', floor($value / 60), $value % 60);
+    }
 }

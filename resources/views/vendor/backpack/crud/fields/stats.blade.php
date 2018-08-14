@@ -1,3 +1,7 @@
+<?php
+    if(!isset($entry))
+        return;
+?>
 <div @include('crud::inc.field_wrapper_attributes') >
 
     <h3 style="margin-top:0">{!! $field['label'] !!}</h3>

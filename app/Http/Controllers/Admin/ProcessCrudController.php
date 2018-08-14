@@ -79,21 +79,24 @@ class ProcessCrudController extends CrudController
             'label' => __('Males Amount'),
             'type' => 'number',
             'name' => 'amount_males',
-            'default' => 0
+            'default' => 0,
+            'attributes' => ['min' => 0, 'max' => 100],
         ]);
 
         $this->crud->addField([
             'label' => __('Females Amount'),
             'type' => 'number',
             'name' => 'amount_females',
-            'default' => 0
+            'default' => 0,
+            'attributes' => ['min' => 0, 'max' => 100],
         ]);
 
         $this->crud->addField([
             'label' => __('Others Amount'),
             'type' => 'number',
             'name' => 'amount_other',
-            'default' => 0
+            'default' => 0,
+            'attributes' => ['min' => 0, 'max' => 100],
         ]);
 
         $this->crud->addField([

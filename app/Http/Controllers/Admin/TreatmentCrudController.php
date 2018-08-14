@@ -116,7 +116,9 @@ class TreatmentCrudController extends CrudController
         $this->crud->addField([
             'label' => __("Expense"),
             'name' => 'expense',
-            'type' => 'number'
+            'type' => 'number',
+            'default' => 0,
+            'attributes' => ['min' => 0, 'max' => 1000000],
         ]);
 
         $this->crud->addField([
