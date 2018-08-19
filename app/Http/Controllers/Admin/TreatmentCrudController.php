@@ -31,7 +31,7 @@ class TreatmentCrudController extends CrudController
         */
 
         // ------ CRUD COLUMNS
-        $this->crud->setColumns(['process', 'treatment_type', 'vet', 'expense', 'date']);
+        $this->crud->setColumns(['process', 'treatment_type', 'vet', 'affected_animals', 'expense', 'date']);
 
         $this->crud->setColumnDetails('process', [
             'name' => 'process',
@@ -65,6 +65,11 @@ class TreatmentCrudController extends CrudController
 
         $this->crud->setColumnDetails('vet_id', [
             'label' => ucfirst(__("vet")),
+        ]);
+
+        $this->crud->setColumnDetails('affected_animals', [
+            'label' => __("Animals"),
+            'type' => 'number'
         ]);
 
         $this->crud->setColumnDetails('expense', [
@@ -111,6 +116,14 @@ class TreatmentCrudController extends CrudController
             'placeholder' => __("Select a vet"),
             'minimum_input_length' => 2,
             'default' => \Request::has('vet') ?? false,
+        ]);
+
+        $this->crud->addField([
+            'label' => __("Affected Animals"),
+            'name' => 'affected_animals',
+            'type' => 'number',
+            'default' => 1,
+            'attributes' => ['min' => 1, 'max' => 100]
         ]);
 
         $this->crud->addField([
