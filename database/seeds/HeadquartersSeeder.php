@@ -15,100 +15,50 @@ class HeadquartersSeeder extends Seeder
         DB::table('headquarters')->truncate();
         DB::table('headquarters_territories')->truncate();
 
+        $i = 0;
         $date = Carbon::now();
+        
+        $headquarters = [
+            'Porto' => [
+                '1312', // Porto
+                '1317', // Gaia
+                '1306', // Maia
+                '1308', // Matosinhos
+                '1315', // Valongo
+                '1304', // Gondomar
+            ],
+            'Lisboa' => [
+                '1106', // Lisboa
+                '1510', // Seixal
+                '150303', // Costa da Caparica
+                '1114', // Vila Franca de Xira
+            ],
+            'Sintra' => [
+                '1111', // Sintra
+                '1110', // Oeiras
+                '1105', // Cascais
+                '0805', // Faro
+            ],
+            'Faro' => [
+                '0809', // Monchique
+            ],
+            'São Miguel' => [
+                '21', // Ilha São Miguel
+            ],
+        ];
 
-        DB::table('headquarters')->insert([
-        [
-            'name' => 'Porto',
-            'created_at' => $date,
-            'updated_at' => $date,
-        ],[
-            'name' => 'Lisboa',
-            'created_at' => $date,
-            'updated_at' => $date,
-        ],[
-            'name' => 'Sintra',
-            'created_at' => $date,
-            'updated_at' => $date,
-        ],[
-            'name' => 'Faro',
-            'created_at' => $date,
-            'updated_at' => $date,
-        ],[
-            'name' => 'São Miguel',
-            'created_at' => $date,
-            'updated_at' => $date,
-        ]]);
+        // Headquarters
+        foreach ($headquarters as $headquarter => $territories) {
+            DB::table('headquarters')->insert(['created_at' => $date, 'updated_at' => $date, 'name' => $headquarter]);
+            $i++;
 
-        DB::table('headquarters_territories')->insert([
-
-        // Porto
-        [
-            'headquarter_id' => 1,
-            'territory_id'   => '1312', // Porto
-        ],[
-            'headquarter_id' => 1,
-            'territory_id'   => '1317', // Gaia
-        ],[
-            'headquarter_id' => 1,
-            'territory_id'   => '1306', // Maia
-        ],[
-            'headquarter_id' => 1,
-            'territory_id'   => '1308', // Matosinhos
-        ],[
-            'headquarter_id' => 1,
-            'territory_id'   => '1315', // Valongo
-        ],[
-            'headquarter_id' => 1,
-            'territory_id'   => '1304', // Gondomar
-        ],
-
-        // Lisboa
-        [
-            'headquarter_id' => 2,
-            'territory_id'   => '1106', // Lisboa
-        ],
-        [
-            'headquarter_id' => 2,
-            'territory_id'   => '1510', // Seixal
-        ],
-        [
-            'headquarter_id' => 2,
-            'territory_id'   => '150303', // Costa da Caparica
-        ],
-        [
-            'headquarter_id' => 2,
-            'territory_id'   => '1114', // Vila Franca de Xira
-        ],
-
-        // Sintra
-        [
-            'headquarter_id' => 3,
-            'territory_id'   => '1111', // Sintra
-        ],
-        [
-            'headquarter_id' => 3,
-            'territory_id'   => '1110', // Oeiras
-        ],
-        [
-            'headquarter_id' => 3,
-            'territory_id'   => '1105', // Cascais
-        ],
-
-        // Faro
-        [
-            'headquarter_id' => 4,
-            'territory_id'   => '0805', // Faro
-        ],
-        [
-            'headquarter_id' => 4,
-            'territory_id'   => '0809', // Monchique
-        ],
-
-        // Sao Miguel
-        [
-            'headquarter_id' => 5,
-            'territory_id'   => '21', // Ilha São Miguel
-        ]]);
+            // Headquarter Territories
+            foreach ($territories as $territory) {
+                DB::table('headquarters_territories')->insert([
+                    'headquarter_id' => $i,
+                    'territory_id'   => $territory,
+                ]);
+            }
+        }
     }
 }

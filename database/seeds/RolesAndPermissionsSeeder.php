@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Carbon\Carbon;
+use App\Helpers\EnumHelper;
 
 class RolesAndPermissionsSeeder extends Seeder
 {
@@ -19,28 +20,12 @@ class RolesAndPermissionsSeeder extends Seeder
         $date = Carbon::now();
 
         // Roles
-        $roles = [
-            'admin', 
-            'volunteer'];
-
-        foreach ($roles as $role) {
+        foreach (EnumHelper::values('user.roles') as $role) {
             DB::table('roles')->insert(['created_at' => $date, 'updated_at' => $date, 'name' => $role]);
         }
 
         // Permissions
-        $permissions = [
-            'processes',
-            'counters',
-            'adoptions',
-            'accountancy',
-            'website',
-            'store',
-            'friend card',
-            'vets',
-            'protocols',
-            'council'];
-
-        foreach ($permissions as $i => $permission) {
+        foreach (EnumHelper::values('user.permissions') as $i => $permission) {
             DB::table('permissions')->insert(['created_at' => $date, 'updated_at' => $date, 'name' => $permission]);
             DB::table('role_has_permissions')->insert(['role_id' => 1, 'permission_id' => $i+1]);
         }

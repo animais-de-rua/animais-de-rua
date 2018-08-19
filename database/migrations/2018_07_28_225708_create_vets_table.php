@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use App\Helpers\EnumHelper;
 
 class CreateVetsTable extends Migration
 {
@@ -22,7 +23,7 @@ class CreateVetsTable extends Migration
             $table->string('address', 255)->nullable();
             $table->string('latlong', 255)->nullable();
             $table->integer('headquarter_id')->nullable()->unsigned();
-            $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->enum('status', EnumHelper::values('vet.status'))->default('active');
             $table->timestamps();
 
             $table->index(['headquarter_id']);

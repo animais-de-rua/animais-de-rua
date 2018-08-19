@@ -12,9 +12,16 @@ class EnumHelper
         return Config::get("enums.$name");
     }
 
-    public static function keys($name)
+    public static function values($name, $join = null)
     {
-        return join(',', array_keys(self::get($name)));
+        $data = array_values(self::get($name));
+        return $join ? join($join, $data) : $data;
+    }
+
+    public static function keys($name, $join = null)
+    {
+        $data = array_keys(self::get($name));
+        return $join ? join($join, $data) : $data;
     }
 
     public static function translate($name)

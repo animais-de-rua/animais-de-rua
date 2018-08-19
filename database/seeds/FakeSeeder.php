@@ -11,6 +11,7 @@ use App\Models\Vet;
 use App\Models\Treatment;
 use Backpack\PermissionManager\app\Models\Role;
 use Backpack\PermissionManager\app\Models\Permission;
+use App\Helpers\EnumHelper;
 
 class FakeSeeder extends Seeder
 {
@@ -21,18 +22,26 @@ class FakeSeeder extends Seeder
      */
     public function run()
     {
+        $permissions = EnumHelper::keys('user.permissions');
+
         // Users
-        factory(User::class, 24)->create()->each(function($user) {
+        factory(User::class, 24)->create()->each(function($user) use ($permissions) {
             // 66% change to be a volunteer
             if(rand(0, 2)) {
                 $user->roles()->save(Role::where('id', 2)->first());
 
                 // Permission
-                $permissions = Permission::inRandomOrder();
-                $user->permissions()->save($permissions->get()[0]);
+                shuffle($permissions);
+
+                $user->permissions()->save(Permission::where('id', $permissions[0])->first());
                 if(rand(0, 1)) { // 50% change to have extra permissions
-                    $user->permissions()->save($permissions->get()[1]);
+                    $user->permissions()->save(Permission::where('id', $permissions[1])->first());
                 }
+            }
+
+            // 33% change to be a FAT
+            if(!rand(0, 2)) {
+                $user->roles()->save(Role::where('id', 3)->first());
             }
         });
 

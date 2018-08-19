@@ -37,8 +37,8 @@ class ProcessRequest extends FormRequest
             'amount_males' => 'required|numeric|min:0|max:100',
             'amount_females' => 'required|numeric|min:0|max:100',
             'amount_other' => 'required|numeric|min:0|max:100',
-            'specie' => 'in:'.EnumHelper::keys('process.specie'),
-            'status' => 'in:'.EnumHelper::keys('process.status'),
+            'specie' => 'in:'.EnumHelper::keys('process.specie', ','),
+            'status' => 'in:'.EnumHelper::keys('process.status', ','),
             'donation_id' => 'exists:donations,id',
             'treatment_id' => 'exists:treatments,id'
         ];

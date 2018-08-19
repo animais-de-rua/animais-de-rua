@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use App\Helpers\EnumHelper;
 
 class CreateProcessesTable extends Migration
 {
@@ -23,11 +24,11 @@ class CreateProcessesTable extends Migration
             $table->string('address', 255)->nullable();
             $table->string('territory_id', 6)->nullable();
             $table->integer('headquarter_id')->unsigned()->nullable();
-            $table->enum('specie', ['dog', 'cat'])->default('dog');
+            $table->enum('specie', EnumHelper::values('process.specie'))->default('dog');
             $table->integer('amount_males')->unsigned()->default(0);
             $table->integer('amount_females')->unsigned()->default(0);
             $table->integer('amount_other')->unsigned()->default(0);
-            $table->enum('status', ['approving', 'waiting_godfather', 'waiting_capture', 'open', 'closed', 'archived'])->default('approving');
+            $table->enum('status', EnumHelper::values('process.status'))->default('approving');
             $table->text('history')->nullable();
             $table->text('notes')->nullable();
             $table->text('latlong')->nullable();

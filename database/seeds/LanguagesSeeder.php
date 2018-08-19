@@ -17,20 +17,20 @@ class LanguagesSeeder extends Seeder
             'name'        => 'English',
             'flag'        => '',
             'abbr'        => 'en',
-            'script'    => 'Latn',
-            'native'    => 'English',
-            'active'    => '1',
-            'default'    => '1',
+            'script'      => 'Latn',
+            'native'      => 'English',
+            'active'      => '1',
+            'default'     => '1',
         ]);
 
         DB::table('languages')->insert([
             'name'        => 'Portuguese',
             'flag'        => '',
             'abbr'        => 'pt',
-            'script'    => 'Latn',
-            'native'    => 'Português',
-            'active'    => '1',
-            'default'    => '0',
+            'script'      => 'Latn',
+            'native'      => 'Português',
+            'active'      => '1',
+            'default'     => '0',
         ]);
     }
 }

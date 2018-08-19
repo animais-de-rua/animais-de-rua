@@ -119,6 +119,7 @@ class TreatmentCrudController extends CrudController
             'type' => 'number',
             'default' => 0,
             'attributes' => ['min' => 0, 'max' => 1000000],
+            'prefix' => '€'
         ]);
 
         $this->crud->addField([

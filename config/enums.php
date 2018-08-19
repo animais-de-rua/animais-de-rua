@@ -39,7 +39,8 @@ return [
         ],
         'roles' => [
             1 => 'admin', 
-            2 => 'volunteer'
+            2 => 'volunteer',
+            3 => 'FAT'
         ],
         'permissions' => [
             1 => 'processes',

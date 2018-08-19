@@ -32,7 +32,7 @@ class VetRequest extends FormRequest
             'email' => 'nullable|email',
             'url' => 'nullable|url',
             'headquarter_id' => 'nullable|exists:headquarters,id',
-            'status' => 'in:'.EnumHelper::keys('vet.status')
+            'status' => 'in:'.EnumHelper::keys('vet.status', ',')
         ];
     }
 
