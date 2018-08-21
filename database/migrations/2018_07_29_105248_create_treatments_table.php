@@ -16,7 +16,7 @@ class CreateTreatmentsTable extends Migration
         Schema::create('treatment_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 255);
-            $table->integer('operation_time')->nullable()->unsigned()->default(0);
+            $table->integer('operation_time')->nullable()->unsigned()->default(60);
             $table->timestamps();
         });
 

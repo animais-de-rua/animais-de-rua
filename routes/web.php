@@ -26,15 +26,9 @@ Route::get('login/facebook/callback', 			'Auth\LoginController@facebookCallback'
 Route::get('login/google', 						'Auth\LoginController@googleLogin');
 Route::get('login/google/callback', 			'Auth\LoginController@googleCallback');
 
-
-// Auth middleware
-Route::group(['middleware' => ['auth']], function() {
-	Route::get('/dashboard', 					'HomeController@index')->name('dashboard');
-});
-
-
 // Admin
 Route::group(['prefix' => config('backpack.base.route_prefix'), 'middleware' => ['admin'], 'namespace' => 'Admin'], function() {
+	Route::get('/dashboard', 					'DashboardController@dashboard')->name('dashboard');
 
 	// Terminal
 	Route::get('/terminal', 					'UserCrudController@terminal')->name('terminal');
