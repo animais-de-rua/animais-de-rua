@@ -31,7 +31,7 @@ class TreatmentCrudController extends CrudController
         */
 
         // ------ CRUD COLUMNS
-        $this->crud->setColumns(['process', 'treatment_type', 'vet', 'affected_animals', 'expense', 'date']);
+        $this->crud->setColumns(['process', 'treatment_type', 'vet', 'user', 'affected_animals', 'expense', 'date']);
 
         $this->crud->setColumnDetails('process', [
             'name' => 'process',
@@ -58,13 +58,12 @@ class TreatmentCrudController extends CrudController
             'function_name' => 'getVetLinkAttribute'
         ]);
 
-        $this->crud->setColumnDetails('process', [
-            'label' => ucfirst(__("process")),
-            'attribute' => 'name',
-        ]);
-
-        $this->crud->setColumnDetails('vet_id', [
-            'label' => ucfirst(__("vet")),
+        $this->crud->setColumnDetails('user', [
+            'name' => 'user',
+            'label' => ucfirst(__("volunteer")),
+            'type' => "model_function",
+            'limit' => 120,
+            'function_name' => 'getUserLinkAttribute'
         ]);
 
         $this->crud->setColumnDetails('affected_animals', [
@@ -177,6 +176,17 @@ class TreatmentCrudController extends CrudController
         });
 
         $this->crud->addFilter([
+            'name' => 'user',
+            'type' => 'select2_ajax',
+            'label'=> ucfirst(__("volunteer")),
+            'placeholder' => __('Select a volunteer')
+        ],
+        url('admin/user/ajax/filter'),
+        function($value) {
+            $this->crud->addClause('where', 'user_id', $value);
+        });
+
+        $this->crud->addFilter([
             'name' => 'expense',
             'type' => 'range',
             'label'=> __('Expense') . ' €',
@@ -214,6 +224,9 @@ class TreatmentCrudController extends CrudController
 
     public function store(StoreRequest $request)
     {
+        // Add user to the treatment
+        $request->merge(['user_id' => backpack_user()->id]);
+
         return parent::storeCrud($request);
     }
 

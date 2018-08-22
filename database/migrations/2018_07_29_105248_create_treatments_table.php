@@ -25,6 +25,7 @@ class CreateTreatmentsTable extends Migration
             $table->integer('process_id')->unsigned();
             $table->integer('treatment_type_id')->unsigned();
             $table->integer('vet_id')->unsigned();
+            $table->integer('user_id')->unsigned()->nullable();
             $table->integer('affected_animals')->unsigned()->default(1);
             $table->decimal('expense', 8, 2)->nullable()->unsigned()->default(0);
             $table->date('date');
@@ -46,6 +47,12 @@ class CreateTreatmentsTable extends Migration
             $table->foreign('vet_id')
                 ->references('id')
                 ->on('vets')
+                ->onDelete('cascade');
+
+            $table->index(['user_id']);
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
                 ->onDelete('cascade');
         });
     }

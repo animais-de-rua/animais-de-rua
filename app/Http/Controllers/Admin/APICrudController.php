@@ -11,6 +11,7 @@ use App\Models\Territory;
 use App\Models\Treatment;
 use App\Models\TreatmentType;
 use App\Models\Vet;
+use App\User;
 
 class APICrudController extends CrudController
 {
@@ -21,25 +22,42 @@ class APICrudController extends CrudController
 
     /*
     |--------------------------------------------------------------------------
+    | Default Search
+    |--------------------------------------------------------------------------
+    */
+    public function entitySearch($entity, $searchFields, Request $request)
+    {
+        $search_term = $this->getSearchParam($request);
+
+        if ($search_term && count($searchFields)) {
+            $results = $entity::where(array_shift($searchFields), 'LIKE', "%$search_term%");
+
+            foreach ($searchFields as $field) {
+                $results = $results->orWhere($field, 'LIKE', "%$search_term%");
+            }
+            $results = $results->paginate(10);
+        } else {
+            $results = $entity::paginate(10);
+        }
+
+        return $results;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
     | Godfather
     |--------------------------------------------------------------------------
     */
     public function godfatherSearch(Request $request)
     {
-        $search_term = $this->getSearchParam($request);
-
-        if ($search_term)
-            $results = Godfather::where('name', 'LIKE', "%$search_term%")->orWhere('email', 'LIKE', "%$search_term%")->paginate(10);
-        else
-            $results = Godfather::paginate(10);
-
-        return $results;
+        return $this->entitySearch(Godfather::class, ['name', 'email'], $request);
     }
 
     public function godfatherFilter(Request $request)
     {
         return $this->godfatherSearch($request)->pluck('name', 'id');
     }
+
     /*
     |--------------------------------------------------------------------------
     | Headquarter
@@ -47,14 +65,7 @@ class APICrudController extends CrudController
     */
     public function headquarterSearch(Request $request)
     {
-        $search_term = $this->getSearchParam($request);
-
-        if ($search_term)
-            $results = Headquarter::where('name', 'LIKE', "%$search_term%")->paginate(10);
-        else
-            $results = Headquarter::paginate(10);
-
-        return $results;
+        return $this->entitySearch(Headquarter::class, ['name'], $request);
     }
 
     public function headquarterFilter(Request $request)
@@ -74,14 +85,7 @@ class APICrudController extends CrudController
     */
     public function processSearch(Request $request)
     {
-        $search_term = $this->getSearchParam($request);
-
-        if ($search_term)
-            $results = Process::where('name', 'LIKE', "%$search_term%")->paginate(10);
-        else
-            $results = Process::paginate(10);
-
-        return $results;
+        return $this->entitySearch(Process::class, ['name'], $request);
     }
 
     public function processFilter(Request $request)
@@ -91,19 +95,27 @@ class APICrudController extends CrudController
 
     /*
     |--------------------------------------------------------------------------
+    | User
+    |--------------------------------------------------------------------------
+    */
+    public function userSearch(Request $request)
+    {
+        return $this->entitySearch(User::class, ['name', 'email'], $request);
+    }
+
+    public function userFilter(Request $request)
+    {
+        return $this->userSearch($request)->pluck('name', 'id');
+    }
+
+    /*
+    |--------------------------------------------------------------------------
     | Vet
     |--------------------------------------------------------------------------
     */
     public function vetSearch(Request $request)
     {
-        $search_term = $this->getSearchParam($request);
-
-        if ($search_term)
-            $results = Vet::where('name', 'LIKE', "%$search_term%")->paginate(10);
-        else
-            $results = Vet::paginate(10);
-
-        return $results;
+        return $this->entitySearch(Vet::class, ['name'], $request);
     }
 
     public function vetFilter(Request $request)

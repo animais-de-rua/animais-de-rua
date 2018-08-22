@@ -46,6 +46,9 @@ Route::group(['prefix' => config('backpack.base.route_prefix'), 'middleware' => 
 	CRUD::resource('treatmenttype', 			'TreatmentTypeCrudController');
 
 	// API
+	Route::get('user/ajax/filter', 						'APICrudController@userFilter');
+	Route::get('user/ajax/search', 						'APICrudController@userSearch');
+
 	Route::get('godfather/ajax/filter', 				'APICrudController@godfatherFilter');
 	Route::get('godfather/ajax/search', 				'APICrudController@godfatherSearch');
 

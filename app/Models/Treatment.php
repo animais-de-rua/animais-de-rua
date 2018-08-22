@@ -19,7 +19,7 @@ class Treatment extends Model
     protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['treatment_type_id', 'vet_id', 'expense', 'date'];
+    protected $fillable = ['process_id', 'treatment_type_id', 'vet_id', 'user_id', 'expense', 'date'];
     // protected $hidden = [];
     // protected $dates = [];
 
@@ -45,6 +45,11 @@ class Treatment extends Model
         return $this->belongsTo('App\Models\Vet', 'vet_id');
     }
 
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'user_id');
+    }
+
     public function treatment_type()
     {
         return $this->belongsTo('App\Models\TreatmentType', 'treatment_type_id');
@@ -68,6 +73,10 @@ class Treatment extends Model
 
     public function getVetLinkAttribute() {
         return "<a href='/admin/vet/{$this->vet->id}/edit'>".str_limit($this->vet->name, 60, "...")."</a>";
+    }
+
+    public function getUserLinkAttribute() {
+        return $this->user ? "<a href='/admin/user/{$this->user->id}/edit'>".str_limit($this->user->name, 60, "...")."</a>" : "-";
     }
 
     public function getFullExpenseAttribute() {

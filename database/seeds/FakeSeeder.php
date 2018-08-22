@@ -22,6 +22,14 @@ class FakeSeeder extends Seeder
      */
     public function run()
     {
+        // Truncate tables
+        DB::table('users')->where('id', '>', 1)->delete();
+        DB::table('processes')->truncate();
+        DB::table('godfathers')->truncate();
+        DB::table('donations')->truncate();
+        DB::table('vets')->truncate();
+        DB::table('treatments')->truncate();
+
         $permissions = EnumHelper::keys('user.permissions');
 
         // Users
