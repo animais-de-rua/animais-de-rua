@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Backpack\CRUD\CrudTrait;
 
 class Treatment extends Model
@@ -68,15 +67,15 @@ class Treatment extends Model
     */
 
     public function getProcessLinkAttribute() {
-        return "<a href='/admin/process/{$this->process->id}/edit'>".str_limit($this->process->name, 60, "...")."</a>";
+        return $this->getLink($this->process);
     }
 
     public function getVetLinkAttribute() {
-        return "<a href='/admin/vet/{$this->vet->id}/edit'>".str_limit($this->vet->name, 60, "...")."</a>";
+        return $this->getLink($this->vet);
     }
 
     public function getUserLinkAttribute() {
-        return $this->user ? "<a href='/admin/user/{$this->user->id}/edit'>".str_limit($this->user->name, 60, "...")."</a>" : "-";
+        return $this->getLink($this->user);
     }
 
     public function getFullExpenseAttribute() {

@@ -29,7 +29,7 @@ class ProcessCrudController extends CrudController
         */
 
         // ------ CRUD FIELDS
-        $this->crud->addFields(['name', 'contact', 'phone', 'email', 'latlong', 'territory_id', 'headquarter_id', 'specie', 'amount_males', 'amount_females', 'amount_other', 'status', 'images', 'history', 'notes', 'donations', 'treatments', 'stats']);
+        $this->crud->addFields(['name', 'contact', 'phone', 'email', 'latlong', 'territory_id', 'headquarter_id', 'specie', 'amount_males', 'amount_females', 'amount_other', 'status', 'images', 'history', 'notes', 'donations', 'treatments', 'appointments', 'stats']);
 
         $this->crud->addField([
             'label' => __('Name'),
@@ -183,6 +183,35 @@ class ProcessCrudController extends CrudController
         ]);
 
         $this->crud->addField([
+            'label' => ucfirst(__('appointments')),
+            'name' => 'appointments',
+            'type' => 'relation_table',
+            'route' => '/admin/appointment',
+            'columns' => [
+                'user' => [
+                    'label' => ucfirst(__('volunteer')),
+                    'name' => 'userLink',
+                ],
+                'vet1' => [
+                    'label' => ucfirst(__('vet')) . " 1",
+                    'name' => 'vet1Link',
+                ],
+                'date1' => [
+                    'label' => __('Date') . " 1",
+                    'name' => 'date_1',
+                ],
+                'vet2' => [
+                    'label' => ucfirst(__('vet')) . " 2",
+                    'name' => 'vet2Link',
+                ],
+                'date2' => [
+                    'label' => __('Date') . " 2",
+                    'name' => 'date_2',
+                ]
+            ]
+        ]);
+
+        $this->crud->addField([
             'label' => __('Stats'),
             'name' => 'stats',
             'type' => 'stats',
@@ -246,9 +275,9 @@ class ProcessCrudController extends CrudController
 
         $this->crud->setColumnDetails('animal_count', [
             'name' => 'animal_count',
-            'label' => __("Animal count"),
+            'label' => __("Animals") . ' M/F | O',
             'type' => "model_function",
-            'function_name' => 'getTotalAnimalsValue'
+            'function_name' => 'getAnimalsValue'
         ]);
 
         $this->crud->setColumnDetails('total_donations', [

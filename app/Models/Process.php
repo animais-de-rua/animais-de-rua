@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Backpack\CRUD\CrudTrait;
 
 class Process extends Model
@@ -56,6 +55,11 @@ class Process extends Model
         return $this->hasMany('App\Models\Treatment', 'process_id');
     }
 
+    public function appointments()
+    {
+        return $this->hasMany('App\Models\Appointment', 'process_id');
+    }
+
     /*
     |--------------------------------------------------------------------------
     | SCOPES
@@ -70,7 +74,7 @@ class Process extends Model
 
     public function getLinkAttribute()
     {
-        return "<a href='".url('/admin/process/'.$this->id.'/edit')."'>".$this->name."</a>";
+        return $this->getLink($this);
     }
 
     public function getDateAttribute()
@@ -115,8 +119,21 @@ class Process extends Model
             return "<span style='color:#A00'>{$balance}€</span>";
     }
 
-    public function getTotalAnimalsValue() {
-        return $this->amount_males + $this->amount_females + $this->amount_other;
+    public function getAnimalsValue() {
+        $result = "";
+        if($this->amount_males && $this->amount_females) {
+            $result .= $this->amount_males . " / " . $this->amount_females;
+            if($this->amount_other)
+                $result .= " | " . $this->amount_other;
+        }
+        else if($this->amount_other) {
+            $result = $this->amount_other;
+        }
+        else {
+            $result = "-";
+        }
+
+        return $result;
     }
 
     // Stats

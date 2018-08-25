@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Factory as EloquentFactory;
 
 use Backpack\Base\app\Models\BackpackUser as User;
+use App\Models\Appointment;
 use App\Models\Process;
 use App\Models\Godfather;
 use App\Models\Donation;
@@ -29,6 +30,7 @@ class FakeSeeder extends Seeder
         DB::table('donations')->truncate();
         DB::table('vets')->truncate();
         DB::table('treatments')->truncate();
+        DB::table('appointments')->truncate();
 
         $permissions = EnumHelper::keys('user.permissions');
 
@@ -70,5 +72,8 @@ class FakeSeeder extends Seeder
 
         // Treatments
         factory(Treatment::class, 120)->create();
+
+        // Appointments
+        factory(Appointment::class, 100)->create();
     }
 }

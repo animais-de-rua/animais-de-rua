@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Backpack\CRUD\CrudTrait;
 
 class Donation extends Model
@@ -58,11 +57,11 @@ class Donation extends Model
     */
 
     public function getProcessLinkAttribute() {
-        return "<a href='/admin/process/{$this->process->id}/edit'>".str_limit($this->process->name, 60, "...")."</a>";
+        return $this->getLink($this->process);
     }
 
     public function getGodfatherLinkAttribute() {
-        return "<a href='/admin/godfather/{$this->godfather->id}/edit'>".str_limit($this->godfather->name, 60, "...")."</a>";
+        return $this->getLink($this->godfather);
     }
 
     public function getFullValueAttribute() {

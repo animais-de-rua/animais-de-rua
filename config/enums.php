@@ -1,6 +1,14 @@
 <?php
 
 return [
+    'appointment' => [
+        'status' => [
+            'approving' => 'approving',
+            'approved_option_1' => 'approved_option_1',
+            'approved_option_2' => 'approved_option_2'
+        ]
+    ],
+
     'process' => [
         'specie' => [
             'dog' => 'dog',

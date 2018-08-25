@@ -3,12 +3,10 @@
 namespace App\Models;
 
 use Backpack\CRUD\CrudTrait;
-use Backpack\CRUD\ModelTraits\SpatieTranslatable\HasTranslations;
 
-class TreatmentType extends Model
+class Appointment extends Model
 {
     use CrudTrait;
-    use HasTranslations;
 
     /*
     |--------------------------------------------------------------------------
@@ -16,14 +14,13 @@ class TreatmentType extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'treatment_types';
+    protected $table = 'appointments';
     protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['name', 'operation_time'];
+    protected $fillable = ['process_id', 'user_id', 'vet_id_1', 'date_1', 'vet_id_2', 'date_2', 'amount_males', 'amount_females', 'notes', 'status'];
     // protected $hidden = [];
     // protected $dates = [];
-    protected $translatable = ['name'];
 
     /*
     |--------------------------------------------------------------------------
@@ -37,9 +34,24 @@ class TreatmentType extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function treatments()
+    public function process()
     {
-        return $this->hasMany('App\Models\Treatment', 'treatment_type_id');
+        return $this->belongsTo('App\Models\Process', 'process_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'user_id');
+    }
+
+    public function vet1()
+    {
+        return $this->belongsTo('App\Models\Vet', 'vet_id_1');
+    }
+
+    public function vet2()
+    {
+        return $this->belongsTo('App\Models\Vet', 'vet_id_2');
     }
 
     /*
@@ -54,23 +66,24 @@ class TreatmentType extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function getTotalExpensesValue() {
-        $expenses = data_get_first($this, 'treatments', 'total_expenses', 0);
-
-        return $expenses != 0 ? $expenses . "€" : '-';
+    public function getProcessLinkAttribute() {
+        return $this->getLink($this->process);
     }
 
-    public function getTotalOperationsValue() {
-        $operations = data_get_first($this, 'treatments', 'total_operations', 0);
-
-        return $operations != 0 ? $operations : '-';
+    public function getUserLinkAttribute() {
+        return $this->getLink($this->user);
     }
 
-    public function getOperationsAverageValue() {
-        $expenses = data_get_first($this, 'treatments', 'total_expenses', 0);
-        $operations = data_get_first($this, 'treatments', 'total_operations', 0);
+    public function getVet1LinkAttribute() {
+        return $this->getLink($this->vet1);
+    }
 
-        return $operations > 0 ? number_format($expenses / $operations, 2) . "€" : '-';
+    public function getVet2LinkAttribute() {
+        return $this->getLink($this->vet2);
+    }
+
+    public function getAnimalsValue() {
+        return "{$this->amount_males} / {$this->amount_females}";
     }
 
     /*
@@ -78,14 +91,4 @@ class TreatmentType extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
-   
-    public function setOperationTimeAttribute($value) {
-        $parts = explode(':', $value);
-        if(count($parts) >= 2)
-            $this->attributes['operation_time'] = $parts[0] * 60 + $parts[1];
-    }
-   
-    public function getOperationTimeAttribute($value) {
-        return sprintf('%02d:%02d', floor($value / 60), $value % 60);
-    }
 }

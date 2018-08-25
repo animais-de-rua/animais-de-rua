@@ -2,7 +2,7 @@
 
 <li class="header">{{ __("Management") }}</li>
 <li><a href="{{ backpack_url('process') }}"><i class="fa fa-file-o"></i> <span class="text-capitalize">{{ __("processes") }}</span></a></li>
-{{--<li><a href="{{ backpack_url('appointment') }}"><i class="fa fa-file-o"></i> <span class="text-capitalize">{{ __("appointments") }}</span></a></li>--}}
+<li><a href="{{ backpack_url('appointment') }}"><i class="fa fa-file-o"></i> <span class="text-capitalize">{{ __("appointments") }}</span></a></li>
 {{--<li><a href="{{ backpack_url('counter') }}"><i class="fa fa-file-o"></i> <span class="text-capitalize">{{ __("counters") }}</span></a></li>--}}
 {{--<li><a href="{{ backpack_url('adoption') }}"><i class="fa fa-file-o"></i> <span class="text-capitalize">{{ __("adoptions") }}</span></a></li>--}}
 <li><a href="{{ backpack_url('godfather') }}"><i class="fa fa-file-o"></i> <span class="text-capitalize">{{ __("godfathers") }}</span></a></li>
