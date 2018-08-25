@@ -69,6 +69,12 @@ Route::group(['prefix' => config('backpack.base.route_prefix'), 'middleware' => 
 	Route::post('dropzone/{column}/{entity}/remove', 	'CrudController@handleDropzoneRemoveRaw');
 });
 
+// Language
+Route::any('lang/{locale}', function ($locale) {
+	Session::put('locale', $locale);
+	return redirect(url()->previous());
+})->where('locale', '[a-z]{2}(-[A-Z]{2})?')->name('lang');
+
 // Pages
 Route::get('{page}/{subs?}', ['uses' => 'PageController@index'])
     ->where(['page' => '^((?!admin).)*$', 'subs' => '.*']);

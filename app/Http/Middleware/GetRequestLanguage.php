@@ -20,12 +20,12 @@ class GetRequestLanguage
         if (Session::has('locale')) {
             App::setLocale(Session::get('locale'));
         } else {
-            $availableLangs = ['pt', 'en'];
+            $availableLangs = array_keys(config('backpack.crud.locales'));
             $userLangs = preg_split('/,|;/', $request->server('HTTP_ACCEPT_LANGUAGE'));
 
-            foreach ($availableLangs as $lang) {
-                if(in_array($lang, $userLangs)) {
-                    Session::push('locale', $lang);
+            foreach ($userLangs as $lang) {
+                if(in_array($lang, $availableLangs)) {
+                    Session::put('locale', $lang);
                     App::setLocale($lang);
                     break;
                 }

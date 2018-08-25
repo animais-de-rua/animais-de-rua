@@ -3,6 +3,8 @@
     "keywords": "associaçao, animais, esterilização, animais, de, rua, animais de rua, adopção, cão, gato, cães, gatos",
     "Admin Panel": "Painel de administração",
 
+    "Home": "Início",
+    "Store": "Loja",
     "Login": "Entrar",
     "Login with": "Entrar com",
     "Register": "Registar",
@@ -52,6 +54,11 @@
     "Attribute": "Atributo",
     "Affected Animals": "Animais intervencionados",
     "Animals": "Animais",
+
+    "Languages": "Idioma",
+    "File manager": "Gestor de ficheiros",
+    "Language Files": "Ficheiros de tradução",
+    "Settings": "Configurações",
 
     "headquarters": "núcleos",
     "processes": "processos",
