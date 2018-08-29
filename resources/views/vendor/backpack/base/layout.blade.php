@@ -33,6 +33,8 @@
     <link rel="stylesheet" href="{{ asset('vendor/backpack/backpack.base.min.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/backpack/overlays/backpack.bold.min.css') }}">
 
+    <link rel="stylesheet" href="{{ asset('css/admin/icomoon/style.css') }}">
+
     <style type="text/css">
         .skin-red .main-header .navbar,
         .skin-red .main-header .navbar .sidebar-toggle:hover,
@@ -68,7 +70,7 @@
         <header class="main-header">
             <a href="{{ url('') }}" class="logo">
               <span class="logo-mini"><img style="width: 38px; filter: brightness(0) invert(1) opacity(0.9);" src="/img/logo/logo.svg" /></span>
-              <span class="logo-lg"><img style="width: 80%; filter: brightness(0) invert(1) opacity(0.9);" src="/img/logo/logo-text.svg" /></span>
+              <span class="logo-lg"><img style="width: 80%; max-width: 300px; filter: brightness(0) invert(1) opacity(0.9);" src="/img/logo/logo-text.svg" /></span>
             </a>
             <nav class="navbar navbar-static-top" role="navigation">
                 <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">

@@ -4,6 +4,8 @@ use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Factory as EloquentFactory;
 
 use Backpack\Base\app\Models\BackpackUser as User;
+use App\Models\Adoption;
+use App\Models\Animal;
 use App\Models\Appointment;
 use App\Models\Process;
 use App\Models\Godfather;
@@ -31,10 +33,13 @@ class FakeSeeder extends Seeder
         DB::table('vets')->truncate();
         DB::table('treatments')->truncate();
         DB::table('appointments')->truncate();
+        DB::table('animals')->truncate();
+        DB::table('adoptions')->truncate();
 
         $permissions = EnumHelper::keys('user.permissions');
 
         // Users
+        $this->log("Users");
         factory(User::class, 24)->create()->each(function($user) use ($permissions) {
             // 66% change to be a volunteer
             if(rand(0, 2)) {
@@ -56,24 +61,45 @@ class FakeSeeder extends Seeder
         });
 
         // Processes
+        $this->log("Processes");
         factory(Process::class, 50)->create();
 
         // Godfathers
+        $this->log("Godfathers");
         factory(Godfather::class, 50)->create()->each(function($godfather) {
             // One donation per godfather
             $godfather->donations()->save(factory(Donation::class)->make());
         });
 
         // Donations
+        $this->log("Donations");
         factory(Donation::class, 30)->create();
 
         // Vets
+        $this->log("Vets");
         factory(Vet::class, 50)->create();
 
         // Treatments
+        $this->log("Treatments");
         factory(Treatment::class, 120)->create();
 
         // Appointments
+        $this->log("Appointments");
         factory(Appointment::class, 100)->create();
+
+        // Adoptions
+        $this->log("Adoptions");
+        factory(Adoption::class, 40)->create()->each(function($adoption) {
+            // Some animals per Adoption process
+            $animals = rand(1, 4);
+            while($animals--) { 
+                $adoption->animal()->save(factory(Animal::class)->make());
+            }
+        });
+    }
+
+    public function log($entity)
+    {
+        echo "Seeding: Fake $entity\n";
     }
 }

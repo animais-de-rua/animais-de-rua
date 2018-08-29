@@ -36,6 +36,8 @@ Route::group(['prefix' => config('backpack.base.route_prefix'), 'middleware' => 
 
 	// CRUD
 	CRUD::resource('user', 						'UserCrudController');
+	CRUD::resource('adoption', 					'AdoptionCrudController');
+	CRUD::resource('animal', 					'AnimalCrudController');
 	CRUD::resource('appointment', 				'AppointmentCrudController');
 	CRUD::resource('donation', 					'DonationCrudController');
 	CRUD::resource('godfather', 				'GodfatherCrudController');
@@ -47,8 +49,11 @@ Route::group(['prefix' => config('backpack.base.route_prefix'), 'middleware' => 
 	CRUD::resource('treatmenttype', 			'TreatmentTypeCrudController');
 
 	// API
-	Route::get('user/ajax/filter', 						'APICrudController@userFilter');
-	Route::get('user/ajax/search', 						'APICrudController@userSearch');
+	Route::get('user/ajax/filter/{role?}', 				'APICrudController@userFilter');
+	Route::get('user/ajax/search/{role?}', 				'APICrudController@userSearch');
+
+	Route::get('adoption/ajax/filter/', 				'APICrudController@adoptionFilter');
+	Route::get('adoption/ajax/search/', 				'APICrudController@adoptionSearch');
 
 	Route::get('godfather/ajax/filter', 				'APICrudController@godfatherFilter');
 	Route::get('godfather/ajax/search', 				'APICrudController@godfatherSearch');

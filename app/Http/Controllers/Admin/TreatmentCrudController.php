@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\TreatmentRequest as StoreRequest;
 use App\Http\Requests\TreatmentRequest as UpdateRequest;
 use Carbon\Carbon;
+use App\User;
 
 /**
  * Class TreatmentCrudController
@@ -181,7 +182,7 @@ class TreatmentCrudController extends CrudController
             'label'=> ucfirst(__("volunteer")),
             'placeholder' => __('Select a volunteer')
         ],
-        url('admin/user/ajax/filter'),
+        url('admin/user/ajax/filter/' . User::VOLUNTEER),
         function($value) {
             $this->crud->addClause('where', 'user_id', $value);
         });

@@ -4,9 +4,8 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 use Illuminate\Foundation\Http\FormRequest;
-use App\Helpers\EnumHelper;
 
-class AppointmentRequest extends FormRequest
+class AdoptionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,14 +26,10 @@ class AppointmentRequest extends FormRequest
     public function rules()
     {
         return [
+            'name' => 'required|min:2|max:255',
             'process_id' => 'required|exists:processes,id',
-            'vet_id_1' => 'required|exists:vets,id',
-            'date_1' => 'required|date',
-            'vet_id_2' => 'nullable|exists:vets,id',
-            'date_2' => 'nullable|date',
-            'amount_males' => 'required|numeric|min:0|max:100',
-            'amount_females' => 'required|numeric|min:0|max:100',
-            'status' => 'in:'.EnumHelper::keys('appointment.status', ','),
+            'fat_id' => 'required|exists:users,id',
+            'history' => 'nullable|max:4096',
         ];
     }
 

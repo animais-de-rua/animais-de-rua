@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use DB;
 use Illuminate\Http\Request;
+use App\Models\Adoption;
 use App\Models\Godfather;
 use App\Models\Headquarter;
 use App\Models\Process;
@@ -11,7 +12,8 @@ use App\Models\Territory;
 use App\Models\Treatment;
 use App\Models\TreatmentType;
 use App\Models\Vet;
-use App\User;
+use Backpack\Base\app\Models\BackpackUser as User;
+use App\User as UserBase;
 
 class APICrudController extends CrudController
 {
@@ -41,6 +43,21 @@ class APICrudController extends CrudController
         }
 
         return $results;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Adoption
+    |--------------------------------------------------------------------------
+    */
+    public function adoptionSearch(Request $request)
+    {
+        return $this->entitySearch(Adoption::class, ['name'], $request);
+    }
+
+    public function adoptionFilter(Request $request)
+    {
+        return $this->adoptionSearch($request)->pluck('name', 'id');
     }
 
     /*
@@ -98,14 +115,29 @@ class APICrudController extends CrudController
     | User
     |--------------------------------------------------------------------------
     */
-    public function userSearch(Request $request)
+    public function userSearch($role = UserBase::ALL, Request $request)
     {
-        return $this->entitySearch(User::class, ['name', 'email'], $request);
+        $search_term = $this->getSearchParam($request);
+
+        $roles = [];
+        if($role & UserBase::ADMIN) $roles[] = 1;
+        if($role & UserBase::VOLUNTEER) $roles[] = 2;
+        if($role & UserBase::FAT) $roles[] = 3;
+
+        $users = User::whereIn("id", DB::table('user_has_roles')->select('model_id')->whereIn('role_id', $roles));
+
+        if ($search_term) {
+            $users = $users->where(function($query) use ($search_term){
+                $query->where('name', 'LIKE', "%$search_term%")->orWhere('email', 'LIKE', "%$search_term%");
+            });
+        }
+
+        return $users->paginate(10);
     }
 
-    public function userFilter(Request $request)
+    public function userFilter($role = UserBase::ALL, Request $request)
     {
-        return $this->userSearch($request)->pluck('name', 'id');
+        return $this->userSearch($role, $request)->pluck('name', 'id');
     }
 
     /*

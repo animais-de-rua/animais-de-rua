@@ -1,20 +1,31 @@
 <li><a href="{{ backpack_url('dashboard') }}"><i class="fa fa-dashboard"></i> <span>{{ trans('backpack::base.dashboard') }}</span></a></li>
 
 <li class="header">{{ __("Management") }}</li>
-<li><a href="{{ backpack_url('process') }}"><i class="fa fa-file-o"></i> <span class="text-capitalize">{{ __("processes") }}</span></a></li>
-<li><a href="{{ backpack_url('appointment') }}"><i class="fa fa-file-o"></i> <span class="text-capitalize">{{ __("appointments") }}</span></a></li>
-{{--<li><a href="{{ backpack_url('adoption') }}"><i class="fa fa-file-o"></i> <span class="text-capitalize">{{ __("adoptions") }}</span></a></li>--}}
-<li><a href="{{ backpack_url('godfather') }}"><i class="fa fa-file-o"></i> <span class="text-capitalize">{{ __("godfathers") }}</span></a></li>
-<li><a href="{{ backpack_url('donation') }}"><i class="fa fa-file-o"></i> <span class="text-capitalize">{{ __("donations") }}</span></a></li>
-{{--<li><a href="{{ backpack_url('protocol') }}"><i class="fa fa-file-o"></i> <span class="text-capitalize">{{ __("protocols") }}</span></a></li>--}}
-<li><a href="{{ backpack_url('treatment') }}"><i class="fa fa-file-o"></i> <span class="text-capitalize">{{ __("treatments") }}</span></a></li>
-<li><a href="{{ backpack_url('treatmenttype') }}"><i class="fa fa-file-o"></i> <span class="text-capitalize">{{ __("treatment types") }}</span></a></li>
-<li><a href="{{ backpack_url('vet') }}"><i class="fa fa-file-o"></i> <span class="text-capitalize">{{ __("vets") }}</span></a></li>
+<li><a href="{{ backpack_url('process') }}"><i class="fa icon-process"></i> <span class="text-capitalize">{{ __("processes") }}</span></a></li>
+<li><a href="{{ backpack_url('appointment') }}"><i class="fa icon-appointment"></i> <span class="text-capitalize">{{ __("appointments") }}</span></a></li>
+<li class="treeview">
+	<a href="#"><i class="fa icon-animal"></i> <span class="text-capitalize">{{ __("adoptions") }}</span> <i class="fa fa-angle-left pull-right"></i></a>
+	<ul class="treeview-menu">
+		<li><a href="{{ backpack_url('adoption') }}"><i class="fa icon-adoption"></i> <span class="text-capitalize">{{ __("adoptions") }}</span></a></li>
+		<li><a href="{{ backpack_url('animal') }}"><i class="fa icon-animal"></i> <span class="text-capitalize">{{ __("animals") }}</span></a></li>
+	</ul>
+</li>
+<li><a href="{{ backpack_url('godfather') }}"><i class="fa icon-godfather"></i> <span class="text-capitalize">{{ __("godfathers") }}</span></a></li>
+<li><a href="{{ backpack_url('donation') }}"><i class="fa icon-donation"></i> <span class="text-capitalize">{{ __("donations") }}</span></a></li>
+{{-- <li><a href="{{ backpack_url('protocol') }}"><i class="fa icon-protocol"></i> <span class="text-capitalize">{{ __("protocols") }}</span></a></li> --}}
+<li class="treeview">
+	<a href="#"><i class="fa icon-treatment"></i> <span class="text-capitalize">{{ __("treatment") }}</span> <i class="fa fa-angle-left pull-right"></i></a>
+	<ul class="treeview-menu">
+		<li><a href="{{ backpack_url('treatment') }}"><i class="fa icon-treatment"></i> <span class="text-capitalize">{{ __("treatments") }}</span></a></li>
+		<li><a href="{{ backpack_url('treatmenttype') }}"><i class="fa icon-treatment-type"></i> <span class="text-capitalize">{{ __("treatment types") }}</span></a></li>
+	</ul>
+</li>
+<li><a href="{{ backpack_url('vet') }}"><i class="fa icon-vet"></i> <span class="text-capitalize">{{ __("vets") }}</span></a></li>
 
 <li class="header">Animais de Rua</li>
-<li><a href="{{ backpack_url('headquarter') }}"><i class="fa fa-building"></i> <span class="text-capitalize">{{ __("headquarters") }}</span></a></li>
+<li><a href="{{ backpack_url('headquarter') }}"><i class="fa icon-headquarter"></i> <span class="text-capitalize">{{ __("headquarters") }}</span></a></li>
 <li class="treeview">
-	<a href="#"><i class="fa fa-university"></i> <span class="text-capitalize">{{ __("territories") }}</span> <i class="fa fa-angle-left pull-right"></i></a>
+	<a href="#"><i class="fa icon-territory"></i> <span class="text-capitalize">{{ __("territories") }}</span> <i class="fa fa-angle-left pull-right"></i></a>
 	<ul class="treeview-menu">
 		<li><a href="{{ url(config('backpack.base.route_prefix', 'admin') . '/territory?level=1') }}"><i class="fa fa-file-o"></i> <span class="text-capitalize">{{ __("district") }}</span></a></li>
 		<li><a href="{{ url(config('backpack.base.route_prefix', 'admin') . '/territory?level=2') }}"><i class="fa fa-file-o"></i> <span class="text-capitalize">{{ __("county") }}</span></a></li>

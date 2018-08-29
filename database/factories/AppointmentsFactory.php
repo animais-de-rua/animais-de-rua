@@ -29,7 +29,7 @@ $factory->define(Appointment::class, function (Faker $faker) {
         'amount_males' => $faker->numberBetween(0, 4),
         'amount_females' => $faker->numberBetween(0, 4),
         'notes' => $faker->text(50),
-        'status' => $faker->randomElement(EnumHelper::get('appointments.status')),
+        'status' => $faker->randomElement(EnumHelper::get('appointment.status')),
         'created_at' => $date,
         'updated_at' => $date,
     ];

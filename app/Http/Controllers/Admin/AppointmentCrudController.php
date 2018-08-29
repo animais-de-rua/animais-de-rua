@@ -8,6 +8,7 @@ use App\Helpers\EnumHelper;
 use App\Models\Appointment;
 use App\Http\Requests\AppointmentRequest as StoreRequest;
 use App\Http\Requests\AppointmentRequest as UpdateRequest;
+use App\User;
 
 /**
  * Class AppointmentCrudController
@@ -34,7 +35,7 @@ class AppointmentCrudController extends CrudController
         */
 
         // ------ CRUD FIELDS
-        $this->crud->addFields(['process_id', 'user_id', 'vet_id_1', 'date_1', 'vet_id_2', 'date_2', 'amount_males', 'amount_females', 'notes', 'status']);
+        $this->crud->addFields(['process_id', 'vet_id_1', 'date_1', 'vet_id_2', 'date_2', 'amount_males', 'amount_females', 'notes', 'status']);
 
         $this->crud->addField([
             'label' => ucfirst(__("process")),
@@ -50,23 +51,10 @@ class AppointmentCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'label' => ucfirst(__("volunteer")),
-            'name' => 'user_id',
-            'type' => 'select2_from_ajax',
-            'entity' => 'user',
-            'attribute' => 'name',
-            'model' => '\App\User',
-            'data_source' => url("admin/user/ajax/search"),
-            'placeholder' => __("Select a user"),
-            'minimum_input_length' => 2,
-            'default' => \Request::has('user') ?? false,
-        ]);
-
-        $this->crud->addField([
             'label' => ucfirst(__("vet")),
             'name' => 'vet_id_1',
             'type' => 'select2_from_ajax',
-            'entity' => 'vet',
+            'entity' => 'vet1',
             'attribute' => 'name',
             'model' => '\App\Models\Vet',
             'data_source' => url("admin/vet/ajax/search"),
@@ -86,7 +74,7 @@ class AppointmentCrudController extends CrudController
             'label' => ucfirst(__("vet")),
             'name' => 'vet_id_2',
             'type' => 'select2_from_ajax',
-            'entity' => 'vet',
+            'entity' => 'vet2',
             'attribute' => 'name',
             'model' => '\App\Models\Vet',
             'data_source' => url("admin/vet/ajax/search"),
@@ -207,7 +195,7 @@ class AppointmentCrudController extends CrudController
             'label'=> ucfirst(__("volunteer")),
             'placeholder' => __('Select a volunteer')
         ],
-        url('admin/user/ajax/filter'),
+        url('admin/user/ajax/filter/' . User::VOLUNTEER),
         function($value) {
             $this->crud->addClause('where', 'user_id', $value);
         });
@@ -265,11 +253,13 @@ class AppointmentCrudController extends CrudController
         // add asterisk for fields that are required in AppointmentRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
-
     }
 
     public function store(StoreRequest $request)
     {
+        // Add user to the treatment
+        $request->merge(['user_id' => backpack_user()->id]);
+
         return parent::storeCrud($request);
     }
 

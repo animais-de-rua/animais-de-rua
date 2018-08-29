@@ -1,6 +1,20 @@
 <?php
 
 return [
+    'general' => [
+        'boolean' => [
+            1 => 'yes',
+            0 => 'no'
+        ]
+    ],
+
+    'animal' => [
+        'gender' => [
+            'male' => 'male',
+            'female' => 'female'
+        ]
+    ],
+
     'appointment' => [
         'status' => [
             'approving' => 'approving',
