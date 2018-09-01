@@ -47,6 +47,7 @@ Route::group(['prefix' => config('backpack.base.route_prefix'), 'middleware' => 
 	CRUD::resource('vet', 						'VetCrudController');
 	CRUD::resource('treatment', 				'TreatmentCrudController');
 	CRUD::resource('treatmenttype', 			'TreatmentTypeCrudController');
+	CRUD::resource('friend-card-modality', 		'FriendCardModalityCrudController');
 
 	// API
 	Route::get('user/ajax/filter/{role?}', 				'APICrudController@userFilter');

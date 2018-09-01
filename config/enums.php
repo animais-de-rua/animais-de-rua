@@ -5,6 +5,10 @@ return [
         'boolean' => [
             1 => 'yes',
             0 => 'no'
+        ],
+        'friend_card_modalities' => [
+            'monthly' => 'monthly',
+            'yearly' => 'yearly'
         ]
     ],
 

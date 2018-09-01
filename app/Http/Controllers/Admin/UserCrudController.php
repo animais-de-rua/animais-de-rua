@@ -38,13 +38,32 @@ class UserCrudController extends OriginalUserCrudController
             'model' => 'App\Models\Headquarter'
         ])->afterField('status');
 
+        $this->crud->addField([
+            'label' => ucfirst(__("friend card")),
+            'name' => 'friend_card_modality_id',
+            'type' => 'select2',
+            'entity' => 'friend_card_modality',
+            'attribute' => 'fullname',
+            'model' => 'App\Models\FriendCardModality'
+        ])->afterField('headquarter_id');
+
         $this->crud->addColumn([
             'label' => ucfirst(__('headquarter')),
+            'name' => 'headquarter',
             'type' => "select",
             'entity' => 'headquarter',
             'attribute' => "name",
             'model' => "App\Models\Headquarter"
         ])->afterColumn('email');
+
+        $this->crud->addColumn([
+            'label' => ucfirst(__('friend card')),
+            'name' => 'friend_card_modality',
+            'type' => "select",
+            'entity' => 'friend_card_modality',
+            'attribute' => "value",
+            'model' => "App\Models\FriendCardModality"
+        ])->afterColumn('headquarter');
 
         $this->crud->addColumn([
             'label' => __("Status"),
@@ -92,6 +111,28 @@ class UserCrudController extends OriginalUserCrudController
                     ->selectRaw("permission_id")
                     ->whereIn('permission_id', json_decode($values));
             });
+        });
+
+        $this->crud->addFilter([
+            'name' => 'friend_card_modality2',
+            'type' => 'simple',
+            'label'=> ucfirst(__('friend card')),
+            'placeholder' => __('Select a modality')
+        ],
+        1,
+        function($value) {
+            $this->crud->addClause('whereNotNull', 'friend_card_modality_id');
+        });
+
+        $this->crud->addFilter([
+            'name' => 'friend_card_modality',
+            'type' => 'select2_multiple',
+            'label'=> ucfirst(__('friend card modality')),
+            'placeholder' => __('Select a modality')
+        ],
+        api()->friendCardModalitiesList(),
+        function($values) {
+            $this->crud->addClause('whereIn', 'friend_card_modality_id', json_decode($values));
         });
 
         $this->crud->addFilter([

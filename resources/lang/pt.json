@@ -54,6 +54,7 @@
     "Attribute": "Atributo",
     "Affected Animals": "Animais intervencionados",
     "Animals": "Animais",
+    "Paypal code": "Código Paypal",
 
     "Languages": "Idioma",
     "File manager": "Gestor de ficheiros",
@@ -72,6 +73,8 @@
     "donations": "donativos",
     "treatments": "tratamentos",
     "treatment types": "tipos de tratamento",
+    "friend card modality": "modalidade do cartão amigo",
+    "protocol": "protocolo",
 
     "headquarter": "núcleo",
     "process": "processo",
@@ -86,9 +89,11 @@
     "donation": "donativo",
     "treatment": "tratamento",
     "treatment type": "tipo de tratamento",
+    "friend card modalities": "modalidades do cartão amigo",
     "protocols": "protocolos",
 
     "volunteer": "voluntário",
+    "friend": "amigo",
     "council": "câmara municipal",
     "accountancy": "contabilidade",
     "store": "loja",
@@ -109,8 +114,10 @@
     "Select a permission": "Selecione uma permissão",
     "Select a volunteer": "Selecione um voluntário",
     "Select a FAT": "Selecione um FAT",
+    "Select a friend": "Selecione um amigo",
     "Select an adoption process": "Selecione um processo de adopção",
     "Select a gender": "Selecione um género",
+    "Select a modality": "Selecione uma modalidade",
 
     "Users": "Utilizadores",
     "Pages": "Páginas",
@@ -150,6 +157,8 @@
     "approved_option_2": "Aprovado opção 2",
     "yes": "sim",
     "no": "não",
+    "monthly": "mensal",
+    "yearly": "anual",
 
     "Today": "Hoje",
     "Yesterday": "Ontem",

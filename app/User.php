@@ -60,4 +60,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Models\Headquarter', 'headquarter_id');
     }
+
+    public function friend_card_modality()
+    {
+        return $this->belongsTo('App\Models\FriendCardModality', 'friend_card_modality_id');
+    }
 }

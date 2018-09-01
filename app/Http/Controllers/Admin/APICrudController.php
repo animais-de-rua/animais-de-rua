@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use DB;
 use Illuminate\Http\Request;
 use App\Models\Adoption;
+use App\Models\FriendCardModality;
 use App\Models\Godfather;
 use App\Models\Headquarter;
 use App\Models\Process;
@@ -58,6 +59,16 @@ class APICrudController extends CrudController
     public function adoptionFilter(Request $request)
     {
         return $this->adoptionSearch($request)->pluck('name', 'id');
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Treatment Type
+    |--------------------------------------------------------------------------
+    */
+    public function friendCardModalitiesList()
+    {
+        return FriendCardModality::get()->pluck('value', 'id')->toArray();
     }
 
     /*

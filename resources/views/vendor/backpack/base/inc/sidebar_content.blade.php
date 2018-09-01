@@ -24,6 +24,7 @@
 
 <li class="header">Animais de Rua</li>
 <li><a href="{{ backpack_url('headquarter') }}"><i class="fa icon-headquarter"></i> <span class="text-capitalize">{{ __("headquarters") }}</span></a></li>
+<li><a href="{{ backpack_url('friend-card-modality') }}"><i class="fa icon-card"></i> <span class="text-capitalize">{{ __("friend card") }}</span></a></li>
 <li class="treeview">
 	<a href="#"><i class="fa icon-territory"></i> <span class="text-capitalize">{{ __("territories") }}</span> <i class="fa fa-angle-left pull-right"></i></a>
 	<ul class="treeview-menu">
