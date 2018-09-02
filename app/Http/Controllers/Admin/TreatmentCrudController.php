@@ -224,6 +224,9 @@ class TreatmentCrudController extends CrudController
         // ------ DATATABLE EXPORT BUTTONS
         $this->crud->enableExportButtons();
 
+        // ------ ADVANCED QUERIES
+        $this->crud->query->with(['process', 'vet', 'user', 'treatment_type']);
+
         // add asterisk for fields that are required in TreatmentRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');

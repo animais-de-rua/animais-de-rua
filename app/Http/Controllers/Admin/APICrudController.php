@@ -209,10 +209,16 @@ class APICrudController extends CrudController
     | Territory
     |--------------------------------------------------------------------------
     */
+    private static $territoryCache = [];
+
     public function territorySearch($level = Territory::ALL, Request $request)
     {
         $search_term = $this->getSearchParam($request);
         $data = [];
+
+        if (isset(self::$territoryCache[$level . $search_term])) {
+            return self::$territoryCache[$level . $search_term];
+        }
 
         if ($level & Territory::DISTRITO) {
             $dataC = DB::table('territories as a')
@@ -266,6 +272,8 @@ class APICrudController extends CrudController
         }
 
         $data = Territory::hydrate($data);
+
+        self::$territoryCache[$level . $search_term] = $data;
 
         return $data;
     }

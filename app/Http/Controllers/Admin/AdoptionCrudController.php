@@ -172,6 +172,9 @@ class AdoptionCrudController extends CrudController
                 $this->crud->addClause('where', 'user_id', $value);
             });
 
+        // ------ ADVANCED QUERIES
+        $this->crud->query->with(['process', 'user', 'fat', 'animal']);
+
         // add asterisk for fields that are required in AdoptionRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');

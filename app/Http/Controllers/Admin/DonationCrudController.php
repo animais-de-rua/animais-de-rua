@@ -147,6 +147,9 @@ class DonationCrudController extends CrudController
 
             });
 
+        // ------ ADVANCED QUERIES
+        $this->crud->query->with(['process', 'godfather']);
+
         // Add asterisk for fields that are required
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');

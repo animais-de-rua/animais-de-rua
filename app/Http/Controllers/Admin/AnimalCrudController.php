@@ -175,6 +175,9 @@ class AnimalCrudController extends CrudController
                 }
             });
 
+        // ------ ADVANCED QUERIES
+        $this->crud->query->with(['adoption']);
+
         // add asterisk for fields that are required in AnimalRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');

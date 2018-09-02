@@ -256,6 +256,9 @@ class AppointmentCrudController extends CrudController
                 $this->crud->addClause('whereIn', 'status', json_decode($values));
             });
 
+        // ------ ADVANCED QUERIES
+        $this->crud->query->with(['process', 'vet1', 'vet2', 'user']);
+
         // add asterisk for fields that are required in AppointmentRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');

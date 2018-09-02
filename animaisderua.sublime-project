@@ -4,9 +4,6 @@
 		{
 			"name": "Animais de Rua",
 			"path": "."
-		},
-		{
-			"path": "database\\migrations"
 		}
 	]
 }
