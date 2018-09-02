@@ -55,6 +55,7 @@
     "Affected Animals": "Animais intervencionados",
     "Animals": "Animais",
     "Paypal code": "Código Paypal",
+    "Benefit": "Benefício",
 
     "Languages": "Idioma",
     "File manager": "Gestor de ficheiros",
@@ -75,6 +76,9 @@
     "treatment types": "tipos de tratamento",
     "friend card modality": "modalidade do cartão amigo",
     "protocol": "protocolo",
+    "partner": "parceiro",
+    "partner category": "categoria de parceiro",
+    "category": "categoria",
 
     "headquarter": "núcleo",
     "process": "processo",
@@ -91,6 +95,9 @@
     "treatment type": "tipo de tratamento",
     "friend card modalities": "modalidades do cartão amigo",
     "protocols": "protocolos",
+    "partners": "parceiros",
+    "partner categories": "categorias de parceiro",
+    "categories": "categorias",
 
     "volunteer": "voluntário",
     "friend": "amigo",

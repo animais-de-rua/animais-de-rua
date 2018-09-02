@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             HeadquartersSeeder::class,
             TreatmentTypesSeeder::class,
             FriendCardModalitiesSeeder::class,
+            PartnersSeeder::class,
             FakeSeeder::class
         ]);
 

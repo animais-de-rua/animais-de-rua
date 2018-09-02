@@ -26,8 +26,7 @@ class FriendCardModalitiesSeeder extends Seeder
 		            'en' => 'Basic'
 		        ]),
 	        	'description' => json_encode([
-		            'pt' => 'O aderente tem direito ao cartão (renovável todos os anos), com todos os descontos disponíveis.',
-		            'en' => ''
+		            'pt' => 'O aderente tem direito ao cartão (renovável todos os anos), com todos os descontos disponíveis.'
 		        ]),
 	        	'paypal_code' => 'Op. 1',
 	        	'amount' => 3,
@@ -41,8 +40,7 @@ class FriendCardModalitiesSeeder extends Seeder
 		            'en' => 'Basic'
 		        ]),
 	        	'description' => json_encode([
-		            'pt' => 'o aderente tem direito ao cartão (renovável todos os anos), com todos os descontos disponíveis e recebe a agenda da Animais de Rua do ano seguinte.',
-		            'en' => ''
+		            'pt' => 'o aderente tem direito ao cartão (renovável todos os anos), com todos os descontos disponíveis e recebe a agenda da Animais de Rua do ano seguinte.'
 		        ]),
 	        	'paypal_code' => 'Op. 2',
 	        	'amount' => 36,
@@ -56,8 +54,7 @@ class FriendCardModalitiesSeeder extends Seeder
 		            'en' => 'Intermediate'
 		        ]),
 	        	'description' => json_encode([
-		            'pt' => 'O aderente tem direito ao cartão (renovável todos os anos), com todos os descontos disponíveis e recebe a agenda da Animais de Rua do ano seguinte, juntamente com um cheque-oferta da Loja da Animais de Rua no valor de 10€.',
-		            'en' => ''
+		            'pt' => 'O aderente tem direito ao cartão (renovável todos os anos), com todos os descontos disponíveis e recebe a agenda da Animais de Rua do ano seguinte, juntamente com um cheque-oferta da Loja da Animais de Rua no valor de 10€.'
 		        ]),
 	        	'paypal_code' => 'Op. 3',
 	        	'amount' => 5,
@@ -71,8 +68,7 @@ class FriendCardModalitiesSeeder extends Seeder
 		            'en' => 'Intermediate'
 		        ]),
 	        	'description' => json_encode([
-		            'pt' => 'O aderente tem direito ao cartão (renovável todos os anos), com todos os descontos disponíveis, recebe a agenda da Animais de Rua do ano seguinte, juntamente com um cheque-oferta da Loja da Animais de Rua no valor de 15€.',
-		            'en' => ''
+		            'pt' => 'O aderente tem direito ao cartão (renovável todos os anos), com todos os descontos disponíveis, recebe a agenda da Animais de Rua do ano seguinte, juntamente com um cheque-oferta da Loja da Animais de Rua no valor de 15€.'
 		        ]),
 	        	'paypal_code' => 'Op. 4',
 	        	'amount' => 60,
@@ -86,8 +82,7 @@ class FriendCardModalitiesSeeder extends Seeder
 		            'en' => 'Advanced'
 		        ]),
 	        	'description' => json_encode([
-		            'pt' => 'O aderente tem direito ao cartão (renovável todos os anos), com todos os descontos disponíveis e recebe a agenda da Animais de Rua do ano seguinte, juntamente com um cheque-oferta da Loja da Animais de Rua no valor de 20€.',
-		            'en' => ''
+		            'pt' => 'O aderente tem direito ao cartão (renovável todos os anos), com todos os descontos disponíveis e recebe a agenda da Animais de Rua do ano seguinte, juntamente com um cheque-oferta da Loja da Animais de Rua no valor de 20€.'
 		        ]),
 	        	'paypal_code' => 'Op. 5',
 	        	'amount' => 15,
@@ -101,8 +96,7 @@ class FriendCardModalitiesSeeder extends Seeder
 		            'en' => 'Advanced'
 		        ]),
 	        	'description' => json_encode([
-		            'pt' => 'O aderente tem direito ao cartão (renovável todos os anos), com todos os descontos disponíveis, recebe a agenda da Animais de Rua do ano seguinte, juntamente com um cheque-oferta da Loja da Animais de Rua no valor de 25€.',
-		            'en' => ''
+		            'pt' => 'O aderente tem direito ao cartão (renovável todos os anos), com todos os descontos disponíveis, recebe a agenda da Animais de Rua do ano seguinte, juntamente com um cheque-oferta da Loja da Animais de Rua no valor de 25€.'
 		        ]),
 	        	'paypal_code' => 'Op. 6',
 	        	'amount' => 180,

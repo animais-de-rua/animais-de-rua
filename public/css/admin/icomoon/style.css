@@ -1,8 +1,8 @@
 @font-face {
   font-family: 'icomoon';
   src:
-    url('fonts/icomoon.woff2?2obrbm') format('woff2'),
-    url('fonts/icomoon.woff?2obrbm') format('woff');
+    url('fonts/icomoon.woff2?h3y0pn') format('woff2'),
+    url('fonts/icomoon.woff?h3y0pn') format('woff');
   font-weight: normal;
   font-style: normal;
 }
@@ -52,7 +52,10 @@
 .icon-godfather:before {
   content: "\e90b";
 }
-.icon-protocol:before {
+.icon-category:before {
+  content: "\e920";
+}
+.icon-partner:before {
   content: "\e939";
 }
 .icon-card:before {

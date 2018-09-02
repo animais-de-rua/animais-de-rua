@@ -9,6 +9,8 @@ use App\Models\FriendCardModality;
 use App\Models\Godfather;
 use App\Models\Headquarter;
 use App\Models\Process;
+use App\Models\Partner;
+use App\Models\PartnerCategory;
 use App\Models\Territory;
 use App\Models\Treatment;
 use App\Models\TreatmentType;
@@ -104,6 +106,26 @@ class APICrudController extends CrudController
     public function headquarterList()
     {
         return $this->headquarterFilter(new Request())->toArray();
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Partner
+    |--------------------------------------------------------------------------
+    */
+    public function partnerCategorySearch(Request $request)
+    {
+        return $this->entitySearch(PartnerCategory::class, ['name'], $request);
+    }
+
+    public function partnerCategoryFilter(Request $request)
+    {
+        return $this->partnerCategorySearch($request)->pluck('name', 'id');
+    }
+
+    public function partnerCategoryList()
+    {
+        return $this->partnerCategoryFilter(new Request())->toArray();
     }
 
     /*

@@ -6,6 +6,10 @@ return [
             1 => 'yes',
             0 => 'no'
         ],
+        'check' => [
+            1 => 'active',
+            0 => 'inactive'
+        ],
         'friend_card_modalities' => [
             'monthly' => 'monthly',
             'yearly' => 'yearly'

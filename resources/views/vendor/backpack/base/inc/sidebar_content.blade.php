@@ -21,7 +21,13 @@
 	</ul>
 </li>
 <li><a href="{{ backpack_url('vet') }}"><i class="fa icon-vet"></i> <span class="text-capitalize">{{ __("vets") }}</span></a></li>
-
+<li class="treeview">
+	<a href="#"><i class="fa icon-partner"></i> <span class="text-capitalize">{{ __("partners") }}</span> <i class="fa fa-angle-left pull-right"></i></a>
+	<ul class="treeview-menu">
+		<li><a href="{{ backpack_url('partner') }}"><i class="fa icon-partner"></i> <span class="text-capitalize">{{ __("partners") }}</span></a></li>
+		<li><a href="{{ backpack_url('partner-category') }}"><i class="fa icon-category"></i> <span class="text-capitalize">{{ __("partner categories") }}</span></a></li>
+	</ul>
+</li>
 <li class="header">Animais de Rua</li>
 <li><a href="{{ backpack_url('headquarter') }}"><i class="fa icon-headquarter"></i> <span class="text-capitalize">{{ __("headquarters") }}</span></a></li>
 <li><a href="{{ backpack_url('friend-card-modality') }}"><i class="fa icon-card"></i> <span class="text-capitalize">{{ __("friend card") }}</span></a></li>

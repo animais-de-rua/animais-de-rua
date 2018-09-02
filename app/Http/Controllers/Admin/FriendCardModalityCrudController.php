@@ -58,6 +58,7 @@ class FriendCardModalityCrudController extends CrudController
             'name' => 'amount',
             'type' => 'number',
             'default' => 0,
+            'suffix' => '€',
             'attributes' => ['min' => 0, 'max' => 1000000],
         ]);
 
