@@ -66,19 +66,23 @@ class Adoption extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function getProcessLinkAttribute() {
+    public function getProcessLinkAttribute()
+    {
         return $this->getLink($this->process);
     }
 
-    public function getUserLinkAttribute() {
+    public function getUserLinkAttribute()
+    {
         return $this->getLink($this->user);
     }
 
-    public function getFatLinkAttribute() {
+    public function getFatLinkAttribute()
+    {
         return $this->getLink($this->fat);
     }
 
-    public function getAnimalsAttribute() {
+    public function getAnimalsAttribute()
+    {
         return count($this->animal);
     }
 

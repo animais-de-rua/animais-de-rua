@@ -56,21 +56,25 @@ class Godfather extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function getTotalDonatedValue() {
+    public function getTotalDonatedValue()
+    {
         $donations = data_get_first($this, 'donations', 'total', 0);
-        return $donations != 0 ? $donations . "€" : '-';
+        return $donations != 0 ? $donations . '€' : '-';
     }
 
-    public function getDetailAttribute() {
+    public function getDetailAttribute()
+    {
         return "{$this->name} ({$this->email})";
     }
 
-    public function getTotalDonatedStats() {
-        $donations =  $this->donations->reduce(function ($carry, $item) { return $carry + $item->value; });
-        return $donations != 0 ? $donations . "€" : '-';
+    public function getTotalDonatedStats()
+    {
+        $donations = $this->donations->reduce(function ($carry, $item) {return $carry + $item->value;});
+        return $donations != 0 ? $donations . '€' : '-';
     }
 
-    public function getTotalDonationsStats() {
+    public function getTotalDonationsStats()
+    {
         return sizeof($this->donations);
     }
 
@@ -79,8 +83,9 @@ class Godfather extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
-   
-    public function toArray() {
+
+    public function toArray()
+    {
         $data = parent::toArray();
 
         $data['detail'] = $this->detail;

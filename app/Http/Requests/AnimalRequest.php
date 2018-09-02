@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Helpers\EnumHelper;
 use App\Http\Requests\Request;
 use Illuminate\Foundation\Http\FormRequest;
-use App\Helpers\EnumHelper;
 
 class AnimalRequest extends FormRequest
 {
@@ -30,7 +30,7 @@ class AnimalRequest extends FormRequest
             'adoption_id' => 'required|exists:adoptions,id',
             'name' => 'required|min:2|max:255',
             'age' => 'nullable|numeric|min:0|max:300',
-            'gender' => 'nullable|in:'.EnumHelper::keys('animal.gender', ','),
+            'gender' => 'nullable|in:' . EnumHelper::keys('animal.gender', ','),
             'sterilized' => 'nullable|in:0,1',
             'vaccinated' => 'nullable|in:0,1'
         ];

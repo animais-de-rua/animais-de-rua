@@ -25,11 +25,10 @@ class Territory extends Model
         'id' => 'string'
     ];
 
-    const
-        DISTRITO = 1,
-        CONCELHO = 2,
-        FREGUESIA = 4,
-        ALL = 7;
+    const DISTRITO = 1;
+    const CONCELHO = 2;
+    const FREGUESIA = 4;
+    const ALL = 7;
 
     /*
     |--------------------------------------------------------------------------
@@ -67,7 +66,7 @@ class Territory extends Model
 
     public function getFullnameAttribute()
     {
-        return $this->name . ($this->parent()->exists() ? ", " . $this->parent()->first()->fullname : '');
+        return $this->name . ($this->parent()->exists() ? ', ' . $this->parent()->first()->fullname : '');
     }
 
     /*

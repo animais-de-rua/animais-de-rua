@@ -54,23 +54,26 @@ class TreatmentType extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function getTotalExpensesValue() {
+    public function getTotalExpensesValue()
+    {
         $expenses = data_get_first($this, 'treatments', 'total_expenses', 0);
 
-        return $expenses != 0 ? $expenses . "€" : '-';
+        return $expenses != 0 ? $expenses . '€' : '-';
     }
 
-    public function getTotalOperationsValue() {
+    public function getTotalOperationsValue()
+    {
         $operations = data_get_first($this, 'treatments', 'total_operations', 0);
 
         return $operations != 0 ? $operations : '-';
     }
 
-    public function getOperationsAverageValue() {
+    public function getOperationsAverageValue()
+    {
         $expenses = data_get_first($this, 'treatments', 'total_expenses', 0);
         $operations = data_get_first($this, 'treatments', 'total_operations', 0);
 
-        return $operations > 0 ? number_format($expenses / $operations, 2) . "€" : '-';
+        return $operations > 0 ? number_format($expenses / $operations, 2) . '€' : '-';
     }
 
     /*
@@ -78,14 +81,18 @@ class TreatmentType extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
-   
-    public function setOperationTimeAttribute($value) {
+
+    public function setOperationTimeAttribute($value)
+    {
         $parts = explode(':', $value);
-        if(count($parts) >= 2)
+        if (count($parts) >= 2) {
             $this->attributes['operation_time'] = $parts[0] * 60 + $parts[1];
+        }
+
     }
-   
-    public function getOperationTimeAttribute($value) {
+
+    public function getOperationTimeAttribute($value)
+    {
         return sprintf('%02d:%02d', floor($value / 60), $value % 60);
     }
 }

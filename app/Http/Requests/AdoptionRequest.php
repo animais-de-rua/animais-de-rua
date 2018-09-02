@@ -29,7 +29,7 @@ class AdoptionRequest extends FormRequest
             'name' => 'required|min:2|max:255',
             'process_id' => 'required|exists:processes,id',
             'fat_id' => 'required|exists:users,id',
-            'history' => 'nullable|max:4096',
+            'history' => 'nullable|max:4096'
         ];
     }
 

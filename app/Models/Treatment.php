@@ -66,20 +66,24 @@ class Treatment extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function getProcessLinkAttribute() {
+    public function getProcessLinkAttribute()
+    {
         return $this->getLink($this->process);
     }
 
-    public function getVetLinkAttribute() {
+    public function getVetLinkAttribute()
+    {
         return $this->getLink($this->vet);
     }
 
-    public function getUserLinkAttribute() {
+    public function getUserLinkAttribute()
+    {
         return $this->getLink($this->user);
     }
 
-    public function getFullExpenseAttribute() {
-        return $this->expense . "€";
+    public function getFullExpenseAttribute()
+    {
+        return $this->expense . '€';
     }
 
     /*

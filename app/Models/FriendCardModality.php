@@ -53,12 +53,14 @@ class FriendCardModality extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function getFullnameAttribute() {
+    public function getFullnameAttribute()
+    {
         $type = ucfirst(__($this->type));
         return "{$this->name} — {$this->amount}€ {$type}";
     }
 
-    public function getValueAttribute() {
+    public function getValueAttribute()
+    {
         $type = ucfirst(__($this->type));
         return "{$this->amount}€ {$type}";
     }

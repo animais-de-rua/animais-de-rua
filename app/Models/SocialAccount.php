@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use App\Helpers\CompositeKeyHelper;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
-use App\Helpers\CompositeKeyHelper;
 
 class SocialAccount extends Model
 {
@@ -12,12 +12,11 @@ class SocialAccount extends Model
 
     protected $fillable = ['user_id', 'provider_user_id', 'provider', 'token'];
 
-    protected $table = "users_social_accounts";
+    protected $table = 'users_social_accounts';
 
     protected $primaryKey = ['user_id', 'provider'];
 
     public $incrementing = false;
-
 
     public function user()
     {

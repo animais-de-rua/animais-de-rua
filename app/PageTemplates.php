@@ -23,9 +23,9 @@ trait PageTemplates
     {
         $this->crud->addField([
             'name' => 'content',
-            'label' => __("Content"),
+            'label' => __('Content'),
             'type' => 'wysiwyg',
-            'placeholder' => trans('backpack::pagemanager.content_placeholder'),
+            'placeholder' => trans('backpack::pagemanager.content_placeholder')
         ]);
     }
 

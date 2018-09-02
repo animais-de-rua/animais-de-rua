@@ -2,21 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
-use DB;
-use Illuminate\Http\Request;
 use App\Models\Adoption;
 use App\Models\FriendCardModality;
 use App\Models\Godfather;
 use App\Models\Headquarter;
-use App\Models\Process;
-use App\Models\Partner;
 use App\Models\PartnerCategory;
+use App\Models\Process;
 use App\Models\Territory;
-use App\Models\Treatment;
 use App\Models\TreatmentType;
 use App\Models\Vet;
-use Backpack\Base\app\Models\BackpackUser as User;
 use App\User as UserBase;
+use Backpack\Base\app\Models\BackpackUser as User;
+use DB;
+use Illuminate\Http\Request;
 
 class APICrudController extends CrudController
 {
@@ -153,14 +151,22 @@ class APICrudController extends CrudController
         $search_term = $this->getSearchParam($request);
 
         $roles = [];
-        if($role & UserBase::ADMIN) $roles[] = 1;
-        if($role & UserBase::VOLUNTEER) $roles[] = 2;
-        if($role & UserBase::FAT) $roles[] = 3;
+        if ($role & UserBase::ADMIN) {
+            $roles[] = 1;
+        }
 
-        $users = User::whereIn("id", DB::table('user_has_roles')->select('model_id')->whereIn('role_id', $roles));
+        if ($role & UserBase::VOLUNTEER) {
+            $roles[] = 2;
+        }
+
+        if ($role & UserBase::FAT) {
+            $roles[] = 3;
+        }
+
+        $users = User::whereIn('id', DB::table('user_has_roles')->select('model_id')->whereIn('role_id', $roles));
 
         if ($search_term) {
-            $users = $users->where(function($query) use ($search_term){
+            $users = $users->where(function ($query) use ($search_term) {
                 $query->where('name', 'LIKE', "%$search_term%")->orWhere('email', 'LIKE', "%$search_term%");
             });
         }
@@ -208,49 +214,55 @@ class APICrudController extends CrudController
         $search_term = $this->getSearchParam($request);
         $data = [];
 
-        if($level & Territory::DISTRITO) {
+        if ($level & Territory::DISTRITO) {
             $dataC = DB::table('territories as a')
-                ->select(DB::raw("a.id, a.name"));
+                ->select(DB::raw('a.id, a.name'));
 
             $where = [['a.level', '=', 1]];
-            if($search_term) {
+            if ($search_term) {
                 array_push($where, ['a.name', 'LIKE', "%$search_term%"]);
                 $dataC = $dataC->limit(2);
             }
 
-            foreach ($dataC->where($where)->get() as $v)
+            foreach ($dataC->where($where)->get() as $v) {
                 $data[] = $v;
+            }
+
         }
 
-        if($level & Territory::CONCELHO) {
+        if ($level & Territory::CONCELHO) {
             $dataB = DB::table('territories as a')
-                ->join('territories as b', 'a.parent_id', '=' , 'b.id')
+                ->join('territories as b', 'a.parent_id', '=', 'b.id')
                 ->select(DB::raw("a.id, CONCAT(a.name, ', ', b.name) name"));
 
             $where = [['a.level', '=', 2]];
-            if($search_term) {
+            if ($search_term) {
                 array_push($where, ['a.name', 'LIKE', "%$search_term%"]);
                 $dataB = $dataB->limit(4);
             }
-            
-            foreach ($dataB->where($where)->get() as $v)
+
+            foreach ($dataB->where($where)->get() as $v) {
                 $data[] = $v;
+            }
+
         }
 
-        if($level & Territory::FREGUESIA) {
+        if ($level & Territory::FREGUESIA) {
             $dataA = DB::table('territories as a')
-                ->join('territories as b', 'a.parent_id', '=' , 'b.id')
-                ->join('territories as c', 'b.parent_id', '=' , 'c.id')
+                ->join('territories as b', 'a.parent_id', '=', 'b.id')
+                ->join('territories as c', 'b.parent_id', '=', 'c.id')
                 ->select(DB::raw("a.id, CONCAT(a.name, ', ', b.name, ', ', c.name) name"));
 
             $where = [['a.level', '=', 3]];
-            if($search_term) {
+            if ($search_term) {
                 array_push($where, ['a.name', 'LIKE', "%$search_term%"]);
                 $dataA = $dataA->limit(8);
             }
-            
-            foreach ($dataA->where($where)->get() as $v)
+
+            foreach ($dataA->where($where)->get() as $v) {
                 $data[] = $v;
+            }
+
         }
 
         $data = Territory::hydrate($data);
@@ -262,8 +274,9 @@ class APICrudController extends CrudController
     {
         $data = [];
 
-        foreach ($this->territorySearch($level, $request) as $elem)
+        foreach ($this->territorySearch($level, $request) as $elem) {
             $data[$elem->id] = $elem->name;
+        }
 
         return $data;
     }

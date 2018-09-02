@@ -33,31 +33,31 @@ class TreatmentTypeCrudController extends CrudController
         $this->crud->setColumns(['name', 'operation_time', 'total_expenses', 'total_operations', 'average_expense']);
 
         $this->crud->setColumnDetails('name', [
-            'label' => __("Name"),
+            'label' => __('Name')
         ]);
 
         $this->crud->setColumnDetails('operation_time', [
-            'label' => __("Operation Time")
+            'label' => __('Operation Time')
         ]);
 
         $this->crud->setColumnDetails('total_expenses', [
             'name' => 'total_expenses',
-            'label' => __("Total Expenses"),
-            'type' => "model_function",
+            'label' => __('Total Expenses'),
+            'type' => 'model_function',
             'function_name' => 'getTotalExpensesValue'
         ]);
 
         $this->crud->setColumnDetails('total_operations', [
             'name' => 'total_operations',
-            'label' => __("Total Operations"),
-            'type' => "model_function",
+            'label' => __('Total Operations'),
+            'type' => 'model_function',
             'function_name' => 'getTotalOperationsValue'
         ]);
 
         $this->crud->setColumnDetails('average_expense', [
             'name' => 'average_expense',
-            'label' => __("Average Expense"),
-            'type' => "model_function",
+            'label' => __('Average Expense'),
+            'type' => 'model_function',
             'function_name' => 'getOperationsAverageValue'
         ]);
 
@@ -69,53 +69,65 @@ class TreatmentTypeCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'label' => __('Operation Time') . " (hh:mm)",
+            'label' => __('Operation Time') . ' (hh:mm)',
             'name' => 'operation_time',
             'type' => 'time',
             'default' => 0,
-            'attributes' => ['min' => 0, 'max' => 24*60],
+            'attributes' => ['min' => 0, 'max' => 24 * 60]
         ]);
 
         // Filter
         $this->crud->addFilter([
             'name' => 'expenses',
             'type' => 'range',
-            'label'=> __('Total Expenses'),
+            'label' => __('Total Expenses'),
             'label_from' => __('Min value'),
             'label_to' => __('Max value')
         ],
-        true,
-        function($value) {
-            $range = json_decode($value);
+            true,
+            function ($value) {
+                $range = json_decode($value);
 
-            $this->crud->query->whereHas('treatments', function ($query) use ($range) {
-                $query->selectRaw("treatment_type_id, sum(expense) as total_expenses")
-                    ->groupBy(['treatment_type_id']);
+                $this->crud->query->whereHas('treatments', function ($query) use ($range) {
+                    $query->selectRaw('treatment_type_id, sum(expense) as total_expenses')
+                        ->groupBy(['treatment_type_id']);
 
-                if (is_numeric($range->from)) $query->having('total_expenses', '>=', $range->from);
-                if (is_numeric($range->to)) $query->having('total_expenses', '<=', $range->to);
+                    if (is_numeric($range->from)) {
+                        $query->having('total_expenses', '>=', $range->from);
+                    }
+
+                    if (is_numeric($range->to)) {
+                        $query->having('total_expenses', '<=', $range->to);
+                    }
+
+                });
             });
-        });
 
         $this->crud->addFilter([
             'name' => 'operations',
             'type' => 'range',
-            'label'=> __('Total Operations'),
+            'label' => __('Total Operations'),
             'label_from' => __('Min value'),
             'label_to' => __('Max value')
         ],
-        true,
-        function($value) {
-            $range = json_decode($value);
+            true,
+            function ($value) {
+                $range = json_decode($value);
 
-            $this->crud->query->whereHas('treatments', function ($query) use ($range) {
-                $query->selectRaw("treatment_type_id, count(*) as total_operations")
-                    ->groupBy(['treatment_type_id']);
+                $this->crud->query->whereHas('treatments', function ($query) use ($range) {
+                    $query->selectRaw('treatment_type_id, count(*) as total_operations')
+                        ->groupBy(['treatment_type_id']);
 
-                if (is_numeric($range->from)) $query->having('total_operations', '>=', $range->from);
-                if (is_numeric($range->to)) $query->having('total_operations', '<=', $range->to);
+                    if (is_numeric($range->from)) {
+                        $query->having('total_operations', '>=', $range->from);
+                    }
+
+                    if (is_numeric($range->to)) {
+                        $query->having('total_operations', '<=', $range->to);
+                    }
+
+                });
             });
-        });
 
         // ------ DATATABLE EXPORT BUTTONS
         $this->crud->enableExportButtons();
@@ -126,7 +138,7 @@ class TreatmentTypeCrudController extends CrudController
 
         // ------ ADVANCED QUERIES
         $this->crud->addClause('with', ['treatments' => function ($query) {
-            $query->selectRaw("treatment_type_id, sum(expense) as total_expenses, count(*) as total_operations")
+            $query->selectRaw('treatment_type_id, sum(expense) as total_expenses, count(*) as total_operations')
                 ->groupBy(['treatment_type_id'])
                 ->orderBy('total_expenses');
         }]);

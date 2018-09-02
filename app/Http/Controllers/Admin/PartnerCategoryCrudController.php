@@ -33,11 +33,11 @@ class PartnerCategoryCrudController extends CrudController
         $this->crud->setColumns(['name', 'description']);
 
         $this->crud->setColumnDetails('name', [
-            'label' => __("Name"),
+            'label' => __('Name')
         ]);
 
         $this->crud->setColumnDetails('description', [
-            'label' => __("Description"),
+            'label' => __('Description')
         ]);
 
         // ------ CRUD FIELDS

@@ -66,23 +66,28 @@ class Appointment extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function getProcessLinkAttribute() {
+    public function getProcessLinkAttribute()
+    {
         return $this->getLink($this->process);
     }
 
-    public function getUserLinkAttribute() {
+    public function getUserLinkAttribute()
+    {
         return $this->getLink($this->user);
     }
 
-    public function getVet1LinkAttribute() {
+    public function getVet1LinkAttribute()
+    {
         return $this->getLink($this->vet1);
     }
 
-    public function getVet2LinkAttribute() {
+    public function getVet2LinkAttribute()
+    {
         return $this->getLink($this->vet2);
     }
 
-    public function getAnimalsValue() {
+    public function getAnimalsValue()
+    {
         return "{$this->amount_males} / {$this->amount_females}";
     }
 

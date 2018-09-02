@@ -14,14 +14,14 @@ class DropzoneRequest extends FormRequest
     public function rules()
     {
         return [
-            'file' => 'required',
+            'file' => 'required'
         ];
     }
 
     public function messages()
     {
         return [
-            'file.required' => 'No file specified.',
+            'file.required' => 'No file specified.'
         ];
     }
 }

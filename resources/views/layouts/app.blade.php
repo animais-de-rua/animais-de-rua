@@ -46,7 +46,7 @@
     <p style="display:none">{{ __('description') }}</p>
     <div id="app">
         @include('layouts.navbar')
-        
+
         @yield('content')
 
         @include('layouts.footer')

@@ -51,20 +51,24 @@ class Animal extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function getAdoptionLinkAttribute() {
+    public function getAdoptionLinkAttribute()
+    {
         return $this->getLink($this->adoption);
     }
 
-    public function getGenderValueAttribute() {
+    public function getGenderValueAttribute()
+    {
         return ucfirst(__($this->gender));
     }
 
-    public function getSterilizedValueAttribute() {
-        return ucfirst(__($this->sterilized ? "yes" : "no"));
+    public function getSterilizedValueAttribute()
+    {
+        return ucfirst(__($this->sterilized ? 'yes' : 'no'));
     }
 
-    public function getVaccinatedValueAttribute() {
-        return ucfirst(__($this->vaccinated ? "yes" : "no"));
+    public function getVaccinatedValueAttribute()
+    {
+        return ucfirst(__($this->vaccinated ? 'yes' : 'no'));
     }
 
     /*
@@ -72,21 +76,29 @@ class Animal extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
-   
-    public function setAgeAttribute($value) {
+
+    public function setAgeAttribute($value)
+    {
         $this->attributes['age'] = $value[0] * 12 + $value[1];
     }
-   
-    public function getAgeAttribute($value) {
+
+    public function getAgeAttribute($value)
+    {
         return [floor($value / 12), $value % 12];
     }
-   
-    public function getAgeValueAttribute() {
+
+    public function getAgeValueAttribute()
+    {
         list($y, $m) = $this->age;
 
         $result = [];
-        if($y > 0) $result[] = "$y " . ($y > 1 ? __('years') : __('year'));
-        if($m > 0) $result[] = "$m " . ($m > 1 ? __('months') : __('month'));
+        if ($y > 0) {
+            $result[] = "$y " . ($y > 1 ? __('years') : __('year'));
+        }
+
+        if ($m > 0) {
+            $result[] = "$m " . ($m > 1 ? __('months') : __('month'));
+        }
 
         return join(' ' . __('and') . ' ', $result);
     }

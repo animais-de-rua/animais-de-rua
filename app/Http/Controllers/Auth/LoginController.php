@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Laravel\Socialite\Contracts\User as ProviderUser;
-use Illuminate\Support\Carbon;
 use App\Models\SocialAccount;
 use App\User;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Carbon;
+use Laravel\Socialite\Contracts\User as ProviderUser;
 use Socialite;
 
 class LoginController extends Controller
@@ -23,11 +23,10 @@ class LoginController extends Controller
     |
     */
 
-    const
-        FACEBOOK = 'facebook',
-        GOOGLE = 'google',
-        GITHUB = 'github',
-        TWITTER = 'twitter';
+    const FACEBOOK = 'facebook';
+    const GOOGLE = 'google';
+    const GITHUB = 'github';
+    const TWITTER = 'twitter';
 
     use AuthenticatesUsers;
 
@@ -108,11 +107,11 @@ class LoginController extends Controller
 
         switch ($provider) {
             case self::FACEBOOK:
-                $avatar = str_replace("normal", "large", $avatar);
-                $avatar.= "&type=square";
+                $avatar = str_replace('normal', 'large', $avatar);
+                $avatar .= '&type=square';
                 break;
             case self::GOOGLE:
-                $avatar = str_replace("?sz=50", "", $avatar);
+                $avatar = str_replace('?sz=50', '', $avatar);
                 break;
         }
 
@@ -130,7 +129,7 @@ class LoginController extends Controller
         $account = new SocialAccount([
             'provider' => $provider,
             'provider_user_id' => $providerUser->getId(),
-            'token' => $providerUser->token,
+            'token' => $providerUser->token
         ]);
 
         $user = User::whereEmail($providerUser->getEmail())->first();
@@ -141,7 +140,7 @@ class LoginController extends Controller
                 'name' => $providerUser->getName(),
                 'avatar' => $avatar,
                 'password' => bcrypt(\Hash::make(uniqid())),
-                'created_at' => Carbon::now(),
+                'created_at' => Carbon::now()
             ]);
         } else {
             $user->avatar = $avatar;

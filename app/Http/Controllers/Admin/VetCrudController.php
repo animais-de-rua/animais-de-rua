@@ -38,20 +38,20 @@ class VetCrudController extends CrudController
         ]);
 
         $this->crud->setColumnDetails('phone', [
-            'type' => "tel",
-            'label' => __('Phone'),
+            'type' => 'tel',
+            'label' => __('Phone')
         ]);
 
         $this->crud->setColumnDetails('url', [
-            'type' => "url",
-            'label' => __('Website'),
+            'type' => 'url',
+            'label' => __('Website')
         ]);
 
         $this->crud->setColumnDetails('headquarter', [
             'label' => ucfirst(__('headquarter')),
-            'type' => "select",
+            'type' => 'select',
             'entity' => 'headquarter',
-            'attribute' => "name",
+            'attribute' => 'name',
             'model' => "App\Models\Headquarter"
         ]);
 
@@ -62,15 +62,15 @@ class VetCrudController extends CrudController
 
         $this->crud->setColumnDetails('total_expenses', [
             'name' => 'total_expenses',
-            'label' => __("Total Expenses"),
-            'type' => "model_function",
+            'label' => __('Total Expenses'),
+            'type' => 'model_function',
             'function_name' => 'getTotalExpensesValue'
         ]);
 
         $this->crud->setColumnDetails('total_operations', [
             'name' => 'total_operations',
-            'label' => __("Total Operations"),
-            'type' => "model_function",
+            'label' => __('Total Operations'),
+            'type' => 'model_function',
             'function_name' => 'getTotalOperationsValue'
         ]);
 
@@ -98,7 +98,7 @@ class VetCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'label' => ucfirst(__("headquarter")),
+            'label' => ucfirst(__('headquarter')),
             'name' => 'headquarter_id',
             'type' => 'select2',
             'entity' => 'headquarter',
@@ -134,15 +134,15 @@ class VetCrudController extends CrudController
                 ],
                 'process' => [
                     'label' => ucfirst(__('process')),
-                    'name' => 'processLink',
+                    'name' => 'processLink'
                 ],
                 'expense' => [
                     'label' => __('Expense'),
-                    'name' => 'fullExpense',
+                    'name' => 'fullExpense'
                 ],
                 'date' => [
                     'label' => __('Date'),
-                    'name' => 'date',
+                    'name' => 'date'
                 ]
             ]
         ]);
@@ -154,11 +154,11 @@ class VetCrudController extends CrudController
             'rows' => [
                 'expenses' => [
                     'label' => __('Total Expenses'),
-                    'value' => 'getTotalExpensesStats',
+                    'value' => 'getTotalExpensesStats'
                 ],
                 'operations' => [
                     'label' => __('Total Operations'),
-                    'value' => 'getTotalOperationsStats',
+                    'value' => 'getTotalOperationsStats'
                 ]
             ]
         ]);
@@ -167,68 +167,80 @@ class VetCrudController extends CrudController
         $this->crud->addFilter([
             'name' => 'headquarter_id',
             'type' => 'select2_multiple',
-            'label'=> ucfirst(__("headquarter")),
+            'label' => ucfirst(__('headquarter')),
             'placeholder' => __('Select a headquarter')
         ],
-        $this->wantsJSON() ? null : api()->headquarterList(),
-        function($values) {
-            $this->crud->addClause('whereIn', 'headquarter_id', json_decode($values));
-        });
+            $this->wantsJSON() ? null : api()->headquarterList(),
+            function ($values) {
+                $this->crud->addClause('whereIn', 'headquarter_id', json_decode($values));
+            });
 
         $this->crud->addFilter([
             'name' => 'status',
             'type' => 'select2_multiple',
-            'label'=> __("Status"),
+            'label' => __('Status'),
             'placeholder' => __('Select a status')
         ],
-        EnumHelper::translate('vet.status'),
-        function($values) {
-            $this->crud->addClause('whereIn', 'status', json_decode($values));
-        });
+            EnumHelper::translate('vet.status'),
+            function ($values) {
+                $this->crud->addClause('whereIn', 'status', json_decode($values));
+            });
 
         $this->crud->addFilter([
             'name' => 'total_expenses',
             'type' => 'range',
-            'label'=> __('Total Expenses') . ' €',
+            'label' => __('Total Expenses') . ' €',
             'label_from' => __('Min value'),
             'label_to' => __('Max value')
         ],
-        true,
-        function($value) {
-            $range = json_decode($value);
+            true,
+            function ($value) {
+                $range = json_decode($value);
 
-            $this->crud->query->whereHas('treatments', function ($query) use ($range) {
-                $query->selectRaw("vet_id, sum(expense) as total_expenses")
-                    ->groupBy('vet_id');
+                $this->crud->query->whereHas('treatments', function ($query) use ($range) {
+                    $query->selectRaw('vet_id, sum(expense) as total_expenses')
+                        ->groupBy('vet_id');
 
-                if (is_numeric($range->from)) $query->having('total_expenses', '>=', $range->from);
-                if (is_numeric($range->to)) $query->having('total_expenses', '<=', $range->to);
+                    if (is_numeric($range->from)) {
+                        $query->having('total_expenses', '>=', $range->from);
+                    }
+
+                    if (is_numeric($range->to)) {
+                        $query->having('total_expenses', '<=', $range->to);
+                    }
+
+                });
             });
-        });
 
         $this->crud->addFilter([
             'name' => 'total_operations',
             'type' => 'range',
-            'label'=> __('Total Operations'),
+            'label' => __('Total Operations'),
             'label_from' => __('Min value'),
             'label_to' => __('Max value')
         ],
-        true,
-        function($value) {
-            $range = json_decode($value);
+            true,
+            function ($value) {
+                $range = json_decode($value);
 
-            $this->crud->query->whereHas('treatments', function ($query) use ($range) {
-                $query->selectRaw("vet_id, count(*) as total_operations")
-                    ->groupBy('vet_id');
+                $this->crud->query->whereHas('treatments', function ($query) use ($range) {
+                    $query->selectRaw('vet_id, count(*) as total_operations')
+                        ->groupBy('vet_id');
 
-                if (is_numeric($range->from)) $query->having('total_operations', '>=', $range->from);
-                if (is_numeric($range->to)) $query->having('total_operations', '<=', $range->to);
+                    if (is_numeric($range->from)) {
+                        $query->having('total_operations', '>=', $range->from);
+                    }
+
+                    if (is_numeric($range->to)) {
+                        $query->having('total_operations', '<=', $range->to);
+                    }
+
+                });
             });
-        });
 
         // ------ ADVANCED QUERIES
         $this->crud->addClause('with', ['treatments' => function ($query) {
-            $query->selectRaw("vet_id, sum(expense) as total_expenses, count(*) as total_operations")
+            $query->selectRaw('vet_id, sum(expense) as total_expenses, count(*) as total_operations')
                 ->groupBy('vet_id');
         }]);
 

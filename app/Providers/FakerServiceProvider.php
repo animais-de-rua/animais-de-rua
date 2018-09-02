@@ -10,6 +10,6 @@ class FakerServiceProvider extends Base
 
     public function animal()
     {
-        return $this->animal_names[rand(0, count($this->animal_names)-1)];
+        return $this->animal_names[rand(0, count($this->animal_names) - 1)];
     }
 }

@@ -2,11 +2,11 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
-use Backpack\CRUD\CrudTrait;
-use Spatie\Permission\Traits\HasRoles;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Backpack\Base\app\Notifications\ResetPasswordNotification as ResetPasswordNotification;
+use Backpack\CRUD\CrudTrait;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
@@ -14,11 +14,10 @@ class User extends Authenticatable
     use HasRoles;
     use Notifiable;
 
-    const
-        ADMIN = 1,
-        VOLUNTEER = 2,
-        FAT = 4,
-        ALL = 7;
+    const ADMIN = 1;
+    const VOLUNTEER = 2;
+    const FAT = 4;
+    const ALL = 7;
 
     /**
      * The attributes that are mass assignable.
@@ -36,7 +35,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token'
     ];
 
     /**

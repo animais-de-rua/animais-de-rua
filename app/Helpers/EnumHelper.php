@@ -3,7 +3,6 @@
 namespace App\Helpers;
 
 use Config;
-use Illuminate\Database\Eloquent\Builder;
 
 class EnumHelper
 {
@@ -27,10 +26,10 @@ class EnumHelper
     public static function translate($name)
     {
         $enum = [];
-        foreach (self::get($name) as $key => $value)
+        foreach (self::get($name) as $key => $value) {
             $enum[$key] = ucfirst(__($value));
+        }
 
         return $enum;
     }
 }
-?>

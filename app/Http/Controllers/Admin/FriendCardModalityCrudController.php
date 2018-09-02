@@ -2,13 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use DB;
-use Carbon\Carbon;
-use App\Helpers\EnumHelper;
-use App\Models\FriendCardModality;
 use App\Http\Requests\FriendCardModalityRequest as StoreRequest;
 use App\Http\Requests\FriendCardModalityRequest as UpdateRequest;
-use App\User;
+use App\Models\FriendCardModality;
 
 /**
  * Class FriendCardModalityCrudController
@@ -59,7 +55,7 @@ class FriendCardModalityCrudController extends CrudController
             'type' => 'number',
             'default' => 0,
             'suffix' => '€',
-            'attributes' => ['min' => 0, 'max' => 1000000],
+            'attributes' => ['min' => 0, 'max' => 1000000]
         ]);
 
         $this->crud->addField([
@@ -72,12 +68,12 @@ class FriendCardModalityCrudController extends CrudController
         $this->crud->addColumns(['name', 'amount', 'type']);
 
         $this->crud->setColumnDetails('name', [
-            'label' => __('Name'),
+            'label' => __('Name')
         ]);
 
         $this->crud->setColumnDetails('amount', [
             'label' => __('Value'),
-            'suffix' => '€',
+            'suffix' => '€'
         ]);
 
         $this->crud->setColumnDetails('type', [

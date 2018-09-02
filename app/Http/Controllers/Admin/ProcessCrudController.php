@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use DB;
-use Carbon\Carbon;
 use App\Helpers\EnumHelper;
-use App\Models\Process;
 use App\Http\Requests\ProcessRequest as StoreRequest;
 use App\Http\Requests\ProcessRequest as UpdateRequest;
+use App\Models\Process;
+use DB;
 
 class ProcessCrudController extends CrudController
 {
@@ -53,15 +52,15 @@ class ProcessCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'label' => ucfirst(__("territory")),
+            'label' => ucfirst(__('territory')),
             'name' => 'territory_id',
             'type' => 'select2_from_array',
             'options' => $this->wantsJSON() ? null : api()->territoryList(),
-            'allows_null' => true,
+            'allows_null' => true
         ]);
 
         $this->crud->addField([
-            'label' => ucfirst(__("headquarter")),
+            'label' => ucfirst(__('headquarter')),
             'name' => 'headquarter_id',
             'type' => 'select2',
             'entity' => 'headquarter',
@@ -80,7 +79,7 @@ class ProcessCrudController extends CrudController
             'type' => 'number',
             'name' => 'amount_males',
             'default' => 0,
-            'attributes' => ['min' => 0, 'max' => 100],
+            'attributes' => ['min' => 0, 'max' => 100]
         ]);
 
         $this->crud->addField([
@@ -88,7 +87,7 @@ class ProcessCrudController extends CrudController
             'type' => 'number',
             'name' => 'amount_females',
             'default' => 0,
-            'attributes' => ['min' => 0, 'max' => 100],
+            'attributes' => ['min' => 0, 'max' => 100]
         ]);
 
         $this->crud->addField([
@@ -96,7 +95,7 @@ class ProcessCrudController extends CrudController
             'type' => 'number',
             'name' => 'amount_other',
             'default' => 0,
-            'attributes' => ['min' => 0, 'max' => 100],
+            'attributes' => ['min' => 0, 'max' => 100]
         ]);
 
         $this->crud->addField([
@@ -130,7 +129,7 @@ class ProcessCrudController extends CrudController
             'name' => 'images',
             'label' => __('Images'),
             'type' => 'dropzone',
-            'upload-url' => '/admin/dropzone/images/process',
+            'upload-url' => '/admin/dropzone/images/process'
         ]);
 
         $this->separator();
@@ -143,15 +142,15 @@ class ProcessCrudController extends CrudController
             'columns' => [
                 'name' => [
                     'label' => ucfirst(__('godfather')),
-                    'name' => 'godfatherLink',
+                    'name' => 'godfatherLink'
                 ],
                 'value' => [
                     'label' => __('Value'),
-                    'name' => 'fullValue',
+                    'name' => 'fullValue'
                 ],
                 'date' => [
                     'label' => __('Date'),
-                    'name' => 'date',
+                    'name' => 'date'
                 ]
             ]
         ]);
@@ -169,15 +168,15 @@ class ProcessCrudController extends CrudController
                 ],
                 'vet' => [
                     'label' => ucfirst(__('vet')),
-                    'name' => 'vetLink',
+                    'name' => 'vetLink'
                 ],
                 'expense' => [
                     'label' => __('Expense'),
-                    'name' => 'fullExpense',
+                    'name' => 'fullExpense'
                 ],
                 'date' => [
                     'label' => __('Date'),
-                    'name' => 'date',
+                    'name' => 'date'
                 ]
             ]
         ]);
@@ -190,23 +189,23 @@ class ProcessCrudController extends CrudController
             'columns' => [
                 'user' => [
                     'label' => ucfirst(__('volunteer')),
-                    'name' => 'userLink',
+                    'name' => 'userLink'
                 ],
                 'vet1' => [
-                    'label' => ucfirst(__('vet')) . " 1",
-                    'name' => 'vet1Link',
+                    'label' => ucfirst(__('vet')) . ' 1',
+                    'name' => 'vet1Link'
                 ],
                 'date1' => [
-                    'label' => __('Date') . " 1",
-                    'name' => 'date_1',
+                    'label' => __('Date') . ' 1',
+                    'name' => 'date_1'
                 ],
                 'vet2' => [
-                    'label' => ucfirst(__('vet')) . " 2",
-                    'name' => 'vet2Link',
+                    'label' => ucfirst(__('vet')) . ' 2',
+                    'name' => 'vet2Link'
                 ],
                 'date2' => [
-                    'label' => __('Date') . " 2",
-                    'name' => 'date_2',
+                    'label' => __('Date') . ' 2',
+                    'name' => 'date_2'
                 ]
             ]
         ]);
@@ -218,19 +217,19 @@ class ProcessCrudController extends CrudController
             'rows' => [
                 'expenses' => [
                     'label' => __('Total Expenses'),
-                    'value' => 'getTotalExpensesStats',
+                    'value' => 'getTotalExpensesStats'
                 ],
                 'operations' => [
                     'label' => __('Total Operations'),
-                    'value' => 'getTotalOperationsStats',
+                    'value' => 'getTotalOperationsStats'
                 ],
                 'donated' => [
                     'label' => __('Total Donated'),
-                    'value' => 'getTotalDonatedStats',
+                    'value' => 'getTotalDonatedStats'
                 ],
                 'donations' => [
                     'label' => __('Total Donations'),
-                    'value' => 'getTotalDonationsStats',
+                    'value' => 'getTotalDonationsStats'
                 ]
             ]
         ]);
@@ -243,23 +242,23 @@ class ProcessCrudController extends CrudController
         ]);
 
         $this->crud->setColumnDetails('created_at', [
-            'type' => "date",
-            'label' => __('Date'),
+            'type' => 'date',
+            'label' => __('Date')
         ]);
 
         $this->crud->setColumnDetails('territory_id', [
             'label' => ucfirst(__('territory')),
-            'type' => "select",
+            'type' => 'select',
             'entity' => 'territory',
-            'attribute' => "name",
+            'attribute' => 'name',
             'model' => "App\Models\Territory"
         ]);
 
         $this->crud->setColumnDetails('headquarter', [
             'label' => ucfirst(__('headquarter')),
-            'type' => "select",
+            'type' => 'select',
             'entity' => 'headquarter',
-            'attribute' => "name",
+            'attribute' => 'name',
             'model' => "App\Models\Headquarter"
         ]);
 
@@ -275,36 +274,36 @@ class ProcessCrudController extends CrudController
 
         $this->crud->setColumnDetails('animal_count', [
             'name' => 'animal_count',
-            'label' => __("Animals") . ' M/F | O',
-            'type' => "model_function",
+            'label' => __('Animals') . ' M/F | O',
+            'type' => 'model_function',
             'function_name' => 'getAnimalsValue'
         ]);
 
         $this->crud->setColumnDetails('total_donations', [
             'name' => 'total_donations',
-            'label' => __("Total Donated"),
-            'type' => "model_function",
+            'label' => __('Total Donated'),
+            'type' => 'model_function',
             'function_name' => 'getTotalDonatedValue'
         ]);
 
         $this->crud->setColumnDetails('total_expenses', [
             'name' => 'total_expenses',
-            'label' => __("Total Expenses"),
-            'type' => "model_function",
+            'label' => __('Total Expenses'),
+            'type' => 'model_function',
             'function_name' => 'getTotalExpensesValue'
         ]);
 
         $this->crud->setColumnDetails('balance', [
             'name' => 'balance',
-            'label' => __("Balance"),
-            'type' => "model_function",
+            'label' => __('Balance'),
+            'type' => 'model_function',
             'function_name' => 'getBalanceValue'
         ]);
 
         $this->crud->setColumnDetails('total_operations', [
             'name' => 'total_operations',
-            'label' => __("Total Operations"),
-            'type' => "model_function",
+            'label' => __('Total Operations'),
+            'type' => 'model_function',
             'function_name' => 'getTotalOperationsValue'
         ]);
 
@@ -318,168 +317,198 @@ class ProcessCrudController extends CrudController
         $this->crud->addFilter([
             'name' => 'territory_id',
             'type' => 'select2_multiple',
-            'label'=> ucfirst(__("territory")),
+            'label' => ucfirst(__('territory')),
             'placeholder' => __('Select a territory')
         ],
-        $this->wantsJSON() ? null : api()->territoryList(),
-        function($values) {
-            $values = json_decode($values);
-            $where = join(' OR ', array_fill(0, count($values), "territory_id LIKE ?"));
-            $values = array_map(function($field) { return $field . "%"; }, $values);
+            $this->wantsJSON() ? null : api()->territoryList(),
+            function ($values) {
+                $values = json_decode($values);
+                $where = join(' OR ', array_fill(0, count($values), 'territory_id LIKE ?'));
+                $values = array_map(function ($field) {return $field . '%';}, $values);
 
-            $this->crud->query->whereRaw($where, $values);
-        });
+                $this->crud->query->whereRaw($where, $values);
+            });
 
         $this->crud->addFilter([
             'name' => 'headquarter_id',
             'type' => 'select2_multiple',
-            'label'=> ucfirst(__("headquarter")),
+            'label' => ucfirst(__('headquarter')),
             'placeholder' => __('Select a headquarter')
         ],
-        $this->wantsJSON() ? null : api()->headquarterList(),
-        function($values) {
-            $this->crud->addClause('whereIn', 'headquarter_id', json_decode($values));
-        });
+            $this->wantsJSON() ? null : api()->headquarterList(),
+            function ($values) {
+                $this->crud->addClause('whereIn', 'headquarter_id', json_decode($values));
+            });
 
         $this->crud->addFilter([
             'type' => 'date_range',
             'name' => 'from_to',
-            'label'=> __('Date range'),
-            'format'=> "DD/MM/YYYY",
-            'firstDay'=> 1
+            'label' => __('Date range'),
+            'format' => 'DD/MM/YYYY',
+            'firstDay' => 1
         ],
-        false,
-        function($value) {
-            $dates = json_decode($value);
-            $this->crud->query->whereRaw("created_at >= ? AND created_at <= DATE_ADD(?, INTERVAL 1 DAY)", [$dates->from, $dates->to]);
-        });
+            false,
+            function ($value) {
+                $dates = json_decode($value);
+                $this->crud->query->whereRaw('created_at >= ? AND created_at <= DATE_ADD(?, INTERVAL 1 DAY)', [$dates->from, $dates->to]);
+            });
 
         $this->crud->addFilter([
             'name' => 'status',
             'type' => 'select2_multiple',
-            'label'=> __("Status"),
+            'label' => __('Status'),
             'placeholder' => __('Select a status')
         ],
-        EnumHelper::translate('process.status'),
-        function($values) {
-            $this->crud->addClause('whereIn', 'status', json_decode($values));
-        });
+            EnumHelper::translate('process.status'),
+            function ($values) {
+                $this->crud->addClause('whereIn', 'status', json_decode($values));
+            });
 
         $this->crud->addFilter([
             'name' => 'specie',
             'type' => 'select2_multiple',
-            'label'=> __("Specie"),
+            'label' => __('Specie'),
             'placeholder' => __('Select a specie')
         ],
-        EnumHelper::translate('process.specie'),
-        function($values) {
-            $this->crud->addClause('whereIn', 'specie', json_decode($values));
-        });
+            EnumHelper::translate('process.specie'),
+            function ($values) {
+                $this->crud->addClause('whereIn', 'specie', json_decode($values));
+            });
 
         $this->crud->addFilter([
             'name' => 'value',
             'type' => 'range',
-            'label'=> __('Animal count'),
+            'label' => __('Animal count'),
             'label_from' => __('Min value'),
             'label_to' => __('Max value')
         ],
-        true,
-        function($value) {
-            $range = json_decode($value);
-            if (is_numeric($range->from)) $this->crud->addClause('where', DB::raw('amount_males + amount_females + amount_other'), '>=', $range->from);
-            if (is_numeric($range->to)) $this->crud->addClause('where', DB::raw('amount_males + amount_females + amount_other'), '<=', $range->to);
-        });
+            true,
+            function ($value) {
+                $range = json_decode($value);
+                if (is_numeric($range->from)) {
+                    $this->crud->addClause('where', DB::raw('amount_males + amount_females + amount_other'), '>=', $range->from);
+                }
+
+                if (is_numeric($range->to)) {
+                    $this->crud->addClause('where', DB::raw('amount_males + amount_females + amount_other'), '<=', $range->to);
+                }
+
+            });
 
         $this->crud->addFilter([
             'name' => 'total_donations',
             'type' => 'range',
-            'label'=> ucfirst(__('donations')) . ' €',
+            'label' => ucfirst(__('donations')) . ' €',
             'label_from' => __('Min value'),
             'label_to' => __('Max value')
         ],
-        true,
-        function($value) {
-            $range = json_decode($value);
+            true,
+            function ($value) {
+                $range = json_decode($value);
 
-            $this->crud->query->whereHas('donations', function ($query) use ($range) {
-                $query->selectRaw("process_id, sum(value) as total_donations")
-                    ->groupBy('process_id');
+                $this->crud->query->whereHas('donations', function ($query) use ($range) {
+                    $query->selectRaw('process_id, sum(value) as total_donations')
+                        ->groupBy('process_id');
 
-                if (is_numeric($range->from)) $query->having('total_donations', '>=', $range->from);
-                if (is_numeric($range->to)) $query->having('total_donations', '<=', $range->to);
+                    if (is_numeric($range->from)) {
+                        $query->having('total_donations', '>=', $range->from);
+                    }
+
+                    if (is_numeric($range->to)) {
+                        $query->having('total_donations', '<=', $range->to);
+                    }
+
+                });
             });
-        });
 
         $this->crud->addFilter([
             'name' => 'total_expenses',
             'type' => 'range',
-            'label'=> __('Total Expenses') . ' €',
+            'label' => __('Total Expenses') . ' €',
             'label_from' => __('Min value'),
             'label_to' => __('Max value')
         ],
-        true,
-        function($value) {
-            $range = json_decode($value);
+            true,
+            function ($value) {
+                $range = json_decode($value);
 
-            $this->crud->query->whereHas('treatments', function ($query) use ($range) {
-                $query->selectRaw("process_id, sum(expense) as total_expenses")
-                    ->groupBy('process_id');
+                $this->crud->query->whereHas('treatments', function ($query) use ($range) {
+                    $query->selectRaw('process_id, sum(expense) as total_expenses')
+                        ->groupBy('process_id');
 
-                if (is_numeric($range->from)) $query->having('total_expenses', '>=', $range->from);
-                if (is_numeric($range->to)) $query->having('total_expenses', '<=', $range->to);
+                    if (is_numeric($range->from)) {
+                        $query->having('total_expenses', '>=', $range->from);
+                    }
+
+                    if (is_numeric($range->to)) {
+                        $query->having('total_expenses', '<=', $range->to);
+                    }
+
+                });
             });
-        });
 
         $this->crud->addFilter([
             'name' => 'total_operations',
             'type' => 'range',
-            'label'=> __('Total Operations'),
+            'label' => __('Total Operations'),
             'label_from' => __('Min value'),
             'label_to' => __('Max value')
         ],
-        true,
-        function($value) {
-            $range = json_decode($value);
+            true,
+            function ($value) {
+                $range = json_decode($value);
 
-            $this->crud->query->whereHas('treatments', function ($query) use ($range) {
-                $query->selectRaw("process_id, count(*) as total_operations")
-                    ->groupBy('process_id');
+                $this->crud->query->whereHas('treatments', function ($query) use ($range) {
+                    $query->selectRaw('process_id, count(*) as total_operations')
+                        ->groupBy('process_id');
 
-                if (is_numeric($range->from)) $query->having('total_operations', '>=', $range->from);
-                if (is_numeric($range->to)) $query->having('total_operations', '<=', $range->to);
+                    if (is_numeric($range->from)) {
+                        $query->having('total_operations', '>=', $range->from);
+                    }
+
+                    if (is_numeric($range->to)) {
+                        $query->having('total_operations', '<=', $range->to);
+                    }
+
+                });
             });
-        });
 
         $this->crud->addFilter([
             'name' => 'balance',
             'type' => 'range',
-            'label'=> __('Balance') . ' €',
+            'label' => __('Balance') . ' €',
             'label_from' => __('Min value'),
             'label_to' => __('Max value')
         ],
-        true,
-        function($value) {
-            $range = json_decode($value);
+            true,
+            function ($value) {
+                $range = json_decode($value);
 
-            $this->crud->query
-                ->join('donations', 'processes.id', '=', 'donations.process_id')
-                ->join('treatments', 'processes.id', '=', 'treatments.process_id')
-                ->select('processes.*')
-                ->selectRaw('sum(donations.value) - sum(treatments.expense) as balance')
-                ->groupBy('processes.id');
+                $this->crud->query
+                    ->join('donations', 'processes.id', '=', 'donations.process_id')
+                    ->join('treatments', 'processes.id', '=', 'treatments.process_id')
+                    ->select('processes.*')
+                    ->selectRaw('sum(donations.value) - sum(treatments.expense) as balance')
+                    ->groupBy('processes.id');
 
-            if (is_numeric($range->from)) $this->crud->query->having(DB::raw('sum(donations.value) - sum(treatments.expense)'), '>=', $range->from);
-            if (is_numeric($range->to)) $this->crud->query->having(DB::raw('sum(donations.value) - sum(treatments.expense)'), '<=', $range->to);
-        });
+                if (is_numeric($range->from)) {
+                    $this->crud->query->having(DB::raw('sum(donations.value) - sum(treatments.expense)'), '>=', $range->from);
+                }
+
+                if (is_numeric($range->to)) {
+                    $this->crud->query->having(DB::raw('sum(donations.value) - sum(treatments.expense)'), '<=', $range->to);
+                }
+
+            });
 
         // ------ ADVANCED QUERIES
         $this->crud->addClause('with', ['donations' => function ($query) {
-            $query->selectRaw("process_id, sum(value) as total_donations")
+            $query->selectRaw('process_id, sum(value) as total_donations')
                 ->groupBy('process_id');
         }]);
 
         $this->crud->addClause('with', ['treatments' => function ($query) {
-            $query->selectRaw("process_id, sum(expense) as total_expenses, count(*) as total_operations")
+            $query->selectRaw('process_id, sum(expense) as total_expenses, count(*) as total_operations')
                 ->groupBy('process_id');
         }]);
 
@@ -490,8 +519,8 @@ class ProcessCrudController extends CrudController
 
     public function showDetailsRow($id)
     {
-        $process = Process::select(['history', 'notes', 'contact', 'phone', 'email'])->where("id", "=", $id)->first();
-        
+        $process = Process::select(['history', 'notes', 'contact', 'phone', 'email'])->where('id', '=', $id)->first();
+
         return "<div style='margin:5px 8px'>
                 <p>$process->contact, <a href='tel:$process->phone'>$process->phone</a><br /><a href='tel:$process->email'>$process->email</a></p>
                 <p>$process->history</p>

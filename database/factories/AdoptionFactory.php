@@ -1,11 +1,9 @@
 <?php
 
-use Faker\Generator as Faker;
-use Carbon\Carbon;
-
 use App\Models\Adoption;
 use App\Models\Process;
 use App\User;
+use Faker\Generator as Faker;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,7 +12,7 @@ use App\User;
 */
 
 $factory->define(Adoption::class, function (Faker $faker) {
-	$faker->addProvider(new \App\Providers\FakerServiceProvider($faker));
+    $faker->addProvider(new \App\Providers\FakerServiceProvider($faker));
 
     $date = $faker->dateTimeBetween('-2 months', 'now');
 
@@ -25,6 +23,6 @@ $factory->define(Adoption::class, function (Faker $faker) {
         'name' => $faker->animal . (rand(0, 1) ? ' e ' . $faker->animal : ''),
         'history' => $faker->text(80),
         'created_at' => $date,
-        'updated_at' => $date,
+        'updated_at' => $date
     ];
 });

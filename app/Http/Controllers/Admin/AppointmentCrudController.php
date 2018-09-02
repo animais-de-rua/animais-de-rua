@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use DB;
-use Carbon\Carbon;
 use App\Helpers\EnumHelper;
-use App\Models\Appointment;
 use App\Http\Requests\AppointmentRequest as StoreRequest;
 use App\Http\Requests\AppointmentRequest as UpdateRequest;
+use App\Models\Appointment;
 use App\User;
+use Carbon\Carbon;
+use DB;
 
 /**
  * Class AppointmentCrudController
@@ -38,55 +38,55 @@ class AppointmentCrudController extends CrudController
         $this->crud->addFields(['process_id', 'vet_id_1', 'date_1', 'vet_id_2', 'date_2', 'amount_males', 'amount_females', 'notes', 'status']);
 
         $this->crud->addField([
-            'label' => ucfirst(__("process")),
+            'label' => ucfirst(__('process')),
             'name' => 'process_id',
             'type' => 'select2_from_ajax',
             'entity' => 'process',
             'attribute' => 'detail',
             'model' => '\App\Models\Process',
-            'data_source' => url("admin/process/ajax/search"),
-            'placeholder' => __("Select a process"),
+            'data_source' => url('admin/process/ajax/search'),
+            'placeholder' => __('Select a process'),
             'minimum_input_length' => 2,
-            'default' => \Request::has('process') ?? false,
+            'default' => \Request::has('process') ?? false
         ]);
 
         $this->crud->addField([
-            'label' => ucfirst(__("vet")),
+            'label' => ucfirst(__('vet')),
             'name' => 'vet_id_1',
             'type' => 'select2_from_ajax',
             'entity' => 'vet1',
             'attribute' => 'name',
             'model' => '\App\Models\Vet',
-            'data_source' => url("admin/vet/ajax/search"),
-            'placeholder' => __("Select a vet"),
+            'data_source' => url('admin/vet/ajax/search'),
+            'placeholder' => __('Select a vet'),
             'minimum_input_length' => 2,
-            'default' => \Request::has('vet') ?? false,
+            'default' => \Request::has('vet') ?? false
         ]);
 
         $this->crud->addField([
-            'label' => __("Date"),
+            'label' => __('Date'),
             'name' => 'date_1',
             'type' => 'date',
             'default' => Carbon::today()->toDateString()
         ]);
 
         $this->crud->addField([
-            'label' => ucfirst(__("vet")),
+            'label' => ucfirst(__('vet')),
             'name' => 'vet_id_2',
             'type' => 'select2_from_ajax',
             'entity' => 'vet2',
             'attribute' => 'name',
             'model' => '\App\Models\Vet',
-            'data_source' => url("admin/vet/ajax/search"),
-            'placeholder' => __("Select a vet"),
+            'data_source' => url('admin/vet/ajax/search'),
+            'placeholder' => __('Select a vet'),
             'minimum_input_length' => 2,
-            'default' => \Request::has('vet') ?? false,
+            'default' => \Request::has('vet') ?? false
         ]);
 
         $this->crud->addField([
-            'label' => __("Date"),
+            'label' => __('Date'),
             'name' => 'date_2',
-            'type' => 'date',
+            'type' => 'date'
         ]);
 
         $this->crud->addField([
@@ -94,7 +94,7 @@ class AppointmentCrudController extends CrudController
             'type' => 'number',
             'name' => 'amount_males',
             'default' => 0,
-            'attributes' => ['min' => 0, 'max' => 100],
+            'attributes' => ['min' => 0, 'max' => 100]
         ]);
 
         $this->crud->addField([
@@ -102,7 +102,7 @@ class AppointmentCrudController extends CrudController
             'type' => 'number',
             'name' => 'amount_females',
             'default' => 0,
-            'attributes' => ['min' => 0, 'max' => 100],
+            'attributes' => ['min' => 0, 'max' => 100]
         ]);
 
         $this->crud->addField([
@@ -122,50 +122,50 @@ class AppointmentCrudController extends CrudController
 
         $this->crud->setColumnDetails('process_id', [
             'name' => 'process',
-            'label' => ucfirst(__("process")),
-            'type' => "model_function",
+            'label' => ucfirst(__('process')),
+            'type' => 'model_function',
             'limit' => 120,
             'function_name' => 'getProcessLinkAttribute'
         ]);
 
         $this->crud->setColumnDetails('user_id', [
             'name' => 'user',
-            'label' => ucfirst(__("volunteer")),
-            'type' => "model_function",
+            'label' => ucfirst(__('volunteer')),
+            'type' => 'model_function',
             'limit' => 120,
             'function_name' => 'getUserLinkAttribute'
         ]);
 
         $this->crud->setColumnDetails('vet_id_1', [
             'name' => 'vet1',
-            'label' => ucfirst(__("vet")),
-            'type' => "model_function",
+            'label' => ucfirst(__('vet')),
+            'type' => 'model_function',
             'limit' => 120,
             'function_name' => 'getVet1LinkAttribute'
         ]);
 
         $this->crud->setColumnDetails('date_1', [
-            'type' => "date",
-            'label' => __('Date'),
+            'type' => 'date',
+            'label' => __('Date')
         ]);
 
         $this->crud->setColumnDetails('vet_id_2', [
             'name' => 'vet2',
-            'label' => ucfirst(__("vet")),
-            'type' => "model_function",
+            'label' => ucfirst(__('vet')),
+            'type' => 'model_function',
             'limit' => 120,
             'function_name' => 'getVet2LinkAttribute'
         ]);
 
         $this->crud->setColumnDetails('date_2', [
-            'type' => "date",
-            'label' => __('Date'),
+            'type' => 'date',
+            'label' => __('Date')
         ]);
 
         $this->crud->setColumnDetails('animal_count', [
             'name' => 'animal_count',
-            'label' => __("Animals") . ' M/F',
-            'type' => "model_function",
+            'label' => __('Animals') . ' M/F',
+            'type' => 'model_function',
             'function_name' => 'getAnimalsValue'
         ]);
 
@@ -181,74 +181,80 @@ class AppointmentCrudController extends CrudController
         $this->crud->addFilter([
             'name' => 'process',
             'type' => 'select2_ajax',
-            'label'=> ucfirst(__("process")),
+            'label' => ucfirst(__('process')),
             'placeholder' => __('Select a process')
         ],
-        url('admin/process/ajax/filter'),
-        function($value) {
-            $this->crud->addClause('where', 'process_id', $value);
-        });
+            url('admin/process/ajax/filter'),
+            function ($value) {
+                $this->crud->addClause('where', 'process_id', $value);
+            });
 
         $this->crud->addFilter([
             'name' => 'user',
             'type' => 'select2_ajax',
-            'label'=> ucfirst(__("volunteer")),
+            'label' => ucfirst(__('volunteer')),
             'placeholder' => __('Select a volunteer')
         ],
-        url('admin/user/ajax/filter/' . User::VOLUNTEER),
-        function($value) {
-            $this->crud->addClause('where', 'user_id', $value);
-        });
+            url('admin/user/ajax/filter/' . User::VOLUNTEER),
+            function ($value) {
+                $this->crud->addClause('where', 'user_id', $value);
+            });
 
         $this->crud->addFilter([
             'name' => 'vet',
             'type' => 'select2_ajax',
-            'label'=> ucfirst(__("vet")),
+            'label' => ucfirst(__('vet')),
             'placeholder' => __('Select a vet')
         ],
-        url('admin/vet/ajax/filter'),
-        function($value) {
-            $this->crud->query->whereRaw("(vet_id_1 = ? OR vet_id_2 = ?)", [$value, $value]);
-        });
+            url('admin/vet/ajax/filter'),
+            function ($value) {
+                $this->crud->query->whereRaw('(vet_id_1 = ? OR vet_id_2 = ?)', [$value, $value]);
+            });
 
         $this->crud->addFilter([
             'type' => 'date_range',
             'name' => 'from_to',
-            'label'=> __('Date range'),
-            'format'=> "DD/MM/YYYY",
-            'firstDay'=> 1
+            'label' => __('Date range'),
+            'format' => 'DD/MM/YYYY',
+            'firstDay' => 1
         ],
-        false,
-        function($value) {
-            $dates = json_decode($value);
-            $this->crud->query->whereRaw("((date_1 >= ? AND date_1 <= DATE_ADD(?, INTERVAL 1 DAY)) OR (date_2 >= ? AND date_2 <= DATE_ADD(?, INTERVAL 1 DAY)))",
-                [$dates->from, $dates->to, $dates->from, $dates->to]);
-        });
+            false,
+            function ($value) {
+                $dates = json_decode($value);
+                $this->crud->query->whereRaw('((date_1 >= ? AND date_1 <= DATE_ADD(?, INTERVAL 1 DAY)) OR (date_2 >= ? AND date_2 <= DATE_ADD(?, INTERVAL 1 DAY)))',
+                    [$dates->from, $dates->to, $dates->from, $dates->to]);
+            });
 
         $this->crud->addFilter([
             'name' => 'value',
             'type' => 'range',
-            'label'=> __('Animal count'),
+            'label' => __('Animal count'),
             'label_from' => __('Min value'),
             'label_to' => __('Max value')
         ],
-        true,
-        function($value) {
-            $range = json_decode($value);
-            if (is_numeric($range->from)) $this->crud->addClause('where', DB::raw('amount_males + amount_females'), '>=', $range->from);
-            if (is_numeric($range->to)) $this->crud->addClause('where', DB::raw('amount_males + amount_females'), '<=', $range->to);
-        });
+            true,
+            function ($value) {
+                $range = json_decode($value);
+                if (is_numeric($range->from)) {
+                    $this->crud->addClause('where', DB::raw('amount_males + amount_females'), '>=', $range->from);
+                }
+
+                if (is_numeric($range->to)) {
+                    $this->crud->addClause('where', DB::raw('amount_males + amount_females'), '<=', $range->to);
+                }
+
+            });
 
         $this->crud->addFilter([
             'name' => 'status',
             'type' => 'select2_multiple',
-            'label'=> __("Status"),
+            'label' => __('Status'),
             'placeholder' => __('Select a status')
         ],
-        EnumHelper::translate('appointment.status'),
-        function($values) {
-            $this->crud->addClause('whereIn', 'status', json_decode($values));
-        });
+            EnumHelper::translate('appointment.status'),
+            function ($values) {
+                $this->crud->addClause('whereIn', 'status', json_decode($values));
+            });
 
         // add asterisk for fields that are required in AppointmentRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');

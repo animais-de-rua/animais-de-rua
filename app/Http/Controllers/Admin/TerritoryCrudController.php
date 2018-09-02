@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use DB;
-use App\Models\Territory;
 use App\Helpers\EnumHelper;
 use App\Http\Requests\TerritoryRequest as StoreRequest;
 use App\Http\Requests\TerritoryRequest as UpdateRequest;
@@ -33,7 +31,7 @@ class TerritoryCrudController extends CrudController
         $this->crud->setColumns(['name', 'sf']);
 
         $this->crud->setColumnDetails('sf', [
-            'label' => "Código SF",
+            'label' => 'Código SF'
         ]);
 
         // ------ CRUD BUTTONS
@@ -50,34 +48,34 @@ class TerritoryCrudController extends CrudController
         $this->crud->addFilter([
             'name' => 'level',
             'type' => 'select2',
-            'label'=> ucfirst(__("territory")),
+            'label' => ucfirst(__('territory'))
         ],
-        EnumHelper::translate('territory.levels'),
-        function($value) {
-            $this->crud->addClause('where', 'level', $value);
-        });
+            EnumHelper::translate('territory.levels'),
+            function ($value) {
+                $this->crud->addClause('where', 'level', $value);
+            });
 
         $this->crud->addFilter([
             'name' => 'district',
             'type' => 'select2_ajax',
-            'label'=> ucfirst(__('district')),
+            'label' => ucfirst(__('district')),
             'placeholder' => __('Select a district')
         ],
-        url('admin/territory/ajax/filter/1'),
-        function($value) {
-            $this->crud->addClause('where', 'parent_id', $value);
-        });
+            url('admin/territory/ajax/filter/1'),
+            function ($value) {
+                $this->crud->addClause('where', 'parent_id', $value);
+            });
 
         $this->crud->addFilter([
             'name' => 'county',
             'type' => 'select2_ajax',
-            'label'=> ucfirst(__('county')),
+            'label' => ucfirst(__('county')),
             'placeholder' => __('Select a county')
         ],
-        url('admin/territory/ajax/filter/2'),
-        function($value) {
-            $this->crud->addClause('where', 'parent_id', $value);
-        });
+            url('admin/territory/ajax/filter/2'),
+            function ($value) {
+                $this->crud->addClause('where', 'parent_id', $value);
+            });
 
         // Add asterisk for fields that are required
         $this->crud->setRequiredFields(StoreRequest::class, 'create');

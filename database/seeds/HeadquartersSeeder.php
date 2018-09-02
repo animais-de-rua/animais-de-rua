@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Seeder;
 use Carbon\Carbon;
+use Illuminate\Database\Seeder;
 
 class HeadquartersSeeder extends Seeder
 {
@@ -17,7 +17,7 @@ class HeadquartersSeeder extends Seeder
 
         $i = 0;
         $date = Carbon::now();
-        
+
         $headquarters = [
             'Porto' => [
                 '1312', // Porto
@@ -25,26 +25,26 @@ class HeadquartersSeeder extends Seeder
                 '1306', // Maia
                 '1308', // Matosinhos
                 '1315', // Valongo
-                '1304', // Gondomar
+                '1304' // Gondomar
             ],
             'Lisboa' => [
                 '1106', // Lisboa
                 '1510', // Seixal
                 '150303', // Costa da Caparica
-                '1114', // Vila Franca de Xira
+                '1114' // Vila Franca de Xira
             ],
             'Sintra' => [
                 '1111', // Sintra
                 '1110', // Oeiras
                 '1105', // Cascais
-                '0805', // Faro
+                '0805' // Faro
             ],
             'Faro' => [
-                '0809', // Monchique
+                '0809' // Monchique
             ],
             'São Miguel' => [
-                '21', // Ilha São Miguel
-            ],
+                '21' // Ilha São Miguel
+            ]
         ];
 
         // Headquarters
@@ -56,7 +56,7 @@ class HeadquartersSeeder extends Seeder
             foreach ($territories as $territory) {
                 DB::table('headquarters_territories')->insert([
                     'headquarter_id' => $i,
-                    'territory_id'   => $territory,
+                    'territory_id' => $territory
                 ]);
             }
         }

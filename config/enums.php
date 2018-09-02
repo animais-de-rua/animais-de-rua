@@ -34,7 +34,7 @@ return [
     'process' => [
         'specie' => [
             'dog' => 'dog',
-            'cat' => 'cat',
+            'cat' => 'cat'
         ],
 
         'status' => [
@@ -68,7 +68,7 @@ return [
             0 => 'inactive'
         ],
         'roles' => [
-            1 => 'admin', 
+            1 => 'admin',
             2 => 'volunteer',
             3 => 'FAT'
         ],

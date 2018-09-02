@@ -56,22 +56,26 @@ class Vet extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function getTotalExpensesValue() {
+    public function getTotalExpensesValue()
+    {
         $expenses = data_get_first($this, 'treatments', 'total_expenses', 0);
-        return $expenses != 0 ? $expenses . "€" : '-';
+        return $expenses != 0 ? $expenses . '€' : '-';
     }
 
-    public function getTotalOperationsValue() {
+    public function getTotalOperationsValue()
+    {
         $operations = data_get_first($this, 'treatments', 'total_operations', 0);
         return $operations;
     }
 
-    public function getTotalExpensesStats() {
-        $expenses =  $this->treatments->reduce(function ($carry, $item) { return $carry + $item->expense; });
-        return $expenses != 0 ? $expenses . "€" : '-';
+    public function getTotalExpensesStats()
+    {
+        $expenses = $this->treatments->reduce(function ($carry, $item) {return $carry + $item->expense;});
+        return $expenses != 0 ? $expenses . '€' : '-';
     }
 
-    public function getTotalOperationsStats() {
+    public function getTotalOperationsStats()
+    {
         return sizeof($this->treatments);
     }
 

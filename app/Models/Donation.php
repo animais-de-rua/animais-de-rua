@@ -56,16 +56,19 @@ class Donation extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function getProcessLinkAttribute() {
+    public function getProcessLinkAttribute()
+    {
         return $this->getLink($this->process);
     }
 
-    public function getGodfatherLinkAttribute() {
+    public function getGodfatherLinkAttribute()
+    {
         return $this->getLink($this->godfather);
     }
 
-    public function getFullValueAttribute() {
-        return $this->value . "€";
+    public function getFullValueAttribute()
+    {
+        return $this->value . '€';
     }
 
     /*

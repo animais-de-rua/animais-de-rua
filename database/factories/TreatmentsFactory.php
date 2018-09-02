@@ -1,13 +1,10 @@
 <?php
 
-use Faker\Generator as Faker;
-use Carbon\Carbon;
-
 use App\Models\Process;
 use App\Models\Treatment;
 use App\Models\TreatmentType;
 use App\Models\Vet;
-use App\Helpers\EnumHelper;
+use Faker\Generator as Faker;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +23,6 @@ $factory->define(Treatment::class, function (Faker $faker) {
         'affected_animals' => $faker->randomElement([1, 1, 1, 2, 3, 4, 6]),
         'date' => $date,
         'created_at' => $date,
-        'updated_at' => $date,
+        'updated_at' => $date
     ];
 });

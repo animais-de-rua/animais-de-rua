@@ -30,7 +30,7 @@ class TreatmentRequest extends FormRequest
             'treatment_type_id' => 'required|exists:treatment_types,id',
             'vet_id' => 'required|exists:vets,id',
             'affected_animals' => 'required|numeric|min:1|max:100',
-            'expense' => 'required|numeric|min:0|max:1000000',
+            'expense' => 'required|numeric|min:0|max:1000000'
         ];
     }
 

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Territory;
-use Illuminate\Http\Request;
 use App\Http\Requests\HeadquarterRequest as StoreRequest;
 use App\Http\Requests\HeadquarterRequest as UpdateRequest;
+use App\Models\Territory;
+use Illuminate\Http\Request;
 
 class HeadquarterCrudController extends CrudController
 {
@@ -50,7 +50,7 @@ class HeadquarterCrudController extends CrudController
         $this->crud->addField([
             'label' => __('E-Mail Address'),
             'name' => 'mail',
-            'type' => 'email',
+            'type' => 'email'
         ]);
         $this->crud->addField([
             'label' => __('Description'),
@@ -59,12 +59,12 @@ class HeadquarterCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'label' => __("Acting Zone"),
+            'label' => __('Acting Zone'),
             'type' => 'select2_multiple_data_source',
             'name' => 'territories',
-            'attribute' => "name",
+            'attribute' => 'name',
             'model' => api()->territorySearch(Territory::DISTRITO | Territory::CONCELHO, new Request()),
-            'pivot' => true,
+            'pivot' => true
         ]);
 
         // ------ CRUD COLUMNS
@@ -72,17 +72,17 @@ class HeadquarterCrudController extends CrudController
 
         $this->crud->setColumnDetails('name', [
             'name' => 'name',
-            'label' => __("Name")
+            'label' => __('Name')
         ]);
 
         $this->crud->setColumnDetails('address', [
             'name' => 'address',
-            'label' => __("Address")
+            'label' => __('Address')
         ]);
 
         $this->crud->setColumnDetails('phone', [
             'name' => 'phone',
-            'label' => __("Phone")
+            'label' => __('Phone')
         ]);
 
         // ------ CRUD ACCESS

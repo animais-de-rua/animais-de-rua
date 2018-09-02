@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Helpers\EnumHelper;
 use App\Http\Requests\Request;
 use Illuminate\Foundation\Http\FormRequest;
-use App\Helpers\EnumHelper;
 
 class VetRequest extends FormRequest
 {
@@ -32,7 +32,7 @@ class VetRequest extends FormRequest
             'email' => 'nullable|email',
             'url' => 'nullable|url',
             'headquarter_id' => 'nullable|exists:headquarters,id',
-            'status' => 'in:'.EnumHelper::keys('vet.status', ',')
+            'status' => 'in:' . EnumHelper::keys('vet.status', ',')
         ];
     }
 

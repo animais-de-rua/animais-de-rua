@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 use Illuminate\Foundation\Http\FormRequest;
-use App\Helpers\EnumHelper;
 
 class DonationRequest extends FormRequest
 {
@@ -29,7 +28,7 @@ class DonationRequest extends FormRequest
         return [
             'value' => 'required|numeric',
             'process_id' => 'exists:processes,id',
-            'godfather_id' => 'required|exists:godfathers,id',
+            'godfather_id' => 'required|exists:godfathers,id'
         ];
     }
 

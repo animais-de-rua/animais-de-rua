@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Helpers\EnumHelper;
 use App\Http\Requests\Request;
 use Illuminate\Foundation\Http\FormRequest;
-use App\Helpers\EnumHelper;
 
 class AppointmentRequest extends FormRequest
 {
@@ -34,7 +34,7 @@ class AppointmentRequest extends FormRequest
             'date_2' => 'nullable|date',
             'amount_males' => 'required|numeric|min:0|max:100',
             'amount_females' => 'required|numeric|min:0|max:100',
-            'status' => 'in:'.EnumHelper::keys('appointment.status', ','),
+            'status' => 'in:' . EnumHelper::keys('appointment.status', ',')
         ];
     }
 

@@ -30,7 +30,7 @@ class GodfatherRequest extends FormRequest
             'alias' => 'nullable|min:5|max:255',
             'phone' => 'nullable|min:9|max:14',
             'email' => 'nullable|email',
-            'territory_id' => 'nullable|exists:territories,id',
+            'territory_id' => 'nullable|exists:territories,id'
         ];
     }
 

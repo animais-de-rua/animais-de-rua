@@ -1,12 +1,9 @@
 <?php
 
-use Faker\Generator as Faker;
-use Carbon\Carbon;
-
 use App\Models\Donation;
-use App\Models\Process;
 use App\Models\Godfather;
-use App\Helpers\EnumHelper;
+use App\Models\Process;
+use Faker\Generator as Faker;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +20,6 @@ $factory->define(Donation::class, function (Faker $faker) {
         'value' => $faker->randomElement([5, 10, 20, 50]),
         'date' => $date,
         'created_at' => $date,
-        'updated_at' => $date,
+        'updated_at' => $date
     ];
 });

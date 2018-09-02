@@ -2,9 +2,8 @@
 
 namespace App\Helpers;
 
-use Illuminate\Http\Request;
 use App\Http\Requests\DropzoneRequest;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 
 trait HandleDropzoneUploadHelper
 {
@@ -13,9 +12,9 @@ trait HandleDropzoneUploadHelper
         $column = \Route::current()->parameters()['column'];
 
         switch ($column) {
-        	case 'images': return $this->handleDropzoneUploadImage('uploads', false);
-        	case 'videos': return $this->handleDropzoneUploadVideo('uploads', false);
-        	case 'audios': return $this->handleDropzoneUploadAudio('uploads', false);
+            case 'images':return $this->handleDropzoneUploadImage('uploads', false);
+            case 'videos':return $this->handleDropzoneUploadVideo('uploads', false);
+            case 'audios':return $this->handleDropzoneUploadAudio('uploads', false);
         }
     }
 
@@ -27,88 +26,88 @@ trait HandleDropzoneUploadHelper
         return $this->handleDropzoneRemove('uploads', $entity, $column);
     }
 
-	// -----
+    // -----
 
-	public function handleDropzoneRemove($disk, $entity, $column)
-	{
-		$id = $this->request->get('id');
+    public function handleDropzoneRemove($disk, $entity, $column)
+    {
+        $id = $this->request->get('id');
         $filepath = $this->request->get('filepath');
 
-		try
-		{
-			$filename = basename($filepath);
+        try
+        {
+            $filename = basename($filepath);
 
-			// Remove File from disk
-			\Storage::disk($disk)->delete("$entity/$filename");
+            // Remove File from disk
+            \Storage::disk($disk)->delete("$entity/$filename");
 
-			// Remove file from DB
-			$class = "App\\Models\\".ucfirst($entity);
-			$entity = $class::find($id);
+            // Remove file from DB
+            $class = 'App\\Models\\' . ucfirst($entity);
+            $entity = $class::find($id);
 
-			if($entity)
-			{
-				$imgs = $entity->getAttribute($column);
-				if(isset($imgs)) {
-					unset($imgs[array_search($filepath, $imgs)]);
-					
-					$entity->{$column} = array_values($imgs);
-					$entity->save();
-				}
-			}
+            if ($entity) {
+                $imgs = $entity->getAttribute($column);
+                if (isset($imgs)) {
+                    unset($imgs[array_search($filepath, $imgs)]);
 
-			return response()->json(['success' => true]);
-		}
-		catch (\Exception $e)
-		{
-			return response('Unknown error'.$e, 412);
-		}
-	}
+                    $entity->{$column} = array_values($imgs);
+                    $entity->save();
+                }
+            }
 
-	public function handleDropzoneUploadImage($disk, $random_name = true)
-	{
-		$destination_path = \Route::current()->parameters()['entity'];
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            return response('Unknown error' . $e, 412);
+        }
+    }
 
-		try
-		{
-			$file = $this->request->file('file');
+    public function handleDropzoneUploadImage($disk, $random_name = true)
+    {
+        $destination_path = \Route::current()->parameters()['entity'];
 
-			if(!$this->compareMimeTypes($file, ['image']))
-				return response('Not a valid image type', 412);
+        try
+        {
+            $file = $this->request->file('file');
 
-			$image = \Image::make($file);
+            if (!$this->compareMimeTypes($file, ['image'])) {
+                return response('Not a valid image type', 412);
+            }
 
-			// Filename
-			$filename = preg_replace('/\\.[^.\\s]{3,4}$/', '', $file->getClientOriginalName()).'_'.time();
-			if($random_name)
-				$filename = md5($filename);
-			$filename.= "." . $file->extension();
+            $image = \Image::make($file);
 
-			\Storage::disk($disk)->put($destination_path.'/'.$filename, $image->stream());
+            // Filename
+            $filename = preg_replace('/\\.[^.\\s]{3,4}$/', '', $file->getClientOriginalName()) . '_' . time();
+            if ($random_name) {
+                $filename = md5($filename);
+            }
 
-			return response()->json(['success' => true, 'filename' => $disk.'/'.$destination_path . '/' . $filename]);
-		}
-		catch (\Exception $e)
-		{
-			return response('Unknown error '.$e, 412);
-		}
-	}
+            $filename .= '.' . $file->extension();
 
-	public function handleDropzoneUploadVideo($disk, $destination_path, $random_name = true)
-	{
-		// TODO
-	}
+            \Storage::disk($disk)->put($destination_path . '/' . $filename, $image->stream());
 
-	public function handleDropzoneUploadAudio($disk, $destination_path, $random_name = true)
-	{
-		// TODO
-	}
+            return response()->json(['success' => true, 'filename' => $disk . '/' . $destination_path . '/' . $filename]);
+        } catch (\Exception $e) {
+            return response('Unknown error ' . $e, 412);
+        }
+    }
 
-	private function compareMimeTypes($file, $mimes)
-	{
-		foreach ($mimes as $mime)
-			if(strpos($file->getMimeType(), $mime) === 0)
-				return true;
-		
-		return false;
-	}
+    public function handleDropzoneUploadVideo($disk, $destination_path, $random_name = true)
+    {
+        // TODO
+    }
+
+    public function handleDropzoneUploadAudio($disk, $destination_path, $random_name = true)
+    {
+        // TODO
+    }
+
+    private function compareMimeTypes($file, $mimes)
+    {
+        foreach ($mimes as $mime) {
+            if (strpos($file->getMimeType(), $mime) === 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

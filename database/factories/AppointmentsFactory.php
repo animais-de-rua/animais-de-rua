@@ -1,13 +1,11 @@
 <?php
 
-use Faker\Generator as Faker;
-use Carbon\Carbon;
-
+use App\Helpers\EnumHelper;
 use App\Models\Appointment;
 use App\Models\Process;
 use App\Models\Vet;
 use App\User;
-use App\Helpers\EnumHelper;
+use Faker\Generator as Faker;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +16,7 @@ use App\Helpers\EnumHelper;
 $factory->define(Appointment::class, function (Faker $faker) {
     $date = $faker->dateTimeBetween('-2 months', 'now');
     $vets = $faker->randomElements(Vet::all()->pluck('id')->toArray(), 2);
- 
+
     return [
         'process_id' => $faker->randomElement(Process::all()->pluck('id')->toArray()),
         'user_id' => $faker->randomElement(User::all()->pluck('id')->toArray()),
@@ -31,6 +29,6 @@ $factory->define(Appointment::class, function (Faker $faker) {
         'notes' => $faker->text(50),
         'status' => $faker->randomElement(EnumHelper::get('appointment.status')),
         'created_at' => $date,
-        'updated_at' => $date,
+        'updated_at' => $date
     ];
 });

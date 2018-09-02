@@ -2,8 +2,11 @@
 	"folders":
 	[
 		{
-			"path": ".",
-			"name": "Animais de Rua"
+			"name": "Animais de Rua",
+			"path": "."
+		},
+		{
+			"path": "database\\migrations"
 		}
 	]
 }

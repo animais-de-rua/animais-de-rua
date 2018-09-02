@@ -30,8 +30,8 @@ class CreatePermissionTables extends Migration
 
         Schema::create($tableNames['model_has_permissions'], function (Blueprint $table) use ($tableNames) {
             $table->integer('permission_id')->unsigned();
-            $table->string("model_type", 127);
-            $table->unsignedBigInteger("model_id");
+            $table->string('model_type', 127);
+            $table->unsignedBigInteger('model_id');
 
             $table->foreign('permission_id')
                 ->references('id')
@@ -43,8 +43,8 @@ class CreatePermissionTables extends Migration
 
         Schema::create($tableNames['model_has_roles'], function (Blueprint $table) use ($tableNames) {
             $table->integer('role_id')->unsigned();
-            $table->string("model_type", 127);
-            $table->unsignedBigInteger("model_id");
+            $table->string('model_type', 127);
+            $table->unsignedBigInteger('model_id');
 
             $table->foreign('role_id')
                 ->references('id')

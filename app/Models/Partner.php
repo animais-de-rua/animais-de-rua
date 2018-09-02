@@ -64,15 +64,18 @@ class Partner extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function getUserLinkAttribute() {
+    public function getUserLinkAttribute()
+    {
         return $this->getLink($this->user);
     }
 
-    public function getCategoryListAttribute() {
+    public function getCategoryListAttribute()
+    {
         return join(', ', $this->categories()->pluck('name')->toArray());
     }
 
-    public function getTerritoryListAttribute() {
+    public function getTerritoryListAttribute()
+    {
         return join(', ', $this->territories()->pluck('name')->toArray());
     }
 

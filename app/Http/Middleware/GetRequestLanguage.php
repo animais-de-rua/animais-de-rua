@@ -24,7 +24,7 @@ class GetRequestLanguage
             $userLangs = preg_split('/,|;/', $request->server('HTTP_ACCEPT_LANGUAGE'));
 
             foreach ($userLangs as $lang) {
-                if(in_array($lang, $availableLangs)) {
+                if (in_array($lang, $availableLangs)) {
                     Session::put('locale', $lang);
                     App::setLocale($lang);
                     break;

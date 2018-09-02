@@ -15,11 +15,11 @@ trait CompositeKeyHelper
     protected function setKeysForSaveQuery(Builder $query)
     {
         $keys = $this->getKeyName();
-        if(!is_array($keys)){
+        if (!is_array($keys)) {
             return parent::setKeysForSaveQuery($query);
         }
 
-        foreach($keys as $keyName){
+        foreach ($keys as $keyName) {
             $query->where($keyName, '=', $this->getKeyForSaveQueryByName($keyName));
         }
 
@@ -34,7 +34,7 @@ trait CompositeKeyHelper
      */
     protected function getKeyForSaveQueryByName($keyName = null)
     {
-        if(is_null($keyName)){
+        if (is_null($keyName)) {
             $keyName = $this->getKeyName();
         }
 

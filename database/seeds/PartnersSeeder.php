@@ -3,13 +3,15 @@
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
-class PartnersSeeder extends Seeder {
+class PartnersSeeder extends Seeder
+{
     /**
      * Run the database seeds.
      *
      * @return void
      */
-    public function run() {
+    public function run()
+    {
         DB::table('partners_categories')->truncate();
         DB::table('partners_territories')->truncate();
         DB::table('partner_category_list')->truncate();
@@ -34,7 +36,7 @@ class PartnersSeeder extends Seeder {
             ['Apoio no Estudo', 'Apoie a sua família a obter os melhores resultados escolares e sempre com os melhores descontos para amigos.'],
             ['Projectos e Consultoria', 'Encontre harmonia e graciosidade para o seu espaço ou as melhores ideias para o seu negócio com descontos e ideias que agradarão a todos.​​'],
             ['Saúde', 'Porque queremos que os nossos amigos tenham uma saúde de ferro, temos para lhe oferecer descontos em produtos e serviços que cuidam de si quando mais precisa.'],
-            ['Serviços e Reparações para o Lar', 'O seu Lar merece o melhor e nós ainda ajudamos com descontos.'],
+            ['Serviços e Reparações para o Lar', 'O seu Lar merece o melhor e nós ainda ajudamos com descontos.']
         ];
 
         $partners = [
@@ -123,7 +125,7 @@ class PartnersSeeder extends Seeder {
             ['name' => 'Bricotec 24', 'address' => 'Apartado 121 EC Gondomar - 4424-909 Gondomar', 'email' => 'Geral@bricotec24.pt', 'url' => 'https://bricotec24.pt/', 'phone' => '961 635 603 - 930 601 358', 'status' => '1', 'benefit' => '15% em serviços de assistência a caldeiras, esquentadores, localização de fugas de água e desentupimentos de esgotos. (Exclui-se deslocações, peças ou materiais)'],
             ['name' => 'Art of Steel jóias - Jóias em aço inoxidável', 'description' => '<p>Somos especializados em peças de aço inoxidável a um preço low cost. O nosso objetivo é que todos tenham acesso a joias de design com uma excelente relação qualidade/preço.</p><p>Oferecemos segurança e serviço. Experimente!</p><p> </p><p>Twitter:</p><p>https://twitter.com/Art_of_Steel</p><p> </p><p>Instagram:</p><p>https://www.instagram.com/art.of.steel.joias/?hl=pt</p><p> </p>', 'email' => 'geral.artofsteel@gmail.com', 'url' => 'https://www.facebook.com/art.of.steel.loja/', 'phone' => '968 927 701', 'status' => '1', 'benefit' => '15%'],
             ['name' => 'Diana Nobre Fotografia', 'description' => '<p>A Diana Nobre fotografa para expressar todas as emoções, sentimentos e estados de espírito. Daí que se sinta privilegiada a cada casal que lhe dá a conhecer a sua história. Nessas histórias que capta, o seu objectivo, o seu maior desafio, é chegar a um resultado final que permita reviver todos aqueles sentimentos genuíno, puros, de duas pessoas que se amam e que estão tremendamente felizes</p><p>Serviços que oferece:</p><ul><li>Reportagem fotográfica de casamentos;</li><li>Sessões (solteiros, trash the dress, família, etc.);</li><li>Video de casamento, engagement sessions, etc;</li><li>Design de casamento (convites, logotipos, etc);</li><li>Fotografia de lifestyle.</li></ul>', 'email' => 'pappermoonsphotography@gmail.com', 'url' => 'http://diananobre.com/', 'phone' => '911 082 434', 'status' => '1', 'benefit' => '15%'],
-            ['name' => 'Hotel Senhora do castelo', 'description' => '<p>O Hotel Senhora do Castelo oferece uma localização ideal para uma estadia relaxante.</p><p>Durante o Inverno poderá desfrutar da nossa piscina interior aquecida, do calor da lareira, enquanto saboreia um chá revigorante.</p><p>No Verão poderá relaxar na piscina exterior com piscina para crianças, passear na mata privada, ou simplesmente desfrutar da eslanada da piscina com uma bebida refrescante.</p>', 'address' => 'Rua de Santa Maria do Castelo, 3530-238 Mangualde', 'email' => 'reservas@cotel.pt', 'url' => 'www.cotel.pt', 'phone' => '232619950 / 912225090', 'status' => '1', 'benefit' => '15% Alojamento, 15% F&B, Oferta Garrafa de Água à chegada, WI-FI gratuito, Parque gratuito'],
+            ['name' => 'Hotel Senhora do castelo', 'description' => '<p>O Hotel Senhora do Castelo oferece uma localização ideal para uma estadia relaxante.</p><p>Durante o Inverno poderá desfrutar da nossa piscina interior aquecida, do calor da lareira, enquanto saboreia um chá revigorante.</p><p>No Verão poderá relaxar na piscina exterior com piscina para crianças, passear na mata privada, ou simplesmente desfrutar da eslanada da piscina com uma bebida refrescante.</p>', 'address' => 'Rua de Santa Maria do Castelo, 3530-238 Mangualde', 'email' => 'reservas@cotel.pt', 'url' => 'www.cotel.pt', 'phone' => '232619950 / 912225090', 'status' => '1', 'benefit' => '15% Alojamento, 15% F&B, Oferta Garrafa de Água à chegada, WI-FI gratuito, Parque gratuito']
         ];
 
         $partner_categories = [
@@ -247,7 +249,7 @@ class PartnersSeeder extends Seeder {
             [84, 1],
             [84, 9],
             [85, 13],
-            [86, 11],
+            [86, 11]
         ];
 
         $partner_territories = [
@@ -318,7 +320,7 @@ class PartnersSeeder extends Seeder {
             [79, '1106'],
             [82, '0105'],
             [85, '1317'],
-            [86, '1823'],
+            [86, '1823']
         ];
 
         foreach ($categories as $category) {
@@ -326,7 +328,7 @@ class PartnersSeeder extends Seeder {
                 'name' => json_encode(['pt' => $category[0]]),
                 'description' => json_encode(['pt' => $category[1]]),
                 'created_at' => $date,
-                'updated_at' => $date,
+                'updated_at' => $date
             ]);
         }
 
@@ -342,21 +344,21 @@ class PartnersSeeder extends Seeder {
                 'benefit' => $partner['benefit'] ?? null,
                 'notes' => $partner['notes'] ?? null,
                 'created_at' => $date,
-                'updated_at' => $date,
+                'updated_at' => $date
             ]]);
         }
 
         foreach ($partner_categories as $partner_category) {
             DB::table('partners_categories')->insert([
                 'partner_id' => $partner_category[0],
-                'partner_category_list_id' => $partner_category[1],
+                'partner_category_list_id' => $partner_category[1]
             ]);
         }
 
         foreach ($partner_territories as $partner_territory) {
             DB::table('partners_territories')->insert([
                 'partner_id' => $partner_territory[0],
-                'territory_id' => $partner_territory[1],
+                'territory_id' => $partner_territory[1]
             ]);
         }
     }

@@ -10,7 +10,7 @@
                 {{ session('status') }}
             </div>
             @endif
-            
+
             <div class="panel panel-default">
                 <div class="panel-heading"><i class="ico-stack" style="font-size: 20px;"></i> ...</div>
                 <div class="panel-body">

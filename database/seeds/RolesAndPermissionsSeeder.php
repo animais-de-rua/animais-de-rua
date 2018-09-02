@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Seeder;
-use Carbon\Carbon;
 use App\Helpers\EnumHelper;
+use Carbon\Carbon;
+use Illuminate\Database\Seeder;
 
 class RolesAndPermissionsSeeder extends Seeder
 {
@@ -16,7 +16,7 @@ class RolesAndPermissionsSeeder extends Seeder
         DB::table('roles')->truncate();
         DB::table('permissions')->truncate();
         DB::table('role_has_permissions')->truncate();
-        
+
         $date = Carbon::now();
 
         // Roles
@@ -27,7 +27,7 @@ class RolesAndPermissionsSeeder extends Seeder
         // Permissions
         foreach (EnumHelper::values('user.permissions') as $i => $permission) {
             DB::table('permissions')->insert(['created_at' => $date, 'updated_at' => $date, 'name' => $permission]);
-            DB::table('role_has_permissions')->insert(['role_id' => 1, 'permission_id' => $i+1]);
+            DB::table('role_has_permissions')->insert(['role_id' => 1, 'permission_id' => $i + 1]);
         }
     }
 }

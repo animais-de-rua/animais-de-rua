@@ -82,76 +82,88 @@ class Process extends Model
         return $this->created_at ? explode(' ', $this->created_at)[0] : '';
     }
 
-    public function getDetailAttribute() {
-        $headquarter = (isset($this->headquarter) ? $this->headquarter['name'].', ' : '');
+    public function getDetailAttribute()
+    {
+        $headquarter = (isset($this->headquarter) ? $this->headquarter['name'] . ', ' : '');
 
         return "{$this->name} ({$headquarter}{$this->date})";
     }
 
-    public function getTotalDonatedValue() {
+    public function getTotalDonatedValue()
+    {
         $donations = data_get_first($this, 'donations', 'total_donations', 0);
 
-        return $donations != 0 ? $donations . "€" : '-';
+        return $donations != 0 ? $donations . '€' : '-';
     }
 
-    public function getTotalExpensesValue() {
+    public function getTotalExpensesValue()
+    {
         $expenses = data_get_first($this, 'treatments', 'total_expenses', 0);
 
-        return $expenses != 0 ? $expenses . "€" : '-';
+        return $expenses != 0 ? $expenses . '€' : '-';
     }
 
-    public function getTotalOperationsValue() {
+    public function getTotalOperationsValue()
+    {
         $operations = data_get_first($this, 'treatments', 'total_operations', 0);
 
         return $operations;
     }
 
-    public function getBalanceValue() {
+    public function getBalanceValue()
+    {
         $donations = data_get_first($this, 'donations', 'total_donations', 0);
         $expenses = data_get_first($this, 'treatments', 'total_expenses', 0);
         $balance = $donations - $expenses;
 
-        if(!$balance)
-            return "-";
-        else if($balance > 0)
+        if (!$balance) {
+            return '-';
+        } else if ($balance > 0) {
             return "+{$balance}€";
-        else 
+        } else {
             return "<span style='color:#A00'>{$balance}€</span>";
+        }
+
     }
 
-    public function getAnimalsValue() {
-        $result = "";
-        if($this->amount_males && $this->amount_females) {
-            $result .= $this->amount_males . " / " . $this->amount_females;
-            if($this->amount_other)
-                $result .= " | " . $this->amount_other;
-        }
-        else if($this->amount_other) {
+    public function getAnimalsValue()
+    {
+        $result = '';
+        if ($this->amount_males && $this->amount_females) {
+            $result .= $this->amount_males . ' / ' . $this->amount_females;
+            if ($this->amount_other) {
+                $result .= ' | ' . $this->amount_other;
+            }
+
+        } else if ($this->amount_other) {
             $result = $this->amount_other;
-        }
-        else {
-            $result = "-";
+        } else {
+            $result = '-';
         }
 
         return $result;
     }
 
     // Stats
-    public function getTotalDonatedStats() {
-        $donations =  $this->donations->reduce(function ($carry, $item) { return $carry + $item->value; });
-        return $donations != 0 ? $donations . "€" : '-';
+    public function getTotalDonatedStats()
+    {
+        $donations = $this->donations->reduce(function ($carry, $item) {return $carry + $item->value;});
+        return $donations != 0 ? $donations . '€' : '-';
     }
 
-    public function getTotalDonationsStats() {
+    public function getTotalDonationsStats()
+    {
         return sizeof($this->donations);
     }
 
-    public function getTotalExpensesStats() {
-        $expenses =  $this->treatments->reduce(function ($carry, $item) { return $carry + $item->expense; });
-        return $expenses != 0 ? $expenses . "€" : '-';
+    public function getTotalExpensesStats()
+    {
+        $expenses = $this->treatments->reduce(function ($carry, $item) {return $carry + $item->expense;});
+        return $expenses != 0 ? $expenses . '€' : '-';
     }
 
-    public function getTotalOperationsStats() {
+    public function getTotalOperationsStats()
+    {
         return sizeof($this->treatments);
     }
 
@@ -160,8 +172,9 @@ class Process extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
-   
-    public function toArray() {
+
+    public function toArray()
+    {
         $data = parent::toArray();
 
         $data['detail'] = $this->detail;

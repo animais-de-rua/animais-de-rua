@@ -1,11 +1,9 @@
 <?php
 
-use Faker\Generator as Faker;
-use Carbon\Carbon;
-
+use App\Helpers\EnumHelper;
 use App\Models\Adoption;
 use App\Models\Animal;
-use App\Helpers\EnumHelper;
+use Faker\Generator as Faker;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,7 +12,7 @@ use App\Helpers\EnumHelper;
 */
 
 $factory->define(Animal::class, function (Faker $faker) {
-	$faker->addProvider(new \App\Providers\FakerServiceProvider($faker));
+    $faker->addProvider(new \App\Providers\FakerServiceProvider($faker));
     $date = $faker->dateTimeBetween('-2 months', 'now');
 
     return [
@@ -25,6 +23,6 @@ $factory->define(Animal::class, function (Faker $faker) {
         'sterilized' => rand(0, 1),
         'vaccinated' => rand(0, 1),
         'created_at' => $date,
-        'updated_at' => $date,
+        'updated_at' => $date
     ];
 });

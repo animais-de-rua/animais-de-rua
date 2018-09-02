@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Seeder;
 use Carbon\Carbon;
+use Illuminate\Database\Seeder;
 
 class UsersSeeder extends Seeder
 {
@@ -26,7 +26,7 @@ class UsersSeeder extends Seeder
 
         // Super Admin Role
         DB::table('user_has_roles')->insert([
-            ['role_id' => 1, 'model_type' => 'Backpack\Base\app\Models\BackpackUser', 'model_id' => 1],
+            ['role_id' => 1, 'model_type' => 'Backpack\Base\app\Models\BackpackUser', 'model_id' => 1]
         ]);
     }
 }
