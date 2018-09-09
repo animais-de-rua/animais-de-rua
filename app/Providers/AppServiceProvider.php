@@ -18,6 +18,18 @@ class AppServiceProvider extends ServiceProvider
             return \Faker\Factory::create('pt_PT');
         });
 
+        \Blade::directive('svg', function ($arguments) {
+            list($path, $class, $style) = array_pad(explode(',', trim($arguments . ',,', '() ')), 2, '');
+            $path = trim($path, "' ");
+            $class = trim($class, "' ");
+            $style = trim($style, "' ");
+
+            $svg = new \DOMDocument();
+            $svg->load(public_path($path));
+            $svg->documentElement->setAttribute('class', $class);
+            $svg->documentElement->setAttribute('style', $style);
+            return $svg->saveXML($svg->documentElement);
+        });
     }
 
     /**

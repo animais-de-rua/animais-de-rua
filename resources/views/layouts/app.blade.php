@@ -27,9 +27,9 @@
     <link rel="icon" type="image/png" sizes="192x192" href="/img/icons/android-icon-192x192.png">
     <link rel="icon" type="image/png" sizes="256x256" href="/img/icons/android-icon-256x256.png">
     <link rel="manifest" href="manifest.json">
-    <meta name="msapplication-TileColor" content="#E43524">
+    <meta name="msapplication-TileColor" content="#E53625">
     <meta name="msapplication-TileImage" content="/img/icons/ms-icon-144x144.png">
-    <meta name="theme-color" content="#E43524">
+    <meta name="theme-color" content="#E53625">
 
     <meta property="og:url" content="{{ env('APP_URL') }}"/>
     <meta property="og:type" content="website"/>
@@ -42,17 +42,15 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @yield('style')
 </head>
-<body class="@yield('bodyClass')">
+<body style="background-color: #F7F7F7">
     <p style="display:none">{{ __('description') }}</p>
-    <div id="app">
-        @include('layouts.navbar')
 
-        @yield('content')
+    @include('layouts.navbar')
 
-        @include('layouts.footer')
-    </div>
+    @yield('content')
 
-    <!-- Scripts -->
+    @include('layouts.footer')
+
     <script>
         window.Laravel = {token: '{{ csrf_token() }}'};
         window.components = { };

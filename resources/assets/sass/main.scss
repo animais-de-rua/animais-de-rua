@@ -1,20 +1,355 @@
 html, body {
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-	//font-family: 'Open Sans', 'Arial', sans-serif;
-	font-weight: 300;
-	margin: 0;
-	position: relative;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    // font-family: 'Open Sans', 'Arial', sans-serif;
+    font-weight: 400;
+    margin: 0;
+    position: relative;
 }
+
 body {
-	min-height: 100vh;
+    min-height: 100vh;
 }
 
-/* Desktop */
-@media screen and (min-width: 480px) {
-	
+.container {
+    max-width: 1250px;
 }
 
-/* Mobile only */
-@media screen and (max-width: 480px) {
-	
+input {
+    outline: none;
+}
+.btn {
+    background-color: #FFF!important;
+    border: 2px solid #FFF!important;
+    font-size: 1.35rem!important;
+    transition: background-color 0.2s, color 0.2s;
+}
+.btn:hover {
+    background-color: $color!important;
+    color: #FFF!important;
+}
+input[type='radio'] {
+    appearance: none;
+    background-color: #FAFAFA;
+    padding: 7px;
+    border-radius: 7px;
+    display: inline-block;
+    margin: 0;
+    position: relative;
+}
+input[type='radio']:checked:after {
+    content: ' ';
+    width: 8px;
+    height: 8px;
+    border-radius: 50px;
+    position: absolute;
+    top: 3px;
+    background: #e53625;
+    left: 3px;
+    font-size: 32px;
+}
+a {
+    transition: color 0.2s;
+}
+a:hover {
+    color: $color;
+}
+
+.navbar {
+    background-color: #FFF;
+    height: 130px;
+
+    .container {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .left {
+        display: flex;
+        height: 36px;
+        margin-top: 48px;
+    }
+
+    .logo {
+        margin-right: 32px;
+        width: 230px;
+    }
+
+    .icon {
+        font-size: 40px;
+    }
+
+    .menu {
+        display: inline-block;
+        cursor: pointer;
+        position: absolute;
+        right: 20px;
+        z-index: 2;
+
+        div {
+            width: 35px;
+            height: 5px;
+            background-color: $color;
+            margin: 6px 0;
+            transition: 0.25s;
+            border-radius: 5px;
+            pointer-events: none;
+        }
+    }
+    .menu.active {
+        div:nth-of-type(1) {
+            transform: rotate(-45deg) translate(-9px, 7px);
+        }
+        div:nth-of-type(2) {
+            opacity: 0;
+        }
+        div:nth-of-type(3) {
+            transform: rotate(45deg) translate(-8px, -7px);
+        }
+    }
+
+    .list {
+        text-transform: uppercase;
+        list-style-type: none;
+        display: flex;
+        line-height: 38px;
+
+        li {
+            font-size: 1.25rem;
+            color: black;
+            margin: 0 12px;
+            font-weight: 600;
+            letter-spacing: 0.06rem;
+            white-space: nowrap;
+        }
+
+        li:nth-of-type(1) {
+            margin-left: 0;
+        }
+    }
+
+    .cards {
+        display: flex;
+        color: #FFF;
+        text-align: center;
+    }
+
+    .card {
+        width: 82px;
+        height: 145px;
+        background-color: $color;
+        padding-top: 35px;
+        margin-right: 10px;
+        cursor: pointer;
+        transition: height 0.2s, padding 0.2s;
+        position: relative;
+
+        text-transform: uppercase;
+        font-size: 1.25rem;
+        font-weight: 600;
+
+        p {
+            line-height: 16px;
+            margin: 16px 0 0;
+            height: 22px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #FFF;
+        }
+
+        svg {
+            width: 42px;
+            height: 42px;
+            transition: transform 0.2s;
+        }
+
+        .menu-panel {
+            position: absolute;
+            width: 360px;
+            height: 0;
+            right: 0;
+            top: 160px;
+            background-color: $color;
+            transition: height 0.3s, padding 0.3s;
+            overflow: hidden;
+        }
+    }
+
+    .card.active {
+        .menu-panel {
+            height: 240px;
+            padding-top: 30px;
+        }
+    }
+
+    .card:hover, .card.active {
+        height: 160px;
+        padding-top: 48px;
+
+        svg {
+            transform: rotate(20deg);
+        }
+    }
+
+    .mobile {
+        position: absolute;
+        width: 100vw;
+        height: 100vh;
+        top: 0;
+        left: -100vw;
+        z-index: 1;
+        background-color: #F7F7F7;
+        transition: left 0.4s;
+        overflow: hidden;
+
+        .list {
+            display: block;
+            margin-top: 6rem;
+
+            li {
+                margin: 0;
+                font-size: 2.4rem;
+                font-weight: 700;
+                margin: 1.6rem 0 0 4rem;
+            }
+        }
+
+        .cards {
+            display: flex;
+            position: absolute;
+            bottom: 0;
+        }
+
+        .card {
+            display: inline;
+            width: 50vw;
+            height: 100px;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            padding-top: 26px;
+
+            svg {
+                margin-right: 16px;
+            }
+
+            p {
+                font-size: 1.5rem;
+                margin: 12px 0 0;
+            }
+        }
+
+        .card:hover {
+            height: 100px!important;
+            padding-top: 26px;
+        }
+
+        .mobile-card-view {
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+            top: 100vh;
+            left: 0;
+            z-index: 1;
+            transition: top 0.4s;
+            background-color: $color;
+            display: flex;
+            align-items: center;
+        }
+
+        .mobile-card-view.active {
+            top: 0;
+        }
+    }
+
+    .mobile.active {
+        left: 0;
+    }
+
+    .menu-panel {
+        width: 50%;
+        margin-left: 25%;
+        color: #FFF;
+        padding: 0 30px;
+
+        h1 {
+            font-weight: 700;
+            font-size: 3.0rem;
+        }
+
+        p {
+            font-weight: 600;
+            margin: 20px 0 30px;
+            height: initial;
+        }
+
+        label {
+            display: inline-block;
+            margin-right: 22px;
+        }
+
+        .btn {
+            margin-top: 8px;
+        }
+
+        a {
+            color: #FFF;
+            text-transform: uppercase;
+            font-weight: 600;
+            text-decoration: underline;
+            font-size: 1.8rem;
+        }
+        a:hover {
+            text-decoration: none;
+        }
+    }
+}
+
+.navbar.card-view {
+    .menu div {
+        background-color: #FFF;
+    }
+    .mobile .mobile-card-view {
+        top: 0;
+    }
+}
+
+// Desktop
+@media (min-width: 769px) {
+    .navbar .menu, .navbar .mobile {
+        display: none;
+    }
+}
+
+// Mobile only
+@media (max-width: 768px) {
+    .navbar {
+        height: 68px;
+
+        .left {
+            margin-top: 18px!important;
+        }
+
+        .list, .cards {
+            display: none;
+        }
+
+        .menu {
+            margin-top: 16px;
+        }
+
+        .menu-panel {
+            width: 70%;
+            margin-left: 15%;
+            padding: 0;
+        }
+    }
+}
+
+// Fix for top menu
+@media (max-width: 1040px) {
+    .navbar .left {
+        display: inline;
+        margin-top: 28px;
+    }
 }

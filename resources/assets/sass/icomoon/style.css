@@ -1,18 +1,13 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?k956cf');
-  src:
-    url('fonts/icomoon.woff2?k956cf') format('woff2'),
-    url('fonts/icomoon.ttf?k956cf') format('truetype'),
-    url('fonts/icomoon.woff?k956cf') format('woff'),
-    url('fonts/icomoon.eot?k956cf#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.svg?k956cf#icomoon') format('svg');
+  src:  
+    url('fonts/icomoon.woff?3hsyaj') format('woff'),
+    url('fonts/icomoon.woff2?3hsyaj') format('woff2');
   font-weight: normal;
   font-style: normal;
 }
 
-i {
-  /* use !important to prevent issues with browser extensions that change fonts */
+[class^="icon-"], [class*=" icon-"] {
   font-family: 'icomoon' !important;
   speak: none;
   font-style: normal;
@@ -21,23 +16,31 @@ i {
   text-transform: none;
   line-height: 1;
 
-  /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-.ico-stack:before {
-  content: "\e905";
+.icon-arrow:before {
+  content: "\e901";
 }
-.ico-close:before {
-  content: "\e907";
+.icon-cart:before {
+  content: "\e906";
+  color: #fff;
 }
-.ico-user:before {
+.icon-card:before {
+  content: "\e900";
+  color: #fff;
+}
+.icon-donate:before {
   content: "\e902";
+  color: #fff;
 }
-.ico-google:before {
+.icon-facebook:before {
   content: "\e903";
 }
-.ico-facebook:before {
+.icon-instagram:before {
   content: "\e904";
+}
+.icon-youtube:before {
+  content: "\e905";
 }

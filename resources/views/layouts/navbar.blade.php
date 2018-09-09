@@ -1,58 +1,86 @@
-<nav class="navbar navbar-default navbar-static-top">
+<nav class="navbar">
     <div class="container">
-        <div class="navbar-header">
+        <div class="left">
+            <div class="logo">
+                <a href="{{ url('/') }}">
+                    @svg('img/logo/logo-text.svg', '', 'max-width: 230px; max-height: 36px;')
+                </a>
+            </div>
 
-            <!-- Collapsed Hamburger -->
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse" aria-expanded="false">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-
-            <!-- Branding Image -->
-            <a class="navbar-brand" href="{{ url('/') }}">
-                {{ config('app.name', 'Laravel') }}
-                <!-- img alt="{{ config('app.name', 'Laravel') }}" src="/img/icons/android-icon-48x48.png" /-->
-            </a>
+            <ul class="list">
+                <li class=""><a href="/association">{{ __("The Organization") }}</a></li>
+                <li class=""><a href="/ced">{{ __("CED") }}</a></li>
+                <li class=""><a href="/animals">{{ __("Animals") }}</a></li>
+                <li class=""><a href="/help">{{ __("Help") }}</a></li>
+                <li class=""><a href="/partners">{{ __("Partners") }}</a></li>
+            </ul>
         </div>
 
-        <div class="collapse navbar-collapse" id="app-navbar-collapse">
-            <!-- Left Side Of Navbar -->
-            <!--ul class="nav navbar-nav">
-            </ul-->
+        <div class="cards">
+            <a href="{{ url('/store') }}">
+                <div class="card">
+                    <i class="icon icon-cart"></i>
+                    <p>{{ __("Store") }}</p>
+                </div>
+            </a>
+            <div class="card" onclick="menuCard(this, 0)">
+                <i class="icon icon-card"></i>
+                <p>{{ __("friend card") }}</p>
+                <div class="menu-panel">
+                    @component('components.friend_card')
+                    @endcomponent
+                </div>
+            </div>
+            <div class="card" onclick="menuCard(this, 1)">
+                <i class="icon icon-donate"></i>
+                <p>{{ __("Donate") }}</p>
+                <div class="menu-panel">
+                    @component('components.donate')
+                    @endcomponent
+                </div>
+            </div>
+        </div>
 
-            <!-- Right Side Of Navbar -->
-            <ul class="nav navbar-nav navbar-right links">
-                <!-- Authentication Links -->
-                @guest
-                    <li><a href="{{ route('login') }}">{{ __("Login") }}</a></li>
-                    <li><a href="{{ route('register') }}">{{ __("Register") }}</a></li>
-                @else
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle dropdown-toggle-avatar" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
-                            <div class="avatar" style="background-image: url('{{ Auth::user()->avatar }}');"></div>
-                            {{ Auth::user()->name }} <span class="caret"></span>
-                        </a>
+        <div class="menu" onclick="mobileMenu(this)">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
 
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="{{ '/admin' }}">{{ __("Dashboard") }}<i class="ico-stack" style="float:right;margin-top:1px;"></i></a>
-                            </li>
-                            <li>
-                                <a href="{{ route('logout') }}"
-                                    onclick="event.preventDefault();
-                                             document.getElementById('logout-form').submit();">
-                                    {{ __("Logout") }}
-                                </a>
+    <div class="mobile">
+        <ul class="list">
+            <li class=""><a href="/">{{ __("Home") }}</a></li>
+            <li class=""><a href="/association">{{ __("The Organization") }}</a></li>
+            <li class=""><a href="/ced">{{ __("CED") }}</a></li>
+            <li class=""><a href="/animals">{{ __("Animals") }}</a></li>
+            <li class=""><a href="/help">{{ __("Help") }}</a></li>
+            <li class=""><a href="/partners">{{ __("Partners") }}</a></li>
+            <li class=""><a href="/store">{{ __("Store") }}</a></li>
+        </ul>
 
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                    {{ csrf_field() }}
-                                </form>
-                            </li>
-                        </ul>
-                    </li>
-                @endguest
-            </ul>
+        <div class="cards">
+            <div class="card" onclick="mobileMenuCard(0)" style="border-right: 4px solid white;">
+                <div class="icon icon-card" style="margin-right: 8px"></div>
+                <p>{{ __("friend card") }}</p>
+            </div>
+            <div class="card" onclick="mobileMenuCard(1)">
+                <div class="icon icon-donate" style="margin-right: 8px"></div>
+                <p>{{ __("Donate") }}</p>
+            </div>
+        </div>
+
+        <div class="mobile-card-view">
+            <div class="menu-panel">
+                <div class="icon icon-card" style="margin:8px 0"></div>
+                @component('components.friend_card')
+                @endcomponent
+            </div>
+            <div class="menu-panel">
+                <div class="icon icon-donate" style="margin:8px 0"></div>
+                @component('components.donate')
+                @endcomponent
+            </div>
         </div>
     </div>
 </nav>
