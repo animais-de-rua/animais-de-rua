@@ -1,4 +1,5 @@
 <nav class="navbar">
+    <div id="loading"></div>
     <div class="container">
         <div class="left">
             <div class="logo">
@@ -8,11 +9,11 @@
             </div>
 
             <ul class="list">
-                <li class=""><a href="/association">{{ __("The Organization") }}</a></li>
-                <li class=""><a href="/ced">{{ __("CED") }}</a></li>
-                <li class=""><a href="/animals">{{ __("Animals") }}</a></li>
-                <li class=""><a href="/help">{{ __("Help") }}</a></li>
-                <li class=""><a href="/partners">{{ __("Partners") }}</a></li>
+                <li><a class="link" href="/association">{{ __("The Organization") }}</a></li>
+                <li><a class="link" href="/ced">{{ __("CED") }}</a></li>
+                <li><a class="link" href="/animals">{{ __("Animals") }}</a></li>
+                <li><a class="link" href="/help">{{ __("Help") }}</a></li>
+                <li><a class="link" href="/partners">{{ __("Partners") }}</a></li>
             </ul>
         </div>
 
@@ -50,19 +51,19 @@
 
     <div class="mobile">
         <ul class="list">
-            <li class=""><a href="/">{{ __("Home") }}</a></li>
-            <li class=""><a href="/association">{{ __("The Organization") }}</a></li>
-            <li class=""><a href="/ced">{{ __("CED") }}</a></li>
-            <li class=""><a href="/animals">{{ __("Animals") }}</a></li>
-            <li class=""><a href="/help">{{ __("Help") }}</a></li>
-            <li class=""><a href="/partners">{{ __("Partners") }}</a></li>
-            <li class=""><a href="/store">{{ __("Store") }}</a></li>
+            <li><a class="link" href="/home">{{ __("Home") }}</a></li>
+            <li><a class="link" href="/association">{{ __("The Organization") }}</a></li>
+            <li><a class="link" href="/ced">{{ __("CED") }}</a></li>
+            <li><a class="link" href="/animals">{{ __("Animals") }}</a></li>
+            <li><a class="link" href="/help">{{ __("Help") }}</a></li>
+            <li><a class="link" href="/partners">{{ __("Partners") }}</a></li>
+            <li><a class="link" href="/store">{{ __("Store") }}</a></li>
         </ul>
 
         <div class="cards">
             <div class="card" onclick="mobileMenuCard(0)" style="border-right: 4px solid white;">
                 <div class="icon icon-card" style="margin-right: 8px"></div>
-                <p>{{ __("friend card") }}</p>
+                <p>{!! str_replace(" ", "<br />", __("friend card")) !!}</p>
             </div>
             <div class="card" onclick="mobileMenuCard(1)">
                 <div class="icon icon-donate" style="margin-right: 8px"></div>

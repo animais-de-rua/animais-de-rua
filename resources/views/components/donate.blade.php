@@ -1,6 +1,6 @@
 <h1>Doar</h1>
 <p>O seu donativo salva vidas!</p>
-<form name="_xclick" action="https://www.paypal.com/yt/cgi-bin/webscr" method="post" target="_blank">
+<form class="stopPropagation" name="_xclick" action="https://www.paypal.com/yt/cgi-bin/webscr" method="post" target="_blank">
     <input type="hidden" name="cmd" value="_xclick"/>
     <input type="hidden" name="business" value="donativos@animaisderua.org"/>
     <input type="hidden" name="item_name" value="Doar"/>

@@ -13,6 +13,37 @@ body {
 .container {
     max-width: 1250px;
 }
+#content {
+    opacity: 1.0;
+    transition: opacity 0.2s;
+}
+#content.anim { animation: fadeIn .1s forwards; }
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+#loading {
+    background-color: $color;
+    position: fixed;
+    top: 0;
+    width: 0;
+    height: 2px;
+    z-index: 10;
+}
+#loading.start { animation: loadingStart .6s forwards; }
+#loading.end { animation: loadingEnd .2s; }
+
+@keyframes loadingStart {
+    0% { width: 0; }
+    100% { width: 35vw; }
+}
+
+@keyframes loadingEnd {
+    0% { width: 35vw; }
+    100% { width: 100vw; }
+}
+
 
 input {
     outline: none;
@@ -22,6 +53,7 @@ input {
     border: 2px solid #FFF!important;
     font-size: 1.35rem!important;
     transition: background-color 0.2s, color 0.2s;
+    line-height: 2rem!important;
 }
 .btn:hover {
     background-color: $color!important;
@@ -52,6 +84,9 @@ a {
 }
 a:hover {
     color: $color;
+}
+.overflow {
+    overflow: hidden;
 }
 
 .navbar {
@@ -164,14 +199,14 @@ a:hover {
         }
 
         .menu-panel {
-            position: absolute;
             width: 360px;
             height: 0;
-            right: 0;
-            top: 160px;
-            background-color: $color;
+            background-color: #E53625;
             transition: height 0.3s, padding 0.3s;
             overflow: hidden;
+            z-index: 10;
+            margin: 30px 0 0 calc(82px - 360px);
+            position: absolute;
         }
     }
 
@@ -316,6 +351,10 @@ a:hover {
 
 // Desktop
 @media (min-width: 769px) {
+    #content {
+        min-height: calc(100vh - 130px);
+    }
+
     .navbar .menu, .navbar .mobile {
         display: none;
     }
@@ -323,6 +362,10 @@ a:hover {
 
 // Mobile only
 @media (max-width: 768px) {
+    #content {
+        min-height: calc(100vh - 68px);
+    }
+
     .navbar {
         height: 68px;
 

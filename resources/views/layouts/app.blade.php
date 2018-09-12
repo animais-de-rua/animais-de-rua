@@ -1,3 +1,6 @@
+@if(Request::ajax())
+    @yield('content')
+@else
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
 <head>
@@ -11,7 +14,7 @@
 
     <title>{{ config('app.name') }}</title>
 
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <link rel="apple-touch-icon" sizes="57x57" href="/img/icons/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="/img/icons/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="/img/icons/apple-icon-72x72.png">
@@ -25,10 +28,12 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/img/icons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="96x96" href="/img/icons/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="192x192" href="/img/icons/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="256x256" href="/img/icons/android-icon-256x256.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/img/icons/android-icon-512x512.png">
+    <link rel="icon" type="image/png" sizes="1024x1024" href="/img/icons/android-icon-1024x1024.png">
     <link rel="manifest" href="manifest.json">
     <meta name="msapplication-TileColor" content="#E53625">
     <meta name="msapplication-TileImage" content="/img/icons/ms-icon-144x144.png">
+    <meta name="msapplication-config" content="browserconfig.xml">
     <meta name="theme-color" content="#E53625">
 
     <meta property="og:url" content="{{ env('APP_URL') }}"/>
@@ -39,7 +44,7 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     @yield('style')
 </head>
 <body style="background-color: #F7F7F7">
@@ -47,20 +52,21 @@
 
     @include('layouts.navbar')
 
-    @yield('content')
+    <section id="content" class="container">
+        @yield('content')
+    </section>
 
     @include('layouts.footer')
 
     <script>
         window.Laravel = {token: '{{ csrf_token() }}'};
         window.components = { };
-        window.utils = { };
         window.translations = {month: [
             '{{ __('Jan') }}', '{{ __('Feb') }}', '{{ __('Mar') }}', '{{ __('Apr') }}',
             '{{ __('May') }}', '{{ __('Jun') }}', '{{ __('Jul') }}', '{{ __('Aug') }}',
             '{{ __('Sep') }}', '{{ __('Oct') }}', '{{ __('Nov') }}', '{{ __('Dec') }}']};
     </script>
-    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ mix('js/app.js') }}"></script>
     <script>
         if(typeof onDocumentReady === 'function')
             document.addEventListener("DOMContentLoaded", onDocumentReady);
@@ -76,3 +82,4 @@
     </script>
 </body>
 </html>
+@endif

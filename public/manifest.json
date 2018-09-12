@@ -1,8 +1,8 @@
 {
   "name": "Animais de Rua",
   "short_name": "Animais de Rua",
-  "theme_color": "#E43524",
-  "background_color": "#E43524",
+  "theme_color": "#E53625",
+  "background_color": "#E53625",
   "display": "standalone",
   "start_url": "/",
   "scope": "/",
@@ -40,6 +40,18 @@
     {
       "src": "/img/icons/android-icon-192x192.png?v=1",
       "sizes": "192x192",
+      "type": "image/png",
+      "density": "4.0"
+    },
+    {
+      "src": "/img/icons/android-icon-512x512.png?v=1",
+      "sizes": "512x512",
+      "type": "image/png",
+      "density": "4.0"
+    },
+    {
+      "src": "/img/icons/android-icon-1024x1024.png?v=1",
+      "sizes": "1024x1024",
       "type": "image/png",
       "density": "4.0"
     }

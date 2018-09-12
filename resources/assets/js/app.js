@@ -1,40 +1,94 @@
-
-// ----------
 // Load Modules
+import * as utils from './utils.js';
 
-window.utils = require('./utils.js');
-
-
-// ----------
 // Main Code
 document.addEventListener('DOMContentLoaded', e => {
+    loadLinks();
 
+    // Close cards when clicking out of them
+    content.addEventListener('click', e => {
+        if(navbar.querySelector('.card.active'))
+            navbar.querySelector('.card.active').classList.remove('active');
+    });
+
+    // Stop propagation
+    document.querySelectorAll('.stopPropagation').forEach(e => e.addEventListener('click', e => e.stopPropagation()));
+
+    // Router control
+    window.history.pushState({'html': content.innerHTML}, '', location.pathname);
+    window.onpopstate = e => {
+        if(e.state)
+            content.innerHTML = e.state.html;
+    }
 });
 
-let navbar = document.querySelector('.navbar'),
-	navbarCards = document.querySelector('.navbar .cards'),
-	navbarMobile = document.querySelector('.navbar .mobile'),
-	navbarMobileCards = document.querySelector('.navbar .mobile-card-view');
+const loader = document.querySelector('#loading'),
+    content = document.getElementById('content'),
+    navbar = document.querySelector('.navbar'),
+    navbarCards = navbar.querySelectorAll('.cards > .card'),
+    navbarMobile = navbar.querySelector('.mobile'),
+    navbarMobileCards = navbar.querySelectorAll('.mobile-card-view > .menu-panel');
 
-mobileMenu = e => {
-	if(navbar.classList.contains('card-view'))
-		return navbar.classList.remove('card-view');
+window.mobileMenu = e => {
+    if(navbar.classList.contains('card-view'))
+        return navbar.classList.remove('card-view');
 
-	e.classList.toggle('active');
-	navbarMobile.classList.toggle('active');
-};
-
-mobileMenuCard = i => {
-	navbar.classList.toggle('card-view');
-
-	navbarMobileCards.children.map(card => card.style.display = 'none');
-	navbarMobileCards.children[i].style.display = 'block';
+    e.classList.toggle('active');
+    navbarMobile.classList.toggle('active');
+    document.body.classList.toggle('overflow');
 }
 
-menuCard = (e, i) => {
-	if(e.classList.contains('active'))
-		return e.classList.remove('active');
+window.mobileMenuCard = i => {
+    navbar.classList.toggle('card-view');
 
-	navbarCards.children.map(card => card.classList.remove('active'));
-	e.classList.add('active');
+    navbarMobileCards.forEach(card => card.style.display = 'none');
+    navbarMobileCards[i].style.display = 'block';
 }
+
+window.menuCard = (e, i) => {
+    if(e.classList.contains('active'))
+        return e.classList.remove('active');
+
+    navbarCards.forEach(card => card.classList.remove('active'));
+    e.classList.add('active');
+}
+
+// AJAX Links controller
+window.loadLinks = () => {
+    document.querySelectorAll('a.link').forEach(link => {
+        link.addEventListener('click', e => {
+            let urlPath = e.target.href;
+
+            loadingStart();
+            content.classList.remove('anim');
+
+            e.preventDefault();
+            fetch(urlPath, {
+                credentials: 'same-origin',
+                headers: {'X-Requested-With': 'XMLHttpRequest'}
+            }).then(response => {
+                // Closes mobile menu
+                if(navbarMobile.classList.contains('active')) {
+                    navbar.querySelector('.menu').click();
+                    // In case second menu is oppened
+                    if(navbarMobile.classList.contains('active'))
+                        setTimeout(e => navbar.querySelector('.menu').click(), 250);
+                }
+
+                response.text().then(html => {
+                    content.innerHTML = html;
+
+                    loadingEnd();
+                    content.classList.add('anim');
+
+                    window.history.pushState({'html': html}, '', urlPath);
+                })
+            }).catch(() => {
+                window.location = urlPath;
+            });
+        })
+    });
+}
+
+window.loadingStart = () => loader.className = 'start';
+window.loadingEnd = () => loader.className = 'end';

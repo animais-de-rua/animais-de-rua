@@ -1,0 +1,46 @@
+AddOutputFilterByType DEFLATE text/plain
+AddOutputFilterByType DEFLATE text/html
+AddOutputFilterByType DEFLATE text/xml
+AddOutputFilterByType DEFLATE text/css
+AddOutputFilterByType DEFLATE application/xml
+AddOutputFilterByType DEFLATE application/xhtml+xml
+AddOutputFilterByType DEFLATE application/rss+xml
+AddOutputFilterByType DEFLATE application/javascript
+AddOutputFilterByType DEFLATE application/x-javascript
+
+<IfModule mod_rewrite.c>
+    RewriteEngine on
+    
+    RewriteCond %{HTTPS} !on
+    RewriteCond %{HTTP_HOST} animaisderua.org [NC,OR]
+    RewriteCond %{HTTPS} on
+    RewriteCond %{HTTP_HOST} (\w+).animaisderua.org [NC]
+    RewriteRule ^(.*)$ https://animaisderua.org/$1 [L,R=301]
+
+    RewriteCond %{HTTP_HOST} animaisderua.org$ [NC]
+    RewriteRule ^(.*)$ /public/$1 [L]
+</IfModule>
+
+<IfModule mod_headers.c>
+    Header set Connection keep-alive
+
+    # 15 DAYS
+    <filesMatch "\.(ico|pdf|flv|jpg|jpeg|webp|png|gif|js|swf)$">
+        Header set Cache-Control "max-age=1209600, public"
+    </filesMatch>
+
+    # 3 DAYS
+    <filesMatch "\.(css|js)$">
+        Header set Cache-Control "max-age=86400, public, must-revalidate"
+        #Header set Cache-Control "max-age=0, public, must-revalidate"
+    </filesMatch>
+
+    # 2 HOURS
+    <filesMatch "\.(html|htm)$">
+        Header set Cache-Control "max-age=7200, must-revalidate"
+    </filesMatch>
+
+    <FilesMatch "\.(gif|jpg|png|ico|css|js|pdf|txt)$">
+        Header append Cache-Control "public"
+    </FilesMatch>
+</IfModule>
