@@ -9,7 +9,7 @@
             </div>
 
             <ul class="list">
-                <li><a class="link" href="/association">{{ __("The Organization") }}</a></li>
+                <li><a class="link" href="/association">{{ __("Organization") }}</a></li>
                 <li><a class="link" href="/ced">{{ __("CED") }}</a></li>
                 <li><a class="link" href="/animals">{{ __("Animals") }}</a></li>
                 <li><a class="link" href="/help">{{ __("Help") }}</a></li>
@@ -18,6 +18,11 @@
         </div>
 
         <div class="cards">
+            <div class="languages">
+                @component('components.flagpicker')
+                @endcomponent
+            </div>
+
             <a href="{{ url('/store') }}">
                 <div class="card">
                     <i class="icon icon-cart"></i>
@@ -61,7 +66,11 @@
         </ul>
 
         <div class="cards">
-            <div class="card" onclick="mobileMenuCard(0)" style="border-right: 4px solid white;">
+            <div class="languages">
+                @component('components.flagpicker')
+                @endcomponent
+            </div>
+            <div class="card" onclick="mobileMenuCard(0)">
                 <div class="icon icon-card" style="margin-right: 8px"></div>
                 <p>{!! str_replace(" ", "<br />", __("friend card")) !!}</p>
             </div>

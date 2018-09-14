@@ -1,6 +1,14 @@
 // Load Modules
 import * as utils from './utils.js';
 
+const loader = document.querySelector('#loading'),
+    content = document.getElementById('content'),
+    navbar = document.querySelector('.navbar'),
+    navbarCards = navbar.querySelectorAll('.cards > .card'),
+    navbarMobile = navbar.querySelector('.mobile'),
+    navbarMobileMenu = navbar.querySelector('.menu'),
+    navbarMobileCards = navbar.querySelectorAll('.mobile-card-view > .menu-panel');
+
 // Main Code
 document.addEventListener('DOMContentLoaded', e => {
     loadLinks();
@@ -20,14 +28,20 @@ document.addEventListener('DOMContentLoaded', e => {
         if(e.state)
             content.innerHTML = e.state.html;
     }
-});
 
-const loader = document.querySelector('#loading'),
-    content = document.getElementById('content'),
-    navbar = document.querySelector('.navbar'),
-    navbarCards = navbar.querySelectorAll('.cards > .card'),
-    navbarMobile = navbar.querySelector('.mobile'),
-    navbarMobileCards = navbar.querySelectorAll('.mobile-card-view > .menu-panel');
+    // Simple Handler for touch on mobile menu
+    let startTouch;
+    navbarMobile.addEventListener("touchstart", e => { startTouch = e.changedTouches[0] }, false);
+    navbarMobile.addEventListener("touchend", e => {
+        let [diffX, diffY] = [
+            e.changedTouches[0].clientX - startTouch.clientX,
+            e.changedTouches[0].clientY - startTouch.clientY
+        ];
+
+        if((navbar.classList.contains("card-view") && diffY > 20) || diffX < -20)
+            navbarMobileMenu.click();
+    }, false);
+});
 
 window.mobileMenu = e => {
     if(navbar.classList.contains('card-view'))

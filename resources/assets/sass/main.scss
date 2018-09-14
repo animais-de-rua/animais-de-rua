@@ -80,11 +80,22 @@ input[type='radio']:checked:after {
     font-size: 32px;
 }
 a {
+    cursor: pointer;
     transition: color 0.2s;
 }
 a:hover {
     color: $color;
 }
+
+a.lined {
+    border-bottom: solid 1px #CCC;
+    padding-bottom: 3px;
+    transition: color 0.2s, padding 0.2s!important;
+}
+a.lined:hover {
+    padding-bottom: 0px;
+}
+
 .overflow {
     overflow: hidden;
 }
@@ -101,6 +112,7 @@ a:hover {
     .left {
         display: flex;
         height: 36px;
+        width: 100%;
         margin-top: 48px;
     }
 
@@ -148,10 +160,16 @@ a:hover {
         display: flex;
         line-height: 38px;
 
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 450px;
+        min-width: 380px;
+
         li {
             font-size: 1.25rem;
             color: black;
-            margin: 0 12px;
+            margin: 0;
             font-weight: 600;
             letter-spacing: 0.06rem;
             white-space: nowrap;
@@ -172,7 +190,7 @@ a:hover {
         width: 82px;
         height: 145px;
         background-color: $color;
-        padding-top: 35px;
+        padding: 35px 4px;
         margin-right: 10px;
         cursor: pointer;
         transition: height 0.2s, padding 0.2s;
@@ -205,7 +223,7 @@ a:hover {
             transition: height 0.3s, padding 0.3s;
             overflow: hidden;
             z-index: 10;
-            margin: 30px 0 0 calc(82px - 360px);
+            margin: 30px 0 0 calc(82px - 360px - 4px);
             position: absolute;
         }
     }
@@ -231,7 +249,8 @@ a:hover {
         width: 100vw;
         height: 100vh;
         top: 0;
-        left: -100vw;
+        left: -100%;
+        will-change: left;
         z-index: 1;
         background-color: #F7F7F7;
         transition: left 0.4s;
@@ -250,9 +269,27 @@ a:hover {
         }
 
         .cards {
-            display: flex;
             position: absolute;
             bottom: 0;
+            display: grid;
+            grid-template-columns: 50% 50%;
+            grid-column-gap: 4px;
+        }
+
+        .languages {
+            margin: 0;
+            grid-column-start: 1;
+            grid-column-end: 3;
+            margin: 1.6rem 0 2rem 4rem;
+            width: 100%;
+            text-align: left;
+
+            .lang {
+                font-size: 2.4rem;
+                font-weight: 700;
+                color: #000;
+                margin-right: 1rem;
+            }
         }
 
         .card {
@@ -338,6 +375,22 @@ a:hover {
             text-decoration: none;
         }
     }
+
+    .languages {
+        margin: 52px 10px 0 20px;
+        width: 40px;
+
+        .lang {
+            display: inline-block;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .lang.active {
+            color: $color;
+        }
+    }
 }
 
 .navbar.card-view {
@@ -346,6 +399,127 @@ a:hover {
     }
     .mobile .mobile-card-view {
         top: 0;
+    }
+}
+
+// Footer
+footer {
+    background-color: #000;
+    color: #FFF;
+    padding: 64px 0 80px;
+    font-weight: 800;
+
+    h4 {
+        font-weight: 700;
+        font-size: 1.8rem;
+        letter-spacing: 0.01rem;
+    }
+    a.color-link {
+        color: #FFF;
+        transition: 0.1s color;
+    }
+    a.color-link:hover {
+        color: #CCC;
+    }
+
+    .logo {
+        svg {
+            fill: #FFF;
+            width: 46px;
+            height: 46px;
+            margin-top:5px;
+
+            path {
+                fill: #FFF;
+            }
+        }
+    }
+
+    .stats {
+        h1 {
+            font-weight: 700;
+            font-size: 5.4rem;
+            letter-spacing: 0.01rem;
+            margin-bottom: 0px;
+        }
+    }
+
+    .newsletter {
+        h4 {
+            margin-bottom: 0.8rem;
+        }
+    }
+
+    .social {
+        h4 {
+            margin-bottom: 1.4rem;
+        }
+        .icon {
+            font-size: 22px;
+            margin: 0 10px 0 0;
+        }
+    }
+
+    .solidarity {
+        h4 {
+            margin-bottom: 0.5rem;
+        }
+        a {
+            font-weight: 600;
+            font-size: 1.8rem;
+        }
+        p {
+            margin-top: 2px;
+            font-weight: 400;
+            font-size: 1.2rem;
+        }
+    }
+
+    .contact {
+        a {
+            font-weight: 700;
+        }
+    }
+
+    form {
+        input[type='email'] {
+            width: 250px;
+            height: 30px;
+            background: transparent;
+            border: 1px solid #FFF;
+            padding: 0 10px;
+            display: inline-block;
+            margin-right: 12px;
+            color: #FFF;
+            font-size: 1.4rem;
+            border-radius: 0;
+            transition: 0.2s margin;
+        }
+        input[type='email']:focus {
+            border: 1px solid #FFF;
+            margin-right: 0px;
+        }
+
+        button {
+            background: #FFF;
+            height: 30px;
+            width: 50px;
+            vertical-align: top;
+            border-radius: 0;
+            border: 1px solid #FFF;
+            color: #000;
+            text-align: center;
+            transition: 0.2s background;
+            margin-left: -5px;
+            font-size: 18px;
+            padding: 0px;
+            line-height: 0px;
+        }
+        button:hover, button:focus {
+            color: #000;
+            background: #EEE;
+            border: 1px solid #FFF;
+        }
     }
 }
 
@@ -390,9 +564,25 @@ a:hover {
 }
 
 // Fix for top menu
-@media (max-width: 1040px) {
+@media (max-width: 1092px) {
     .navbar .left {
         display: inline;
         margin-top: 28px;
+    }
+}
+
+@media (max-width: 40rem) {
+    .row.responsive .column[class*=" column-"] {
+        margin-left: 0;
+        max-width: 100%;
+    }
+
+    footer {
+        .logo {
+            display: none!important;
+        }
+        .contact {
+            margin-top: 20px;
+        }
     }
 }

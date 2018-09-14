@@ -5,7 +5,7 @@
 
     "Home": "Início",
     "Store": "Loja",
-    "The Organization": "A Associação",
+    "Organization": "A Associação",
     "CED": "CED",
     "Help": "Como Ajudar",
     "Partners": "Parceiros",
@@ -16,6 +16,7 @@
     "Register": "Registar",
     "Logout": "Sair",
     "E-Mail Address": "E-Mail",
+    "Your Email Address": "O seu email",
     "Password": "Password",
     "Remember Me": "Lembrar-me",
     "Forgot Your Password?": "Esqueceu-se da Password?",
@@ -62,6 +63,7 @@
     "Animals": "Animais",
     "Paypal code": "Código Paypal",
     "Benefit": "Benefício",
+    "Learn more": "Saiba mais",
 
     "Languages": "Idioma",
     "File manager": "Gestor de ficheiros",

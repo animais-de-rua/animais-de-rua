@@ -9,6 +9,8 @@ class PageController extends Controller
 {
     public function index($slug)
     {
+        \Debugbar::disable();
+
         $page = Page::findBySlug($slug);
 
         if (!$page) {
