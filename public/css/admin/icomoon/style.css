@@ -1,8 +1,8 @@
 @font-face {
   font-family: 'icomoon';
   src:
-    url('fonts/icomoon.woff2?h3y0pn') format('woff2'),
-    url('fonts/icomoon.woff?h3y0pn') format('woff');
+    url('fonts/icomoon.woff2?v3lrka') format('woff2'),
+    url('fonts/icomoon.woff?v3lrka') format('woff');
   font-weight: normal;
   font-style: normal;
 }
@@ -21,6 +21,9 @@
 
 .icon-headquarter:before {
   content: "\e905";
+}
+.icon-protocol:before {
+  content: "\e900";
 }
 .icon-vet:before {
   content: "\e901";

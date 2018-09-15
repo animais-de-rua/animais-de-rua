@@ -1,12 +1,10 @@
 @if ($crud->hasAccess('delete'))
-	<a href="javascript:void(0)" onclick="deleteEntry(this)" data-route="{{ url($crud->route.'/'.$entry->getKey()) }}" class="btn btn-xs btn-default" data-button-type="delete"><i class="fa fa-trash"></i> {{ trans('backpack::crud.delete') }}</a>
+	<a href="javascript:void(0)" onclick="deleteEntry(this)" data-route="{{ url($crud->route.'/'.$entry->getKey()) }}" class="btn btn-xs btn-default" data-button-type="delete"><i class="fa fa-trash"></i> <span>{{ trans('backpack::crud.delete') }}</span></a>
 @endif
 
 <script>
 	if (typeof deleteEntry != 'function') {
-		document.addEventListener('DOMContentLoaded', e => {
-			$("[data-button-type=delete]").unbind('click');
-		}, false);
+	  $("[data-button-type=delete]").unbind('click');
 
 	  function deleteEntry(button) {
 	      // ask for confirmation before deleting an item
@@ -30,9 +28,9 @@
 	                  // Hide the modal, if any
 	                  $('.modal').modal('hide');
 
-	                  // Check if details row is open
+	                  // Remove the details row, if it is open
 	                  if (row.hasClass("shown")) {
-	                  	row.next().remove();
+	                      row.next().remove();
 	                  }
 
 	                  // Remove the row from the datatable

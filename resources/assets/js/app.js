@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', e => {
             e.changedTouches[0].clientY - startTouch.clientY
         ];
 
-        if((navbar.classList.contains("card-view") && diffY > 20) || diffX < -20)
+        if((navbar.classList.contains("card-view") && diffY > 60) || diffX < -60)
             navbarMobileMenu.click();
     }, false);
 });

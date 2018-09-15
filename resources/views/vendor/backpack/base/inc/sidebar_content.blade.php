@@ -12,7 +12,7 @@
 </li>
 <li><a href="{{ backpack_url('godfather') }}"><i class="fa icon-godfather"></i> <span class="text-capitalize">{{ __("godfathers") }}</span></a></li>
 <li><a href="{{ backpack_url('donation') }}"><i class="fa icon-donation"></i> <span class="text-capitalize">{{ __("donations") }}</span></a></li>
-{{-- <li><a href="{{ backpack_url('protocol') }}"><i class="fa icon-protocol"></i> <span class="text-capitalize">{{ __("protocols") }}</span></a></li> --}}
+<li><a href="{{ backpack_url('protocol') }}"><i class="fa icon-protocol"></i> <span class="text-capitalize">{{ __("protocols") }}</span></a></li>
 <li class="treeview">
 	<a href="#"><i class="fa icon-treatment"></i> <span class="text-capitalize">{{ __("treatment") }}</span> <i class="fa fa-angle-left pull-right"></i></a>
 	<ul class="treeview-menu">
