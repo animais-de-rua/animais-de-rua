@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', e => {
 
     // Simple Handler for touch on mobile menu
     let startTouch;
-    navbarMobile.addEventListener("touchstart", e => { startTouch = e.changedTouches[0] }, false);
+    navbarMobile.addEventListener("touchstart", e => { startTouch = e.changedTouches[0] }, {passive: true});
     navbarMobile.addEventListener("touchend", e => {
         let [diffX, diffY] = [
             e.changedTouches[0].clientX - startTouch.clientX,
@@ -40,8 +40,63 @@ document.addEventListener('DOMContentLoaded', e => {
 
         if((navbar.classList.contains("card-view") && diffY > 60) || diffX < -60)
             navbarMobileMenu.click();
-    }, false);
+    }, {passive: true});
+
+    // Sliders
+    document.querySelectorAll('.flex-slider').forEach(elem => {
+        sliderStart(elem);
+
+        // Dots
+        elem.querySelectorAll('.dots > li').forEach(dot => {
+            dot.addEventListener('click', e => {
+                // Index of this element in parent
+                let index = utils.indexOf(dot);
+                let slider = dot.closest('.flex-slider');
+
+                // Restart slider interval
+                sliderStart(slider);
+
+                sliderMoveTo(slider, index);
+            })
+        });
+    });
 });
+
+
+window.sliderStart = slider => {
+    let autoScroll = slider.getAttribute('auto-scroll');
+
+    if(autoScroll) {
+        let interval = slider.getAttribute('interval');
+        if(interval)
+            clearInterval(interval);
+
+        slider.setAttribute('interval', setInterval(() => {
+            sliderMove(slider);
+        }, autoScroll));
+    }
+}
+
+window.sliderMove = slider => {
+    let dots = slider.querySelector('.dots');
+    let index = utils.indexOf(dots.querySelector('.active'));
+
+    index++;
+    if(index == dots.children.length)
+        index = 0;
+
+    sliderMoveTo(slider, index);
+}
+
+window.sliderMoveTo = (slider, index) => {
+    // Change active Dot
+    let dots = slider.querySelector('.dots');
+    dots.querySelector('.active').classList.remove('active');
+    dots.children[index].classList.add('active');
+
+    // Add the translate
+    slider.querySelector('ul').style = "transform: translateX(-" + index * 100 + "%);";
+}
 
 window.mobileMenu = e => {
     if(navbar.classList.contains('card-view'))

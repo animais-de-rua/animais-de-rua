@@ -29,3 +29,11 @@ export function ajax(url, data, success, error, method) {
     xhr.send(params);
     return xhr;
 }
+
+
+export function indexOf(child) {
+    let i = 0;
+    while( (child = child.previousElementSibling) != null)
+        i++;
+    return i;
+}

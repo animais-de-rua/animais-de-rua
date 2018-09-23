@@ -1,4 +1,5 @@
 @if(Request::ajax())
+    <script>document.body || window.location.reload()</script>
     @yield('content')
 @else
 <!DOCTYPE html>
@@ -14,7 +15,6 @@
 
     <title>{{ config('app.name') }}</title>
 
-    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <link rel="apple-touch-icon" sizes="57x57" href="/img/icons/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="/img/icons/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="/img/icons/apple-icon-72x72.png">
@@ -27,9 +27,6 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/img/icons/favicon-16x16.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/img/icons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="96x96" href="/img/icons/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="/img/icons/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="512x512" href="/img/icons/android-icon-512x512.png">
-    <link rel="icon" type="image/png" sizes="1024x1024" href="/img/icons/android-icon-1024x1024.png">
     <link rel="manifest" href="manifest.json">
     <meta name="msapplication-TileColor" content="#E53625">
     <meta name="msapplication-TileImage" content="/img/icons/ms-icon-144x144.png">
@@ -42,17 +39,22 @@
     <meta property="og:description" content="{{ __('description') }}"/>
     <meta property="og:image" content="{{ env('APP_URL') }}/img/logo.png"/>
 
+    <link rel="preload" href="/js/app.js" as="script"/>
+    <link rel="preload" href="/css/app.css" as="style"/>
+
+    <link rel="preconnect" href="https://www.google-analytics.com"/>
+    <link rel="preconnect" href="https://www.googletagmanager.com"/>
+
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     @yield('style')
 </head>
 <body style="background-color: #F7F7F7">
-    <p style="display:none">{{ __('description') }}</p>
 
     @include('layouts.navbar')
 
-    <section id="content" class="container">
+    <section id="content">
         @yield('content')
     </section>
 

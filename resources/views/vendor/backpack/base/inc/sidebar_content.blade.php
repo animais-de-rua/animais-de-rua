@@ -45,6 +45,7 @@
 	<a href="#"><i class="fa fa-window-maximize"></i> <span>Website</span> <i class="fa fa-angle-left pull-right"></i></a>
 	<ul class="treeview-menu">
 		<li><a href="{{ backpack_url('page') }}"><i class="fa fa-file-o"></i> <span>{{ __("Pages") }}</span></a></li>
+		<li><a href="{{ backpack_url('campaign') }}"><i class="fa fa-file-o"></i> <span class="text-capitalize">{{ __("campaigns") }}</span></a></li>
 	</ul>
 </li>
 

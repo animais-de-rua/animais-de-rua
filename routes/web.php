@@ -38,6 +38,7 @@ Route::group(['prefix' => config('backpack.base.route_prefix'), 'middleware' => 
     CRUD::resource('adoption', 'AdoptionCrudController');
     CRUD::resource('animal', 'AnimalCrudController');
     CRUD::resource('appointment', 'AppointmentCrudController');
+    CRUD::resource('campaign', 'CampaignCrudController');
     CRUD::resource('donation', 'DonationCrudController');
     CRUD::resource('godfather', 'GodfatherCrudController');
     CRUD::resource('headquarter', 'HeadquarterCrudController');

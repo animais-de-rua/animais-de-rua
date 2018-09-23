@@ -32,6 +32,7 @@
     "Phone": "Telefone",
     "URL": "URL",
     "Description": "Descrição",
+    "Introduction": "Introdução",
     "Address": "Morada",
     "Locality": "Localidade",
     "Region": "Região",
@@ -48,6 +49,7 @@
     "Contact": "Contacto",
     "History": "História",
     "Notes": "Notas",
+    "Image": "Imagem",
     "Images": "Imagens",
     "Acting Zone": "Zona de atuação",
     "Value": "Valor",
@@ -87,6 +89,7 @@
     "partner": "parceiro",
     "partner category": "categoria de parceiro",
     "category": "categoria",
+    "campaign": "campanha",
 
     "headquarter": "núcleo",
     "process": "processo",
@@ -106,6 +109,7 @@
     "partners": "parceiros",
     "partner categories": "categorias de parceiro",
     "categories": "categorias",
+    "campaigns": "campanhas",
 
     "volunteer": "voluntário",
     "friend": "amigo",

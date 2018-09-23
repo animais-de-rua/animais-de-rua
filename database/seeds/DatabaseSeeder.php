@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             FriendCardModalitiesSeeder::class,
             PartnersSeeder::class,
             PagesSeeder::class,
+            CampaignsSeeder::class,
             FakeSeeder::class
         ]);
 
