@@ -44,7 +44,7 @@ class PageController extends Controller
             ->get();
 
         return [
-            'waiting_godfather' => $processes,
+            'processes' => $processes,
             'campaigns' => $campaigns
         ];
     }

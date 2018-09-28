@@ -71,8 +71,8 @@ class Campaign extends Model
             $filename = str_slug(json_decode($this->attributes['name'])->pt) . '.jpg';
 
             $image = \Image::make($value);
-            if ($image->width() > 600) {
-                $image->resize(600, null, function ($c) {$c->aspectRatio();});
+            if ($image->width() > 800) {
+                $image->resize(800, null, function ($c) {$c->aspectRatio();});
             }
 
             \Storage::disk($disk)->put('campaigns/' . $filename, $image->stream('jpg', 88));

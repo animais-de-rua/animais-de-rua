@@ -59,6 +59,26 @@ class CampaignCrudController extends CrudController
             'disk' => 'uploads'
         ]);
 
+        $this->crud->addColumns(['image', 'name', 'introduction']);
+
+        $this->crud->setColumnDetails('image', [
+            'name' => 'image',
+            'label' => __('Image'),
+            'type' => 'image',
+            'prefix' => 'uploads/',
+            'height' => '50px'
+        ]);
+
+        $this->crud->setColumnDetails('name', [
+            'name' => 'name',
+            'label' => __('Name')
+        ]);
+
+        $this->crud->setColumnDetails('introduction', [
+            'name' => 'introduction',
+            'label' => __('Introduction')
+        ]);
+
         // add asterisk for fields that are required in CampaignRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');

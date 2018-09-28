@@ -39,6 +39,7 @@ trait HandleDropzoneUploadHelper
 
             // Remove File from disk
             \Storage::disk($disk)->delete("$entity/$filename");
+            \Storage::disk($disk)->delete("$entity/thumb/$filename");
 
             // Remove file from DB
             $class = 'App\\Models\\' . ucfirst($entity);
@@ -62,7 +63,11 @@ trait HandleDropzoneUploadHelper
 
     public function handleDropzoneUploadImage($disk, $random_name = true)
     {
-        $destination_path = \Route::current()->parameters()['entity'];
+        $params = \Route::current()->parameters();
+        $destination_path = $params['entity'];
+        $max_size = $params['size'] ?? 0;
+        $quality = $params['quality'] ?? 0;
+        $thumb = $params['thumb'] ?? 0;
 
         try
         {
@@ -73,6 +78,9 @@ trait HandleDropzoneUploadHelper
             }
 
             $image = \Image::make($file);
+            if ($max_size > 0 && $image->width() > $max_size) {
+                $image->resize($max_size, null, function ($c) {$c->aspectRatio();});
+            }
 
             // Filename
             $filename = preg_replace('/\\.[^.\\s]{3,4}$/', '', $file->getClientOriginalName()) . '_' . time();
@@ -82,7 +90,12 @@ trait HandleDropzoneUploadHelper
 
             $filename .= '.' . $file->extension();
 
-            \Storage::disk($disk)->put($destination_path . '/' . $filename, $image->stream());
+            \Storage::disk($disk)->put($destination_path . '/' . $filename, $quality ? $image->stream('jpg', $quality) : $image->stream());
+
+            if ($thumb > 0) {
+                $image->resize($thumb, null, function ($c) {$c->aspectRatio();});
+                \Storage::disk($disk)->put($destination_path . '/thumb/' . $filename, $quality ? $image->stream('jpg', $quality) : $image->stream());
+            }
 
             return response()->json(['success' => true, 'filename' => $disk . '/' . $destination_path . '/' . $filename]);
         } catch (\Exception $e) {
