@@ -46,6 +46,12 @@ return [
     'risk' => [
         'title' => 'Encontrou um animal em risco?',
         'link' => 'Candidatura de Esterilização'
+    ],
+
+    'processes' => [
+        'title' => 'Ajudas Urgentes',
+        'subtitle' => 'Mude a vida de um Animal de Rua',
+        'need' => 'Necessidade'
     ]
 
 ];

@@ -33,7 +33,7 @@ class PageController extends Controller
 
     private function home()
     {
-        $processes = Process::select(['name', 'specie', 'history', 'images', 'created_at'])
+        $processes = Process::select(['name', 'specie', 'history', 'images', 'status', 'created_at'])
             ->where('status', 'waiting_godfather')
             ->orderBy('created_at', 'desc')
             ->limit(9)

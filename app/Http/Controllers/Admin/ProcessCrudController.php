@@ -130,7 +130,7 @@ class ProcessCrudController extends CrudController
             'label' => __('Images'),
             'type' => 'dropzone',
             'upload-url' => '/admin/dropzone/images/process',
-            'thumb' => 288,
+            'thumb' => 340,
             'size' => 800,
             'quality' => 82
         ]);

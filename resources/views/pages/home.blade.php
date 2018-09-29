@@ -23,6 +23,59 @@
 		</div>
 	</div>
 
+	<div class="container processes">
+		<h1>{{ __("web.processes.title") }}</h1>
+		<p>{{ __("web.processes.subtitle") }}</p>
+		<div class="flex-slider">
+			@php
+			$pages = ceil(count($processes) / 3);
+			@endphp
+			<ul>
+				@for($i=0; $i<$pages; $i++)
+				<li>
+					<div class="slide">
+						@for($j=0; $j<3 && isset($processes[$j + $i * 3]); $j++)
+						@php
+							$process = $processes[$j + $i * 3]
+						@endphp
+						<div class="card">
+							<div class="image">
+								@if(count($process->images))
+								<div style="background-image:url('{{ str_replace('process', 'process/thumb', $process->images[0]) }}')"></div>
+								@endif
+							</div>
+
+							<div>
+								<h1>{{ $process->name }}</h1>
+
+								<div class="necessity">
+									<p>{{ __("web.processes.need") }}</p>
+									<div class="line"></div>
+									@switch($process->status)
+										@case('waiting_godfather')
+										<p>{{ __('godfathers') }}</p>
+										@break
+
+										@case('waiting_capture')
+										<p>{{ __('capture') }}</p>
+										@break
+									@endswitch
+								</div>
+							</div>
+						</div>
+						@endfor
+					</div>
+				</li>
+				@endfor
+			</ul>
+			<ul class="dots">
+				@for($i=0; $i<$pages; $i++)
+				<li class="{{ $i == 0 ? 'active' : '' }}"></li>
+				@endfor
+			</ul>
+		</div>
+	</div>
+
 	<div class="container campaigns">
 		<div class="flex-slider" auto-scroll="5000">
 			<ul>
@@ -53,7 +106,7 @@
 		<picture>
 			<source srcset="img/risk.webp" type="image/webp"/>
 			<source srcset="img/risk.jpg" type="image/jpeg"/>
-			<img src="img/risk.jpg" alt="Animal in ris/k">
+			<img src="img/risk.jpg" alt="Animal in risk">
 		</picture>
 		<a href="" class="box">
 			<h2>{{ __("web.risk.title") }}</h2>

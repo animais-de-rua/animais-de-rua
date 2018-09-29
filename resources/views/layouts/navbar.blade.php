@@ -25,12 +25,12 @@
 
             <a href="{{ url('/store') }}">
                 <div class="card">
-                    <i class="icon icon-cart"></i>
+                    <div class="icon icon-cart"></div>
                     <p>{{ __("Store") }}</p>
                 </div>
             </a>
             <div class="card" onclick="menuCard(this, 0)">
-                <i class="icon icon-card"></i>
+                <div class="icon icon-card"></div>
                 <p>{{ __("friend card") }}</p>
                 <div class="menu-panel">
                     @component('components.friend_card')
@@ -38,7 +38,7 @@
                 </div>
             </div>
             <div class="card" onclick="menuCard(this, 1)">
-                <i class="icon icon-donate"></i>
+                <div class="icon icon-donate"></div>
                 <p>{{ __("Donate") }}</p>
                 <div class="menu-panel">
                     @component('components.donate')
