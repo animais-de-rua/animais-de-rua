@@ -1,9 +1,9 @@
-<nav class="navbar">
+<nav id="navbar">
     <div id="loading"></div>
     <div class="container">
         <div class="left">
             <div class="logo">
-                <a href="{{ url('/') }}">
+                <a href="{{ url('/home') }}">
                     @svg('img/logo/logo-text.svg', '', 'max-width: 230px; max-height: 36px;')
                 </a>
             </div>
@@ -29,7 +29,7 @@
                     <p>{{ __("Store") }}</p>
                 </div>
             </a>
-            <div class="card" onclick="menuCard(this, 0)">
+            <div class="card" onclick="navbar.onCardClick(this, 0)">
                 <div class="icon icon-card"></div>
                 <p>{{ __("friend card") }}</p>
                 <div class="menu-panel">
@@ -37,7 +37,7 @@
                     @endcomponent
                 </div>
             </div>
-            <div class="card" onclick="menuCard(this, 1)">
+            <div class="card" onclick="navbar.onCardClick(this, 1)">
                 <div class="icon icon-donate"></div>
                 <p>{{ __("Donate") }}</p>
                 <div class="menu-panel">
@@ -47,7 +47,7 @@
             </div>
         </div>
 
-        <div class="menu" onclick="mobileMenu(this)">
+        <div class="menu" onclick="navbar.onMobileMenuClick(this)">
             <div></div>
             <div></div>
             <div></div>
@@ -57,7 +57,7 @@
     <div class="mobile">
         <ul class="list">
             <li><a class="link" href="/home">{{ __("Home") }}</a></li>
-            <li><a class="link" href="/association">{{ __("The Organization") }}</a></li>
+            <li><a class="link" href="/association">{{ __("Organization") }}</a></li>
             <li><a class="link" href="/ced">{{ __("CED") }}</a></li>
             <li><a class="link" href="/animals">{{ __("Animals") }}</a></li>
             <li><a class="link" href="/help">{{ __("Help") }}</a></li>
@@ -70,11 +70,11 @@
                 @component('components.flagpicker')
                 @endcomponent
             </div>
-            <div class="card" onclick="mobileMenuCard(0)">
+            <div class="card" onclick="navbar.onMobileCardClick(0)">
                 <div class="icon icon-card" style="margin-right: 8px"></div>
                 <p>{!! str_replace(" ", "<br />", __("friend card")) !!}</p>
             </div>
-            <div class="card" onclick="mobileMenuCard(1)">
+            <div class="card" onclick="navbar.onMobileCardClick(1)">
                 <div class="icon icon-donate" style="margin-right: 8px"></div>
                 <p>{{ __("Donate") }}</p>
             </div>

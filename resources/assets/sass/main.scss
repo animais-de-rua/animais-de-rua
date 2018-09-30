@@ -16,6 +16,20 @@ h1 {
     font-weight: 700;
 }
 
+h2, h3 {
+    font-weight: 600;
+}
+
+h1, h2, h3 {
+    letter-spacing: 0;
+}
+
+hr {
+    width: 40px;
+    border: 1px solid black;
+    margin: 10px 0 24px;
+}
+
 .container {
     max-width: 1250px;
 }
@@ -26,6 +40,11 @@ h1 {
 
     &.anim {
         animation: fadeIn .1s forwards;
+    }
+
+    .container {
+        margin-top: 20px;
+        margin-bottom: 60px;
     }
 }
 
@@ -133,10 +152,80 @@ a.lined {
     height: 100%;
 }
 
+.accordion {
+    h1 {
+        font-size: 2.4rem;
+        display: block;
+        cursor: pointer;
+        position: relative;
+
+        &:after {
+            content: '';
+
+            border-style: solid;
+            border-width: 5px 0 5px 7px;
+            border-color: transparent transparent transparent #e53525;
+
+            position: absolute;
+            bottom: 6px;
+            margin-left: 10px;
+            transform: rotate(0);
+            transition: transform 0.2s;
+        }
+
+        &:hover {
+            color: $grey;
+        }
+    }
+
+    .slider {
+        overflow: hidden;
+        max-height: 0px;
+        transition: max-height 0.4s;
+
+        div {
+            transition: transform 0.4s;
+            transform: translateY(-100%);
+        }
+    }
+
+    &.open {
+        h1:after {
+            transform: rotate(90deg);
+        }
+
+        .slider {
+            max-height: 800px;
+
+            div {
+                transform: translateY(0);
+            }
+        }
+    }
+
+    ul {
+        list-style-type: none;
+        margin-left: 0;
+    }
+
+    li {
+        text-indent: 24px;
+        color: #7C7C7C;
+        line-height: 1.8em;
+        font-size: 1.4rem;
+
+        &:before {
+            content: '\2014';
+            position: absolute;
+            margin-left: -46px;
+        }
+    }
+}
+
 // ----------
 // Navbar
 
-.navbar {
+#navbar {
     background-color: #FFF;
     height: 130px;
 
@@ -432,14 +521,14 @@ a.lined {
             }
         }
     }
-}
 
-.navbar.card-view {
-    .menu div {
-        background-color: #FFF;
-    }
-    .mobile .mobile-card-view {
-        top: 0;
+    &.card-view {
+        .menu div {
+            background-color: #FFF;
+        }
+        .mobile .mobile-card-view {
+            top: 0;
+        }
     }
 }
 
@@ -568,34 +657,52 @@ footer {
     }
 }
 
+
 // ----------
-// Media Queries
+// Flex Slider
 
-.row.responsive {
-    flex-wrap: wrap;
-}
+.flex-slider {
+    flex: 1;
+    overflow: hidden;
 
-// Wide screens
-@media (max-width: 1092px) {
-    // Fix for top menu
-    .navbar .left {
-        display: inline;
-        margin-top: 28px;
+    ul {
+        white-space: nowrap;
+        margin-bottom: 0;
+        transition: transform 0.3s;
+        font-size: 0;
     }
 
-    #home {
-        .how-to-help .box {
-            max-width: calc(50% - 10px);
-            flex: 0 0 50%;
-            background-color: #FFF;
-            border-bottom: 1px solid black;
+    li {
+        display: inline-block;
+        vertical-align: middle;
+        width: 100%;
+    }
 
-            .icon {
-                opacity: 1;
+    .slide {
+        width: 100%;
+        white-space: normal;
+    }
+
+    .dots {
+        text-align: center;
+
+        li {
+            background-color: #FFF;
+            width: 10px;
+            height: 10px;
+            border-radius: 5px;
+            border: 1px solid $color;
+            transition: background 0.3s;
+            margin: 0 3px;
+            cursor: pointer;
+
+            &.active {
+                background-color: $color;
             }
         }
     }
 }
+
 
 // ----------
 // Pages
@@ -621,8 +728,6 @@ footer {
 }
 
 .how-to-help {
-    margin-top: 100px;
-    margin-bottom: 60px;
     text-align: center;
     
     h2 {
@@ -675,11 +780,12 @@ footer {
     }
 }
 
-.risk {
-    margin: 40px 0;
+.banner {
+    margin: 40px 0 0;
     position: relative;
 
     img {
+        display: flex;
         width: 100%;
         height: 480px;
         object-fit: cover;
@@ -724,9 +830,6 @@ footer {
 }
 
 .campaigns {
-    margin-top: 40px;
-    margin-bottom: 40px;
-
     img {
         object-fit: contain;
         width: 100%;
@@ -761,9 +864,6 @@ footer {
 }
 
 .processes {
-    margin-top: 40px;
-    margin-bottom: 40px;
-
     > h1 {
         text-align: center;
         margin-bottom: 8px;
@@ -864,49 +964,125 @@ footer {
     }
 }
 
-.flex-slider {
-    flex: 1;
-    overflow: hidden;
+// Association
+.whoweare {
+    h2 {
+        font-size: 2rem;
+        margin-bottom: 6px;
+    }
+    a {
+        color: $grey;
+        font-size: 1.4rem;
 
-    ul {
-        white-space: nowrap;
-        margin-bottom: 0;
-        transition: transform 0.3s;
-        font-size: 0;
+        .icon {
+            transition: margin 0.2s;
+            font-size: 1rem;
+        }
+
+        &:hover {
+            color: $color;
+
+            .icon {
+                margin-left: 6px;
+            }
+        }
+    }
+}
+.vision {
+    .box {
+        background-color: #FFF;
+        padding: 40px 80px;
+
+        &:nth-of-type(2) {
+            margin-top: 30px;
+        }
     }
 
-    li {
-        display: inline-block;
-        vertical-align: middle;
-        width: 100%;
+    h1 {
+        font-size: 2.2rem;
+    }
+    p {
+        color: $grey;
+        font-size: 1.4rem;
+    }
+}
+.where {
+    text-align: center;
+
+    > div {
+        color: $grey;
+        font-size: 1.4rem;
     }
 
-    .slide {
-        width: 100%;
-        white-space: normal;
-    }
+    .headquarters {
+        display: flex;
+        justify-content: space-between;
 
-    .dots {
-        text-align: center;
-
-        li {
+        a {
+            color: $color;
             background-color: #FFF;
-            width: 10px;
-            height: 10px;
-            border-radius: 5px;
-            border: 1px solid $color;
-            transition: background 0.3s;
-            margin: 0 3px;
-            cursor: pointer;
+            padding: 15px;
+            position: relative;
+            margin: 0 4px;
 
-            &.active {
-                background-color: $color;
+            &:after {
+                content: ' ';
+                height: 4px;
+                position: absolute;
+                background: $color;
+                bottom: 0;
+                left: 0;
+                width: 0;
+                transition: width 0.6s;
+            }
+
+            &:hover:after {
+                width: 100%;
+            }
+
+            h1 {
+                font-size: 2.6rem;
+                margin-bottom: 0;
+            }
+
+            p {
+                text-transform: lowercase;
+                font-size: 2.4rem;
+                margin-bottom: 0;
             }
         }
     }
 }
 
 
+// ----------
+// Media Queries
+
+.row.responsive {
+    flex-wrap: wrap;
+}
+
+// Wide screens
+@media (max-width: 1092px) {
+    // Fix for top menu
+    #navbar .left {
+        display: inline;
+        margin-top: 28px;
+    }
+
+    #home {
+        .how-to-help .box {
+            max-width: calc(50% - 10px);
+            flex: 0 0 50%;
+            background-color: #FFF;
+            border-bottom: 1px solid black;
+
+            .icon {
+                opacity: 1;
+            }
+        }
+    }
+}
 
 // Desktop
 @media (min-width: 769px) {
@@ -914,7 +1090,7 @@ footer {
         min-height: calc(100vh - 130px);
     }
 
-    .navbar .menu, .navbar .mobile {
+    #navbar .menu, #navbar .mobile {
         display: none;
     }
 }
@@ -927,9 +1103,14 @@ footer {
     .row.responsive .column[class*=" column-"] {
         margin-left: 0;
         max-width: 100%;
+        flex: 0 0 100%;
     }
 
-    .navbar {
+    .column > picture > img {
+        width: 100%;
+    }
+
+    #navbar {
         height: 68px;
 
         .left {
@@ -1034,6 +1215,19 @@ footer {
                 font-size: 2.5rem;
                 margin: 0 0 32px;
             }
+        }
+    }
+    .vision {
+        .box {
+            padding: 25px 16px;
+            margin-top: 30px;
+        }
+    }
+    .where .headquarters {
+        flex-direction: column;
+
+        a {
+            margin: 4px 0;
         }
     }
 }

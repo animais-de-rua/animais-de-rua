@@ -52,6 +52,16 @@ return [
         'title' => 'Ajudas Urgentes',
         'subtitle' => 'Mude a vida de um Animal de Rua',
         'need' => 'Necessidade'
+    ],
+
+    'association' => [
+        'report' => 'Relatório de actividades',
+        'report_year' => 'Relatório de actividades de :year'
+    ],
+
+    'ced' => [
+        'title' => 'Gostaria de participar/organizar uma formação CED?',
+        'link' => 'Preencha o nosso formulário'
     ]
 
 ];

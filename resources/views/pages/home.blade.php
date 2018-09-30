@@ -8,7 +8,7 @@
 				<div class="flex-vertical-align">
 					<div class="info-text">
 						<h1 class="label-title">{{ $page['association_title'] }}</h1>
-						<p>{{ $page['association_text'] }}</p>
+						<p>{!! $page['association_text'] !!}</p>
 						<a href="/association" class="link lined">{{ $page['association_link'] }}</a>
 					</div>
 				</div>
@@ -102,11 +102,11 @@
 		</div>
 	</div>
 
-	<div class="risk">
+	<div class="risk banner">
 		<picture>
-			<source srcset="img/risk.webp" type="image/webp"/>
-			<source srcset="img/risk.jpg" type="image/jpeg"/>
-			<img src="img/risk.jpg" alt="Animal in risk">
+			<source srcset="img/banner_risk.webp" type="image/webp"/>
+			<source srcset="img/banner_risk.jpg" type="image/jpeg"/>
+			<img src="img/banner_risk.jpg" alt="Animal in risk">
 		</picture>
 		<a href="" class="box">
 			<h2>{{ __("web.risk.title") }}</h2>

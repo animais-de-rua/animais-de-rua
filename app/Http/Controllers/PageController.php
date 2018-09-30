@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Campaign;
+use App\Models\Headquarter;
 use App\Models\Page;
 use App\Models\Process;
 
@@ -51,7 +52,11 @@ class PageController extends Controller
 
     private function association()
     {
-        return [];
+        $headquarters = Headquarter::select(['name', 'mail'])->get();
+
+        return [
+            'headquarters' => $headquarters
+        ];
     }
 
     private function ced()
