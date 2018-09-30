@@ -3,7 +3,7 @@
     <div class="container">
         <div class="left">
             <div class="logo">
-                <a href="{{ url('/home') }}">
+                <a class="link" href="/home">
                     @svg('img/logo/logo-text.svg', '', 'max-width: 230px; max-height: 36px;')
                 </a>
             </div>

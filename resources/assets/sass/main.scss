@@ -1,4 +1,4 @@
-$grey: #7C7C7C;
+$grey: #717171;
 
 html, body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
@@ -39,7 +39,7 @@ hr {
     margin-top: 28px;
 
     &.anim {
-        animation: fadeIn .1s forwards;
+        animation: fadeIn .18s forwards;
     }
 
     .container {
@@ -889,6 +889,7 @@ footer {
         border-bottom: 1px solid #FFF;
         display: flex;
         flex-direction: column;
+        width: 33%;
 
         &:hover {
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);

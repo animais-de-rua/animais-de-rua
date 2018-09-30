@@ -1,22 +1,18 @@
 // Load Modules
 import * as utils from './utils.js';
 
-const loader = document.getElementById('loading'),
-    content = document.getElementById('content'),
-    navbarElem = document.getElementById('navbar'),
-    navbarCards = navbarElem.querySelectorAll('.cards > .card'),
-    navbarMobile = navbarElem.querySelector('.mobile'),
-    navbarMobileMenu = navbarElem.querySelector('.menu'),
-    navbarMobileCards = navbarElem.querySelectorAll('.mobile-card-view > .menu-panel');
+const _loading = document.getElementById('loading'),
+    _content = document.getElementById('content'),
+    _navbar = document.getElementById('navbar');
 
 window.router = {
     init: e => {
-        window.history.pushState({'html': content.innerHTML}, '', location.pathname);
+        window.history.pushState({'html': _content.innerHTML}, '', location.pathname);
 
         window.onpopstate = e => {
             if(e.state) {
-                content.innerHTML = e.state.html;
-                app.onReload();
+                _content.innerHTML = e.state.html;
+                app.init();
             }
         }
     },
@@ -28,47 +24,61 @@ window.router = {
 
 window.navbar = {
     init: e => {
+        this.navbarCards = _navbar.querySelectorAll('.cards > .card');
+        this.navbarMobile = _navbar.querySelector('.mobile');
+        this.navbarMobileMenu = _navbar.querySelector('.menu');
+        this.navbarMobileCards = _navbar.querySelectorAll('.mobile-card-view > .menu-panel');
+
         // Close navbar cards when clicking out of them
-        content.addEventListener('click', e => {
-            if(navbarElem.querySelector('.card.active'))
-                navbarElem.querySelector('.card.active').classList.remove('active');
+        _content.addEventListener('click', e => {
+            if(_navbar.querySelector('.card.active'))
+                _navbar.querySelector('.card.active').classList.remove('active');
         });
 
         // Simple Handler for touch on mobile menu
         let startTouch;
-        navbarMobile.addEventListener("touchstart", e => { startTouch = e.changedTouches[0] }, {passive: true});
-        navbarMobile.addEventListener("touchend", e => {
+        this.navbarMobile.addEventListener("touchstart", e => { startTouch = e.changedTouches[0] }, {passive: true});
+        this.navbarMobile.addEventListener("touchend", e => {
             let [diffX, diffY] = [
                 e.changedTouches[0].clientX - startTouch.clientX,
                 e.changedTouches[0].clientY - startTouch.clientY
             ];
 
-            if((navbarElem.classList.contains("card-view") && diffY > 60) || diffX < -60)
-                navbarMobileMenu.click();
+            if((_navbar.classList.contains("card-view") && diffY > 60) || diffX < -60)
+                this.navbarMobileMenu.click();
         }, {passive: true});
     },
 
+    close: e => {
+        if(this.navbarMobile.classList.contains('active')) {
+            this.navbarMobileMenu.click();
+            // In case second menu is oppened
+            if(this.navbarMobile.classList.contains('active'))
+                setTimeout(e => _navbar.querySelector('.menu').click(), 250);
+        }
+    },
+
     onMobileMenuClick: e => {
-        if(navbarElem.classList.contains('card-view'))
-            return navbarElem.classList.remove('card-view');
+        if(_navbar.classList.contains('card-view'))
+            return _navbar.classList.remove('card-view');
 
         e.classList.toggle('active');
-        navbarMobile.classList.toggle('active');
+        this.navbarMobile.classList.toggle('active');
         document.body.classList.toggle('overflow');
     },
 
     onMobileCardClick: i => {
-        navbarElem.classList.toggle('card-view');
+        _navbar.classList.toggle('card-view');
 
-        navbarMobileCards.forEach(card => card.style.display = 'none');
-        navbarMobileCards[i].style.display = 'block';
+        this.navbarMobileCards.forEach(card => card.style.display = 'none');
+        this.navbarMobileCards[i].style.display = 'block';
     },
 
     onCardClick: (e, i) => {
         if(e.classList.contains('active'))
             return e.classList.remove('active');
 
-        navbarCards.forEach(card => card.classList.remove('active'));
+        this.navbarCards.forEach(card => card.classList.remove('active'));
         e.classList.add('active');
     }
 }
@@ -141,19 +151,20 @@ window.accordions = {
 }
 
 window.loading = {
-    start: e => loader.className = 'start',
-    end: e => loader.className = 'end'
+    start: e => _loading.className = 'start',
+    end: e => _loading.className = 'end'
 }
 
 window.app = {
-    onReload: e => {
+    init: e => {
         // AJAX Links controller
         document.querySelectorAll('a.link').forEach(link => {
+            link.classList.remove('link');
             link.addEventListener('click', e => {
-                let urlPath = e.target.href;
+                let urlPath = e.target.closest('a').href;
 
                 loading.start();
-                content.classList.remove('anim');
+                _content.classList.remove('anim');
 
                 e.preventDefault();
                 fetch(urlPath, {
@@ -161,19 +172,14 @@ window.app = {
                     headers: {'X-Requested-With': 'XMLHttpRequest'}
                 }).then(response => {
                     // Closes mobile menu
-                    if(navbarMobile.classList.contains('active')) {
-                        navbarElem.querySelector('.menu').click();
-                        // In case second menu is oppened
-                        if(navbarMobile.classList.contains('active'))
-                            setTimeout(e => navbarElem.querySelector('.menu').click(), 250);
-                    }
+                    navbar.close();
 
                     response.text().then(html => {
-                        content.innerHTML = html;
-                        app.onReload();
+                        _content.innerHTML = html;
+                        app.init();
 
                         loading.end();
-                        content.classList.add('anim');
+                        _content.classList.add('anim');
 
                         router.push(html, urlPath);
                     })
@@ -184,7 +190,10 @@ window.app = {
         });
 
         // Stop propagation links
-        document.querySelectorAll('.stopPropagation').forEach(e => e.addEventListener('click', e => e.stopPropagation()));
+        document.querySelectorAll('.stopPropagation').forEach(e => {
+            e.classList.remove('stopPropagation');
+            e.addEventListener('click', e => e.stopPropagation())
+        });
 
         // Sliders
         sliders.init();
@@ -195,8 +204,7 @@ window.app = {
 }
 
 document.addEventListener('DOMContentLoaded', e => {
-    app.onReload();
-
+    app.init();
     router.init();
     navbar.init();
 });

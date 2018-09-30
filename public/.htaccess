@@ -1,9 +1,48 @@
+<IfModule mod_mime.c>
+    # Add rare mime types
+    AddType application/javascript          js
+    AddType application/x-font-woff         woff
+    AddType image/svg+xml                   svg svgz 
+    AddEncoding gzip                        svgz
+</Ifmodule>
+
+<IfModule mod_filter.c>
+    # gzip all this file types
+    AddOutputFilterByType DEFLATE "application/atom+xml"
+    AddOutputFilterByType DEFLATE "application/javascript"
+    AddOutputFilterByType DEFLATE "application/json"
+    AddOutputFilterByType DEFLATE "application/ld+json"
+    AddOutputFilterByType DEFLATE "application/manifest+json"
+    AddOutputFilterByType DEFLATE "application/rdf+xml"
+    AddOutputFilterByType DEFLATE "application/rss+xml"
+    AddOutputFilterByType DEFLATE "application/schema+json"
+    AddOutputFilterByType DEFLATE "application/x-javascript"
+    AddOutputFilterByType DEFLATE "application/x-web-app-manifest+json"
+    AddOutputFilterByType DEFLATE "application/xhtml+xml"
+    AddOutputFilterByType DEFLATE "application/xml"
+    AddOutputFilterByType DEFLATE "application/x-font-woff"
+    AddOutputFilterByType DEFLATE "font/collection"
+    AddOutputFilterByType DEFLATE "image/bmp"
+    AddOutputFilterByType DEFLATE "image/svg+xml"
+    AddOutputFilterByType DEFLATE "image/x-icon"
+    AddOutputFilterByType DEFLATE "text/cache-manifest"
+    AddOutputFilterByType DEFLATE "text/css"
+    AddOutputFilterByType DEFLATE "text/html"
+    AddOutputFilterByType DEFLATE "text/javascript"
+    AddOutputFilterByType DEFLATE "text/plain"
+    AddOutputFilterByType DEFLATE "text/xml"
+</IfModule>
+
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
         Options -MultiViews -Indexes
     </IfModule>
 
     RewriteEngine On
+    
+    RewriteCond %{HTTPS} !on
+    RewriteCond %{HTTP_HOST} animaisderua.org [NC,OR]
+    RewriteRule ^(.*)$ https://animaisderua.org/$1 [L,R=301]
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
@@ -18,4 +57,34 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
+</IfModule>
+
+<IfModule mod_headers.c>
+    Header set Connection keep-alive
+
+    # 15 DAYS
+    <filesMatch "\.(ico|pdf|flv|jpg|jpeg|webp|png|gif|js|swf|woff|woff2|svg)$">
+        Header set Cache-Control "max-age=1209600, public"
+    </filesMatch>
+
+    # 3 DAYS
+    <filesMatch "\.(css|js)$">
+        Header set Cache-Control "max-age=86400, public, must-revalidate"
+        #Header set Cache-Control "max-age=0, public, must-revalidate"
+    </filesMatch>
+
+    # 2 HOURS
+    <filesMatch "\.(html|htm)$">
+        Header set Cache-Control "max-age=7200, must-revalidate"
+    </filesMatch>
+
+    <FilesMatch "\.(gif|jpg|png|ico|css|js|pdf|txt)$">
+        Header append Cache-Control "public"
+    </FilesMatch>
+</IfModule>
+
+<IfModule mod_authz_core.c>
+    <FilesMatch "(^#.*#|\.(bk|bak|conf|dist|fla|in[ci]|log|orig|psd|sh|sql|sw[op])|~)$">
+        Require all denied
+    </FilesMatch>
 </IfModule>
