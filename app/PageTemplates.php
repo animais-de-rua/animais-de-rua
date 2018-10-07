@@ -169,6 +169,165 @@ trait PageTemplates
     private function ced()
     {
 
+        // --------------------
+        $this->header('CED');
+
+        $this->addField([
+            'name' => 'ced_title',
+            'label' => '',
+            'type' => 'text'
+        ]);
+
+        $this->addField([
+            'name' => 'ced_text',
+            'label' => '',
+            'type' => 'wysiwyg'
+        ]);
+
+        // --------------------
+        $this->header('O que é o CED?');
+
+        $this->addField([
+            'name' => 'what_title',
+            'label' => '',
+            'type' => 'text'
+        ]);
+
+        $this->addField([
+            'name' => 'what_text',
+            'label' => '',
+            'type' => 'wysiwyg'
+        ]);
+
+        // --------------------
+        $this->header('Informações úteis sobre o CED');
+
+        $this->addField([
+            'name' => 'info_title',
+            'label' => '',
+            'type' => 'text'
+        ]);
+
+        $this->addField([
+            'name' => 'info_links',
+            'label' => "PDF's",
+            'type' => 'browse_table',
+            'entity_singular' => 'pdf',
+            'columns' => [
+                'name' => __('Name'),
+                'url' => 'URL'
+            ],
+            'mimes' => ['pdf']
+        ]);
+
+        // --------------------
+        $this->header('As vantagens do CED');
+
+        $this->addField([
+            'name' => 'advantage_title',
+            'label' => '',
+            'type' => 'text'
+        ]);
+
+        $this->addField([
+            'name' => 'advantage_community_title',
+            'label' => 'Comunidade',
+            'type' => 'text'
+        ]);
+
+        $this->addField([
+            'name' => 'advantage_community_text',
+            'label' => '',
+            'type' => 'wysiwyg'
+        ]);
+
+        $this->addField([
+            'name' => 'advantage_colony_title',
+            'label' => 'Colónia',
+            'type' => 'text'
+        ]);
+
+        $this->addField([
+            'name' => 'advantage_colony_text',
+            'label' => '',
+            'type' => 'wysiwyg'
+        ]);
+
+        // --------------------
+        $this->header('Alternativas falhadas ao CED');
+
+        $this->addField([
+            'name' => 'alternatives_title',
+            'label' => '',
+            'type' => 'text'
+        ]);
+
+        $this->addField([
+            'name' => 'alternatives_text',
+            'label' => '',
+            'type' => 'textarea'
+        ]);
+
+        // --------------------
+        $this->header('Captura e Abate');
+
+        $this->addField([
+            'name' => 'alternatives_capture_title',
+            'label' => '',
+            'type' => 'text'
+        ]);
+
+        $this->addField([
+            'name' => 'alternatives_capture_text',
+            'label' => '',
+            'type' => 'textarea'
+        ]);
+
+        // --------------------
+        $this->header('Parar de Alimentar');
+
+        $this->addField([
+            'name' => 'alternatives_feed_title',
+            'label' => '',
+            'type' => 'text'
+        ]);
+
+        $this->addField([
+            'name' => 'alternatives_feed_text',
+            'label' => '',
+            'type' => 'textarea'
+        ]);
+
+        // --------------------
+        $this->header('Acolhimento ou realojamento');
+
+        $this->addField([
+            'name' => 'alternatives_greeting_title',
+            'label' => '',
+            'type' => 'text'
+        ]);
+
+        $this->addField([
+            'name' => 'alternatives_greeting_text',
+            'label' => '',
+            'type' => 'textarea'
+        ]);
+
+        // --------------------
+        $this->header('Não fazer nada');
+
+        $this->addField([
+            'name' => 'alternatives_nothing_title',
+            'label' => '',
+            'type' => 'text'
+        ]);
+
+        $this->addField([
+            'name' => 'alternatives_nothing_text',
+            'label' => '',
+            'type' => 'textarea'
+        ]);
+
     }
 
     private function animals()

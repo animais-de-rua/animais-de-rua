@@ -4,7 +4,9 @@
 
 <script>
 	if (typeof deleteEntry != 'function') {
-	  $("[data-button-type=delete]").unbind('click');
+	  document.addEventListener("DOMContentLoaded", function(event) {
+	      $("[data-button-type=delete]").unbind('click');
+	  });
 
 	  function deleteEntry(button) {
 	      // ask for confirmation before deleting an item

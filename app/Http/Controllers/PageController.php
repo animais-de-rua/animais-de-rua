@@ -25,11 +25,30 @@ class PageController extends Controller
             'page' => $page->withFakes()
         ];
 
+        // Common data to all pages
+        $this->data = array_merge($this->data, $this->common());
+
+        // Page specific data
         if (method_exists($this, $slug)) {
             $this->data = array_merge($this->data, call_user_func(array($this, $slug)));
         }
 
         return view('pages.' . $page->template, $this->data);
+    }
+
+    private function common()
+    {
+        $data = [];
+
+        if (\Request::ajax()) {
+            $data = [];
+        } else {
+            $data = [
+                'total_operations' => 12345
+            ];
+        }
+
+        return $data;
     }
 
     private function home()

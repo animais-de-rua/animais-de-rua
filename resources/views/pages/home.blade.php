@@ -3,7 +3,7 @@
 @section('content')
 <div id="home">
 	<div class="container">
-		<div class="row responsive header">
+		<div class="row row-wrap header">
 			<div class="column column-50">
 				<div class="flex-vertical-align">
 					<div class="info-text">
@@ -102,21 +102,12 @@
 		</div>
 	</div>
 
-	<div class="risk banner">
-		<picture>
-			<source srcset="img/banner_risk.webp" type="image/webp"/>
-			<source srcset="img/banner_risk.jpg" type="image/jpeg"/>
-			<img src="img/banner_risk.jpg" alt="Animal in risk">
-		</picture>
-		<a href="" class="box">
-			<h2>{{ __("web.risk.title") }}</h2>
-			<p>{{ __("web.risk.link") }}<i class="icon icon-arrow"></i></p>
-		</a>
-	</div>
+    @component('components.banner.risk')
+    @endcomponent
 
 	<div class="container how-to-help">
 		<h2>{{ __("web.help.title") }}</h2>
-		<div class="row responsive header">
+		<div class="row row-wrap header">
 			@foreach(['volunteer', 'friend', 'godfather', 'donate'] as $link)
 			<a href="/help#{{ $link }}" class="column box link">
 				<h3>{{ __("web.help.$link.title") }}</h3>
