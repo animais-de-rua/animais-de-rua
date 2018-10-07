@@ -168,7 +168,6 @@ trait PageTemplates
 
     private function ced()
     {
-
         // --------------------
         $this->header('CED');
 
@@ -327,7 +326,6 @@ trait PageTemplates
             'label' => '',
             'type' => 'textarea'
         ]);
-
     }
 
     private function animals()
@@ -337,7 +335,155 @@ trait PageTemplates
 
     private function help()
     {
+        // --------------------
+        $this->header('Como Ajudar?');
 
+        $this->addField([
+            'name' => 'help_title',
+            'label' => '',
+            'type' => 'text'
+        ]);
+
+        $this->addField([
+            'name' => 'help_text',
+            'label' => '',
+            'type' => 'wysiwyg'
+        ]);
+
+        // --------------------
+        $this->header('Ser Voluntário');
+
+        $this->addField([
+            'name' => 'volunteer_title',
+            'label' => '',
+            'type' => 'text'
+        ]);
+
+        $this->addField([
+            'name' => 'volunteer_text',
+            'label' => '',
+            'type' => 'wysiwyg'
+        ]);
+
+        $this->addField([
+            'name' => 'volunteer_link',
+            'label' => 'Link',
+            'type' => 'text'
+        ]);
+
+        // --------------------
+        $this->header('Adoptar ou Apadrinhar');
+
+        $this->addField([
+            'name' => 'adopt_title',
+            'label' => '',
+            'type' => 'text'
+        ]);
+
+        $this->addField([
+            'name' => 'adopt_text',
+            'label' => '',
+            'type' => 'wysiwyg'
+        ]);
+
+        $this->addField([
+            'name' => 'adopt_link',
+            'label' => 'Link',
+            'type' => 'text'
+        ]);
+
+        // --------------------
+        $this->header('Ser nosso Amigo');
+
+        $this->addField([
+            'name' => 'friend_title',
+            'label' => '',
+            'type' => 'text'
+        ]);
+
+        $this->addField([
+            'name' => 'friend_text',
+            'label' => '',
+            'type' => 'wysiwyg'
+        ]);
+
+        $this->addField([
+            'name' => 'friend_link',
+            'label' => 'Link',
+            'type' => 'text'
+        ]);
+
+        // --------------------
+        $this->header('Conhecer a nossa Loja');
+
+        $this->addField([
+            'name' => 'store_title',
+            'label' => '',
+            'type' => 'text'
+        ]);
+
+        $this->addField([
+            'name' => 'store_text',
+            'label' => '',
+            'type' => 'wysiwyg'
+        ]);
+
+        $this->addField([
+            'name' => 'store_link',
+            'label' => 'Link',
+            'type' => 'text'
+        ]);
+
+        // --------------------
+        $this->header('Doar');
+
+        $this->addField([
+            'name' => 'donate_title',
+            'label' => '',
+            'type' => 'text'
+        ]);
+
+        $this->addField([
+            'name' => 'donate_text',
+            'label' => '',
+            'type' => 'wysiwyg'
+        ]);
+
+        $this->addField([
+            'name' => 'donate_link',
+            'label' => 'Link',
+            'type' => 'text'
+        ]);
+
+        // --------------------
+        $this->header('Ligar-nos');
+
+        $this->addField([
+            'name' => 'call_title',
+            'label' => '',
+            'type' => 'text'
+        ]);
+
+        $this->addField([
+            'name' => 'call_text',
+            'label' => '',
+            'type' => 'wysiwyg'
+        ]);
+
+        // --------------------
+        $this->header('Tornar-se Sócio');
+
+        $this->addField([
+            'name' => 'associate_title',
+            'label' => '',
+            'type' => 'text'
+        ]);
+
+        $this->addField([
+            'name' => 'associate_text',
+            'label' => '',
+            'type' => 'wysiwyg'
+        ]);
     }
 
     private function partners()

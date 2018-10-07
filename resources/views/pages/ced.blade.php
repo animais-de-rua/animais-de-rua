@@ -17,7 +17,7 @@
                 <picture>
                     <source srcset="img/ced.webp" type="image/webp"/>
                     <source srcset="img/ced.jpg" type="image/jpeg"/>
-                    <img src="img/ced.jpg" alt="Home"/>
+                    <img src="img/ced.jpg" alt="CED"/>
                 </picture>
             </div>
         </div>

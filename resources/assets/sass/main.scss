@@ -81,15 +81,26 @@ hr {
 }
 
 .btn {
-    background-color: #FFF!important;
-    border: 2px solid #FFF!important;
+    background-color: $color!important;
+    border: 2px solid $color!important;
+    color: #FFF;
     font-size: 1.35rem!important;
     transition: background-color 0.2s, color 0.2s;
     line-height: 2rem!important;
 
-    &:hover {
-        background-color: $color!important;
-        color: #FFF!important;
+    &:hover, &:focus {
+        background-color: #FFF!important;
+        color: $color!important;
+    }
+
+    &.inverse {
+        background-color: #FFF!important;
+        border: 2px solid #FFF!important;
+
+        &:hover, &:focus {
+            background-color: $color!important;
+            color: #FFF!important;
+        }
     }
 }
 
@@ -1100,6 +1111,24 @@ footer {
     }
 }
 
+// Help
+.help {
+    h2 {
+        font-weight: 700;
+    }
+    a,.text {
+        font-size: 1.4rem;
+        color: $grey;
+    }
+    a {
+        text-transform: uppercase;
+        font-weight: 600;
+    }
+    .column > div, .column img {
+        margin-bottom: 24px;
+    }
+}
+
 // ----------
 // Media Queries
 
@@ -1270,6 +1299,9 @@ footer {
     }
     .advantage .white-box {
         height: initial;
+    }
+    .help .column img {
+        margin-bottom: 0px;
     }
 }
 
