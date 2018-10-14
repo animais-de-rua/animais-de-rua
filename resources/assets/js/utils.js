@@ -30,7 +30,6 @@ export function ajax(url, data, success, error, method) {
     return xhr;
 }
 
-
 export function indexOf(child) {
     let i = 0;
     while( (child = child.previousElementSibling) != null)

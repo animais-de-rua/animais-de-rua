@@ -39,8 +39,8 @@
     <meta property="og:description" content="{{ __('description') }}"/>
     <meta property="og:image" content="{{ env('APP_URL') }}/img/logo.png"/>
 
-    <link rel="preload" href="/js/app.js" as="script"/>
-    <link rel="preload" href="/css/app.css" as="style"/>
+    <link rel="preload" href="{{ mix('js/app.js') }}" as="script"/>
+    <link rel="preload" href="{{ mix('css/app.css') }}" as="style"/>
 
     <link rel="preconnect" href="https://www.google-analytics.com"/>
     <link rel="preconnect" href="https://www.googletagmanager.com"/>
@@ -62,7 +62,6 @@
 
     <script>
         window.Laravel = {token: '{{ csrf_token() }}'};
-        window.components = { };
         window.translations = {month: [
             '{{ __('Jan') }}', '{{ __('Feb') }}', '{{ __('Mar') }}', '{{ __('Apr') }}',
             '{{ __('May') }}', '{{ __('Jun') }}', '{{ __('Jul') }}', '{{ __('Aug') }}',
@@ -75,7 +74,7 @@
     </script>
     @yield('script')
 
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-118312120-1"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-118312120-1" max-age=604800></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}

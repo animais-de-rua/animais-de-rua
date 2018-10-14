@@ -36,7 +36,16 @@ class PartnerCrudController extends CrudController
         */
 
         // ------ CRUD COLUMNS
-        $this->crud->setColumns(['name', 'url', 'categories', 'territories', 'user', 'status']);
+        $this->crud->setColumns(['image', 'name', 'url', 'categories', 'territories', 'user', 'status']);
+
+        $this->crud->setColumnDetails('image', [
+            'name' => 'image',
+            'label' => __('Image'),
+            'type' => 'image',
+            'prefix' => 'uploads/',
+            'height' => '50px',
+            'width' => '50px'
+        ]);
 
         $this->crud->setColumnDetails('name', [
             'label' => __('Name')
@@ -80,17 +89,11 @@ class PartnerCrudController extends CrudController
         ]);
 
         // ------ CRUD FIELDS
-        $this->crud->addFields(['name', 'description', 'benefit', 'categories', 'territories', 'email', 'phone', 'url', 'address', 'notes', 'status']);
+        $this->crud->addFields(['name', 'benefit', 'categories', 'territories', 'email', 'phone1', 'phone1_info', 'phone2', 'phone2_info', 'url', 'facebook', 'address', 'address_info', 'image', 'notes', 'status']);
 
         $this->crud->addField([
             'label' => __('Name'),
             'name' => 'name'
-        ]);
-
-        $this->crud->addField([
-            'label' => __('Description'),
-            'type' => 'wysiwyg',
-            'name' => 'description'
         ]);
 
         $this->crud->addField([
@@ -102,7 +105,6 @@ class PartnerCrudController extends CrudController
         $this->crud->addField([
             'label' => ucfirst(__('categories')),
             'type' => 'select2_multiple',
-
             'name' => 'categories',
             'entity' => 'categories',
             'attribute' => 'name',
@@ -115,7 +117,7 @@ class PartnerCrudController extends CrudController
             'type' => 'select2_multiple_data_source',
             'name' => 'territories',
             'attribute' => 'name',
-            'model' => api()->territorySearch(Territory::DISTRITO | Territory::CONCELHO, new Request()),
+            'model' => api()->territorySearch(Territory::DISTRITO, new Request()),
             'pivot' => true
         ]);
 
@@ -127,8 +129,26 @@ class PartnerCrudController extends CrudController
 
         $this->crud->addField([
             'label' => __('Phone'),
-            'name' => 'phone',
-            'type' => 'textarea'
+            'name' => 'phone1',
+            'type' => 'text'
+        ]);
+
+        $this->crud->addField([
+            'label' => __('Phone') . ' info',
+            'name' => 'phone1_info',
+            'type' => 'text'
+        ]);
+
+        $this->crud->addField([
+            'label' => __('Phone') . ' 2',
+            'name' => 'phone2',
+            'type' => 'text'
+        ]);
+
+        $this->crud->addField([
+            'label' => __('Phone') . ' 2 info',
+            'name' => 'phone2_info',
+            'type' => 'text'
         ]);
 
         $this->crud->addField([
@@ -138,9 +158,30 @@ class PartnerCrudController extends CrudController
         ]);
 
         $this->crud->addField([
+            'label' => 'Facebook',
+            'name' => 'facebook',
+            'type' => 'url'
+        ]);
+
+        $this->crud->addField([
             'label' => __('Address'),
             'name' => 'address',
             'type' => 'textarea'
+        ]);
+
+        $this->crud->addField([
+            'label' => __('Address'),
+            'name' => 'address_info',
+            'type' => 'text'
+        ]);
+
+        $this->crud->addField([
+            'label' => __('Image'),
+            'name' => 'image',
+            'type' => 'image',
+            'upload' => true,
+            'crop' => true,
+            'disk' => 'uploads'
         ]);
 
         $this->crud->addField([

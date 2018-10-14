@@ -153,7 +153,7 @@ class Process extends Model
 
     public function getTotalDonationsStats()
     {
-        return sizeof($this->donations);
+        return count($this->donations);
     }
 
     public function getTotalExpensesStats()
@@ -164,7 +164,7 @@ class Process extends Model
 
     public function getTotalOperationsStats()
     {
-        return sizeof($this->treatments);
+        return count($this->treatments);
     }
 
     /*

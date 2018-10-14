@@ -62,25 +62,16 @@
 <IfModule mod_headers.c>
     Header set Connection keep-alive
 
-    # 15 DAYS
+    # 28 DAYS
     <filesMatch "\.(ico|pdf|flv|jpg|jpeg|webp|png|gif|js|swf|woff|woff2|svg)$">
-        Header set Cache-Control "max-age=1209600, public"
+        Header set Cache-Control "max-age=2419200, public"
     </filesMatch>
 
-    # 3 DAYS
-    <filesMatch "\.(css|js)$">
-        Header set Cache-Control "max-age=86400, public, must-revalidate"
+    # 14 DAYS
+    <filesMatch "\.(css|js|html|htm|txt)$">
+        Header set Cache-Control "max-age=1209600, public, must-revalidate"
         #Header set Cache-Control "max-age=0, public, must-revalidate"
     </filesMatch>
-
-    # 2 HOURS
-    <filesMatch "\.(html|htm)$">
-        Header set Cache-Control "max-age=7200, must-revalidate"
-    </filesMatch>
-
-    <FilesMatch "\.(gif|jpg|png|ico|css|js|pdf|txt)$">
-        Header append Cache-Control "public"
-    </FilesMatch>
 </IfModule>
 
 <IfModule mod_authz_core.c>

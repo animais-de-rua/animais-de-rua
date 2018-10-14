@@ -16,14 +16,19 @@ class CreatePartnersTable extends Migration
         Schema::create('partners', function (Blueprint $table) {
             $table->increments('id');
             $table->text('name');
-            $table->text('description')->nullable();
             $table->string('email', 127)->nullable()->unique();
-            $table->text('phone')->nullable();
+            $table->text('phone1')->nullable();
+            $table->text('phone1_info')->nullable();
+            $table->text('phone2')->nullable();
+            $table->text('phone2_info')->nullable();
             $table->string('url', 255)->nullable();
-            $table->string('address', 255)->nullable();
+            $table->string('facebook', 255)->nullable();
+            $table->text('address')->nullable();
+            $table->text('address_info')->nullable();
             $table->string('latlong', 255)->nullable();
             $table->text('benefit')->nullable();
             $table->text('notes')->nullable();
+            $table->string('image', 255)->nullable();
             $table->boolean('status')->default(1);
             $table->integer('user_id')->unsigned()->nullable();
             $table->timestamps();

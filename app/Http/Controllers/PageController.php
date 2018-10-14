@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Campaign;
+use App\Models\FriendCardModality;
 use App\Models\Headquarter;
 use App\Models\Page;
+use App\Models\Partner;
+use App\Models\PartnerCategory;
 use App\Models\Process;
+use App\Models\Territory;
 
 class PageController extends Controller
 {
@@ -100,6 +104,43 @@ class PageController extends Controller
 
     private function friends()
     {
-        return [];
+        $modalities = FriendCardModality::select(['name', 'description', 'paypal_code', 'amount', 'type'])
+            ->orderBy('id', 'asc')
+            ->get();
+
+        $partners = Partner::select(['id', 'name', 'image', 'benefit', 'email', 'url', 'facebook', 'phone1', 'phone1_info', 'phone2', 'phone2_info', 'address', 'address_info'])
+            ->with('territories', 'categories')
+            ->orderBy('updated_at', 'DESC')
+            ->get();
+
+        foreach ($partners as $partner) {
+            $partner->categories = $partner->categories->pluck('id')->toArray();
+            $partner->territories = $partner->territories->pluck('id')->toArray();
+        }
+
+        $partner_categories = PartnerCategory::select(['id', 'name'])
+            ->whereIn('id', function ($query) {
+                $query->select('partner_category_list_id')
+                    ->distinct()
+                    ->from('partners_categories');
+            })
+            ->get();
+
+        $partner_territories = Territory::select(['id', 'name'])
+            ->whereIn('id', function ($query) {
+                $query->select('territory_id')
+                    ->distinct()
+                    ->from('partners_territories');
+            })
+            ->get();
+
+        return [
+            'modalities' => $modalities,
+            'partners' => [
+                'list' => $partners,
+                'categories' => $partner_categories,
+                'territories' => $partner_territories
+            ]
+        ];
     }
 }

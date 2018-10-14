@@ -493,7 +493,59 @@ trait PageTemplates
 
     private function friends()
     {
+        // --------------------
+        $this->header('Amigos');
 
+        $this->addField([
+            'name' => 'friend_title',
+            'label' => '',
+            'type' => 'text'
+        ]);
+
+        $this->addField([
+            'name' => 'friend_text',
+            'label' => '',
+            'type' => 'wysiwyg'
+        ]);
+
+        // --------------------
+        $this->header('Cartão amigo');
+
+        $this->addField([
+            'name' => 'card_title',
+            'label' => '',
+            'type' => 'text'
+        ]);
+
+        $this->addField([
+            'name' => 'card_text',
+            'label' => '',
+            'type' => 'wysiwyg'
+        ]);
+
+        // --------------------
+        $this->header('Modalidades De Adesão Ao Cartão');
+
+        $this->addField([
+            'name' => 'modalities_title',
+            'label' => '',
+            'type' => 'text'
+        ]);
+
+        // --------------------
+        $this->header('Conheça As Vantagens Do Nosso Cartão');
+
+        $this->addField([
+            'name' => 'advantages_title',
+            'label' => '',
+            'type' => 'text'
+        ]);
+
+        $this->addField([
+            'name' => 'advantages_map',
+            'label' => 'Mapa',
+            'type' => 'text'
+        ]);
     }
 
     // --------------------

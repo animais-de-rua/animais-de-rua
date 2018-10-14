@@ -75,7 +75,7 @@ class Godfather extends Model
 
     public function getTotalDonationsStats()
     {
-        return sizeof($this->donations);
+        return count($this->donations);
     }
 
     /*

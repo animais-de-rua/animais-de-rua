@@ -47,6 +47,7 @@
     "Others Amount": "Nº Outros",
     "Status": "Estado",
     "Contact": "Contacto",
+    "Contacts": "Contactos",
     "History": "História",
     "Notes": "Notas",
     "Image": "Imagem",
@@ -66,6 +67,7 @@
     "Paypal code": "Código Paypal",
     "Benefit": "Benefício",
     "Learn more": "Saiba mais",
+    "Discounts": "Descontos",
 
     "Languages": "Idioma",
     "File manager": "Gestor de ficheiros",
@@ -179,6 +181,7 @@
     "no": "não",
     "monthly": "mensal",
     "yearly": "anual",
+    "Select": "Escolher",
 
     "Today": "Hoje",
     "Yesterday": "Ontem",

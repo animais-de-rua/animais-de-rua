@@ -30,13 +30,32 @@ hr {
     margin: 10px 0 24px;
 }
 
+::selection {
+    background: $color;
+    color: #FFF;
+}
+
+input, textarea, select {
+    background-color: transparent;
+    height: 3.8rem;
+    padding: .6rem 1.0rem;
+
+    &:focus {
+        outline: 0;
+    }
+}
+
+label {
+    display: block;
+}
+
 .container {
     max-width: 1250px;
 }
 
 #content {
     opacity: 1.0;
-    transition: opacity 0.2s;
+    transition: opacity .2s;
     margin-top: 28px;
 
     &.anim {
@@ -85,7 +104,7 @@ hr {
     border: 2px solid $color!important;
     color: #FFF;
     font-size: 1.35rem!important;
-    transition: background-color 0.2s, color 0.2s;
+    transition: background-color .2s, color .2s;
     line-height: 2rem!important;
 
     &:hover, &:focus {
@@ -131,7 +150,7 @@ input {
 
 a {
     cursor: pointer;
-    transition: color 0.2s;
+    transition: color .2s;
 
     &:hover {
         color: $color;
@@ -140,7 +159,7 @@ a {
     &.lined {
         border-bottom: solid 1px #222;
         padding-bottom: 3px;
-        transition: color 0.2s, padding 0.2s!important;
+        transition: color .2s, padding .2s!important;
 
         &:hover {
             color: #000;
@@ -160,6 +179,14 @@ a {
 
 .overflow {
     overflow: hidden;
+}
+
+.ellipsis {
+    text-overflow: ellipsis;
+    display: inline-block;
+    overflow: hidden;
+    max-width: 100%;
+    vertical-align: top;
 }
 
 .flex-vertical-align {
@@ -186,7 +213,7 @@ a {
             bottom: 6px;
             margin-left: 10px;
             transform: rotate(0);
-            transition: transform 0.2s;
+            transition: transform .2s;
         }
 
         &:hover {
@@ -197,7 +224,7 @@ a {
     .slider {
         overflow: hidden;
         max-height: 0px;
-        transition: max-height 0.4s;
+        transition: max-height .4s;
 
         div {
             color: $grey;
@@ -205,7 +232,7 @@ a {
             line-height: 2.4rem;
             margin-bottom: 32px;
 
-            transition: transform 0.4s;
+            transition: transform .4s;
             transform: translateY(-100%);
         }
     }
@@ -285,7 +312,7 @@ a {
             height: 5px;
             background-color: $color;
             margin: 6px 0;
-            transition: 0.25s;
+            transition: .25s;
             border-radius: 5px;
             pointer-events: none;
         }
@@ -319,7 +346,7 @@ a {
             color: black;
             margin: 0;
             font-weight: 600;
-            letter-spacing: 0.06rem;
+            letter-spacing: .06rem;
             white-space: nowrap;
         }
 
@@ -345,7 +372,7 @@ a {
         padding: 35px 4px;
         margin-right: 10px;
         cursor: pointer;
-        transition: height 0.2s, padding 0.2s;
+        transition: height .2s, padding .2s;
         position: relative;
 
         text-transform: uppercase;
@@ -365,7 +392,7 @@ a {
         .icon {
             width: 42px;
             height: 42px;
-            transition: transform 0.2s;
+            transition: transform .2s;
             margin: auto;
         }
 
@@ -373,7 +400,7 @@ a {
             width: 360px;
             height: 0;
             background-color: #E53625;
-            transition: height 0.3s, padding 0.3s;
+            transition: height .3s, padding .3s;
             overflow: hidden;
             z-index: 10;
             margin: 30px 0 0 calc(82px - 360px - 4px);
@@ -406,7 +433,7 @@ a {
         will-change: left;
         z-index: 1;
         background-color: #F7F7F7;
-        transition: left 0.3s;
+        transition: left .3s;
         overflow: hidden;
 
         .list {
@@ -476,7 +503,7 @@ a {
             top: 100vh;
             left: 0;
             z-index: 1;
-            transition: top 0.4s;
+            transition: top .4s;
             background-color: $color;
             display: flex;
             align-items: center;
@@ -563,11 +590,11 @@ footer {
     h4, label {
         font-weight: 700;
         font-size: 1.8rem;
-        letter-spacing: 0.01rem;
+        letter-spacing: .01rem;
     }
     a.color-link {
         color: #FFF;
-        transition: 0.1s color;
+        transition: .1s color;
 
         &:hover {
             color: #CCC;
@@ -590,14 +617,14 @@ footer {
     .stats {
         h1 {
             font-size: 5.4rem;
-            letter-spacing: 0.01rem;
+            letter-spacing: .01rem;
             margin-bottom: 0px;
         }
     }
 
     .newsletter {
         label {
-            margin-bottom: 0.8rem;
+            margin-bottom: .8rem;
         }
     }
 
@@ -613,7 +640,7 @@ footer {
 
     .solidarity {
         h4 {
-            margin-bottom: 0.5rem;
+            margin-bottom: .5rem;
         }
         a {
             font-weight: 600;
@@ -645,7 +672,7 @@ footer {
                 color: #FFF;
                 font-size: 1.4rem;
                 border-radius: 0;
-                transition: 0.2s margin;
+                transition: .2s margin;
             }
             &[type='email']:focus {
                 border: 1px solid #FFF;
@@ -662,7 +689,7 @@ footer {
             border: 1px solid #FFF;
             color: #000;
             text-align: center;
-            transition: 0.2s background;
+            transition: .2s background;
             margin-left: -5px;
             font-size: 18px;
             padding: 0px;
@@ -687,7 +714,7 @@ footer {
     ul {
         white-space: nowrap;
         margin-bottom: 0;
-        transition: transform 0.3s;
+        transition: transform .3s;
         font-size: 0;
     }
 
@@ -711,13 +738,39 @@ footer {
             height: 10px;
             border-radius: 5px;
             border: 1px solid $color;
-            transition: background 0.3s;
+            transition: background .3s;
             margin: 0 3px;
             cursor: pointer;
 
             &.active {
                 background-color: $color;
             }
+        }
+    }
+}
+
+.isotope {
+    display: flex;
+    flex-wrap: wrap;
+
+    .box {
+        min-height: 460px;
+        margin: 8px;
+        padding: 20px 12px;
+        overflow: auto;
+        flex: 0 0 calc(25% - 16px);
+        background-color: #FFF;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+        transition: box-shadow .4s;
+        flex-direction: column;
+        display: none;
+
+        &:hover,&:focus {
+            box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
+        }
+
+        &.active {
+            display: flex;
         }
     }
 }
@@ -733,7 +786,7 @@ footer {
         font-size: 1.4rem;
 
         .icon {
-            transition: margin 0.2s;
+            transition: margin .2s;
             font-size: 1rem;
         }
 
@@ -761,7 +814,7 @@ footer {
         text-transform: uppercase;
         font-size: 1.3rem;
         font-weight: 700;
-        letter-spacing: 0.06rem;
+        letter-spacing: .06rem;
     }
     p {
         font-size: 2.2rem;
@@ -799,7 +852,7 @@ footer {
 
     .box {
         position: relative;
-        transition: background 0.4s, border 0.4s, box-shadow 0.4s;
+        transition: background .4s, border .4s, box-shadow .4s;
         padding-top: 20px;
         max-width: calc(25% - 10px);
         flex: 0 0 25%;
@@ -824,7 +877,7 @@ footer {
         font-size: 1rem;
         margin-bottom: 10px;
         color: #777;
-        transition: opacity 0.4s;
+        transition: opacity .4s;
     }
 }
 
@@ -871,7 +924,7 @@ footer {
     }
 
     .icon {
-        transition: margin 0.2s;
+        transition: margin .2s;
         margin-left: 8px;
         font-size: 1.2rem;
     }
@@ -889,7 +942,7 @@ footer {
         font-weight: 700;
         font-size: 1.5rem;
         margin: 0;
-        letter-spacing: 0.15rem;
+        letter-spacing: .15rem;
     }
 
     h1 {
@@ -931,7 +984,7 @@ footer {
         background-color: #FFF;
         margin: 16px;
         padding: 16px;
-        transition: box-shadow 0.2s, border 0.2s;
+        transition: box-shadow .2s, border .2s;
         cursor: pointer;
         position: relative;
         border-bottom: 1px solid #FFF;
@@ -940,7 +993,7 @@ footer {
         width: 33%;
 
         &:hover {
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, .1);
             border-bottom: 1px solid #000;
 
             .necessity {
@@ -984,7 +1037,7 @@ footer {
                 text-align: center;
                 text-transform: uppercase;
                 font-size: 1.2rem;
-                transition: margin 0.16s;
+                transition: margin .16s;
 
                 &:first-child {
                     margin: 0 20% 10px 0;
@@ -1003,7 +1056,7 @@ footer {
                 background-color: #CCC;
                 transform: rotate(-24deg);
                 margin: auto;
-                transition: width 0.16s;
+                transition: width .16s;
             }
         }
     }
@@ -1060,7 +1113,7 @@ footer {
                 bottom: 0;
                 left: 0;
                 width: 0;
-                transition: width 0.6s;
+                transition: width .6s;
             }
 
             &:hover:after {
@@ -1129,6 +1182,145 @@ footer {
     }
 }
 
+// Friends
+.modalities {
+    h1 {
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 2rem;
+        margin-bottom: 32px;
+    }
+
+    form {
+        display: none;
+    }
+
+    .box {
+        position: relative;
+        overflow: hidden;
+        background-color: #FFF;
+        margin-bottom: 20px;
+        padding: 32px 20px 50px;
+        height: 90%;
+        font-size: 1.5rem;
+        cursor: pointer;
+        transition: box-shadow .2s;
+
+        .slider {
+            position: absolute;
+            bottom: -48px;
+            left: 0;
+            height: 48px;
+            width: 100%;
+            background-color: #000;
+            color: #FFF;
+            line-height: 48px;
+            padding: 0 20px;
+            text-align: right;
+            text-transform: uppercase;
+            font-weight: 700;
+            transition: bottom .2s;
+
+            .icon {
+                font-size: 1.2rem;
+            }
+        }
+
+        .price {
+            position: absolute;
+            z-index: 2;
+            bottom: 0;
+            font-weight: 700;
+            margin: 0;
+            line-height: 48px;
+            transition: color .2s;
+        }
+
+        &:hover {
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+
+            .price {
+                color: #FFF;
+            }
+            .slider {
+                bottom: 0;
+            }
+        }
+    }
+}
+
+.advantages {
+    h1 {
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 2rem;
+        margin-bottom: 32px;
+    }
+
+    iframe {
+        width: 100%;
+        height: 520px;
+        border: 0;
+    }
+}
+
+.isotope {
+    .selects {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+
+        select {
+            width: initial;
+            min-width: 33%;
+            margin: 8px;
+            font-weight: 600;
+        }
+    }
+    .empty {
+        display: none;
+        width: 100%;
+        text-align: center;
+        font-size: 1.6rem;
+        margin: 32px 0;
+    }
+
+    .image {
+        text-align: center;
+        height: 180px;
+
+        img {
+            object-fit: scale-down;
+            object-position: center center;
+            width: 100%;
+            height: 100%;
+        }
+    }
+    .contact {
+        // min-height: 160px;
+    }
+    .benefit p, .address, span {
+        font-size: 1.2rem;
+    }
+    h1 {
+        font-size: 1.8rem;
+        margin: 8px 0 0;
+    }
+    p {
+        font-size: 1.4rem;
+        margin: 0;
+    }
+    span {
+        font-style: italic;
+        color: $grey;
+    }
+    hr {
+        margin: 5px 0;
+        border-width: 1px 0 0 0;
+        border-color: $grey;
+    }
+}
+
 // ----------
 // Media Queries
 
@@ -1151,6 +1343,11 @@ footer {
                 opacity: 1;
             }
         }
+    }
+
+    .modalities .row .column-33 {
+        flex: 0 0 50%;
+        max-width: 50%;
     }
 }
 
@@ -1229,15 +1426,15 @@ footer {
             margin-left: 0;
             flex: 0 0 100%;
         }
+    }
 
-        .risk {
-            img {
-                height: 280px;
-            }
-            .box {
-                margin: 32px 2%;
-                width: 96%;
-            }
+    .banner {
+        img {
+            height: 280px;
+        }
+        .box {
+            margin: 32px 2%;
+            width: 96%;
         }
     }
 
@@ -1303,6 +1500,13 @@ footer {
     .help .column img {
         margin-bottom: 0px;
     }
+    .modalities .box {
+        height: initial;
+    }
+
+    .isotope .box {
+        flex: 0 0 calc(50% - 16px);
+    }
 }
 
 // Small mobile only
@@ -1319,5 +1523,9 @@ footer {
                 margin: 20px 0;
             }
         }
+    }
+    .isotope .box {
+        margin: 8px 0;
+        flex: 0 0 calc(100%);
     }
 }

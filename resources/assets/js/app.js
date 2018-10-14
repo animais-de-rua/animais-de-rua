@@ -150,6 +150,28 @@ window.accordions = {
     }
 }
 
+window.isotope = {
+    init: e => {
+        document.querySelectorAll('.isotope select').forEach(elem => {
+            elem.addEventListener('change', e => {
+                let filters = [];
+                let isotope = e.target.closest('.isotope');
+
+                isotope.querySelectorAll('select').forEach(select => {
+                    if(select.value)
+                        filters.push('[' + select.getAttribute('type') + '~="' + select.value + '"]');
+                });
+
+                isotope.querySelectorAll('.box').forEach(box => box.classList.remove('active'));
+                isotope.querySelectorAll('.box' + filters.join('')).forEach(box => box.classList.add('active'));
+
+
+                isotope.querySelector('.empty').style.display = isotope.querySelectorAll('.box.active').length ? "none" : "block";
+            });
+        });
+    }
+}
+
 window.loading = {
     start: e => _loading.className = 'start',
     end: e => _loading.className = 'end'
@@ -200,6 +222,16 @@ window.app = {
 
         // Accordion
         accordions.init();
+
+        // Isotope
+        isotope.init();
+    },
+
+    onModalitiesClick: e => {
+        let index = utils.indexOf(e.parentElement);
+        let form =  document.querySelector('.modalities form');
+        form.querySelector('select > option:nth-child(' + (index + 1) + ')').selected = true;
+        form.submit();
     }
 }
 

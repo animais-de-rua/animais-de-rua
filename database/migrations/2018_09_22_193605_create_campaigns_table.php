@@ -18,7 +18,7 @@ class CreateCampaignsTable extends Migration
             $table->text('name');
             $table->text('introduction');
             $table->text('description');
-            $table->string('image', 255);
+            $table->string('image', 255)->nullable();
             $table->integer('parent_id')->unsigned()->nullable();
             $table->integer('lft')->unsigned()->nullable();
             $table->integer('rgt')->unsigned()->nullable();

@@ -20,10 +20,10 @@ class Partner extends Model
     protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['name', 'description', 'email', 'phone', 'url', 'address', 'latlong', 'benefit', 'notes', 'status', 'user_id'];
+    protected $fillable = ['name', 'description', 'email', 'phone1', 'phone1_info', 'phone2', 'phone2_info', 'url', 'facebook', 'address', 'address_info', 'latlong', 'benefit', 'notes', 'status', 'user_id', 'image'];
     // protected $hidden = [];
     // protected $dates = [];
-    protected $translatable = ['name', 'description', 'benefit'];
+    protected $translatable = ['benefit'];
 
     /*
     |--------------------------------------------------------------------------
@@ -84,4 +84,29 @@ class Partner extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
+
+    public function setImageAttribute($value)
+    {
+        $attribute_name = 'image';
+        $disk = 'uploads';
+
+        // if the image was erased
+        if ($value == null) {
+            \Storage::disk($disk)->delete($this->{$attribute_name});
+            $this->attributes[$attribute_name] = null;
+        }
+
+        // if a base64 was sent, store it in the db
+        if (starts_with($value, 'data:image')) {
+            $filename = str_slug($this->attributes['name']) . '.jpg';
+
+            $image = \Image::make($value);
+            if ($image->width() > 192) {
+                $image->resize(192, null, function ($c) {$c->aspectRatio();});
+            }
+
+            \Storage::disk($disk)->put('partners/' . $filename, $image->stream('jpg', 82));
+            $this->attributes[$attribute_name] = 'partners/' . $filename;
+        }
+    }
 }

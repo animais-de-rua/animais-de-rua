@@ -3,7 +3,7 @@
     <div class="container">
         <div class="left">
             <div class="logo">
-                <a class="link" href="/home">
+                <a class="link" href="/home" aria-label="{{ __("Home") }}">
                     @svg('img/logo/logo-text.svg', '', 'max-width: 230px; max-height: 36px;')
                 </a>
             </div>

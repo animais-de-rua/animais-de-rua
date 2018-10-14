@@ -1,17 +1,17 @@
 $color: #E03322;
 $color-initial: #E03322;
 $color-primary: #000;
-$color-secondary: #000;
-$color-tertiary: #000;
-$color-quaternary: #000;
-$color-quinary: #000;
+$color-secondary: #333;
+$color-tertiary: #666;
+$color-quaternary: #777;
+$color-quinary: #aaa;
 
 @import "~milligram/src/Base";
 // @import "~milligram/src/Blockquote";
 @import "~milligram/src/Button";
 // @import "~milligram/src/Code";
 // @import "~milligram/src/Divider";
-@import "~milligram/src/Form";
+// @import "~milligram/src/Form";
 @import "~milligram/src/Grid";
 @import "~milligram/src/Link";
 @import "~milligram/src/List";
