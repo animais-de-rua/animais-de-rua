@@ -73,7 +73,7 @@ class CreatePartnersTable extends Migration
             $table->index(['partner_id']);
             $table->foreign('partner_id')
                 ->references('id')
-                ->on('headquarters')
+                ->on('partners')
                 ->onDelete('cascade');
 
             $table->index(['territory_id']);

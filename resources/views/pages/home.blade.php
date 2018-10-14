@@ -24,8 +24,8 @@
     </div>
 
     <div class="container processes">
-        <h1>{{ __("web.processes.title") }}</h1>
-        <p>{{ __("web.processes.subtitle") }}</p>
+        <h1>{{ $page['processes_title'] }}</h1>
+        <p>{{ $page['processes_subtitle'] }}</p>
         <div class="flex-slider">
             @php
             $pages = ceil(count($processes) / 3);
@@ -49,7 +49,7 @@
                                 <h1>{{ $process->name }}</h1>
 
                                 <div class="necessity">
-                                    <p>{{ __("web.processes.need") }}</p>
+                                    <p>{{ __("Need") }}</p>
                                     <div class="line"></div>
                                     @switch($process->status)
                                         @case('waiting_godfather')
@@ -106,12 +106,12 @@
     @endcomponent
 
     <div class="container how-to-help">
-        <h2>{{ __("web.help.title") }}</h2>
+        <h2>{{ $page["help_title"] }}</h2>
         <div class="row row-wrap header">
             @foreach(['volunteer', 'friend', 'godfather', 'donate'] as $link)
             <a href="/help#{{ $link }}" class="column box link">
-                <h3>{{ __("web.help.$link.title") }}</h3>
-                <p>{{ __("web.help.$link.text") }}</p>
+                <h3>{{ $page["help_{$link}_title"] }}</h3>
+                <p>{{ $page["help_{$link}_text"] }}</p>
                 <div class="icon icon-arrow"></div>
             </a>
             @endforeach

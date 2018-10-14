@@ -26,6 +26,82 @@ trait PageTemplates
             'label' => 'Link',
             'type' => 'text'
         ]);
+
+        // --------------------
+        $this->header('Ajudas Urgentes');
+
+        $this->addField([
+            'name' => 'processes_title',
+            'label' => '',
+            'type' => 'text'
+        ]);
+
+        $this->addField([
+            'name' => 'processes_subtitle',
+            'label' => 'sub-título',
+            'type' => 'text'
+        ]);
+
+        // --------------------
+        $this->header('Como ajudar?');
+
+        $this->addField([
+            'name' => 'help_title',
+            'label' => '',
+            'type' => 'text'
+        ]);
+
+        // --------------------
+        $this->addField([
+            'name' => 'help_volunteer_title',
+            'label' => 'Ser Voluntário',
+            'type' => 'text'
+        ]);
+
+        $this->addField([
+            'name' => 'help_volunteer_text',
+            'label' => '',
+            'type' => 'textarea'
+        ]);
+
+        // --------------------
+        $this->addField([
+            'name' => 'help_friend_title',
+            'label' => 'Ser nosso Amigo',
+            'type' => 'text'
+        ]);
+
+        $this->addField([
+            'name' => 'help_friend_text',
+            'label' => '',
+            'type' => 'textarea'
+        ]);
+
+        // --------------------
+        $this->addField([
+            'name' => 'help_godfather_title',
+            'label' => 'Apadrinhar',
+            'type' => 'text'
+        ]);
+
+        $this->addField([
+            'name' => 'help_godfather_text',
+            'label' => '',
+            'type' => 'textarea'
+        ]);
+
+        // --------------------
+        $this->addField([
+            'name' => 'help_donate_title',
+            'label' => 'Doar',
+            'type' => 'text'
+        ]);
+
+        $this->addField([
+            'name' => 'help_donate_text',
+            'label' => '',
+            'type' => 'textarea'
+        ]);
     }
 
     private function association()

@@ -94,7 +94,7 @@
                 @endforeach
             </select>
         </div>
-        <p class="empty">Sem resultados...</p>
+        <p class="empty">{{ __("No results") }}...</p>
         @foreach($partners['list'] as $partner)
         <div class="box active" categories="{{ join(' ', $partner->categories) }}" territories="{{ join(' ', $partner->territories) }}">
             <div class="image" title="{{ $partner->name }}">
@@ -110,10 +110,10 @@
                 <p><a target="_blank" href="tel:{{ preg_replace( '/[^0-9]/', '', $partner->phone2) }}">{{ $partner->phone2 }}</a> <span class="details">{{ $partner->phone2_info }}</span></p>
                 @endif
                 @if($partner->facebook)
-                <p><a target="_blank" href="{{ $partner->facebook }}">Facebook</a></p>
+                <p><a target="_blank" href="{{ $partner->facebook }}">{{ __("Facebook") }}</a></p>
                 @endif
                 @if($partner->website)
-                <p><a target="_blank" href="{{ $partner->website }}">Website</a></p>
+                <p><a target="_blank" href="{{ $partner->website }}">{{ __("Website") }}</a></p>
                 @endif
                 @if($partner->address)
                 <hr />

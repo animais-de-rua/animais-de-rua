@@ -27,7 +27,7 @@ return [
         'numeric' => 'O campo :attribute deverá ter um valor entre :min - :max.',
         'file' => 'O campo :attribute deverá ter um tamanho entre :min - :max kilobytes.',
         'string' => 'O campo :attribute deverá conter entre :min - :max caracteres.',
-        'array' => 'O campo :attribute deverá conter entre :min - :max elementos.',
+        'array' => 'O campo :attribute deverá conter entre :min - :max elementos.'
     ],
     'boolean' => 'O campo :attribute deverá conter o valor verdadeiro ou falso.',
     'confirmed' => 'A confirmação para o campo :attribute não coincide.',
@@ -54,7 +54,7 @@ return [
         'numeric' => 'O campo :attribute não deverá conter um valor superior a :max.',
         'file' => 'O campo :attribute não deverá ter um tamanho superior a :max kilobytes.',
         'string' => 'O campo :attribute não deverá conter mais de :max caracteres.',
-        'array' => 'O campo :attribute não deverá conter mais de :max elementos.',
+        'array' => 'O campo :attribute não deverá conter mais de :max elementos.'
     ],
     'mimes' => 'O campo :attribute deverá conter um ficheiro do tipo: :values.',
     'mimetypes' => 'O campo :attribute deverá conter um ficheiro do tipo: :values.',
@@ -62,7 +62,7 @@ return [
         'numeric' => 'O campo :attribute deverá ter um valor superior ou igual a :min.',
         'file' => 'O campo :attribute deverá ter no mínimo :min kilobytes.',
         'string' => 'O campo :attribute deverá conter no mínimo :min caracteres.',
-        'array' => 'O campo :attribute deverá conter no mínimo :min elementos.',
+        'array' => 'O campo :attribute deverá conter no mínimo :min elementos.'
     ],
     'not_in' => 'O campo :attribute contém um valor inválido.',
     'numeric' => 'O campo :attribute deverá conter um valor numérico.',
@@ -80,7 +80,7 @@ return [
         'numeric' => 'O campo :attribute deverá conter o tamanho de :size.',
         'file' => 'O campo :attribute deverá ter o tamanho de :size kilobytes.',
         'string' => 'O campo :attribute deverá conter :size caracteres.',
-        'array' => 'O campo :attribute deverá conter :size elementos.',
+        'array' => 'O campo :attribute deverá conter :size elementos.'
     ],
     'string' => 'O campo :attribute deverá conter texto.',
     'timezone' => 'O campo :attribute deverá ter um fuso horário válido.',
@@ -101,8 +101,8 @@ return [
 
     'custom' => [
         'attribute-name' => [
-            'rule-name' => 'custom-message',
-        ],
+            'rule-name' => 'custom-message'
+        ]
     ],
 
     /*
@@ -116,6 +116,52 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'address' => 'endereço',
+        'adoption_id' => 'adopção',
+        'affected_animals' => 'animais intervencionados',
+        'age' => 'idade',
+        'alias' => 'alias',
+        'amount' => 'quantidade',
+        'amount_females' => 'fêmeas',
+        'amount_males' => 'machos',
+        'amount_other' => 'outros',
+        'benefit' => 'benefício',
+        'contact' => 'contacto',
+        'council' => 'concelho',
+        'date_1' => 'data',
+        'date_2' => 'data',
+        'description' => 'descrição',
+        'donation_id' => 'donativo',
+        'email' => 'email',
+        'expense' => 'despesa',
+        'fat_id' => 'fat',
+        'file' => 'ficheiro',
+        'gender' => 'género',
+        'godfather_id' => 'padrinho',
+        'headquarter_id' => 'núcleo',
+        'history' => 'história',
+        'image' => 'imagem',
+        'introduction' => 'introdução',
+        'latlong' => 'localização',
+        'name' => 'nome',
+        'notes' => 'notas',
+        'paypal_code' => 'código paypal',
+        'phone' => 'telefone',
+        'process_id' => 'processo',
+        'specie' => 'especie',
+        'status' => 'estado',
+        'sterilized' => 'esterilizado',
+        'territory_id' => 'território',
+        'treatment_id' => 'tratamento',
+        'treatment_type_id' => 'tipo de tratamento',
+        'type' => 'tipo',
+        'url' => 'url',
+        'vaccinated' => 'vacinado',
+        'value' => 'valor',
+        'vet_id' => 'veterinário',
+        'vet_id_1' => 'veterinário',
+        'vet_id_2' => 'veterinário'
+    ]
 
 ];
