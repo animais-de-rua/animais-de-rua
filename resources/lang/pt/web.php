@@ -11,6 +11,7 @@ return [
     ],
     'social' => 'Redes Sociais',
     'contact' => 'Formulário de Contacto',
+    'privacy' => 'Política de privacidade',
 
     'friendcard' => 'A partir de 3€ mensais poderá subscrever o Cartão do Amigo da Animais de Rua e ajudar-nos a chegar a cada vez mais animais.',
 

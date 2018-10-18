@@ -134,6 +134,7 @@ input {
         display: inline-block;
         margin: 0;
         position: relative;
+        height: 14px;
     }
     &[type='radio']:checked:after {
         content: ' ';
@@ -656,6 +657,9 @@ footer {
     .contact {
         a {
             font-weight: 700;
+        }
+        p {
+            margin-bottom: 12px;
         }
     }
 
