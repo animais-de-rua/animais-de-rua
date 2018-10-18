@@ -1321,6 +1321,37 @@ footer {
     }
 }
 
+// Privacy policy
+.privacy {
+    text-align: center;
+
+    h1 {
+        margin-top: 80px;
+        font-size: 3.4rem;
+    }
+    h3 {
+        font-size: 2rem;
+    }
+    .doc {
+        text-align: left;
+        width: 80%;
+        margin: 0 10%;
+        padding: 30px;
+        background-color: #FFF;
+        font-size: 1.4rem;
+
+        h1 {
+            text-align: left;
+            margin-top: 0;
+            font-size: 2rem;
+        }
+
+        a:not([name]) {
+            color: $color;
+        }
+    }
+}
+
 // ----------
 // Media Queries
 

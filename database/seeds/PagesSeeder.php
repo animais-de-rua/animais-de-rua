@@ -93,6 +93,17 @@ class PagesSeeder extends Seeder
                 'slug' => 'partners',
                 'created_at' => $date,
                 'updated_at' => $date
+            ],
+            [
+                'title' => json_encode([
+                    'pt' => 'Política de privacidade',
+                    'en' => 'Privacy policy'
+                ]),
+                'template' => 'privacypolicy',
+                'name' => 'Política de privacidade',
+                'slug' => 'privacy-policy',
+                'created_at' => $date,
+                'updated_at' => $date
             ]
         ]);
     }

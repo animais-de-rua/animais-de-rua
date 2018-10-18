@@ -18,14 +18,4 @@ class HomeController extends Controller
     {
         return view('import');
     }
-
-    public function termsOfService()
-    {
-        return view('legal.terms-of-service');
-    }
-
-    public function privacyPolicy()
-    {
-        return view('legal.privacy-policy');
-    }
 }

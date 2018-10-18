@@ -624,9 +624,33 @@ trait PageTemplates
         ]);
     }
 
+    private function privacypolicy()
+    {
+        // --------------------
+        $this->header('Política de Privacidade');
+
+        $this->addField([
+            'name' => 'privacypolicy_title',
+            'label' => '',
+            'type' => 'text'
+        ]);
+
+        $this->addField([
+            'name' => 'privacypolicy_subtitle',
+            'label' => '',
+            'type' => 'text'
+        ]);
+
+        $this->addField([
+            'name' => 'privacypolicy_text',
+            'label' => '',
+            'type' => 'wysiwyg'
+        ]);
+    }
+
     // --------------------
     // Helpers
-    private function addField($field, $translatable = true)
+    public function addField($field, $translatable = true)
     {
         $this->crud->addField(array_merge($field, [
             'fake' => true,
@@ -635,7 +659,7 @@ trait PageTemplates
     }
 
     private $id = 0;
-    private function header($label)
+    public function header($label)
     {
         $this->crud->addField([
             'name' => 'content_header_' . $this->id++,
