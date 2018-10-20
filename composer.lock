@@ -51,16 +51,16 @@
         },
         {
             "name": "backpack/backupmanager",
-            "version": "1.4.2",
+            "version": "1.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Laravel-Backpack/BackupManager.git",
-                "reference": "51ed7e828d4e2fe0b40679e76bf066a6cef74eea"
+                "reference": "f901eaa5ea91efbd2092b8ff4df6100dd806e906"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Laravel-Backpack/BackupManager/zipball/51ed7e828d4e2fe0b40679e76bf066a6cef74eea",
-                "reference": "51ed7e828d4e2fe0b40679e76bf066a6cef74eea",
+                "url": "https://api.github.com/repos/Laravel-Backpack/BackupManager/zipball/f901eaa5ea91efbd2092b8ff4df6100dd806e906",
+                "reference": "f901eaa5ea91efbd2092b8ff4df6100dd806e906",
                 "shasum": ""
             },
             "require": {
@@ -111,20 +111,20 @@
                 "tabacitu",
                 "updivision"
             ],
-            "time": "2018-06-19T11:30:03+00:00"
+            "time": "2018-10-15T05:28:42+00:00"
         },
         {
             "name": "backpack/base",
-            "version": "0.9.9",
+            "version": "0.9.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Laravel-Backpack/Base.git",
-                "reference": "4405fd7d0a538a4b4d8b27066f80fbf920ca087c"
+                "reference": "f3f13e7972670598fd830990b22299e31157f844"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Laravel-Backpack/Base/zipball/4405fd7d0a538a4b4d8b27066f80fbf920ca087c",
-                "reference": "4405fd7d0a538a4b4d8b27066f80fbf920ca087c",
+                "url": "https://api.github.com/repos/Laravel-Backpack/Base/zipball/f3f13e7972670598fd830990b22299e31157f844",
+                "reference": "f3f13e7972670598fd830990b22299e31157f844",
                 "shasum": ""
             },
             "require": {
@@ -175,20 +175,20 @@
                 "backpack",
                 "base"
             ],
-            "time": "2018-09-20T07:38:10+00:00"
+            "time": "2018-10-18T06:58:01+00:00"
         },
         {
             "name": "backpack/crud",
-            "version": "3.4.35",
+            "version": "3.4.36",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Laravel-Backpack/CRUD.git",
-                "reference": "828bc52caabfa487b294813fc2699691ca672537"
+                "reference": "1779dc6c5a28ad3e8555b1abc2bf395dd13b48fb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Laravel-Backpack/CRUD/zipball/828bc52caabfa487b294813fc2699691ca672537",
-                "reference": "828bc52caabfa487b294813fc2699691ca672537",
+                "url": "https://api.github.com/repos/Laravel-Backpack/CRUD/zipball/1779dc6c5a28ad3e8555b1abc2bf395dd13b48fb",
+                "reference": "1779dc6c5a28ad3e8555b1abc2bf395dd13b48fb",
                 "shasum": ""
             },
             "require": {
@@ -250,7 +250,7 @@
                 "read",
                 "update"
             ],
-            "time": "2018-09-26T14:32:04+00:00"
+            "time": "2018-10-15T05:49:05+00:00"
         },
         {
             "name": "backpack/langfilemanager",
@@ -330,16 +330,16 @@
         },
         {
             "name": "backpack/logmanager",
-            "version": "2.3.21",
+            "version": "2.3.23",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Laravel-Backpack/LogManager.git",
-                "reference": "d7698ced56abf24557a20a8791ad2acf5bb9a0ed"
+                "reference": "fa1870b0a9cd39a582ca5d59be833f0603bbd894"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Laravel-Backpack/LogManager/zipball/d7698ced56abf24557a20a8791ad2acf5bb9a0ed",
-                "reference": "d7698ced56abf24557a20a8791ad2acf5bb9a0ed",
+                "url": "https://api.github.com/repos/Laravel-Backpack/LogManager/zipball/fa1870b0a9cd39a582ca5d59be833f0603bbd894",
+                "reference": "fa1870b0a9cd39a582ca5d59be833f0603bbd894",
                 "shasum": ""
             },
             "require": {
@@ -388,7 +388,7 @@
                 "log manager",
                 "logs"
             ],
-            "time": "2018-05-01T17:43:06+00:00"
+            "time": "2018-10-15T04:33:24+00:00"
         },
         {
             "name": "backpack/pagemanager",
@@ -463,16 +463,16 @@
         },
         {
             "name": "backpack/permissionmanager",
-            "version": "3.12.5",
+            "version": "3.12.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Laravel-Backpack/PermissionManager.git",
-                "reference": "ae9eb32e03c6c8d05070c9f3994fdeae92747a72"
+                "reference": "6965dd05ea539565dac9489254e78657b5415c64"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Laravel-Backpack/PermissionManager/zipball/ae9eb32e03c6c8d05070c9f3994fdeae92747a72",
-                "reference": "ae9eb32e03c6c8d05070c9f3994fdeae92747a72",
+                "url": "https://api.github.com/repos/Laravel-Backpack/PermissionManager/zipball/6965dd05ea539565dac9489254e78657b5415c64",
+                "reference": "6965dd05ea539565dac9489254e78657b5415c64",
                 "shasum": ""
             },
             "require": {
@@ -534,20 +534,20 @@
                 "updivision",
                 "users roles admin"
             ],
-            "time": "2018-09-29T07:13:26+00:00"
+            "time": "2018-10-16T06:15:57+00:00"
         },
         {
             "name": "backpack/settings",
-            "version": "2.1.0",
+            "version": "2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Laravel-Backpack/Settings.git",
-                "reference": "277660aee4f1e3334c9fb98a9c37b95df32f396d"
+                "reference": "d1077319696dc6bc57e92e88c4574356782874f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Laravel-Backpack/Settings/zipball/277660aee4f1e3334c9fb98a9c37b95df32f396d",
-                "reference": "277660aee4f1e3334c9fb98a9c37b95df32f396d",
+                "url": "https://api.github.com/repos/Laravel-Backpack/Settings/zipball/d1077319696dc6bc57e92e88c4574356782874f5",
+                "reference": "d1077319696dc6bc57e92e88c4574356782874f5",
                 "shasum": ""
             },
             "require": {
@@ -598,7 +598,7 @@
                 "tabacitu",
                 "updivision"
             ],
-            "time": "2018-04-18T21:00:52+00:00"
+            "time": "2018-10-15T07:57:45+00:00"
         },
         {
             "name": "barryvdh/elfinder-flysystem-driver",
@@ -2343,16 +2343,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "1.0.47",
+            "version": "1.0.48",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "a11e4a75f256bdacf99d20780ce42d3b8272975c"
+                "reference": "a6ded5b2f6055e2db97b4b859fdfca2b952b78aa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/a11e4a75f256bdacf99d20780ce42d3b8272975c",
-                "reference": "a11e4a75f256bdacf99d20780ce42d3b8272975c",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/a6ded5b2f6055e2db97b4b859fdfca2b952b78aa",
+                "reference": "a6ded5b2f6055e2db97b4b859fdfca2b952b78aa",
                 "shasum": ""
             },
             "require": {
@@ -2423,7 +2423,7 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2018-09-14T15:30:29+00:00"
+            "time": "2018-10-15T13:53:10+00:00"
         },
         {
             "name": "league/flysystem-cached-adapter",
@@ -3394,23 +3394,23 @@
         },
         {
             "name": "spatie/laravel-backup",
-            "version": "5.10.1",
+            "version": "5.11.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-backup.git",
-                "reference": "20598fb6fd8695809ffceacfbaf22a816f546bca"
+                "reference": "fc5aa95db8868c9615ffa4cb2060214f95f1d5ce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-backup/zipball/20598fb6fd8695809ffceacfbaf22a816f546bca",
-                "reference": "20598fb6fd8695809ffceacfbaf22a816f546bca",
+                "url": "https://api.github.com/repos/spatie/laravel-backup/zipball/fc5aa95db8868c9615ffa4cb2060214f95f1d5ce",
+                "reference": "fc5aa95db8868c9615ffa4cb2060214f95f1d5ce",
                 "shasum": ""
             },
             "require": {
-                "laravel/framework": "~5.5.0|~5.6.0|~5.5.0|~5.7.0",
+                "laravel/framework": "~5.5.0|~5.6.0|~5.7.0",
                 "league/flysystem": "^1.0.27",
                 "php": "^7.1",
-                "spatie/db-dumper": "^2.10",
+                "spatie/db-dumper": "^2.11.1",
                 "spatie/temporary-directory": "^1.1",
                 "symfony/finder": "^3.3|^4.0"
             },
@@ -3458,20 +3458,20 @@
                 "laravel-backup",
                 "spatie"
             ],
-            "time": "2018-08-24T09:10:11+00:00"
+            "time": "2018-10-20T07:24:26+00:00"
         },
         {
             "name": "spatie/laravel-permission",
-            "version": "2.22.0",
+            "version": "2.23.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-permission.git",
-                "reference": "095fae92d5a0950405e251a10061ec64d768b842"
+                "reference": "104e3aad0ac6f1364ec52d3f3f9d9ded0e822d82"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/095fae92d5a0950405e251a10061ec64d768b842",
-                "reference": "095fae92d5a0950405e251a10061ec64d768b842",
+                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/104e3aad0ac6f1364ec52d3f3f9d9ded0e822d82",
+                "reference": "104e3aad0ac6f1364ec52d3f3f9d9ded0e822d82",
                 "shasum": ""
             },
             "require": {
@@ -3522,7 +3522,7 @@
                 "security",
                 "spatie"
             ],
-            "time": "2018-10-12T00:42:03+00:00"
+            "time": "2018-10-15T19:10:43+00:00"
         },
         {
             "name": "spatie/laravel-translatable",
@@ -5597,16 +5597,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "6.0.8",
+            "version": "6.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "848f78b3309780fef7ec8c4666b7ab4e6b09b22f"
+                "reference": "b097681a19a48e52706f57e47a09594bac4f7cab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/848f78b3309780fef7ec8c4666b7ab4e6b09b22f",
-                "reference": "848f78b3309780fef7ec8c4666b7ab4e6b09b22f",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/b097681a19a48e52706f57e47a09594bac4f7cab",
+                "reference": "b097681a19a48e52706f57e47a09594bac4f7cab",
                 "shasum": ""
             },
             "require": {
@@ -5617,7 +5617,7 @@
                 "phpunit/php-text-template": "^1.2.1",
                 "phpunit/php-token-stream": "^3.0",
                 "sebastian/code-unit-reverse-lookup": "^1.0.1",
-                "sebastian/environment": "^3.1",
+                "sebastian/environment": "^3.1 || ^4.0",
                 "sebastian/version": "^2.0.1",
                 "theseer/tokenizer": "^1.1"
             },
@@ -5630,7 +5630,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "6.0-dev"
+                    "dev-master": "6.1-dev"
                 }
             },
             "autoload": {
@@ -5656,7 +5656,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-10-04T03:41:23+00:00"
+            "time": "2018-10-18T09:01:38+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -5849,16 +5849,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "7.4.0",
+            "version": "7.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "f3837fa1e07758057ae06e8ddec6d06ba183f126"
+                "reference": "c5a120ade60992bd671a912188ee9ee9f8083bbd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/f3837fa1e07758057ae06e8ddec6d06ba183f126",
-                "reference": "f3837fa1e07758057ae06e8ddec6d06ba183f126",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/c5a120ade60992bd671a912188ee9ee9f8083bbd",
+                "reference": "c5a120ade60992bd671a912188ee9ee9f8083bbd",
                 "shasum": ""
             },
             "require": {
@@ -5879,7 +5879,7 @@
                 "phpunit/php-timer": "^2.0",
                 "sebastian/comparator": "^3.0",
                 "sebastian/diff": "^3.0",
-                "sebastian/environment": "^3.1",
+                "sebastian/environment": "^3.1 || ^4.0",
                 "sebastian/exporter": "^3.1",
                 "sebastian/global-state": "^2.0",
                 "sebastian/object-enumerator": "^3.0.3",
@@ -5929,7 +5929,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-10-05T04:05:24+00:00"
+            "time": "2018-10-18T09:02:52+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",

@@ -71,6 +71,13 @@
     "No results": "Sem resultados",
     "Need": "Necessidade",
 
+    "Go Home": "Voltar ao início",
+    "Sorry, the page you are looking for could not be found.": "Desculpe, a página que procura já não existe.",
+    "Sorry, your session has expired. Please refresh and try again.": "Desculpe, a sua sessão expirou. Por favor atualize a página e tente novamente.",
+    "Sorry, you are making too many requests to our servers.": "Desculpe, está a fazer demasiados pedidos ao nosso servidor.",
+    "Sorry, we are doing some maintenance. Please check back soon.": "Desculpe, estamos a fazer manutenção ao servidor. Por favor tente mais tarde.",
+    "Whoops, something went wrong on our servers.": "Oops, alguma coisa correu mal no nosso servidor.",
+
     "Languages": "Idioma",
     "File manager": "Gestor de ficheiros",
     "Language Files": "Ficheiros de tradução",
@@ -94,6 +101,7 @@
     "partner category": "categoria de parceiro",
     "category": "categoria",
     "campaign": "campanha",
+    "sponsor": "patrocinador",
 
     "headquarter": "núcleo",
     "process": "processo",
@@ -114,6 +122,7 @@
     "partner categories": "categorias de parceiro",
     "categories": "categorias",
     "campaigns": "campanhas",
+    "sponsors": "patrocinadores",
 
     "volunteer": "voluntário",
     "friend": "amigo",
