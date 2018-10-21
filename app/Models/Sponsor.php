@@ -3,12 +3,10 @@
 namespace App\Models;
 
 use Backpack\CRUD\CrudTrait;
-use Backpack\CRUD\ModelTraits\SpatieTranslatable\HasTranslations;
 
-class Partner extends Model
+class Sponsor extends Model
 {
     use CrudTrait;
-    use HasTranslations;
 
     /*
     |--------------------------------------------------------------------------
@@ -16,14 +14,13 @@ class Partner extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'partners';
+    protected $table = 'sponsors';
     protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['name', 'description', 'email', 'phone1', 'phone1_info', 'phone2', 'phone2_info', 'url', 'facebook', 'address', 'address_info', 'latlong', 'benefit', 'notes', 'status', 'user_id', 'image'];
+    protected $fillable = ['name', 'url', 'image'];
     // protected $hidden = [];
     // protected $dates = [];
-    protected $translatable = ['benefit'];
 
     /*
     |--------------------------------------------------------------------------
@@ -37,21 +34,6 @@ class Partner extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function territories()
-    {
-        return $this->belongsToMany('App\Models\Territory', 'partners_territories', 'partner_id', 'territory_id');
-    }
-
-    public function categories()
-    {
-        return $this->belongsToMany('App\Models\PartnerCategory', 'partners_categories', 'partner_id', 'partner_category_list_id');
-    }
-
-    public function user()
-    {
-        return $this->belongsTo('App\User', 'user_id');
-    }
-
     /*
     |--------------------------------------------------------------------------
     | SCOPES
@@ -64,21 +46,6 @@ class Partner extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function getUserLinkAttribute()
-    {
-        return $this->getLink($this->user);
-    }
-
-    public function getCategoryListAttribute()
-    {
-        return join(', ', $this->categories()->pluck('name')->toArray());
-    }
-
-    public function getTerritoryListAttribute()
-    {
-        return join(', ', $this->territories()->pluck('name')->toArray());
-    }
-
     /*
     |--------------------------------------------------------------------------
     | MUTATORS
@@ -88,6 +55,6 @@ class Partner extends Model
     public function setImageAttribute($value)
     {
         $filename = $this->attributes['name'];
-        $this->saveImage($this, $value, 'partners/', $filename, 192, 82);
+        $this->saveImage($this, $value, 'sponsors/', $filename, 144, 90);
     }
 }

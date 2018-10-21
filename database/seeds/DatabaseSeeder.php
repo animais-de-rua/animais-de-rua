@@ -25,7 +25,8 @@ class DatabaseSeeder extends Seeder
             PartnersSeeder::class,
             PagesSeeder::class,
             CampaignsSeeder::class,
-            FakeSeeder::class
+            SponsorsSeeder::class,
+            FakeSeeder::class,
         ]);
 
         Schema::enableForeignKeyConstraints();

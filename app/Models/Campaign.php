@@ -57,26 +57,7 @@ class Campaign extends Model
 
     public function setImageAttribute($value)
     {
-        $attribute_name = 'image';
-        $disk = 'uploads';
-
-        // if the image was erased
-        if ($value == null) {
-            \Storage::disk($disk)->delete($this->{$attribute_name});
-            $this->attributes[$attribute_name] = null;
-        }
-
-        // if a base64 was sent, store it in the db
-        if (starts_with($value, 'data:image')) {
-            $filename = str_slug(json_decode($this->attributes['name'])->pt) . '.jpg';
-
-            $image = \Image::make($value);
-            if ($image->width() > 800) {
-                $image->resize(800, null, function ($c) {$c->aspectRatio();});
-            }
-
-            \Storage::disk($disk)->put('campaigns/' . $filename, $image->stream('jpg', 88));
-            $this->attributes[$attribute_name] = 'campaigns/' . $filename;
-        }
+        $filename = json_decode($model->attributes['name'])->pt;
+        $this->saveImage($this, $value, 'campaigns/', $filename, 800, 88);
     }
 }

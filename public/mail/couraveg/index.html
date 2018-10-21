@@ -2,11 +2,10 @@
 	<tr>
 		<td style="width:145px;"><img width="130" src="https://static1.squarespace.com/static/543c2bcae4b039cae1678ab7/56da08b82b8dde9c3d581dd8/5bc9baea0d9297da87db6e6e/1539947247252/couraveg-avatar.png" style="max-width:130px;width:130px;"/></td>
 		<td>
-			<p style="font-weight: bold;font-size:12px;margin-bottom:0;color:#000;font-weight:bold" id="pNome"></p>
-			<p style="font-size:10px;margin:1px 0 8px 0;" id="pEmail"><a href="" id="lEmail" style="color:black; text-decoration:none;margin-top:1px;"></a></p>
+			<p style="font-weight: bold;font-size:12px;margin-bottom:8px;color:#000;font-weight:bold" id="pNome"></p>
 			<p style="font-size:12px;margin:1px 0 0 0;color:black;margin-top:1px;"><span style="font-weight:bold">CouraVeg</span> | International Congress</span></br>
 			<p style="font-size:10px;margin:2px 0 0 0;"><a href="http://www.animaisderua.org/pt/" target="_blank" style="color:black; text-decoration:none;margin-top:2px;">www.couraveg.org</a></p>
-			<p style="font-size:10px;margin:2px 0 0 0;"><a href="tel:918991438" target="_blank" style="color:black; text-decoration:none;margin-top:2px;">+351 918 991 438</a></p>
+			<p style="font-size:10px;margin:2px 0 0 0;"><a href="tel:918991438" target="_blank" style="color:black; text-decoration:none;margin-top:2px;" id="pTelefone"></a></p>
 			<p style="font-size:10px;margin:4px 0 0 0;margin-top:4px;"><a href="https://www.facebook.com/couraveg/" target="_blank"><img src="https://lh3.googleusercontent.com/je5QD3pO-fE4OdXhLKPyVffwt3w1nR2nYMTjsaBVnW5ffptTufAPzxSDsgU20ZUIFva2Y66ITvElJ_7aTBZcDiFx2FKMWZ8cViJdZk0EmpI8kF7YKSV7GPzG7U8zQa2CSnVWPYolvG0hcW2J8wZyukJQxDYjEisi6Y6S4uOXlygtd7CLvm5gCl3Aya9Knxs7wsKqa8DMpTsTKRePT7SBvxoNXgdyexTyUqcBSBhXx3zZ6ovGx6dOwOA8uYqFVpQuvgXQP8X7XHxzVahPa3wS1mE4nbwSjyWAoaRm6_sdX_aFLJZmB2cLivlvQymRrNdr5cZjktqUDkjH8fmeUYs-E0gBFYh5KIQhvZagfqePke6k5KYmKLpJE-WsSHl23Mp_gTHVuKH1RIlauGj4puM6yBzhKK_AJVaIKBb0nNrScUb0tjoDiUiXrVYB-VU8sdRAattJKKZuKgCz0lUOrpbXeI4CREU8_NJISTIGCw3qPw1bf9AtB3RX7MqYvw8EJ4QUTXUqIJtDIxyNVpUlB3bpVXSgoFcw3OsoL5b9p9Dc3gdmWVFk4kgsCJcee1MbuOMOBz5FLg96__RW4Gew2gQuDocVPBYNWsxXmbzxzEv1-bYcQlLC4okdpnq5NL2exAuW7JAs3gpmc80K_5K1i91Vr49sZvc=s48-no" style="width: 24px;"/></a>
 			<a href="https://www.instagram.com/couraveg/" target="_blank"><img src="https://lh3.googleusercontent.com/DaESmvdRDQuy-6qiubO_SeEAn36vk03UEKivRV0Hm6fWmfqL8Pst3SU2bUU8eY-VP3RnDwkTDV6VkE0yRj0ViPtGKBRmk8At7VEcXLCWmtLf2PbYcHzK4yOUae3_JQXfQgk6FpQdkah2X5Y65Sl_310Hr-WMtX1QSePrKL53Y8hjKRebhdfIBXMglClj3bq3OWtyXh9UV4rEFXoT2c8gJQy3i7yfmT-Ur1AFyAUwlBOsZde6rK2sRTunPh9tv83kflrQTuFVzK8F_S7AbdVqDna7-gIRBj3hCXj_4WhjT_H8a1vB8pzQzha74HHFk3tSSDJ0fK1cxUXDOYGUVUUJ0uO6GL5JheiiD13Hc2IDFtr8zXzQilMlbAu5r7nuV5XyR-gYTuQkk6Q97Kzz_i08CwNGohTnOegiuQb44Hm9dAEKUM4W8QHIv_dYlOSGSXuZG2bHxv098LZgKJTr6UzeTFwIi0WCYlQDsbKuxIc9xQzN9DzPmR_OBlKzbdcdejTEk2cJWEJXZB_i0RQDlc57MmfhsGNQNrq1k2_1Mju1mUQ8_uBwGUWYCeCpjKhmfv94Gqz7u1F-PID7-tT_RqHAvIeF2kmeoj2dYqGe5zINVaIW4Q_iZ75KXCoZsDeW6HbwQ0S9dWkhuqiur6P1Ep6pfiD541o=s48-no" style="width: 24px;"/></a>
 		</td>
@@ -34,8 +33,8 @@
 		<td><input id="txtNome" /></td>
 	</tr>
 	<tr>
-		<td>Email</td>
-		<td><input id="txtEmail" /></td>
+		<td>Telefone</td>
+		<td><input id="txtTelefone" /></td>
 	</tr>
 	<tr>
 		<td>
@@ -48,14 +47,13 @@
 	document.addEventListener('DOMContentLoaded', e => {
 		const onChange = () => {
 			var nome = document.getElementById('txtNome').value;
-			var email = document.getElementById('txtEmail').value;
+			var telefone = document.getElementById('txtTelefone').value;
 			document.getElementById('pNome').innerHTML = nome;
-			document.getElementById('lEmail').innerHTML = email;
-			document.getElementById('lEmail').href = "mailto:"+email;
+			document.getElementById('pTelefone').innerHTML = telefone;
 		}
 
 		['keypress', 'paste', 'input'].forEach(event => document.getElementById('txtNome').addEventListener(event, onChange));
-		['keypress', 'paste', 'input'].forEach(event => document.getElementById('txtEmail').addEventListener(event, onChange));
+		['keypress', 'paste', 'input'].forEach(event => document.getElementById('txtTelefone').addEventListener(event, onChange));
 
 		document.getElementById('copy').addEventListener("click", e => {
             var range = document.getSelection().getRangeAt(0);

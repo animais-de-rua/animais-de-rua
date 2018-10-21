@@ -49,6 +49,7 @@ Route::group(['prefix' => config('backpack.base.route_prefix'), 'middleware' => 
     CRUD::resource('partner', 'PartnerCrudController');
     CRUD::resource('partner-category', 'PartnerCategoryCrudController');
     CRUD::resource('protocol', 'ProtocolCrudController');
+    CRUD::resource('sponsor', 'SponsorCrudController');
 
     // API
     Route::get('user/ajax/filter/{role?}', 'APICrudController@userFilter');
