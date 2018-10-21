@@ -12,7 +12,7 @@
 */
 
 // Home
-Route::get('/', 'HomeController@welcome')->name('welcome');
+Route::get('/', 'PageController@index', 'home');
 
 // Auth
 Auth::routes();

@@ -7,7 +7,7 @@ return [
     'solidary' => [
         'title' => 'Solidary number',
         'number' => '760 300 161',
-        'description' => '0,60€ + FAT calling costs'
+        'description' => '0,60€ + FAT calling costs',
     ],
     'social' => 'Social Networks',
     'contact' => 'Contact Form',
@@ -20,23 +20,23 @@ return [
         'values' => [
             '1' => '5',
             '2' => '10',
-            '3' => '15'
-        ]
+            '3' => '15',
+        ],
     ],
 
     'risk' => [
-        'title' => 'Encontrou um animal em risco?',
-        'link' => 'Candidatura de Esterilização'
+        'title' => 'Did you find an animal at risk?',
+        'link' => 'Application for Sterilization',
     ],
 
     'association' => [
         'report' => 'Activity report',
-        'report_year' => 'Activity report of :year'
+        'report_year' => 'Activity report of :year',
     ],
 
     'ced' => [
-        'title' => 'Gostaria de participar/organizar uma formação CED?',
-        'link' => 'Preencha o nosso formulário'
-    ]
+        'title' => 'Would you like to join/organize a formation?',
+        'link' => 'Fill up our form',
+    ],
 
 ];

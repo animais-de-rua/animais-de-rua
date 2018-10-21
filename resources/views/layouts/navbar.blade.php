@@ -3,7 +3,7 @@
     <div class="container">
         <div class="left">
             <div class="logo">
-                <a class="link" href="/home" aria-label="{{ __("Home") }}">
+                <a class="link" href="/" aria-label="{{ __("Home") }}">
                     @svg('img/logo/logo-text.svg', '', 'max-width: 230px; max-height: 36px;')
                 </a>
             </div>
@@ -56,7 +56,7 @@
 
     <div class="mobile">
         <ul class="list">
-            <li><a class="link" href="/home">{{ __("Home") }}</a></li>
+            <li><a class="link" href="/">{{ __("Home") }}</a></li>
             <li><a class="link" href="/association">{{ __("Organization") }}</a></li>
             <li><a class="link" href="/ced">{{ __("CED") }}</a></li>
             <li><a class="link" href="/animals">{{ __("Animals") }}</a></li>

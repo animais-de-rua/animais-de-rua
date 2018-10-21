@@ -31,9 +31,11 @@
                 <hr />
                 <h3>{!! $page['info_title'] !!}</h3>
                 <ul class="arrow-links">
-                @foreach(json_decode($page['info_links']) as $link)
-                    <li><a href="{{ $link->url }}">{{ $link->name }} <span class="icon icon-arrow"></span></a></li>
-                @endforeach
+                @if($page['info_links'])
+                    @foreach(json_decode($page['info_links']) as $link)
+                        <li><a href="{{ $link->url }}">{{ $link->name }} <span class="icon icon-arrow"></span></a></li>
+                    @endforeach
+                @endif
                 </ul>
             </div>
         </div>

@@ -12,19 +12,19 @@ trait PageTemplates
         $this->addField([
             'name' => 'association_title',
             'label' => '',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         $this->addField([
             'name' => 'association_text',
             'label' => '',
-            'type' => 'wysiwyg'
+            'type' => 'wysiwyg',
         ]);
 
         $this->addField([
             'name' => 'association_link',
             'label' => 'Link',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         // --------------------
@@ -33,13 +33,13 @@ trait PageTemplates
         $this->addField([
             'name' => 'processes_title',
             'label' => '',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         $this->addField([
             'name' => 'processes_subtitle',
             'label' => 'sub-título',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         // --------------------
@@ -48,59 +48,59 @@ trait PageTemplates
         $this->addField([
             'name' => 'help_title',
             'label' => '',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         // --------------------
         $this->addField([
             'name' => 'help_volunteer_title',
             'label' => 'Ser Voluntário',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         $this->addField([
             'name' => 'help_volunteer_text',
             'label' => '',
-            'type' => 'textarea'
+            'type' => 'textarea',
         ]);
 
         // --------------------
         $this->addField([
             'name' => 'help_friend_title',
             'label' => 'Ser nosso Amigo',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         $this->addField([
             'name' => 'help_friend_text',
             'label' => '',
-            'type' => 'textarea'
+            'type' => 'textarea',
         ]);
 
         // --------------------
         $this->addField([
             'name' => 'help_godfather_title',
             'label' => 'Apadrinhar',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         $this->addField([
             'name' => 'help_godfather_text',
             'label' => '',
-            'type' => 'textarea'
+            'type' => 'textarea',
         ]);
 
         // --------------------
         $this->addField([
             'name' => 'help_donate_title',
             'label' => 'Doar',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         $this->addField([
             'name' => 'help_donate_text',
             'label' => '',
-            'type' => 'textarea'
+            'type' => 'textarea',
         ]);
     }
 
@@ -112,13 +112,13 @@ trait PageTemplates
         $this->addField([
             'name' => 'association_title',
             'label' => '',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         $this->addField([
             'name' => 'association_text',
             'label' => '',
-            'type' => 'wysiwyg'
+            'type' => 'wysiwyg',
         ]);
 
         // --------------------
@@ -127,13 +127,13 @@ trait PageTemplates
         $this->addField([
             'name' => 'whoweare_title',
             'label' => '',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         $this->addField([
             'name' => 'whoweare_text',
             'label' => '',
-            'type' => 'wysiwyg'
+            'type' => 'wysiwyg',
         ]);
 
         // --------------------
@@ -142,13 +142,13 @@ trait PageTemplates
         $this->addField([
             'name' => 'report_year',
             'label' => 'Ano',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         $this->addField([
             'name' => 'report_link',
             'label' => 'Link',
-            'type' => 'browse'
+            'type' => 'browse',
         ]);
 
         // --------------------
@@ -157,13 +157,13 @@ trait PageTemplates
         $this->addField([
             'name' => 'act_title',
             'label' => '',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         $this->addField([
             'name' => 'act_text',
             'label' => '',
-            'type' => 'wysiwyg'
+            'type' => 'wysiwyg',
         ]);
 
         // --------------------
@@ -172,13 +172,13 @@ trait PageTemplates
         $this->addField([
             'name' => 'program_title',
             'label' => '',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         $this->addField([
             'name' => 'program_text',
             'label' => '',
-            'type' => 'wysiwyg'
+            'type' => 'wysiwyg',
         ]);
 
         // --------------------
@@ -187,13 +187,13 @@ trait PageTemplates
         $this->addField([
             'name' => 'vision_title',
             'label' => '',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         $this->addField([
             'name' => 'vision_text',
             'label' => '',
-            'type' => 'wysiwyg'
+            'type' => 'wysiwyg',
         ]);
 
         // --------------------
@@ -202,13 +202,13 @@ trait PageTemplates
         $this->addField([
             'name' => 'mission_title',
             'label' => '',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         $this->addField([
             'name' => 'mission_text',
             'label' => '',
-            'type' => 'wysiwyg'
+            'type' => 'wysiwyg',
         ]);
 
         // --------------------
@@ -217,13 +217,13 @@ trait PageTemplates
         $this->addField([
             'name' => 'values_title',
             'label' => '',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         $this->addField([
             'name' => 'values_text',
             'label' => '',
-            'type' => 'wysiwyg'
+            'type' => 'wysiwyg',
         ]);
 
         // --------------------
@@ -232,13 +232,13 @@ trait PageTemplates
         $this->addField([
             'name' => 'where_title',
             'label' => '',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         $this->addField([
             'name' => 'where_text',
             'label' => '',
-            'type' => 'wysiwyg'
+            'type' => 'wysiwyg',
         ]);
     }
 
@@ -250,13 +250,13 @@ trait PageTemplates
         $this->addField([
             'name' => 'ced_title',
             'label' => '',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         $this->addField([
             'name' => 'ced_text',
             'label' => '',
-            'type' => 'wysiwyg'
+            'type' => 'wysiwyg',
         ]);
 
         // --------------------
@@ -265,13 +265,13 @@ trait PageTemplates
         $this->addField([
             'name' => 'what_title',
             'label' => '',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         $this->addField([
             'name' => 'what_text',
             'label' => '',
-            'type' => 'wysiwyg'
+            'type' => 'wysiwyg',
         ]);
 
         // --------------------
@@ -280,7 +280,7 @@ trait PageTemplates
         $this->addField([
             'name' => 'info_title',
             'label' => '',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         $this->addField([
@@ -290,9 +290,9 @@ trait PageTemplates
             'entity_singular' => 'pdf',
             'columns' => [
                 'name' => __('Name'),
-                'url' => 'URL'
+                'url' => 'URL',
             ],
-            'mimes' => ['pdf']
+            'mimes' => ['pdf'],
         ]);
 
         // --------------------
@@ -301,31 +301,31 @@ trait PageTemplates
         $this->addField([
             'name' => 'advantage_title',
             'label' => '',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         $this->addField([
             'name' => 'advantage_community_title',
             'label' => 'Comunidade',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         $this->addField([
             'name' => 'advantage_community_text',
             'label' => '',
-            'type' => 'wysiwyg'
+            'type' => 'wysiwyg',
         ]);
 
         $this->addField([
             'name' => 'advantage_colony_title',
             'label' => 'Colónia',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         $this->addField([
             'name' => 'advantage_colony_text',
             'label' => '',
-            'type' => 'wysiwyg'
+            'type' => 'wysiwyg',
         ]);
 
         // --------------------
@@ -334,13 +334,13 @@ trait PageTemplates
         $this->addField([
             'name' => 'alternatives_title',
             'label' => '',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         $this->addField([
             'name' => 'alternatives_text',
             'label' => '',
-            'type' => 'textarea'
+            'type' => 'textarea',
         ]);
 
         // --------------------
@@ -349,13 +349,13 @@ trait PageTemplates
         $this->addField([
             'name' => 'alternatives_capture_title',
             'label' => '',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         $this->addField([
             'name' => 'alternatives_capture_text',
             'label' => '',
-            'type' => 'textarea'
+            'type' => 'textarea',
         ]);
 
         // --------------------
@@ -364,13 +364,13 @@ trait PageTemplates
         $this->addField([
             'name' => 'alternatives_feed_title',
             'label' => '',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         $this->addField([
             'name' => 'alternatives_feed_text',
             'label' => '',
-            'type' => 'textarea'
+            'type' => 'textarea',
         ]);
 
         // --------------------
@@ -379,13 +379,13 @@ trait PageTemplates
         $this->addField([
             'name' => 'alternatives_greeting_title',
             'label' => '',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         $this->addField([
             'name' => 'alternatives_greeting_text',
             'label' => '',
-            'type' => 'textarea'
+            'type' => 'textarea',
         ]);
 
         // --------------------
@@ -394,13 +394,13 @@ trait PageTemplates
         $this->addField([
             'name' => 'alternatives_nothing_title',
             'label' => '',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         $this->addField([
             'name' => 'alternatives_nothing_text',
             'label' => '',
-            'type' => 'textarea'
+            'type' => 'textarea',
         ]);
     }
 
@@ -417,13 +417,13 @@ trait PageTemplates
         $this->addField([
             'name' => 'help_title',
             'label' => '',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         $this->addField([
             'name' => 'help_text',
             'label' => '',
-            'type' => 'wysiwyg'
+            'type' => 'wysiwyg',
         ]);
 
         // --------------------
@@ -432,19 +432,19 @@ trait PageTemplates
         $this->addField([
             'name' => 'volunteer_title',
             'label' => '',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         $this->addField([
             'name' => 'volunteer_text',
             'label' => '',
-            'type' => 'wysiwyg'
+            'type' => 'wysiwyg',
         ]);
 
         $this->addField([
             'name' => 'volunteer_link',
             'label' => 'Link',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         // --------------------
@@ -453,19 +453,19 @@ trait PageTemplates
         $this->addField([
             'name' => 'adopt_title',
             'label' => '',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         $this->addField([
             'name' => 'adopt_text',
             'label' => '',
-            'type' => 'wysiwyg'
+            'type' => 'wysiwyg',
         ]);
 
         $this->addField([
             'name' => 'adopt_link',
             'label' => 'Link',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         // --------------------
@@ -474,19 +474,19 @@ trait PageTemplates
         $this->addField([
             'name' => 'friend_title',
             'label' => '',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         $this->addField([
             'name' => 'friend_text',
             'label' => '',
-            'type' => 'wysiwyg'
+            'type' => 'wysiwyg',
         ]);
 
         $this->addField([
             'name' => 'friend_link',
             'label' => 'Link',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         // --------------------
@@ -495,19 +495,19 @@ trait PageTemplates
         $this->addField([
             'name' => 'store_title',
             'label' => '',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         $this->addField([
             'name' => 'store_text',
             'label' => '',
-            'type' => 'wysiwyg'
+            'type' => 'wysiwyg',
         ]);
 
         $this->addField([
             'name' => 'store_link',
             'label' => 'Link',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         // --------------------
@@ -516,19 +516,19 @@ trait PageTemplates
         $this->addField([
             'name' => 'donate_title',
             'label' => '',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         $this->addField([
             'name' => 'donate_text',
             'label' => '',
-            'type' => 'wysiwyg'
+            'type' => 'wysiwyg',
         ]);
 
         $this->addField([
             'name' => 'donate_link',
             'label' => 'Link',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         // --------------------
@@ -537,13 +537,13 @@ trait PageTemplates
         $this->addField([
             'name' => 'call_title',
             'label' => '',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         $this->addField([
             'name' => 'call_text',
             'label' => '',
-            'type' => 'wysiwyg'
+            'type' => 'wysiwyg',
         ]);
 
         // --------------------
@@ -552,18 +552,32 @@ trait PageTemplates
         $this->addField([
             'name' => 'associate_title',
             'label' => '',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         $this->addField([
             'name' => 'associate_text',
             'label' => '',
-            'type' => 'wysiwyg'
+            'type' => 'wysiwyg',
         ]);
     }
 
     private function partners()
     {
+        // --------------------
+        $this->header('Parceiros');
+
+        $this->addField([
+            'name' => 'partners_title',
+            'label' => '',
+            'type' => 'text',
+        ]);
+
+        $this->addField([
+            'name' => 'partners_text',
+            'label' => '',
+            'type' => 'wysiwyg',
+        ]);
 
     }
 
@@ -575,13 +589,13 @@ trait PageTemplates
         $this->addField([
             'name' => 'friend_title',
             'label' => '',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         $this->addField([
             'name' => 'friend_text',
             'label' => '',
-            'type' => 'wysiwyg'
+            'type' => 'wysiwyg',
         ]);
 
         // --------------------
@@ -590,13 +604,13 @@ trait PageTemplates
         $this->addField([
             'name' => 'card_title',
             'label' => '',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         $this->addField([
             'name' => 'card_text',
             'label' => '',
-            'type' => 'wysiwyg'
+            'type' => 'wysiwyg',
         ]);
 
         // --------------------
@@ -605,7 +619,7 @@ trait PageTemplates
         $this->addField([
             'name' => 'modalities_title',
             'label' => '',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         // --------------------
@@ -614,13 +628,13 @@ trait PageTemplates
         $this->addField([
             'name' => 'advantages_title',
             'label' => '',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         $this->addField([
             'name' => 'advantages_map',
             'label' => 'Mapa',
-            'type' => 'text'
+            'type' => 'text',
         ]);
     }
 
@@ -632,19 +646,19 @@ trait PageTemplates
         $this->addField([
             'name' => 'privacypolicy_title',
             'label' => '',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         $this->addField([
             'name' => 'privacypolicy_subtitle',
             'label' => '',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         $this->addField([
             'name' => 'privacypolicy_text',
             'label' => '',
-            'type' => 'wysiwyg'
+            'type' => 'wysiwyg',
         ]);
     }
 
@@ -654,7 +668,7 @@ trait PageTemplates
     {
         $this->crud->addField(array_merge($field, [
             'fake' => true,
-            'store_in' => $translatable ? 'extras_translatable' : 'extras'
+            'store_in' => $translatable ? 'extras_translatable' : 'extras',
         ]));
     }
 
@@ -664,7 +678,7 @@ trait PageTemplates
         $this->crud->addField([
             'name' => 'content_header_' . $this->id++,
             'type' => 'custom_html',
-            'value' => "<br/><hr/><h2 style='margin-bottom:-15px'>$label</h2>"
+            'value' => "<br/><hr/><h2 style='margin-bottom:-15px'>$label</h2>",
         ]);
     }
 }

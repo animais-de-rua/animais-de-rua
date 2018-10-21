@@ -35,19 +35,19 @@ class CampaignCrudController extends CrudController
         $this->crud->addField([
             'label' => __('Name'),
             'type' => 'text',
-            'name' => 'name'
+            'name' => 'name',
         ]);
 
         $this->crud->addField([
             'label' => __('Introduction'),
             'type' => 'wysiwyg',
-            'name' => 'introduction'
+            'name' => 'introduction',
         ]);
 
         $this->crud->addField([
             'label' => __('Description'),
             'type' => 'wysiwyg',
-            'name' => 'description'
+            'name' => 'description',
         ]);
 
         $this->crud->addField([
@@ -56,7 +56,7 @@ class CampaignCrudController extends CrudController
             'type' => 'image',
             'upload' => true,
             'crop' => true,
-            'disk' => 'uploads'
+            'disk' => 'uploads',
         ]);
 
         $this->crud->addColumns(['image', 'name', 'introduction']);
@@ -66,22 +66,25 @@ class CampaignCrudController extends CrudController
             'label' => __('Image'),
             'type' => 'image',
             'prefix' => 'uploads/',
-            'height' => '50px'
+            'height' => '50px',
         ]);
 
         $this->crud->setColumnDetails('name', [
             'name' => 'name',
-            'label' => __('Name')
+            'label' => __('Name'),
         ]);
 
         $this->crud->setColumnDetails('introduction', [
             'name' => 'introduction',
-            'label' => __('Introduction')
+            'label' => __('Introduction'),
         ]);
 
         // add asterisk for fields that are required in CampaignRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
+
+        $this->crud->enableReorder('name', 1);
+        $this->crud->allowAccess('reorder');
     }
 
     public function store(StoreRequest $request)

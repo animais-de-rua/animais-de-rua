@@ -10,11 +10,12 @@ use App\Models\Page;
 use App\Models\Partner;
 use App\Models\PartnerCategory;
 use App\Models\Process;
+use App\Models\Sponsor;
 use App\Models\Territory;
 
 class PageController extends Controller
 {
-    public function index($slug)
+    public function index($slug = 'home')
     {
         \Debugbar::disable();
 
@@ -26,7 +27,7 @@ class PageController extends Controller
 
         $this->data = [
             'title' => $page->title,
-            'page' => $page->withFakes()
+            'page' => $page->withFakes(),
         ];
 
         // Common data to all pages
@@ -48,7 +49,7 @@ class PageController extends Controller
             $data = [];
         } else {
             $data = [
-                'total_operations' => 12345
+                'total_operations' => 12345,
             ];
         }
 
@@ -69,7 +70,7 @@ class PageController extends Controller
 
         return [
             'processes' => $processes,
-            'campaigns' => $campaigns
+            'campaigns' => $campaigns,
         ];
     }
 
@@ -78,7 +79,7 @@ class PageController extends Controller
         $headquarters = Headquarter::select(['name', 'mail'])->get();
 
         return [
-            'headquarters' => $headquarters
+            'headquarters' => $headquarters,
         ];
     }
 
@@ -99,7 +100,13 @@ class PageController extends Controller
 
     private function partners()
     {
-        return [];
+        $sponsors = Sponsor::select(['name', 'url', 'image'])
+            ->orderBy('lft')
+            ->get();
+
+        return [
+            'sponsors' => $sponsors,
+        ];
     }
 
     private function friends()
@@ -139,8 +146,8 @@ class PageController extends Controller
             'partners' => [
                 'list' => $partners,
                 'categories' => $partner_categories,
-                'territories' => $partner_territories
-            ]
+                'territories' => $partner_territories,
+            ],
         ];
     }
 }

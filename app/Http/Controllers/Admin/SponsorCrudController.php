@@ -77,6 +77,9 @@ class SponsorCrudController extends CrudController
         // add asterisk for fields that are required in CampaignRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
+
+        $this->crud->enableReorder('name', 1);
+        $this->crud->allowAccess('reorder');
     }
 
     public function store(StoreRequest $request)
