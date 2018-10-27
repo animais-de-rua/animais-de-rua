@@ -61,7 +61,7 @@ return [
     'delete_confirmation_not_deleted_message' => 'Ничего не произошло. Ваша запись сохранена/',
 
     // DataTables translation
-    'emptyTable'                              => 'В таблице нет доступых данных',
+    'emptyTable'                              => 'В таблице нет доступных данных',
     'info'                                    => 'Показано _START_ до _END_ из _TOTAL_ совпадений',
     'infoEmpty'                               => 'Показано 0 до 0 из 0 совпадений',
     'infoFiltered'                            => '(отфильтровано из _MAX_ совпадений)',

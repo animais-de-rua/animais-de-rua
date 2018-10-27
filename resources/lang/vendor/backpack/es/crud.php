@@ -87,6 +87,15 @@ return [
         'sortDescending' => ': activar para ordenar descendentemente',
     ],
 
+    'export' => [
+        'copy'              => 'Copiar',
+        'excel'             => 'Excel',
+        'csv'               => 'CSV',
+        'pdf'               => 'PDF',
+        'print'             => 'Imprimir',
+        'column_visibility' => 'Visibilidad de columnas',
+    ],
+
     // global crud - errors
     'unauthorized_access' => 'Acceso denegado - usted no tiene los permisos necesarios para ver esta página.',
     'please_fix' => 'Por favor corrija los siguientes errores:',
@@ -115,5 +124,10 @@ return [
     'internal_link' => 'Enlace interno',
     'internal_link_placeholder' => 'Slug interno. Ejplo: \'admin/page\' (sin comillas) para \':url\'',
     'external_link' => 'Enlace externo',
+
+    // Filtering
+    'filters'           =>  'Filtros',
+    'remove_filters'    =>  'Remover filtros',
+    'toggle_filters'    =>  'Alternar filtros',
 
 ];

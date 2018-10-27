@@ -30,7 +30,7 @@
 	}
 
 	#crudTable_wrapper {
-		overflow: hidden;
+		/*overflow: hidden;*/
 	}
 
 	#crudTable.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>td:first-child:before,

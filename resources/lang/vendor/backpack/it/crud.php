@@ -1,6 +1,5 @@
 <?php
 
-
 return [
 
     /*
@@ -66,6 +65,9 @@ return [
     'delete_confirmation_not_deleted_title'       => 'Non eliminato',
     'delete_confirmation_not_deleted_message'     => "Non è successo niente. L'elemento è al sicuro.",
 
+    'ajax_error_title' => 'Errore',
+    'ajax_error_text'  => 'Errore durante il caricamento della pagina. Per favore ricarica la pagina.',
+
     // DataTables translation
     'emptyTable'     => 'Nessun record da visualizzare',
     'info'           => 'Visualizzando da _START_ a _END_ record di _TOTAL_',
@@ -79,20 +81,23 @@ return [
     'search'         => 'Cerca: ',
     'zeroRecords'    => 'Nessun record corrispondente',
     'paginate'       => [
-    'first'    => 'Primo',
-    'last'     => 'Ultimo',
-    'next'     => 'Prossimo',
-    'previous' => 'Precedente',
-],
+        'first'    => 'Primo',
+        'last'     => 'Ultimo',
+        'next'     => 'Prossimo',
+        'previous' => 'Precedente',
+    ],
     'aria' => [
-    'sortAscending'  => ': attiva per ordinare la colonna ascendentemente',
-    'sortDescending' => ': attiva per ordinare la colonna discendentemente',
-],
+        'sortAscending'  => ': attiva per ordinare la colonna ascendentemente',
+        'sortDescending' => ': attiva per ordinare la colonna discendentemente',
+    ],
     'export' => [
-    'copy'              => 'Copia',
-    'print'             => 'Stampa',
-    'column_visibility' => 'Visibilità colonne',
-],
+        'copy'              => 'Copia',
+        'excel'             => 'Excel',
+        'csv'               => 'CSV',
+        'pdf'               => 'PDF',
+        'print'             => 'Stampa',
+        'column_visibility' => 'Visibilità colonne',
+    ],
 
     // global crud - errors
     'unauthorized_access' => 'Accesso non autorizzato - non hai i permessi necessari per vedere questa pagina.',
@@ -121,6 +126,9 @@ return [
 
     // Fields
     'browse_uploads' => 'Sfoglia file caricati',
+    'select_all' => 'Seleziona tutti',
+    'select_files' => 'Seleziona i files',
+    'select_file' => 'Seleziona un file',
     'clear' => 'Pulisci',
     'page_link' => 'Link Pagina',
     'page_link_placeholder' => 'http://esempio.com/pagina-desiderata',
@@ -132,4 +140,7 @@ return [
     //Table field
     'table_cant_add' => 'Impossibile aggiungere una nuova :entity',
     'table_max_reached' => 'Numero massimo di :max raggiunto',
+
+    // File manager
+    'file_manager' => 'File Manager',
 ];

@@ -23,7 +23,7 @@ return [
     'add'                 => 'Adicionar',
     'back_to_all'         => 'Voltar para todos ',
     'cancel'              => 'Cancelar',
-    'add_a_new'           => 'Adicionar um novo ',
+    'add_a_new'           => 'Adicionar ',
 
     // Edit form
     'edit'                 => 'Editar',
@@ -34,7 +34,7 @@ return [
     'no_revisions'         => 'Nenhuma revisão encontrada',
     'created_this'         => 'criou este',
     'changed_the'          => 'alterou o',
-    'restore_this_value'   => 'Restore this value',
+    'restore_this_value'   => 'Restaurar esse valor',
     'from'                 => 'de',
     'to'                   => 'para',
     'undo'                 => 'Desfazer',
@@ -65,6 +65,9 @@ return [
         'delete_confirmation_not_deleted_title'       => 'Item não excluído',
         'delete_confirmation_not_deleted_message'     => 'Nada aconteceu. Seu item está seguro.',
 
+        'ajax_error_title' => 'Erro',
+        'ajax_error_text'  => 'Erro ao carregar. Por favor, atualize a página.',
+
         // DataTables translation
         'emptyTable'     => 'Nenhum dado cadastrado na tabela',
         'info'           => 'Exibindo _START_ a _END_ de _TOTAL_ registros',
@@ -86,6 +89,14 @@ return [
         'aria' => [
             'sortAscending'  => ': clique para ordenar de forma ascendente',
             'sortDescending' => ': clique para ordenar de forma descendente',
+        ],
+        'export' => [
+            'copy'              => 'Copiar',
+            'excel'             => 'Excel',
+            'csv'               => 'CSV',
+            'pdf'               => 'PDF',
+            'print'             => 'Imprimir',
+            'column_visibility' => 'Visibilidade da coluna',
         ],
 
     // global crud - errors
@@ -122,10 +133,13 @@ return [
         'internal_link_placeholder' => 'Endereço interno. Ex: \'admin/pagina\' (sem aspas) para \':url\'',
         'external_link' => 'Link Externo',
         'choose_file' => 'Escolher arquivo',
+        'select_all' => 'Selecionar todos',
+        'select_files' => 'Selecionar todos os arquivos',
+        'select_file' => 'Selecionar arquivo',
 
     //Table field
         'table_cant_add' => 'Não foi possível adicionar um(a) novo(a) :entity',
-        'table_max_reached' => 'Máximo de :max alcançado',
+        'table_max_reached' => 'Limite de :max alcançado',
 
     // File manager
     'file_manager' => 'Gerenciador de Arquivos',

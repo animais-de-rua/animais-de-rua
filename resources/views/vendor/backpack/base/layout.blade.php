@@ -32,7 +32,11 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
     <link rel="stylesheet" href="{{ asset('vendor/backpack/backpack.base.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('vendor/backpack/overlays/backpack.bold.min.css') }}">
+    @if (config('backpack.base.overlays') && count(config('backpack.base.overlays')))
+        @foreach (config('backpack.base.overlays') as $overlay)
+        <link rel="stylesheet" href="{{ asset($overlay) }}">
+        @endforeach
+    @endif
 
     <link rel="stylesheet" href="{{ asset('css/admin/icomoon/style.css') }}">
 
@@ -59,14 +63,14 @@
     <![endif]-->
 </head>
 <body class="hold-transition {{ config('backpack.base.skin') }} sidebar-mini">
-	<script type="text/javascript">
-		(function () {
-			if (Boolean(sessionStorage.getItem('sidebar-toggle-collapsed'))) {
-				var body = document.getElementsByTagName('body')[0];
-				body.className = body.className + ' sidebar-collapse';
-			}
-		})();
-	</script>
+    <script type="text/javascript">
+        (function () {
+            if (Boolean(sessionStorage.getItem('sidebar-toggle-collapsed'))) {
+                var body = document.getElementsByTagName('body')[0];
+                body.className = body.className + ' sidebar-collapse';
+            }
+        })();
+    </script>
     <div class="wrapper">
         <header class="main-header">
             <a href="{{ url('') }}" class="logo">

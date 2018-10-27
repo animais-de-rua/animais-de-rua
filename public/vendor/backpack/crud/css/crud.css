@@ -3,13 +3,3 @@
 * Backpack Crud
 *
 */
-
-@media only screen and (max-width: 767px) {
-    #crudTable .btn {
-        width: 28px;
-        padding: 2px;
-    }
-    #crudTable .btn span {
-        display: none;
-    }
-}

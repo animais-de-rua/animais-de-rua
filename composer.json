@@ -20,7 +20,7 @@
         "laravel/framework": "5.7.*",
         "laravel/socialite": "^3.0",
         "laravel/tinker": "^1.0",
-        "spatie/laravel-translatable": "^2.2"
+        "spatie/laravel-translatable": "^3.0"
     },
     "require-dev": {
         "backpack/generators": "^1.1",

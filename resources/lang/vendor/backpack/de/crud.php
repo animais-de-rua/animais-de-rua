@@ -36,7 +36,7 @@ return [
     'changed_the'          => 'hat das geändert: ',
     'restore_this_value'   => 'Wiederherstellen',
     'from'                 => 'von',
-    'to'                   => 'bis',
+    'to'                   => 'nach',
     'undo'                 => 'Rückgängig',
     'revision_restored'    => 'Revision erfolgreich wiederhergestellt',
     'guest_user'           => 'Gast',
@@ -63,7 +63,7 @@ return [
     'delete_confirmation_not_title'               => 'NICHT gelöscht',
     'delete_confirmation_not_message'             => 'Ein Fehler ist aufgetreten. Der Eintrag wurde möglicherweise nicht gelöscht.',
     'delete_confirmation_not_deleted_title'       => 'Nicht gelöscht',
-    'delete_confirmation_not_deleted_message'     => 'Nichts passiert. Der eintrag wurde nicht gelöscht.',
+    'delete_confirmation_not_deleted_message'     => 'Nichts passiert. Der Eintrag wurde nicht gelöscht.',
 
     // DataTables translation
     'emptyTable'     => 'Keine Einträge vorhanden',

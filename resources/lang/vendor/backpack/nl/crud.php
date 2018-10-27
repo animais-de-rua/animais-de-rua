@@ -40,6 +40,10 @@ return [
     'undo'                 => 'Ongedaan maken',
     'revision_restored'    => 'Revisie succesvol hersteld',
 
+    // Translatable models
+    'edit_translations' => 'VERTALING WIJZIGEN',
+    'language'          => 'Taal',
+
     // CRUD table view
     'all'                       => 'Alles ',
     'in_the_database'           => 'in de database',
