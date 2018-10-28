@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Admin\Traits\Permissions;
 use App\Http\Requests\ProtocolRequest as StoreRequest;
 use App\Http\Requests\ProtocolRequest as UpdateRequest;
 use App\User;
@@ -13,6 +14,8 @@ use App\User;
  */
 class ProtocolCrudController extends CrudController
 {
+    use Permissions;
+
     public function setup()
     {
         /*
@@ -33,11 +36,11 @@ class ProtocolCrudController extends CrudController
         $this->crud->setColumns(['council', 'name', 'territory', 'process', 'user']);
 
         $this->crud->setColumnDetails('council', [
-            'label' => 'ID ' . ucfirst(__('council'))
+            'label' => 'ID ' . ucfirst(__('council')),
         ]);
 
         $this->crud->setColumnDetails('name', [
-            'label' => __('Name')
+            'label' => __('Name'),
         ]);
 
         $this->crud->setColumnDetails('territory', [
@@ -46,7 +49,7 @@ class ProtocolCrudController extends CrudController
             'name' => 'territory',
             'entity' => 'territory',
             'attribute' => 'name',
-            'model' => "App\Models\Territory"
+            'model' => "App\Models\Territory",
         ]);
 
         $this->crud->setColumnDetails('process', [
@@ -54,7 +57,7 @@ class ProtocolCrudController extends CrudController
             'label' => ucfirst(__('process')),
             'type' => 'model_function',
             'limit' => 120,
-            'function_name' => 'getProcessLinkAttribute'
+            'function_name' => 'getProcessLinkAttribute',
         ]);
 
         $this->crud->setColumnDetails('user', [
@@ -62,42 +65,42 @@ class ProtocolCrudController extends CrudController
             'label' => ucfirst(__('volunteer')),
             'type' => 'model_function',
             'limit' => 120,
-            'function_name' => 'getUserLinkAttribute'
+            'function_name' => 'getUserLinkAttribute',
         ]);
 
         $this->crud->addFields(['council', 'name', 'email', 'phone', 'address', 'description', 'territory_id', 'process_id']);
 
         $this->crud->addField([
             'label' => ucfirst(__('council')),
-            'name' => 'council'
+            'name' => 'council',
         ]);
 
         $this->crud->addField([
             'label' => __('Name'),
-            'name' => 'name'
+            'name' => 'name',
         ]);
 
         $this->crud->addField([
             'label' => __('Email'),
             'name' => 'email',
-            'type' => 'email'
+            'type' => 'email',
         ]);
 
         $this->crud->addField([
             'label' => __('Phone'),
-            'name' => 'phone'
+            'name' => 'phone',
         ]);
 
         $this->crud->addField([
             'label' => __('Address'),
             'name' => 'address',
-            'type' => 'textarea'
+            'type' => 'textarea',
         ]);
 
         $this->crud->addField([
             'label' => __('Description'),
             'name' => 'description',
-            'type' => 'textarea'
+            'type' => 'textarea',
         ]);
 
         $this->crud->addField([
@@ -105,7 +108,7 @@ class ProtocolCrudController extends CrudController
             'name' => 'territory_id',
             'type' => 'select2_from_array',
             'options' => $this->wantsJSON() ? null : api()->territoryList(),
-            'allows_null' => true
+            'allows_null' => true,
         ]);
 
         $this->crud->addField([
@@ -118,7 +121,7 @@ class ProtocolCrudController extends CrudController
             'data_source' => url('admin/process/ajax/search'),
             'placeholder' => __('Select a process'),
             'minimum_input_length' => 2,
-            'default' => \Request::has('process') ?? false
+            'default' => \Request::has('process') ?? false,
         ]);
 
         // Filters
@@ -126,7 +129,7 @@ class ProtocolCrudController extends CrudController
             'name' => 'territory',
             'type' => 'select2_multiple',
             'label' => ucfirst(__('territory')),
-            'placeholder' => __('Select a territory')
+            'placeholder' => __('Select a territory'),
         ],
             $this->wantsJSON() ? null : api()->territoryList(),
             function ($values) {
@@ -141,7 +144,7 @@ class ProtocolCrudController extends CrudController
             'name' => 'process',
             'type' => 'select2_ajax',
             'label' => ucfirst(__('process')),
-            'placeholder' => __('Select a process')
+            'placeholder' => __('Select a process'),
         ],
             url('admin/process/ajax/filter/'),
             function ($value) {
@@ -152,7 +155,7 @@ class ProtocolCrudController extends CrudController
             'name' => 'user',
             'type' => 'select2_ajax',
             'label' => ucfirst(__('volunteer')),
-            'placeholder' => __('Select a volunteer')
+            'placeholder' => __('Select a volunteer'),
         ],
             url('admin/user/ajax/filter/' . User::VOLUNTEER),
             function ($value) {

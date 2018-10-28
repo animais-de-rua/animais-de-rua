@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Admin\Traits\Permissions;
 use App\Http\Requests\SponsorRequest as StoreRequest;
 use App\Http\Requests\SponsorRequest as UpdateRequest;
 
@@ -12,6 +13,8 @@ use App\Http\Requests\SponsorRequest as UpdateRequest;
  */
 class SponsorCrudController extends CrudController
 {
+    use Permissions;
+
     public function setup()
     {
         /*

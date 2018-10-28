@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Admin\Traits\Permissions;
 use App\Http\Requests\DonationRequest as StoreRequest;
 use App\Http\Requests\DonationRequest as UpdateRequest;
 use Carbon\Carbon;
@@ -13,6 +14,8 @@ use Carbon\Carbon;
  */
 class DonationCrudController extends CrudController
 {
+    use Permissions;
+
     public function setup()
     {
         /*
@@ -39,7 +42,7 @@ class DonationCrudController extends CrudController
             'type' => 'number',
             'default' => 0,
             'attributes' => ['min' => 0, 'max' => 1000000],
-            'prefix' => '€'
+            'prefix' => '€',
         ]);
 
         $this->crud->addField([
@@ -52,7 +55,7 @@ class DonationCrudController extends CrudController
             'data_source' => url('admin/process/ajax/search'),
             'placeholder' => __('Select a process'),
             'minimum_input_length' => 2,
-            'default' => \Request::has('process') ?? false
+            'default' => \Request::has('process') ?? false,
         ]);
 
         $this->crud->addField([
@@ -65,14 +68,14 @@ class DonationCrudController extends CrudController
             'data_source' => url('admin/godfather/ajax/search'),
             'placeholder' => __('Select a godfather'),
             'minimum_input_length' => 2,
-            'default' => \Request::has('godfather') ?? false
+            'default' => \Request::has('godfather') ?? false,
         ]);
 
         $this->crud->addField([
             'label' => __('Date'),
             'name' => 'date',
             'type' => 'date',
-            'default' => Carbon::today()->toDateString()
+            'default' => Carbon::today()->toDateString(),
         ]);
 
         // ------ CRUD COLUMNS
@@ -83,7 +86,7 @@ class DonationCrudController extends CrudController
             'label' => ucfirst(__('godfather')),
             'type' => 'model_function',
             'limit' => 120,
-            'function_name' => 'getGodfatherLinkAttribute'
+            'function_name' => 'getGodfatherLinkAttribute',
         ]);
 
         $this->crud->setColumnDetails('process', [
@@ -91,14 +94,14 @@ class DonationCrudController extends CrudController
             'label' => ucfirst(__('process')),
             'type' => 'model_function',
             'limit' => 120,
-            'function_name' => 'getProcessLinkAttribute'
+            'function_name' => 'getProcessLinkAttribute',
         ]);
 
         $this->crud->setColumnDetails('value', [
             'name' => 'value',
             'label' => __('Value'),
             'type' => 'model_function',
-            'function_name' => 'getFullValueAttribute'
+            'function_name' => 'getFullValueAttribute',
         ]);
 
         // ------ DATATABLE EXPORT BUTTONS
@@ -109,7 +112,7 @@ class DonationCrudController extends CrudController
             'name' => 'godfather',
             'type' => 'select2_ajax',
             'label' => ucfirst(__('godfather')),
-            'placeholder' => __('Select a godfather')
+            'placeholder' => __('Select a godfather'),
         ],
             url('admin/godfather/ajax/filter'),
             function ($value) {
@@ -120,7 +123,7 @@ class DonationCrudController extends CrudController
             'name' => 'process',
             'type' => 'select2_ajax',
             'label' => ucfirst(__('process')),
-            'placeholder' => __('Select a process')
+            'placeholder' => __('Select a process'),
         ],
             url('admin/process/ajax/filter'),
             function ($value) {
@@ -132,7 +135,7 @@ class DonationCrudController extends CrudController
             'type' => 'range',
             'label' => __('Value'),
             'label_from' => __('Min value'),
-            'label_to' => __('Max value')
+            'label_to' => __('Max value'),
         ],
             true,
             function ($value) {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Admin\Traits\Permissions;
 use App\Http\Requests\CampaignRequest as StoreRequest;
 use App\Http\Requests\CampaignRequest as UpdateRequest;
 
@@ -12,6 +13,8 @@ use App\Http\Requests\CampaignRequest as UpdateRequest;
  */
 class CampaignCrudController extends CrudController
 {
+    use Permissions;
+
     public function setup()
     {
         /*

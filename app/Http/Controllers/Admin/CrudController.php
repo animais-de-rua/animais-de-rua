@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Helpers\HandleDropzoneUploadHelper;
+use App\Http\Controllers\Admin\Traits\Permissions;
 
 class CrudController extends \Backpack\CRUD\app\Http\Controllers\CrudController
 {
+    use Permissions;
     use HandleDropzoneUploadHelper;
 
     public function wantsJSON()
@@ -20,8 +22,8 @@ class CrudController extends \Backpack\CRUD\app\Http\Controllers\CrudController
             'type' => 'custom_html',
             'value' => '<hr />',
             'wrapperAttributes' => [
-                'style' => 'margin:0'
-            ]
+                'style' => 'margin:0',
+            ],
         ]);
     }
 }

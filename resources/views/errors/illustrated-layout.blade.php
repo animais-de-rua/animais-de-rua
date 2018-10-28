@@ -480,9 +480,9 @@
                         @yield('message')
                     </p>
 
-                    <a href="{{ url('/') }}">
+                    <a href="{{ URL::previous() }}">
                         <button class="font-bold uppercase tracking-wide py-3 px-6 border-2 rounded-lg">
-                            {{ __('Go Home') }}
+                            {{ __('Go Back') }}
                         </button>
                     </a>
                 </div>
@@ -492,7 +492,7 @@
                 @php
                 $files = glob("img/error/*.jpg");
                 @endphp
-                <div style="background-image: url('{{ $files[array_rand($files)] }}');" class="absolute pin bg-cover bg-no-repeat md:bg-center lg:bg-center"></div>
+                <div style="background-image: url('/{{ $files[array_rand($files)] }}');" class="absolute pin bg-cover bg-no-repeat md:bg-center lg:bg-center"></div>
             </div>
         </div>
     </body>

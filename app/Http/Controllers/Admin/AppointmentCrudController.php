@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Helpers\EnumHelper;
+use App\Http\Controllers\Admin\Traits\Permissions;
 use App\Http\Requests\AppointmentRequest as StoreRequest;
 use App\Http\Requests\AppointmentRequest as UpdateRequest;
 use App\Models\Appointment;
@@ -17,6 +18,8 @@ use DB;
  */
 class AppointmentCrudController extends CrudController
 {
+    use Permissions;
+
     public function setup()
     {
         /*
@@ -47,11 +50,11 @@ class AppointmentCrudController extends CrudController
             'data_source' => url('admin/process/ajax/search'),
             'placeholder' => __('Select a process'),
             'minimum_input_length' => 2,
-            'default' => \Request::has('process') ?? false
+            'default' => \Request::has('process') ?? false,
         ]);
 
         $this->crud->addField([
-            'label' => ucfirst(__('vet')),
+            'label' => ucfirst(__('vet')) . ' 1',
             'name' => 'vet_id_1',
             'type' => 'select2_from_ajax',
             'entity' => 'vet1',
@@ -60,18 +63,18 @@ class AppointmentCrudController extends CrudController
             'data_source' => url('admin/vet/ajax/search'),
             'placeholder' => __('Select a vet'),
             'minimum_input_length' => 2,
-            'default' => \Request::has('vet') ?? false
+            'default' => \Request::has('vet') ?? false,
         ]);
 
         $this->crud->addField([
             'label' => __('Date'),
             'name' => 'date_1',
             'type' => 'date',
-            'default' => Carbon::today()->toDateString()
+            'default' => Carbon::today()->toDateString(),
         ]);
 
         $this->crud->addField([
-            'label' => ucfirst(__('vet')),
+            'label' => ucfirst(__('vet')) . ' 1',
             'name' => 'vet_id_2',
             'type' => 'select2_from_ajax',
             'entity' => 'vet2',
@@ -80,13 +83,13 @@ class AppointmentCrudController extends CrudController
             'data_source' => url('admin/vet/ajax/search'),
             'placeholder' => __('Select a vet'),
             'minimum_input_length' => 2,
-            'default' => \Request::has('vet') ?? false
+            'default' => \Request::has('vet') ?? false,
         ]);
 
         $this->crud->addField([
             'label' => __('Date'),
             'name' => 'date_2',
-            'type' => 'date'
+            'type' => 'date',
         ]);
 
         $this->crud->addField([
@@ -94,7 +97,7 @@ class AppointmentCrudController extends CrudController
             'type' => 'number',
             'name' => 'amount_males',
             'default' => 0,
-            'attributes' => ['min' => 0, 'max' => 100]
+            'attributes' => ['min' => 0, 'max' => 100],
         ]);
 
         $this->crud->addField([
@@ -102,19 +105,26 @@ class AppointmentCrudController extends CrudController
             'type' => 'number',
             'name' => 'amount_females',
             'default' => 0,
-            'attributes' => ['min' => 0, 'max' => 100]
+            'attributes' => ['min' => 0, 'max' => 100],
         ]);
 
         $this->crud->addField([
             'label' => __('Notes'),
             'type' => 'wysiwyg',
-            'name' => 'notes'
+            'name' => 'notes',
+            'default' => 'a)&nbsp;<br />b)&nbsp;<br />c)&nbsp;<br />d)&nbsp;<br />e)&nbsp;',
+            'hint' => '<ul style="list-style:lower-alpha;padding-left:16px;"><li>Quem entrega o animal na clínica</li>
+<li>Quem vai buscar o animal ao final do dia</li>
+<li>O teu contacto telefónico<br /><i style="font-size:14px;">Como voluntário responsável por esses animais, é crucial que as clínicas tenham o teu contacto, para saber com quem falar caso haja algum contratempo;</i></li>
+<li>Quem apadrinha o animal</li>
+<li>Informações relevantes<br /><i style="font-size:14px;">Se há gatas gestantes, se há animais doentes, se há crias, etc.</i></li></ul>
+<p>No caso de consulta, indica sempre o motivo, o intervalo de horas para a mesma e um dia alternativo.</p>',
         ]);
 
         $this->crud->addField([
             'label' => __('Status'),
             'type' => 'enum',
-            'name' => 'status'
+            'name' => 'status',
         ]);
 
         // ------ CRUD COLUMNS
@@ -125,7 +135,7 @@ class AppointmentCrudController extends CrudController
             'label' => ucfirst(__('process')),
             'type' => 'model_function',
             'limit' => 120,
-            'function_name' => 'getProcessLinkAttribute'
+            'function_name' => 'getProcessLinkAttribute',
         ]);
 
         $this->crud->setColumnDetails('user_id', [
@@ -133,45 +143,45 @@ class AppointmentCrudController extends CrudController
             'label' => ucfirst(__('volunteer')),
             'type' => 'model_function',
             'limit' => 120,
-            'function_name' => 'getUserLinkAttribute'
+            'function_name' => 'getUserLinkAttribute',
         ]);
 
         $this->crud->setColumnDetails('vet_id_1', [
             'name' => 'vet1',
-            'label' => ucfirst(__('vet')),
+            'label' => ucfirst(__('vet')) . ' 1',
             'type' => 'model_function',
             'limit' => 120,
-            'function_name' => 'getVet1LinkAttribute'
+            'function_name' => 'getVet1LinkAttribute',
         ]);
 
         $this->crud->setColumnDetails('date_1', [
             'type' => 'date',
-            'label' => __('Date')
+            'label' => __('Date'),
         ]);
 
         $this->crud->setColumnDetails('vet_id_2', [
             'name' => 'vet2',
-            'label' => ucfirst(__('vet')),
+            'label' => ucfirst(__('vet')) . ' 2',
             'type' => 'model_function',
             'limit' => 120,
-            'function_name' => 'getVet2LinkAttribute'
+            'function_name' => 'getVet2LinkAttribute',
         ]);
 
         $this->crud->setColumnDetails('date_2', [
             'type' => 'date',
-            'label' => __('Date')
+            'label' => __('Date'),
         ]);
 
         $this->crud->setColumnDetails('animal_count', [
             'name' => 'animal_count',
             'label' => __('Animals') . ' M/F',
             'type' => 'model_function',
-            'function_name' => 'getAnimalsValue'
+            'function_name' => 'getAnimalsValue',
         ]);
 
         $this->crud->setColumnDetails('status', [
             'type' => 'trans',
-            'label' => __('Status')
+            'label' => __('Status'),
         ]);
 
         // ------ CRUD DETAILS ROW
@@ -182,7 +192,7 @@ class AppointmentCrudController extends CrudController
             'name' => 'process',
             'type' => 'select2_ajax',
             'label' => ucfirst(__('process')),
-            'placeholder' => __('Select a process')
+            'placeholder' => __('Select a process'),
         ],
             url('admin/process/ajax/filter'),
             function ($value) {
@@ -193,7 +203,7 @@ class AppointmentCrudController extends CrudController
             'name' => 'user',
             'type' => 'select2_ajax',
             'label' => ucfirst(__('volunteer')),
-            'placeholder' => __('Select a volunteer')
+            'placeholder' => __('Select a volunteer'),
         ],
             url('admin/user/ajax/filter/' . User::VOLUNTEER),
             function ($value) {
@@ -204,7 +214,7 @@ class AppointmentCrudController extends CrudController
             'name' => 'vet',
             'type' => 'select2_ajax',
             'label' => ucfirst(__('vet')),
-            'placeholder' => __('Select a vet')
+            'placeholder' => __('Select a vet'),
         ],
             url('admin/vet/ajax/filter'),
             function ($value) {
@@ -216,7 +226,7 @@ class AppointmentCrudController extends CrudController
             'name' => 'from_to',
             'label' => __('Date range'),
             'format' => 'DD/MM/YYYY',
-            'firstDay' => 1
+            'firstDay' => 1,
         ],
             false,
             function ($value) {
@@ -230,7 +240,7 @@ class AppointmentCrudController extends CrudController
             'type' => 'range',
             'label' => __('Animal count'),
             'label_from' => __('Min value'),
-            'label_to' => __('Max value')
+            'label_to' => __('Max value'),
         ],
             true,
             function ($value) {
@@ -249,7 +259,7 @@ class AppointmentCrudController extends CrudController
             'name' => 'status',
             'type' => 'select2_multiple',
             'label' => __('Status'),
-            'placeholder' => __('Select a status')
+            'placeholder' => __('Select a status'),
         ],
             EnumHelper::translate('appointment.status'),
             function ($values) {

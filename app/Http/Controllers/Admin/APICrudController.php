@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Admin\Traits\Permissions;
 use App\Models\Adoption;
 use App\Models\FriendCardModality;
 use App\Models\Godfather;
@@ -18,6 +19,8 @@ use Illuminate\Http\Request;
 
 class APICrudController extends CrudController
 {
+    use Permissions;
+
     public function getSearchParam(Request $request)
     {
         return $request ? ($request->has('q') || $request->has('term') ? $request->input('q') . $request->input('term') : false) : false;

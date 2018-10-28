@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Admin\Traits\Permissions;
 use App\Http\Requests\PartnerCategoryRequest as StoreRequest;
 use App\Http\Requests\PartnerCategoryRequest as UpdateRequest;
 
@@ -12,6 +13,8 @@ use App\Http\Requests\PartnerCategoryRequest as UpdateRequest;
  */
 class PartnerCategoryCrudController extends CrudController
 {
+    use Permissions;
+
     public function setup()
     {
         /*
@@ -33,24 +36,24 @@ class PartnerCategoryCrudController extends CrudController
         $this->crud->setColumns(['name', 'description']);
 
         $this->crud->setColumnDetails('name', [
-            'label' => __('Name')
+            'label' => __('Name'),
         ]);
 
         $this->crud->setColumnDetails('description', [
-            'label' => __('Description')
+            'label' => __('Description'),
         ]);
 
         // ------ CRUD FIELDS
         $this->crud->addField([
             'label' => __('Name'),
             'name' => 'name',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         $this->crud->addField([
             'label' => __('Description'),
             'name' => 'description',
-            'type' => 'wysiwyg'
+            'type' => 'wysiwyg',
         ]);
 
         // ------ DATATABLE EXPORT BUTTONS

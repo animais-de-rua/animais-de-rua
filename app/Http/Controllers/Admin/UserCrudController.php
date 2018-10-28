@@ -3,21 +3,27 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Helpers\EnumHelper;
+use App\Http\Controllers\Admin\Traits\Permissions;
 use App\User;
 use Backpack\PermissionManager\app\Http\Controllers\UserCrudController as OriginalUserCrudController;
 use Illuminate\Http\Request;
 
 class UserCrudController extends OriginalUserCrudController
 {
+    use Permissions;
+
     public function setup()
     {
         parent::setup();
+
+        $this->restrictTo('admin');
+        $this->removeDefaultActions();
 
         // Fields
         $this->crud->addField([
             'label' => __('Phone'),
             'name' => 'phone',
-            'type' => 'text'
+            'type' => 'text',
         ])->afterField('email');
 
         $this->crud->addField([
@@ -25,7 +31,7 @@ class UserCrudController extends OriginalUserCrudController
             'label' => __('Status'),
             'type' => 'select_from_array',
             'options' => EnumHelper::translate('user.status'),
-            'allows_null' => false
+            'allows_null' => false,
         ])->afterField('phone');
 
         $this->crud->addField([
@@ -34,7 +40,7 @@ class UserCrudController extends OriginalUserCrudController
             'type' => 'select2',
             'entity' => 'headquarter',
             'attribute' => 'name',
-            'model' => 'App\Models\Headquarter'
+            'model' => 'App\Models\Headquarter',
         ])->afterField('status');
 
         $this->crud->addField([
@@ -43,7 +49,7 @@ class UserCrudController extends OriginalUserCrudController
             'type' => 'select2',
             'entity' => 'friend_card_modality',
             'attribute' => 'fullname',
-            'model' => 'App\Models\FriendCardModality'
+            'model' => 'App\Models\FriendCardModality',
         ])->afterField('headquarter_id');
 
         $this->crud->addColumn([
@@ -52,7 +58,7 @@ class UserCrudController extends OriginalUserCrudController
             'type' => 'select',
             'entity' => 'headquarter',
             'attribute' => 'name',
-            'model' => "App\Models\Headquarter"
+            'model' => "App\Models\Headquarter",
         ])->afterColumn('email');
 
         $this->crud->addColumn([
@@ -61,13 +67,13 @@ class UserCrudController extends OriginalUserCrudController
             'type' => 'select',
             'entity' => 'friend_card_modality',
             'attribute' => 'value',
-            'model' => "App\Models\FriendCardModality"
+            'model' => "App\Models\FriendCardModality",
         ])->afterColumn('headquarter');
 
         $this->crud->addColumn([
             'label' => __('Status'),
             'name' => 'status',
-            'type' => 'check'
+            'type' => 'check',
         ]);
 
         // Filters
@@ -75,7 +81,7 @@ class UserCrudController extends OriginalUserCrudController
             'name' => 'headquarter_id',
             'type' => 'select2_multiple',
             'label' => ucfirst(__('headquarter')),
-            'placeholder' => __('Select a headquarter')
+            'placeholder' => __('Select a headquarter'),
         ],
             api()->headquarterList(),
             function ($values) {
@@ -86,7 +92,7 @@ class UserCrudController extends OriginalUserCrudController
             'name' => 'roles',
             'type' => 'select2_multiple',
             'label' => ucfirst(__('backpack::permissionmanager.roles')),
-            'placeholder' => __('Select a role')
+            'placeholder' => __('Select a role'),
         ],
             EnumHelper::translate('user.roles'),
             function ($values) {
@@ -101,7 +107,7 @@ class UserCrudController extends OriginalUserCrudController
             'name' => 'permissions',
             'type' => 'select2_multiple',
             'label' => ucfirst(__('backpack::permissionmanager.permission_plural')),
-            'placeholder' => __('Select a permission')
+            'placeholder' => __('Select a permission'),
         ],
             EnumHelper::translate('user.permissions'),
             function ($values) {
@@ -116,7 +122,7 @@ class UserCrudController extends OriginalUserCrudController
             'name' => 'friend_card_modality2',
             'type' => 'simple',
             'label' => ucfirst(__('friend card')),
-            'placeholder' => __('Select a modality')
+            'placeholder' => __('Select a modality'),
         ],
             1,
             function ($value) {
@@ -127,7 +133,7 @@ class UserCrudController extends OriginalUserCrudController
             'name' => 'friend_card_modality',
             'type' => 'select2_multiple',
             'label' => ucfirst(__('friend card modality')),
-            'placeholder' => __('Select a modality')
+            'placeholder' => __('Select a modality'),
         ],
             api()->friendCardModalitiesList(),
             function ($values) {
@@ -138,7 +144,7 @@ class UserCrudController extends OriginalUserCrudController
             'name' => 'status',
             'type' => 'select2',
             'label' => __('Status'),
-            'placeholder' => __('Select a status')
+            'placeholder' => __('Select a status'),
         ],
             EnumHelper::translate('user.status'),
             function ($value) {

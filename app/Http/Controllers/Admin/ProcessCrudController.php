@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Helpers\EnumHelper;
+use App\Http\Controllers\Admin\Traits\Permissions;
 use App\Http\Requests\ProcessRequest as StoreRequest;
 use App\Http\Requests\ProcessRequest as UpdateRequest;
 use App\Models\Process;
@@ -10,6 +11,8 @@ use DB;
 
 class ProcessCrudController extends CrudController
 {
+    use Permissions;
+
     public function setup()
     {
         /*
@@ -32,23 +35,23 @@ class ProcessCrudController extends CrudController
 
         $this->crud->addField([
             'label' => __('Name'),
-            'name' => 'name'
+            'name' => 'name',
         ]);
 
         $this->crud->addField([
             'label' => __('Contact'),
-            'name' => 'contact'
+            'name' => 'contact',
         ]);
 
         $this->crud->addField([
             'label' => __('Phone'),
-            'name' => 'phone'
+            'name' => 'phone',
         ]);
 
         $this->crud->addField([
             'label' => __('Email'),
             'type' => 'email',
-            'name' => 'email'
+            'name' => 'email',
         ]);
 
         $this->crud->addField([
@@ -56,7 +59,7 @@ class ProcessCrudController extends CrudController
             'name' => 'territory_id',
             'type' => 'select2_from_array',
             'options' => $this->wantsJSON() ? null : api()->territoryList(),
-            'allows_null' => true
+            'allows_null' => true,
         ]);
 
         $this->crud->addField([
@@ -65,13 +68,13 @@ class ProcessCrudController extends CrudController
             'type' => 'select2',
             'entity' => 'headquarter',
             'attribute' => 'name',
-            'model' => 'App\Models\Headquarter'
+            'model' => 'App\Models\Headquarter',
         ]);
 
         $this->crud->addField([
             'label' => __('Specie'),
             'type' => 'enum',
-            'name' => 'specie'
+            'name' => 'specie',
         ]);
 
         $this->crud->addField([
@@ -79,7 +82,7 @@ class ProcessCrudController extends CrudController
             'type' => 'number',
             'name' => 'amount_males',
             'default' => 0,
-            'attributes' => ['min' => 0, 'max' => 100]
+            'attributes' => ['min' => 0, 'max' => 100],
         ]);
 
         $this->crud->addField([
@@ -87,7 +90,7 @@ class ProcessCrudController extends CrudController
             'type' => 'number',
             'name' => 'amount_females',
             'default' => 0,
-            'attributes' => ['min' => 0, 'max' => 100]
+            'attributes' => ['min' => 0, 'max' => 100],
         ]);
 
         $this->crud->addField([
@@ -95,13 +98,13 @@ class ProcessCrudController extends CrudController
             'type' => 'number',
             'name' => 'amount_other',
             'default' => 0,
-            'attributes' => ['min' => 0, 'max' => 100]
+            'attributes' => ['min' => 0, 'max' => 100],
         ]);
 
         $this->crud->addField([
             'label' => __('Status'),
             'type' => 'enum',
-            'name' => 'status'
+            'name' => 'status',
         ]);
 
         $this->crud->addField([
@@ -110,19 +113,19 @@ class ProcessCrudController extends CrudController
             'name' => 'latlong',
             'map_style' => 'width:100%; height:320px;',
             'google_api_key' => env('GOOGLE_API_KEY'),
-            'default_zoom' => '9'
+            'default_zoom' => '9',
         ]);
 
         $this->crud->addField([
             'label' => __('History'),
             'type' => 'wysiwyg',
-            'name' => 'history'
+            'name' => 'history',
         ]);
 
         $this->crud->addField([
             'label' => __('Notes'),
             'type' => 'wysiwyg',
-            'name' => 'notes'
+            'name' => 'notes',
         ]);
 
         $this->crud->addField([
@@ -132,7 +135,7 @@ class ProcessCrudController extends CrudController
             'upload-url' => '/admin/dropzone/images/process',
             'thumb' => 340,
             'size' => 800,
-            'quality' => 82
+            'quality' => 82,
         ]);
 
         $this->separator();
@@ -145,17 +148,17 @@ class ProcessCrudController extends CrudController
             'columns' => [
                 'name' => [
                     'label' => ucfirst(__('godfather')),
-                    'name' => 'godfatherLink'
+                    'name' => 'godfatherLink',
                 ],
                 'value' => [
                     'label' => __('Value'),
-                    'name' => 'fullValue'
+                    'name' => 'fullValue',
                 ],
                 'date' => [
                     'label' => __('Date'),
-                    'name' => 'date'
-                ]
-            ]
+                    'name' => 'date',
+                ],
+            ],
         ]);
 
         $this->crud->addField([
@@ -167,21 +170,21 @@ class ProcessCrudController extends CrudController
                 'treatment_type' => [
                     'label' => ucfirst(__('treatment type')),
                     'name' => 'treatment_type',
-                    'attribute' => 'name'
+                    'attribute' => 'name',
                 ],
                 'vet' => [
                     'label' => ucfirst(__('vet')),
-                    'name' => 'vetLink'
+                    'name' => 'vetLink',
                 ],
                 'expense' => [
                     'label' => __('Expense'),
-                    'name' => 'fullExpense'
+                    'name' => 'fullExpense',
                 ],
                 'date' => [
                     'label' => __('Date'),
-                    'name' => 'date'
-                ]
-            ]
+                    'name' => 'date',
+                ],
+            ],
         ]);
 
         $this->crud->addField([
@@ -192,25 +195,25 @@ class ProcessCrudController extends CrudController
             'columns' => [
                 'user' => [
                     'label' => ucfirst(__('volunteer')),
-                    'name' => 'userLink'
+                    'name' => 'userLink',
                 ],
                 'vet1' => [
                     'label' => ucfirst(__('vet')) . ' 1',
-                    'name' => 'vet1Link'
+                    'name' => 'vet1Link',
                 ],
                 'date1' => [
                     'label' => __('Date') . ' 1',
-                    'name' => 'date_1'
+                    'name' => 'date_1',
                 ],
                 'vet2' => [
                     'label' => ucfirst(__('vet')) . ' 2',
-                    'name' => 'vet2Link'
+                    'name' => 'vet2Link',
                 ],
                 'date2' => [
                     'label' => __('Date') . ' 2',
-                    'name' => 'date_2'
-                ]
-            ]
+                    'name' => 'date_2',
+                ],
+            ],
         ]);
 
         $this->crud->addField([
@@ -220,33 +223,33 @@ class ProcessCrudController extends CrudController
             'rows' => [
                 'expenses' => [
                     'label' => __('Total Expenses'),
-                    'value' => 'getTotalExpensesStats'
+                    'value' => 'getTotalExpensesStats',
                 ],
                 'operations' => [
                     'label' => __('Total Operations'),
-                    'value' => 'getTotalOperationsStats'
+                    'value' => 'getTotalOperationsStats',
                 ],
                 'donated' => [
                     'label' => __('Total Donated'),
-                    'value' => 'getTotalDonatedStats'
+                    'value' => 'getTotalDonatedStats',
                 ],
                 'donations' => [
                     'label' => __('Total Donations'),
-                    'value' => 'getTotalDonationsStats'
-                ]
-            ]
+                    'value' => 'getTotalDonationsStats',
+                ],
+            ],
         ]);
 
         // ------ CRUD COLUMNS
         $this->crud->addColumns(['name', 'territory_id', 'headquarter', 'created_at', 'specie', 'animal_count', 'status', 'total_donations', 'total_expenses', 'balance', 'total_operations']);
 
         $this->crud->setColumnDetails('name', [
-            'label' => __('Name')
+            'label' => __('Name'),
         ]);
 
         $this->crud->setColumnDetails('created_at', [
             'type' => 'date',
-            'label' => __('Date')
+            'label' => __('Date'),
         ]);
 
         $this->crud->setColumnDetails('territory_id', [
@@ -254,7 +257,7 @@ class ProcessCrudController extends CrudController
             'type' => 'select',
             'entity' => 'territory',
             'attribute' => 'name',
-            'model' => "App\Models\Territory"
+            'model' => "App\Models\Territory",
         ]);
 
         $this->crud->setColumnDetails('headquarter', [
@@ -262,52 +265,52 @@ class ProcessCrudController extends CrudController
             'type' => 'select',
             'entity' => 'headquarter',
             'attribute' => 'name',
-            'model' => "App\Models\Headquarter"
+            'model' => "App\Models\Headquarter",
         ]);
 
         $this->crud->setColumnDetails('specie', [
             'type' => 'trans',
-            'label' => __('Specie')
+            'label' => __('Specie'),
         ]);
 
         $this->crud->setColumnDetails('status', [
             'type' => 'trans',
-            'label' => __('Status')
+            'label' => __('Status'),
         ]);
 
         $this->crud->setColumnDetails('animal_count', [
             'name' => 'animal_count',
             'label' => __('Animals') . ' M/F | O',
             'type' => 'model_function',
-            'function_name' => 'getAnimalsValue'
+            'function_name' => 'getAnimalsValue',
         ]);
 
         $this->crud->setColumnDetails('total_donations', [
             'name' => 'total_donations',
             'label' => __('Total Donated'),
             'type' => 'model_function',
-            'function_name' => 'getTotalDonatedValue'
+            'function_name' => 'getTotalDonatedValue',
         ]);
 
         $this->crud->setColumnDetails('total_expenses', [
             'name' => 'total_expenses',
             'label' => __('Total Expenses'),
             'type' => 'model_function',
-            'function_name' => 'getTotalExpensesValue'
+            'function_name' => 'getTotalExpensesValue',
         ]);
 
         $this->crud->setColumnDetails('balance', [
             'name' => 'balance',
             'label' => __('Balance'),
             'type' => 'model_function',
-            'function_name' => 'getBalanceValue'
+            'function_name' => 'getBalanceValue',
         ]);
 
         $this->crud->setColumnDetails('total_operations', [
             'name' => 'total_operations',
             'label' => __('Total Operations'),
             'type' => 'model_function',
-            'function_name' => 'getTotalOperationsValue'
+            'function_name' => 'getTotalOperationsValue',
         ]);
 
         // ------ CRUD DETAILS ROW
@@ -321,7 +324,7 @@ class ProcessCrudController extends CrudController
             'name' => 'territory_id',
             'type' => 'select2_multiple',
             'label' => ucfirst(__('territory')),
-            'placeholder' => __('Select a territory')
+            'placeholder' => __('Select a territory'),
         ],
             $this->wantsJSON() ? null : api()->territoryList(),
             function ($values) {
@@ -336,7 +339,7 @@ class ProcessCrudController extends CrudController
             'name' => 'headquarter_id',
             'type' => 'select2_multiple',
             'label' => ucfirst(__('headquarter')),
-            'placeholder' => __('Select a headquarter')
+            'placeholder' => __('Select a headquarter'),
         ],
             $this->wantsJSON() ? null : api()->headquarterList(),
             function ($values) {
@@ -348,7 +351,7 @@ class ProcessCrudController extends CrudController
             'name' => 'from_to',
             'label' => __('Date range'),
             'format' => 'DD/MM/YYYY',
-            'firstDay' => 1
+            'firstDay' => 1,
         ],
             false,
             function ($value) {
@@ -360,7 +363,7 @@ class ProcessCrudController extends CrudController
             'name' => 'status',
             'type' => 'select2_multiple',
             'label' => __('Status'),
-            'placeholder' => __('Select a status')
+            'placeholder' => __('Select a status'),
         ],
             EnumHelper::translate('process.status'),
             function ($values) {
@@ -371,7 +374,7 @@ class ProcessCrudController extends CrudController
             'name' => 'specie',
             'type' => 'select2_multiple',
             'label' => __('Specie'),
-            'placeholder' => __('Select a specie')
+            'placeholder' => __('Select a specie'),
         ],
             EnumHelper::translate('process.specie'),
             function ($values) {
@@ -383,7 +386,7 @@ class ProcessCrudController extends CrudController
             'type' => 'range',
             'label' => __('Animal count'),
             'label_from' => __('Min value'),
-            'label_to' => __('Max value')
+            'label_to' => __('Max value'),
         ],
             true,
             function ($value) {
@@ -403,7 +406,7 @@ class ProcessCrudController extends CrudController
             'type' => 'range',
             'label' => ucfirst(__('donations')) . ' €',
             'label_from' => __('Min value'),
-            'label_to' => __('Max value')
+            'label_to' => __('Max value'),
         ],
             true,
             function ($value) {
@@ -429,7 +432,7 @@ class ProcessCrudController extends CrudController
             'type' => 'range',
             'label' => __('Total Expenses') . ' €',
             'label_from' => __('Min value'),
-            'label_to' => __('Max value')
+            'label_to' => __('Max value'),
         ],
             true,
             function ($value) {
@@ -455,7 +458,7 @@ class ProcessCrudController extends CrudController
             'type' => 'range',
             'label' => __('Total Operations'),
             'label_from' => __('Min value'),
-            'label_to' => __('Max value')
+            'label_to' => __('Max value'),
         ],
             true,
             function ($value) {
@@ -481,7 +484,7 @@ class ProcessCrudController extends CrudController
             'type' => 'range',
             'label' => __('Balance') . ' €',
             'label_from' => __('Min value'),
-            'label_to' => __('Max value')
+            'label_to' => __('Max value'),
         ],
             true,
             function ($value) {

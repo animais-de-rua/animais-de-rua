@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Admin\Traits\Permissions;
 use DB;
 
 class DashboardController extends CrudController
 {
+    use Permissions;
+
     public function dashboard()
     {
         $headquarter_sterilizations = DB::table('treatments')
@@ -47,7 +50,7 @@ class DashboardController extends CrudController
             'vets_working_hours' => $vets_working_hours < 2 ? floor($vets_working_hours * 10) / 10 : floor($vets_working_hours),
             'godfathers' => DB::table('donations')->selectRaw('COUNT(DISTINCT godfather_id) as total')->first()->total,
             'donations' => $donations < 2 ? floor($donations * 10) / 10 : floor($donations),
-            'godfathers_processes' => DB::table('donations')->selectRaw('COUNT(DISTINCT process_id) as total')->first()->total
+            'godfathers_processes' => DB::table('donations')->selectRaw('COUNT(DISTINCT process_id) as total')->first()->total,
         ]);
     }
 }

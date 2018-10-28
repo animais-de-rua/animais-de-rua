@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Helpers\EnumHelper;
+use App\Http\Controllers\Admin\Traits\Permissions;
 use App\Http\Requests\PartnerRequest as StoreRequest;
 use App\Http\Requests\PartnerRequest as UpdateRequest;
 use App\Models\Partner;
@@ -18,6 +19,8 @@ use Illuminate\Http\Request;
  */
 class PartnerCrudController extends CrudController
 {
+    use Permissions;
+
     public function setup()
     {
         /*
@@ -44,22 +47,22 @@ class PartnerCrudController extends CrudController
             'type' => 'image',
             'prefix' => 'uploads/',
             'height' => '50px',
-            'width' => '50px'
+            'width' => '50px',
         ]);
 
         $this->crud->setColumnDetails('name', [
-            'label' => __('Name')
+            'label' => __('Name'),
         ]);
 
         $this->crud->setColumnDetails('url', [
             'label' => __('Website'),
             'type' => 'url',
-            'limit' => 36
+            'limit' => 36,
         ]);
 
         $this->crud->setColumnDetails('status', [
             'label' => __('Status'),
-            'type' => 'check'
+            'type' => 'check',
         ]);
 
         $this->crud->setColumnDetails('user', [
@@ -67,7 +70,7 @@ class PartnerCrudController extends CrudController
             'label' => ucfirst(__('volunteer')),
             'type' => 'model_function',
             'limit' => 120,
-            'function_name' => 'getUserLinkAttribute'
+            'function_name' => 'getUserLinkAttribute',
         ]);
 
         $this->crud->setColumnDetails('categories', [
@@ -76,7 +79,7 @@ class PartnerCrudController extends CrudController
             'name' => 'categories',
             'entity' => 'categories',
             'attribute' => 'name',
-            'model' => "App\Models\PartnerCategory"
+            'model' => "App\Models\PartnerCategory",
         ]);
 
         $this->crud->setColumnDetails('territories', [
@@ -85,7 +88,7 @@ class PartnerCrudController extends CrudController
             'name' => 'territories',
             'entity' => 'territories',
             'attribute' => 'name',
-            'model' => "App\Models\Territory"
+            'model' => "App\Models\Territory",
         ]);
 
         // ------ CRUD FIELDS
@@ -93,13 +96,13 @@ class PartnerCrudController extends CrudController
 
         $this->crud->addField([
             'label' => __('Name'),
-            'name' => 'name'
+            'name' => 'name',
         ]);
 
         $this->crud->addField([
             'label' => __('Benefit'),
             'name' => 'benefit',
-            'type' => 'textarea'
+            'type' => 'textarea',
         ]);
 
         $this->crud->addField([
@@ -109,7 +112,7 @@ class PartnerCrudController extends CrudController
             'entity' => 'categories',
             'attribute' => 'name',
             'model' => "App\Models\PartnerCategory",
-            'pivot' => true
+            'pivot' => true,
         ]);
 
         $this->crud->addField([
@@ -118,61 +121,61 @@ class PartnerCrudController extends CrudController
             'name' => 'territories',
             'attribute' => 'name',
             'model' => api()->territorySearch(Territory::DISTRITO, new Request()),
-            'pivot' => true
+            'pivot' => true,
         ]);
 
         $this->crud->addField([
             'label' => __('Email'),
             'name' => 'email',
-            'type' => 'email'
+            'type' => 'email',
         ]);
 
         $this->crud->addField([
             'label' => __('Phone'),
             'name' => 'phone1',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         $this->crud->addField([
             'label' => __('Phone') . ' info',
             'name' => 'phone1_info',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         $this->crud->addField([
             'label' => __('Phone') . ' 2',
             'name' => 'phone2',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         $this->crud->addField([
             'label' => __('Phone') . ' 2 info',
             'name' => 'phone2_info',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         $this->crud->addField([
             'label' => __('Website'),
             'name' => 'url',
-            'type' => 'url'
+            'type' => 'url',
         ]);
 
         $this->crud->addField([
             'label' => 'Facebook',
             'name' => 'facebook',
-            'type' => 'url'
+            'type' => 'url',
         ]);
 
         $this->crud->addField([
             'label' => __('Address'),
             'name' => 'address',
-            'type' => 'textarea'
+            'type' => 'textarea',
         ]);
 
         $this->crud->addField([
             'label' => __('Address'),
             'name' => 'address_info',
-            'type' => 'text'
+            'type' => 'text',
         ]);
 
         $this->crud->addField([
@@ -181,19 +184,19 @@ class PartnerCrudController extends CrudController
             'type' => 'image',
             'upload' => true,
             'crop' => true,
-            'disk' => 'uploads'
+            'disk' => 'uploads',
         ]);
 
         $this->crud->addField([
             'label' => __('Notes'),
             'name' => 'notes',
-            'type' => 'textarea'
+            'type' => 'textarea',
         ]);
 
         $this->crud->addField([
             'label' => __('Status'),
             'name' => 'status',
-            'type' => 'checkbox'
+            'type' => 'checkbox',
         ]);
 
         // Filters
@@ -201,7 +204,7 @@ class PartnerCrudController extends CrudController
             'name' => 'territory',
             'type' => 'select2_multiple',
             'label' => ucfirst(__('territory')),
-            'placeholder' => __('Select a territory')
+            'placeholder' => __('Select a territory'),
         ],
             api()->territoryList(Territory::DISTRITO | Territory::CONCELHO),
             function ($values) {
@@ -216,7 +219,7 @@ class PartnerCrudController extends CrudController
             'name' => 'category',
             'type' => 'select2_multiple',
             'label' => ucfirst(__('category')),
-            'placeholder' => __('Select a category')
+            'placeholder' => __('Select a category'),
         ],
             api()->partnerCategoryList(),
             function ($values) {
@@ -231,7 +234,7 @@ class PartnerCrudController extends CrudController
             'name' => 'user',
             'type' => 'select2_ajax',
             'label' => ucfirst(__('volunteer')),
-            'placeholder' => __('Select a volunteer')
+            'placeholder' => __('Select a volunteer'),
         ],
             url('admin/user/ajax/filter/' . User::VOLUNTEER),
             function ($value) {
@@ -241,7 +244,7 @@ class PartnerCrudController extends CrudController
         $this->crud->addFilter([
             'type' => 'select2',
             'name' => 'status',
-            'label' => __('Status')
+            'label' => __('Status'),
         ],
             EnumHelper::translate('general.check'),
             function ($value) {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Admin\Traits\Permissions;
 use App\Http\Requests\FriendCardModalityRequest as StoreRequest;
 use App\Http\Requests\FriendCardModalityRequest as UpdateRequest;
 use App\Models\FriendCardModality;
@@ -13,6 +14,8 @@ use App\Models\FriendCardModality;
  */
 class FriendCardModalityCrudController extends CrudController
 {
+    use Permissions;
+
     public function setup()
     {
         /*
@@ -35,18 +38,18 @@ class FriendCardModalityCrudController extends CrudController
 
         $this->crud->addField([
             'label' => __('Name'),
-            'name' => 'name'
+            'name' => 'name',
         ]);
 
         $this->crud->addField([
             'label' => __('Description'),
             'type' => 'wysiwyg',
-            'name' => 'description'
+            'name' => 'description',
         ]);
 
         $this->crud->addField([
             'label' => __('Paypal code'),
-            'name' => 'paypal_code'
+            'name' => 'paypal_code',
         ]);
 
         $this->crud->addField([
@@ -55,30 +58,30 @@ class FriendCardModalityCrudController extends CrudController
             'type' => 'number',
             'default' => 0,
             'suffix' => '€',
-            'attributes' => ['min' => 0, 'max' => 1000000]
+            'attributes' => ['min' => 0, 'max' => 1000000],
         ]);
 
         $this->crud->addField([
             'label' => __('Type'),
             'name' => 'type',
-            'type' => 'enum'
+            'type' => 'enum',
         ]);
 
         // ------ CRUD COLUMNS
         $this->crud->addColumns(['name', 'amount', 'type']);
 
         $this->crud->setColumnDetails('name', [
-            'label' => __('Name')
+            'label' => __('Name'),
         ]);
 
         $this->crud->setColumnDetails('amount', [
             'label' => __('Value'),
-            'suffix' => '€'
+            'suffix' => '€',
         ]);
 
         $this->crud->setColumnDetails('type', [
             'type' => 'trans',
-            'label' => __('Type')
+            'label' => __('Type'),
         ]);
 
         // add asterisk for fields that are required in FriendCardModalityRequest

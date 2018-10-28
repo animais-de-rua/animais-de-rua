@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Admin\Traits\Permissions;
 use App\Http\Requests\TreatmentRequest as StoreRequest;
 use App\Http\Requests\TreatmentRequest as UpdateRequest;
 use App\User;
@@ -14,6 +15,8 @@ use Carbon\Carbon;
  */
 class TreatmentCrudController extends CrudController
 {
+    use Permissions;
+
     public function setup()
     {
         /*
@@ -39,7 +42,7 @@ class TreatmentCrudController extends CrudController
             'label' => ucfirst(__('process')),
             'type' => 'model_function',
             'limit' => 120,
-            'function_name' => 'getProcessLinkAttribute'
+            'function_name' => 'getProcessLinkAttribute',
         ]);
 
         $this->crud->setColumnDetails('treatment_type', [
@@ -48,7 +51,7 @@ class TreatmentCrudController extends CrudController
             'name' => 'treatment_type_id',
             'entity' => 'treatment_type',
             'attribute' => 'name',
-            'model' => "App\Models\TreatmentType"
+            'model' => "App\Models\TreatmentType",
         ]);
 
         $this->crud->setColumnDetails('vet', [
@@ -56,7 +59,7 @@ class TreatmentCrudController extends CrudController
             'label' => ucfirst(__('vet')),
             'type' => 'model_function',
             'limit' => 120,
-            'function_name' => 'getVetLinkAttribute'
+            'function_name' => 'getVetLinkAttribute',
         ]);
 
         $this->crud->setColumnDetails('user', [
@@ -64,22 +67,22 @@ class TreatmentCrudController extends CrudController
             'label' => ucfirst(__('volunteer')),
             'type' => 'model_function',
             'limit' => 120,
-            'function_name' => 'getUserLinkAttribute'
+            'function_name' => 'getUserLinkAttribute',
         ]);
 
         $this->crud->setColumnDetails('affected_animals', [
             'label' => __('Animals'),
-            'type' => 'number'
+            'type' => 'number',
         ]);
 
         $this->crud->setColumnDetails('expense', [
             'label' => __('Expense'),
-            'suffix' => '€'
+            'suffix' => '€',
         ]);
 
         $this->crud->setColumnDetails('date', [
             'label' => __('Date'),
-            'type' => 'date'
+            'type' => 'date',
         ]);
 
         // ------ CRUD FIELDS
@@ -93,7 +96,7 @@ class TreatmentCrudController extends CrudController
             'data_source' => url('admin/process/ajax/search'),
             'placeholder' => __('Select a process'),
             'minimum_input_length' => 2,
-            'default' => \Request::has('process') ?? false
+            'default' => \Request::has('process') ?? false,
         ]);
 
         $this->crud->addField([
@@ -102,7 +105,7 @@ class TreatmentCrudController extends CrudController
             'name' => 'treatment_type_id',
             'entity' => 'treatment_type',
             'attribute' => 'name',
-            'model' => "App\Models\TreatmentType"
+            'model' => "App\Models\TreatmentType",
         ]);
 
         $this->crud->addField([
@@ -115,7 +118,7 @@ class TreatmentCrudController extends CrudController
             'data_source' => url('admin/vet/ajax/search'),
             'placeholder' => __('Select a vet'),
             'minimum_input_length' => 2,
-            'default' => \Request::has('vet') ?? false
+            'default' => \Request::has('vet') ?? false,
         ]);
 
         $this->crud->addField([
@@ -123,7 +126,7 @@ class TreatmentCrudController extends CrudController
             'name' => 'affected_animals',
             'type' => 'number',
             'default' => 1,
-            'attributes' => ['min' => 1, 'max' => 100]
+            'attributes' => ['min' => 1, 'max' => 100],
         ]);
 
         $this->crud->addField([
@@ -132,14 +135,14 @@ class TreatmentCrudController extends CrudController
             'type' => 'number',
             'default' => 0,
             'attributes' => ['min' => 0, 'max' => 1000000],
-            'prefix' => '€'
+            'prefix' => '€',
         ]);
 
         $this->crud->addField([
             'label' => __('Date'),
             'name' => 'date',
             'type' => 'date',
-            'default' => Carbon::today()->toDateString()
+            'default' => Carbon::today()->toDateString(),
         ]);
 
         // Filter
@@ -147,7 +150,7 @@ class TreatmentCrudController extends CrudController
             'name' => 'process',
             'type' => 'select2_ajax',
             'label' => ucfirst(__('process')),
-            'placeholder' => __('Select a process')
+            'placeholder' => __('Select a process'),
         ],
             url('admin/process/ajax/filter'),
             function ($value) {
@@ -158,7 +161,7 @@ class TreatmentCrudController extends CrudController
             'name' => 'treatment_type_id',
             'type' => 'select2_multiple',
             'label' => ucfirst(__('treatment type')),
-            'placeholder' => __('Select a treatment type')
+            'placeholder' => __('Select a treatment type'),
         ],
             $this->wantsJSON() ? null : api()->treatmentTypeList(),
             function ($values) {
@@ -169,7 +172,7 @@ class TreatmentCrudController extends CrudController
             'name' => 'vet',
             'type' => 'select2_ajax',
             'label' => ucfirst(__('vet')),
-            'placeholder' => __('Select a vet')
+            'placeholder' => __('Select a vet'),
         ],
             url('admin/vet/ajax/filter'),
             function ($value) {
@@ -180,7 +183,7 @@ class TreatmentCrudController extends CrudController
             'name' => 'user',
             'type' => 'select2_ajax',
             'label' => ucfirst(__('volunteer')),
-            'placeholder' => __('Select a volunteer')
+            'placeholder' => __('Select a volunteer'),
         ],
             url('admin/user/ajax/filter/' . User::VOLUNTEER),
             function ($value) {
@@ -192,7 +195,7 @@ class TreatmentCrudController extends CrudController
             'type' => 'range',
             'label' => __('Expense') . ' €',
             'label_from' => __('Min value'),
-            'label_to' => __('Max value')
+            'label_to' => __('Max value'),
         ],
             true,
             function ($value) {
@@ -213,7 +216,7 @@ class TreatmentCrudController extends CrudController
             'name' => 'from_to',
             'label' => __('Date range'),
             'format' => 'DD/MM/YYYY',
-            'firstDay' => 1
+            'firstDay' => 1,
         ],
             false,
             function ($value) {

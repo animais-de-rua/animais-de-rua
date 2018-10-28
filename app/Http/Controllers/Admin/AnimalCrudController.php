@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Helpers\EnumHelper;
+use App\Http\Controllers\Admin\Traits\Permissions;
 use App\Http\Requests\AnimalRequest as StoreRequest;
 use App\Http\Requests\AnimalRequest as UpdateRequest;
 use App\Models\Animal;
@@ -14,6 +15,8 @@ use App\Models\Animal;
  */
 class AnimalCrudController extends CrudController
 {
+    use Permissions;
+
     public function setup()
     {
         /*
@@ -36,7 +39,7 @@ class AnimalCrudController extends CrudController
 
         $this->crud->addField([
             'label' => __('Name'),
-            'name' => 'name'
+            'name' => 'name',
         ]);
 
         $this->crud->addField([
@@ -49,39 +52,39 @@ class AnimalCrudController extends CrudController
             'data_source' => url('admin/adoption/ajax/search'),
             'placeholder' => __('Select an adoption process'),
             'minimum_input_length' => 2,
-            'default' => \Request::has('adoption') ?? false
+            'default' => \Request::has('adoption') ?? false,
         ]);
 
         $this->crud->addField([
             'label' => ucfirst(__('age')),
             'name' => 'age',
             'type' => 'age',
-            'default' => [0, 0]
+            'default' => [0, 0],
         ]);
 
         $this->crud->addField([
             'label' => ucfirst(__('gender')),
             'name' => 'gender',
-            'type' => 'enum'
+            'type' => 'enum',
         ]);
 
         $this->crud->addField([
             'label' => ucfirst(__('sterilized')),
             'name' => 'sterilized',
-            'type' => 'checkbox'
+            'type' => 'checkbox',
         ]);
 
         $this->crud->addField([
             'label' => ucfirst(__('vaccinated')),
             'name' => 'vaccinated',
-            'type' => 'checkbox'
+            'type' => 'checkbox',
         ]);
 
         // ------ CRUD COLUMNS
         $this->crud->addColumns(['name', 'adoption_id', 'age', 'gender', 'sterilized', 'vaccinated']);
 
         $this->crud->setColumnDetails('name', [
-            'label' => __('Name')
+            'label' => __('Name'),
         ]);
 
         $this->crud->setColumnDetails('adoption_id', [
@@ -89,29 +92,29 @@ class AnimalCrudController extends CrudController
             'label' => ucfirst(__('adoption process')),
             'type' => 'model_function',
             'limit' => 120,
-            'function_name' => 'getAdoptionLinkAttribute'
+            'function_name' => 'getAdoptionLinkAttribute',
         ]);
 
         $this->crud->setColumnDetails('age', [
             'name' => 'age',
             'label' => ucfirst(__('age')),
             'type' => 'model_function',
-            'function_name' => 'getAgeValueAttribute'
+            'function_name' => 'getAgeValueAttribute',
         ]);
 
         $this->crud->setColumnDetails('gender', [
             'type' => 'trans',
-            'label' => ucfirst(__('gender'))
+            'label' => ucfirst(__('gender')),
         ]);
 
         $this->crud->setColumnDetails('sterilized', [
             'type' => 'boolean',
-            'label' => ucfirst(__('sterilized'))
+            'label' => ucfirst(__('sterilized')),
         ]);
 
         $this->crud->setColumnDetails('vaccinated', [
             'type' => 'boolean',
-            'label' => ucfirst(__('vaccinated'))
+            'label' => ucfirst(__('vaccinated')),
         ]);
 
         // Filtrers
@@ -119,7 +122,7 @@ class AnimalCrudController extends CrudController
             'name' => 'adoption',
             'type' => 'select2_ajax',
             'label' => ucfirst(__('adoption process')),
-            'placeholder' => __('Select an adoption process')
+            'placeholder' => __('Select an adoption process'),
         ],
             url('admin/adoption/ajax/filter'),
             function ($value) {
@@ -130,7 +133,7 @@ class AnimalCrudController extends CrudController
             'name' => 'gender',
             'type' => 'select2',
             'label' => ucfirst(__('gender')),
-            'placeholder' => __('Select a gender')
+            'placeholder' => __('Select a gender'),
         ],
             EnumHelper::translate('animal.gender'),
             function ($value) {
@@ -140,7 +143,7 @@ class AnimalCrudController extends CrudController
         $this->crud->addFilter([
             'type' => 'select2',
             'name' => 'sterilized',
-            'label' => ucfirst(__('sterilized'))
+            'label' => ucfirst(__('sterilized')),
         ],
             EnumHelper::translate('general.boolean'),
             function ($value) {
@@ -150,7 +153,7 @@ class AnimalCrudController extends CrudController
         $this->crud->addFilter([
             'type' => 'select2',
             'name' => 'vaccinated',
-            'label' => ucfirst(__('vaccinated'))
+            'label' => ucfirst(__('vaccinated')),
         ],
             EnumHelper::translate('general.boolean'),
             function ($value) {
@@ -162,7 +165,7 @@ class AnimalCrudController extends CrudController
             'type' => 'range',
             'label' => sprintf('%s (%s)', ucfirst(__('age')), ucfirst(__('months'))),
             'label_from' => __('Min value'),
-            'label_to' => __('Max value')
+            'label_to' => __('Max value'),
         ],
             false,
             function ($value) {

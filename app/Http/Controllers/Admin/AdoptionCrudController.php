@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Admin\Traits\Permissions;
 use App\Http\Requests\AdoptionRequest as StoreRequest;
 use App\Http\Requests\AdoptionRequest as UpdateRequest;
 use App\Models\Adoption;
@@ -14,6 +15,8 @@ use App\User;
  */
 class AdoptionCrudController extends CrudController
 {
+    use Permissions;
+
     public function setup()
     {
         /*
@@ -44,7 +47,7 @@ class AdoptionCrudController extends CrudController
             'data_source' => url('admin/process/ajax/search'),
             'placeholder' => __('Select a process'),
             'minimum_input_length' => 2,
-            'default' => \Request::has('process') ?? false
+            'default' => \Request::has('process') ?? false,
         ]);
 
         $this->crud->addField([
@@ -57,18 +60,18 @@ class AdoptionCrudController extends CrudController
             'data_source' => url('admin/user/ajax/search/' . User::FAT),
             'placeholder' => __('Select a fat'),
             'minimum_input_length' => 2,
-            'default' => \Request::has('user') ?? false
+            'default' => \Request::has('user') ?? false,
         ]);
 
         $this->crud->addField([
             'label' => __('Name'),
-            'name' => 'name'
+            'name' => 'name',
         ]);
 
         $this->crud->addField([
             'label' => __('History'),
             'type' => 'wysiwyg',
-            'name' => 'history'
+            'name' => 'history',
         ]);
 
         $this->crud->addField([
@@ -79,32 +82,32 @@ class AdoptionCrudController extends CrudController
             'columns' => [
                 'name' => [
                     'label' => ucfirst(__('name')),
-                    'name' => 'name'
+                    'name' => 'name',
                 ],
                 'age' => [
                     'label' => ucfirst(__('age')),
-                    'name' => 'ageValue'
+                    'name' => 'ageValue',
                 ],
                 'gender' => [
                     'label' => ucfirst(__('gender')),
-                    'name' => 'genderValue'
+                    'name' => 'genderValue',
                 ],
                 'sterilized' => [
                     'label' => ucfirst(__('sterilized')),
-                    'name' => 'sterilizedValue'
+                    'name' => 'sterilizedValue',
                 ],
                 'vaccinated' => [
                     'label' => ucfirst(__('vaccinated')),
-                    'name' => 'vaccinatedValue'
-                ]
-            ]
+                    'name' => 'vaccinatedValue',
+                ],
+            ],
         ]);
 
         // ------ CRUD COLUMNS
         $this->crud->addColumns(['name', 'process_id', 'user_id', 'fat_id', 'animal_count']);
 
         $this->crud->setColumnDetails('name', [
-            'label' => __('Name')
+            'label' => __('Name'),
         ]);
 
         $this->crud->setColumnDetails('process_id', [
@@ -112,7 +115,7 @@ class AdoptionCrudController extends CrudController
             'label' => ucfirst(__('process')),
             'type' => 'model_function',
             'limit' => 120,
-            'function_name' => 'getProcessLinkAttribute'
+            'function_name' => 'getProcessLinkAttribute',
         ]);
 
         $this->crud->setColumnDetails('user_id', [
@@ -120,7 +123,7 @@ class AdoptionCrudController extends CrudController
             'label' => ucfirst(__('volunteer')),
             'type' => 'model_function',
             'limit' => 120,
-            'function_name' => 'getUserLinkAttribute'
+            'function_name' => 'getUserLinkAttribute',
         ]);
 
         $this->crud->setColumnDetails('fat_id', [
@@ -128,14 +131,14 @@ class AdoptionCrudController extends CrudController
             'label' => __('FAT'),
             'type' => 'model_function',
             'limit' => 120,
-            'function_name' => 'getFatLinkAttribute'
+            'function_name' => 'getFatLinkAttribute',
         ]);
 
         $this->crud->setColumnDetails('animal_count', [
             'name' => 'animal_count',
             'label' => __('Animals'),
             'type' => 'model_function',
-            'function_name' => 'getAnimalsAttribute'
+            'function_name' => 'getAnimalsAttribute',
         ]);
 
         // Filtrers
@@ -143,7 +146,7 @@ class AdoptionCrudController extends CrudController
             'name' => 'process',
             'type' => 'select2_ajax',
             'label' => ucfirst(__('process')),
-            'placeholder' => __('Select a process')
+            'placeholder' => __('Select a process'),
         ],
             url('admin/process/ajax/filter'),
             function ($value) {
@@ -154,7 +157,7 @@ class AdoptionCrudController extends CrudController
             'name' => 'fat',
             'type' => 'select2_ajax',
             'label' => __('FAT'),
-            'placeholder' => __('Select a FAT')
+            'placeholder' => __('Select a FAT'),
         ],
             url('admin/user/ajax/filter/' . User::FAT),
             function ($value) {
@@ -165,7 +168,7 @@ class AdoptionCrudController extends CrudController
             'name' => 'user',
             'type' => 'select2_ajax',
             'label' => ucfirst(__('volunteer')),
-            'placeholder' => __('Select a volunteer')
+            'placeholder' => __('Select a volunteer'),
         ],
             url('admin/user/ajax/filter/' . User::VOLUNTEER),
             function ($value) {

@@ -13,6 +13,11 @@
       @component('admin.flagpicker')
       @endcomponent
 
+      @if(admin())
+        @component('admin.view-as')
+        @endcomponent
+      @endif
+
       @if (config('backpack.base.setup_auth_routes'))
         @if (backpack_auth()->guest())
             <li><a href="{{ url(config('backpack.base.route_prefix', 'admin').'/login') }}">{{ trans('backpack::base.login') }}</a></li>

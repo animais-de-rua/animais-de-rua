@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Helpers\EnumHelper;
+use App\Http\Controllers\Admin\Traits\Permissions;
 use App\Http\Requests\TerritoryRequest as StoreRequest;
 use App\Http\Requests\TerritoryRequest as UpdateRequest;
 
 class TerritoryCrudController extends CrudController
 {
+    use Permissions;
 
     public function setup()
     {
@@ -31,7 +33,7 @@ class TerritoryCrudController extends CrudController
         $this->crud->setColumns(['name', 'sf']);
 
         $this->crud->setColumnDetails('sf', [
-            'label' => 'Código SF'
+            'label' => 'Código SF',
         ]);
 
         // ------ CRUD BUTTONS
@@ -48,7 +50,7 @@ class TerritoryCrudController extends CrudController
         $this->crud->addFilter([
             'name' => 'level',
             'type' => 'select2',
-            'label' => ucfirst(__('territory'))
+            'label' => ucfirst(__('territory')),
         ],
             EnumHelper::translate('territory.levels'),
             function ($value) {
@@ -59,7 +61,7 @@ class TerritoryCrudController extends CrudController
             'name' => 'district',
             'type' => 'select2_ajax',
             'label' => ucfirst(__('district')),
-            'placeholder' => __('Select a district')
+            'placeholder' => __('Select a district'),
         ],
             url('admin/territory/ajax/filter/1'),
             function ($value) {
@@ -70,7 +72,7 @@ class TerritoryCrudController extends CrudController
             'name' => 'county',
             'type' => 'select2_ajax',
             'label' => ucfirst(__('county')),
-            'placeholder' => __('Select a county')
+            'placeholder' => __('Select a county'),
         ],
             url('admin/territory/ajax/filter/2'),
             function ($value) {
