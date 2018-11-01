@@ -1,5 +1,6 @@
 <?php
 
+use App\Helpers\EnumHelper;
 use App\Models\Adoption;
 use App\Models\Process;
 use App\User;
@@ -20,9 +21,13 @@ $factory->define(Adoption::class, function (Faker $faker) {
         'process_id' => $faker->randomElement(Process::all()->pluck('id')->toArray()),
         'user_id' => $faker->randomElement(User::all()->pluck('id')->toArray()),
         'fat_id' => $faker->randomElement(User::all()->pluck('id')->toArray()),
-        'name' => $faker->animal . (rand(0, 1) ? ' e ' . $faker->animal : ''),
+        'name' => $faker->animal,
+        'age' => [rand(0, 5), rand(0, 12)],
+        'gender' => $faker->randomElement(EnumHelper::get('animal.gender')),
+        'sterilized' => rand(0, 1),
+        'vaccinated' => rand(0, 1),
         'history' => $faker->text(80),
         'created_at' => $date,
-        'updated_at' => $date
+        'updated_at' => $date,
     ];
 });

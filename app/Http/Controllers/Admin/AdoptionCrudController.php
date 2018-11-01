@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\EnumHelper;
 use App\Http\Controllers\Admin\Traits\Permissions;
 use App\Http\Requests\AdoptionRequest as StoreRequest;
 use App\Http\Requests\AdoptionRequest as UpdateRequest;
@@ -35,7 +36,7 @@ class AdoptionCrudController extends CrudController
         */
 
         // ------ CRUD FIELDS
-        $this->crud->addFields(['name', 'process_id', 'fat_id', 'history']);
+        $this->crud->addFields(['process_id', 'fat_id', 'name', 'age', 'gender', 'sterilized', 'vaccinated', 'images', 'history']);
 
         $this->crud->addField([
             'label' => ucfirst(__('process')),
@@ -69,42 +70,48 @@ class AdoptionCrudController extends CrudController
         ]);
 
         $this->crud->addField([
+            'label' => ucfirst(__('age')),
+            'name' => 'age',
+            'type' => 'age',
+            'default' => [0, 0],
+        ]);
+
+        $this->crud->addField([
+            'label' => ucfirst(__('gender')),
+            'name' => 'gender',
+            'type' => 'enum',
+        ]);
+
+        $this->crud->addField([
+            'label' => ucfirst(__('sterilized')),
+            'name' => 'sterilized',
+            'type' => 'checkbox',
+        ]);
+
+        $this->crud->addField([
+            'label' => ucfirst(__('vaccinated')),
+            'name' => 'vaccinated',
+            'type' => 'checkbox',
+        ]);
+
+        $this->crud->addField([
+            'name' => 'images',
+            'label' => __('Images'),
+            'type' => 'dropzone',
+            'upload-url' => '/admin/dropzone/images/adoptions',
+            'thumb' => 340,
+            'size' => 800,
+            'quality' => 82,
+        ]);
+
+        $this->crud->addField([
             'label' => __('History'),
             'type' => 'wysiwyg',
             'name' => 'history',
         ]);
 
-        $this->crud->addField([
-            'label' => ucfirst(__('animals')),
-            'name' => 'animal',
-            'type' => 'relation_table',
-            'route' => '/admin/animal',
-            'columns' => [
-                'name' => [
-                    'label' => ucfirst(__('name')),
-                    'name' => 'name',
-                ],
-                'age' => [
-                    'label' => ucfirst(__('age')),
-                    'name' => 'ageValue',
-                ],
-                'gender' => [
-                    'label' => ucfirst(__('gender')),
-                    'name' => 'genderValue',
-                ],
-                'sterilized' => [
-                    'label' => ucfirst(__('sterilized')),
-                    'name' => 'sterilizedValue',
-                ],
-                'vaccinated' => [
-                    'label' => ucfirst(__('vaccinated')),
-                    'name' => 'vaccinatedValue',
-                ],
-            ],
-        ]);
-
         // ------ CRUD COLUMNS
-        $this->crud->addColumns(['name', 'process_id', 'user_id', 'fat_id', 'animal_count']);
+        $this->crud->addColumns(['name', 'process_id', 'user_id', 'fat_id', 'age', 'gender', 'sterilized', 'vaccinated']);
 
         $this->crud->setColumnDetails('name', [
             'label' => __('Name'),
@@ -134,11 +141,26 @@ class AdoptionCrudController extends CrudController
             'function_name' => 'getFatLinkAttribute',
         ]);
 
-        $this->crud->setColumnDetails('animal_count', [
-            'name' => 'animal_count',
-            'label' => __('Animals'),
+        $this->crud->setColumnDetails('age', [
+            'name' => 'age',
+            'label' => ucfirst(__('age')),
             'type' => 'model_function',
-            'function_name' => 'getAnimalsAttribute',
+            'function_name' => 'getAgeValueAttribute',
+        ]);
+
+        $this->crud->setColumnDetails('gender', [
+            'type' => 'trans',
+            'label' => ucfirst(__('gender')),
+        ]);
+
+        $this->crud->setColumnDetails('sterilized', [
+            'type' => 'boolean',
+            'label' => ucfirst(__('sterilized')),
+        ]);
+
+        $this->crud->setColumnDetails('vaccinated', [
+            'type' => 'boolean',
+            'label' => ucfirst(__('vaccinated')),
         ]);
 
         // Filtrers
@@ -175,8 +197,57 @@ class AdoptionCrudController extends CrudController
                 $this->crud->addClause('where', 'user_id', $value);
             });
 
+        $this->crud->addFilter([
+            'name' => 'gender',
+            'type' => 'select2',
+            'label' => ucfirst(__('gender')),
+            'placeholder' => __('Select a gender'),
+        ],
+            EnumHelper::translate('animal.gender'),
+            function ($value) {
+                $this->crud->addClause('where', 'gender', $value);
+            });
+
+        $this->crud->addFilter([
+            'type' => 'select2',
+            'name' => 'sterilized',
+            'label' => ucfirst(__('sterilized')),
+        ],
+            EnumHelper::translate('general.boolean'),
+            function ($value) {
+                $this->crud->addClause('where', 'sterilized', $value);
+            });
+
+        $this->crud->addFilter([
+            'type' => 'select2',
+            'name' => 'vaccinated',
+            'label' => ucfirst(__('vaccinated')),
+        ],
+            EnumHelper::translate('general.boolean'),
+            function ($value) {
+                $this->crud->addClause('where', 'vaccinated', $value);
+            });
+
+        $this->crud->addFilter([
+            'name' => 'number',
+            'type' => 'range',
+            'label' => sprintf('%s (%s)', ucfirst(__('age')), ucfirst(__('months'))),
+            'label_from' => __('Min value'),
+            'label_to' => __('Max value'),
+        ],
+            false,
+            function ($value) {
+                $range = json_decode($value);
+                if ($range->from) {
+                    $this->crud->addClause('where', 'age', '>=', (float) $range->from);
+                }
+                if ($range->to) {
+                    $this->crud->addClause('where', 'age', '<=', (float) $range->to);
+                }
+            });
+
         // ------ ADVANCED QUERIES
-        $this->crud->query->with(['process', 'user', 'fat', 'animal']);
+        $this->crud->query->with(['process', 'user', 'fat']);
 
         // add asterisk for fields that are required in AdoptionRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');

@@ -2,7 +2,6 @@
 
 use App\Helpers\EnumHelper;
 use App\Models\Adoption;
-use App\Models\Animal;
 use App\Models\Appointment;
 use App\Models\Donation;
 use App\Models\Godfather;
@@ -32,7 +31,6 @@ class FakeSeeder extends Seeder
         DB::table('vets')->truncate();
         DB::table('treatments')->truncate();
         DB::table('appointments')->truncate();
-        DB::table('animals')->truncate();
         DB::table('adoptions')->truncate();
         DB::table('protocols')->truncate();
 
@@ -90,13 +88,7 @@ class FakeSeeder extends Seeder
 
         // Adoptions
         $this->log('Adoptions');
-        factory(Adoption::class, 40)->create()->each(function ($adoption) {
-            // Some animals per Adoption process
-            $animals = rand(1, 4);
-            while ($animals--) {
-                $adoption->animal()->save(factory(Animal::class)->make());
-            }
-        });
+        factory(Adoption::class, 100)->create();
 
         // Protocols
         $this->log('Protocols');

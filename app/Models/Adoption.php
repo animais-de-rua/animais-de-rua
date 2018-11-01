@@ -18,7 +18,8 @@ class Adoption extends Model
     protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['process_id', 'user_id', 'fat_id', 'name', 'history'];
+    protected $fillable = ['process_id', 'user_id', 'fat_id', 'name', 'age', 'gender', 'sterilized', 'vaccinated', 'history', 'images'];
+    protected $casts = ['images' => 'array'];
     // protected $hidden = [];
     // protected $dates = [];
 
@@ -49,11 +50,6 @@ class Adoption extends Model
         return $this->belongsTo('App\User', 'fat_id');
     }
 
-    public function animal()
-    {
-        return $this->hasMany('App\Models\Animal', 'adoption_id');
-    }
-
     /*
     |--------------------------------------------------------------------------
     | SCOPES
@@ -81,9 +77,19 @@ class Adoption extends Model
         return $this->getLink($this->fat);
     }
 
-    public function getAnimalsAttribute()
+    public function getGenderValueAttribute()
     {
-        return count($this->animal);
+        return ucfirst(__($this->gender));
+    }
+
+    public function getSterilizedValueAttribute()
+    {
+        return ucfirst(__($this->sterilized ? 'yes' : 'no'));
+    }
+
+    public function getVaccinatedValueAttribute()
+    {
+        return ucfirst(__($this->vaccinated ? 'yes' : 'no'));
     }
 
     /*
@@ -91,4 +97,30 @@ class Adoption extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
+
+    public function setAgeAttribute($value)
+    {
+        $this->attributes['age'] = $value[0] * 12 + $value[1];
+    }
+
+    public function getAgeAttribute($value)
+    {
+        return [floor($value / 12), $value % 12];
+    }
+
+    public function getAgeValueAttribute()
+    {
+        list($y, $m) = $this->age;
+
+        $result = [];
+        if ($y > 0) {
+            $result[] = "$y " . ($y > 1 ? __('years') : __('year'));
+        }
+
+        if ($m > 0) {
+            $result[] = "$m " . ($m > 1 ? __('months') : __('month'));
+        }
+
+        return join(' ' . __('and') . ' ', $result);
+    }
 }

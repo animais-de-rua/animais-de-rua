@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Helpers\EnumHelper;
 use App\Http\Requests\Request;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -29,7 +30,11 @@ class AdoptionRequest extends FormRequest
             'name' => 'required|min:2|max:255',
             'process_id' => 'required|exists:processes,id',
             'fat_id' => 'required|exists:users,id',
-            'history' => 'nullable|max:4096'
+            'age' => 'nullable|numeric|min:0|max:300',
+            'gender' => 'nullable|in:' . EnumHelper::keys('animal.gender', ','),
+            'sterilized' => 'nullable|in:0,1',
+            'vaccinated' => 'nullable|in:0,1',
+            'history' => 'nullable|max:4096',
         ];
     }
 
