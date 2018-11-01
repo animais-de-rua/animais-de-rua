@@ -116,14 +116,7 @@ class Process extends Model
         $expenses = data_get_first($this, 'treatments', 'total_expenses', 0);
         $balance = $donations - $expenses;
 
-        if (!$balance) {
-            return '-';
-        } else if ($balance > 0) {
-            return "+{$balance}€";
-        } else {
-            return "<span style='color:#A00'>{$balance}€</span>";
-        }
-
+        return $this->colorizeValue($balance);
     }
 
     public function getAnimalsValue()
@@ -147,7 +140,7 @@ class Process extends Model
     // Stats
     public function getTotalDonatedStats()
     {
-        $donations = $this->donations->reduce(function ($carry, $item) {return $carry + $item->value;});
+        $donations = $this->getDonated();
         return $donations != 0 ? $donations . '€' : '-';
     }
 
@@ -158,13 +151,40 @@ class Process extends Model
 
     public function getTotalExpensesStats()
     {
-        $expenses = $this->treatments->reduce(function ($carry, $item) {return $carry + $item->expense;});
+        $expenses = $this->getExpenses();
         return $expenses != 0 ? $expenses . '€' : '-';
     }
 
     public function getTotalOperationsStats()
     {
         return count($this->treatments);
+    }
+
+    public function getBalanceStats()
+    {
+        $balance = $this->getDonated() - $this->getExpenses();
+        return $this->colorizeValue($balance);
+    }
+
+    private function getDonated()
+    {
+        return $this->donations->reduce(function ($carry, $item) {return $carry + $item->value;});
+    }
+
+    private function getExpenses()
+    {
+        return $this->treatments->reduce(function ($carry, $item) {return $carry + $item->expense;});
+    }
+
+    private function colorizeValue($value)
+    {
+        if (!$value) {
+            return '-';
+        } else if ($value > 0) {
+            return "<span style='color:#0A0'>+{$value}€</span>";
+        } else {
+            return "<span style='color:#A00'>{$value}€</span>";
+        }
     }
 
     /*

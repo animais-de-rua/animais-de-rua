@@ -74,3 +74,10 @@ if (!function_exists('restrictTo')) {
         }
     }
 }
+
+if (!function_exists('is')) {
+    function is($roles, $permissions = null)
+    {
+        return restrictTo($roles, $permissions);
+    }
+}

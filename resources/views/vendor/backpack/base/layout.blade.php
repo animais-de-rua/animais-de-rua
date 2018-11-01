@@ -73,7 +73,7 @@
     </script>
     <div class="wrapper">
         <header class="main-header">
-            <a href="{{ url('') }}" class="logo">
+            <a href="{{ url('') }}" class="logo hidden-xs">
               <span class="logo-mini"><img style="width: 38px; filter: brightness(0) invert(1) opacity(0.9);" src="/img/logo/logo.svg" /></span>
               <span class="logo-lg"><img style="width: 80%; max-width: 300px; filter: brightness(0) invert(1) opacity(0.9);" src="/img/logo/logo-text.svg" /></span>
             </a>

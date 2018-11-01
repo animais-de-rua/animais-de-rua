@@ -18,6 +18,6 @@ $factory->define(Godfather::class, function (Faker $faker) {
         'email' => $faker->unique()->safeEmail,
         'territory_id' => $faker->randomElement(Territory::all()->pluck('id')->toArray()),
         'created_at' => $date,
-        'updated_at' => $date
+        'updated_at' => $date,
     ];
 });

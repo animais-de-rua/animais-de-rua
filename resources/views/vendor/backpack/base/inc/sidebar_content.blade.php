@@ -10,13 +10,7 @@
 
 
 @if(restrictTo('admin', 'adoptions'))
-<li class="treeview">
-    <a href="#"><i class="fa icon-animal"></i> <span class="text-capitalize">{{ __("adoptions") }}</span> <i class="fa fa-angle-left pull-right"></i></a>
-    <ul class="treeview-menu">
-        <li><a href="{{ backpack_url('adoption') }}"><i class="fa icon-adoption"></i> <span class="text-capitalize">{{ __("adoptions") }}</span></a></li>
-        <li><a href="{{ backpack_url('animal') }}"><i class="fa icon-animal"></i> <span class="text-capitalize">{{ __("animals") }}</span></a></li>
-    </ul>
-</li>
+<li><a href="{{ backpack_url('adoption') }}"><i class="fa icon-animal"></i> <span class="text-capitalize">{{ __("adoptions") }}</span></a></li>
 @endif
 
 <li><a href="{{ backpack_url('godfather') }}"><i class="fa icon-godfather"></i> <span class="text-capitalize">{{ __("godfathers") }}</span></a></li>

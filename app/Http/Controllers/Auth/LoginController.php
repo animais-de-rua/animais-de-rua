@@ -129,7 +129,7 @@ class LoginController extends Controller
         $account = new SocialAccount([
             'provider' => $provider,
             'provider_user_id' => $providerUser->getId(),
-            'token' => $providerUser->token
+            'token' => $providerUser->token,
         ]);
 
         $user = User::whereEmail($providerUser->getEmail())->first();
@@ -140,7 +140,7 @@ class LoginController extends Controller
                 'name' => $providerUser->getName(),
                 'avatar' => $avatar,
                 'password' => bcrypt(\Hash::make(uniqid())),
-                'created_at' => Carbon::now()
+                'created_at' => Carbon::now(),
             ]);
         } else {
             $user->avatar = $avatar;

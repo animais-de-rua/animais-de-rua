@@ -23,6 +23,6 @@ $factory->define(Treatment::class, function (Faker $faker) {
         'affected_animals' => $faker->randomElement([1, 1, 1, 2, 3, 4, 6]),
         'date' => $date,
         'created_at' => $date,
-        'updated_at' => $date
+        'updated_at' => $date,
     ];
 });

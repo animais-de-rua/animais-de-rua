@@ -22,7 +22,7 @@ class Territory extends Model
     // protected $hidden = [];
     // protected $dates = [];
     protected $casts = [
-        'id' => 'string'
+        'id' => 'string',
     ];
 
     const DISTRITO = 1;

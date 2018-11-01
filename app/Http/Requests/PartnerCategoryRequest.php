@@ -27,7 +27,7 @@ class PartnerCategoryRequest extends FormRequest
     {
         return [
             'name' => 'required|min:2|max:255',
-            'description' => 'required|min:2|max:4096'
+            'description' => 'required|min:2|max:4096',
         ];
     }
 

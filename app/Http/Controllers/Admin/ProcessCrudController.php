@@ -237,6 +237,10 @@ class ProcessCrudController extends CrudController
                     'label' => __('Total Donations'),
                     'value' => 'getTotalDonationsStats',
                 ],
+                'balance' => [
+                    'label' => __('Balance'),
+                    'value' => 'getBalanceStats',
+                ],
             ],
         ]);
 

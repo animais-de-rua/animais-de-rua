@@ -29,7 +29,7 @@ class CampaignRequest extends FormRequest
             'name' => 'required|min:3|max:255',
             'introduction' => 'required|min:5',
             'description' => 'nullable',
-            'image' => 'nullable'
+            'image' => 'nullable',
         ];
     }
 

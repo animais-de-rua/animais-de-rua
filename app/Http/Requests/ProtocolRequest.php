@@ -32,7 +32,7 @@ class ProtocolRequest extends FormRequest
             'phone' => 'nullable|min:9|max:14',
             'address' => 'nullable|min:3|max:255',
             'description' => 'nullable|min:3|max:4096',
-            'territory_id' => 'nullable|exists:territories,id'
+            'territory_id' => 'nullable|exists:territories,id',
         ];
     }
 

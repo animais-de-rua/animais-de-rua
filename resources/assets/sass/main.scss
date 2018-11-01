@@ -6,10 +6,12 @@ html, body {
     font-weight: 400;
     margin: 0;
     position: relative;
+    scroll-behavior: smooth;
 }
 
 body {
     min-height: 100vh;
+    background-color: #F7F7F7;
 }
 
 h1 {
@@ -45,7 +47,7 @@ input, textarea, select {
     }
 }
 
-label {
+label, picture, picture > img {
     display: block;
 }
 
@@ -117,7 +119,7 @@ label {
         border: 2px solid #FFF!important;
 
         &:hover, &:focus {
-            background-color: $color!important;
+            background-color: transparent!important;
             color: #FFF!important;
         }
     }
@@ -708,6 +710,21 @@ footer {
     }
 }
 
+.cookie-consent {
+    position: fixed;
+    bottom: 0;
+    text-align: center;
+    width: 100%;
+    background-color: #333333;
+    padding-top: 10px;
+    color: #FFF;
+
+    button {
+        margin-left: 10px;
+        color: #333;
+    }
+}
+
 
 // ----------
 // Flex Slider
@@ -812,6 +829,20 @@ footer {
 
 // ----------
 // Pages
+
+.header {
+    picture {
+        height: 468px;
+        background: #FFF url(/img/logo/logo.svg) no-repeat center;
+        background-size: 200px;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+}
 
 // Home
 .info-text {
@@ -1272,6 +1303,7 @@ footer {
         flex-wrap: wrap;
         justify-content: center;
         width: 80%;
+        min-height: 400px;
         margin: 0 10%;
 
         a {
@@ -1496,10 +1528,9 @@ footer {
             flex-direction: column-reverse;
         }
 
-        img {
-            max-height: 300px;
-            object-fit: cover;
+        picture {
             margin-bottom: 20px;
+            height: 300px;
         }
     }
 

@@ -185,6 +185,7 @@ window.app = {
             link.addEventListener('click', e => {
                 let urlPath = e.target.closest('a').href;
 
+                window.scrollTo(0, 0);
                 loading.start();
                 _content.classList.remove('anim');
 

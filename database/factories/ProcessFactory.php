@@ -34,6 +34,6 @@ $factory->define(Process::class, function (Faker $faker) {
         'notes' => $faker->text(80),
         'latlong' => $faker->latitude(41.76, 37.26) . ', ' . $faker->longitude(-8.62, -7.21),
         'created_at' => $date,
-        'updated_at' => $date
+        'updated_at' => $date,
     ];
 });

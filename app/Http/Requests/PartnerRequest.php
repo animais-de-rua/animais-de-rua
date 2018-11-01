@@ -35,7 +35,7 @@ class PartnerRequest extends FormRequest
             'latlong' => 'nullable|min:2|max:255',
             'benefit' => 'nullable|min:2|max:4096',
             'notes' => 'nullable|min:2|max:4096',
-            'status' => 'in:0,1'
+            'status' => 'in:0,1',
         ];
     }
 

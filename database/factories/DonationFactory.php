@@ -20,6 +20,6 @@ $factory->define(Donation::class, function (Faker $faker) {
         'value' => $faker->randomElement([5, 10, 20, 50]),
         'date' => $date,
         'created_at' => $date,
-        'updated_at' => $date
+        'updated_at' => $date,
     ];
 });

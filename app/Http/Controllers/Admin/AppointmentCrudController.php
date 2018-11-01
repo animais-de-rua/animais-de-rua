@@ -74,7 +74,7 @@ class AppointmentCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'label' => ucfirst(__('vet')) . ' 1',
+            'label' => ucfirst(__('vet')) . ' 2',
             'name' => 'vet_id_2',
             'type' => 'select2_from_ajax',
             'entity' => 'vet2',
@@ -255,19 +255,28 @@ class AppointmentCrudController extends CrudController
 
             });
 
+        $status_options = EnumHelper::translate('appointment.status');
+        if (!is('admin', 'appointment')) {
+            unset($options['approving']);
+        }
+
         $this->crud->addFilter([
             'name' => 'status',
             'type' => 'select2_multiple',
             'label' => __('Status'),
             'placeholder' => __('Select a status'),
         ],
-            EnumHelper::translate('appointment.status'),
+            $status_options,
             function ($values) {
                 $this->crud->addClause('whereIn', 'status', json_decode($values));
             });
 
         // ------ ADVANCED QUERIES
         $this->crud->query->with(['process', 'vet1', 'vet2', 'user']);
+
+        if (!is('admin', 'appointment')) {
+            $this->crud->addClause('where', 'status', '<>', 'approving');
+        }
 
         // add asterisk for fields that are required in AppointmentRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');

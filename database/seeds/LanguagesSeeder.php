@@ -20,7 +20,7 @@ class LanguagesSeeder extends Seeder
             'script' => 'Latn',
             'native' => 'English',
             'active' => '1',
-            'default' => '1'
+            'default' => '1',
         ]);
 
         DB::table('languages')->insert([
@@ -30,7 +30,7 @@ class LanguagesSeeder extends Seeder
             'script' => 'Latn',
             'native' => 'Português',
             'active' => '1',
-            'default' => '0'
+            'default' => '0',
         ]);
     }
 }

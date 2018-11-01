@@ -28,7 +28,7 @@ class DonationRequest extends FormRequest
         return [
             'value' => 'required|numeric',
             'process_id' => 'exists:processes,id',
-            'godfather_id' => 'required|exists:godfathers,id'
+            'godfather_id' => 'required|exists:godfathers,id',
         ];
     }
 

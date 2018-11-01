@@ -29,6 +29,6 @@ $factory->define(Appointment::class, function (Faker $faker) {
         'notes' => $faker->text(50),
         'status' => $faker->randomElement(EnumHelper::get('appointment.status')),
         'created_at' => $date,
-        'updated_at' => $date
+        'updated_at' => $date,
     ];
 });

@@ -20,91 +20,91 @@ class PagesSeeder extends Seeder
             [
                 'title' => json_encode([
                     'pt' => 'Animais de Rua',
-                    'en' => 'Animais de Rua'
+                    'en' => 'Animais de Rua',
                 ]),
                 'template' => 'home',
                 'name' => 'Home',
                 'slug' => 'home',
                 'created_at' => $date,
-                'updated_at' => $date
+                'updated_at' => $date,
             ],
             [
                 'title' => json_encode([
                     'pt' => 'Animais',
-                    'en' => 'Animals'
+                    'en' => 'Animals',
                 ]),
                 'template' => 'animals',
                 'name' => 'Animais',
                 'slug' => 'animals',
                 'created_at' => $date,
-                'updated_at' => $date
+                'updated_at' => $date,
             ],
             [
                 'title' => json_encode([
                     'pt' => 'Associação',
-                    'en' => 'Association'
+                    'en' => 'Association',
                 ]),
                 'template' => 'association',
                 'name' => 'Associação',
                 'slug' => 'association',
                 'created_at' => $date,
-                'updated_at' => $date
+                'updated_at' => $date,
             ],
             [
                 'title' => json_encode([
                     'pt' => 'CED',
-                    'en' => 'CED'
+                    'en' => 'CED',
                 ]),
                 'template' => 'ced',
                 'name' => 'CED',
                 'slug' => 'ced',
                 'created_at' => $date,
-                'updated_at' => $date
+                'updated_at' => $date,
             ],
             [
                 'title' => json_encode([
                     'pt' => 'Amigos',
-                    'en' => 'Friends'
+                    'en' => 'Friends',
                 ]),
                 'template' => 'friends',
                 'name' => 'Amigos',
                 'slug' => 'friends',
                 'created_at' => $date,
-                'updated_at' => $date
+                'updated_at' => $date,
             ],
             [
                 'title' => json_encode([
                     'pt' => 'Ajuda',
-                    'en' => 'Help'
+                    'en' => 'Help',
                 ]),
                 'template' => 'help',
                 'name' => 'Ajuda',
                 'slug' => 'help',
                 'created_at' => $date,
-                'updated_at' => $date
+                'updated_at' => $date,
             ],
             [
                 'title' => json_encode([
                     'pt' => 'Parceiros',
-                    'en' => 'Partners'
+                    'en' => 'Partners',
                 ]),
                 'template' => 'partners',
                 'name' => 'Parceiros',
                 'slug' => 'partners',
                 'created_at' => $date,
-                'updated_at' => $date
+                'updated_at' => $date,
             ],
             [
                 'title' => json_encode([
                     'pt' => 'Política de privacidade',
-                    'en' => 'Privacy policy'
+                    'en' => 'Privacy policy',
                 ]),
                 'template' => 'privacypolicy',
                 'name' => 'Política de privacidade',
                 'slug' => 'privacy-policy',
                 'created_at' => $date,
-                'updated_at' => $date
-            ]
+                'updated_at' => $date,
+            ],
         ]);
     }
 }

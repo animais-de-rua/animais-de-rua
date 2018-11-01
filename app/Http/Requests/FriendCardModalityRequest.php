@@ -31,7 +31,7 @@ class FriendCardModalityRequest extends FormRequest
             'description' => 'nullable|min:0|max:4096',
             'paypal_code' => 'required|min:1|max:255',
             'amount' => 'required|numeric|min:0|max:1000000',
-            'type' => 'in:' . EnumHelper::keys('general.friend_card_modalities', ',')
+            'type' => 'in:' . EnumHelper::keys('general.friend_card_modalities', ','),
         ];
     }
 

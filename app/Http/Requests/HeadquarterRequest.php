@@ -29,7 +29,7 @@ class HeadquarterRequest extends FormRequest
             'name' => 'required|min:3|max:255',
             'phone' => 'nullable|min:9|max:14',
             'address' => 'nullable|min:3|max:255',
-            'email' => 'nullable|email'
+            'email' => 'nullable|email',
         ];
     }
 

@@ -7,7 +7,7 @@ return [
     'solidary' => [
         'title' => 'Número Solidário',
         'number' => '760 300 161',
-        'description' => 'Custo da Chamada 0,60€ + IVA'
+        'description' => 'Custo da Chamada 0,60€ + IVA',
     ],
     'social' => 'Redes Sociais',
     'contact' => 'Formulário de Contacto',
@@ -20,23 +20,23 @@ return [
         'values' => [
             '1' => '5',
             '2' => '10',
-            '3' => '15'
-        ]
+            '3' => '15',
+        ],
     ],
 
     'risk' => [
         'title' => 'Encontrou um animal em risco?',
-        'link' => 'Candidatura de Esterilização'
+        'link' => 'Candidatura de Esterilização',
     ],
 
     'association' => [
         'report' => 'Relatório de actividades',
-        'report_year' => 'Relatório de actividades de :year'
+        'report_year' => 'Relatório de actividades de :year',
     ],
 
     'ced' => [
         'title' => 'Gostaria de participar/organizar uma formação CED?',
-        'link' => 'Preencha o nosso formulário'
-    ]
+        'link' => 'Preencha o nosso formulário',
+    ],
 
 ];

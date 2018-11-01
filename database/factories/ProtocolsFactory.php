@@ -26,6 +26,6 @@ $factory->define(Protocol::class, function (Faker $faker) {
         'process_id' => $faker->randomElement(Process::all()->pluck('id')->toArray()),
         'user_id' => $faker->randomElement(User::all()->pluck('id')->toArray()),
         'created_at' => $date,
-        'updated_at' => $date
+        'updated_at' => $date,
     ];
 });

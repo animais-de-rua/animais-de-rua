@@ -1,7 +1,7 @@
 <div class="navbar-custom-menu pull-left">
     <ul class="nav navbar-nav">
-        <li><a href="{{ url('/') }}"><i class="fa fa-home"></i> <span>{{ __("Home") }}</span></a></li>
-        <li><a href="{{ url('/store') }}"><i class="fa fa-shopping-cart"></i> <span>{{ __("Store") }}</span></a></li>
+        {{-- <li><a href="{{ url('/') }}"><i class="fa fa-home"></i> <span>{{ __("Home") }}</span></a></li> --}}
+        {{-- <li><a href="{{ url('/store') }}"><i class="fa fa-shopping-cart"></i> <span>{{ __("Store") }}</span></a></li> --}}
     </ul>
 </div>
 

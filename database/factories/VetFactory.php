@@ -23,6 +23,6 @@ $factory->define(Vet::class, function (Faker $faker) {
         'headquarter_id' => $faker->randomElement(Headquarter::all()->pluck('id')->toArray()),
         'status' => $faker->randomElement(EnumHelper::get('vet.status')),
         'created_at' => $date,
-        'updated_at' => $date
+        'updated_at' => $date,
     ];
 });

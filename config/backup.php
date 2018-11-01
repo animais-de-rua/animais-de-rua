@@ -77,12 +77,12 @@ return [
     'notifications' => [
 
         'notifications' => [
-            \Spatie\Backup\Notifications\Notifications\BackupHasFailed::class         => ['mail'],
+            \Spatie\Backup\Notifications\Notifications\BackupHasFailed::class => ['mail'],
             \Spatie\Backup\Notifications\Notifications\UnhealthyBackupWasFound::class => ['mail'],
-            \Spatie\Backup\Notifications\Notifications\CleanupHasFailed::class        => ['mail'],
-            \Spatie\Backup\Notifications\Notifications\BackupWasSuccessful::class     => ['mail'],
-            \Spatie\Backup\Notifications\Notifications\HealthyBackupWasFound::class   => ['mail'],
-            \Spatie\Backup\Notifications\Notifications\CleanupWasSuccessful::class    => ['mail'],
+            \Spatie\Backup\Notifications\Notifications\CleanupHasFailed::class => ['mail'],
+            \Spatie\Backup\Notifications\Notifications\BackupWasSuccessful::class => ['mail'],
+            \Spatie\Backup\Notifications\Notifications\HealthyBackupWasFound::class => ['mail'],
+            \Spatie\Backup\Notifications\Notifications\CleanupWasSuccessful::class => ['mail'],
         ],
 
         /*
@@ -95,7 +95,7 @@ return [
          * Here you can specify how emails should be sent.
          */
         'mail' => [
-            'to'   => 'your@email.com',
+            'to' => 'your@email.com',
         ],
 
         /*
@@ -118,9 +118,9 @@ return [
      */
     'monitorBackups' => [
         [
-            'name'                                   => env('APP_NAME'),
-            'disks'                                  => ['backup'],
-            'newestBackupsShouldNotBeOlderThanDays'  => 1,
+            'name' => env('APP_NAME'),
+            'disks' => ['backup'],
+            'newestBackupsShouldNotBeOlderThanDays' => 1,
             'storageUsedMayNotBeHigherThanMegabytes' => 5000,
         ],
 

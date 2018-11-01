@@ -35,15 +35,15 @@ return [
 
     // LIST VIEW (table view)
 
-        // How many items should be shown by default by the Datatable?
-        // This value can be overwritten on a specific CRUD by calling
-        // $this->crud->setDefaultPageLength(50);
-        'default_page_length' => 25,
+    // How many items should be shown by default by the Datatable?
+    // This value can be overwritten on a specific CRUD by calling
+    // $this->crud->setDefaultPageLength(50);
+    'default_page_length' => 25,
 
     // A 1D array of options which will be used for both the displayed option and the value, or
     // A 2D array in which the first array is used to define the value options and the second array the displayed options
     // If a 2D array is used, strings in the right hand array will be automatically run through trans()
-        'page_length_menu' => [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'backpack::crud.all']],
+    'page_length_menu' => [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'backpack::crud.all']],
 
     // PREVIEW
 
@@ -378,7 +378,7 @@ return [
         // "pt_GW" => "Portuguese (Guinea-Bissau)",
         // "pt_MZ" => "Portuguese (Mozambique)",
         // "pt_PT" => "Portuguese (Portugal)",
-        "pt" => "Português",
+        'pt' => 'Português',
         // "pa_Arab" => "Punjabi (Arabic)",
         // "pa_Arab_PK" => "Punjabi (Arabic, Pakistan)",
         // "pa_Guru" => "Punjabi (Gurmukhi)",
