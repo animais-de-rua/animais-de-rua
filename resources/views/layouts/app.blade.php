@@ -50,7 +50,7 @@
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     @yield('style')
 </head>
-<body style="background-color: #F7F7F7">
+<body>
 
     @include('layouts.navbar')
 
@@ -60,12 +60,10 @@
 
     @include('layouts.footer')
 
+    @include('cookieConsent::index')
+
     <script>
         window.Laravel = {token: '{{ csrf_token() }}'};
-        window.translations = {month: [
-            '{{ __('Jan') }}', '{{ __('Feb') }}', '{{ __('Mar') }}', '{{ __('Apr') }}',
-            '{{ __('May') }}', '{{ __('Jun') }}', '{{ __('Jul') }}', '{{ __('Aug') }}',
-            '{{ __('Sep') }}', '{{ __('Oct') }}', '{{ __('Nov') }}', '{{ __('Dec') }}']};
     </script>
     <script src="{{ mix('js/app.js') }}"></script>
     <script>
