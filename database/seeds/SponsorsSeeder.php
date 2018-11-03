@@ -15,6 +15,26 @@ class SponsorsSeeder extends Seeder
 
         DB::table('sponsors')->insert([
             [
+                'name' => 'Hostel HUB',
+                'url' => 'https://www.hostelshub.com/',
+                'image' => 'sponsors/hostel-hub.jpg',
+            ],
+            [
+                'name' => 'Hotel Porto AS 1829',
+                'url' => 'https://as1829.luxhotels.pt/',
+                'image' => 'sponsors/hotel-porto-as-1829.jpg',
+            ],
+            [
+                'name' => 'Lisboa Pessoa Hotel',
+                'url' => 'https://pessoa.luxhotels.pt/',
+                'image' => 'sponsors/hotel-lisbon-pessoa.jpg',
+            ],
+            [
+                'name' => 'Hostel Lisbon Forever',
+                'url' => 'http://lisbonforever.pt/',
+                'image' => 'sponsors/hostel-lisbon-forever.jpg',
+            ],
+            [
                 'name' => 'Change for animals',
                 'url' => 'http://www.changeforanimals.org/',
                 'image' => 'sponsors/change.jpg',
@@ -40,16 +60,6 @@ class SponsorsSeeder extends Seeder
                 'image' => 'sponsors/rede.jpg',
             ],
             [
-                'name' => 'Loja do Gato',
-                'url' => 'https://www.lojadogato.pt/',
-                'image' => 'sponsors/lojadogato.jpg',
-            ],
-            [
-                'name' => 'Mar Shopping',
-                'url' => 'https://www.marshopping.com/',
-                'image' => 'sponsors/marshopping.jpg',
-            ],
-            [
                 'name' => 'No brinde',
                 'url' => 'http://www.nobrinde.com/',
                 'image' => 'sponsors/nobrinde.png',
@@ -58,11 +68,6 @@ class SponsorsSeeder extends Seeder
                 'name' => 'Royal Canin',
                 'url' => 'http://www.royalcanin.pt/',
                 'image' => 'sponsors/royal_canin.png',
-            ],
-            [
-                'name' => 'Loja do Cão',
-                'url' => 'https://www.lojadocao.pt/',
-                'image' => 'sponsors/lojadocao.jpg',
             ],
             [
                 'name' => 'Quinta das Águias',

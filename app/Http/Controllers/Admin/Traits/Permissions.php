@@ -6,7 +6,7 @@ use Auth;
 
 trait Permissions
 {
-    public function restrictTo($roles, $permissions)
+    public function restrictTo($roles, $permissions = null)
     {
         if (!restrictTo($roles, $permissions)) {
             abort(403);
