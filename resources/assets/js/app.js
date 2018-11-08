@@ -25,6 +25,7 @@ window.router = {
 window.navbar = {
     init: e => {
         this.navbarCards = _navbar.querySelectorAll('.cards > .card');
+        this.navbarSwipeable = _navbar.querySelector('.swipeable');
         this.navbarMobile = _navbar.querySelector('.mobile');
         this.navbarMobileMenu = _navbar.querySelector('.menu');
         this.navbarMobileCards = _navbar.querySelectorAll('.mobile-card-view > .menu-panel');
@@ -36,17 +37,10 @@ window.navbar = {
         });
 
         // Simple Handler for touch on mobile menu
-        let startTouch;
-        this.navbarMobile.addEventListener("touchstart", e => { startTouch = e.changedTouches[0] }, {passive: true});
-        this.navbarMobile.addEventListener("touchend", e => {
-            let [diffX, diffY] = [
-                e.changedTouches[0].clientX - startTouch.clientX,
-                e.changedTouches[0].clientY - startTouch.clientY
-            ];
-
-            if((_navbar.classList.contains("card-view") && diffY > 60) || diffX < -60)
+        this.navbarSwipeable.addEventListener('swipe', e => {
+            if(e.detail.y < 0 || e.detail.x > 0)
                 this.navbarMobileMenu.click();
-        }, {passive: true});
+        });
     },
 
     close: e => {
@@ -86,7 +80,8 @@ window.navbar = {
 window.sliders = {
     init: e => {
         document.querySelectorAll('.flex-slider').forEach(elem => {
-            sliders.start(elem);
+            // Start slider interval
+            sliders.autoScroll(elem);
 
             // Dots
             elem.querySelectorAll('.dots > li').forEach(dot => {
@@ -96,29 +91,38 @@ window.sliders = {
                     let slider = dot.closest('.flex-slider');
 
                     // Restart slider interval
-                    sliders.start(slider);
+                    sliders.autoScroll(slider);
 
                     sliders.moveTo(slider, index);
                 })
             });
+
+            // Touch
+            elem.addEventListener('swipe', e => {
+                if(e.detail.x)
+                    sliders.swipe(elem, e.detail.x);
+
+                // Restart slider interval
+                sliders.autoScroll(elem);
+            });
         });
     },
 
-    start: slider => {
-        let autoScroll = slider.getAttribute('auto-scroll');
+    autoScroll: slider => {
+        let scrollTimer = slider.getAttribute('auto-scroll');
 
-        if(autoScroll) {
+        if(scrollTimer) {
             let interval = slider.getAttribute('interval');
             if(interval)
                 clearInterval(interval);
 
             slider.setAttribute('interval', setInterval(e => {
-                sliders.move(slider);
-            }, autoScroll));
+                sliders.play(slider);
+            }, scrollTimer));
         }
     },
 
-    move: slider => {
+    play: slider => {
         let dots = slider.querySelector('.dots');
         let index = utils.indexOf(dots.querySelector('.active'));
 
@@ -129,6 +133,17 @@ window.sliders = {
         sliders.moveTo(slider, index);
     },
 
+    swipe: (slider, direction = 1) => {
+        let dots = slider.querySelector('.dots');
+        let index = utils.indexOf(dots.querySelector('.active'));
+
+        if((index == 0 && direction < 0) || (index == dots.children.length - 1 && direction > 0))
+            return;
+
+        index += direction;
+        sliders.moveTo(slider, index);
+    },
+
     moveTo: (slider, index) => {
         // Change active Dot
         let dots = slider.querySelector('.dots');
@@ -136,7 +151,7 @@ window.sliders = {
         dots.children[index].classList.add('active');
 
         // Add the translate
-        slider.querySelector('ul').style = "transform: translateX(-" + index * 100 + "%);";
+        slider.querySelector('ul').style.setProperty('--page', index);
     }
 }
 
@@ -166,7 +181,7 @@ window.isotope = {
                 isotope.querySelectorAll('.box' + filters.join('')).forEach(box => box.classList.add('active'));
 
 
-                isotope.querySelector('.empty').style.display = isotope.querySelectorAll('.box.active').length ? "none" : "block";
+                isotope.querySelector('.empty').style.display = isotope.querySelectorAll('.box.active').length ? 'none' : 'block';
             });
         });
     }
@@ -175,6 +190,75 @@ window.isotope = {
 window.loading = {
     start: e => _loading.className = 'start',
     end: e => _loading.className = 'end'
+}
+
+window.swipeable = {
+    init: e => {
+        document.querySelectorAll('.swipeable').forEach(elem => {
+            let startTouch;
+            elem.addEventListener('touchstart', e => { startTouch = e.changedTouches[0] }, {passive: true});
+            elem.addEventListener('touchend', e => {
+                let [dx, dy] = [
+                    e.changedTouches[0].clientX - startTouch.clientX,
+                    e.changedTouches[0].clientY - startTouch.clientY
+                ];
+
+                dx = Math.abs(dx) > 120 ? (dx > 0 ? -1 : 1) : 0;
+                dy = Math.abs(dy) > 120 ? (dy > 0 ? -1 : 1) : 0;
+
+                if(dx + dy)
+                    elem.dispatchEvent(new CustomEvent('swipe', {'detail': {
+                        'x': dx,
+                        'y': dy
+                    }}));
+            }, {passive: true});
+
+            // Touchable
+            elem.querySelectorAll('.touchable').forEach(touchable => {
+                let startDrag;
+                let range = {
+                    min: {
+                        x: touchable.getAttribute("min-x"),
+                        y: touchable.getAttribute("min-y")
+                    },
+                    max: {
+                        x: touchable.getAttribute("max-x"),
+                        y: touchable.getAttribute("max-y")
+                    },
+                }
+
+                touchable.addEventListener('touchstart', e => {
+                    touchable.style.setProperty('transition', 'initial');
+                    startDrag = e.changedTouches[0];
+                }, false);
+
+                touchable.addEventListener('touchmove', e => {
+                    let [dx, dy] = [
+                        Math.round(e.changedTouches[0].clientX - startDrag.clientX),
+                        Math.round(e.changedTouches[0].clientY - startDrag.clientY)
+                    ];
+                    
+                    if(Math.abs(dx) > 32 || Math.abs(dy) > 32)
+                        e.preventDefault();
+
+                    // Normalize values
+                    if(range.min.x && dx < range.min.x) dx = range.min.x;
+                    if(range.max.x && dx > range.max.x) dx = range.max.x;
+                    if(range.min.y && dy < range.min.y) dy = range.min.y;
+                    if(range.max.y && dy > range.max.y) dy = range.max.y;
+
+                    touchable.style.setProperty('--x', dx + 'px');
+                    touchable.style.setProperty('--y', dy + 'px');
+                }, false);
+
+                touchable.addEventListener('touchend', e => {
+                    touchable.style.removeProperty('transition');
+                    touchable.style.setProperty('--x', '0px');
+                    touchable.style.setProperty('--y', '0px');
+                }, false);
+            });
+        });
+    }
 }
 
 window.app = {
@@ -217,6 +301,9 @@ window.app = {
             e.classList.remove('stopPropagation');
             e.addEventListener('click', e => e.stopPropagation())
         });
+
+        // Swipeable
+        swipeable.init();
 
         // Sliders
         sliders.init();

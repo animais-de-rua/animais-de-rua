@@ -437,8 +437,9 @@ a {
         will-change: left;
         z-index: 1;
         background-color: #F7F7F7;
-        transition: left .3s;
         overflow: hidden;
+        transition: transform .3s, left .3s;
+        transform: translate(var(--x, "0px"));
 
         .list {
             display: block;
@@ -507,10 +508,11 @@ a {
             top: 100vh;
             left: 0;
             z-index: 1;
-            transition: top .4s;
             background-color: $color;
             display: flex;
             align-items: center;
+            transition: transform .3s, top .3s;
+            transform: translateY(var(--y, "0px"));
         }
 
         &.active {
@@ -578,6 +580,9 @@ a {
         }
         .mobile .mobile-card-view {
             top: 0;
+        }
+        .mobile {
+            transform: initial!important;
         }
     }
 }
@@ -736,8 +741,9 @@ footer {
     ul {
         white-space: nowrap;
         margin-bottom: 0;
-        transition: transform .3s;
         font-size: 0;
+        transition: transform .3s;
+        transform: translate(calc(var(--x, 0px) + var(--page, 0) * -100%));
     }
 
     li {

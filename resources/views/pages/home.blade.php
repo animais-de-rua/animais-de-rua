@@ -26,21 +26,21 @@
     <div class="container processes">
         <h1>{{ $page['processes_title'] }}</h1>
         <p>{{ $page['processes_subtitle'] }}</p>
-        <div class="flex-slider">
+        <div class="flex-slider swipeable">
             @php
             $pages = ceil(count($processes) / 3);
             @endphp
-            <ul>
+            <ul class="touchable">
                 @for($i=0; $i<$pages; $i++)
                 <li>
                     <div class="slide">
                         @for($j=0; $j<3 && isset($processes[$j + $i * 3]); $j++)
                         @php
-                            $process = $processes[$j + $i * 3]
+                            $process = $processes[$j + $i * 3];
                         @endphp
                         <div class="card">
                             <div class="image">
-                                @if(count($process->images))
+                                @if($process->images && count($process->images))
                                 <div style="background-image:url('{{ str_replace('process', 'process/thumb', $process->images[0]) }}')"></div>
                                 @endif
                             </div>
@@ -77,8 +77,8 @@
     </div>
 
     <div class="container campaigns">
-        <div class="flex-slider" auto-scroll="5000">
-            <ul>
+        <div class="flex-slider swipeable" auto-scroll="5000">
+            <ul class="touchable">
                 @foreach($campaigns as $campaign)
                 <li>
                     <div class="slide">
