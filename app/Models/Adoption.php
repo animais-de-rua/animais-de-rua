@@ -19,7 +19,7 @@ class Adoption extends Model
     // public $timestamps = false;
     // protected $guarded = ['id'];
     protected $fillable = ['process_id', 'user_id', 'fat_id', 'name', 'age', 'gender', 'sterilized', 'vaccinated', 'history', 'images'];
-    protected $casts = ['images' => 'array'];
+    protected $casts = ['images' => 'array', 'age' => 'array'];
     // protected $hidden = [];
     // protected $dates = [];
 

@@ -39,7 +39,7 @@ class PartnerCrudController extends CrudController
         */
 
         // ------ CRUD COLUMNS
-        $this->crud->setColumns(['image', 'name', 'url', 'categories', 'territories', 'user', 'status']);
+        $this->crud->setColumns(['image', 'name', 'url', 'categories', 'territories', 'status', 'user_id']);
 
         $this->crud->setColumnDetails('image', [
             'name' => 'image',
@@ -65,7 +65,7 @@ class PartnerCrudController extends CrudController
             'type' => 'check',
         ]);
 
-        $this->crud->setColumnDetails('user', [
+        $this->crud->setColumnDetails('user_id', [
             'name' => 'user',
             'label' => ucfirst(__('volunteer')),
             'type' => 'model_function',
@@ -92,7 +92,7 @@ class PartnerCrudController extends CrudController
         ]);
 
         // ------ CRUD FIELDS
-        $this->crud->addFields(['name', 'benefit', 'categories', 'territories', 'email', 'phone1', 'phone1_info', 'phone2', 'phone2_info', 'url', 'facebook', 'address', 'address_info', 'image', 'notes', 'status']);
+        $this->crud->addFields(['name', 'benefit', 'categories', 'territories', 'email', 'phone1', 'phone1_info', 'phone2', 'phone2_info', 'url', 'facebook', 'address', 'address_info', 'image', 'notes', 'status', 'user_id']);
 
         $this->crud->addField([
             'label' => __('Name'),
@@ -197,6 +197,21 @@ class PartnerCrudController extends CrudController
             'label' => __('Status'),
             'name' => 'status',
             'type' => 'checkbox',
+        ]);
+
+        $this->crud->addField([
+            'label' => ucfirst(__('volunteer')),
+            'name' => 'user_id',
+            'type' => 'select2_from_ajax',
+            'entity' => 'user',
+            'attribute' => 'name',
+            'model' => '\App\User',
+            'placeholder' => '',
+            'minimum_input_length' => 2,
+            'data_source' => null,
+            'attributes' => [
+                'readonly' => 'readonly',
+            ],
         ]);
 
         // Filters

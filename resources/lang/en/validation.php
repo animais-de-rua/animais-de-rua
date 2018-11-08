@@ -147,6 +147,8 @@ return [
         'adoption_id' => 'adoption',
         'affected_animals' => 'affected animals',
         'age' => 'age',
+        'age.1' => 'age (years)',
+        'age.2' => 'age (months)',
         'alias' => 'alias',
         'amount' => 'amount',
         'amount_females' => 'females amount',

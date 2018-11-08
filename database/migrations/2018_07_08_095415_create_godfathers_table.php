@@ -20,11 +20,18 @@ class CreateGodfathersTable extends Migration
             $table->string('email', 127)->nullable()->unique();
             $table->string('phone', 255)->nullable();
             $table->string('territory_id', 6)->nullable();
+            $table->integer('user_id')->unsigned();
 
             $table->index(['territory_id']);
             $table->foreign('territory_id')
                 ->references('id')
                 ->on('territories')
+                ->onDelete('cascade');
+
+            $table->index(['user_id']);
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
                 ->onDelete('cascade');
 
             $table->timestamps();
@@ -34,6 +41,7 @@ class CreateGodfathersTable extends Migration
             $table->increments('id');
             $table->integer('process_id')->nullable()->unsigned();
             $table->integer('godfather_id')->unsigned();
+            $table->integer('user_id')->unsigned();
 
             $table->decimal('value', 8, 2)->nullable()->unsigned()->default(0);
             $table->date('date')->nullable();
@@ -48,6 +56,12 @@ class CreateGodfathersTable extends Migration
             $table->foreign('godfather_id')
                 ->references('id')
                 ->on('godfathers')
+                ->onDelete('cascade');
+
+            $table->index(['user_id']);
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
                 ->onDelete('cascade');
 
             // $table->unique(['process_id', 'godfather_id']);

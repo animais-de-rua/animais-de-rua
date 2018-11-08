@@ -15,10 +15,11 @@ class CrudController extends \Backpack\CRUD\app\Http\Controllers\CrudController
         return $this->request && strpos($this->request->headers->get('accept'), 'application/json') === 0;
     }
 
+    private $i = 0;
     public function separator()
     {
         $this->crud->addField([
-            'name' => 'separator',
+            'name' => 'separator' . $this->i++,
             'type' => 'custom_html',
             'value' => '<hr />',
             'wrapperAttributes' => [

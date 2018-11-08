@@ -35,7 +35,7 @@ class TreatmentCrudController extends CrudController
         */
 
         // ------ CRUD COLUMNS
-        $this->crud->setColumns(['process', 'treatment_type', 'vet', 'user', 'affected_animals', 'expense', 'date']);
+        $this->crud->setColumns(['process', 'treatment_type', 'vet', 'affected_animals', 'expense', 'date', 'user_id']);
 
         $this->crud->setColumnDetails('process', [
             'name' => 'process',
@@ -62,7 +62,7 @@ class TreatmentCrudController extends CrudController
             'function_name' => 'getVetLinkAttribute',
         ]);
 
-        $this->crud->setColumnDetails('user', [
+        $this->crud->setColumnDetails('user_id', [
             'name' => 'user',
             'label' => ucfirst(__('volunteer')),
             'type' => 'model_function',
@@ -143,6 +143,21 @@ class TreatmentCrudController extends CrudController
             'name' => 'date',
             'type' => 'date',
             'default' => Carbon::today()->toDateString(),
+        ]);
+
+        $this->crud->addField([
+            'label' => ucfirst(__('volunteer')),
+            'name' => 'user_id',
+            'type' => 'select2_from_ajax',
+            'entity' => 'user',
+            'attribute' => 'name',
+            'model' => '\App\User',
+            'placeholder' => '',
+            'minimum_input_length' => 2,
+            'data_source' => null,
+            'attributes' => [
+                'readonly' => 'readonly',
+            ],
         ]);
 
         // Filter
@@ -237,7 +252,7 @@ class TreatmentCrudController extends CrudController
 
     public function store(StoreRequest $request)
     {
-        // Add user to the treatment
+        // Add user
         $request->merge(['user_id' => backpack_user()->id]);
 
         return parent::storeCrud($request);

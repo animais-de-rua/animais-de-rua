@@ -60,6 +60,11 @@ class Process extends Model
         return $this->hasMany('App\Models\Appointment', 'process_id');
     }
 
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'user_id');
+    }
+
     /*
     |--------------------------------------------------------------------------
     | SCOPES
@@ -75,6 +80,11 @@ class Process extends Model
     public function getLinkAttribute()
     {
         return $this->getLink($this);
+    }
+
+    public function getUserLinkAttribute()
+    {
+        return $this->getLink($this->user);
     }
 
     public function getDateAttribute()

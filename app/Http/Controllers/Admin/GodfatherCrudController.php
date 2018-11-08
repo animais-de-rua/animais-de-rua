@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\Traits\Permissions;
 use App\Http\Requests\GodfatherRequest as StoreRequest;
 use App\Http\Requests\GodfatherRequest as UpdateRequest;
 use App\Models\Godfather;
+use App\User;
 
 /**
  * Class GodfatherCrudController
@@ -65,6 +66,21 @@ class GodfatherCrudController extends CrudController
             'allows_null' => true,
         ]);
 
+        $this->crud->addField([
+            'label' => ucfirst(__('volunteer')),
+            'name' => 'user_id',
+            'type' => 'select2_from_ajax',
+            'entity' => 'user',
+            'attribute' => 'name',
+            'model' => '\App\User',
+            'placeholder' => '',
+            'minimum_input_length' => 2,
+            'data_source' => null,
+            'attributes' => [
+                'readonly' => 'readonly',
+            ],
+        ]);
+
         $this->separator();
 
         $this->crud->addField([
@@ -105,7 +121,7 @@ class GodfatherCrudController extends CrudController
         ]);
 
         // ------ CRUD COLUMNS
-        $this->crud->addColumns(['name', 'email', 'phone', 'donations']);
+        $this->crud->addColumns(['name', 'email', 'phone', 'donations', 'user_id']);
 
         $this->crud->setColumnDetails('name', [
             'label' => __('Name'),
@@ -127,6 +143,26 @@ class GodfatherCrudController extends CrudController
             'function_name' => 'getTotalDonatedValue',
         ]);
 
+        $this->crud->setColumnDetails('user_id', [
+            'name' => 'user',
+            'label' => ucfirst(__('volunteer')),
+            'type' => 'model_function',
+            'limit' => 120,
+            'function_name' => 'getUserLinkAttribute',
+        ]);
+
+        // Filtrers
+        $this->crud->addFilter([
+            'name' => 'user',
+            'type' => 'select2_ajax',
+            'label' => ucfirst(__('volunteer')),
+            'placeholder' => __('Select a volunteer'),
+        ],
+            url('admin/user/ajax/filter/' . User::VOLUNTEER),
+            function ($value) {
+                $this->crud->addClause('where', 'user_id', $value);
+            });
+
         // ------ ADVANCED QUERIES
         $this->crud->addClause('with', ['donations' => function ($query) {
             $query->selectRaw('godfather_id, sum(value) as total')
@@ -140,6 +176,9 @@ class GodfatherCrudController extends CrudController
 
     public function store(StoreRequest $request)
     {
+        // Add user
+        $request->merge(['user_id' => backpack_user()->id]);
+
         // Validate email
         $request->validate(['email' => 'required|email|unique:godfathers,email']);
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Admin\Traits\Permissions;
 use App\Http\Requests\DonationRequest as StoreRequest;
 use App\Http\Requests\DonationRequest as UpdateRequest;
+use App\User;
 use Carbon\Carbon;
 
 /**
@@ -34,7 +35,7 @@ class DonationCrudController extends CrudController
         */
 
         // ------ CRUD FIELDS
-        $this->crud->addFields(['godfather_id', 'process_id', 'value', 'date']);
+        $this->crud->addFields(['godfather_id', 'process_id', 'value', 'date', 'user_id']);
 
         $this->crud->addField([
             'label' => __('Value'),
@@ -78,8 +79,23 @@ class DonationCrudController extends CrudController
             'default' => Carbon::today()->toDateString(),
         ]);
 
+        $this->crud->addField([
+            'label' => ucfirst(__('volunteer')),
+            'name' => 'user_id',
+            'type' => 'select2_from_ajax',
+            'entity' => 'user',
+            'attribute' => 'name',
+            'model' => '\App\User',
+            'placeholder' => '',
+            'minimum_input_length' => 2,
+            'data_source' => null,
+            'attributes' => [
+                'readonly' => 'readonly',
+            ],
+        ]);
+
         // ------ CRUD COLUMNS
-        $this->crud->addColumns(['godfather', 'process', 'value']);
+        $this->crud->addColumns(['godfather', 'process', 'value', 'user_id']);
 
         $this->crud->setColumnDetails('godfather', [
             'name' => 'godfather',
@@ -102,6 +118,14 @@ class DonationCrudController extends CrudController
             'label' => __('Value'),
             'type' => 'model_function',
             'function_name' => 'getFullValueAttribute',
+        ]);
+
+        $this->crud->setColumnDetails('user_id', [
+            'name' => 'user',
+            'label' => ucfirst(__('volunteer')),
+            'type' => 'model_function',
+            'limit' => 120,
+            'function_name' => 'getUserLinkAttribute',
         ]);
 
         // ------ DATATABLE EXPORT BUTTONS
@@ -147,7 +171,17 @@ class DonationCrudController extends CrudController
                 if (is_numeric($range->to)) {
                     $this->crud->addClause('where', 'value', '<=', (float) $range->to);
                 }
+            });
 
+        $this->crud->addFilter([
+            'name' => 'user',
+            'type' => 'select2_ajax',
+            'label' => ucfirst(__('volunteer')),
+            'placeholder' => __('Select a volunteer'),
+        ],
+            url('admin/user/ajax/filter/' . User::VOLUNTEER),
+            function ($value) {
+                $this->crud->addClause('where', 'user_id', $value);
             });
 
         // ------ ADVANCED QUERIES
@@ -160,6 +194,9 @@ class DonationCrudController extends CrudController
 
     public function store(StoreRequest $request)
     {
+        // Add user
+        $request->merge(['user_id' => backpack_user()->id]);
+
         return parent::storeCrud($request);
     }
 

@@ -33,7 +33,7 @@ class ProtocolCrudController extends CrudController
         |--------------------------------------------------------------------------
         */
 
-        $this->crud->setColumns(['council', 'name', 'territory', 'process', 'user']);
+        $this->crud->setColumns(['council', 'name', 'territory', 'process', 'user_id']);
 
         $this->crud->setColumnDetails('council', [
             'label' => 'ID ' . ucfirst(__('council')),
@@ -60,15 +60,15 @@ class ProtocolCrudController extends CrudController
             'function_name' => 'getProcessLinkAttribute',
         ]);
 
-        $this->crud->setColumnDetails('user', [
-            'name' => 'user',
+        $this->crud->setColumnDetails('user_id', [
+            'name' => 'user_id',
             'label' => ucfirst(__('volunteer')),
             'type' => 'model_function',
             'limit' => 120,
             'function_name' => 'getUserLinkAttribute',
         ]);
 
-        $this->crud->addFields(['council', 'name', 'email', 'phone', 'address', 'description', 'territory_id', 'process_id']);
+        $this->crud->addFields(['council', 'name', 'email', 'phone', 'address', 'description', 'territory_id', 'process_id', 'user_id']);
 
         $this->crud->addField([
             'label' => ucfirst(__('council')),
@@ -122,6 +122,21 @@ class ProtocolCrudController extends CrudController
             'placeholder' => __('Select a process'),
             'minimum_input_length' => 2,
             'default' => \Request::has('process') ?? false,
+        ]);
+
+        $this->crud->addField([
+            'label' => ucfirst(__('volunteer')),
+            'name' => 'user_id',
+            'type' => 'select2_from_ajax',
+            'entity' => 'user',
+            'attribute' => 'name',
+            'model' => '\App\User',
+            'placeholder' => '',
+            'minimum_input_length' => 2,
+            'data_source' => null,
+            'attributes' => [
+                'readonly' => 'readonly',
+            ],
         ]);
 
         // Filters

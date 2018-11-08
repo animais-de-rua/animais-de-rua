@@ -24,6 +24,7 @@ class CreateProcessesTable extends Migration
             $table->string('address', 255)->nullable();
             $table->string('territory_id', 6)->nullable();
             $table->integer('headquarter_id')->unsigned()->nullable();
+            $table->integer('user_id')->unsigned()->nullable();
             $table->enum('specie', EnumHelper::values('process.specie'))->default('dog');
             $table->integer('amount_males')->unsigned()->default(0);
             $table->integer('amount_females')->unsigned()->default(0);
@@ -44,6 +45,12 @@ class CreateProcessesTable extends Migration
             $table->foreign('territory_id')
                 ->references('id')
                 ->on('territories')
+                ->onDelete('cascade');
+
+            $table->index(['user_id']);
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
                 ->onDelete('cascade');
 
             $table->timestamps();

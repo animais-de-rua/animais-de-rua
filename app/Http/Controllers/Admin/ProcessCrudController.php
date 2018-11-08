@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\Traits\Permissions;
 use App\Http\Requests\ProcessRequest as StoreRequest;
 use App\Http\Requests\ProcessRequest as UpdateRequest;
 use App\Models\Process;
+use App\User;
 use DB;
 
 class ProcessCrudController extends CrudController
@@ -31,7 +32,7 @@ class ProcessCrudController extends CrudController
         */
 
         // ------ CRUD FIELDS
-        $this->crud->addFields(['name', 'contact', 'phone', 'email', 'latlong', 'territory_id', 'headquarter_id', 'specie', 'amount_males', 'amount_females', 'amount_other', 'status', 'images', 'history', 'notes', 'donations', 'treatments', 'appointments', 'stats']);
+        $this->crud->addFields(['name', 'contact', 'phone', 'email', 'latlong', 'territory_id', 'headquarter_id', 'specie', 'amount_males', 'amount_females', 'amount_other', 'status', 'images', 'history', 'notes', 'user_id', 'donations', 'treatments', 'appointments', 'stats']);
 
         $this->crud->addField([
             'label' => __('Name'),
@@ -136,6 +137,21 @@ class ProcessCrudController extends CrudController
             'thumb' => 340,
             'size' => 800,
             'quality' => 82,
+        ]);
+
+        $this->crud->addField([
+            'label' => ucfirst(__('volunteer')),
+            'name' => 'user_id',
+            'type' => 'select2_from_ajax',
+            'entity' => 'user',
+            'attribute' => 'name',
+            'model' => '\App\User',
+            'placeholder' => '',
+            'minimum_input_length' => 2,
+            'data_source' => null,
+            'attributes' => [
+                //'readonly' => 'readonly',
+            ],
         ]);
 
         $this->separator();
@@ -245,7 +261,7 @@ class ProcessCrudController extends CrudController
         ]);
 
         // ------ CRUD COLUMNS
-        $this->crud->addColumns(['name', 'territory_id', 'headquarter', 'created_at', 'specie', 'animal_count', 'status', 'total_donations', 'total_expenses', 'balance', 'total_operations']);
+        $this->crud->addColumns(['name', 'territory_id', 'headquarter', 'created_at', 'specie', 'animal_count', 'status', 'total_donations', 'total_expenses', 'balance', 'total_operations', 'user_id']);
 
         $this->crud->setColumnDetails('name', [
             'label' => __('Name'),
@@ -315,6 +331,14 @@ class ProcessCrudController extends CrudController
             'label' => __('Total Operations'),
             'type' => 'model_function',
             'function_name' => 'getTotalOperationsValue',
+        ]);
+
+        $this->crud->setColumnDetails('user_id', [
+            'name' => 'user',
+            'label' => ucfirst(__('volunteer')),
+            'type' => 'model_function',
+            'limit' => 120,
+            'function_name' => 'getUserLinkAttribute',
         ]);
 
         // ------ CRUD DETAILS ROW
@@ -508,7 +532,17 @@ class ProcessCrudController extends CrudController
                 if (is_numeric($range->to)) {
                     $this->crud->query->having(DB::raw('sum(donations.value) - sum(treatments.expense)'), '<=', $range->to);
                 }
+            });
 
+        $this->crud->addFilter([
+            'name' => 'user',
+            'type' => 'select2_ajax',
+            'label' => ucfirst(__('volunteer')),
+            'placeholder' => __('Select a volunteer'),
+        ],
+            url('admin/user/ajax/filter/' . User::VOLUNTEER),
+            function ($value) {
+                $this->crud->addClause('where', 'user_id', $value);
             });
 
         // ------ ADVANCED QUERIES
@@ -540,6 +574,9 @@ class ProcessCrudController extends CrudController
 
     public function store(StoreRequest $request)
     {
+        // Add user
+        $request->merge(['user_id' => backpack_user()->id]);
+
         return parent::storeCrud($request);
     }
 

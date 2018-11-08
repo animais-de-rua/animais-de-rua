@@ -38,7 +38,7 @@ class AppointmentCrudController extends CrudController
         */
 
         // ------ CRUD FIELDS
-        $this->crud->addFields(['process_id', 'vet_id_1', 'date_1', 'vet_id_2', 'date_2', 'amount_males', 'amount_females', 'notes', 'status']);
+        $this->crud->addFields(['process_id', 'vet_id_1', 'date_1', 'vet_id_2', 'date_2', 'amount_males', 'amount_females', 'notes', 'status', 'user_id']);
 
         $this->crud->addField([
             'label' => ucfirst(__('process')),
@@ -51,6 +51,21 @@ class AppointmentCrudController extends CrudController
             'placeholder' => __('Select a process'),
             'minimum_input_length' => 2,
             'default' => \Request::has('process') ?? false,
+        ]);
+
+        $this->crud->addField([
+            'label' => ucfirst(__('volunteer')),
+            'name' => 'user_id',
+            'type' => 'select2_from_ajax',
+            'entity' => 'user',
+            'attribute' => 'name',
+            'model' => '\App\User',
+            'placeholder' => '',
+            'minimum_input_length' => 2,
+            'data_source' => null,
+            'attributes' => [
+                'readonly' => 'readonly',
+            ],
         ]);
 
         $this->crud->addField([
@@ -128,7 +143,7 @@ class AppointmentCrudController extends CrudController
         ]);
 
         // ------ CRUD COLUMNS
-        $this->crud->addColumns(['process_id', 'user_id', 'vet_id_1', 'date_1', 'vet_id_2', 'date_2', 'animal_count', 'status']);
+        $this->crud->addColumns(['process_id', 'vet_id_1', 'date_1', 'vet_id_2', 'date_2', 'animal_count', 'status', 'user_id']);
 
         $this->crud->setColumnDetails('process_id', [
             'name' => 'process',
@@ -257,7 +272,7 @@ class AppointmentCrudController extends CrudController
 
         $status_options = EnumHelper::translate('appointment.status');
         if (!is('admin', 'appointment')) {
-            unset($options['approving']);
+            unset($status_options['approving']);
         }
 
         $this->crud->addFilter([
@@ -285,7 +300,7 @@ class AppointmentCrudController extends CrudController
 
     public function store(StoreRequest $request)
     {
-        // Add user to the treatment
+        // Add user
         $request->merge(['user_id' => backpack_user()->id]);
 
         return parent::storeCrud($request);

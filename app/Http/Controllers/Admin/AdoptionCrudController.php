@@ -36,7 +36,7 @@ class AdoptionCrudController extends CrudController
         */
 
         // ------ CRUD FIELDS
-        $this->crud->addFields(['process_id', 'fat_id', 'name', 'age', 'gender', 'sterilized', 'vaccinated', 'images', 'history']);
+        $this->crud->addFields(['process_id', 'fat_id', 'name', 'age', 'gender', 'sterilized', 'vaccinated', 'images', 'history', 'user_id']);
 
         $this->crud->addField([
             'label' => ucfirst(__('process')),
@@ -49,6 +49,21 @@ class AdoptionCrudController extends CrudController
             'placeholder' => __('Select a process'),
             'minimum_input_length' => 2,
             'default' => \Request::has('process') ?? false,
+        ]);
+
+        $this->crud->addField([
+            'label' => ucfirst(__('volunteer')),
+            'name' => 'user_id',
+            'type' => 'select2_from_ajax',
+            'entity' => 'user',
+            'attribute' => 'name',
+            'model' => '\App\User',
+            'placeholder' => '',
+            'minimum_input_length' => 2,
+            'data_source' => null,
+            'attributes' => [
+                'readonly' => 'readonly',
+            ],
         ]);
 
         $this->crud->addField([
@@ -111,7 +126,7 @@ class AdoptionCrudController extends CrudController
         ]);
 
         // ------ CRUD COLUMNS
-        $this->crud->addColumns(['name', 'process_id', 'user_id', 'fat_id', 'age', 'gender', 'sterilized', 'vaccinated']);
+        $this->crud->addColumns(['name', 'process_id', 'fat_id', 'age', 'gender', 'sterilized', 'vaccinated', 'user_id']);
 
         $this->crud->setColumnDetails('name', [
             'label' => __('Name'),
@@ -256,7 +271,7 @@ class AdoptionCrudController extends CrudController
 
     public function store(StoreRequest $request)
     {
-        // Add user to the treatment
+        // Add user
         $request->merge(['user_id' => backpack_user()->id]);
 
         return parent::storeCrud($request);

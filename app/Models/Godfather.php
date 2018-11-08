@@ -18,7 +18,7 @@ class Godfather extends Model
     protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['name', 'alias', 'email', 'phone', 'territory_id'];
+    protected $fillable = ['name', 'alias', 'email', 'phone', 'territory_id', 'user_id'];
     // protected $hidden = [];
     // protected $dates = [];
 
@@ -42,6 +42,11 @@ class Godfather extends Model
     public function territory()
     {
         return $this->belongsTo('App\Models\Territory', 'territory_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'user_id');
     }
 
     /*
@@ -76,6 +81,11 @@ class Godfather extends Model
     public function getTotalDonationsStats()
     {
         return count($this->donations);
+    }
+
+    public function getUserLinkAttribute()
+    {
+        return $this->getLink($this->user);
     }
 
     /*

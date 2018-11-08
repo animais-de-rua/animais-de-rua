@@ -18,7 +18,7 @@ class Donation extends Model
     protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['process_id', 'godfather_id', 'value', 'status', 'date'];
+    protected $fillable = ['process_id', 'godfather_id', 'value', 'status', 'date', 'user_id'];
     // protected $hidden = [];
     // protected $dates = [];
 
@@ -42,6 +42,11 @@ class Donation extends Model
     public function godfather()
     {
         return $this->belongsTo('App\Models\Godfather', 'godfather_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'user_id');
     }
 
     /*
@@ -69,6 +74,11 @@ class Donation extends Model
     public function getFullValueAttribute()
     {
         return $this->value . '€';
+    }
+
+    public function getUserLinkAttribute()
+    {
+        return $this->getLink($this->user);
     }
 
     /*

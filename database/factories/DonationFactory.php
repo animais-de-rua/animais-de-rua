@@ -3,6 +3,7 @@
 use App\Models\Donation;
 use App\Models\Godfather;
 use App\Models\Process;
+use App\User;
 use Faker\Generator as Faker;
 
 /*
@@ -17,6 +18,7 @@ $factory->define(Donation::class, function (Faker $faker) {
     return [
         'process_id' => $faker->randomElement(Process::all()->pluck('id')->toArray()),
         'godfather_id' => $faker->randomElement(Godfather::all()->pluck('id')->toArray()),
+        'user_id' => $faker->randomElement(User::all()->pluck('id')->toArray()),
         'value' => $faker->randomElement([5, 10, 20, 50]),
         'date' => $date,
         'created_at' => $date,

@@ -4,6 +4,7 @@ use App\Helpers\EnumHelper;
 use App\Models\Headquarter;
 use App\Models\Process;
 use App\Models\Territory;
+use App\User;
 use Faker\Generator as Faker;
 
 /*
@@ -25,6 +26,7 @@ $factory->define(Process::class, function (Faker $faker) {
         'address' => $faker->address,
         'territory_id' => $faker->randomElement(Territory::all()->pluck('id')->toArray()),
         'headquarter_id' => $faker->randomElement(Headquarter::all()->pluck('id')->toArray()),
+        'user_id' => $faker->randomElement(User::all()->pluck('id')->toArray()),
         'specie' => $specie,
         'amount_males' => $amountDefined ? $faker->numberBetween(0, 4) : 0,
         'amount_females' => $amountDefined ? $faker->numberBetween(0, 4) : 0,
