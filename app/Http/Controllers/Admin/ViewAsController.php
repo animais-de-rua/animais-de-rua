@@ -49,9 +49,21 @@ class ViewAsController extends \App\Http\Controllers\Controller
         return redirect(url()->previous());
     }
 
+    public function view_as_headquarter($headquarter)
+    {
+        if (!admin()) {
+            abort(403);
+        }
+
+        Session::put('headquarter', $headquarter);
+
+        return redirect(url()->previous());
+    }
+
     private function clearAll()
     {
         Session::remove('role');
         Session::remove('permissions');
+        Session::remove('headquarter');
     }
 }

@@ -512,7 +512,12 @@ a {
             display: flex;
             align-items: center;
             transition: transform .3s, top .3s;
-            transform: translateY(var(--y, "0px"));
+        }
+
+        @at-root {
+            #navbar.card-view .mobile .mobile-card-view {
+                transform: translateY(var(--y, "0px"));
+            }
         }
 
         &.active {
@@ -1470,6 +1475,12 @@ footer {
             margin: 0;
         }
     }
+
+    .campaigns {
+        h1 {
+            width: 100%;
+        }
+    }
 }
 
 // Desktop
@@ -1594,7 +1605,11 @@ footer {
             flex-direction: row;
 
             .image {
-                width: 66%;
+                width: 60%;
+
+                + div {
+                    width: 40%;
+                }
             }
 
             h1 {
@@ -1637,6 +1652,11 @@ footer {
 
             .image {
                 width: 100%;
+
+                + div {
+                    width: 100%;
+                    min-height: 160px;
+                }
             }
 
             h1 {

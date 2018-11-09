@@ -48,8 +48,10 @@ hr {
 @php
 $current_role = Session::get('role', 'admin');
 $current_permissions = Session::get('permissions', []);
+$current_headquarter = Session::get('headquarter', '');
 $roles = Config::get("enums.user.roles");
 $permissions = Config::get("enums.user.permissions");
+$headquarters = \App\Models\Headquarter::select(['id', 'name'])->get();
 @endphp
 <li class="dropdown roles-list">
 	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -77,6 +79,17 @@ $permissions = Config::get("enums.user.permissions");
 		<li class="toggle {{ $state ? "active" : "" }}">
 			<a href="{{ route('view-as-permission', ['permission' => $permission, 'state' => $state ? 0 : 1]) }}">
 				<p>{{ ucfirst(__($permission)) }}</p>
+			</a>
+		</li>
+		@endforeach
+		<hr />
+		@foreach($headquarters as $headquarter)
+		@php
+			$state = $current_headquarter == $headquarter->id;
+		@endphp
+		<li class="toggle {{ $state ? "active" : "" }}">
+			<a href="{{ route('view-as-headquarter', ['headquarter' => $headquarter->id, 'state' => $state ? 0 : 1]) }}">
+				<p>{{ $headquarter->name }}</p>
 			</a>
 		</li>
 		@endforeach

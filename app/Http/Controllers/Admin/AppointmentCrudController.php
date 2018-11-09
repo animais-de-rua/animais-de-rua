@@ -291,6 +291,15 @@ class AppointmentCrudController extends CrudController
 
         if (!is('admin', 'appointment')) {
             $this->crud->addClause('where', 'status', '<>', 'approving');
+            $this->crud->denyAccess(['update']);
+        }
+
+        // Headquarter filter
+        $headquarter_id = admin() ? \Session::get('headquarter', null) : backpack_user()->headquarter_id;
+        if ($headquarter_id) {
+            $this->crud->query->whereHas('process', function ($query) use ($headquarter_id) {
+                $query->where('headquarter_id', $headquarter_id);
+            })->get();
         }
 
         // add asterisk for fields that are required in AppointmentRequest

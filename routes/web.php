@@ -79,6 +79,7 @@ Route::group(['prefix' => config('backpack.base.route_prefix'), 'middleware' => 
     // View as
     Route::any('/view-as-role/{role}', 'ViewAsController@view_as_role')->name('view-as-role');
     Route::any('/view-as-permission/{permission}/{state}', 'ViewAsController@view_as_permission')->name('view-as-permission');
+    Route::any('/view-as-headquarter/{headquarter}/{state}', 'ViewAsController@view_as_headquarter')->name('view-as-headquarter');
 });
 
 // Language

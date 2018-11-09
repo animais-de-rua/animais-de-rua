@@ -136,7 +136,24 @@ class APICrudController extends CrudController
     */
     public function processSearch(Request $request)
     {
-        return $this->entitySearch(Process::class, ['name'], $request);
+        $search_term = $this->getSearchParam($request);
+
+        // Headquarter filter
+        $headquarter = admin() ? \Session::get('headquarter', null) : backpack_user()->headquarter_id;
+
+        if ($search_term) {
+            $results = Process::where('name', 'LIKE', "%$search_term%");
+
+            if ($headquarter) {
+                $results = $results->where('headquarter_id', $headquarter);
+            }
+
+            $results = $results->paginate(10);
+        } else {
+            $results = Process::paginate(10);
+        }
+
+        return $results;
     }
 
     public function processFilter(Request $request)

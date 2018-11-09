@@ -8,26 +8,36 @@
 
 <li><a href="{{ backpack_url('appointment') }}"><i class="fa icon-appointment"></i> <span class="text-capitalize">{{ __("appointments") }}</span></a></li>
 
-
 @if(restrictTo('admin', 'adoptions'))
 <li><a href="{{ backpack_url('adoption') }}"><i class="fa icon-animal"></i> <span class="text-capitalize">{{ __("adoptions") }}</span></a></li>
 @endif
 
+@if(restrictTo('admin'))
 <li><a href="{{ backpack_url('godfather') }}"><i class="fa icon-godfather"></i> <span class="text-capitalize">{{ __("godfathers") }}</span></a></li>
 <li><a href="{{ backpack_url('donation') }}"><i class="fa icon-donation"></i> <span class="text-capitalize">{{ __("donations") }}</span></a></li>
+@endif
 
 @if(restrictTo('admin', 'protocols'))
 <li><a href="{{ backpack_url('protocol') }}"><i class="fa icon-protocol"></i> <span class="text-capitalize">{{ __("protocols") }}</span></a></li>
 @endif
 
+@if(restrictTo('admin'))
 <li class="treeview">
     <a href="#"><i class="fa icon-treatment"></i> <span class="text-capitalize">{{ __("treatment") }}</span> <i class="fa fa-angle-left pull-right"></i></a>
     <ul class="treeview-menu">
+@endif
         <li><a href="{{ backpack_url('treatment') }}"><i class="fa icon-treatment"></i> <span class="text-capitalize">{{ __("treatments") }}</span></a></li>
+@if(restrictTo('admin'))
         <li><a href="{{ backpack_url('treatmenttype') }}"><i class="fa icon-treatment-type"></i> <span class="text-capitalize">{{ __("treatment types") }}</span></a></li>
     </ul>
 </li>
+@endif
+
+@if(restrictTo('admin'))
 <li><a href="{{ backpack_url('vet') }}"><i class="fa icon-vet"></i> <span class="text-capitalize">{{ __("vets") }}</span></a></li>
+@endif
+
+@if(restrictTo('admin'))
 <li class="treeview">
     <a href="#"><i class="fa icon-partner"></i> <span class="text-capitalize">{{ __("partners") }}</span> <i class="fa fa-angle-left pull-right"></i></a>
     <ul class="treeview-menu">
@@ -35,7 +45,7 @@
         <li><a href="{{ backpack_url('partner-category') }}"><i class="fa icon-category"></i> <span class="text-capitalize">{{ __("partner categories") }}</span></a></li>
     </ul>
 </li>
-{{-- @endif --}}
+@endif
 
 @if(restrictTo('admin'))
 <li class="header">Animais de Rua</li>
