@@ -27,6 +27,7 @@ $factory->define(Adoption::class, function (Faker $faker) {
         'sterilized' => rand(0, 1),
         'vaccinated' => rand(0, 1),
         'history' => $faker->text(80),
+        'status' => $faker->randomElement(EnumHelper::get('adoption.status')),
         'created_at' => $date,
         'updated_at' => $date,
     ];

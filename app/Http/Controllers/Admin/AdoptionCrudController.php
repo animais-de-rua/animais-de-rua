@@ -36,7 +36,7 @@ class AdoptionCrudController extends CrudController
         */
 
         // ------ CRUD FIELDS
-        $this->crud->addFields(['process_id', 'fat_id', 'name', 'age', 'gender', 'sterilized', 'vaccinated', 'images', 'history', 'user_id']);
+        $this->crud->addFields(['process_id', 'fat_id', 'name', 'age', 'gender', 'sterilized', 'vaccinated', 'images', 'history', 'status', 'user_id']);
 
         $this->crud->addField([
             'label' => ucfirst(__('process')),
@@ -125,8 +125,14 @@ class AdoptionCrudController extends CrudController
             'name' => 'history',
         ]);
 
+        $this->crud->addField([
+            'label' => __('Status'),
+            'type' => 'enum',
+            'name' => 'status',
+        ]);
+
         // ------ CRUD COLUMNS
-        $this->crud->addColumns(['name', 'process_id', 'fat_id', 'age', 'gender', 'sterilized', 'vaccinated', 'user_id']);
+        $this->crud->addColumns(['name', 'process_id', 'fat_id', 'age', 'gender', 'sterilized', 'vaccinated', 'status', 'user_id']);
 
         $this->crud->setColumnDetails('name', [
             'label' => __('Name'),
@@ -176,6 +182,11 @@ class AdoptionCrudController extends CrudController
         $this->crud->setColumnDetails('vaccinated', [
             'type' => 'boolean',
             'label' => ucfirst(__('vaccinated')),
+        ]);
+
+        $this->crud->setColumnDetails('status', [
+            'type' => 'trans',
+            'label' => __('Status'),
         ]);
 
         // Filtrers
@@ -259,6 +270,17 @@ class AdoptionCrudController extends CrudController
                 if ($range->to) {
                     $this->crud->addClause('where', 'age', '<=', (float) $range->to);
                 }
+            });
+
+        $this->crud->addFilter([
+            'name' => 'status',
+            'type' => 'select2_multiple',
+            'label' => __('Status'),
+            'placeholder' => __('Select a status'),
+        ],
+            EnumHelper::translate('adoption.status'),
+            function ($values) {
+                $this->crud->addClause('whereIn', 'status', json_decode($values));
             });
 
         // ------ ADVANCED QUERIES

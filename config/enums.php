@@ -16,6 +16,14 @@ return [
         ],
     ],
 
+    'adoption' => [
+        'status' => [
+            'open' => 'open',
+            'closed' => 'closed',
+            'archived' => 'archived',
+        ],
+    ],
+
     'animal' => [
         'gender' => [
             'male' => 'male',
