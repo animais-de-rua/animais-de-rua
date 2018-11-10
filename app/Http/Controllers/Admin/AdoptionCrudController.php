@@ -36,7 +36,7 @@ class AdoptionCrudController extends CrudController
         */
 
         // ------ CRUD FIELDS
-        $this->crud->addFields(['process_id', 'fat_id', 'name', 'age', 'gender', 'sterilized', 'vaccinated', 'images', 'history', 'status', 'user_id']);
+        $this->crud->addFields(['process_id', 'fat_id', 'name', 'age', 'specie', 'gender', 'sterilized', 'vaccinated', 'images', 'history', 'status', 'user_id']);
 
         $this->crud->addField([
             'label' => ucfirst(__('process')),
@@ -92,6 +92,12 @@ class AdoptionCrudController extends CrudController
         ]);
 
         $this->crud->addField([
+            'label' => __('Specie'),
+            'type' => 'enum',
+            'name' => 'specie',
+        ]);
+
+        $this->crud->addField([
             'label' => ucfirst(__('gender')),
             'name' => 'gender',
             'type' => 'enum',
@@ -132,7 +138,7 @@ class AdoptionCrudController extends CrudController
         ]);
 
         // ------ CRUD COLUMNS
-        $this->crud->addColumns(['name', 'process_id', 'fat_id', 'age', 'gender', 'sterilized', 'vaccinated', 'status', 'user_id']);
+        $this->crud->addColumns(['name', 'process_id', 'fat_id', 'age', 'specie', 'gender', 'sterilized', 'vaccinated', 'status', 'user_id']);
 
         $this->crud->setColumnDetails('name', [
             'label' => __('Name'),
@@ -167,6 +173,11 @@ class AdoptionCrudController extends CrudController
             'label' => ucfirst(__('age')),
             'type' => 'model_function',
             'function_name' => 'getAgeValueAttribute',
+        ]);
+
+        $this->crud->setColumnDetails('specie', [
+            'type' => 'trans',
+            'label' => __('Specie'),
         ]);
 
         $this->crud->setColumnDetails('gender', [
@@ -221,6 +232,17 @@ class AdoptionCrudController extends CrudController
             url('admin/user/ajax/filter/' . User::VOLUNTEER),
             function ($value) {
                 $this->crud->addClause('where', 'user_id', $value);
+            });
+
+        $this->crud->addFilter([
+            'name' => 'specie',
+            'type' => 'select2_multiple',
+            'label' => __('Specie'),
+            'placeholder' => __('Select a specie'),
+        ],
+            EnumHelper::translate('process.specie'),
+            function ($values) {
+                $this->crud->addClause('whereIn', 'specie', json_decode($values));
             });
 
         $this->crud->addFilter([

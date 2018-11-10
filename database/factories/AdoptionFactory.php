@@ -23,6 +23,7 @@ $factory->define(Adoption::class, function (Faker $faker) {
         'fat_id' => $faker->randomElement(User::all()->pluck('id')->toArray()),
         'name' => $faker->animal,
         'age' => [rand(0, 5), rand(0, 12)],
+        'specie' => $faker->randomElement(EnumHelper::get('process.specie')),
         'gender' => $faker->randomElement(EnumHelper::get('animal.gender')),
         'sterilized' => rand(0, 1),
         'vaccinated' => rand(0, 1),
