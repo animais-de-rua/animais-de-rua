@@ -176,6 +176,8 @@ return [
         'notes' => 'notes',
         'paypal_code' => 'paypal code',
         'phone' => 'phone',
+        'phone1' => 'phone',
+        'phone2' => 'phone',
         'process_id' => 'process',
         'specie' => 'specie',
         'status' => 'status',

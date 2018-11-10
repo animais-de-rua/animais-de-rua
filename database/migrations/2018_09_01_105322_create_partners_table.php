@@ -23,6 +23,7 @@ class CreatePartnersTable extends Migration
             $table->text('phone2_info')->nullable();
             $table->string('url', 255)->nullable();
             $table->string('facebook', 255)->nullable();
+            $table->string('instagram', 255)->nullable();
             $table->text('address')->nullable();
             $table->text('address_info')->nullable();
             $table->string('latlong', 255)->nullable();

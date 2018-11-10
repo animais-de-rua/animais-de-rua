@@ -30,9 +30,9 @@ class ProtocolRequest extends FormRequest
             'name' => 'required|min:3|max:255',
             'email' => 'nullable|email',
             'phone' => 'nullable|min:9|max:14',
-            'address' => 'nullable|min:3|max:255',
+            'address' => 'required|min:3|max:255',
             'description' => 'nullable|min:3|max:4096',
-            'territory_id' => 'nullable|exists:territories,id',
+            'territory_id' => 'required|exists:territories,id',
         ];
     }
 

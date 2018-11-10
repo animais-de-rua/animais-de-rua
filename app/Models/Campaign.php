@@ -57,7 +57,7 @@ class Campaign extends Model
 
     public function setImageAttribute($value)
     {
-        $filename = json_decode($model->attributes['name'])->pt;
+        $filename = json_decode($this->attributes['name'])->pt;
         $this->saveImage($this, $value, 'campaigns/', $filename, 800, 88);
     }
 }

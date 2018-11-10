@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Page;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
@@ -13,6 +14,8 @@ class PagesSeeder extends Seeder
     public function run()
     {
         $date = Carbon::now();
+
+        $backups = Page::get();
 
         DB::table('pages')->truncate();
 
@@ -106,5 +109,16 @@ class PagesSeeder extends Seeder
                 'updated_at' => $date,
             ],
         ]);
+
+        // Apply backup
+        foreach ($backups as $backup) {
+            $page = Page::find($backup->id);
+
+            if ($page) {
+                $page->extras = $backup->extras;
+                $page->extras_translatable = json_decode($backup->extras_translatable);
+                $page->save();
+            }
+        }
     }
 }

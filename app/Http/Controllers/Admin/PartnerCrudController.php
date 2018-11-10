@@ -92,7 +92,7 @@ class PartnerCrudController extends CrudController
         ]);
 
         // ------ CRUD FIELDS
-        $this->crud->addFields(['name', 'benefit', 'categories', 'territories', 'email', 'phone1', 'phone1_info', 'phone2', 'phone2_info', 'url', 'facebook', 'address', 'address_info', 'image', 'notes', 'status', 'user_id']);
+        $this->crud->addFields(['name', 'benefit', 'categories', 'territories', 'email', 'phone1', 'phone1_info', 'phone2', 'phone2_info', 'url', 'facebook', 'instagram', 'address', 'address_info', 'image', 'notes', 'status', 'user_id']);
 
         $this->crud->addField([
             'label' => __('Name'),
@@ -163,6 +163,12 @@ class PartnerCrudController extends CrudController
         $this->crud->addField([
             'label' => 'Facebook',
             'name' => 'facebook',
+            'type' => 'url',
+        ]);
+
+        $this->crud->addField([
+            'label' => 'Instagram',
+            'name' => 'instagram',
             'type' => 'url',
         ]);
 
