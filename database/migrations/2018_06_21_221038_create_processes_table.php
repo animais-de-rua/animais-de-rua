@@ -30,6 +30,7 @@ class CreateProcessesTable extends Migration
             $table->integer('amount_females')->unsigned()->default(0);
             $table->integer('amount_other')->unsigned()->default(0);
             $table->enum('status', EnumHelper::values('process.status'))->default('approving');
+            $table->boolean('urgent')->default(0);
             $table->text('history')->nullable();
             $table->text('notes')->nullable();
             $table->text('latlong')->nullable();

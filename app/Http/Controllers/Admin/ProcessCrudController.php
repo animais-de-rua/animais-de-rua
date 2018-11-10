@@ -32,7 +32,7 @@ class ProcessCrudController extends CrudController
         */
 
         // ------ CRUD FIELDS
-        $this->crud->addFields(['name', 'contact', 'phone', 'email', 'latlong', 'territory_id', 'headquarter_id', 'specie', 'amount_males', 'amount_females', 'amount_other', 'status', 'images', 'history', 'notes', 'user_id', 'donations', 'treatments', 'appointments', 'stats']);
+        $this->crud->addFields(['name', 'contact', 'phone', 'email', 'latlong', 'territory_id', 'headquarter_id', 'specie', 'amount_males', 'amount_females', 'amount_other', 'status', 'urgent', 'images', 'history', 'notes', 'user_id', 'donations', 'treatments', 'appointments', 'stats']);
 
         $this->crud->addField([
             'label' => __('Name'),
@@ -106,6 +106,12 @@ class ProcessCrudController extends CrudController
             'label' => __('Status'),
             'type' => 'enum',
             'name' => 'status',
+        ]);
+
+        $this->crud->addField([
+            'label' => __('Urgent'),
+            'type' => 'checkbox',
+            'name' => 'urgent',
         ]);
 
         $this->crud->addField([
@@ -261,7 +267,7 @@ class ProcessCrudController extends CrudController
         ]);
 
         // ------ CRUD COLUMNS
-        $this->crud->addColumns(['name', 'territory_id', 'headquarter', 'created_at', 'specie', 'animal_count', 'status', 'total_donations', 'total_expenses', 'balance', 'total_operations', 'user_id']);
+        $this->crud->addColumns(['name', 'territory_id', 'headquarter', 'created_at', 'specie', 'animal_count', 'status', 'urgent', 'total_donations', 'total_expenses', 'balance', 'total_operations', 'user_id']);
 
         $this->crud->setColumnDetails('name', [
             'label' => __('Name'),
@@ -296,6 +302,11 @@ class ProcessCrudController extends CrudController
         $this->crud->setColumnDetails('status', [
             'type' => 'trans',
             'label' => __('Status'),
+        ]);
+
+        $this->crud->setColumnDetails('urgent', [
+            'type' => 'check',
+            'label' => __('Urgent'),
         ]);
 
         $this->crud->setColumnDetails('animal_count', [

@@ -39,6 +39,7 @@ class ProcessRequest extends FormRequest
             'amount_other' => 'required|numeric|min:0|max:100',
             'specie' => 'required|in:' . EnumHelper::keys('process.specie', ','),
             'status' => 'required|in:' . EnumHelper::keys('process.status', ','),
+            'urgent' => 'required|in:0,1',
             'history' => 'required',
         ];
     }

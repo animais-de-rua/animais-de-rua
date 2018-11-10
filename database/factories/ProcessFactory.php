@@ -32,6 +32,7 @@ $factory->define(Process::class, function (Faker $faker) {
         'amount_females' => $amountDefined ? $faker->numberBetween(0, 4) : 0,
         'amount_other' => $amountDefined ? 0 : $faker->numberBetween(0, 8),
         'status' => $faker->randomElement(EnumHelper::get('process.status')),
+        'urgent' => !rand(0, 9), // 10%
         'history' => $faker->text(80),
         'notes' => $faker->text(80),
         'latlong' => $faker->latitude(41.76, 37.26) . ', ' . $faker->longitude(-8.62, -7.21),
