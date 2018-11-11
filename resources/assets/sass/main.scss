@@ -37,6 +37,10 @@ hr {
     color: #FFF;
 }
 
+.hide {
+    display: none;
+}
+
 input, textarea, select {
     background-color: transparent;
     height: 3.8rem;
@@ -748,7 +752,7 @@ footer {
         margin-bottom: 0;
         font-size: 0;
         transition: transform .3s;
-        transform: translate(calc(var(--x, 0px) + var(--page, 0) * -100%));
+        transform: translateX(calc(var(--x, 0px) - var(--page, 0) * 100%));
     }
 
     li {
@@ -780,6 +784,14 @@ footer {
             }
         }
     }
+
+    @at-root {
+        @supports (-ms-ime-align:auto) {
+            .flex-slider ul {
+                transition: none;
+            }
+        }
+    }
 }
 
 .isotope {
@@ -794,12 +806,14 @@ footer {
         flex: 0 0 calc(25% - 16px);
         background-color: #FFF;
         box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
-        transition: box-shadow .4s;
+        border-bottom: 1px solid #FFF;
+        transition: box-shadow .4s, border .4s;
         flex-direction: column;
         display: none;
 
         &:hover,&:focus {
             box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
+            border-bottom: 1px solid #000;
         }
 
         &.active {
@@ -1066,7 +1080,7 @@ footer {
             div {
                 height: 100%;
                 background: #F7F7F7 url() no-repeat center;
-                background-size: contain;
+                background-size: cover;
             }
         }
 
@@ -1352,6 +1366,7 @@ footer {
     }
 }
 
+// Animals / Friends
 .isotope {
     .selects {
         width: 100%;
@@ -1365,7 +1380,7 @@ footer {
             font-weight: 600;
         }
     }
-    .empty {
+    .empty, .status {
         display: none;
         width: 100%;
         text-align: center;
@@ -1376,12 +1391,18 @@ footer {
     .image {
         text-align: center;
         height: 180px;
+        background: #F7F7F7 url(/img/logo/logo.svg) no-repeat center;
+        background-size: 100px;
 
         img {
             object-fit: scale-down;
             object-position: center center;
             width: 100%;
             height: 100%;
+        }
+
+        img[src=""] {
+            display: none;
         }
     }
     .contact {
@@ -1406,6 +1427,49 @@ footer {
         margin: 5px 0;
         border-width: 1px 0 0 0;
         border-color: $grey;
+    }
+
+    .options {
+        margin: 0 auto 20px;
+
+        a {
+            font-size: 1.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: $grey;
+            margin: 0 12px;
+
+            &.active {
+                pointer-events: none;
+                color: #000;
+            }
+            &:not(.active) {
+                border-bottom: 0;
+            }
+        }
+    }
+
+    .boxs {
+        width: 100%;
+    }
+
+    &.friends {
+        .box .image {
+            background-color: #FFF;
+        }
+    }
+
+    &.animals {
+        min-height: 475px;
+        align-content: baseline;
+
+        .box {
+            cursor: pointer;
+            min-height: 360px;
+        }
+        .image img {
+            object-fit: cover;
+        }
     }
 }
 

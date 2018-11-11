@@ -82,6 +82,12 @@ Route::group(['prefix' => config('backpack.base.route_prefix'), 'middleware' => 
     Route::any('/view-as-headquarter/{headquarter}/{state}', 'ViewAsController@view_as_headquarter')->name('view-as-headquarter');
 });
 
+// API
+Route::group(['prefix' => 'api', 'middleware' => ['web']], function () {
+    Route::get('animals/adoption/{district}/{specie}', 'PageController@getAnimalsAdoption');
+    Route::get('animals/godfather/{district}/{specie}', 'PageController@getAnimalsGodfather');
+});
+
 // Language
 Route::any('lang/{locale}', function ($locale) {
     Session::put('locale', $locale);

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\EnumHelper;
 use App\Http\Controllers\Controller;
+use App\Models\Adoption;
 use App\Models\Campaign;
 use App\Models\FriendCardModality;
 use App\Models\Headquarter;
@@ -58,18 +60,12 @@ class PageController extends Controller
 
     private function home()
     {
-        $processes = Process::select(['name', 'specie', 'history', 'images', 'status', 'created_at'])
-            ->where('status', 'waiting_godfather')
-            ->orderBy('created_at', 'desc')
-            ->limit(9)
-            ->get();
-
         $campaigns = Campaign::select(['name', 'introduction', 'description', 'image'])
             ->orderBy('lft', 'asc')
             ->get();
 
         return [
-            'processes' => $processes,
+            'processes' => $this->_urgent_help(),
             'campaigns' => $campaigns,
         ];
     }
@@ -90,7 +86,31 @@ class PageController extends Controller
 
     private function animals()
     {
-        return [];
+        $districts_godfather = Process::select(['territories.id', 'territories.name'])
+            ->join('territories', 'territories.id', '=', \DB::raw('LEFT(territory_id, 2)'))
+            ->where('status', 'waiting_godfather')
+            ->orderBy('territories.id', 'asc')
+            ->distinct()
+            ->get();
+
+        $districts_adoption = Adoption::select(['territories.id', 'territories.name'])
+            ->join('processes', 'processes.id', '=', 'adoptions.process_id')
+            ->join('territories', 'territories.id', '=', \DB::raw('LEFT(territory_id, 2)'))
+            ->where('adoptions.status', 'open')
+            ->orderBy('territories.id', 'asc')
+            ->distinct()
+            ->get();
+
+        $species = EnumHelper::translate('process.specie');
+
+        return [
+            'processes' => $this->_urgent_help(),
+            'species' => $species,
+            'districts' => [
+                'godfather' => $districts_godfather,
+                'adoption' => $districts_adoption,
+            ],
+        ];
     }
 
     private function help()
@@ -149,5 +169,63 @@ class PageController extends Controller
                 'territories' => $partner_territories,
             ],
         ];
+    }
+
+    private function _urgent_help()
+    {
+        return Process::select(['name', 'specie', 'history', 'images', 'status', 'urgent', 'created_at'])
+            ->where('status', 'waiting_godfather')
+            ->orderBy('urgent', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->limit(6)
+            ->get();
+    }
+
+    // API
+    public function getAnimalsAdoption($territory = 0, $specie = 0)
+    {
+        $data = Adoption::select(['adoptions.id', 'adoptions.name', 'specie', 'adoptions.images', 'adoptions.created_at', 'district.name as district', 'county.name as county'])
+            ->join('processes', 'processes.id', '=', 'adoptions.process_id')
+            ->join('territories as district', 'district.id', '=', \DB::raw('LEFT(territory_id, 2)'))
+            ->join('territories as county', 'county.id', '=', \DB::raw('LEFT(territory_id, 4)'))
+            ->where('adoptions.status', 'open')
+            ->orderBy('created_at', 'desc')
+            ->limit(20);
+
+        // Specie
+        if ($specie) {
+            $data = $data->where('specie', $specie);
+        }
+
+        // Territory
+        if ($territory > 0) {
+            $territory = str_pad($territory, 2, 0, STR_PAD_LEFT);
+            $data = $data->where('territory_id', 'like', $territory . '%');
+        }
+
+        return response()->json($data->get());
+    }
+
+    public function getAnimalsGodfather($territory = 0, $specie = 0)
+    {
+        $data = Process::select(['processes.id', 'processes.name', 'specie', 'images', 'created_at', 'district.name as district', 'county.name as county'])
+            ->join('territories as district', 'district.id', '=', \DB::raw('LEFT(territory_id, 2)'))
+            ->join('territories as county', 'county.id', '=', \DB::raw('LEFT(territory_id, 4)'))
+            ->where('status', 'waiting_godfather')
+            ->orderBy('created_at', 'desc')
+            ->limit(20);
+
+        // Specie
+        if ($specie) {
+            $data = $data->where('specie', $specie);
+        }
+
+        // Territory
+        if ($territory > 0) {
+            $territory = str_pad($territory, 2, 0, STR_PAD_LEFT);
+            $data = $data->where('territory_id', 'like', $territory . '%');
+        }
+
+        return response()->json($data->get());
     }
 }

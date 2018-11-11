@@ -64,6 +64,10 @@
 
     <script>
         window.Laravel = {token: '{{ csrf_token() }}'};
+        window.translations = {month: [
+            '{{ __('January') }}', '{{ __('February') }}', '{{ __('March') }}', '{{ __('April') }}',
+            '{{ __('May') }}', '{{ __('June') }}', '{{ __('July') }}', '{{ __('August') }}',
+            '{{ __('September') }}', '{{ __('October') }}', '{{ __('November') }}', '{{ __('December') }}']};
     </script>
     <script src="{{ mix('js/app.js') }}"></script>
     <script>

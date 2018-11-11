@@ -79,7 +79,7 @@
         </div>
     </div>
 
-    <div class="container isotope">
+    <div class="container isotope friends">
         <div class="selects">
             <select type="territories">
                 <option value="" selected>{{ __("All Districts") }}</option>

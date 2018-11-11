@@ -1,4 +1,4 @@
-export const _prototypes = HTMLCollection.prototype.map = NodeList.prototype.map = Array.prototype.map;
+// export const _prototypeMap = HTMLCollection.prototype.map = NodeList.prototype.map = Array.prototype.map;
 
 export function ajax(url, data, success, error, method) {
     const params = typeof data == 'string' ? data : Object.keys(data).map(
@@ -35,4 +35,12 @@ export function indexOf(child) {
     while( (child = child.previousElementSibling) != null)
         i++;
     return i;
+}
+
+export function siblings(elem, query) {
+    return query ? elem.parentElement.querySelectorAll(query) : elem.parentElement.children;
+}
+
+export function template(selector) {
+    return document.querySelector(selector).content.cloneNode(true);
 }

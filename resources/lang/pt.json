@@ -69,10 +69,12 @@
     "Learn more": "Saiba mais",
     "Discounts": "Descontos",
     "No results": "Sem resultados",
+    "Loading results": "A carregar resultados",
     "Need": "Necessidade",
     "View as": "Ver como",
     "Clear all": "Limpar tudo",
     "Permissions": "Permissões",
+    "Urgent": "Urgente",
 
     "Go Home": "Voltar ao início",
     "Go Back": "Voltar",
@@ -157,6 +159,7 @@
     "Select a modality": "Seleccione uma modalidade",
     "All Districts": "Todos os distritos",
     "All Categories": "Todas as categorias",
+    "All Species": "Todas as espécies",
 
     "Users": "Utilizadores",
     "Pages": "Páginas",
@@ -173,6 +176,7 @@
     "age": "idade",
     "approving": "Em aprovação",
     "waiting_godfather": "A aguardar padrinhos",
+    "waiting_adoption": "A aguardar adopção",
     "waiting_capture": "A aguardar captura",
     "capture": "captura",
     "open": "Aberto",

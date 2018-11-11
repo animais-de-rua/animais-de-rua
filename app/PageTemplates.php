@@ -406,7 +406,20 @@ trait PageTemplates
 
     private function animals()
     {
+        // --------------------
+        $this->header('Animais');
 
+        $this->addField([
+            'name' => 'animals_title',
+            'label' => '',
+            'type' => 'text',
+        ]);
+
+        $this->addField([
+            'name' => 'animals_text',
+            'label' => '',
+            'type' => 'wysiwyg',
+        ]);
     }
 
     private function help()

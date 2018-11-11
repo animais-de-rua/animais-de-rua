@@ -3,7 +3,11 @@ import * as utils from './utils.js';
 
 const _loading = document.getElementById('loading'),
     _content = document.getElementById('content'),
-    _navbar = document.getElementById('navbar');
+    _navbar = document.getElementById('navbar'),
+    _fetchOptions = {
+        credentials: 'same-origin',
+        headers: {'X-Requested-With': 'XMLHttpRequest'}
+    };
 
 window.router = {
     init: e => {
@@ -180,8 +184,8 @@ window.isotope = {
                 isotope.querySelectorAll('.box').forEach(box => box.classList.remove('active'));
                 isotope.querySelectorAll('.box' + filters.join('')).forEach(box => box.classList.add('active'));
 
-
-                isotope.querySelector('.empty').style.display = isotope.querySelectorAll('.box.active').length ? 'none' : 'block';
+                let empty = isotope.querySelector('.empty');
+                if(empty) empty.style.display = isotope.querySelectorAll('.box.active').length ? 'none' : 'block';
             });
         });
     }
@@ -274,10 +278,7 @@ window.app = {
                 _content.classList.remove('anim');
 
                 e.preventDefault();
-                fetch(urlPath, {
-                    credentials: 'same-origin',
-                    headers: {'X-Requested-With': 'XMLHttpRequest'}
-                }).then(response => {
+                fetch(urlPath, _fetchOptions).then(response => {
                     // Closes mobile menu
                     navbar.close();
 
@@ -302,6 +303,10 @@ window.app = {
             e.addEventListener('click', e => e.stopPropagation())
         });
 
+        // Load initial page scripts
+        let script = document.querySelector('#onLoad');
+        if(script) eval(script.innerHTML);
+
         // Swipeable
         swipeable.init();
 
@@ -320,6 +325,65 @@ window.app = {
         let form =  document.querySelector('.modalities form');
         form.querySelector('select > option:nth-child(' + (index + 1) + ')').selected = true;
         form.submit();
+    },
+
+    onAnimalsCategorySelect: e => {
+        let isotope = e.closest('.isotope');
+        let option = e.getAttribute('option');
+
+        // Toggle active buttons
+        e.parentElement.querySelector('.active').classList.remove('active');
+        e.classList.add('active');
+
+        // Toggle selects
+        isotope.querySelectorAll('select.toggle').forEach(e => e.classList.add('hide'));
+        isotope.querySelector('select.' + option).classList.remove('hide');
+
+        app.searchAnimals();
+    },
+
+    searchAnimals: e => {
+        let isotope = document.querySelector('.isotope');
+
+        loading.start();
+        isotope.querySelector('.results-loading').style.display = 'block';
+        isotope.querySelectorAll('.box').forEach(e => isotope.removeChild(e));
+        isotope.querySelector('.results-empty').style.display = 'none';
+
+        let option = isotope.querySelector('.options a.active').getAttribute('option');
+        let district = isotope.querySelector('select.toggle:not(.hide)').value;
+        let specie = isotope.querySelector('select.specie').value;
+
+        fetch(`api/animals/${option}/${district}/${specie}/`, _fetchOptions).then(response => {
+            response.json().then(data => {
+                isotope.querySelector('.results-loading').style.display = 'none';
+
+                let template = document.getElementById('animal-box-template');
+                data.forEach(elem => {
+                    let box = template.content.cloneNode(true);
+                    let date = new Date(elem.created_at);
+
+                    if(elem.images)
+                        box.querySelector('.image img').src = elem.images[0];
+                    box.querySelector('.name').innerText = elem.name;
+                    box.querySelector('.location').innerText = elem.county + ", " + elem.district;
+                    box.querySelector('.date').innerText = translations.month[date.getMonth()] + " " + date.getFullYear();
+
+                    box.querySelector('.box').setAttribute('animal', elem.id);
+                    box.querySelector('.box').setAttribute('option', option);
+
+                    isotope.appendChild(box);
+                });
+
+                if(!data.length) {
+                    isotope.querySelector('.results-empty').style.display = 'block';
+                }
+
+                loading.end();
+            })
+        }).catch(e => {
+            
+        });
     }
 }
 
@@ -328,3 +392,5 @@ document.addEventListener('DOMContentLoaded', e => {
     router.init();
     navbar.init();
 });
+
+window.utils = utils;

@@ -32,7 +32,6 @@ class AdoptionRequest extends FormRequest
             'fat_id' => 'required|exists:users,id',
             'age.1' => 'numeric|min:0|max:30',
             'age.2' => 'numeric|min:0|max:12',
-            'specie' => 'required|in:' . EnumHelper::keys('process.specie', ','),
             'gender' => 'required|in:' . EnumHelper::keys('animal.gender', ','),
             'sterilized' => 'nullable|in:0,1',
             'vaccinated' => 'nullable|in:0,1',
