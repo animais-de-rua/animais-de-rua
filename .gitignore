@@ -24,3 +24,4 @@ yarn-error.log
 /public/uploads/
 /public/fonts
 /public/mix-manifest.json
+/public/vendor/adminlte
