@@ -1,4 +1,28 @@
-// export const _prototypeMap = HTMLCollection.prototype.map = NodeList.prototype.map = Array.prototype.map;
+// Prototype
+NodeList.prototype.__proto__ = HTMLCollection.prototype.__proto__ = Array.prototype;
+
+// Query
+window.query = document.querySelector.bind(document);
+window.queryAll = document.querySelectorAll.bind(document);
+Node.prototype.query = function(selector) { return this.querySelector(selector) }
+Node.prototype.queryAll = function(selector) { return this.querySelectorAll(selector) }
+NodeList.prototype.query = function(selector) { return this.queryAll(selector)[0] }
+NodeList.prototype.queryAll = function(selector) {
+    let results = [];
+    this.map(elem => results.push(...elem.first(selector)));
+    return results;
+}
+
+// Utils
+Node.prototype.sibling = function(query) { return this.siblings(query)[0] }
+Node.prototype.siblings = function(query) { return this.parentElement.children.filter(e => this != e); }
+
+Node.prototype.index = function() {
+    let elem = this, i = 0;
+    while(elem = elem.previousElementSibling)
+        i++;
+    return i;
+}
 
 export function ajax(url, data, success, error, method) {
     const params = typeof data == 'string' ? data : Object.keys(data).map(
@@ -30,17 +54,6 @@ export function ajax(url, data, success, error, method) {
     return xhr;
 }
 
-export function indexOf(child) {
-    let i = 0;
-    while( (child = child.previousElementSibling) != null)
-        i++;
-    return i;
-}
-
-export function siblings(elem, query) {
-    return query ? elem.parentElement.querySelectorAll(query) : elem.parentElement.children;
-}
-
 export function template(selector) {
-    return document.querySelector(selector).content.cloneNode(true);
+    return query(selector).content.cloneNode(true);
 }

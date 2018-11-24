@@ -28,16 +28,16 @@ window.router = {
 
 window.navbar = {
     init: e => {
-        this.navbarCards = _navbar.querySelectorAll('.cards > .card');
-        this.navbarSwipeable = _navbar.querySelector('.swipeable');
-        this.navbarMobile = _navbar.querySelector('.mobile');
-        this.navbarMobileMenu = _navbar.querySelector('.menu');
-        this.navbarMobileCards = _navbar.querySelectorAll('.mobile-card-view > .menu-panel');
+        this.navbarCards = _navbar.queryAll('.cards > .card');
+        this.navbarSwipeable = _navbar.query('.swipeable');
+        this.navbarMobile = _navbar.query('.mobile');
+        this.navbarMobileMenu = _navbar.query('.menu');
+        this.navbarMobileCards = _navbar.queryAll('.mobile-card-view > .menu-panel');
 
         // Close navbar cards when clicking out of them
         _content.addEventListener('click', e => {
-            if(_navbar.querySelector('.card.active'))
-                _navbar.querySelector('.card.active').classList.remove('active');
+            if(_navbar.query('.card.active'))
+                _navbar.query('.card.active').classList.remove('active');
         });
 
         // Simple Handler for touch on mobile menu
@@ -52,7 +52,7 @@ window.navbar = {
             this.navbarMobileMenu.click();
             // In case second menu is oppened
             if(this.navbarMobile.classList.contains('active'))
-                setTimeout(e => _navbar.querySelector('.menu').click(), 250);
+                setTimeout(e => _navbar.query('.menu').click(), 250);
         }
     },
 
@@ -83,15 +83,15 @@ window.navbar = {
 
 window.sliders = {
     init: e => {
-        document.querySelectorAll('.flex-slider').forEach(elem => {
+        queryAll('.flex-slider').forEach(elem => {
             // Start slider interval
             sliders.autoScroll(elem);
 
             // Dots
-            elem.querySelectorAll('.dots > li').forEach(dot => {
+            elem.queryAll('.dots > li').forEach(dot => {
                 dot.addEventListener('click', e => {
                     // Index of this element in parent
-                    let index = utils.indexOf(dot);
+                    let index = dot.index();
                     let slider = dot.closest('.flex-slider');
 
                     // Restart slider interval
@@ -120,15 +120,13 @@ window.sliders = {
             if(interval)
                 clearInterval(interval);
 
-            slider.setAttribute('interval', setInterval(e => {
-                sliders.play(slider);
-            }, scrollTimer));
+            slider.setAttribute('interval', setInterval(e => sliders.play(slider), scrollTimer));
         }
     },
 
     play: slider => {
-        let dots = slider.querySelector('.dots');
-        let index = utils.indexOf(dots.querySelector('.active'));
+        let dots = slider.query('.dots');
+        let index = dots.query('.active').index();
 
         index++;
         if(index == dots.children.length)
@@ -138,8 +136,8 @@ window.sliders = {
     },
 
     swipe: (slider, direction = 1) => {
-        let dots = slider.querySelector('.dots');
-        let index = utils.indexOf(dots.querySelector('.active'));
+        let dots = slider.query('.dots');
+        let index = dots.query('.active').index();
 
         if((index == 0 && direction < 0) || (index == dots.children.length - 1 && direction > 0))
             return;
@@ -150,42 +148,40 @@ window.sliders = {
 
     moveTo: (slider, index) => {
         // Change active Dot
-        let dots = slider.querySelector('.dots');
-        dots.querySelector('.active').classList.remove('active');
+        let dots = slider.query('.dots');
+        dots.query('.active').classList.remove('active');
         dots.children[index].classList.add('active');
 
         // Add the translate
-        slider.querySelector('ul').style.setProperty('--page', index);
+        slider.query('ul').style.setProperty('--page', index);
     }
 }
 
 window.accordions = {
     init: e => {
-        document.querySelectorAll('.accordion > h1').forEach(elem => {
-            elem.addEventListener('click', e => {
-                e.target.parentElement.classList.toggle('open');
-            });
+        queryAll('.accordion > h1').forEach(elem => {
+            elem.addEventListener('click', e => e.target.parentElement.classList.toggle('open'));
         });
     }
 }
 
 window.isotope = {
     init: e => {
-        document.querySelectorAll('.isotope select').forEach(elem => {
+        queryAll('.isotope select').forEach(elem => {
             elem.addEventListener('change', e => {
                 let filters = [];
                 let isotope = e.target.closest('.isotope');
 
-                isotope.querySelectorAll('select').forEach(select => {
+                isotope.queryAll('select').forEach(select => {
                     if(select.value)
                         filters.push('[' + select.getAttribute('type') + '~="' + select.value + '"]');
                 });
 
-                isotope.querySelectorAll('.box').forEach(box => box.classList.remove('active'));
-                isotope.querySelectorAll('.box' + filters.join('')).forEach(box => box.classList.add('active'));
+                isotope.queryAll('.box').forEach(box => box.classList.remove('active'));
+                isotope.queryAll('.box' + filters.join('')).forEach(box => box.classList.add('active'));
 
-                let empty = isotope.querySelector('.empty');
-                if(empty) empty.style.display = isotope.querySelectorAll('.box.active').length ? 'none' : 'block';
+                let empty = isotope.query('.empty');
+                if(empty) empty.style.display = isotope.queryAll('.box.active').length ? 'none' : 'block';
             });
         });
     }
@@ -198,9 +194,9 @@ window.loading = {
 
 window.swipeable = {
     init: e => {
-        document.querySelectorAll('.swipeable').forEach(elem => {
+        queryAll('.swipeable').forEach(elem => {
             let startTouch;
-            elem.addEventListener('touchstart', e => { startTouch = e.changedTouches[0] }, {passive: true});
+            elem.addEventListener('touchstart', e => startTouch = e.changedTouches[0], {passive: true});
             elem.addEventListener('touchend', e => {
                 let [dx, dy] = [
                     e.changedTouches[0].clientX - startTouch.clientX,
@@ -210,7 +206,7 @@ window.swipeable = {
                 dx = Math.abs(dx) > 120 ? (dx > 0 ? -1 : 1) : 0;
                 dy = Math.abs(dy) > 120 ? (dy > 0 ? -1 : 1) : 0;
 
-                if(dx + dy)
+                if(dx | dy)
                     elem.dispatchEvent(new CustomEvent('swipe', {'detail': {
                         'x': dx,
                         'y': dy
@@ -218,7 +214,7 @@ window.swipeable = {
             }, {passive: true});
 
             // Touchable
-            elem.querySelectorAll('.touchable').forEach(touchable => {
+            elem.queryAll('.touchable').forEach(touchable => {
                 let startDrag;
                 let range = {
                     min: {
@@ -268,7 +264,7 @@ window.swipeable = {
 window.app = {
     init: e => {
         // AJAX Links controller
-        document.querySelectorAll('a.link').forEach(link => {
+        queryAll('a.link').forEach(link => {
             link.classList.remove('link');
             link.addEventListener('click', e => {
                 let urlPath = e.target.closest('a').href;
@@ -298,13 +294,13 @@ window.app = {
         });
 
         // Stop propagation links
-        document.querySelectorAll('.stopPropagation').forEach(e => {
+        queryAll('.stopPropagation').forEach(e => {
             e.classList.remove('stopPropagation');
-            e.addEventListener('click', e => e.stopPropagation())
+            e.addEventListener('click', e => e.stopPropagation());
         });
 
         // Load initial page scripts
-        let script = document.querySelector('#onLoad');
+        let script = document.getElementById('onLoad');
         if(script) eval(script.innerHTML);
 
         // Swipeable
@@ -321,9 +317,9 @@ window.app = {
     },
 
     onModalitiesClick: e => {
-        let index = utils.indexOf(e.parentElement);
-        let form =  document.querySelector('.modalities form');
-        form.querySelector('select > option:nth-child(' + (index + 1) + ')').selected = true;
+        let index = e.parentElement.index();
+        let form =  query('.modalities form');
+        form.query('select > option:nth-child(' + (index + 1) + ')').selected = true;
         form.submit();
     },
 
@@ -332,31 +328,31 @@ window.app = {
         let option = e.getAttribute('option');
 
         // Toggle active buttons
-        e.parentElement.querySelector('.active').classList.remove('active');
+        e.sibling('.active').classList.remove('active');
         e.classList.add('active');
 
         // Toggle selects
-        isotope.querySelectorAll('select.toggle').forEach(e => e.classList.add('hide'));
-        isotope.querySelector('select.' + option).classList.remove('hide');
+        isotope.queryAll('select.toggle').forEach(e => e.classList.add('hide'));
+        isotope.query('select.' + option).classList.remove('hide');
 
         app.searchAnimals();
     },
 
     searchAnimals: e => {
-        let isotope = document.querySelector('.isotope');
+        let isotope = query('.isotope');
 
         loading.start();
-        isotope.querySelector('.results-loading').style.display = 'block';
-        isotope.querySelectorAll('.box').forEach(e => isotope.removeChild(e));
-        isotope.querySelector('.results-empty').style.display = 'none';
+        isotope.query('.results-loading').style.display = 'block';
+        isotope.queryAll('.box').forEach(e => isotope.removeChild(e));
+        isotope.query('.results-empty').style.display = 'none';
 
-        let option = isotope.querySelector('.options a.active').getAttribute('option');
-        let district = isotope.querySelector('select.toggle:not(.hide)').value;
-        let specie = isotope.querySelector('select.specie').value;
+        let option = isotope.query('.options a.active').getAttribute('option');
+        let district = isotope.query('select.toggle:not(.hide)').value;
+        let specie = isotope.query('select.specie').value;
 
         fetch(`api/animals/${option}/${district}/${specie}/`, _fetchOptions).then(response => {
             response.json().then(data => {
-                isotope.querySelector('.results-loading').style.display = 'none';
+                isotope.query('.results-loading').style.display = 'none';
 
                 let template = document.getElementById('animal-box-template');
                 data.forEach(elem => {
@@ -364,26 +360,24 @@ window.app = {
                     let date = new Date(elem.created_at);
 
                     if(elem.images)
-                        box.querySelector('.image img').src = elem.images[0];
-                    box.querySelector('.name').innerText = elem.name;
-                    box.querySelector('.location').innerText = elem.county + ", " + elem.district;
-                    box.querySelector('.date').innerText = translations.month[date.getMonth()] + " " + date.getFullYear();
+                        box.query('.image img').src = elem.images[0];
+                    box.query('.name').innerText = elem.name;
+                    box.query('.location').innerText = elem.county + ", " + elem.district;
+                    box.query('.date').innerText = translations.month[date.getMonth()] + " " + date.getFullYear();
 
-                    box.querySelector('.box').setAttribute('animal', elem.id);
-                    box.querySelector('.box').setAttribute('option', option);
+                    box.query('.box').setAttribute('animal', elem.id);
+                    box.query('.box').setAttribute('option', option);
 
                     isotope.appendChild(box);
                 });
 
                 if(!data.length) {
-                    isotope.querySelector('.results-empty').style.display = 'block';
+                    isotope.query('.results-empty').style.display = 'block';
                 }
 
                 loading.end();
             })
-        }).catch(e => {
-            
-        });
+        }).catch(e => { });
     }
 }
 
