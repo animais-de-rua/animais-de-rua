@@ -95,5 +95,6 @@ Route::any('lang/{locale}', function ($locale) {
 })->where('locale', '[a-z]{2}(-[A-Z]{2})?')->name('lang');
 
 // Pages
+Route::get('animals/{option}/{id}', 'PageController@animalsView');
 Route::get('{page}/{subs?}', ['uses' => 'PageController@index'])
     ->where(['page' => '^((?!admin).)*$', 'subs' => '.*']);

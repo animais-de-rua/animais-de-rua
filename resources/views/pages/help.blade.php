@@ -13,11 +13,8 @@
                 </div>
             </div>
             <div class="column column-50">
-                <picture>
-                    <source srcset="img/help.webp" type="image/webp"/>
-                    <source srcset="img/help.jpg" type="image/jpeg"/>
-                    <img src="img/help.jpg" alt="Help"/>
-                </picture>
+                @component('components.picture', ['image' => 'help'])
+                @endcomponent
             </div>
         </div>
     </div>
@@ -34,11 +31,8 @@
                     <div class="text">{!! $page['friend_text'] !!}</div>
                     <a href="/friends" class="link lined">{{ $page['friend_link'] }}</a>
                 </div>
-                <picture>
-                    <source srcset="img/help02.webp" type="image/webp"/>
-                    <source srcset="img/help02.jpg" type="image/jpeg"/>
-                    <img src="img/help02.jpg" alt="Help"/>
-                </picture>
+                @component('components.picture', ['image' => 'help02'])
+                @endcomponent
                 <div class="white-box">
                     <h2>{{ $page['call_title'] }}</h2>
                     <div class="text">{!! $page['call_text'] !!}</div>
@@ -51,11 +45,8 @@
                 </div>
             </div>
             <div class="column column-50">
-                <picture>
-                    <source srcset="img/help01.webp" type="image/webp"/>
-                    <source srcset="img/help01.jpg" type="image/jpeg"/>
-                    <img src="img/help01.jpg" alt="Help"/>
-                </picture>
+                @component('components.picture', ['image' => 'help01'])
+                @endcomponent
                 <div class="white-box">
                     <h2>{{ $page['adopt_title'] }}</h2>
                     <div class="text">{!! $page['adopt_text'] !!}</div>

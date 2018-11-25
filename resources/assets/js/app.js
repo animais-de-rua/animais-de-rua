@@ -23,6 +23,44 @@ window.router = {
 
     push: (content, urlPath) => {
         window.history.pushState({'html': content}, '', urlPath);
+    },
+
+    initLinks: e => {
+        // AJAX Links
+        queryAll('a.link').forEach(link => {
+            link.classList.remove('link');
+            link.addEventListener('click', e => {
+                let urlPath = e.target.closest('a').href;
+
+                window.scrollTo(0, 0);
+                loading.start();
+                _content.classList.remove('anim');
+
+                e.preventDefault();
+                fetch(urlPath, _fetchOptions).then(response => {
+                    // Closes mobile menu
+                    navbar.close();
+
+                    response.text().then(html => {
+                        _content.innerHTML = html;
+                        app.init();
+
+                        loading.end();
+                        _content.classList.add('anim');
+
+                        router.push(html, urlPath);
+                    })
+                }).catch(e => {
+                    window.location = urlPath;
+                });
+            })
+        });
+
+        // Stop propagation links
+        queryAll('.stopPropagation').forEach(e => {
+            e.classList.remove('stopPropagation');
+            e.addEventListener('click', e => e.stopPropagation());
+        });
     }
 }
 
@@ -86,6 +124,9 @@ window.sliders = {
         queryAll('.flex-slider').forEach(elem => {
             // Start slider interval
             sliders.autoScroll(elem);
+
+            // Resize the player
+            sliders.resizePlayer(elem);
 
             // Dots
             elem.queryAll('.dots > li').forEach(dot => {
@@ -154,6 +195,15 @@ window.sliders = {
 
         // Add the translate
         slider.query('ul').style.setProperty('--page', index);
+
+        // Change player size
+        sliders.resizePlayer(slider);
+    },
+
+    resizePlayer: slider => {
+        let index = slider.query('.dots').query('.active').index();
+        let ul = slider.query('ul');
+        ul.style.height = ul.children[index].clientHeight + "px";
     }
 }
 
@@ -263,45 +313,12 @@ window.swipeable = {
 
 window.app = {
     init: e => {
-        // AJAX Links controller
-        queryAll('a.link').forEach(link => {
-            link.classList.remove('link');
-            link.addEventListener('click', e => {
-                let urlPath = e.target.closest('a').href;
-
-                window.scrollTo(0, 0);
-                loading.start();
-                _content.classList.remove('anim');
-
-                e.preventDefault();
-                fetch(urlPath, _fetchOptions).then(response => {
-                    // Closes mobile menu
-                    navbar.close();
-
-                    response.text().then(html => {
-                        _content.innerHTML = html;
-                        app.init();
-
-                        loading.end();
-                        _content.classList.add('anim');
-
-                        router.push(html, urlPath);
-                    })
-                }).catch(e => {
-                    window.location = urlPath;
-                });
-            })
-        });
-
-        // Stop propagation links
-        queryAll('.stopPropagation').forEach(e => {
-            e.classList.remove('stopPropagation');
-            e.addEventListener('click', e => e.stopPropagation());
-        });
-
         // Load initial page scripts
         let script = document.getElementById('onLoad');
         if(script) eval(script.innerHTML);
+
+        // AJAX Links controller
+        router.initLinks();
 
         // Swipeable
         swipeable.init();
@@ -350,7 +367,7 @@ window.app = {
         let district = isotope.query('select.toggle:not(.hide)').value;
         let specie = isotope.query('select.specie').value;
 
-        fetch(`api/animals/${option}/${district}/${specie}/`, _fetchOptions).then(response => {
+        fetch(`/api/animals/${option}/${district}/${specie}/`, _fetchOptions).then(response => {
             response.json().then(data => {
                 isotope.query('.results-loading').style.display = 'none';
 
@@ -368,12 +385,16 @@ window.app = {
                     box.query('.box').setAttribute('animal', elem.id);
                     box.query('.box').setAttribute('option', option);
 
+                    box.query('a').setAttribute('href', `/animals/${option}/${elem.id}`);
+
                     isotope.appendChild(box);
                 });
 
                 if(!data.length) {
                     isotope.query('.results-empty').style.display = 'block';
                 }
+
+                router.initLinks();
 
                 loading.end();
             })

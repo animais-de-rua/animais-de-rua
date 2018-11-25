@@ -39,4 +39,8 @@ return [
         'link' => 'Preencha o nosso formulário',
     ],
 
+    'animals' => [
+        'territory' => 'Animais na mesma Região',
+    ],
+
 ];

@@ -14,11 +14,8 @@
                 </div>
             </div>
             <div class="column column-50">
-                <picture>
-                    <source srcset="img/association.webp" type="image/webp"/>
-                    <source srcset="img/association.jpg" type="image/jpeg"/>
-                    <img src="img/association.jpg" alt="Association"/>
-                </picture>
+                @component('components.picture', ['image' => 'association'])
+                @endcomponent
             </div>
         </div>
     </div>
@@ -40,18 +37,12 @@
     <div class="container">
         <div class="row row-wrap">
             <div class="column column-50">
-                <picture>
-                    <source srcset="img/association01.webp" type="image/webp"/>
-                    <source srcset="img/association01.jpg" type="image/jpeg"/>
-                    <img src="img/association01.jpg" alt="Association"/>
-                </picture>
+                @component('components.picture', ['image' => 'association01'])
+                @endcomponent
             </div>
             <div class="column column-50">
-                <picture>
-                    <source srcset="img/association02.webp" type="image/webp"/>
-                    <source srcset="img/association02.jpg" type="image/jpeg"/>
-                    <img src="img/association02.jpg" alt="Association"/>
-                </picture>
+                @component('components.picture', ['image' => 'association02'])
+                @endcomponent
             </div>
         </div>
     </div>

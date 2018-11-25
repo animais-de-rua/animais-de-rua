@@ -14,29 +14,21 @@
                         $process = $processes[$j + $i * 3];
                     @endphp
                     <div class="card">
-                        <div class="image">
-                            @if($process->images && count($process->images))
-                            <div style="background-image:url('{{ str_replace('process', 'process/thumb', $process->images[0]) }}')"></div>
-                            @endif
-                        </div>
-
-                        <div>
-                            <h1>{{ $process->name }}</h1>
-
-                            <div class="necessity">
-                                <p>{{ __("Need") }}</p>
-                                <div class="line"></div>
-                                @switch($process->status)
-                                    @case('waiting_godfather')
-                                    <p>{{ __('godfathers') }}</p>
-                                    @break
-
-                                    @case('waiting_capture')
-                                    <p>{{ __('capture') }}</p>
-                                    @break
-                                @endswitch
+                        <a class="link" href="/animals/godfather/{{ $process->id }}">
+                            <div class="image">
+                                @if($process->images && count($process->images))
+                                <div style="background-image:url('{{ str_replace('process', 'process/thumb', $process->images[0]) }}')"></div>
+                                @endif
                             </div>
-                        </div>
+                            <div>
+                                <h1>{{ $process->name }}</h1>
+                                <div class="necessity">
+                                    <p>{{ __("Need") }}</p>
+                                    <div class="line"></div>
+                                    <p>{{ __('godfathers') }}</p>
+                                </div>
+                            </div>
+                        </a>
                     </div>
                     @endfor
                 </div>

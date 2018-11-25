@@ -13,11 +13,8 @@
                 </div>
             </div>
             <div class="column column-50">
-                <picture>
-                    <source srcset="img/friend.webp" type="image/webp"/>
-                    <source srcset="img/friend.jpg" type="image/jpeg"/>
-                    <img src="img/friend.jpg" alt="Help"/>
-                </picture>
+                @component('components.picture', ['image' => 'friend'])
+                @endcomponent
             </div>
         </div>
     </div>

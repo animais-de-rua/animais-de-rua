@@ -5,7 +5,7 @@
     url('fonts/icomoon.woff') format('woff');
   font-weight: normal;
   font-style: normal;
-  font-display: fallback;
+  font-display: block;
 }
 
 [class^="icon-"], [class*=" icon-"] {
@@ -21,6 +21,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-twitter:before {
+  content: "\e907";
+}
 .icon-youtube:before {
   content: "\e903";
 }

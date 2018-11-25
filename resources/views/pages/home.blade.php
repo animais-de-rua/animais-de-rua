@@ -15,9 +15,9 @@
             </div>
             <div class="column column-50">
                 <picture>
-                    <source srcset="img/home.webp" type="image/webp"/>
-                    <source srcset="img/home.jpg" type="image/jpeg"/>
-                    <img src="img/home.jpg" alt="Home"/>
+                    <source srcset="/img/home.webp" type="image/webp"/>
+                    <source srcset="/img/home.jpg" type="image/jpeg"/>
+                    <img src="/img/home.jpg" alt="Home"/>
                 </picture>
             </div>
         </div>
@@ -33,7 +33,7 @@
                 <li>
                     <div class="slide">
                         <div>
-                            <img src="uploads/{{ $campaign->image }}" alt="{{ $campaign->name }}"/>
+                            <img src="/uploads/{{ $campaign->image }}" alt="{{ $campaign->name }}"/>
                         </div>
                         <div>
                             <blockquote>{{ __("campaigns") }}</blockquote>

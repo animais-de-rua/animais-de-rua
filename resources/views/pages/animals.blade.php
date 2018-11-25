@@ -13,11 +13,8 @@
                 </div>
             </div>
             <div class="column column-50">
-                <picture>
-                    <source srcset="img/animals.webp" type="image/webp"/>
-                    <source srcset="img/animals.jpg" type="image/jpeg"/>
-                    <img src="img/animals.jpg" alt="Association"/>
-                </picture>
+                @component('components.picture', ['image' => 'animals'])
+                @endcomponent
             </div>
         </div>
     </div>
@@ -59,10 +56,14 @@
 
         <template id="animal-box-template">
             <div class="box active" onclick="" option="" animal="0">
-                <div class="image"><img src="" /></div>
-                <h1 class="name"></h1>
-                <div class="location"></div>
-                <div class="date"></div>
+                <a class="link" href="">
+                    <div class="image"><img src="" /></div>
+                    <div class="content">
+                        <h1 class="name"></h1>
+                        <div class="location"></div>
+                        <div class="date"></div>
+                    </div>
+                </a>
             </div>
         </template>
     </div>

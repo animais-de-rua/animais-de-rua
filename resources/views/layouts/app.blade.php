@@ -27,17 +27,23 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/img/icons/favicon-16x16.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/img/icons/favicon-32x32.png">
     {{-- <link rel="icon" type="image/png" sizes="96x96" href="/img/icons/favicon-96x96.png"> --}}
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="/manifest.json">
     <meta name="msapplication-TileColor" content="#E53625">
     <meta name="msapplication-TileImage" content="/img/icons/ms-icon-144x144.png">
-    <meta name="msapplication-config" content="browserconfig.xml">
+    <meta name="msapplication-config" content="/browserconfig.xml">
     <meta name="theme-color" content="#E53625">
 
     <meta property="og:url" content="{{ env('APP_URL') }}"/>
     <meta property="og:type" content="website"/>
+    <meta property="og:locale" content="{{ app()->getLocale() }}">
+    <meta property="fb:admins" content="100000258524385">
+@if (trim($__env->yieldContent('facebook')))
+@yield('facebook')
+@else
     <meta property="og:title" content="{{ config('app.name') }}"/>
     <meta property="og:description" content="{{ __('description') }}"/>
-    <meta property="og:image" content="{{ env('APP_URL') }}/img/logo.png"/>
+    <meta property="og:image" content="{{ env('APP_URL') }}/img/logo/facebook.png"/>
+@endif
 
     <link rel="preload" href="{{ mix('js/app.js') }}" as="script"/>
     <link rel="preload" href="{{ mix('css/app.css') }}" as="style"/>

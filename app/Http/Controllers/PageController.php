@@ -113,6 +113,45 @@ class PageController extends Controller
         ];
     }
 
+    public function animalsView($option, $id)
+    {
+        switch ($option) {
+            case 'godfather':
+                $animal = Process::select(['processes.name', 'history', 'specie', 'images', 'created_at', 'district.name as district', 'district.id as district_id', 'county.name as county'])
+                    ->join('territories as district', 'district.id', '=', \DB::raw('LEFT(territory_id, 2)'))
+                    ->join('territories as county', 'county.id', '=', \DB::raw('LEFT(territory_id, 4)'))
+                    ->where('processes.id', $id)
+                    ->firstOrFail()->toArray();
+
+                $other = null;
+                break;
+            default:
+            case 'adoption':
+                $animal = Adoption::select(['adoptions.name', 'adoptions.history', 'specie', 'adoptions.images', 'adoptions.created_at', 'district.id as district_id', 'district.name as district', 'county.name as county'])
+                    ->join('processes', 'processes.id', '=', 'adoptions.process_id')
+                    ->join('territories as district', 'district.id', '=', \DB::raw('LEFT(territory_id, 2)'))
+                    ->join('territories as county', 'county.id', '=', \DB::raw('LEFT(territory_id, 4)'))
+                    ->where('adoptions.id', $id)
+                    ->firstOrFail()->toArray();
+
+                $district = $animal['district_id'];
+
+                $other = Adoption::select(['adoptions.id', 'adoptions.name', 'adoptions.history', 'specie', 'adoptions.images', 'adoptions.created_at'])
+                    ->join('processes', 'processes.id', '=', 'adoptions.process_id')
+                    ->where('adoptions.id', '<>', $id)
+                    ->where(\DB::raw('LEFT(territory_id, 2)'), $district)
+                    ->orderBy('created_at', 'desc')
+                    ->limit(3)
+                    ->get()->toArray();
+                break;
+        }
+
+        // Common data to all pages
+        $data = array_merge(['animal' => $animal, 'other' => $other], $this->common());
+
+        return view('pages.animals-view', $data);
+    }
+
     private function help()
     {
         return [];
@@ -173,7 +212,7 @@ class PageController extends Controller
 
     private function _urgent_help()
     {
-        return Process::select(['name', 'specie', 'history', 'images', 'status', 'urgent', 'created_at'])
+        return Process::select(['id', 'name', 'images'])
             ->where('status', 'waiting_godfather')
             ->orderBy('urgent', 'desc')
             ->orderBy('created_at', 'desc')
