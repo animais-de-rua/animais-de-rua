@@ -9,6 +9,7 @@ use App\Models\Godfather;
 use App\Models\Headquarter;
 use App\Models\PartnerCategory;
 use App\Models\Process;
+use App\Models\Protocol;
 use App\Models\Territory;
 use App\Models\TreatmentType;
 use App\Models\Vet;
@@ -127,6 +128,26 @@ class APICrudController extends CrudController
     public function partnerCategoryList()
     {
         return $this->partnerCategoryFilter(new Request())->toArray();
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Protocol
+    |--------------------------------------------------------------------------
+    */
+    public function protocolSearch(Request $request)
+    {
+        return $this->entitySearch(Protocol::class, ['name'], $request);
+    }
+
+    public function protocolFilter(Request $request)
+    {
+        return $this->protocolSearch($request)->pluck('name', 'id');
+    }
+
+    public function protocolList()
+    {
+        return $this->protocolFilter(new Request())->toArray();
     }
 
     /*

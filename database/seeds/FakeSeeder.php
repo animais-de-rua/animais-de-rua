@@ -7,6 +7,7 @@ use App\Models\Donation;
 use App\Models\Godfather;
 use App\Models\Process;
 use App\Models\Protocol;
+use App\Models\ProtocolRequest;
 use App\Models\Treatment;
 use App\Models\Vet;
 use Backpack\Base\app\Models\BackpackUser as User;
@@ -32,6 +33,7 @@ class FakeSeeder extends Seeder
         DB::table('treatments')->truncate();
         DB::table('appointments')->truncate();
         DB::table('adoptions')->truncate();
+        DB::table('protocols_requests')->truncate();
         DB::table('protocols')->truncate();
 
         $permissions = EnumHelper::keys('user.permissions');
@@ -92,7 +94,8 @@ class FakeSeeder extends Seeder
 
         // Protocols
         $this->log('Protocols');
-        factory(Protocol::class, 60)->create();
+        factory(Protocol::class, 6)->create();
+        factory(ProtocolRequest::class, 80)->create();
     }
 
     public function log($entity)

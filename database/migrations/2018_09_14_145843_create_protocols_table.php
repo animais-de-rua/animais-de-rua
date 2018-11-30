@@ -15,6 +15,36 @@ class CreateProtocolsTable extends Migration
     {
         Schema::create('protocols', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name', 255);
+            $table->string('email', 127)->nullable()->unique();
+            $table->string('phone', 255)->nullable();
+            $table->string('territory_id', 6)->nullable();
+            $table->integer('headquarter_id')->unsigned()->nullable();
+            $table->integer('user_id')->unsigned()->nullable();
+
+            $table->index(['territory_id']);
+            $table->foreign('territory_id')
+                ->references('id')
+                ->on('territories')
+                ->onDelete('cascade');
+
+            $table->index(['headquarter_id']);
+            $table->foreign('headquarter_id')
+                ->references('id')
+                ->on('headquarters')
+                ->onDelete('cascade');
+
+            $table->index(['user_id']);
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
+
+            $table->timestamps();
+        });
+
+        Schema::create('protocols_requests', function (Blueprint $table) {
+            $table->increments('id');
             $table->string('council', 127);
             $table->string('name', 255);
             $table->string('email', 127)->nullable()->unique();
@@ -23,6 +53,7 @@ class CreateProtocolsTable extends Migration
             $table->text('description')->nullable();
             $table->string('territory_id', 6)->nullable();
             $table->integer('process_id')->nullable()->unsigned();
+            $table->integer('protocol_id')->nullable()->unsigned();
             $table->integer('user_id')->unsigned()->nullable();
 
             $table->index(['territory_id']);
@@ -35,6 +66,12 @@ class CreateProtocolsTable extends Migration
             $table->foreign('process_id')
                 ->references('id')
                 ->on('processes')
+                ->onDelete('cascade');
+
+            $table->index(['protocol_id']);
+            $table->foreign('protocol_id')
+                ->references('id')
+                ->on('protocols')
                 ->onDelete('cascade');
 
             $table->index(['user_id']);
@@ -54,6 +91,7 @@ class CreateProtocolsTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('protocols_requests');
         Schema::dropIfExists('protocols');
     }
 }

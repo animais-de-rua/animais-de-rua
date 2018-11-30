@@ -15,7 +15,10 @@ NodeList.prototype.queryAll = function(selector) {
 
 // Utils
 Node.prototype.sibling = function(query) { return this.siblings(query)[0] }
-Node.prototype.siblings = function(query) { return this.parentElement.children.filter(e => this != e); }
+Node.prototype.siblings = function(query) {
+    let elems = query ? this.parentElement.queryAll(query) : this.parentElement.children;
+    return elems.filter(e => this != e);
+}
 
 Node.prototype.index = function() {
     let elem = this, i = 0;
@@ -24,6 +27,7 @@ Node.prototype.index = function() {
     return i;
 }
 
+// App
 export function ajax(url, data, success, error, method) {
     const params = typeof data == 'string' ? data : Object.keys(data).map(
             k => encodeURIComponent(k) + '=' + encodeURIComponent(data[k])

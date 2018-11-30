@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Backpack\CRUD\CrudTrait;
 
-class Protocol extends Model
+class ProtocolRequest extends Model
 {
     use CrudTrait;
 
@@ -14,11 +14,11 @@ class Protocol extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'protocols';
+    protected $table = 'protocols_requests';
     protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['name', 'email', 'phone', 'territory_id', 'user_id'];
+    protected $fillable = ['council', 'name', 'email', 'phone', 'address', 'description', 'territory_id', 'user_id', 'protocol_id'];
     // protected $hidden = [];
     // protected $dates = [];
 
@@ -39,9 +39,19 @@ class Protocol extends Model
         return $this->belongsTo('App\Models\Territory', 'territory_id');
     }
 
+    public function process()
+    {
+        return $this->belongsTo('App\Models\Process', 'process_id');
+    }
+
     public function user()
     {
         return $this->belongsTo('App\User', 'user_id');
+    }
+
+    public function protocol()
+    {
+        return $this->belongsTo('App\Models\Protocol', 'protocol_id');
     }
 
     /*
@@ -59,6 +69,16 @@ class Protocol extends Model
     public function getUserLinkAttribute()
     {
         return $this->getLink($this->user);
+    }
+
+    public function getProcessLinkAttribute()
+    {
+        return $this->getLink($this->process);
+    }
+
+    public function getProtocolLinkAttribute()
+    {
+        return $this->getLink($this->protocol);
     }
 
     /*

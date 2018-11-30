@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Http\Requests\Request;
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProtocolRequest extends FormRequest
+class ProtocolRequestRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,10 +26,16 @@ class ProtocolRequest extends FormRequest
     public function rules()
     {
         return [
+            'council' => 'required|min:1',
             'name' => 'required|min:3|max:255',
             'email' => 'nullable|email',
             'phone' => 'nullable|min:9|max:14',
+            'address' => 'required|min:3|max:255',
+            'description' => 'nullable|min:3|max:4096',
             'territory_id' => 'required|exists:territories,id',
+            'process_id' => 'required|exists:processes,id',
+            'user_id' => 'required|exists:users,id',
+            'protocol_id' => 'required|exists:protocols,id',
         ];
     }
 

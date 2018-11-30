@@ -18,7 +18,13 @@
 @endif
 
 @if(restrictTo('admin', 'protocols'))
-<li><a href="{{ backpack_url('protocol') }}"><i class="fa icon-protocol"></i> <span class="text-capitalize">{{ __("protocols") }}</span></a></li>
+<li class="treeview">
+    <a href="#"><i class="fa icon-protocol"></i> <span class="text-capitalize">{{ __("protocols") }}</span> <i class="fa fa-angle-left pull-right"></i></a>
+    <ul class="treeview-menu">
+        <li><a href="{{ backpack_url('protocol') }}"><i class="fa icon-protocol"></i> <span class="text-capitalize">{{ __("protocols") }}</span></a></li>
+        <li><a href="{{ backpack_url('protocol-request') }}"><i class="fa icon-category"></i> <span class="text-capitalize">{{ __("requests") }}</span></a></li>
+    </ul>
+</li>
 @endif
 
 @if(restrictTo('admin'))

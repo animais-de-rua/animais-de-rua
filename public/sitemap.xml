@@ -5,31 +5,39 @@
     http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 
 <url>
-  <loc>http://animaisderua.org/</loc>
+  <loc>https://animaisderua.org/</loc>
   <priority>1.00</priority>
 </url>
 <url>
-  <loc>http://animaisderua.org/association</loc>
+  <loc>https://animaisderua.org/association</loc>
   <priority>0.90</priority>
 </url>
 <url>
-  <loc>http://animaisderua.org/ced</loc>
+  <loc>https://animaisderua.org/ced</loc>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>http://animaisderua.org/animals</loc>
+  <loc>https://animaisderua.org/animals</loc>
   <priority>0.90</priority>
 </url>
 <url>
-  <loc>http://animaisderua.org/help</loc>
+  <loc>https://animaisderua.org/help</loc>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>http://animaisderua.org/partners</loc>
+  <loc>https://animaisderua.org/partners</loc>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>http://animaisderua.org/store</loc>
+  <loc>https://animaisderua.org/friends</loc>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://animaisderua.org/privacy-policy</loc>
+  <priority>0.60</priority>
+</url>
+<url>
+  <loc>https://animaisderua.org/store</loc>
   <priority>1.00</priority>
 </url>
 

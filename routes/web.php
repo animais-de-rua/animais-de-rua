@@ -49,6 +49,7 @@ Route::group(['prefix' => config('backpack.base.route_prefix'), 'middleware' => 
     CRUD::resource('partner', 'PartnerCrudController');
     CRUD::resource('partner-category', 'PartnerCategoryCrudController');
     CRUD::resource('protocol', 'ProtocolCrudController');
+    CRUD::resource('protocol-request', 'ProtocolRequestCrudController');
     CRUD::resource('sponsor', 'SponsorCrudController');
 
     // API
@@ -66,6 +67,9 @@ Route::group(['prefix' => config('backpack.base.route_prefix'), 'middleware' => 
 
     Route::get('process/ajax/filter', 'APICrudController@processFilter');
     Route::get('process/ajax/search', 'APICrudController@processSearch');
+
+    Route::get('protocol/ajax/filter', 'APICrudController@protocolFilter');
+    Route::get('protocol/ajax/search', 'APICrudController@protocolSearch');
 
     Route::get('vet/ajax/filter', 'APICrudController@vetFilter');
     Route::get('vet/ajax/search', 'APICrudController@vetSearch');

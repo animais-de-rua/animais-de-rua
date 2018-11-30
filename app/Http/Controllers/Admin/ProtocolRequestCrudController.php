@@ -2,20 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Admin\Traits\Permissions;
-use App\Http\Requests\ProtocolRequest as StoreRequest;
-use App\Http\Requests\ProtocolRequest as UpdateRequest;
+use App\Http\Requests\ProtocolRequestRequest as StoreRequest;
+use App\Http\Requests\ProtocolRequestRequest as UpdateRequest;
 use App\User;
 
 /**
- * Class ProtocolCrudController
+ * Class ProtocolRequestCrudController
  * @package App\Http\Controllers\Admin
  * @property-read CrudPanel $crud
  */
-class ProtocolCrudController extends CrudController
+class ProtocolRequestCrudController extends CrudController
 {
-    use Permissions;
-
     public function setup()
     {
         /*
@@ -23,9 +20,9 @@ class ProtocolCrudController extends CrudController
         | CrudPanel Basic Information
         |--------------------------------------------------------------------------
         */
-        $this->crud->setModel('App\Models\Protocol');
-        $this->crud->setRoute(config('backpack.base.route_prefix') . '/protocol');
-        $this->crud->setEntityNameStrings(__('protocol'), __('protocols'));
+        $this->crud->setModel('App\Models\ProtocolRequest');
+        $this->crud->setRoute(config('backpack.base.route_prefix') . '/protocol-request');
+        $this->crud->setEntityNameStrings(__('request'), __('requests'));
 
         /*
         |--------------------------------------------------------------------------
@@ -33,7 +30,11 @@ class ProtocolCrudController extends CrudController
         |--------------------------------------------------------------------------
         */
 
-        $this->crud->setColumns(['name', 'territory', 'user_id']);
+        $this->crud->setColumns(['council', 'name', 'territory', 'protocol', 'process', 'user_id']);
+
+        $this->crud->setColumnDetails('council', [
+            'label' => 'ID ' . ucfirst(__('council')),
+        ]);
 
         $this->crud->setColumnDetails('name', [
             'label' => __('Name'),
@@ -48,6 +49,22 @@ class ProtocolCrudController extends CrudController
             'model' => "App\Models\Territory",
         ]);
 
+        $this->crud->setColumnDetails('protocol', [
+            'name' => 'protocol',
+            'label' => ucfirst(__('protocol')),
+            'type' => 'model_function',
+            'limit' => 120,
+            'function_name' => 'getProtocolLinkAttribute',
+        ]);
+
+        $this->crud->setColumnDetails('process', [
+            'name' => 'process',
+            'label' => ucfirst(__('process')),
+            'type' => 'model_function',
+            'limit' => 120,
+            'function_name' => 'getProcessLinkAttribute',
+        ]);
+
         $this->crud->setColumnDetails('user_id', [
             'name' => 'user_id',
             'label' => ucfirst(__('volunteer')),
@@ -56,7 +73,12 @@ class ProtocolCrudController extends CrudController
             'function_name' => 'getUserLinkAttribute',
         ]);
 
-        $this->crud->addFields(['name', 'email', 'phone', 'territory_id', 'user_id']);
+        $this->crud->addFields(['council', 'name', 'email', 'phone', 'address', 'description', 'territory_id', 'protocol_id', 'process_id', 'user_id']);
+
+        $this->crud->addField([
+            'label' => ucfirst(__('council')),
+            'name' => 'council',
+        ]);
 
         $this->crud->addField([
             'label' => __('Name'),
@@ -75,11 +97,49 @@ class ProtocolCrudController extends CrudController
         ]);
 
         $this->crud->addField([
+            'label' => __('Address'),
+            'name' => 'address',
+            'type' => 'textarea',
+        ]);
+
+        $this->crud->addField([
+            'label' => __('Description'),
+            'name' => 'description',
+            'type' => 'textarea',
+        ]);
+
+        $this->crud->addField([
             'label' => ucfirst(__('territory')),
             'name' => 'territory_id',
             'type' => 'select2_from_array',
             'options' => $this->wantsJSON() ? null : api()->territoryList(),
             'allows_null' => true,
+        ]);
+
+        $this->crud->addField([
+            'label' => ucfirst(__('protocol')),
+            'name' => 'protocol_id',
+            'type' => 'select2_from_ajax',
+            'entity' => 'protocol',
+            'attribute' => 'name',
+            'model' => '\App\Models\Protocol',
+            'data_source' => url('admin/protocol/ajax/search'),
+            'placeholder' => __('Select a protocol'),
+            'minimum_input_length' => 2,
+            'default' => \Request::has('protocol') ?? false,
+        ]);
+
+        $this->crud->addField([
+            'label' => ucfirst(__('process')),
+            'name' => 'process_id',
+            'type' => 'select2_from_ajax',
+            'entity' => 'process',
+            'attribute' => 'detail',
+            'model' => '\App\Models\Process',
+            'data_source' => url('admin/process/ajax/search'),
+            'placeholder' => __('Select a process'),
+            'minimum_input_length' => 2,
+            'default' => \Request::has('process') ?? false,
         ]);
 
         $this->crud->addField([
@@ -114,6 +174,28 @@ class ProtocolCrudController extends CrudController
             });
 
         $this->crud->addFilter([
+            'name' => 'protocol',
+            'type' => 'select2_ajax',
+            'label' => ucfirst(__('protocol')),
+            'placeholder' => __('Select a protocol'),
+        ],
+            url('admin/protocol/ajax/filter/'),
+            function ($value) {
+                $this->crud->addClause('where', 'protocol_id', $value);
+            });
+
+        $this->crud->addFilter([
+            'name' => 'process',
+            'type' => 'select2_ajax',
+            'label' => ucfirst(__('process')),
+            'placeholder' => __('Select a process'),
+        ],
+            url('admin/process/ajax/filter/'),
+            function ($value) {
+                $this->crud->addClause('where', 'process_id', $value);
+            });
+
+        $this->crud->addFilter([
             'name' => 'user',
             'type' => 'select2_ajax',
             'label' => ucfirst(__('volunteer')),
@@ -124,12 +206,12 @@ class ProtocolCrudController extends CrudController
                 $this->crud->addClause('where', 'user_id', $value);
             });
 
-        $this->crud->query->with(['territory', 'user']);
+        $this->crud->query->with(['process', 'territory', 'user']);
 
         // ------ DATATABLE EXPORT BUTTONS
         $this->crud->enableExportButtons();
 
-        // add asterisk for fields that are required in ProtocolRequest
+        // add asterisk for fields that are required in ProtocolRequestRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
     }
