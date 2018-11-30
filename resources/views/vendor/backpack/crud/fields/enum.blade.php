@@ -15,7 +15,7 @@
             @if (count($entity_model::getPossibleEnumValues($field['name'])))
                 @foreach ($entity_model::getPossibleEnumValues($field['name']) as $possible_value)
                     <option value="{{ $possible_value }}"
-                        @if (( old($field['name']) &&  old($field['name']) == $possible_value) || (isset($field['value']) && $field['value']==$possible_value))
+                        @if (( old(square_brackets_to_dots($field['name'])) &&  old(square_brackets_to_dots($field['name'])) == $possible_value) || (isset($field['value']) && $field['value']==$possible_value))
                             selected
                         @endif
                     >{{ ucfirst(__($possible_value)) }}</option>

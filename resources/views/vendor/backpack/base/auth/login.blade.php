@@ -1,4 +1,4 @@
-@extends('backpack::layout')
+@extends('backpack::layout_guest')
 
 @section('before_styles')
 <style>
@@ -29,36 +29,33 @@
 }
 </style>
 @endsection
-
 @section('content')
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="box box-default">
-                <div class="box-header with-border">
-                    <div class="box-title">{{ trans('backpack::base.login') }}</div>
-                </div>
+    <div class="row m-t-40">
+        <div class="col-md-4 col-md-offset-4">
+            <h3 class="text-center m-b-20">{{ trans('backpack::base.login') }}</h3>
+            <div class="box">
                 <div class="box-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('backpack.auth.login') }}">
+                    <form class="col-md-12 p-t-10" role="form" method="POST" action="{{ route('backpack.auth.login') }}">
                         {!! csrf_field() !!}
 
-                        <div class="form-group{{ $errors->has(backpack_authentication_column()) ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">{{ config('backpack.base.authentication_column_name') }}</label>
+                        <div class="form-group{{ $errors->has($username) ? ' has-error' : '' }}">
+                            <label class="control-label">{{ config('backpack.base.authentication_column_name') }}</label>
 
-                            <div class="col-md-6">
-                                <input type="text" class="form-control" name="{{ backpack_authentication_column() }}" value="{{ old(backpack_authentication_column()) }}">
+                            <div>
+                                <input type="text" class="form-control" name="{{ $username }}" value="{{ old($username) }}">
 
-                                @if ($errors->has(backpack_authentication_column()))
+                                @if ($errors->has($username))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first(backpack_authentication_column()) }}</strong>
+                                        <strong>{{ $errors->first($username) }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">{{ trans('backpack::base.password') }}</label>
+                            <label class="control-label">{{ trans('backpack::base.password') }}</label>
 
-                            <div class="col-md-6">
+                            <div>
                                 <input type="password" class="form-control" name="password">
 
                                 @if ($errors->has('password'))
@@ -70,7 +67,7 @@
                         </div>
 
                         <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
+                            <div>
                                 <div class="checkbox">
                                     <label>
                                         <input type="checkbox" name="remember"> {{ trans('backpack::base.remember_me') }}
@@ -80,25 +77,27 @@
                         </div>
 
                         <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
+                            <div>
+                                <button type="submit" class="btn btn-block btn-primary">
                                     {{ trans('backpack::base.login') }}
                                 </button>
-
-                                @if (backpack_users_have_email())
-                                <a class="btn btn-link" href="{{ route('backpack.auth.password.reset') }}">{{ trans('backpack::base.forgot_your_password') }}</a>
-                                @endif
                             </div>
                         </div>
+
+	                    <hr />
+
+	                    <div>
+	                        @include('layouts.social_login')
+	                    </div>
                     </form>
-
-                    <hr />
-
-                    <div>
-                        @include('layouts.social_login')
-                    </div>
                 </div>
             </div>
+            @if (backpack_users_have_email())
+                <div class="text-center m-t-10"><a href="{{ route('backpack.auth.password.reset') }}">{{ trans('backpack::base.forgot_your_password') }}</a></div>
+            @endif
+            @if (config('backpack.base.registration_open'))
+                <div class="text-center m-t-10"><a href="{{ route('backpack.auth.register') }}">{{ trans('backpack::base.register') }}</a></div>
+            @endif
         </div>
     </div>
 @endsection

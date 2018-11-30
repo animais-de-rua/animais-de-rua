@@ -65,6 +65,18 @@ return [
         'delete_confirmation_not_deleted_title'       => 'Non supprimé',
         'delete_confirmation_not_deleted_message'     => 'Aucune modification. Votre élément a été conservé.',
 
+        // Bulk actions
+        'bulk_no_entries_selected_title' => 'Aucun élément sélectionné',
+        'bulk_no_entries_selected_message' => 'Veuillez sélectionner un ou plusieurs éléments pour faire une action groupée',
+
+        // Bulk confirmation
+        'bulk_delete_are_you_sure' => 'Souhaitez-vous vraiment supprimer ces :number éléments?',
+        'bulk_delete_sucess_title' => 'Éléments supprimés',
+        'bulk_delete_sucess_message' => ' éléments ont été supprimés',
+        'bulk_delete_error_title' => 'Échec de la suppression',
+        'bulk_delete_error_message' => 'Un ou plusieurs éléments n’ont pu être supprimés',
+
+        // Ajax errors
         'ajax_error_title' => 'Erreur',
         'ajax_error_text'  => 'Erreur lors du chargement. Merci de réactualiser la page.',
 
@@ -126,6 +138,9 @@ return [
 
     // Fields
         'browse_uploads' => 'Parcourir les fichier chargés',
+        'select_all' => 'Tout sélectionner',
+        'select_files' => 'Choisir des fichiers',
+        'select_file' => 'Choisir un fichier',
         'clear' => 'Effacer',
         'page_link' => 'Lien de la page',
         'page_link_placeholder' => 'http://example.com/votre-page',

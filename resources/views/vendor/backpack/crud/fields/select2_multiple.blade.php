@@ -1,4 +1,12 @@
 <!-- select2 multiple -->
+@php
+    if (!isset($field['options'])) {
+        $options = $field['model']::all();
+    } else {
+        $options = call_user_func($field['options'], $field['model']::query());
+    }
+@endphp
+
 <div @include('crud::inc.field_wrapper_attributes') >
     <label>{!! $field['label'] !!}</label>
     @include('crud::inc.field_translatable_icon')
@@ -13,11 +21,11 @@
         @endif
 
         @if (isset($field['model']))
-            @foreach ($field['model']::all() as $connected_entity_entry)
-                @if( (old($field["name"]) && in_array($connected_entity_entry->getKey(), old($field["name"]))) || (is_null(old($field["name"])) && isset($field['value']) && in_array($connected_entity_entry->getKey(), $field['value']->pluck($connected_entity_entry->getKeyName(), $connected_entity_entry->getKeyName())->toArray())))
-                    <option value="{{ $connected_entity_entry->getKey() }}" selected>{{ $connected_entity_entry->{$field['attribute']} }}</option>
+            @foreach ($options as $option)
+                @if( (old(square_brackets_to_dots($field["name"])) && in_array($option->getKey(), old($field["name"]))) || (is_null(old(square_brackets_to_dots($field["name"]))) && isset($field['value']) && in_array($option->getKey(), $field['value']->pluck($option->getKeyName(), $option->getKeyName())->toArray())))
+                    <option value="{{ $option->getKey() }}" selected>{{ $option->{$field['attribute']} }}</option>
                 @else
-                    <option value="{{ $connected_entity_entry->getKey() }}">{{ $connected_entity_entry->{$field['attribute']} }}</option>
+                    <option value="{{ $option->getKey() }}">{{ $option->{$field['attribute']} }}</option>
                 @endif
             @endforeach
         @endif
@@ -38,7 +46,7 @@
 {{-- ########################################## --}}
 {{-- Extra CSS and JS for this particular field --}}
 {{-- If a field type is shown multiple times on a form, the CSS and JS will only be loaded once --}}
-@if ($crud->checkIfFieldIsFirstOfItsType($field, $fields))
+@if ($crud->checkIfFieldIsFirstOfItsType($field))
 
     {{-- FIELD CSS - will be loaded in the after_styles section --}}
     @push('crud_fields_styles')
@@ -62,9 +70,9 @@
                         });
 
                         var options = [];
-                        @if (isset($field['model']))
-                            @foreach ($field['model']::all() as $connected_entity_entry)
-                                options.push('{{ $connected_entity_entry->getKey() }}');
+                        @if (count($options))
+                            @foreach ($options as $option)
+                                options.push({{ $option->getKey() }});
                             @endforeach
                         @endif
 

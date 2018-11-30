@@ -1,4 +1,4 @@
-@extends('backpack::layout')
+﻿@extends('backpack::layout')
 
 @section('header')
     <section class="content-header">
@@ -16,7 +16,7 @@
 @section('content')
     <div class="row">
         <div class="col-md-12">
-            <div class="box box-default">
+            <div class="box">
                 <div class="box-header with-border">
                     <div class="box-title">{{ __('Intranet Stats') }}</div>
                 </div>

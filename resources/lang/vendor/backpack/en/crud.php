@@ -103,6 +103,7 @@ return [
             'sortDescending' => ': activate to sort column descending',
         ],
         'export' => [
+            'export'            => 'Export',
             'copy'              => 'Copy',
             'excel'             => 'Excel',
             'csv'               => 'CSV',

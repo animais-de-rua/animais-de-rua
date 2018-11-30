@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Models\Traits\HasTranslations;
 use Backpack\CRUD\CrudTrait;
+use Backpack\CRUD\ModelTraits\SpatieTranslatable\HasTranslations;
 
 class TreatmentType extends Model
 {
