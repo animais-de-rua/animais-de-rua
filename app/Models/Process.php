@@ -99,6 +99,11 @@ class Process extends Model
         return "{$this->name} ({$headquarter}{$this->date})";
     }
 
+    public function getAmountAttribute()
+    {
+        return $this->amount_males + $this->amount_females + $this->amount_other;
+    }
+
     public function getTotalDonatedValue()
     {
         $donations = data_get_first($this, 'donations', 'total_donations', 0);

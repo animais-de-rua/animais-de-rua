@@ -26,6 +26,7 @@ class CreateAdoptionsTable extends Migration
             $table->enum('gender', EnumHelper::values('animal.gender'))->nullable();
             $table->boolean('sterilized')->default(0);
             $table->boolean('vaccinated')->default(0);
+            $table->boolean('processed')->default(0);
             $table->text('images')->nullable();
             $table->text('history')->nullable();
             $table->enum('status', EnumHelper::values('adoption.status'))->default('open');

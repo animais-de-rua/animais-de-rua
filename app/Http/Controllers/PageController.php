@@ -14,12 +14,13 @@ use App\Models\PartnerCategory;
 use App\Models\Process;
 use App\Models\Sponsor;
 use App\Models\Territory;
+use App\Models\Treatment;
 
 class PageController extends Controller
 {
     public function index($slug = 'home')
     {
-        \Debugbar::disable();
+        // \Debugbar::disable();
 
         $page = Page::findBySlug($slug);
 
@@ -50,8 +51,11 @@ class PageController extends Controller
         if (\Request::ajax()) {
             $data = [];
         } else {
+            $treated = Treatment::selectRaw('SUM(affected_animals_new) as total')->first()->total;
+            $adopted = Adoption::selectRaw('COUNT(processed) as total')->where('processed', 0)->first()->total;
+
             $data = [
-                'total_operations' => 12345,
+                'total_interventions' => $treated + $adopted,
             ];
         }
 

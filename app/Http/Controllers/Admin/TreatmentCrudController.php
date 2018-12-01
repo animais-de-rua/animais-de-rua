@@ -6,6 +6,8 @@ use App\Http\Controllers\Admin\Traits\Permissions;
 use App\Http\Requests\TreatmentRequest as StoreRequest;
 use App\Http\Requests\TreatmentRequest as UpdateRequest;
 use App\User;
+use App\Models\Process;
+use App\Models\Treatment;
 use Carbon\Carbon;
 
 /**
@@ -35,7 +37,7 @@ class TreatmentCrudController extends CrudController
         */
 
         // ------ CRUD COLUMNS
-        $this->crud->setColumns(['process', 'treatment_type', 'vet', 'affected_animals', 'expense', 'date', 'user_id']);
+        $this->crud->setColumns(['process', 'treatment_type', 'vet', 'affected_animals', 'affected_animals_new', 'expense', 'date', 'user_id']);
 
         $this->crud->setColumnDetails('process', [
             'name' => 'process',
@@ -72,6 +74,11 @@ class TreatmentCrudController extends CrudController
 
         $this->crud->setColumnDetails('affected_animals', [
             'label' => __('Animals'),
+            'type' => 'number',
+        ]);
+
+        $this->crud->setColumnDetails('affected_animals_new', [
+            'label' => __('Animals') . " (" . __('new') . ")",
             'type' => 'number',
         ]);
 
@@ -121,12 +128,30 @@ class TreatmentCrudController extends CrudController
             'default' => \Request::has('vet') ?? false,
         ]);
 
+        // Animals
+        $treatment = $this->crud->model;
+        $process = $treatment->process()->getRelated()->first();
+
+        $total_animals = $process->amount;
+        $total_affected_animals_new = $treatment->getAffectedAnimalsNew($process->id);
+        $max = $total_animals - $total_affected_animals_new;
+
         $this->crud->addField([
             'label' => __('Affected Animals'),
             'name' => 'affected_animals',
             'type' => 'number',
             'default' => 1,
-            'attributes' => ['min' => 1, 'max' => 100],
+            'attributes' => ['min' => 1, 'max' => $total_animals],
+        ]);
+
+        $this->crud->addField([
+            'label' => __('New affected Animals') . "<br />".
+                "<i>Assinalar apenas os animais que nunca tenham sido intervencionados.</i><br />".
+                "<i>O processo tem <b style='font-style:initial'>$total_animals</b> animais dos quais <b style='font-style:initial'>$total_affected_animals_new</b> já foram intervencionados.</i>",
+            'name' => 'affected_animals_new',
+            'type' => 'number',
+            'default' => 0,
+            'attributes' => ['min' => 0, 'max' => $max],
         ]);
 
         $this->crud->addField([

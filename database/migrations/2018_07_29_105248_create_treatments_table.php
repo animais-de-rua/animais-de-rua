@@ -27,6 +27,7 @@ class CreateTreatmentsTable extends Migration
             $table->integer('vet_id')->unsigned();
             $table->integer('user_id')->unsigned()->nullable();
             $table->integer('affected_animals')->unsigned()->default(1);
+            $table->integer('affected_animals_new')->unsigned()->default(0);
             $table->decimal('expense', 8, 2)->nullable()->unsigned()->default(0);
             $table->date('date');
             $table->timestamps();

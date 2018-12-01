@@ -4,6 +4,7 @@
 
     "dog": "Dog",
     "cat": "Cat",
+    "processed": "Treated at ADR",
     "approving": "Approving",
     "waiting_godfather": "Waiting for godfather",
     "waiting_adoption": "Waiting for adoption",

@@ -35,6 +35,7 @@ class AdoptionRequest extends FormRequest
             'gender' => 'required|in:' . EnumHelper::keys('animal.gender', ','),
             'sterilized' => 'nullable|in:0,1',
             'vaccinated' => 'nullable|in:0,1',
+            'processed' => 'nullable|in:0,1',
             'history' => 'nullable|max:4096',
         ];
     }

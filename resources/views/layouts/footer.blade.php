@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row responsive">
             <div class="column column-67 stats">
-                <h1>{{ $total_operations }}</h1>
+                <h1>{{ $total_interventions }}</h1>
                 <h4>{{ __("web.operations") }}</h4>
             </div>
             <div class="column column-33 logo">

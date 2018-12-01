@@ -36,7 +36,7 @@ class AdoptionCrudController extends CrudController
         */
 
         // ------ CRUD FIELDS
-        $this->crud->addFields(['process_id', 'fat_id', 'name', 'age', 'gender', 'sterilized', 'vaccinated', 'images', 'history', 'status', 'user_id']);
+        $this->crud->addFields(['process_id', 'fat_id', 'name', 'age', 'gender', 'sterilized', 'vaccinated', 'processed', 'images', 'history', 'status', 'user_id']);
 
         $this->crud->addField([
             'label' => ucfirst(__('process')),
@@ -110,6 +110,12 @@ class AdoptionCrudController extends CrudController
         ]);
 
         $this->crud->addField([
+            'label' => ucfirst(__('processed')) . '<br /><i>Ativar se o animal já tiver sido tratado na AdR.</i>',
+            'name' => 'processed',
+            'type' => 'checkbox',
+        ]);
+
+        $this->crud->addField([
             'name' => 'images',
             'label' => __('Images'),
             'type' => 'dropzone',
@@ -132,7 +138,7 @@ class AdoptionCrudController extends CrudController
         ]);
 
         // ------ CRUD COLUMNS
-        $this->crud->addColumns(['name', 'process_id', 'fat_id', 'age', 'gender', 'sterilized', 'vaccinated', 'status', 'user_id']);
+        $this->crud->addColumns(['name', 'process_id', 'fat_id', 'age', 'gender', 'sterilized', 'vaccinated', 'processed', 'status', 'user_id']);
 
         $this->crud->setColumnDetails('name', [
             'label' => __('Name'),
@@ -182,6 +188,11 @@ class AdoptionCrudController extends CrudController
         $this->crud->setColumnDetails('vaccinated', [
             'type' => 'boolean',
             'label' => ucfirst(__('vaccinated')),
+        ]);
+
+        $this->crud->setColumnDetails('processed', [
+            'type' => 'boolean',
+            'label' => ucfirst(__('processed')),
         ]);
 
         $this->crud->setColumnDetails('status', [
@@ -252,6 +263,16 @@ class AdoptionCrudController extends CrudController
             EnumHelper::translate('general.boolean'),
             function ($value) {
                 $this->crud->addClause('where', 'vaccinated', $value);
+            });
+
+        $this->crud->addFilter([
+            'type' => 'select2',
+            'name' => 'processed',
+            'label' => __('processed'),
+        ],
+            EnumHelper::translate('general.boolean'),
+            function ($value) {
+                $this->crud->addClause('where', 'processed', $value);
             });
 
         $this->crud->addFilter([

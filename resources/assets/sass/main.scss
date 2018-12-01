@@ -171,24 +171,42 @@ input {
 a {
     cursor: pointer;
     transition: color .2s;
+    position: relative;
 
     &:hover {
         color: $color;
     }
 
     &.lined {
-        border-bottom: solid 1px #222;
-        padding-bottom: 3px;
-        transition: color .2s, padding .2s!important;
+        padding-bottom: 4px;
+
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background-color: black;
+
+            transition: transform .2s ease-in-out;
+            transform: translateY(0);
+        }
 
         &:hover {
             color: #000;
-            padding-bottom: 0px;
+
+            &::after {
+                transform: translateY(-3px);
+            }
         }
 
         &.light {
             color: #FFF;
-            border-bottom: solid 1px #CCC;
+
+            &::after {
+                background-color: #CCC;
+            }
 
             &:hover {
                 color: #FFF;

@@ -64,6 +64,7 @@
     "Stats": "Estatísticas",
     "Attribute": "Atributo",
     "Affected Animals": "Animais intervencionados",
+    "New affected Animals": "Novos animais intervencionados",
     "Animals": "Animais",
     "Paypal code": "Código Paypal",
     "Benefit": "Benefício",
@@ -81,6 +82,7 @@
     "Share on Twitter": "Partilhar no Twitter",
     "Beginning of the process": "Início do processo",
     "Become a Godfather": "Apadrinhar",
+    "new": "novos",
 
     "Go Home": "Voltar ao início",
     "Go Back": "Voltar",
@@ -182,6 +184,7 @@
     "gender": "género",
     "sterilized": "esterilizado",
     "vaccinated": "vacinado",
+    "processed": "Tratado na ADR",
     "age": "idade",
     "approving": "Em aprovação",
     "waiting_godfather": "A aguardar padrinhos",

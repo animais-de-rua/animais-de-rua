@@ -92,7 +92,7 @@ class LoginController extends Controller
     {
         $social_user = Socialite::driver($provider)->user();
         $user = $this->createOrGetUser($social_user, $provider);
-        auth()->login($user);
+        auth(backpack_guard_name())->login($user);
 
         return redirect()->to($this->redirectTo);
     }

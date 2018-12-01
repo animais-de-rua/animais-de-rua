@@ -18,7 +18,7 @@ class Treatment extends Model
     protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['process_id', 'treatment_type_id', 'vet_id', 'user_id', 'expense', 'date'];
+    protected $fillable = ['process_id', 'treatment_type_id', 'vet_id', 'affected_animals', 'affected_animals_new', 'user_id', 'expense', 'date'];
     // protected $hidden = [];
     // protected $dates = [];
 
@@ -84,6 +84,11 @@ class Treatment extends Model
     public function getFullExpenseAttribute()
     {
         return $this->expense . '€';
+    }
+
+    public function getAffectedAnimalsNew($process_id)
+    {
+        return Treatment::selectRaw('SUM(affected_animals_new) as total')->where('process_id', $process_id)->first()->total;
     }
 
     /*
