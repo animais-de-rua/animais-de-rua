@@ -27,4 +27,10 @@ class CrudController extends \Backpack\CRUD\app\Http\Controllers\CrudController
             ],
         ]);
     }
+
+    public function getEntryID()
+    {
+        preg_match('/\w+\/(\d+)/', $_SERVER['REQUEST_URI'], $matches);
+        return $matches && sizeof($matches) > 1 ? intval($matches[1]) : null;
+    }
 }

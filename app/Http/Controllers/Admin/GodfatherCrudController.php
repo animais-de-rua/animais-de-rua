@@ -77,7 +77,7 @@ class GodfatherCrudController extends CrudController
             'minimum_input_length' => 2,
             'data_source' => null,
             'attributes' => [
-                'readonly' => 'readonly',
+                'disabled' => 'disabled',
             ],
         ]);
 
