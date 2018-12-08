@@ -103,20 +103,20 @@ class TreatmentCrudController extends CrudController
         ]);
 
         // ------ CRUD FIELDS
-        $process_id = \Request::has('process') ?? false;
+        $process_id = \Request::get('process') ?: false;
         $treatment_id = $this->getEntryID();
         $attributes = !$process_id && !$treatment_id ? ['disabled' => 'disabled'] : [];
 
         if ($process_id) {
-            $process = Process::find($process_id)->first();
+            $process = Process::where('id', $process_id)->first();
 
             $total_animals = $max = $process->amount;
             $total_affected_animals_new = 0;
         }
 
         if ($treatment_id) {
-            $treatment = Treatment::find($treatment_id);
-            $process = $treatment->process()->first();
+            $treatment = Treatment::where('id', $treatment_id)->first();
+            $process = Process::where('id', $treatment->process_id)->first();
 
             $total_animals = $process->amount;
             $total_affected_animals_new = $treatment->getAffectedAnimalsNew($process->id);
