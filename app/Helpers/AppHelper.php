@@ -75,6 +75,13 @@ if (!function_exists('restrictTo')) {
     }
 }
 
+if (!function_exists('restrictToHeadquarter')) {
+    function restrictToHeadquarter()
+    {
+        return is('admin') ? null : (Session::get('headquarter', null) ?: backpack_user()->headquarter_id ?: null);
+    }
+}
+
 if (!function_exists('is')) {
     function is($roles, $permissions = null)
     {

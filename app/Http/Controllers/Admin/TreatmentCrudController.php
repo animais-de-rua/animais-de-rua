@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\EnumHelper;
 use App\Http\Controllers\Admin\Traits\Permissions;
 use App\Http\Requests\TreatmentRequest as StoreRequest;
 use App\Http\Requests\TreatmentRequest as UpdateRequest;
@@ -37,7 +38,11 @@ class TreatmentCrudController extends CrudController
         */
 
         // ------ CRUD COLUMNS
-        $this->crud->setColumns(['process', 'treatment_type', 'vet', 'affected_animals', 'affected_animals_new', 'expense', 'date', 'user_id']);
+        $this->crud->setColumns(['id', 'process', 'treatment_type', 'vet', 'affected_animals', 'affected_animals_new', 'expense', 'date', 'status', 'user_id']);
+
+        $this->crud->setColumnDetails('id', [
+            'label' => 'ID',
+        ]);
 
         $this->crud->setColumnDetails('process', [
             'name' => 'process',
@@ -62,6 +67,11 @@ class TreatmentCrudController extends CrudController
             'type' => 'model_function',
             'limit' => 120,
             'function_name' => 'getVetLinkAttribute',
+        ]);
+
+        $this->crud->setColumnDetails('status', [
+            'type' => 'trans',
+            'label' => __('Status'),
         ]);
 
         $this->crud->setColumnDetails('user_id', [
@@ -196,6 +206,15 @@ class TreatmentCrudController extends CrudController
         ]);
 
         $this->crud->addField([
+            'label' => __('Status'),
+            'type' => 'enum',
+            'name' => 'status',
+            'attributes' => is('admin', 'treatments') ? [] : [
+                'disabled' => 'disabled',
+            ],
+        ]);
+
+        $this->crud->addField([
             'label' => ucfirst(__('volunteer')),
             'name' => 'user_id',
             'type' => 'select2_from_ajax',
@@ -289,11 +308,36 @@ class TreatmentCrudController extends CrudController
                 $this->crud->query->whereRaw('date >= ? AND date <= DATE_ADD(?, INTERVAL 1 DAY)', [$dates->from, $dates->to]);
             });
 
+        $this->crud->addFilter([
+            'name' => 'status',
+            'type' => 'select2_multiple',
+            'label' => __('Status'),
+            'placeholder' => __('Select a status'),
+        ],
+            EnumHelper::translate('treatment.status'),
+            function ($values) {
+                $this->crud->addClause('whereIn', 'status', json_decode($values));
+            });
+
         // ------ DATATABLE EXPORT BUTTONS
         $this->crud->enableExportButtons();
 
         // ------ ADVANCED QUERIES
+        if (!is('admin', 'treatments')) {
+            $this->crud->denyAccess(['update']);
+        }
+
+        if (!is('admin')) {
+            $this->crud->addClause('whereHas', 'process', function ($query) {
+                $query->where('headquarter_id', restrictToHeadquarter());
+            })->get();
+
+            $this->crud->denyAccess(['delete']);
+        }
+
         $this->crud->query->with(['process', 'vet', 'user', 'treatment_type']);
+
+        $this->crud->addClause('orderBy', 'id', 'DESC');
 
         // add asterisk for fields that are required in TreatmentRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');

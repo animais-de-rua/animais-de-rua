@@ -30,7 +30,11 @@ class ProtocolRequestCrudController extends CrudController
         |--------------------------------------------------------------------------
         */
 
-        $this->crud->setColumns(['council', 'name', 'territory', 'protocol', 'process', 'user_id']);
+        $this->crud->setColumns(['id', 'council', 'name', 'territory', 'protocol', 'process', 'user_id']);
+
+        $this->crud->setColumnDetails('id', [
+            'label' => 'ID',
+        ]);
 
         $this->crud->setColumnDetails('council', [
             'label' => 'ID ' . ucfirst(__('council')),
@@ -207,6 +211,8 @@ class ProtocolRequestCrudController extends CrudController
             });
 
         $this->crud->query->with(['process', 'territory', 'user']);
+
+        $this->crud->addClause('orderBy', 'id', 'DESC');
 
         // ------ DATATABLE EXPORT BUTTONS
         $this->crud->enableExportButtons();

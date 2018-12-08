@@ -60,6 +60,11 @@ class Process extends Model
         return $this->hasMany('App\Models\Appointment', 'process_id');
     }
 
+    public function adoptions()
+    {
+        return $this->hasMany('App\Models\Adoption', 'process_id');
+    }
+
     public function user()
     {
         return $this->belongsTo('App\User', 'user_id');

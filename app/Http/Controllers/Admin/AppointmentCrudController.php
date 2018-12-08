@@ -140,10 +140,17 @@ class AppointmentCrudController extends CrudController
             'label' => __('Status'),
             'type' => 'enum',
             'name' => 'status',
+            'attributes' => is('admin', 'appointments') ? [] : [
+                'disabled' => 'disabled',
+            ],
         ]);
 
         // ------ CRUD COLUMNS
-        $this->crud->addColumns(['process_id', 'vet_id_1', 'date_1', 'vet_id_2', 'date_2', 'animal_count', 'status', 'user_id']);
+        $this->crud->addColumns(['id', 'process_id', 'vet_id_1', 'date_1', 'vet_id_2', 'date_2', 'animal_count', 'status', 'user_id']);
+
+        $this->crud->setColumnDetails('id', [
+            'label' => 'ID',
+        ]);
 
         $this->crud->setColumnDetails('process_id', [
             'name' => 'process',
@@ -214,16 +221,18 @@ class AppointmentCrudController extends CrudController
                 $this->crud->addClause('where', 'process_id', $value);
             });
 
-        $this->crud->addFilter([
-            'name' => 'user',
-            'type' => 'select2_ajax',
-            'label' => ucfirst(__('volunteer')),
-            'placeholder' => __('Select a volunteer'),
-        ],
-            url('admin/user/ajax/filter/' . User::VOLUNTEER),
-            function ($value) {
-                $this->crud->addClause('where', 'user_id', $value);
-            });
+        if (is('admin', 'appointments')) {
+            $this->crud->addFilter([
+                'name' => 'user',
+                'type' => 'select2_ajax',
+                'label' => ucfirst(__('volunteer')),
+                'placeholder' => __('Select a volunteer'),
+            ],
+                url('admin/user/ajax/filter/' . User::VOLUNTEER),
+                function ($value) {
+                    $this->crud->addClause('where', 'user_id', $value);
+                });
+        }
 
         $this->crud->addFilter([
             'name' => 'vet',
@@ -270,29 +279,33 @@ class AppointmentCrudController extends CrudController
 
             });
 
-        $status_options = EnumHelper::translate('appointment.status');
-        if (!is('admin', 'appointment')) {
-            unset($status_options['approving']);
-        }
-
         $this->crud->addFilter([
             'name' => 'status',
             'type' => 'select2_multiple',
             'label' => __('Status'),
             'placeholder' => __('Select a status'),
         ],
-            $status_options,
+            EnumHelper::translate('appointment.status'),
             function ($values) {
                 $this->crud->addClause('whereIn', 'status', json_decode($values));
             });
 
         // ------ ADVANCED QUERIES
+        if (!is('admin', 'appointments')) {
+            $this->crud->denyAccess(['update', 'delete']);
+
+            $this->crud->addClause('where', 'user_id', backpack_user()->id);
+        }
+
+        if (!is('admin')) {
+            $this->crud->addClause('whereHas', 'process', function ($query) {
+                $query->where('headquarter_id', restrictToHeadquarter());
+            })->get();
+        }
+
         $this->crud->query->with(['process', 'vet1', 'vet2', 'user']);
 
-        if (!is('admin', 'appointment')) {
-            $this->crud->addClause('where', 'status', '<>', 'approving');
-            $this->crud->denyAccess(['update']);
-        }
+        $this->crud->addClause('orderBy', 'id', 'DESC');
 
         // Headquarter filter
         $headquarter_id = admin() ? \Session::get('headquarter', null) : backpack_user()->headquarter_id;

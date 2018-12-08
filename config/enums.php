@@ -55,6 +55,13 @@ return [
         ],
     ],
 
+    'treatment' => [
+        'status' => [
+            'approving' => 'approving',
+            'approved' => 'approved',
+        ],
+    ],
+
     'territory' => [
         'levels' => [
             1 => 'district',
@@ -79,11 +86,12 @@ return [
             1 => 'admin',
             2 => 'volunteer',
             3 => 'FAT',
+            4 => 'store',
         ],
         'permissions' => [
             1 => 'processes',
-            2 => 'appointment',
-            3 => 'counters',
+            2 => 'appointments',
+            3 => 'treatments',
             4 => 'adoptions',
             5 => 'accountancy',
             6 => 'website',

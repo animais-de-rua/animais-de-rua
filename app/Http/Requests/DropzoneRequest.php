@@ -8,7 +8,7 @@ class DropzoneRequest extends FormRequest
 {
     public function authorize()
     {
-        return \Auth::check();
+        return backpack_auth()->check();
     }
 
     public function rules()

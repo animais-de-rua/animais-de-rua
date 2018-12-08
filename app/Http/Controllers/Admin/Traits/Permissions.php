@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Admin\Traits;
 
-use Auth;
-
 trait Permissions
 {
     public function restrictTo($roles, $permissions = null)
@@ -15,7 +13,7 @@ trait Permissions
 
     public function removeDefaultActions()
     {
-        if (!Auth::user()->hasRole('admin')) {
+        if (!backpack_user()->hasRole('admin')) {
             $this->crud->removeButton('update');
             $this->crud->removeButton('delete');
 

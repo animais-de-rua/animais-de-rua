@@ -30,7 +30,11 @@ class TerritoryCrudController extends CrudController
         */
 
         // ------ CRUD COLUMNS
-        $this->crud->setColumns(['name', 'sf']);
+        $this->crud->setColumns(['id', 'name', 'sf']);
+
+        $this->crud->setColumnDetails('id', [
+            'label' => 'ID',
+        ]);
 
         $this->crud->setColumnDetails('sf', [
             'label' => 'Código SF',

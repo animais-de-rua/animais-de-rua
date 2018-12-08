@@ -95,7 +95,11 @@ class DonationCrudController extends CrudController
         ]);
 
         // ------ CRUD COLUMNS
-        $this->crud->addColumns(['godfather', 'process', 'value', 'user_id']);
+        $this->crud->addColumns(['id', 'godfather', 'process', 'value', 'user_id']);
+
+        $this->crud->setColumnDetails('id', [
+            'label' => 'ID',
+        ]);
 
         $this->crud->setColumnDetails('godfather', [
             'name' => 'godfather',
@@ -186,6 +190,8 @@ class DonationCrudController extends CrudController
 
         // ------ ADVANCED QUERIES
         $this->crud->query->with(['process', 'godfather']);
+
+        $this->crud->addClause('orderBy', 'id', 'DESC');
 
         // Add asterisk for fields that are required
         $this->crud->setRequiredFields(StoreRequest::class, 'create');

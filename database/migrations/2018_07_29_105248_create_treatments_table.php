@@ -1,5 +1,6 @@
 <?php
 
+use App\Helpers\EnumHelper;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -29,6 +30,7 @@ class CreateTreatmentsTable extends Migration
             $table->integer('affected_animals')->unsigned()->default(1);
             $table->integer('affected_animals_new')->unsigned()->default(0);
             $table->decimal('expense', 8, 2)->nullable()->unsigned()->default(0);
+            $table->enum('status', EnumHelper::values('treatment.status'))->default('approving');
             $table->date('date');
             $table->timestamps();
 

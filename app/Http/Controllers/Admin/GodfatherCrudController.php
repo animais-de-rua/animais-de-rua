@@ -121,7 +121,11 @@ class GodfatherCrudController extends CrudController
         ]);
 
         // ------ CRUD COLUMNS
-        $this->crud->addColumns(['name', 'email', 'phone', 'donations', 'user_id']);
+        $this->crud->addColumns(['id', 'name', 'email', 'phone', 'donations', 'user_id']);
+
+        $this->crud->setColumnDetails('id', [
+            'label' => 'ID',
+        ]);
 
         $this->crud->setColumnDetails('name', [
             'label' => __('Name'),

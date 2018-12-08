@@ -96,4 +96,19 @@ class Appointment extends Model
     | MUTATORS
     |--------------------------------------------------------------------------
     */
+
+    /*
+    |--------------------------------------------------------------------------
+    | BOOT
+    |--------------------------------------------------------------------------
+    */
+    public static function boot()
+    {
+        parent::boot();
+        static::deleting(function ($appointment) {
+            if (!is('admin') && $appointment->status != 'approving') {
+                abort(403);
+            }
+        });
+    }
 }

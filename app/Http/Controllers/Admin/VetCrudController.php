@@ -34,7 +34,11 @@ class VetCrudController extends CrudController
         */
 
         // ------ CRUD COLUMNS
-        $this->crud->setColumns(['name', 'phone', 'url', 'headquarter', 'status', 'total_expenses', 'total_operations']);
+        $this->crud->setColumns(['id', 'name', 'phone', 'url', 'headquarter', 'status', 'total_expenses', 'total_operations']);
+
+        $this->crud->setColumnDetails('id', [
+            'label' => 'ID',
+        ]);
 
         $this->crud->setColumnDetails('name', [
             'label' => __('Name'),
@@ -246,6 +250,8 @@ class VetCrudController extends CrudController
             $query->selectRaw('vet_id, sum(expense) as total_expenses, count(*) as total_operations')
                 ->groupBy('vet_id');
         }]);
+
+        $this->crud->addClause('orderBy', 'id', 'DESC');
 
         // ------ DATATABLE EXPORT BUTTONS
         $this->crud->enableExportButtons();

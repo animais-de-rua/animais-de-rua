@@ -42,7 +42,7 @@ class DashboardController extends CrudController
             'top_headquarter_sterilizations_name' => $headquarter_sterilizations->name,
             'top_headquarter_sterilizations_value' => $headquarter_sterilizations->total,
             'appointments' => DB::table('treatments')->selectRaw('COUNT(*) as total')->whereRaw('treatment_type_id BETWEEN 30 AND 33')->first()->total,
-            'vets' => DB::table('treatments')->selectRaw('COUNT(DISTINCT vet_id) as total')->first()->total,
+            'vets' => DB::table('treatments')->selectRaw('COUNT(DISTINCT vet_id) as total')->whereRaw('treatment_type_id BETWEEN 30 AND 33')->first()->total,
             'deworming' => DB::table('treatments')->selectRaw('SUM(affected_animals) as total')->whereRaw('treatment_type_id BETWEEN 15 AND 17')->first()->total,
             'top_headquarter_deworming_name' => $headquarter_deworming->name,
             'top_headquarter_deworming_value' => $headquarter_deworming->total,

@@ -6,7 +6,11 @@ use App\Helpers\EnumHelper;
 use App\Http\Controllers\Admin\Traits\Permissions;
 use App\Http\Requests\ProcessRequest as StoreRequest;
 use App\Http\Requests\ProcessRequest as UpdateRequest;
+use App\Models\Adoption;
+use App\Models\Appointment;
+use App\Models\Donation;
 use App\Models\Process;
+use App\Models\Treatment;
 use App\User;
 use DB;
 
@@ -32,7 +36,7 @@ class ProcessCrudController extends CrudController
         */
 
         // ------ CRUD FIELDS
-        $this->crud->addFields(['name', 'contact', 'phone', 'email', 'latlong', 'territory_id', 'headquarter_id', 'specie', 'amount_males', 'amount_females', 'amount_other', 'status', 'urgent', 'images', 'history', 'notes', 'user_id', 'donations', 'treatments', 'appointments', 'stats']);
+        $this->crud->addFields(['name', 'contact', 'phone', 'email', 'latlong', 'territory_id', 'headquarter_id', 'specie', 'amount_males', 'amount_females', 'amount_other', 'status', 'images', 'history', 'notes', 'user_id', 'donations', 'treatments', 'appointments', 'stats']);
 
         $this->crud->addField([
             'label' => __('Name'),
@@ -106,13 +110,18 @@ class ProcessCrudController extends CrudController
             'label' => __('Status'),
             'type' => 'enum',
             'name' => 'status',
+            'attributes' => is('admin', 'processes') ? [] : [
+                'disabled' => 'disabled',
+            ],
         ]);
 
-        $this->crud->addField([
-            'label' => __('Urgent'),
-            'type' => 'checkbox',
-            'name' => 'urgent',
-        ]);
+        if (is('admin')) {
+            $this->crud->addField([
+                'label' => __('Urgent'),
+                'type' => 'checkbox',
+                'name' => 'urgent',
+            ]);
+        }
 
         $this->crud->addField([
             'label' => __('Location'),
@@ -162,112 +171,18 @@ class ProcessCrudController extends CrudController
 
         $this->separator();
 
-        $this->crud->addField([
-            'label' => ucfirst(__('donations')),
-            'name' => 'donations',
-            'type' => 'relation_table',
-            'route' => '/admin/donation',
-            'columns' => [
-                'name' => [
-                    'label' => ucfirst(__('godfather')),
-                    'name' => 'godfatherLink',
-                ],
-                'value' => [
-                    'label' => __('Value'),
-                    'name' => 'fullValue',
-                ],
-                'date' => [
-                    'label' => __('Date'),
-                    'name' => 'date',
-                ],
-            ],
-        ]);
-
-        $this->crud->addField([
-            'label' => ucfirst(__('treatments')),
-            'name' => 'treatments',
-            'type' => 'relation_table',
-            'route' => '/admin/treatment',
-            'columns' => [
-                'treatment_type' => [
-                    'label' => ucfirst(__('treatment type')),
-                    'name' => 'treatment_type',
-                    'attribute' => 'name',
-                ],
-                'vet' => [
-                    'label' => ucfirst(__('vet')),
-                    'name' => 'vetLink',
-                ],
-                'expense' => [
-                    'label' => __('Expense'),
-                    'name' => 'fullExpense',
-                ],
-                'date' => [
-                    'label' => __('Date'),
-                    'name' => 'date',
-                ],
-            ],
-        ]);
-
-        $this->crud->addField([
-            'label' => ucfirst(__('appointments')),
-            'name' => 'appointments',
-            'type' => 'relation_table',
-            'route' => '/admin/appointment',
-            'columns' => [
-                'user' => [
-                    'label' => ucfirst(__('volunteer')),
-                    'name' => 'userLink',
-                ],
-                'vet1' => [
-                    'label' => ucfirst(__('vet')) . ' 1',
-                    'name' => 'vet1Link',
-                ],
-                'date1' => [
-                    'label' => __('Date') . ' 1',
-                    'name' => 'date_1',
-                ],
-                'vet2' => [
-                    'label' => ucfirst(__('vet')) . ' 2',
-                    'name' => 'vet2Link',
-                ],
-                'date2' => [
-                    'label' => __('Date') . ' 2',
-                    'name' => 'date_2',
-                ],
-            ],
-        ]);
-
-        $this->crud->addField([
-            'label' => __('Stats'),
-            'name' => 'stats',
-            'type' => 'stats',
-            'rows' => [
-                'expenses' => [
-                    'label' => __('Total Expenses'),
-                    'value' => 'getTotalExpensesStats',
-                ],
-                'operations' => [
-                    'label' => __('Total Operations'),
-                    'value' => 'getTotalOperationsStats',
-                ],
-                'donated' => [
-                    'label' => __('Total Donated'),
-                    'value' => 'getTotalDonatedStats',
-                ],
-                'donations' => [
-                    'label' => __('Total Donations'),
-                    'value' => 'getTotalDonationsStats',
-                ],
-                'balance' => [
-                    'label' => __('Balance'),
-                    'value' => 'getBalanceStats',
-                ],
-            ],
-        ]);
+        $this->crud->addField($this->tableDonations());
+        $this->crud->addField($this->tableTreatments());
+        $this->crud->addField($this->tableAppointments());
+        $this->crud->addField($this->tableAdoptions());
+        $this->crud->addField($this->tableStats());
 
         // ------ CRUD COLUMNS
-        $this->crud->addColumns(['name', 'territory_id', 'headquarter', 'created_at', 'specie', 'animal_count', 'status', 'urgent', 'total_donations', 'total_expenses', 'balance', 'total_operations', 'user_id']);
+        $this->crud->addColumns(['id', 'name', 'territory_id', 'headquarter', 'created_at', 'specie', 'animal_count', 'status', 'urgent', 'total_donations', 'total_expenses', 'balance', 'total_operations', 'user_id']);
+
+        $this->crud->setColumnDetails('id', [
+            'label' => 'ID',
+        ]);
 
         $this->crud->setColumnDetails('name', [
             'label' => __('Name'),
@@ -374,16 +289,18 @@ class ProcessCrudController extends CrudController
                 $this->crud->query->whereRaw($where, $values);
             });
 
-        $this->crud->addFilter([
-            'name' => 'headquarter_id',
-            'type' => 'select2_multiple',
-            'label' => ucfirst(__('headquarter')),
-            'placeholder' => __('Select a headquarter'),
-        ],
-            $this->wantsJSON() ? null : api()->headquarterList(),
-            function ($values) {
-                $this->crud->addClause('whereIn', 'headquarter_id', json_decode($values));
-            });
+        if (is('admin')) {
+            $this->crud->addFilter([
+                'name' => 'headquarter_id',
+                'type' => 'select2_multiple',
+                'label' => ucfirst(__('headquarter')),
+                'placeholder' => __('Select a headquarter'),
+            ],
+                $this->wantsJSON() ? null : api()->headquarterList(),
+                function ($values) {
+                    $this->crud->addClause('whereIn', 'headquarter_id', json_decode($values));
+                });
+        }
 
         $this->crud->addFilter([
             'type' => 'date_range',
@@ -557,6 +474,16 @@ class ProcessCrudController extends CrudController
             });
 
         // ------ ADVANCED QUERIES
+        if (!is('admin', 'processes')) {
+            $this->crud->denyAccess(['update']);
+        }
+
+        if (!is('admin')) {
+            $this->crud->addClause('where', 'headquarter_id', restrictToHeadquarter());
+
+            $this->crud->denyAccess(['delete']);
+        }
+
         $this->crud->addClause('with', ['donations' => function ($query) {
             $query->selectRaw('process_id, sum(value) as total_donations')
                 ->groupBy('process_id');
@@ -567,17 +494,84 @@ class ProcessCrudController extends CrudController
                 ->groupBy('process_id');
         }]);
 
+        $this->crud->addClause('orderBy', 'id', 'DESC');
+
+        $this->crud->allowAccess('show');
+
         // Add asterisk for fields that are required
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
     }
 
+    public function show($id)
+    {
+        $content = parent::show($id);
+
+        $this->crud->removeColumn('total_donations');
+        $this->crud->removeColumn('total_expenses');
+        $this->crud->removeColumn('balance');
+        $this->crud->removeColumn('total_operations');
+
+        $this->crud->setColumnDetails('contact', [
+            'label' => __('Contact'),
+        ]);
+        $this->crud->setColumnDetails('phone', [
+            'label' => __('Phone'),
+        ]);
+        $this->crud->setColumnDetails('address', [
+            'label' => __('Address'),
+        ]);
+        $this->crud->setColumnDetails('headquarter_id', [
+            'label' => ucfirst(__('headquarter')),
+            'type' => 'select',
+            'entity' => 'headquarter',
+            'attribute' => 'name',
+            'model' => "App\Models\Headquarter",
+        ]);
+
+        $this->crud->setColumnDetails('images', [
+            'name' => 'images',
+            'label' => __('Images'),
+            'type' => 'upload_multiple_image',
+        ]);
+
+        $this->crud->removeColumn('amount_males');
+        $this->crud->removeColumn('amount_females');
+        $this->crud->removeColumn('amount_other');
+
+        $this->separator();
+
+        $this->crud->addColumn(array_merge(
+            $this->tableDonations(),
+            ['value' => Donation::where('process_id', $id)->get()]
+        ));
+
+        $this->crud->addColumn(array_merge(
+            $this->tableTreatments(),
+            ['value' => Treatment::where('process_id', $id)->get()]
+        ));
+
+        $this->crud->addColumn(array_merge(
+            $this->tableAppointments(),
+            ['value' => Appointment::where('process_id', $id)->get()]
+        ));
+
+        $this->crud->addColumn(array_merge(
+            $this->tableAdoptions(),
+            ['value' => Adoption::where('process_id', $id)->get()]
+        ));
+
+        $this->crud->addColumn($this->tableStats());
+
+        return $content;
+    }
+
     public function showDetailsRow($id)
     {
-        $process = Process::select(['history', 'notes', 'contact', 'phone', 'email'])->where('id', '=', $id)->first();
+        $process = Process::select(['history', 'notes', 'contact', 'phone', 'email'])->where('id', $id)->first();
 
         return "<div style='margin:5px 8px'>
-                <p>$process->contact, <a href='tel:$process->phone'>$process->phone</a><br /><a href='tel:$process->email'>$process->email</a></p>
+                <p>$process->contact, <a href='tel:$process->phone'>$process->phone</a><br /><a href='mailto:$process->email'>$process->email</a></p>
                 <p>$process->history</p>
                 <p>$process->notes</p>
             </div>";
@@ -588,6 +582,10 @@ class ProcessCrudController extends CrudController
         // Add user
         $request->merge(['user_id' => backpack_user()->id]);
 
+        if (!restrictTo('admin')) {
+            dd($request);
+        }
+
         return parent::storeCrud($request);
     }
 
@@ -595,4 +593,158 @@ class ProcessCrudController extends CrudController
     {
         return parent::updateCrud($request);
     }
+
+    // Table Helper
+    private function tableDonations()
+    {
+        return [
+            'label' => ucfirst(__('donations')),
+            'name' => 'donations',
+            'type' => 'relation_table',
+            'route' => '/admin/donation',
+            'columns' => [
+                'name' => [
+                    'label' => ucfirst(__('godfather')),
+                    'name' => 'godfatherLink',
+                ],
+                'value' => [
+                    'label' => __('Value'),
+                    'name' => 'fullValue',
+                ],
+                'date' => [
+                    'label' => __('Date'),
+                    'name' => 'date',
+                ],
+            ],
+        ];
+    }
+
+    private function tableTreatments()
+    {
+        return [
+            'label' => ucfirst(__('treatments')),
+            'name' => 'treatments',
+            'type' => 'relation_table',
+            'route' => '/admin/treatment',
+            'columns' => [
+                'treatment_type' => [
+                    'label' => ucfirst(__('treatment type')),
+                    'name' => 'treatment_type',
+                    'attribute' => 'name',
+                ],
+                'vet' => [
+                    'label' => ucfirst(__('vet')),
+                    'name' => 'vetLink',
+                ],
+                'expense' => [
+                    'label' => __('Expense'),
+                    'name' => 'fullExpense',
+                ],
+                'date' => [
+                    'label' => __('Date'),
+                    'name' => 'date',
+                ],
+            ],
+        ];
+    }
+
+    private function tableAppointments()
+    {
+        return [
+            'label' => ucfirst(__('appointments')),
+            'name' => 'appointments',
+            'type' => 'relation_table',
+            'route' => '/admin/appointment',
+            'columns' => [
+                'user' => [
+                    'label' => ucfirst(__('volunteer')),
+                    'name' => 'userLink',
+                ],
+                'vet1' => [
+                    'label' => ucfirst(__('vet')) . ' 1',
+                    'name' => 'vet1Link',
+                ],
+                'date1' => [
+                    'label' => __('Date') . ' 1',
+                    'name' => 'date_1',
+                ],
+                'vet2' => [
+                    'label' => ucfirst(__('vet')) . ' 2',
+                    'name' => 'vet2Link',
+                ],
+                'date2' => [
+                    'label' => __('Date') . ' 2',
+                    'name' => 'date_2',
+                ],
+            ],
+        ];
+    }
+
+    private function tableAdoptions()
+    {
+        return [
+            'label' => ucfirst(__('adoptions')),
+            'name' => 'adoptions',
+            'type' => 'relation_table',
+            'route' => '/admin/adoption',
+            'columns' => [
+                'user' => [
+                    'label' => ucfirst(__('volunteer')),
+                    'name' => 'userLink',
+                ],
+                'name' => [
+                    'label' => __('Name'),
+                    'name' => 'name',
+                ],
+                'fat' => [
+                    'label' => 'FAT',
+                    'name' => 'fatLink',
+                ],
+                'gender' => [
+                    'label' => __('gender'),
+                    'name' => 'genderValue',
+                ],
+                'sterilized' => [
+                    'label' => ucfirst(__('sterilized')),
+                    'name' => 'sterilizedValue',
+                ],
+                'vaccinated' => [
+                    'label' => ucfirst(__('vaccinated')),
+                    'name' => 'vaccinatedValue',
+                ],
+            ],
+        ];
+    }
+
+    private function tableStats()
+    {
+        return [
+            'label' => __('Stats'),
+            'name' => 'stats',
+            'type' => 'stats',
+            'rows' => [
+                'expenses' => [
+                    'label' => __('Total Expenses'),
+                    'value' => 'getTotalExpensesStats',
+                ],
+                'operations' => [
+                    'label' => __('Total Operations'),
+                    'value' => 'getTotalOperationsStats',
+                ],
+                'donated' => [
+                    'label' => __('Total Donated'),
+                    'value' => 'getTotalDonatedStats',
+                ],
+                'donations' => [
+                    'label' => __('Total Donations'),
+                    'value' => 'getTotalDonationsStats',
+                ],
+                'balance' => [
+                    'label' => __('Balance'),
+                    'value' => 'getBalanceStats',
+                ],
+            ],
+        ];
+    }
+
 }

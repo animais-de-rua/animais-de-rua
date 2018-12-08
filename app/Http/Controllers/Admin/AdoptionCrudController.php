@@ -135,10 +135,17 @@ class AdoptionCrudController extends CrudController
             'label' => __('Status'),
             'type' => 'enum',
             'name' => 'status',
+            'attributes' => is('admin', 'adoptions') ? [] : [
+                'disabled' => 'disabled',
+            ],
         ]);
 
         // ------ CRUD COLUMNS
-        $this->crud->addColumns(['name', 'process_id', 'fat_id', 'age', 'gender', 'sterilized', 'vaccinated', 'processed', 'status', 'user_id']);
+        $this->crud->addColumns(['id', 'name', 'process_id', 'fat_id', 'age', 'gender', 'sterilized', 'vaccinated', 'processed', 'status', 'user_id']);
+
+        $this->crud->setColumnDetails('id', [
+            'label' => 'ID',
+        ]);
 
         $this->crud->setColumnDetails('name', [
             'label' => __('Name'),
@@ -305,7 +312,21 @@ class AdoptionCrudController extends CrudController
             });
 
         // ------ ADVANCED QUERIES
+        if (!is('admin', 'adoptions')) {
+            $this->crud->denyAccess(['update']);
+        }
+
+        if (!is('admin')) {
+            $this->crud->addClause('whereHas', 'process', function ($query) {
+                $query->where('headquarter_id', restrictToHeadquarter());
+            })->get();
+
+            $this->crud->denyAccess(['delete']);
+        }
+
         $this->crud->query->with(['process', 'user', 'fat']);
+
+        $this->crud->addClause('orderBy', 'id', 'DESC');
 
         // add asterisk for fields that are required in AdoptionRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');

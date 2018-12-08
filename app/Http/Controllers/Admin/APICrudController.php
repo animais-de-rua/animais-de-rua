@@ -158,23 +158,21 @@ class APICrudController extends CrudController
     public function processSearch(Request $request)
     {
         $search_term = $this->getSearchParam($request);
+        $headquarter = restrictToHeadquarter();
+
+        $results = Process::with('headquarter');
 
         // Headquarter filter
-        $headquarter = admin() ? \Session::get('headquarter', null) : backpack_user()->headquarter_id;
-
-        if ($search_term) {
-            $results = Process::where('name', 'LIKE', "%$search_term%");
-
-            if ($headquarter) {
-                $results = $results->where('headquarter_id', $headquarter);
-            }
-
-            $results = $results->paginate(10);
-        } else {
-            $results = Process::paginate(10);
+        if ($headquarter) {
+            $results = $results->where('headquarter_id', $headquarter);
         }
 
-        return $results;
+        // Search
+        if ($search_term) {
+            $results = $results->where('name', 'LIKE', "%$search_term%");
+        }
+
+        return $results->paginate(10);
     }
 
     public function processFilter(Request $request)
@@ -205,6 +203,11 @@ class APICrudController extends CrudController
         }
 
         $users = User::whereIn('id', DB::table('user_has_roles')->select('model_id')->whereIn('role_id', $roles));
+
+        $headquarter = restrictToHeadquarter();
+        if ($headquarter) {
+            $users = $users->where('headquarter_id', $headquarter);
+        }
 
         if ($search_term) {
             $users = $users->where(function ($query) use ($search_term) {

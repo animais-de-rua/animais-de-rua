@@ -2,15 +2,9 @@
 
 {{-- @if(restrictTo('admin')) --}}
 <li class="header">{{ __("Management") }}</li>
-@if(restrictTo('admin', 'processes'))
 <li><a href="{{ backpack_url('process') }}"><i class="fa icon-process"></i> <span class="text-capitalize">{{ __("processes") }}</span></a></li>
-@endif
-
 <li><a href="{{ backpack_url('appointment') }}"><i class="fa icon-appointment"></i> <span class="text-capitalize">{{ __("appointments") }}</span></a></li>
-
-@if(restrictTo('admin', 'adoptions'))
 <li><a href="{{ backpack_url('adoption') }}"><i class="fa icon-animal"></i> <span class="text-capitalize">{{ __("adoptions") }}</span></a></li>
-@endif
 
 @if(restrictTo('admin'))
 <li><a href="{{ backpack_url('godfather') }}"><i class="fa icon-godfather"></i> <span class="text-capitalize">{{ __("godfathers") }}</span></a></li>

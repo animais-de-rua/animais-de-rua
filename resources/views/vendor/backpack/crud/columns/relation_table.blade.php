@@ -1,18 +1,15 @@
 <?php
-$item_name = strtolower(isset($field['entity_singular']) && !empty($field['entity_singular']) ? $field['entity_singular'] : $field['label']);
+$item_name = strtolower(isset($column['entity_singular']) && !empty($column['entity_singular']) ? $column['entity_singular'] : $column['label']);
 
-$items = old($field['name']) ? (old($field['name'])) : (isset($field['value']) ? ($field['value']) : (isset($field['default']) ? ($field['default']) : ''));
+$items = old($column['name']) ? (old($column['name'])) : (isset($column['value']) ? ($column['value']) : (isset($column['default']) ? ($column['default']) : ''));
 
 if ($items == '') {
     return;
 }
-
-$crud->route = $field['route'];
+$crud->route = $column['route'];
 ?>
 
 <div @include('crud::inc.field_wrapper_attributes') >
-
-    <h3 style="margin-top:0">{!! $field['label'] !!}</h3>
 
     <div class="array-container form-group">
 
@@ -20,9 +17,9 @@ $crud->route = $field['route'];
 
             <thead>
                 <tr>
-                    @foreach( $field['columns'] as $column )
+                    @foreach( $column['columns'] as $col )
                     <th>
-                        {{ __($column['label']) }}
+                        {{ __($col['label']) }}
                     </th>
                     @endforeach
                     <th data-orderable="false">{{ trans('backpack::crud.actions') }}</th>
@@ -31,9 +28,9 @@ $crud->route = $field['route'];
             <tbody class="table-striped">
                 @foreach( $items as $item)
                 <tr class="array-row">
-                    @foreach( $field['columns'] as $column)
+                    @foreach( $column['columns'] as $col)
                     <td>
-                        {!! isset($column['attribute']) ? $item->{$column['name']}->{$column['attribute']} : $item->{$column['name']} !!}
+                        {!! isset($col['attribute']) ? $item->{$col['name']}->{$col['attribute']} : $item->{$col['name']} !!}
                     </td>
                     @endforeach
                     <td>

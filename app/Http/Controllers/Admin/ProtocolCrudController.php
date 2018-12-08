@@ -33,7 +33,11 @@ class ProtocolCrudController extends CrudController
         |--------------------------------------------------------------------------
         */
 
-        $this->crud->setColumns(['name', 'territory', 'user_id']);
+        $this->crud->setColumns(['id', 'name', 'territory', 'user_id']);
+
+        $this->crud->setColumnDetails('id', [
+            'label' => 'ID',
+        ]);
 
         $this->crud->setColumnDetails('name', [
             'label' => __('Name'),
@@ -125,6 +129,8 @@ class ProtocolCrudController extends CrudController
             });
 
         $this->crud->query->with(['territory', 'user']);
+
+        $this->crud->addClause('orderBy', 'id', 'DESC');
 
         // ------ DATATABLE EXPORT BUTTONS
         $this->crud->enableExportButtons();
