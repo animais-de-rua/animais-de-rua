@@ -6,7 +6,7 @@
 <li><a href="{{ backpack_url('appointment') }}"><i class="fa icon-appointment"></i> <span class="text-capitalize">{{ __("appointments") }}</span></a></li>
 <li><a href="{{ backpack_url('adoption') }}"><i class="fa icon-animal"></i> <span class="text-capitalize">{{ __("adoptions") }}</span></a></li>
 
-@if(restrictTo('admin'))
+@if(restrictTo('admin', 'accountancy'))
 <li><a href="{{ backpack_url('godfather') }}"><i class="fa icon-godfather"></i> <span class="text-capitalize">{{ __("godfathers") }}</span></a></li>
 <li><a href="{{ backpack_url('donation') }}"><i class="fa icon-donation"></i> <span class="text-capitalize">{{ __("donations") }}</span></a></li>
 @endif

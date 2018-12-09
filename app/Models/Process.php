@@ -65,6 +65,11 @@ class Process extends Model
         return $this->belongsTo('App\User', 'user_id');
     }
 
+    public function treatments()
+    {
+        return $this->hasManyThrough('App\Models\Treatment', 'App\Models\Appointment');
+    }
+
     /*
     |--------------------------------------------------------------------------
     | SCOPES

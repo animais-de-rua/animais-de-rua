@@ -156,7 +156,7 @@ class TreatmentCrudController extends CrudController
             'data_source' => url('admin/vet/ajax/search'),
             'placeholder' => __('Select a vet'),
             'minimum_input_length' => 2,
-            'default' => \Request::has('vet') ?? false,
+            'default' => \Request::get('vet') ?: false,
             'attributes' => $attributes,
         ]);
 
@@ -214,20 +214,22 @@ class TreatmentCrudController extends CrudController
             ],
         ]);
 
-        $this->crud->addField([
-            'label' => ucfirst(__('volunteer')),
-            'name' => 'user_id',
-            'type' => 'select2_from_ajax',
-            'entity' => 'user',
-            'attribute' => 'name',
-            'model' => '\App\User',
-            'placeholder' => '',
-            'minimum_input_length' => 2,
-            'data_source' => null,
-            'attributes' => [
-                'disabled' => 'disabled',
-            ],
-        ]);
+        if (is('admin')) {
+            $this->crud->addField([
+                'label' => ucfirst(__('volunteer')),
+                'name' => 'user_id',
+                'type' => 'select2_from_ajax',
+                'entity' => 'user',
+                'attribute' => 'name',
+                'model' => '\App\User',
+                'placeholder' => '',
+                'minimum_input_length' => 2,
+                'data_source' => null,
+                'attributes' => [
+                    'disabled' => 'disabled',
+                ],
+            ], 'update');
+        }
 
         // Filter
         $this->crud->addFilter([

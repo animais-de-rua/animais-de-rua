@@ -35,7 +35,7 @@ class DonationCrudController extends CrudController
         */
 
         // ------ CRUD FIELDS
-        $this->crud->addFields(['godfather_id', 'process_id', 'value', 'date', 'user_id']);
+        $this->crud->addFields(['godfather_id', 'process_id', 'value', 'date']);
 
         $this->crud->addField([
             'label' => __('Value'),
@@ -56,7 +56,7 @@ class DonationCrudController extends CrudController
             'data_source' => url('admin/process/ajax/search'),
             'placeholder' => __('Select a process'),
             'minimum_input_length' => 2,
-            'default' => \Request::has('process') ?? false,
+            'default' => \Request::get('process') ?: false,
         ]);
 
         $this->crud->addField([
@@ -69,7 +69,7 @@ class DonationCrudController extends CrudController
             'data_source' => url('admin/godfather/ajax/search'),
             'placeholder' => __('Select a godfather'),
             'minimum_input_length' => 2,
-            'default' => \Request::has('godfather') ?? false,
+            'default' => \Request::get('godfather') ?: false,
         ]);
 
         $this->crud->addField([
@@ -79,20 +79,22 @@ class DonationCrudController extends CrudController
             'default' => Carbon::today()->toDateString(),
         ]);
 
-        $this->crud->addField([
-            'label' => ucfirst(__('volunteer')),
-            'name' => 'user_id',
-            'type' => 'select2_from_ajax',
-            'entity' => 'user',
-            'attribute' => 'name',
-            'model' => '\App\User',
-            'placeholder' => '',
-            'minimum_input_length' => 2,
-            'data_source' => null,
-            'attributes' => [
-                'disabled' => 'disabled',
-            ],
-        ]);
+        if (is('admin')) {
+            $this->crud->addField([
+                'label' => ucfirst(__('volunteer')),
+                'name' => 'user_id',
+                'type' => 'select2_from_ajax',
+                'entity' => 'user',
+                'attribute' => 'name',
+                'model' => '\App\User',
+                'placeholder' => '',
+                'minimum_input_length' => 2,
+                'data_source' => null,
+                'attributes' => [
+                    'disabled' => 'disabled',
+                ],
+            ], 'update');
+        }
 
         // ------ CRUD COLUMNS
         $this->crud->addColumns(['id', 'godfather', 'process', 'value', 'user_id']);
@@ -189,6 +191,18 @@ class DonationCrudController extends CrudController
             });
 
         // ------ ADVANCED QUERIES
+        if (!is('admin', 'accountancy')) {
+            $this->crud->denyAccess(['update', 'list']);
+        }
+
+        if (!is('admin')) {
+            $this->crud->denyAccess(['delete']);
+
+            $this->crud->addClause('whereHas', 'process', function ($query) {
+                $query->where('headquarter_id', restrictToHeadquarter());
+            })->get();
+        }
+
         $this->crud->query->with(['process', 'godfather']);
 
         $this->crud->addClause('orderBy', 'id', 'DESC');

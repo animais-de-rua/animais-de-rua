@@ -17,10 +17,17 @@ class CreateGodfathersTable extends Migration
             $table->increments('id');
             $table->string('name', 255);
             $table->string('alias', 255)->nullable();
-            $table->string('email', 127)->nullable()->unique();
+            $table->string('email', 127)->nullable();
             $table->string('phone', 255)->nullable();
+            $table->integer('headquarter_id')->unsigned();
             $table->string('territory_id', 6)->nullable();
             $table->integer('user_id')->unsigned();
+
+            $table->index(['headquarter_id']);
+            $table->foreign('headquarter_id')
+                ->references('id')
+                ->on('headquarters')
+                ->onDelete('cascade');
 
             $table->index(['territory_id']);
             $table->foreign('territory_id')

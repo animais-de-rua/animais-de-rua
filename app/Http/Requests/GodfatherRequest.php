@@ -28,9 +28,10 @@ class GodfatherRequest extends FormRequest
         return [
             'name' => 'required|min:5|max:255',
             'alias' => 'required|min:5|max:255',
-            'phone' => 'required_without:email|min:9|max:14',
+            'phone' => 'required_without:email',
             'email' => 'required_without:phone|email',
             'territory_id' => 'nullable|exists:territories,id',
+            'headquarter_id' => 'nullable|exists:headquarters,id',
         ];
     }
 

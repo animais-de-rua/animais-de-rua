@@ -36,7 +36,7 @@ class AdoptionCrudController extends CrudController
         */
 
         // ------ CRUD FIELDS
-        $this->crud->addFields(['process_id', 'fat_id', 'name', 'name_after', 'age', 'gender', 'sterilized', 'vaccinated', 'processed', 'images', 'features', 'history', 'status', 'user_id']);
+        $this->crud->addFields(['process_id', 'fat_id', 'name', 'name_after', 'age', 'gender', 'sterilized', 'vaccinated', 'processed', 'images', 'features', 'history', 'status']);
 
         $this->crud->addField([
             'label' => ucfirst(__('process')),
@@ -48,23 +48,25 @@ class AdoptionCrudController extends CrudController
             'data_source' => url('admin/process/ajax/search'),
             'placeholder' => __('Select a process'),
             'minimum_input_length' => 2,
-            'default' => \Request::has('process') ?? false,
+            'default' => \Request::get('process') ?: false,
         ]);
 
-        $this->crud->addField([
-            'label' => ucfirst(__('volunteer')),
-            'name' => 'user_id',
-            'type' => 'select2_from_ajax',
-            'entity' => 'user',
-            'attribute' => 'name',
-            'model' => '\App\User',
-            'placeholder' => '',
-            'minimum_input_length' => 2,
-            'data_source' => null,
-            'attributes' => [
-                'disabled' => 'disabled',
-            ],
-        ]);
+        if (is('admin')) {
+            $this->crud->addField([
+                'label' => ucfirst(__('volunteer')),
+                'name' => 'user_id',
+                'type' => 'select2_from_ajax',
+                'entity' => 'user',
+                'attribute' => 'name',
+                'model' => '\App\User',
+                'placeholder' => '',
+                'minimum_input_length' => 2,
+                'data_source' => null,
+                'attributes' => [
+                    'disabled' => 'disabled',
+                ],
+            ], 'update');
+        }
 
         $this->crud->addField([
             'label' => __('FAT'),
@@ -76,7 +78,7 @@ class AdoptionCrudController extends CrudController
             'data_source' => url('admin/user/ajax/search/' . User::FAT),
             'placeholder' => __('Select a fat'),
             'minimum_input_length' => 2,
-            'default' => \Request::has('user') ?? false,
+            'default' => \Request::get('user') ?: false,
         ]);
 
         $this->crud->addField([

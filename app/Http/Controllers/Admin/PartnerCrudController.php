@@ -92,7 +92,7 @@ class PartnerCrudController extends CrudController
         ]);
 
         // ------ CRUD FIELDS
-        $this->crud->addFields(['name', 'benefit', 'categories', 'territories', 'email', 'phone1', 'phone1_info', 'phone2', 'phone2_info', 'url', 'facebook', 'instagram', 'address', 'address_info', 'image', 'notes', 'status', 'user_id']);
+        $this->crud->addFields(['name', 'benefit', 'categories', 'territories', 'email', 'phone1', 'phone1_info', 'phone2', 'phone2_info', 'url', 'facebook', 'instagram', 'address', 'address_info', 'image', 'notes', 'status']);
 
         $this->crud->addField([
             'label' => __('Name'),
@@ -205,20 +205,22 @@ class PartnerCrudController extends CrudController
             'type' => 'checkbox',
         ]);
 
-        $this->crud->addField([
-            'label' => ucfirst(__('volunteer')),
-            'name' => 'user_id',
-            'type' => 'select2_from_ajax',
-            'entity' => 'user',
-            'attribute' => 'name',
-            'model' => '\App\User',
-            'placeholder' => '',
-            'minimum_input_length' => 2,
-            'data_source' => null,
-            'attributes' => [
-                'disabled' => 'disabled',
-            ],
-        ]);
+        if (is('admin')) {
+            $this->crud->addField([
+                'label' => ucfirst(__('volunteer')),
+                'name' => 'user_id',
+                'type' => 'select2_from_ajax',
+                'entity' => 'user',
+                'attribute' => 'name',
+                'model' => '\App\User',
+                'placeholder' => '',
+                'minimum_input_length' => 2,
+                'data_source' => null,
+                'attributes' => [
+                    'disabled' => 'disabled',
+                ],
+            ], 'update');
+        }
 
         // Filters
         $this->crud->addFilter([

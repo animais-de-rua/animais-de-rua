@@ -66,20 +66,35 @@ class GodfatherCrudController extends CrudController
             'allows_null' => true,
         ]);
 
-        $this->crud->addField([
-            'label' => ucfirst(__('volunteer')),
-            'name' => 'user_id',
-            'type' => 'select2_from_ajax',
-            'entity' => 'user',
-            'attribute' => 'name',
-            'model' => '\App\User',
-            'placeholder' => '',
-            'minimum_input_length' => 2,
-            'data_source' => null,
-            'attributes' => [
-                'disabled' => 'disabled',
-            ],
-        ]);
+        if (is('admin')) {
+            $this->crud->addField([
+                'label' => ucfirst(__('headquarter')),
+                'name' => 'headquarter_id',
+                'type' => 'select2',
+                'entity' => 'headquarter',
+                'attribute' => 'name',
+                'model' => 'App\Models\Headquarter',
+                'default' => restrictToHeadquarter(),
+                'attributes' => [
+                    'disabled' => 'disabled',
+                ],
+            ]);
+
+            $this->crud->addField([
+                'label' => ucfirst(__('volunteer')),
+                'name' => 'user_id',
+                'type' => 'select2_from_ajax',
+                'entity' => 'user',
+                'attribute' => 'name',
+                'model' => '\App\User',
+                'placeholder' => '',
+                'minimum_input_length' => 2,
+                'data_source' => null,
+                'attributes' => [
+                    'disabled' => 'disabled',
+                ],
+            ]);
+        }
 
         $this->separator();
 
@@ -155,19 +170,43 @@ class GodfatherCrudController extends CrudController
             'function_name' => 'getUserLinkAttribute',
         ]);
 
+        if (is('admin')) {
+            $this->crud->addColumn('headquarter_id', [
+                'label' => ucfirst(__('headquarter')),
+                'type' => 'select',
+                'entity' => 'headquarter',
+                'attribute' => 'name',
+                'model' => "App\Models\Headquarter",
+            ]);
+        }
+
         // Filtrers
-        $this->crud->addFilter([
-            'name' => 'user',
-            'type' => 'select2_ajax',
-            'label' => ucfirst(__('volunteer')),
-            'placeholder' => __('Select a volunteer'),
-        ],
-            url('admin/user/ajax/filter/' . User::VOLUNTEER),
-            function ($value) {
-                $this->crud->addClause('where', 'user_id', $value);
-            });
+        if (is('admin')) {
+            $this->crud->addFilter([
+                'name' => 'user',
+                'type' => 'select2_ajax',
+                'label' => ucfirst(__('volunteer')),
+                'placeholder' => __('Select a volunteer'),
+            ],
+                url('admin/user/ajax/filter/' . User::VOLUNTEER),
+                function ($value) {
+                    $this->crud->addClause('where', 'user_id', $value);
+                });
+        }
 
         // ------ ADVANCED QUERIES
+        if (!is('admin', 'accountancy')) {
+            $this->crud->denyAccess(['update', 'list']);
+        }
+
+        if (!is('admin')) {
+            $this->crud->denyAccess(['delete']);
+
+            $this->crud->addClause('where', 'headquarter_id', restrictToHeadquarter());
+        }
+
+        $this->crud->addClause('orderBy', 'id', 'DESC');
+
         $this->crud->addClause('with', ['donations' => function ($query) {
             $query->selectRaw('godfather_id, sum(value) as total')
                 ->groupBy(['godfather_id']);
@@ -181,10 +220,13 @@ class GodfatherCrudController extends CrudController
     public function store(StoreRequest $request)
     {
         // Add user
-        $request->merge(['user_id' => backpack_user()->id]);
+        $request->merge([
+            'user_id' => backpack_user()->id,
+            'headquarter_id' => restrictToHeadquarter(),
+        ]);
 
         // Validate email
-        $request->validate(['email' => 'required|email|unique:godfathers,email']);
+        // $request->validate(['email' => 'required|email|unique:godfathers,email']);
 
         return parent::storeCrud($request);
     }
@@ -192,7 +234,7 @@ class GodfatherCrudController extends CrudController
     public function update(UpdateRequest $request)
     {
         // Validate email with except id
-        $request->validate(['email' => 'required|email|unique:godfathers,email,' . $request->id]);
+        // $request->validate(['email' => 'required|email|unique:godfathers,email,' . $request->id]);
 
         return parent::updateCrud($request);
     }

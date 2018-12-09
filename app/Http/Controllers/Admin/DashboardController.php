@@ -12,19 +12,11 @@ class DashboardController extends CrudController
     public function dashboard()
     {
         $headquarter_sterilizations = DB::table('treatments')
-            ->join('processes', 'treatments.process_id', '=', 'processes.id')
+            ->join('appointments', 'treatments.appointment_id', '=', 'appointments.id')
+            ->join('processes', 'appointments.process_id', '=', 'processes.id')
             ->join('headquarters', 'processes.headquarter_id', '=', 'headquarters.id')
             ->selectRaw('SUM(affected_animals) as total, headquarters.name')
             ->whereRaw('treatment_type_id BETWEEN 30 AND 33')
-            ->groupBy('headquarters.id')
-            ->orderBy('total', 'DESC')
-            ->first();
-
-        $headquarter_deworming = DB::table('treatments')
-            ->join('processes', 'treatments.process_id', '=', 'processes.id')
-            ->join('headquarters', 'processes.headquarter_id', '=', 'headquarters.id')
-            ->selectRaw('SUM(affected_animals) as total, headquarters.name')
-            ->whereRaw('treatment_type_id BETWEEN 15 AND 17')
             ->groupBy('headquarters.id')
             ->orderBy('total', 'DESC')
             ->first();

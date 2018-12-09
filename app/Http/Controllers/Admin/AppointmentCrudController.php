@@ -38,7 +38,7 @@ class AppointmentCrudController extends CrudController
         */
 
         // ------ CRUD FIELDS
-        $this->crud->addFields(['process_id', 'vet_id_1', 'date_1', 'vet_id_2', 'date_2', 'amount_males', 'amount_females', 'notes', 'status', 'user_id']);
+        $this->crud->addFields(['process_id', 'vet_id_1', 'date_1', 'vet_id_2', 'date_2', 'amount_males', 'amount_females', 'notes', 'status']);
 
         $this->crud->addField([
             'label' => ucfirst(__('process')),
@@ -50,23 +50,25 @@ class AppointmentCrudController extends CrudController
             'data_source' => url('admin/process/ajax/search'),
             'placeholder' => __('Select a process'),
             'minimum_input_length' => 2,
-            'default' => \Request::has('process') ?? false,
+            'default' => \Request::get('process') ?: false,
         ]);
 
-        $this->crud->addField([
-            'label' => ucfirst(__('volunteer')),
-            'name' => 'user_id',
-            'type' => 'select2_from_ajax',
-            'entity' => 'user',
-            'attribute' => 'name',
-            'model' => '\App\User',
-            'placeholder' => '',
-            'minimum_input_length' => 2,
-            'data_source' => null,
-            'attributes' => [
-                'disabled' => 'disabled',
-            ],
-        ]);
+        if (is('admin')) {
+            $this->crud->addField([
+                'label' => ucfirst(__('volunteer')),
+                'name' => 'user_id',
+                'type' => 'select2_from_ajax',
+                'entity' => 'user',
+                'attribute' => 'name',
+                'model' => '\App\User',
+                'placeholder' => '',
+                'minimum_input_length' => 2,
+                'data_source' => null,
+                'attributes' => [
+                    'disabled' => 'disabled',
+                ],
+            ], 'update');
+        }
 
         $this->crud->addField([
             'label' => ucfirst(__('vet')) . ' 1',
@@ -78,7 +80,7 @@ class AppointmentCrudController extends CrudController
             'data_source' => url('admin/vet/ajax/search'),
             'placeholder' => __('Select a vet'),
             'minimum_input_length' => 2,
-            'default' => \Request::has('vet') ?? false,
+            'default' => \Request::get('vet') ?: false,
         ]);
 
         $this->crud->addField([
@@ -98,7 +100,7 @@ class AppointmentCrudController extends CrudController
             'data_source' => url('admin/vet/ajax/search'),
             'placeholder' => __('Select a vet'),
             'minimum_input_length' => 2,
-            'default' => \Request::has('vet') ?? false,
+            'default' => \Request::get('vet') ?: false,
         ]);
 
         $this->crud->addField([
@@ -308,24 +310,24 @@ class AppointmentCrudController extends CrudController
             $this->crud->addClause('whereHas', 'process', function ($query) {
                 $query->where('headquarter_id', restrictToHeadquarter());
             })->get();
+        } else {
+            // Headquarter filter
+            $headquarter_id = admin() ? \Session::get('headquarter', null) : backpack_user()->headquarter_id;
+            if ($headquarter_id) {
+                $this->crud->query->whereHas('process', function ($query) use ($headquarter_id) {
+                    $query->where('headquarter_id', $headquarter_id);
+                })->get();
+            }
         }
 
         $this->crud->query->with(['process', 'vet1', 'vet2', 'user']);
 
-        $this->crud->addClause('with', ['treatment' => function ($query) {
+        $this->crud->addClause('with', ['treatments' => function ($query) {
             $query->selectRaw('appointment_id, count(*) as treatments_count')
                 ->groupBy('appointment_id');
         }]);
 
-        $this->crud->addClause('orderBy', 'id', 'DESC');
-
-        // Headquarter filter
-        $headquarter_id = admin() ? \Session::get('headquarter', null) : backpack_user()->headquarter_id;
-        if ($headquarter_id) {
-            $this->crud->query->whereHas('process', function ($query) use ($headquarter_id) {
-                $query->where('headquarter_id', $headquarter_id);
-            })->get();
-        }
+        $this->crud->addClause('orderBy', 'appointments.id', 'DESC');
 
         // Buttons
         $this->crud->addButtonFromModelFunction('line', 'add_treatment', 'addTreatment', 'beginning');
@@ -340,11 +342,13 @@ class AppointmentCrudController extends CrudController
             false,
             function ($values) {
                 if ($values) {
-                    $this->crud->addClause('with', ['treatment' => function ($query) {
-                        $query
-                            ->groupBy('appointment_id')
-                            ->havingRaw('count(*) = 0');
-                    }]);
+                    // This selects appointments with treatments to use on a whereNotIn
+                    $withTreatments = Appointment::select('appointments.id')
+                        ->join('treatments', 'treatments.appointment_id', 'appointments.id')
+                        ->groupBy('appointments.id')
+                        ->pluck('id');
+
+                    $this->crud->addClause('whereNotIn', 'appointments.id', $withTreatments);
                 }
             });
 

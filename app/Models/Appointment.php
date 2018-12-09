@@ -109,7 +109,7 @@ class Appointment extends Model
 
     public function getTreatmentsCountValue()
     {
-        return data_get_first($this, 'treatment', 'treatments_count', 0);
+        return data_get_first($this, 'treatments', 'treatments_count', 0);
     }
 
     public function getDetailAttribute()

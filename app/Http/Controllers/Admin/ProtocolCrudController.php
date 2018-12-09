@@ -60,7 +60,7 @@ class ProtocolCrudController extends CrudController
             'function_name' => 'getUserLinkAttribute',
         ]);
 
-        $this->crud->addFields(['name', 'email', 'phone', 'territory_id', 'user_id']);
+        $this->crud->addFields(['name', 'email', 'phone', 'territory_id']);
 
         $this->crud->addField([
             'label' => __('Name'),
@@ -86,20 +86,22 @@ class ProtocolCrudController extends CrudController
             'allows_null' => true,
         ]);
 
-        $this->crud->addField([
-            'label' => ucfirst(__('volunteer')),
-            'name' => 'user_id',
-            'type' => 'select2_from_ajax',
-            'entity' => 'user',
-            'attribute' => 'name',
-            'model' => '\App\User',
-            'placeholder' => '',
-            'minimum_input_length' => 2,
-            'data_source' => null,
-            'attributes' => [
-                'disabled' => 'disabled',
-            ],
-        ]);
+        if (is('admin')) {
+            $this->crud->addField([
+                'label' => ucfirst(__('volunteer')),
+                'name' => 'user_id',
+                'type' => 'select2_from_ajax',
+                'entity' => 'user',
+                'attribute' => 'name',
+                'model' => '\App\User',
+                'placeholder' => '',
+                'minimum_input_length' => 2,
+                'data_source' => null,
+                'attributes' => [
+                    'disabled' => 'disabled',
+                ],
+            ], 'update');
+        }
 
         // Filters
         $this->crud->addFilter([

@@ -36,7 +36,7 @@ class ProcessCrudController extends CrudController
         */
 
         // ------ CRUD FIELDS
-        $this->crud->addFields(['name', 'contact', 'phone', 'email', 'latlong', 'territory_id', 'headquarter_id', 'specie', 'amount_males', 'amount_females', 'amount_other', 'status', 'images', 'history', 'notes', 'user_id', 'donations', 'treatments', 'appointments', 'stats']);
+        $this->crud->addFields(['name', 'contact', 'phone', 'email', 'latlong', 'territory_id', 'headquarter_id', 'specie', 'amount_males', 'amount_females', 'amount_other', 'status', 'images', 'history', 'notes', 'donations', 'treatments', 'appointments', 'stats']);
 
         $this->crud->addField([
             'label' => __('Name'),
@@ -154,20 +154,22 @@ class ProcessCrudController extends CrudController
             'quality' => 82,
         ]);
 
-        $this->crud->addField([
-            'label' => ucfirst(__('volunteer')),
-            'name' => 'user_id',
-            'type' => 'select2_from_ajax',
-            'entity' => 'user',
-            'attribute' => 'name',
-            'model' => '\App\User',
-            'placeholder' => '',
-            'minimum_input_length' => 2,
-            'data_source' => null,
-            'attributes' => [
-                'disabled' => 'disabled',
-            ],
-        ]);
+        if (is('admin')) {
+            $this->crud->addField([
+                'label' => ucfirst(__('volunteer')),
+                'name' => 'user_id',
+                'type' => 'select2_from_ajax',
+                'entity' => 'user',
+                'attribute' => 'name',
+                'model' => '\App\User',
+                'placeholder' => '',
+                'minimum_input_length' => 2,
+                'data_source' => null,
+                'attributes' => [
+                    'disabled' => 'disabled',
+                ],
+            ], 'update');
+        }
 
         $this->separator();
 
@@ -448,7 +450,8 @@ class ProcessCrudController extends CrudController
 
                 $this->crud->query
                     ->join('donations', 'processes.id', '=', 'donations.process_id')
-                    ->join('treatments', 'processes.id', '=', 'treatments.process_id')
+                    ->join('appointments', 'processes.id', '=', 'appointments.process_id')
+                    ->join('treatments', 'appointments.id', '=', 'treatments.appointment_id')
                     ->select('processes.*')
                     ->selectRaw('sum(donations.value) - sum(treatments.expense) as balance')
                     ->groupBy('processes.id');
@@ -482,6 +485,8 @@ class ProcessCrudController extends CrudController
             $this->crud->addClause('where', 'headquarter_id', restrictToHeadquarter());
 
             $this->crud->denyAccess(['delete']);
+
+            $this->crud->removeColumn('headquarter');
         }
 
         $this->crud->addClause('with', ['donations' => function ($query) {
@@ -494,7 +499,7 @@ class ProcessCrudController extends CrudController
                 ->groupBy('process_id');
         }]);
 
-        $this->crud->addClause('orderBy', 'id', 'DESC');
+        $this->crud->addClause('orderBy', 'processes.id', 'DESC');
 
         $this->crud->allowAccess('show');
 
@@ -541,24 +546,29 @@ class ProcessCrudController extends CrudController
 
         $this->separator();
 
+        $donations = Donation::where('process_id', $id)->get();
+        $appointments = Appointment::where('process_id', $id)->get();
+        $treatments = Treatment::whereIn('appointment_id', $appointments->pluck('id'))->get();
+        $adoptions = Adoption::where('process_id', $id)->get();
+
         $this->crud->addColumn(array_merge(
             $this->tableDonations(),
-            ['value' => Donation::where('process_id', $id)->get()]
+            ['value' => $donations]
         ));
 
         $this->crud->addColumn(array_merge(
             $this->tableTreatments(),
-            ['value' => Treatment::where('process_id', $id)->get()]
+            ['value' => $treatments]
         ));
 
         $this->crud->addColumn(array_merge(
             $this->tableAppointments(),
-            ['value' => Appointment::where('process_id', $id)->get()]
+            ['value' => $appointments]
         ));
 
         $this->crud->addColumn(array_merge(
             $this->tableAdoptions(),
-            ['value' => Adoption::where('process_id', $id)->get()]
+            ['value' => $adoptions]
         ));
 
         $this->crud->addColumn($this->tableStats());
