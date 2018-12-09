@@ -63,7 +63,7 @@ class Donation extends Model
 
     public function getProcessLinkAttribute()
     {
-        return $this->getLink($this->process);
+        return $this->getLink($this->process, '');
     }
 
     public function getGodfatherLinkAttribute()

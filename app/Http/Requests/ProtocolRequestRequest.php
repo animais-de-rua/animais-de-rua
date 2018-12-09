@@ -33,7 +33,7 @@ class ProtocolRequestRequest extends FormRequest
             'address' => 'required|min:3|max:255',
             'description' => 'nullable|min:3|max:4096',
             'territory_id' => 'required|exists:territories,id',
-            'process_id' => 'required|exists:processes,id',
+            'process_id' => 'nullable|exists:processes,id',
             'user_id' => 'required|exists:users,id',
             'protocol_id' => 'required|exists:protocols,id',
         ];

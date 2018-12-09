@@ -146,7 +146,7 @@ class AppointmentCrudController extends CrudController
         ]);
 
         // ------ CRUD COLUMNS
-        $this->crud->addColumns(['id', 'process_id', 'vet_id_1', 'date_1', 'vet_id_2', 'date_2', 'animal_count', 'status', 'user_id']);
+        $this->crud->addColumns(['id', 'process_id', 'vet_id_1', 'date_1', 'vet_id_2', 'date_2', 'treatment_count', 'animal_count', 'status', 'user_id']);
 
         $this->crud->setColumnDetails('id', [
             'label' => 'ID',
@@ -199,6 +199,13 @@ class AppointmentCrudController extends CrudController
             'label' => __('Animals') . ' M/F',
             'type' => 'model_function',
             'function_name' => 'getAnimalsValue',
+        ]);
+
+        $this->crud->setColumnDetails('treatment_count', [
+            'name' => 'treatment_count',
+            'label' => ucfirst(__('treatments')),
+            'type' => 'model_function',
+            'function_name' => 'getTreatmentsCountValue',
         ]);
 
         $this->crud->setColumnDetails('status', [
@@ -305,6 +312,11 @@ class AppointmentCrudController extends CrudController
 
         $this->crud->query->with(['process', 'vet1', 'vet2', 'user']);
 
+        $this->crud->addClause('with', ['treatment' => function ($query) {
+            $query->selectRaw('appointment_id, count(*) as treatments_count')
+                ->groupBy('appointment_id');
+        }]);
+
         $this->crud->addClause('orderBy', 'id', 'DESC');
 
         // Headquarter filter
@@ -314,6 +326,27 @@ class AppointmentCrudController extends CrudController
                 $query->where('headquarter_id', $headquarter_id);
             })->get();
         }
+
+        // Buttons
+        $this->crud->addButtonFromModelFunction('line', 'add_treatment', 'addTreatment', 'beginning');
+
+        // Extra filter
+        // Must be here because of a previous declaration of ->with(treatment)
+        $this->crud->addFilter([
+            'type' => 'simple',
+            'name' => 'treatments',
+            'label' => __('No treatments'),
+        ],
+            false,
+            function ($values) {
+                if ($values) {
+                    $this->crud->addClause('with', ['treatment' => function ($query) {
+                        $query
+                            ->groupBy('appointment_id')
+                            ->havingRaw('count(*) = 0');
+                    }]);
+                }
+            });
 
         // add asterisk for fields that are required in AppointmentRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');

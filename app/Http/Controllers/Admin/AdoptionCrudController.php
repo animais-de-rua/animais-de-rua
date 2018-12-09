@@ -36,7 +36,7 @@ class AdoptionCrudController extends CrudController
         */
 
         // ------ CRUD FIELDS
-        $this->crud->addFields(['process_id', 'fat_id', 'name', 'age', 'gender', 'sterilized', 'vaccinated', 'processed', 'images', 'history', 'status', 'user_id']);
+        $this->crud->addFields(['process_id', 'fat_id', 'name', 'name_after', 'age', 'gender', 'sterilized', 'vaccinated', 'processed', 'images', 'features', 'history', 'status', 'user_id']);
 
         $this->crud->addField([
             'label' => ucfirst(__('process')),
@@ -85,6 +85,11 @@ class AdoptionCrudController extends CrudController
         ]);
 
         $this->crud->addField([
+            'label' => __('Name after adoption'),
+            'name' => 'name_after',
+        ]);
+
+        $this->crud->addField([
             'label' => ucfirst(__('age')),
             'name' => 'age',
             'type' => 'age',
@@ -123,6 +128,12 @@ class AdoptionCrudController extends CrudController
             'thumb' => 340,
             'size' => 800,
             'quality' => 82,
+        ]);
+
+        $this->crud->addField([
+            'label' => __('Features'),
+            'type' => 'wysiwyg',
+            'name' => 'features',
         ]);
 
         $this->crud->addField([

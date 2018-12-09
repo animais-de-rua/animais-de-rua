@@ -38,14 +38,14 @@ class TreatmentCrudController extends CrudController
         */
 
         // ------ CRUD COLUMNS
-        $this->crud->setColumns(['id', 'process', 'treatment_type', 'vet', 'affected_animals', 'affected_animals_new', 'expense', 'date', 'status', 'user_id']);
+        $this->crud->setColumns(['id', 'appointment', 'treatment_type', 'vet', 'affected_animals', 'affected_animals_new', 'expense', 'date', 'status', 'user_id']);
 
         $this->crud->setColumnDetails('id', [
             'label' => 'ID',
         ]);
 
-        $this->crud->setColumnDetails('process', [
-            'name' => 'process',
+        $this->crud->setColumnDetails('appointment', [
+            'name' => 'appointment',
             'label' => ucfirst(__('process')),
             'type' => 'model_function',
             'limit' => 120,
@@ -124,16 +124,16 @@ class TreatmentCrudController extends CrudController
         }
 
         $this->crud->addField([
-            'label' => ucfirst(__('process')),
-            'name' => 'process_id',
+            'label' => ucfirst(__('appointment')),
+            'name' => 'appointment_id',
             'type' => 'select2_from_ajax_reload',
-            'entity' => 'process',
+            'entity' => 'appointment',
             'attribute' => 'detail',
-            'model' => '\App\Models\Process',
-            'data_source' => url('admin/process/ajax/search'),
-            'placeholder' => __('Select a process'),
+            'model' => '\App\Models\Appointment',
+            'data_source' => url('admin/appointment/ajax/search'),
+            'placeholder' => __('Search for the date or the ID of the appointment'),
             'minimum_input_length' => 2,
-            'default' => $process_id ?? false,
+            'default' => \Request::get('appointment') ?: false,
         ]);
 
         $this->crud->addField([
@@ -238,7 +238,9 @@ class TreatmentCrudController extends CrudController
         ],
             url('admin/process/ajax/filter'),
             function ($value) {
-                $this->crud->addClause('where', 'process_id', $value);
+                $this->crud->addClause('whereHas', 'appointment', function ($query) use ($value) {
+                    $query->where('process_id', $value);
+                })->get();
             });
 
         $this->crud->addFilter([
@@ -328,14 +330,16 @@ class TreatmentCrudController extends CrudController
         }
 
         if (!is('admin')) {
-            $this->crud->addClause('whereHas', 'process', function ($query) {
-                $query->where('headquarter_id', restrictToHeadquarter());
+            $this->crud->addClause('whereHas', 'appointment', function ($query) {
+                $query->whereHas('process', function ($query) {
+                    $query->where('headquarter_id', restrictToHeadquarter());
+                });
             })->get();
 
             $this->crud->denyAccess(['delete']);
         }
 
-        $this->crud->query->with(['process', 'vet', 'user', 'treatment_type']);
+        $this->crud->query->with(['appointment', 'vet', 'user', 'treatment_type']);
 
         $this->crud->addClause('orderBy', 'id', 'DESC');
 

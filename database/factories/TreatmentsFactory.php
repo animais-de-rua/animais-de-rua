@@ -1,7 +1,7 @@
 <?php
 
 use App\Helpers\EnumHelper;
-use App\Models\Process;
+use App\Models\Appointment;
 use App\Models\Treatment;
 use App\Models\TreatmentType;
 use App\Models\Vet;
@@ -18,7 +18,7 @@ $factory->define(Treatment::class, function (Faker $faker) {
     $date = $faker->dateTimeBetween('-2 months', 'now');
 
     return [
-        'process_id' => $faker->randomElement(Process::all()->pluck('id')->toArray()),
+        'appointment_id' => $faker->randomElement(Appointment::all()->pluck('id')->toArray()),
         'treatment_type_id' => $faker->randomElement(TreatmentType::all()->pluck('id')->toArray()),
         'vet_id' => $faker->randomElement(Vet::all()->pluck('id')->toArray()),
         'user_id' => $faker->randomElement(User::all()->pluck('id')->toArray()),

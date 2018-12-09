@@ -22,12 +22,14 @@ class CreateAdoptionsTable extends Migration
 
             // Animal
             $table->string('name', 255);
+            $table->string('name_after', 255);
             $table->integer('age')->unsigned()->default(0);
             $table->enum('gender', EnumHelper::values('animal.gender'))->nullable();
             $table->boolean('sterilized')->default(0);
             $table->boolean('vaccinated')->default(0);
             $table->boolean('processed')->default(0);
             $table->text('images')->nullable();
+            $table->text('features')->nullable();
             $table->text('history')->nullable();
             $table->enum('status', EnumHelper::values('adoption.status'))->default('open');
             $table->timestamps();

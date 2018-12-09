@@ -28,6 +28,7 @@ class AdoptionRequest extends FormRequest
     {
         return [
             'name' => 'required|min:2|max:255',
+            'name_after' => 'nullable|min:2|max:255',
             'process_id' => 'required|exists:processes,id',
             'fat_id' => 'required|exists:users,id',
             'age.1' => 'numeric|min:0|max:30',
@@ -36,6 +37,7 @@ class AdoptionRequest extends FormRequest
             'sterilized' => 'nullable|in:0,1',
             'vaccinated' => 'nullable|in:0,1',
             'processed' => 'nullable|in:0,1',
+            'features' => 'nullable|max:4096',
             'history' => 'nullable|max:4096',
         ];
     }

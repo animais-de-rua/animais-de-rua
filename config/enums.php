@@ -19,6 +19,7 @@ return [
     'adoption' => [
         'status' => [
             'open' => 'open',
+            'pending' => 'pending',
             'closed' => 'closed',
             'archived' => 'archived',
         ],

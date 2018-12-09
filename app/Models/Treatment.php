@@ -34,9 +34,9 @@ class Treatment extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function process()
+    public function appointment()
     {
-        return $this->belongsTo('App\Models\Process', 'process_id');
+        return $this->belongsTo('App\Models\Appointment', 'appointment_id');
     }
 
     public function vet()
@@ -68,17 +68,17 @@ class Treatment extends Model
 
     public function getProcessLinkAttribute()
     {
-        return $this->getLink($this->process);
+        return $this->getLink($this->appointment->process, '');
     }
 
     public function getVetLinkAttribute()
     {
-        return $this->getLink($this->vet);
+        return is('admin', 'vet') ? $this->getLink($this->vet) : $this->vet->name;
     }
 
     public function getUserLinkAttribute()
     {
-        return $this->getLink($this->user);
+        return is('admin') ? $this->getLink($this->user) : $this->user->name;
     }
 
     public function getFullExpenseAttribute()
@@ -86,9 +86,9 @@ class Treatment extends Model
         return $this->expense . '€';
     }
 
-    public function getAffectedAnimalsNew($process_id)
+    public function getAffectedAnimalsNew($appointment_id)
     {
-        return Treatment::selectRaw('SUM(affected_animals_new) as total')->where('process_id', $process_id)->first()->total;
+        return Treatment::selectRaw('SUM(affected_animals_new) as total')->where('appointment_id', $appointment_id)->first()->total;
     }
 
     /*

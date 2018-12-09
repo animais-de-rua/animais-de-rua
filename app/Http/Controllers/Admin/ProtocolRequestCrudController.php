@@ -77,10 +77,10 @@ class ProtocolRequestCrudController extends CrudController
             'function_name' => 'getUserLinkAttribute',
         ]);
 
-        $this->crud->addFields(['council', 'name', 'email', 'phone', 'address', 'description', 'territory_id', 'protocol_id', 'process_id', 'user_id']);
+        $this->crud->addFields(['protocol_id', 'process_id', 'council', 'name', 'email', 'phone', 'address', 'territory_id', 'description', 'user_id']);
 
         $this->crud->addField([
-            'label' => ucfirst(__('council')),
+            'label' => 'ID ' . ucfirst(__('council')),
             'name' => 'council',
         ]);
 

@@ -64,17 +64,17 @@ class Adoption extends Model
 
     public function getProcessLinkAttribute()
     {
-        return $this->getLink($this->process);
+        return $this->getLink($this->process, '');
     }
 
     public function getUserLinkAttribute()
     {
-        return $this->getLink($this->user);
+        return is('admin') ? $this->getLink($this->user) : $this->user->name;
     }
 
     public function getFatLinkAttribute()
     {
-        return $this->getLink($this->fat);
+        return is('admin') ? $this->getLink($this->fat) : $this->fat->name;
     }
 
     public function getGenderValueAttribute()

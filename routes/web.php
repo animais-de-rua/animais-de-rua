@@ -59,6 +59,9 @@ Route::group(['prefix' => config('backpack.base.route_prefix'), 'middleware' => 
     Route::get('adoption/ajax/filter/', 'APICrudController@adoptionFilter');
     Route::get('adoption/ajax/search/', 'APICrudController@adoptionSearch');
 
+    Route::get('appointment/ajax/filter/', 'APICrudController@appointmentFilter');
+    Route::get('appointment/ajax/search/', 'APICrudController@appointmentSearch');
+
     Route::get('godfather/ajax/filter', 'APICrudController@godfatherFilter');
     Route::get('godfather/ajax/search', 'APICrudController@godfatherSearch');
 

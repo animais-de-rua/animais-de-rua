@@ -80,13 +80,13 @@ class FakeSeeder extends Seeder
         $this->log('Vets');
         factory(Vet::class, 50)->create();
 
-        // Treatments
-        $this->log('Treatments');
-        factory(Treatment::class, 120)->create();
-
         // Appointments
         $this->log('Appointments');
         factory(Appointment::class, 100)->create();
+
+        // Treatments
+        $this->log('Treatments');
+        factory(Treatment::class, 120)->create();
 
         // Adoptions
         $this->log('Adoptions');

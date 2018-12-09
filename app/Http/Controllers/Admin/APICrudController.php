@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Admin\Traits\Permissions;
 use App\Models\Adoption;
+use App\Models\Appointment;
 use App\Models\FriendCardModality;
 use App\Models\Godfather;
 use App\Models\Headquarter;
@@ -63,6 +64,38 @@ class APICrudController extends CrudController
     public function adoptionFilter(Request $request)
     {
         return $this->adoptionSearch($request)->pluck('name', 'id');
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Appointment
+    |--------------------------------------------------------------------------
+    */
+    public function appointmentSearch(Request $request)
+    {
+        $searchFields = ['id', 'date_1', 'date_2'];
+        $search_term = $this->getSearchParam($request);
+
+        $results = Appointment::with(['user', 'process.headquarter'])->where('status', '<>', 'approving');
+
+        if ($search_term) {
+            $results = $results->where(function ($query) use ($search_term) {
+                $query->where('id', 'LIKE', "%$search_term%")
+                    ->orWhere('date_1', 'LIKE', "%$search_term%")
+                    ->orWhere('date_2', 'LIKE', "%$search_term%");
+            });
+        }
+
+        if (!is('admin', 'appointments')) {
+            $results = $results->where('user_id', backpack_user()->id);
+        }
+
+        return $results->orderBy('id', 'DESC')->paginate(10);
+    }
+
+    public function appointmentFilter(Request $request)
+    {
+        return $this->appointmentSearch($request)->pluck('detail', 'id');
     }
 
     /*

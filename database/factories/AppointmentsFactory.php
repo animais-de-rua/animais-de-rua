@@ -14,7 +14,7 @@ use Faker\Generator as Faker;
 */
 
 $factory->define(Appointment::class, function (Faker $faker) {
-    $date = $faker->dateTimeBetween('-2 months', 'now');
+    $date = $faker->dateTimeBetween('-2 months', '+1 month');
     $vets = $faker->randomElements(Vet::all()->pluck('id')->toArray(), 2);
 
     return [

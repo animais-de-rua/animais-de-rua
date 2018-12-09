@@ -23,7 +23,7 @@ class CreateTreatmentsTable extends Migration
 
         Schema::create('treatments', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('process_id')->unsigned();
+            $table->integer('appointment_id')->unsigned();
             $table->integer('treatment_type_id')->unsigned();
             $table->integer('vet_id')->unsigned();
             $table->integer('user_id')->unsigned()->nullable();
@@ -34,10 +34,10 @@ class CreateTreatmentsTable extends Migration
             $table->date('date');
             $table->timestamps();
 
-            $table->index(['process_id']);
-            $table->foreign('process_id')
+            $table->index(['appointment_id']);
+            $table->foreign('appointment_id')
                 ->references('id')
-                ->on('processes')
+                ->on('appointments')
                 ->onDelete('cascade');
 
             $table->index(['treatment_type_id']);

@@ -26,7 +26,7 @@ class TreatmentRequest extends FormRequest
     public function rules()
     {
         return [
-            'process_id' => 'required|exists:processes,id',
+            'appointment_id' => 'required|exists:appointments,id',
             'treatment_type_id' => 'required|exists:treatment_types,id',
             'vet_id' => 'required|exists:vets,id',
             'affected_animals' => 'required|numeric|min:1|max:100',

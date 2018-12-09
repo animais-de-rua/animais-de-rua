@@ -89,7 +89,7 @@ class Process extends Model
 
     public function getUserLinkAttribute()
     {
-        return $this->getLink($this->user);
+        return is('admin') ? $this->getLink($this->user) : $this->user->name;
     }
 
     public function getDateAttribute()
