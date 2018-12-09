@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Helpers\EnumHelper;
 use App\Http\Requests\Request;
+use App\Models\Process;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AdoptionRequest extends FormRequest
@@ -64,5 +65,22 @@ class AdoptionRequest extends FormRequest
         return [
             //
         ];
+    }
+
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $process = Process::where('id', $this->input('process_id'))->first();
+
+            if ($this->input('processed')) {
+                $count = 0;
+                foreach ($process->appointments as $appointment) {
+                    $count += count($appointment->treatments);
+                }
+                if (!$count) {
+                    $validator->errors()->add('processed', __("There are no treatments in the process, so this animal can't be already treated"));
+                }
+            }
+        });
     }
 }

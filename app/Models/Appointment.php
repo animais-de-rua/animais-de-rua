@@ -65,7 +65,7 @@ class Appointment extends Model
         return $this->belongsTo('App\Models\Vet', 'vet_id_2');
     }
 
-    public function treatment()
+    public function treatments()
     {
         return $this->hasMany('App\Models\Treatment', 'appointment_id');
     }

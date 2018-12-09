@@ -50,11 +50,6 @@ class Process extends Model
         return $this->hasMany('App\Models\Donation', 'process_id');
     }
 
-    public function treatments()
-    {
-        return $this->hasMany('App\Models\Treatment', 'process_id');
-    }
-
     public function appointments()
     {
         return $this->hasMany('App\Models\Appointment', 'process_id');

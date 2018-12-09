@@ -348,6 +348,18 @@ class AppointmentCrudController extends CrudController
                 }
             });
 
+        $this->crud->addFilter([
+            'type' => 'simple',
+            'name' => 'archive',
+            'label' => __('Archive'),
+        ], false, function ($value) {});
+
+        foreach ($this->crud->filters as $filter) {
+            if ($filter->name == 'archive' && $filter->currentValue == null) {
+                $this->crud->addClause('whereRaw', 'date_1 > DATE_SUB(curdate(), INTERVAL 1 MONTH)');
+            }
+        }
+
         // add asterisk for fields that are required in AppointmentRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
