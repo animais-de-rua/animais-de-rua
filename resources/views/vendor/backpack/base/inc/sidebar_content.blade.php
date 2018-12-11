@@ -1,10 +1,11 @@
 <li><a href="{{ backpack_url('dashboard') }}"><i class="fa fa-dashboard"></i> <span>{{ trans('backpack::base.dashboard') }}</span></a></li>
 
-{{-- @if(restrictTo('admin')) --}}
+@if(restrictTo(['admin', 'volunteer']))
 <li class="header">{{ __("Management") }}</li>
 <li><a href="{{ backpack_url('process') }}"><i class="fa icon-process"></i> <span class="text-capitalize">{{ __("processes") }}</span></a></li>
 <li><a href="{{ backpack_url('appointment') }}"><i class="fa icon-appointment"></i> <span class="text-capitalize">{{ __("appointments") }}</span></a></li>
 <li><a href="{{ backpack_url('adoption') }}"><i class="fa icon-animal"></i> <span class="text-capitalize">{{ __("adoptions") }}</span></a></li>
+@endif
 
 @if(restrictTo('admin', 'accountancy'))
 <li><a href="{{ backpack_url('godfather') }}"><i class="fa icon-godfather"></i> <span class="text-capitalize">{{ __("godfathers") }}</span></a></li>
@@ -26,7 +27,9 @@
     <a href="#"><i class="fa icon-treatment"></i> <span class="text-capitalize">{{ __("treatment") }}</span> <i class="fa fa-angle-left pull-right"></i></a>
     <ul class="treeview-menu">
 @endif
+@if(restrictTo(['admin', 'volunteer']))
         <li><a href="{{ backpack_url('treatment') }}"><i class="fa icon-treatment"></i> <span class="text-capitalize">{{ __("treatments") }}</span></a></li>
+@endif
 @if(restrictTo('admin'))
         <li><a href="{{ backpack_url('treatmenttype') }}"><i class="fa icon-treatment-type"></i> <span class="text-capitalize">{{ __("treatment types") }}</span></a></li>
     </ul>

@@ -31,25 +31,25 @@ class CreateAppointmentsTable extends Migration
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
-                ->onDelete('cascade');
+                ->onDelete('set null');
 
             $table->index(['process_id']);
             $table->foreign('process_id')
                 ->references('id')
                 ->on('processes')
-                ->onDelete('cascade');
+                ->onDelete('set null');
 
             $table->index(['vet_id_1']);
             $table->foreign('vet_id_1')
                 ->references('id')
                 ->on('vets')
-                ->onDelete('cascade');
+                ->onDelete('set null');
 
             $table->index(['vet_id_2']);
             $table->foreign('vet_id_2')
                 ->references('id')
                 ->on('vets')
-                ->onDelete('cascade');
+                ->onDelete('set null');
 
             $table->timestamps();
         });

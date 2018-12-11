@@ -26,19 +26,19 @@ class CreateProtocolsTable extends Migration
             $table->foreign('territory_id')
                 ->references('id')
                 ->on('territories')
-                ->onDelete('cascade');
+                ->onDelete('set null');
 
             $table->index(['headquarter_id']);
             $table->foreign('headquarter_id')
                 ->references('id')
                 ->on('headquarters')
-                ->onDelete('cascade');
+                ->onDelete('set null');
 
             $table->index(['user_id']);
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
-                ->onDelete('cascade');
+                ->onDelete('set null');
 
             $table->timestamps();
         });
@@ -60,25 +60,25 @@ class CreateProtocolsTable extends Migration
             $table->foreign('territory_id')
                 ->references('id')
                 ->on('territories')
-                ->onDelete('cascade');
+                ->onDelete('set null');
 
             $table->index(['process_id']);
             $table->foreign('process_id')
                 ->references('id')
                 ->on('processes')
-                ->onDelete('cascade');
+                ->onDelete('set null');
 
             $table->index(['protocol_id']);
             $table->foreign('protocol_id')
                 ->references('id')
                 ->on('protocols')
-                ->onDelete('cascade');
+                ->onDelete('set null');
 
             $table->index(['user_id']);
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
-                ->onDelete('cascade');
+                ->onDelete('set null');
 
             $table->timestamps();
         });

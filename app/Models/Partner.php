@@ -66,7 +66,7 @@ class Partner extends Model
 
     public function getUserLinkAttribute()
     {
-        return $this->getLink($this->user);
+        return $this->getLink($this->user, is('admin'));
     }
 
     public function getCategoryListAttribute()

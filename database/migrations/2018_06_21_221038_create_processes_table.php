@@ -40,19 +40,19 @@ class CreateProcessesTable extends Migration
             $table->foreign('headquarter_id')
                 ->references('id')
                 ->on('headquarters')
-                ->onDelete('cascade');
+                ->onDelete('set null');
 
             $table->index(['territory_id']);
             $table->foreign('territory_id')
                 ->references('id')
                 ->on('territories')
-                ->onDelete('cascade');
+                ->onDelete('set null');
 
             $table->index(['user_id']);
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
-                ->onDelete('cascade');
+                ->onDelete('set null');
 
             $table->timestamps();
         });

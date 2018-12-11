@@ -69,12 +69,12 @@ class Adoption extends Model
 
     public function getUserLinkAttribute()
     {
-        return is('admin') ? $this->getLink($this->user) : $this->user->name;
+        return $this->getLink($this->user, is('admin'));
     }
 
     public function getFatLinkAttribute()
     {
-        return is('admin') ? $this->getLink($this->fat) : $this->fat->name;
+        return $this->getLink($this->fat, is('admin'));
     }
 
     public function getGenderValueAttribute()

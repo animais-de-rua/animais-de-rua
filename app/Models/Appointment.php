@@ -84,22 +84,22 @@ class Appointment extends Model
 
     public function getProcessLinkAttribute()
     {
-        return $this->getLink($this->process, '');
+        return $this->getLink($this->process, true, '');
     }
 
     public function getUserLinkAttribute()
     {
-        return is('admin') ? $this->getLink($this->user) : $this->user->name;
+        return $this->getLink($this->user, is('admin'));
     }
 
     public function getVet1LinkAttribute()
     {
-        return is('admin', 'vet') ? $this->getLink($this->vet1) : $this->vet1->name;
+        return $this->getLink($this->vet1, is('admin', 'vet'));
     }
 
     public function getVet2LinkAttribute()
     {
-        return is('admin', 'vet') ? $this->getLink($this->vet2) : $this->vet2->name;
+        return $this->getLink($this->vet2, is('admin', 'vet'));
     }
 
     public function getAnimalsValue()

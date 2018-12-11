@@ -27,19 +27,19 @@ class CreateGodfathersTable extends Migration
             $table->foreign('headquarter_id')
                 ->references('id')
                 ->on('headquarters')
-                ->onDelete('cascade');
+                ->onDelete('set null');
 
             $table->index(['territory_id']);
             $table->foreign('territory_id')
                 ->references('id')
                 ->on('territories')
-                ->onDelete('cascade');
+                ->onDelete('set null');
 
             $table->index(['user_id']);
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
-                ->onDelete('cascade');
+                ->onDelete('set null');
 
             $table->timestamps();
         });
@@ -57,19 +57,19 @@ class CreateGodfathersTable extends Migration
             $table->foreign('process_id')
                 ->references('id')
                 ->on('processes')
-                ->onDelete('cascade');
+                ->onDelete('set null');
 
             $table->index(['godfather_id']);
             $table->foreign('godfather_id')
                 ->references('id')
                 ->on('godfathers')
-                ->onDelete('cascade');
+                ->onDelete('set null');
 
             $table->index(['user_id']);
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
-                ->onDelete('cascade');
+                ->onDelete('set null');
 
             // $table->unique(['process_id', 'godfather_id']);
 

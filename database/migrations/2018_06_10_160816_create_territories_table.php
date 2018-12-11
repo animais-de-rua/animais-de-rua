@@ -26,7 +26,7 @@ class CreateTerritoriesTable extends Migration
             $table->foreign('parent_id')
                 ->references('id')
                 ->on('territories')
-                ->onDelete('cascade');
+                ->onDelete('set null');
         });
 
         Schema::table('pages', function (Blueprint $table) {

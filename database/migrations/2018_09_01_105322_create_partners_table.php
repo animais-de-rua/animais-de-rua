@@ -38,7 +38,7 @@ class CreatePartnersTable extends Migration
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
-                ->onDelete('cascade');
+                ->onDelete('set null');
         });
 
         Schema::create('partner_category_list', function (Blueprint $table) {
@@ -56,13 +56,13 @@ class CreatePartnersTable extends Migration
             $table->foreign('partner_id')
                 ->references('id')
                 ->on('partners')
-                ->onDelete('cascade');
+                ->onDelete('set null');
 
             $table->index(['partner_category_list_id']);
             $table->foreign('partner_category_list_id')
                 ->references('id')
                 ->on('partner_category_list')
-                ->onDelete('cascade');
+                ->onDelete('set null');
 
             $table->primary(['partner_id', 'partner_category_list_id']);
         });
@@ -75,13 +75,13 @@ class CreatePartnersTable extends Migration
             $table->foreign('partner_id')
                 ->references('id')
                 ->on('partners')
-                ->onDelete('cascade');
+                ->onDelete('set null');
 
             $table->index(['territory_id']);
             $table->foreign('territory_id')
                 ->references('id')
                 ->on('territories')
-                ->onDelete('cascade');
+                ->onDelete('set null');
 
             $table->primary(['partner_id', 'territory_id']);
         });

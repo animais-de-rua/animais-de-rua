@@ -300,6 +300,10 @@ class AppointmentCrudController extends CrudController
             });
 
         // ------ ADVANCED QUERIES
+        if (!is(['admin', 'volunteer'], 'processes')) {
+            $this->crud->denyAccess(['list', 'show']);
+        }
+
         if (!is('admin', 'appointments')) {
             $this->crud->denyAccess(['update', 'delete']);
 

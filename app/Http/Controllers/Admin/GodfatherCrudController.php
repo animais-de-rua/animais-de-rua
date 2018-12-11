@@ -103,6 +103,7 @@ class GodfatherCrudController extends CrudController
             'name' => 'donations',
             'type' => 'relation_table',
             'route' => '/admin/donation',
+            'buttons' => is('admin', 'accountancy') ? ['add'] : [],
             'columns' => [
                 'name' => [
                     'label' => ucfirst(__('process')),

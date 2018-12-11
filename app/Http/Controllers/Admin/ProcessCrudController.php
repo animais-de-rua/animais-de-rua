@@ -36,7 +36,7 @@ class ProcessCrudController extends CrudController
         */
 
         // ------ CRUD FIELDS
-        $this->crud->addFields(['name', 'contact', 'phone', 'email', 'latlong', 'territory_id', 'headquarter_id', 'specie', 'amount_males', 'amount_females', 'amount_other', 'status', 'images', 'history', 'notes', 'donations', 'treatments', 'appointments', 'stats']);
+        $this->crud->addFields(['name', 'contact', 'phone', 'email', 'latlong', 'territory_id', 'headquarter_id', 'specie', 'amount_males', 'amount_females', 'amount_other', 'status', 'images', 'history', 'notes', 'donations', 'treatments', 'stats']);
 
         $this->crud->addField([
             'label' => __('Name'),
@@ -175,7 +175,6 @@ class ProcessCrudController extends CrudController
 
         $this->crud->addField($this->tableDonations());
         $this->crud->addField($this->tableTreatments());
-        $this->crud->addField($this->tableAppointments());
         $this->crud->addField($this->tableAdoptions());
         $this->crud->addField($this->tableStats());
 
@@ -477,6 +476,10 @@ class ProcessCrudController extends CrudController
             });
 
         // ------ ADVANCED QUERIES
+        if (!is(['admin', 'volunteer'], 'processes')) {
+            $this->crud->denyAccess(['list', 'show']);
+        }
+
         if (!is('admin', 'processes')) {
             $this->crud->denyAccess(['update']);
         }
@@ -562,11 +565,6 @@ class ProcessCrudController extends CrudController
         ));
 
         $this->crud->addColumn(array_merge(
-            $this->tableAppointments(),
-            ['value' => $appointments]
-        ));
-
-        $this->crud->addColumn(array_merge(
             $this->tableAdoptions(),
             ['value' => $adoptions]
         ));
@@ -612,7 +610,12 @@ class ProcessCrudController extends CrudController
             'name' => 'donations',
             'type' => 'relation_table',
             'route' => '/admin/donation',
+            'buttons' => is('admin', 'accountancy') ? ['add'] : [],
             'columns' => [
+                'id' => [
+                    'label' => 'ID',
+                    'name' => 'id',
+                ],
                 'name' => [
                     'label' => ucfirst(__('godfather')),
                     'name' => 'godfatherLink',
@@ -636,7 +639,12 @@ class ProcessCrudController extends CrudController
             'name' => 'treatments',
             'type' => 'relation_table',
             'route' => '/admin/treatment',
+            'buttons' => is('admin', 'treatments') ? ['add'] : [],
             'columns' => [
+                'id' => [
+                    'label' => 'ID',
+                    'name' => 'id',
+                ],
                 'treatment_type' => [
                     'label' => ucfirst(__('treatment type')),
                     'name' => 'treatment_type',
@@ -658,38 +666,6 @@ class ProcessCrudController extends CrudController
         ];
     }
 
-    private function tableAppointments()
-    {
-        return [
-            'label' => ucfirst(__('appointments')),
-            'name' => 'appointments',
-            'type' => 'relation_table',
-            'route' => '/admin/appointment',
-            'columns' => [
-                'user' => [
-                    'label' => ucfirst(__('volunteer')),
-                    'name' => 'userLink',
-                ],
-                'vet1' => [
-                    'label' => ucfirst(__('vet')) . ' 1',
-                    'name' => 'vet1Link',
-                ],
-                'date1' => [
-                    'label' => __('Date') . ' 1',
-                    'name' => 'date_1',
-                ],
-                'vet2' => [
-                    'label' => ucfirst(__('vet')) . ' 2',
-                    'name' => 'vet2Link',
-                ],
-                'date2' => [
-                    'label' => __('Date') . ' 2',
-                    'name' => 'date_2',
-                ],
-            ],
-        ];
-    }
-
     private function tableAdoptions()
     {
         return [
@@ -697,7 +673,12 @@ class ProcessCrudController extends CrudController
             'name' => 'adoptions',
             'type' => 'relation_table',
             'route' => '/admin/adoption',
+            'buttons' => is('admin', 'adoptions') ? ['add'] : [],
             'columns' => [
+                'id' => [
+                    'label' => 'ID',
+                    'name' => 'id',
+                ],
                 'user' => [
                     'label' => ucfirst(__('volunteer')),
                     'name' => 'userLink',

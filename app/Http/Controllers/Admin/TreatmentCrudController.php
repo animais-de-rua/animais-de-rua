@@ -6,6 +6,7 @@ use App\Helpers\EnumHelper;
 use App\Http\Controllers\Admin\Traits\Permissions;
 use App\Http\Requests\TreatmentRequest as StoreRequest;
 use App\Http\Requests\TreatmentRequest as UpdateRequest;
+use App\Models\Appointment;
 use App\Models\Process;
 use App\Models\Treatment;
 use App\User;
@@ -103,12 +104,26 @@ class TreatmentCrudController extends CrudController
         ]);
 
         // ------ CRUD FIELDS
-        $process_id = \Request::get('process') ?: false;
+        $appointment_id = \Request::get('appointment') ?: false;
         $treatment_id = $this->getEntryID();
-        $attributes = !$process_id && !$treatment_id ? ['disabled' => 'disabled'] : [];
+        $attributes = !$appointment_id && !$treatment_id ? ['disabled' => 'disabled'] : [];
+        $vet_id = false;
+        $date = false;
 
-        if ($process_id) {
-            $process = Process::where('id', $process_id)->first();
+        if ($appointment_id) {
+            $appointment = Appointment::where('id', $appointment_id)->first();
+            $process = Process::where('id', $appointment->process_id)->first();
+
+            switch ($appointment->status) {
+                case 'approved_option_1':
+                    $vet_id = $appointment->vet1->id;
+                    $date = $appointment->date_1;
+                    break;
+                case 'approved_option_2':
+                    $vet_id = $appointment->vet2->id;
+                    $date = $appointment->date_2;
+                    break;
+            }
 
             $total_animals = $max = $process->amount;
             $total_affected_animals_new = 0;
@@ -133,18 +148,10 @@ class TreatmentCrudController extends CrudController
             'data_source' => url('admin/appointment/ajax/search'),
             'placeholder' => __('Search for the date or the ID of the appointment'),
             'minimum_input_length' => 2,
-            'default' => \Request::get('appointment') ?: false,
+            'default' => $appointment_id,
         ]);
 
-        $this->crud->addField([
-            'label' => ucfirst(__('treatment type')),
-            'type' => 'select2',
-            'name' => 'treatment_type_id',
-            'entity' => 'treatment_type',
-            'attribute' => 'name',
-            'model' => "App\Models\TreatmentType",
-            'attributes' => $attributes,
-        ]);
+        $this->separator();
 
         $this->crud->addField([
             'label' => ucfirst(__('vet')),
@@ -156,7 +163,28 @@ class TreatmentCrudController extends CrudController
             'data_source' => url('admin/vet/ajax/search'),
             'placeholder' => __('Select a vet'),
             'minimum_input_length' => 2,
-            'default' => \Request::get('vet') ?: false,
+            'default' => $vet_id,
+            'readonly' => !!$vet_id,
+            'attributes' => $attributes,
+        ]);
+
+        $this->crud->addField([
+            'label' => __('Date'),
+            'name' => 'date',
+            'type' => 'date',
+            'default' => $date ?: (isset($appointment) ? $appointment->date_1 : Carbon::today()->toDateString()),
+            'attributes' => $date ? ['readonly' => 'readonly'] : $attributes,
+        ]);
+
+        $this->separator();
+
+        $this->crud->addField([
+            'label' => ucfirst(__('treatment type')),
+            'type' => 'select2',
+            'name' => 'treatment_type_id',
+            'entity' => 'treatment_type',
+            'attribute' => 'name',
+            'model' => "App\Models\TreatmentType",
             'attributes' => $attributes,
         ]);
 
@@ -175,7 +203,7 @@ class TreatmentCrudController extends CrudController
         $this->crud->addField([
             'label' => __('New affected Animals') . '<br />' .
             '<i>Assinalar apenas os animais que nunca tenham sido intervencionados.</i>' .
-            ($process_id || $treatment_id ? "<br /><i>O processo tem <b style='font-style:initial'>$total_animals</b> animais dos quais <b style='font-style:initial'>$total_affected_animals_new</b> já foram intervencionados.</i>" : ''),
+            (isset($process) || $treatment_id ? "<br /><i>O processo tem <b style='font-style:initial'>$total_animals</b> animais dos quais <b style='font-style:initial'>$total_affected_animals_new</b> já foram intervencionados.</i>" : ''),
             'name' => 'affected_animals_new',
             'type' => 'number',
             'default' => 0,
@@ -195,14 +223,6 @@ class TreatmentCrudController extends CrudController
                 'max' => 1000000,
             ]),
             'prefix' => '€',
-        ]);
-
-        $this->crud->addField([
-            'label' => __('Date'),
-            'name' => 'date',
-            'type' => 'date',
-            'default' => Carbon::today()->toDateString(),
-            'attributes' => $attributes,
         ]);
 
         $this->crud->addField([
@@ -355,7 +375,14 @@ class TreatmentCrudController extends CrudController
         // Add user
         $request->merge(['user_id' => backpack_user()->id]);
 
-        return parent::storeCrud($request);
+        $redirect = parent::storeCrud($request);
+
+        if ($request->save_action == 'save_and_new') {
+            $referer = $request->header('referer');
+            $redirect = redirect($referer);
+        }
+
+        return $redirect;
     }
 
     public function update(UpdateRequest $request)

@@ -38,25 +38,25 @@ class CreateTreatmentsTable extends Migration
             $table->foreign('appointment_id')
                 ->references('id')
                 ->on('appointments')
-                ->onDelete('cascade');
+                ->onDelete('set null');
 
             $table->index(['treatment_type_id']);
             $table->foreign('treatment_type_id')
                 ->references('id')
                 ->on('treatment_types')
-                ->onDelete('cascade');
+                ->onDelete('set null');
 
             $table->index(['vet_id']);
             $table->foreign('vet_id')
                 ->references('id')
                 ->on('vets')
-                ->onDelete('cascade');
+                ->onDelete('set null');
 
             $table->index(['user_id']);
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
-                ->onDelete('cascade');
+                ->onDelete('set null');
         });
     }
 

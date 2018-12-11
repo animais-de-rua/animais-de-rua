@@ -31,7 +31,7 @@ class CreateFriendCardTable extends Migration
             $table->foreign('friend_card_modality_id')
                 ->references('id')
                 ->on('friend_card_modalities')
-                ->onDelete('cascade');
+                ->onDelete('set null');
         });
     }
 

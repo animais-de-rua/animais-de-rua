@@ -18,7 +18,7 @@ class Treatment extends Model
     protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['process_id', 'treatment_type_id', 'vet_id', 'affected_animals', 'affected_animals_new', 'user_id', 'expense', 'date'];
+    protected $fillable = ['appointment_id', 'treatment_type_id', 'vet_id', 'affected_animals', 'affected_animals_new', 'user_id', 'expense', 'date'];
     // protected $hidden = [];
     // protected $dates = [];
 
@@ -68,17 +68,17 @@ class Treatment extends Model
 
     public function getProcessLinkAttribute()
     {
-        return $this->getLink($this->appointment->process, '');
+        return $this->getLink($this->appointment->process, true, '');
     }
 
     public function getVetLinkAttribute()
     {
-        return is('admin', 'vet') ? $this->getLink($this->vet) : $this->vet->name;
+        return $this->getLink($this->vet, is('admin', 'vet'));
     }
 
     public function getUserLinkAttribute()
     {
-        return is('admin') ? $this->getLink($this->user) : $this->user->name;
+        return $this->getLink($this->user, is('admin'));
     }
 
     public function getFullExpenseAttribute()

@@ -68,17 +68,17 @@ class ProtocolRequest extends Model
 
     public function getUserLinkAttribute()
     {
-        return $this->getLink($this->user);
+        return $this->getLink($this->user, is('admin'));
     }
 
     public function getProcessLinkAttribute()
     {
-        return $this->getLink($this->process, '');
+        return $this->getLink($this->process, true, '');
     }
 
     public function getProtocolLinkAttribute()
     {
-        return $this->getLink($this->protocol);
+        return $this->getLink($this->protocol, is('admin', 'protocols'));
     }
 
     /*

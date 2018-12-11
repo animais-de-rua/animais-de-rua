@@ -30,7 +30,7 @@ class CreateVetsTable extends Migration
             $table->foreign('headquarter_id')
                 ->references('id')
                 ->on('headquarters')
-                ->onDelete('cascade');
+                ->onDelete('set null');
         });
     }
 

@@ -38,19 +38,19 @@ class CreateAdoptionsTable extends Migration
             $table->foreign('process_id')
                 ->references('id')
                 ->on('processes')
-                ->onDelete('cascade');
+                ->onDelete('set null');
 
             $table->index(['user_id']);
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
-                ->onDelete('cascade');
+                ->onDelete('set null');
 
             $table->index(['fat_id']);
             $table->foreign('fat_id')
                 ->references('id')
                 ->on('users')
-                ->onDelete('cascade');
+                ->onDelete('set null');
         });
     }
 

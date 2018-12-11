@@ -9,7 +9,7 @@
 }
 .btn.btn-social {
     display: flex;
-    margin: 5px 10px 0 0;
+    /*margin: 5px 10px 0 0;*/
     padding: 10px 0 10px 56px!important;
     border: 0;
     border-radius: 3px!important;

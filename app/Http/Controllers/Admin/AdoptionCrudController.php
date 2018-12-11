@@ -325,6 +325,10 @@ class AdoptionCrudController extends CrudController
             });
 
         // ------ ADVANCED QUERIES
+        if (!is(['admin', 'volunteer'], 'processes')) {
+            $this->crud->denyAccess(['list', 'show']);
+        }
+
         if (!is('admin', 'adoptions')) {
             $this->crud->denyAccess(['update']);
         }

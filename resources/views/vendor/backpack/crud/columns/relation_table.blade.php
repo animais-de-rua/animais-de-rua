@@ -51,11 +51,12 @@ $crud->route = $column['route'];
             $url = "{$crud->route}/create?$classname={$crud->entry->id}";
         @endphp
 
+        @if(in_array('add', $column['buttons']))
         <div class="array-controls btn-group m-t-10">
             <a href="{{ $url }}">
                 <button class="btn btn-sm btn-default" type="button"><i class="fa fa-plus"></i> {{trans('backpack::crud.add')}}</button>
             </a>
         </div>
-
+        @endif
     </div>
 </div>
