@@ -23,10 +23,10 @@ class CreateTreatmentsTable extends Migration
 
         Schema::create('treatments', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('appointment_id')->unsigned();
-            $table->integer('treatment_type_id')->unsigned();
-            $table->integer('vet_id')->unsigned();
-            $table->integer('user_id')->unsigned()->nullable();
+            $table->integer('appointment_id')->nullable()->unsigned();
+            $table->integer('treatment_type_id')->nullable()->unsigned();
+            $table->integer('vet_id')->nullable()->unsigned();
+            $table->integer('user_id')->nullable()->unsigned();
             $table->integer('affected_animals')->unsigned()->default(1);
             $table->integer('affected_animals_new')->unsigned()->default(0);
             $table->decimal('expense', 8, 2)->nullable()->unsigned()->default(0);

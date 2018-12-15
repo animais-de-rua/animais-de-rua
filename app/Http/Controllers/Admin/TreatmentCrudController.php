@@ -111,8 +111,8 @@ class TreatmentCrudController extends CrudController
         $date = false;
 
         if ($appointment_id) {
-            $appointment = Appointment::where('id', $appointment_id)->first();
-            $process = Process::where('id', $appointment->process_id)->first();
+            $appointment = Appointment::find($appointment_id);
+            $process = Process::find($appointment->process_id);
 
             switch ($appointment->status) {
                 case 'approved_option_1':
@@ -130,8 +130,9 @@ class TreatmentCrudController extends CrudController
         }
 
         if ($treatment_id) {
-            $treatment = Treatment::where('id', $treatment_id)->first();
-            $process = Process::where('id', $treatment->process_id)->first();
+            $treatment = Treatment::find($treatment_id);
+            $appointment = Appointment::find($treatment->appointment_id);
+            $process = Process::find($appointment->process_id);
 
             $total_animals = $process->amount;
             $total_affected_animals_new = $treatment->getAffectedAnimalsNew($process->id);

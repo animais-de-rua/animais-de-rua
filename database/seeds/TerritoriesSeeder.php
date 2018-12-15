@@ -894,7 +894,7 @@ class TerritoriesSeeder extends Seeder
             ['id' => '031308', 'parent_id' => '0313', 'level' => 3, 'sf' => '0469', 'name' => 'Cabanelas'],
             ['id' => '031309', 'parent_id' => '0313', 'level' => 3, 'sf' => '0469', 'name' => 'Cervães'],
             ['id' => '031311', 'parent_id' => '0313', 'level' => 3, 'sf' => '0469', 'name' => 'Coucieiro'],
-            ['id' => '031313', 'parent_id' => '0313', 'level' => 3, 'sf' => '0469', 'name' => 'DosSão S'],
+            ['id' => '031313', 'parent_id' => '0313', 'level' => 3, 'sf' => '0469', 'name' => 'Dossãos'],
             ['id' => '031316', 'parent_id' => '0313', 'level' => 3, 'sf' => '0469', 'name' => 'Freiriz'],
             ['id' => '031317', 'parent_id' => '0313', 'level' => 3, 'sf' => '0469', 'name' => 'Gême'],
             ['id' => '031323', 'parent_id' => '0313', 'level' => 3, 'sf' => '0469', 'name' => 'Lage'],

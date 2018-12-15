@@ -1,6 +1,7 @@
 <?php
 
 use App\Helpers\EnumHelper;
+use App\Models\Adopter;
 use App\Models\Adoption;
 use App\Models\Appointment;
 use App\Models\Donation;
@@ -32,6 +33,7 @@ class FakeSeeder extends Seeder
         DB::table('vets')->truncate();
         DB::table('treatments')->truncate();
         DB::table('appointments')->truncate();
+        DB::table('adopters')->truncate();
         DB::table('adoptions')->truncate();
         DB::table('protocols_requests')->truncate();
         DB::table('protocols')->truncate();
@@ -91,6 +93,10 @@ class FakeSeeder extends Seeder
         // Adoptions
         $this->log('Adoptions');
         factory(Adoption::class, 100)->create();
+
+        // Adopters
+        $this->log('Adopters');
+        factory(Adopter::class, 50)->create();
 
         // Protocols
         $this->log('Protocols');

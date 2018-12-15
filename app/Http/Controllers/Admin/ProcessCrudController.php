@@ -576,7 +576,7 @@ class ProcessCrudController extends CrudController
 
     public function showDetailsRow($id)
     {
-        $process = Process::select(['history', 'notes', 'contact', 'phone', 'email'])->where('id', $id)->first();
+        $process = Process::select(['history', 'notes', 'contact', 'phone', 'email'])->find($id);
 
         return "<div style='margin:5px 8px'>
                 <p>$process->contact, <a href='tel:$process->phone'>$process->phone</a><br /><a href='mailto:$process->email'>$process->email</a></p>
@@ -590,9 +590,9 @@ class ProcessCrudController extends CrudController
         // Add user
         $request->merge(['user_id' => backpack_user()->id]);
 
-        if (!restrictTo('admin')) {
-            dd($request);
-        }
+        // if (!restrictTo('admin')) {
+        //     dd($request);
+        // }
 
         return parent::storeCrud($request);
     }

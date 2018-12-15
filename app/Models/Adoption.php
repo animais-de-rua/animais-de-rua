@@ -29,6 +29,16 @@ class Adoption extends Model
     |--------------------------------------------------------------------------
     */
 
+    public function addAdopter()
+    {
+        $disabled = $this->status != 'open';
+
+        return '
+        <a class="btn btn-xs btn-' . ($disabled ? 'default' : 'primary') . ' ' . ($disabled ? 'disabled' : '') . '" href="/admin/adopter/create?adoption=' . $this->id . '" title="' . __('Add adopter') . '">
+        <i class="fa fa-plus"></i> ' . ucfirst(__('adopter')) . '
+        </a>';
+    }
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONS
@@ -48,6 +58,11 @@ class Adoption extends Model
     public function fat()
     {
         return $this->belongsTo('App\User', 'fat_id');
+    }
+
+    public function adopter()
+    {
+        return $this->hasOne('App\Models\Adopter', 'adoption_id');
     }
 
     /*
@@ -92,6 +107,11 @@ class Adoption extends Model
         return ucfirst(__($this->vaccinated ? 'yes' : 'no'));
     }
 
+    public function getDetailAttribute()
+    {
+        return "{$this->id} - {$this->name} ({$this->process->name})";
+    }
+
     /*
     |--------------------------------------------------------------------------
     | MUTATORS
@@ -122,5 +142,14 @@ class Adoption extends Model
         }
 
         return join(' ' . __('and') . ' ', $result);
+    }
+
+    public function toArray()
+    {
+        $data = parent::toArray();
+
+        $data['detail'] = $this->detail;
+
+        return $data;
     }
 }

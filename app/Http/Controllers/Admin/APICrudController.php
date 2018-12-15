@@ -58,7 +58,7 @@ class APICrudController extends CrudController
     */
     public function adoptionSearch(Request $request)
     {
-        return $this->entitySearch(Adoption::class, ['name'], $request);
+        return $this->entitySearch(Adoption::class, ['name', 'name_after'], $request);
     }
 
     public function adoptionFilter(Request $request)

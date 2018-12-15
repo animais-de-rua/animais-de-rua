@@ -16,9 +16,9 @@ class CreateAdoptionsTable extends Migration
     {
         Schema::create('adoptions', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('process_id')->unsigned();
-            $table->integer('user_id')->unsigned();
-            $table->integer('fat_id')->unsigned();
+            $table->integer('process_id')->nullable()->unsigned();
+            $table->integer('user_id')->nullable()->unsigned();
+            $table->integer('fat_id')->nullable()->unsigned();
 
             // Animal
             $table->string('name', 255);

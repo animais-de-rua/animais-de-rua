@@ -345,6 +345,9 @@ class AdoptionCrudController extends CrudController
 
         $this->crud->addClause('orderBy', 'id', 'DESC');
 
+        // Buttons
+        $this->crud->addButtonFromModelFunction('line', 'add_adopter', 'addAdopter', 'beginning');
+
         // add asterisk for fields that are required in AdoptionRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');

@@ -22,13 +22,13 @@ class CreateHeadquarterTerritories extends Migration
             $table->foreign('headquarter_id')
                 ->references('id')
                 ->on('headquarters')
-                ->onDelete('set null');
+                ->onDelete('cascade');
 
             $table->index(['territory_id']);
             $table->foreign('territory_id')
                 ->references('id')
                 ->on('territories')
-                ->onDelete('set null');
+                ->onDelete('cascade');
 
             $table->primary(['headquarter_id', 'territory_id']);
             $table->unique(['territory_id']);

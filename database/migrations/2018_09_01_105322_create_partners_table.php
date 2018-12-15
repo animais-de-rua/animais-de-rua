@@ -56,13 +56,13 @@ class CreatePartnersTable extends Migration
             $table->foreign('partner_id')
                 ->references('id')
                 ->on('partners')
-                ->onDelete('set null');
+                ->onDelete('cascade');
 
             $table->index(['partner_category_list_id']);
             $table->foreign('partner_category_list_id')
                 ->references('id')
                 ->on('partner_category_list')
-                ->onDelete('set null');
+                ->onDelete('cascade');
 
             $table->primary(['partner_id', 'partner_category_list_id']);
         });
@@ -75,13 +75,13 @@ class CreatePartnersTable extends Migration
             $table->foreign('partner_id')
                 ->references('id')
                 ->on('partners')
-                ->onDelete('set null');
+                ->onDelete('cascade');
 
             $table->index(['territory_id']);
             $table->foreign('territory_id')
                 ->references('id')
                 ->on('territories')
-                ->onDelete('set null');
+                ->onDelete('cascade');
 
             $table->primary(['partner_id', 'territory_id']);
         });

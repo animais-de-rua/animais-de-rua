@@ -16,11 +16,11 @@ class CreateAppointmentsTable extends Migration
     {
         Schema::create('appointments', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('process_id')->unsigned();
-            $table->integer('user_id')->unsigned();
-            $table->integer('vet_id_1')->unsigned()->nullable();
+            $table->integer('process_id')->nullable()->unsigned();
+            $table->integer('user_id')->nullable()->unsigned();
+            $table->integer('vet_id_1')->nullable()->unsigned();
             $table->date('date_1')->nullable();
-            $table->integer('vet_id_2')->unsigned()->nullable();
+            $table->integer('vet_id_2')->nullable()->unsigned();
             $table->date('date_2')->nullable();
             $table->integer('amount_males')->unsigned()->default(0);
             $table->integer('amount_females')->unsigned()->default(0);

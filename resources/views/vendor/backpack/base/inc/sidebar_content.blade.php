@@ -4,7 +4,13 @@
 <li class="header">{{ __("Management") }}</li>
 <li><a href="{{ backpack_url('process') }}"><i class="fa icon-process"></i> <span class="text-capitalize">{{ __("processes") }}</span></a></li>
 <li><a href="{{ backpack_url('appointment') }}"><i class="fa icon-appointment"></i> <span class="text-capitalize">{{ __("appointments") }}</span></a></li>
-<li><a href="{{ backpack_url('adoption') }}"><i class="fa icon-animal"></i> <span class="text-capitalize">{{ __("adoptions") }}</span></a></li>
+<li class="treeview">
+    <a href="#"><i class="fa icon-animal"></i> <span class="text-capitalize">{{ __("adoptions") }}</span> <i class="fa fa-angle-left pull-right"></i></a>
+    <ul class="treeview-menu">
+        <li><a href="{{ backpack_url('adoption') }}"><i class="fa icon-animal"></i> <span class="text-capitalize">{{ __("adoptions") }}</span></a></li>
+        <li><a href="{{ backpack_url('adopter') }}"><i class="fa icon-godfather"></i> <span class="text-capitalize">{{ __("adopters") }}</span></a></li>
+    </ul>
+</li>
 @endif
 
 @if(restrictTo('admin', 'accountancy'))

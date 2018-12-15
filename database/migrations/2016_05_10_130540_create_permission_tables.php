@@ -36,7 +36,7 @@ class CreatePermissionTables extends Migration
             $table->foreign('permission_id')
                 ->references('id')
                 ->on($tableNames['permissions'])
-                ->onDelete('set null');
+                ->onDelete('cascade');
 
             $table->primary(['permission_id', 'model_id', 'model_type']);
         });
@@ -49,7 +49,7 @@ class CreatePermissionTables extends Migration
             $table->foreign('role_id')
                 ->references('id')
                 ->on($tableNames['roles'])
-                ->onDelete('set null');
+                ->onDelete('cascade');
 
             $table->primary(['role_id', 'model_id', 'model_type']);
         });
@@ -61,12 +61,12 @@ class CreatePermissionTables extends Migration
             $table->foreign('permission_id')
                 ->references('id')
                 ->on($tableNames['permissions'])
-                ->onDelete('set null');
+                ->onDelete('cascade');
 
             $table->foreign('role_id')
                 ->references('id')
                 ->on($tableNames['roles'])
-                ->onDelete('set null');
+                ->onDelete('cascade');
 
             $table->primary(['permission_id', 'role_id']);
 
