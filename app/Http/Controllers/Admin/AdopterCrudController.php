@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\AdopterRequest as UpdateRequest;
 use App\Http\Requests\AdopterStoreRequest as StoreRequest;
-use Backpack\CRUD\app\Http\Controllers\CrudController;
+use App\User;
 use Carbon\Carbon;
 
 /**
@@ -164,7 +164,44 @@ class AdopterCrudController extends CrudController
         ]);
 
         // Filters
-        //  TODO
+        $this->crud->addFilter([
+            'name' => 'territory_id',
+            'type' => 'select2_multiple',
+            'label' => ucfirst(__('territory')),
+            'placeholder' => __('Select a territory'),
+        ],
+            $this->wantsJSON() ? null : api()->territoryList(),
+            function ($values) {
+                $values = json_decode($values);
+                $where = join(' OR ', array_fill(0, count($values), 'territory_id LIKE ?'));
+                $values = array_map(function ($field) {return $field . '%';}, $values);
+
+                $this->crud->query->whereRaw($where, $values);
+            });
+
+        $this->crud->addFilter([
+            'type' => 'date_range',
+            'name' => 'from_to',
+            'label' => __('Date range'),
+            'format' => 'DD/MM/YYYY',
+            'firstDay' => 1,
+        ],
+            false,
+            function ($value) {
+                $dates = json_decode($value);
+                $this->crud->query->whereRaw('adoption_date >= ? AND adoption_date <= DATE_ADD(?, INTERVAL 1 DAY)', [$dates->from, $dates->to]);
+            });
+
+        $this->crud->addFilter([
+            'name' => 'user',
+            'type' => 'select2_ajax',
+            'label' => ucfirst(__('volunteer')),
+            'placeholder' => __('Select a volunteer'),
+        ],
+            url('admin/user/ajax/filter/' . User::VOLUNTEER),
+            function ($value) {
+                $this->crud->addClause('where', 'user_id', $value);
+            });
 
         // ------ ADVANCED QUERIES
         $this->crud->query->with(['adoption']);

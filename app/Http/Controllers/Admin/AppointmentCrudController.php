@@ -38,7 +38,7 @@ class AppointmentCrudController extends CrudController
         */
 
         // ------ CRUD FIELDS
-        $this->crud->addFields(['process_id', 'vet_id_1', 'date_1', 'vet_id_2', 'date_2', 'amount_males', 'amount_females', 'notes', 'status']);
+        $this->crud->addFields(['process_id', 'vet_id_1', 'date_1', 'vet_id_2', 'date_2', 'amount_males', 'amount_females', 'amount_other', 'notes', 'status']);
 
         $this->crud->addField([
             'label' => ucfirst(__('process')),
@@ -126,6 +126,14 @@ class AppointmentCrudController extends CrudController
         ]);
 
         $this->crud->addField([
+            'label' => __('Others Amount'),
+            'type' => 'number',
+            'name' => 'amount_other',
+            'default' => 0,
+            'attributes' => ['min' => 0, 'max' => 100],
+        ]);
+
+        $this->crud->addField([
             'label' => __('Notes'),
             'type' => 'wysiwyg',
             'name' => 'notes',
@@ -198,7 +206,7 @@ class AppointmentCrudController extends CrudController
 
         $this->crud->setColumnDetails('animal_count', [
             'name' => 'animal_count',
-            'label' => __('Animals') . ' M/F',
+            'label' => __('Animals') . ' M/F | O',
             'type' => 'model_function',
             'function_name' => 'getAnimalsValue',
         ]);
@@ -279,11 +287,11 @@ class AppointmentCrudController extends CrudController
             function ($value) {
                 $range = json_decode($value);
                 if (is_numeric($range->from)) {
-                    $this->crud->addClause('where', DB::raw('amount_males + amount_females'), '>=', $range->from);
+                    $this->crud->addClause('where', DB::raw('amount_males + amount_females + amount_other'), '>=', $range->from);
                 }
 
                 if (is_numeric($range->to)) {
-                    $this->crud->addClause('where', DB::raw('amount_males + amount_females'), '<=', $range->to);
+                    $this->crud->addClause('where', DB::raw('amount_males + amount_females + amount_other'), '<=', $range->to);
                 }
 
             });
@@ -364,7 +372,11 @@ class AppointmentCrudController extends CrudController
 
         foreach ($this->crud->filters as $filter) {
             if ($filter->name == 'archive' && $filter->currentValue == null) {
-                $this->crud->addClause('whereRaw', 'date_1 > DATE_SUB(curdate(), INTERVAL 1 MONTH)');
+
+                // Treatments created more than 1 Day ago
+                $this->crud->addClause('whereDoesntHave', 'treatments', function ($query) {
+                    $query->whereRaw('created_at < DATE_SUB(curdate(), INTERVAL 1 DAY)');
+                })->get();
             }
         }
 

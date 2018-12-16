@@ -67,7 +67,7 @@ class Process extends Model
 
     public function treatments()
     {
-        return $this->hasManyThrough('App\Models\Treatment', 'App\Models\Appointment');
+        return $this->hasManyThrough('App\Models\Treatment', 'App\Models\Appointment', 'process_id', 'appointment_id');
     }
 
     /*
@@ -101,7 +101,7 @@ class Process extends Model
     {
         $headquarter = (isset($this->headquarter) ? $this->headquarter['name'] . ', ' : '');
 
-        return "{$this->name} ({$headquarter}{$this->date})";
+        return "{$this->id} - {$this->name} ({$headquarter}{$this->date})";
     }
 
     public function getAmountAttribute()
@@ -177,7 +177,12 @@ class Process extends Model
 
     public function getTotalOperationsStats()
     {
-        return count($this->treatments);
+        return $this->treatments->reduce(function ($carry, $item) {return $carry + $item->affected_animals;});
+    }
+
+    public function getTotalAffectedAnimalsNew()
+    {
+        return $this->treatments->reduce(function ($carry, $item) {return $carry + $item->affected_animals_new;});
     }
 
     public function getBalanceStats()

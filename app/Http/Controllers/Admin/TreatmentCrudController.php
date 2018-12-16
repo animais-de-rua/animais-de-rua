@@ -124,18 +124,20 @@ class TreatmentCrudController extends CrudController
                     $date = $appointment->date_2;
                     break;
             }
-
-            $total_animals = $max = $process->amount;
-            $total_affected_animals_new = 0;
         }
 
         if ($treatment_id) {
             $treatment = Treatment::find($treatment_id);
             $appointment = Appointment::find($treatment->appointment_id);
             $process = Process::find($appointment->process_id);
+        }
+
+        if (isset($process)) {
+            $total_affected_animals_new = 0;
+            $total_animals = $max = $process->amount;
 
             $total_animals = $process->amount;
-            $total_affected_animals_new = $treatment->getAffectedAnimalsNew($process->id);
+            $total_affected_animals_new = $process->getTotalAffectedAnimalsNew();
             $max = max(0, $total_animals - $total_affected_animals_new);
         }
 

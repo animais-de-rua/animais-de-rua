@@ -498,7 +498,7 @@ class ProcessCrudController extends CrudController
         }]);
 
         $this->crud->addClause('with', ['treatments' => function ($query) {
-            $query->selectRaw('process_id, sum(expense) as total_expenses, count(*) as total_operations')
+            $query->selectRaw('process_id, sum(expense) as total_expenses, sum(affected_animals) as total_operations')
                 ->groupBy('process_id');
         }]);
 
@@ -653,6 +653,10 @@ class ProcessCrudController extends CrudController
                 'vet' => [
                     'label' => ucfirst(__('vet')),
                     'name' => 'vetLink',
+                ],
+                'affected_animals' => [
+                    'label' => ucfirst(__('Operations')),
+                    'name' => 'affected_animals',
                 ],
                 'expense' => [
                     'label' => __('Expense'),

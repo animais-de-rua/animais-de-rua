@@ -193,7 +193,7 @@ class APICrudController extends CrudController
         $search_term = $this->getSearchParam($request);
         $headquarter = restrictToHeadquarter();
 
-        $results = Process::with('headquarter');
+        $results = Process::with('headquarter')->whereIn('status', ['waiting_godfather', 'waiting_capture', 'open']);
 
         // Headquarter filter
         if ($headquarter) {
@@ -202,7 +202,9 @@ class APICrudController extends CrudController
 
         // Search
         if ($search_term) {
-            $results = $results->where('name', 'LIKE', "%$search_term%");
+            $results = $results
+                ->where('id', "$search_term")
+                ->orWhere('name', 'LIKE', "%$search_term%");
         }
 
         return $results->paginate(10);

@@ -76,7 +76,7 @@ class Vet extends Model
 
     public function getTotalOperationsStats()
     {
-        return count($this->treatments);
+        return $this->treatments->reduce(function ($carry, $item) {return $carry + $item->affected_animals;});
     }
 
     /*

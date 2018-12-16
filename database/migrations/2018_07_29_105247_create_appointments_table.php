@@ -24,6 +24,7 @@ class CreateAppointmentsTable extends Migration
             $table->date('date_2')->nullable();
             $table->integer('amount_males')->unsigned()->default(0);
             $table->integer('amount_females')->unsigned()->default(0);
+            $table->integer('amount_other')->unsigned()->default(0);
             $table->text('notes')->nullable();
             $table->enum('status', EnumHelper::values('appointment.status'))->default('approving');
 

@@ -24,7 +24,7 @@ $factory->define(Treatment::class, function (Faker $faker) {
         'user_id' => $faker->randomElement(User::all()->pluck('id')->toArray()),
         'expense' => $faker->randomElement([0, 0, 0, 0, 10, 10, 20, 50, 80, 120, 150]),
         'affected_animals' => $faker->randomElement([1, 1, 1, 2, 3, 4, 6]),
-        'affected_animals_new' => $faker->randomElement([0, 0, 0, 1, 1, 1, 2]),
+        'affected_animals_new' => $faker->randomElement([0, 0, 0, 0, 0, 0, 1, 1, 1, 2]),
         'date' => $date,
         'status' => $faker->randomElement(EnumHelper::get('treatment.status')),
         'created_at' => $date,

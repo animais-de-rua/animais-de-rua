@@ -18,7 +18,7 @@ class Appointment extends Model
     protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['process_id', 'user_id', 'vet_id_1', 'date_1', 'vet_id_2', 'date_2', 'amount_males', 'amount_females', 'notes', 'status'];
+    protected $fillable = ['process_id', 'user_id', 'vet_id_1', 'date_1', 'vet_id_2', 'date_2', 'amount_males', 'amount_females', 'amount_other', 'notes', 'status'];
     // protected $hidden = [];
     // protected $dates = [];
 
@@ -104,7 +104,20 @@ class Appointment extends Model
 
     public function getAnimalsValue()
     {
-        return "{$this->amount_males} / {$this->amount_females}";
+        $result = '';
+        if ($this->amount_males && $this->amount_females) {
+            $result .= $this->amount_males . ' / ' . $this->amount_females;
+            if ($this->amount_other) {
+                $result .= ' | ' . $this->amount_other;
+            }
+
+        } else if ($this->amount_other) {
+            $result = $this->amount_other;
+        } else {
+            $result = '-';
+        }
+
+        return $result;
     }
 
     public function getTreatmentsCountValue()
@@ -114,7 +127,7 @@ class Appointment extends Model
 
     public function getDetailAttribute()
     {
-        return "{$this->id} - {$this->process->name} - {$this->user->name} ({$this->date_1} / {$this->date_2})";
+        return "{$this->id} - {$this->process->name} ({$this->process->id}) - {$this->user->name} ({$this->date_1} / {$this->date_2})";
     }
 
     /*
