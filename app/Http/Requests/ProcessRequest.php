@@ -29,7 +29,7 @@ class ProcessRequest extends FormRequest
         return [
             'name' => 'required|min:3|max:255',
             'contact' => 'required|min:3|max:255',
-            'phone' => 'required|min:9|max:14',
+            'phone' => 'required|min:9|max:16',
             'email' => 'required|email',
             'latlong' => 'required|min:3|max:255',
             'territory_id' => 'required|exists:territories,id',

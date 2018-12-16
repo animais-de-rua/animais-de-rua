@@ -29,6 +29,16 @@ class Process extends Model
     |--------------------------------------------------------------------------
     */
 
+    public function addAppointment()
+    {
+        $disabled = !in_array($this->status, ['waiting_godfather', 'waiting_capture', 'open']);
+
+        return '
+        <a class="btn btn-xs btn-' . ($disabled ? 'default' : 'primary') . ' ' . ($disabled ? 'disabled' : '') . '" href="/admin/appointment/create?process=' . $this->id . '" title="' . __('Add appointment') . '">
+        <i class="fa fa-plus"></i> ' . ucfirst(__('appointment')) . '
+        </a>';
+    }
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONS

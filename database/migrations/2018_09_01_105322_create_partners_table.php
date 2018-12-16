@@ -30,6 +30,7 @@ class CreatePartnersTable extends Migration
             $table->text('benefit')->nullable();
             $table->text('notes')->nullable();
             $table->string('image', 255)->nullable();
+            $table->text('promo_code')->nullable();
             $table->boolean('status')->default(1);
             $table->integer('user_id')->unsigned()->nullable();
             $table->timestamps();

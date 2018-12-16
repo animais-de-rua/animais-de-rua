@@ -20,7 +20,7 @@ class Partner extends Model
     protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['name', 'description', 'email', 'phone1', 'phone1_info', 'phone2', 'phone2_info', 'url', 'facebook', 'address', 'address_info', 'latlong', 'benefit', 'notes', 'status', 'user_id', 'image'];
+    protected $fillable = ['name', 'description', 'email', 'phone1', 'phone1_info', 'phone2', 'phone2_info', 'url', 'facebook', 'address', 'address_info', 'latlong', 'benefit', 'notes', 'promo_code', 'status', 'user_id', 'image'];
     // protected $hidden = [];
     // protected $dates = [];
     protected $translatable = ['benefit'];

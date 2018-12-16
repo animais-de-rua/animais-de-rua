@@ -39,7 +39,7 @@ class PartnerCrudController extends CrudController
         */
 
         // ------ CRUD COLUMNS
-        $this->crud->setColumns(['image', 'name', 'url', 'categories', 'territories', 'status', 'user_id']);
+        $this->crud->setColumns(['image', 'name', 'url', 'categories', 'territories', 'promo_code', 'status', 'user_id']);
 
         $this->crud->setColumnDetails('image', [
             'name' => 'image',
@@ -91,8 +91,12 @@ class PartnerCrudController extends CrudController
             'model' => "App\Models\Territory",
         ]);
 
+        $this->crud->setColumnDetails('promo_code', [
+            'label' => __('Promo Code'),
+        ]);
+
         // ------ CRUD FIELDS
-        $this->crud->addFields(['name', 'benefit', 'categories', 'territories', 'email', 'phone1', 'phone1_info', 'phone2', 'phone2_info', 'url', 'facebook', 'instagram', 'address', 'address_info', 'image', 'notes', 'status']);
+        $this->crud->addFields(['name', 'benefit', 'categories', 'territories', 'email', 'phone1', 'phone1_info', 'phone2', 'phone2_info', 'url', 'facebook', 'instagram', 'address', 'address_info', 'image', 'notes', 'promo_code', 'status']);
 
         $this->crud->addField([
             'label' => __('Name'),
@@ -197,6 +201,12 @@ class PartnerCrudController extends CrudController
             'label' => __('Notes'),
             'name' => 'notes',
             'type' => 'textarea',
+        ]);
+
+        $this->crud->addField([
+            'label' => __('Promo Code'),
+            'name' => 'promo_code',
+            'type' => 'text',
         ]);
 
         $this->crud->addField([

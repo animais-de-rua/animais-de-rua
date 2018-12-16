@@ -87,6 +87,7 @@
     "new": "novos",
     "Adoption Date": "Data de adopção",
     "ID Card": "Cartão de Identidade",
+    "Promo Code": "Código promocional",
 
     "Go Home": "Voltar ao início",
     "Go Back": "Voltar",
@@ -220,6 +221,9 @@
     "Total Donations": "Total de doações",
     "Total Expenses": "Total despesas",
     "Total Operations": "Total de operações",
+    "Donated": "Doado",
+    "Donations": "Doações",
+    "Expenses": "Despesas",
     "Operations": "Operações",
     "Average Expense": "Custo médio por operação",
     "district": "distrito",

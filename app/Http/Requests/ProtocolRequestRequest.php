@@ -29,7 +29,7 @@ class ProtocolRequestRequest extends FormRequest
             'council' => 'required|min:1',
             'name' => 'required|min:3|max:255',
             'email' => 'nullable|email',
-            'phone' => 'nullable|min:9|max:14',
+            'phone' => 'nullable|min:9|max:16',
             'address' => 'required|min:3|max:255',
             'description' => 'nullable|min:3|max:4096',
             'territory_id' => 'required|exists:territories,id',

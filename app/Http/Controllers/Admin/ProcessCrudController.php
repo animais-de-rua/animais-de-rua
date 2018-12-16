@@ -179,7 +179,7 @@ class ProcessCrudController extends CrudController
         $this->crud->addField($this->tableStats());
 
         // ------ CRUD COLUMNS
-        $this->crud->addColumns(['id', 'name', 'territory_id', 'headquarter', 'created_at', 'specie', 'animal_count', 'status', 'urgent', 'total_donations', 'total_expenses', 'balance', 'total_operations', 'user_id']);
+        $this->crud->addColumns(['id', 'name', 'headquarter', 'created_at', 'specie', 'animal_count', 'status', 'urgent', 'total_donations', 'total_expenses', 'balance', 'total_operations', 'user_id', 'territory_id']);
 
         $this->crud->setColumnDetails('id', [
             'label' => 'ID',
@@ -234,14 +234,14 @@ class ProcessCrudController extends CrudController
 
         $this->crud->setColumnDetails('total_donations', [
             'name' => 'total_donations',
-            'label' => __('Total Donated'),
+            'label' => __('Donated'),
             'type' => 'model_function',
             'function_name' => 'getTotalDonatedValue',
         ]);
 
         $this->crud->setColumnDetails('total_expenses', [
             'name' => 'total_expenses',
-            'label' => __('Total Expenses'),
+            'label' => __('Expenses'),
             'type' => 'model_function',
             'function_name' => 'getTotalExpensesValue',
         ]);
@@ -255,7 +255,7 @@ class ProcessCrudController extends CrudController
 
         $this->crud->setColumnDetails('total_operations', [
             'name' => 'total_operations',
-            'label' => __('Total Operations'),
+            'label' => __('Operations'),
             'type' => 'model_function',
             'function_name' => 'getTotalOperationsValue',
         ]);
@@ -268,11 +268,25 @@ class ProcessCrudController extends CrudController
             'function_name' => 'getUserLinkAttribute',
         ]);
 
+        // For search proposes only
+        $this->crud->addColumn('notes', [
+            'name' => 'notes',
+            'type' => 'text',
+            'label' => __('Notes'),
+            'visibleInTable' => false,
+            'visibleInModal' => false,
+            'visibleInExport' => false,
+            'visibleInShow' => false,
+        ]);
+
         // ------ CRUD DETAILS ROW
         $this->crud->enableDetailsRow();
         $this->crud->allowAccess('details_row');
 
         $this->crud->enableExportButtons();
+
+        // Buttons
+        $this->crud->addButtonFromModelFunction('line', 'add_appointment', 'addAppointment', 'beginning');
 
         // Filtrers
         $this->crud->addFilter([

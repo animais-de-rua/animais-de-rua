@@ -28,7 +28,7 @@ class VetRequest extends FormRequest
     {
         return [
             'name' => 'required|min:3|max:255',
-            'phone' => 'required_without:email|min:9|max:14',
+            'phone' => 'required_without:email|min:9|max:16',
             'email' => 'required_without:phone|email',
             'url' => 'nullable|url',
             'headquarter_id' => 'required|exists:headquarters,id',

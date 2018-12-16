@@ -29,8 +29,8 @@ class PartnerRequest extends FormRequest
             'name' => 'required|min:2|max:255',
             'description' => 'nullable|min:2|max:4096',
             'email' => 'required|email',
-            'phone1' => 'required|min:9|max:14',
-            'phone2' => 'nullable|min:9|max:14',
+            'phone1' => 'required|min:9|max:16',
+            'phone2' => 'nullable|min:9|max:16',
             'url' => 'required_without_all:facebook,instagram',
             'facebook' => 'required_without_all:url,instagram',
             'instagram' => 'required_without_all:url,facebook',
@@ -38,6 +38,7 @@ class PartnerRequest extends FormRequest
             'latlong' => 'nullable|min:2|max:255',
             'benefit' => 'nullable|min:2|max:4096',
             'notes' => 'nullable|min:2|max:4096',
+            'promo_code' => 'nullable|min:2|max:4096',
             'status' => 'in:0,1',
         ];
     }
