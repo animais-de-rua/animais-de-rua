@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Admin\Traits\Permissions;
 use App\Models\Adoption;
 use App\Models\Appointment;
+use App\Models\Fat;
 use App\Models\FriendCardModality;
 use App\Models\Godfather;
 use App\Models\Headquarter;
@@ -23,9 +24,10 @@ class APICrudController extends CrudController
 {
     use Permissions;
 
-    public function getSearchParam(Request $request)
+    public function ajax()
     {
-        return $request ? ($request->has('q') || $request->has('term') ? $request->input('q') . $request->input('term') : false) : false;
+        $args = func_get_args();
+        return call_user_func_array([$this, $args[0] . $args[1]], array_slice($args, 2));
     }
 
     /*
@@ -33,22 +35,34 @@ class APICrudController extends CrudController
     | Default Search
     |--------------------------------------------------------------------------
     */
-    public function entitySearch($entity, $searchFields, Request $request)
+    public function getSearchParam()
     {
-        $search_term = $this->getSearchParam($request);
+        $request = request();
+        return $request ? ($request->has('q') || $request->has('term') ? $request->input('q') . $request->input('term') : false) : false;
+    }
+
+    public function entitySearch($entity, $searchFields = null, $where = null)
+    {
+        $search_term = $this->getSearchParam();
+        $results = $entity::select();
 
         if ($search_term && count($searchFields)) {
-            $results = $entity::where(array_shift($searchFields), 'LIKE', "%$search_term%");
+            $results = $entity::where(function ($query) use ($search_term, $searchFields) {
+                $query->where(array_shift($searchFields), 'LIKE', "%$search_term%");
 
-            foreach ($searchFields as $field) {
-                $results = $results->orWhere($field, 'LIKE', "%$search_term%");
-            }
-            $results = $results->paginate(10);
-        } else {
-            $results = $entity::paginate(10);
+                foreach ($searchFields as $field) {
+                    $query->orWhere($field, 'LIKE', "%$search_term%");
+                }
+            });
         }
 
-        return $results;
+        if ($where) {
+            foreach ($where as $key => $value) {
+                $results = $results->where($key, $value);
+            }
+        }
+
+        return $results->paginate(10);
     }
 
     /*
@@ -56,14 +70,14 @@ class APICrudController extends CrudController
     | Adoption
     |--------------------------------------------------------------------------
     */
-    public function adoptionSearch(Request $request)
+    public function adoptionSearch()
     {
-        return $this->entitySearch(Adoption::class, ['name', 'name_after'], $request);
+        return $this->entitySearch(Adoption::class, ['name', 'name_after']);
     }
 
-    public function adoptionFilter(Request $request)
+    public function adoptionFilter()
     {
-        return $this->adoptionSearch($request)->pluck('name', 'id');
+        return $this->adoptionSearch()->pluck('name', 'id');
     }
 
     /*
@@ -71,10 +85,10 @@ class APICrudController extends CrudController
     | Appointment
     |--------------------------------------------------------------------------
     */
-    public function appointmentSearch(Request $request)
+    public function appointmentSearch()
     {
         $searchFields = ['id', 'date_1', 'date_2'];
-        $search_term = $this->getSearchParam($request);
+        $search_term = $this->getSearchParam();
 
         $results = Appointment::with(['user', 'process.headquarter'])->where('status', '<>', 'approving');
 
@@ -93,9 +107,9 @@ class APICrudController extends CrudController
         return $results->orderBy('id', 'DESC')->paginate(10);
     }
 
-    public function appointmentFilter(Request $request)
+    public function appointmentFilter()
     {
-        return $this->appointmentSearch($request)->pluck('detail', 'id');
+        return $this->appointmentSearch()->pluck('detail', 'id');
     }
 
     /*
@@ -113,14 +127,35 @@ class APICrudController extends CrudController
     | Godfather
     |--------------------------------------------------------------------------
     */
-    public function godfatherSearch(Request $request)
+    public function godfatherSearch()
     {
-        return $this->entitySearch(Godfather::class, ['name', 'email'], $request);
+        $headquarter = restrictToHeadquarter();
+        $where = $headquarter ? ['headquarter_id' => $headquarter] : [];
+
+        return $this->entitySearch(Godfather::class, ['name', 'email']);
     }
 
-    public function godfatherFilter(Request $request)
+    public function godfatherFilter()
     {
-        return $this->godfatherSearch($request)->pluck('name', 'id');
+        return $this->godfatherSearch()->pluck('name', 'id');
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Fat
+    |--------------------------------------------------------------------------
+    */
+    public function fatSearch()
+    {
+        $headquarter = restrictToHeadquarter();
+        $where = $headquarter ? ['headquarter_id' => $headquarter] : [];
+
+        return $this->entitySearch(Fat::class, ['name', 'email'], $where);
+    }
+
+    public function fatFilter()
+    {
+        return $this->godfatherSearch()->pluck('name', 'id');
     }
 
     /*
@@ -128,19 +163,19 @@ class APICrudController extends CrudController
     | Headquarter
     |--------------------------------------------------------------------------
     */
-    public function headquarterSearch(Request $request)
+    public function headquarterSearch()
     {
-        return $this->entitySearch(Headquarter::class, ['name'], $request);
+        return $this->entitySearch(Headquarter::class, ['name']);
     }
 
-    public function headquarterFilter(Request $request)
+    public function headquarterFilter()
     {
-        return $this->headquarterSearch($request)->pluck('name', 'id');
+        return $this->headquarterSearch()->pluck('name', 'id');
     }
 
     public function headquarterList()
     {
-        return $this->headquarterFilter(new Request())->toArray();
+        return $this->headquarterFilter()->toArray();
     }
 
     /*
@@ -148,19 +183,19 @@ class APICrudController extends CrudController
     | Partner
     |--------------------------------------------------------------------------
     */
-    public function partnerCategorySearch(Request $request)
+    public function partnerCategorySearch()
     {
-        return $this->entitySearch(PartnerCategory::class, ['name'], $request);
+        return $this->entitySearch(PartnerCategory::class, ['name']);
     }
 
-    public function partnerCategoryFilter(Request $request)
+    public function partnerCategoryFilter()
     {
-        return $this->partnerCategorySearch($request)->pluck('name', 'id');
+        return $this->partnerCategorySearch()->pluck('name', 'id');
     }
 
     public function partnerCategoryList()
     {
-        return $this->partnerCategoryFilter(new Request())->toArray();
+        return $this->partnerCategoryFilter()->toArray();
     }
 
     /*
@@ -168,19 +203,19 @@ class APICrudController extends CrudController
     | Protocol
     |--------------------------------------------------------------------------
     */
-    public function protocolSearch(Request $request)
+    public function protocolSearch()
     {
-        return $this->entitySearch(Protocol::class, ['name'], $request);
+        return $this->entitySearch(Protocol::class, ['name']);
     }
 
-    public function protocolFilter(Request $request)
+    public function protocolFilter()
     {
-        return $this->protocolSearch($request)->pluck('name', 'id');
+        return $this->protocolSearch()->pluck('name', 'id');
     }
 
     public function protocolList()
     {
-        return $this->protocolFilter(new Request())->toArray();
+        return $this->protocolFilter()->toArray();
     }
 
     /*
@@ -188,9 +223,9 @@ class APICrudController extends CrudController
     | Process
     |--------------------------------------------------------------------------
     */
-    public function processSearch(Request $request)
+    public function processSearch()
     {
-        $search_term = $this->getSearchParam($request);
+        $search_term = $this->getSearchParam();
         $headquarter = restrictToHeadquarter();
 
         $results = Process::with('headquarter')->whereIn('status', ['waiting_godfather', 'waiting_capture', 'open']);
@@ -210,9 +245,9 @@ class APICrudController extends CrudController
         return $results->paginate(10);
     }
 
-    public function processFilter(Request $request)
+    public function processFilter()
     {
-        return $this->processSearch($request)->pluck('name', 'id');
+        return $this->processSearch()->pluck('name', 'id');
     }
 
     /*
@@ -220,9 +255,9 @@ class APICrudController extends CrudController
     | User
     |--------------------------------------------------------------------------
     */
-    public function userSearch($role = UserBase::ALL, Request $request)
+    public function userSearch($role = UserBase::ALL)
     {
-        $search_term = $this->getSearchParam($request);
+        $search_term = $this->getSearchParam();
 
         $roles = [];
         if ($role & UserBase::ADMIN) {
@@ -253,9 +288,9 @@ class APICrudController extends CrudController
         return $users->paginate(10);
     }
 
-    public function userFilter($role = UserBase::ALL, Request $request)
+    public function userFilter($role = UserBase::ALL)
     {
-        return $this->userSearch($role, $request)->pluck('name', 'id');
+        return $this->userSearch($role)->pluck('name', 'id');
     }
 
     /*
@@ -263,14 +298,14 @@ class APICrudController extends CrudController
     | Vet
     |--------------------------------------------------------------------------
     */
-    public function vetSearch(Request $request)
+    public function vetSearch()
     {
-        return $this->entitySearch(Vet::class, ['name'], $request);
+        return $this->entitySearch(Vet::class, ['name']);
     }
 
-    public function vetFilter(Request $request)
+    public function vetFilter()
     {
-        return $this->vetSearch($request)->pluck('name', 'id');
+        return $this->vetSearch()->pluck('name', 'id');
     }
 
     /*
@@ -290,9 +325,9 @@ class APICrudController extends CrudController
     */
     private static $territoryCache = [];
 
-    public function territorySearch($level = Territory::ALL, Request $request)
+    public function territorySearch($level = Territory::ALL)
     {
-        $search_term = $this->getSearchParam($request);
+        $search_term = $this->getSearchParam();
         $data = [];
 
         if (isset(self::$territoryCache[$level . $search_term])) {
@@ -357,11 +392,11 @@ class APICrudController extends CrudController
         return $data;
     }
 
-    public function territoryFilter($level = Territory::ALL, Request $request)
+    public function territoryFilter($level = Territory::ALL)
     {
         $data = [];
 
-        foreach ($this->territorySearch($level, $request) as $elem) {
+        foreach ($this->territorySearch($level) as $elem) {
             $data[$elem->id] = $elem->name;
         }
 
@@ -370,6 +405,6 @@ class APICrudController extends CrudController
 
     public function territoryList($level = Territory::ALL)
     {
-        return $this->territoryFilter($level, new Request());
+        return $this->territoryFilter($level);
     }
 }

@@ -52,34 +52,10 @@ Route::group(['prefix' => config('backpack.base.route_prefix'), 'middleware' => 
     CRUD::resource('protocol', 'ProtocolCrudController');
     CRUD::resource('protocol-request', 'ProtocolRequestCrudController');
     CRUD::resource('sponsor', 'SponsorCrudController');
+    CRUD::resource('fat', 'FatCrudController');
 
     // API
-    Route::get('user/ajax/filter/{role?}', 'APICrudController@userFilter');
-    Route::get('user/ajax/search/{role?}', 'APICrudController@userSearch');
-
-    Route::get('adoption/ajax/filter/', 'APICrudController@adoptionFilter');
-    Route::get('adoption/ajax/search/', 'APICrudController@adoptionSearch');
-
-    Route::get('appointment/ajax/filter/', 'APICrudController@appointmentFilter');
-    Route::get('appointment/ajax/search/', 'APICrudController@appointmentSearch');
-
-    Route::get('godfather/ajax/filter', 'APICrudController@godfatherFilter');
-    Route::get('godfather/ajax/search', 'APICrudController@godfatherSearch');
-
-    Route::get('headquarter/ajax/filter', 'APICrudController@headquarterFilter');
-    Route::get('headquarter/ajax/search', 'APICrudController@headquarterSearch');
-
-    Route::get('process/ajax/filter', 'APICrudController@processFilter');
-    Route::get('process/ajax/search', 'APICrudController@processSearch');
-
-    Route::get('protocol/ajax/filter', 'APICrudController@protocolFilter');
-    Route::get('protocol/ajax/search', 'APICrudController@protocolSearch');
-
-    Route::get('vet/ajax/filter', 'APICrudController@vetFilter');
-    Route::get('vet/ajax/search', 'APICrudController@vetSearch');
-
-    Route::get('territory/ajax/filter/{level?}', 'APICrudController@territoryFilter');
-    Route::get('territory/ajax/search/{level?}', 'APICrudController@territorySearch');
+    Route::get('{entity}/ajax/{action}/{extra?}', 'APICrudController@ajax');
 
     Route::post('dropzone/{column}/{entity}/{thumb}/{size}/{quality}', 'CrudController@handleDropzoneUploadRaw');
     Route::post('dropzone/{column}/{entity}/remove', 'CrudController@handleDropzoneRemoveRaw');

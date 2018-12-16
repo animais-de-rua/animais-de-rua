@@ -192,7 +192,7 @@ class DonationCrudController extends CrudController
 
         // ------ ADVANCED QUERIES
         if (!is('admin', 'accountancy')) {
-            $this->crud->denyAccess(['update', 'list']);
+            $this->crud->denyAccess(['update', 'create', 'list']);
         }
 
         if (!is('admin')) {

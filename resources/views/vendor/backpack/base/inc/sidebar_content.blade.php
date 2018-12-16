@@ -9,6 +9,9 @@
     <ul class="treeview-menu">
         <li><a href="{{ backpack_url('adoption') }}"><i class="fa icon-animal"></i> <span class="text-capitalize">{{ __("adoptions") }}</span></a></li>
         <li><a href="{{ backpack_url('adopter') }}"><i class="fa icon-godfather"></i> <span class="text-capitalize">{{ __("adopters") }}</span></a></li>
+        @if(restrictTo('admin', 'adoptions'))
+        <li><a href="{{ backpack_url('fat') }}"><i class="fa icon-godfather"></i> <span class="text-capitalize">{{ __("fats") }}</span></a></li>
+        @endif
     </ul>
 </li>
 @endif

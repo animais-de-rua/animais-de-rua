@@ -72,13 +72,13 @@ class AdoptionCrudController extends CrudController
             'label' => __('FAT'),
             'name' => 'fat_id',
             'type' => 'select2_from_ajax',
-            'entity' => 'user',
+            'entity' => 'fat',
             'attribute' => 'name',
-            'model' => '\App\User',
-            'data_source' => url('admin/user/ajax/search/' . User::FAT),
+            'model' => '\App\Models\Fat',
+            'data_source' => url('admin/fat/ajax/search/'),
             'placeholder' => __('Select a fat'),
             'minimum_input_length' => 2,
-            'default' => \Request::get('user') ?: false,
+            'default' => \Request::get('fat') ?: false,
         ]);
 
         $this->crud->addField([
@@ -330,7 +330,7 @@ class AdoptionCrudController extends CrudController
         }
 
         if (!is('admin', 'adoptions')) {
-            $this->crud->denyAccess(['update']);
+            $this->crud->denyAccess(['update', 'create']);
         }
 
         if (!is('admin')) {

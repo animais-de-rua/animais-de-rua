@@ -3,17 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Admin\Traits\Permissions;
-use App\Http\Requests\GodfatherRequest as StoreRequest;
-use App\Http\Requests\GodfatherRequest as UpdateRequest;
-use App\Models\Godfather;
+use App\Http\Requests\FatRequest as StoreRequest;
+use App\Http\Requests\FatRequest as UpdateRequest;
+use App\Models\Fat;
 use App\User;
 
 /**
- * Class GodfatherCrudController
+ * Class FatCrudController
  * @package App\Http\Controllers\Admin
  * @property-read CrudPanel $crud
  */
-class GodfatherCrudController extends CrudController
+class FatCrudController extends CrudController
 {
     use Permissions;
 
@@ -24,9 +24,9 @@ class GodfatherCrudController extends CrudController
         | BASIC CRUD INFORMATION
         |--------------------------------------------------------------------------
         */
-        $this->crud->setModel('App\Models\Godfather');
-        $this->crud->setRoute(config('backpack.base.route_prefix') . '/godfather');
-        $this->crud->setEntityNameStrings(__('godfather'), __('godfathers'));
+        $this->crud->setModel('App\Models\Fat');
+        $this->crud->setRoute(config('backpack.base.route_prefix') . '/fat');
+        $this->crud->setEntityNameStrings('FAT', 'FATs');
 
         /*
         |--------------------------------------------------------------------------
@@ -98,46 +98,8 @@ class GodfatherCrudController extends CrudController
 
         $this->separator();
 
-        $this->crud->addField([
-            'label' => ucfirst(__('donations')),
-            'name' => 'donations',
-            'type' => 'relation_table',
-            'route' => '/admin/donation',
-            'buttons' => is('admin', 'accountancy') ? ['add'] : [],
-            'columns' => [
-                'name' => [
-                    'label' => ucfirst(__('process')),
-                    'name' => 'processLink',
-                ],
-                'value' => [
-                    'label' => __('Value'),
-                    'name' => 'fullValue',
-                ],
-                'date' => [
-                    'label' => __('Date'),
-                    'name' => 'date',
-                ],
-            ],
-        ]);
-
-        $this->crud->addField([
-            'label' => __('Stats'),
-            'name' => 'stats',
-            'type' => 'stats',
-            'rows' => [
-                'donated' => [
-                    'label' => __('Total Donated'),
-                    'value' => 'getTotalDonatedStats',
-                ],
-                'donations' => [
-                    'label' => __('Total Donations'),
-                    'value' => 'getTotalDonationsStats',
-                ],
-            ],
-        ]);
-
         // ------ CRUD COLUMNS
-        $this->crud->addColumns(['id', 'name', 'email', 'phone', 'donations', 'user_id']);
+        $this->crud->addColumns(['id', 'name', 'email', 'phone', 'user_id']);
 
         $this->crud->setColumnDetails('id', [
             'label' => 'ID',
@@ -154,13 +116,6 @@ class GodfatherCrudController extends CrudController
 
         $this->crud->setColumnDetails('phone', [
             'label' => __('Phone'),
-        ]);
-
-        $this->crud->setColumnDetails('donations', [
-            'name' => 'donations',
-            'label' => __('Total Donated'),
-            'type' => 'model_function',
-            'function_name' => 'getTotalDonatedValue',
         ]);
 
         $this->crud->setColumnDetails('user_id', [
@@ -207,7 +162,7 @@ class GodfatherCrudController extends CrudController
         }
 
         // ------ ADVANCED QUERIES
-        if (!is('admin', 'accountancy')) {
+        if (!is('admin', 'adoptions')) {
             $this->crud->denyAccess(['update', 'create', 'list']);
         }
 
@@ -218,11 +173,6 @@ class GodfatherCrudController extends CrudController
         }
 
         $this->crud->addClause('orderBy', 'id', 'DESC');
-
-        $this->crud->addClause('with', ['donations' => function ($query) {
-            $query->selectRaw('godfather_id, sum(value) as total')
-                ->groupBy(['godfather_id']);
-        }]);
 
         // Add asterisk for fields that are required
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
@@ -237,17 +187,11 @@ class GodfatherCrudController extends CrudController
             'headquarter_id' => restrictToHeadquarter(),
         ]);
 
-        // Validate email
-        // $request->validate(['email' => 'required|email|unique:godfathers,email']);
-
         return parent::storeCrud($request);
     }
 
     public function update(UpdateRequest $request)
     {
-        // Validate email with except id
-        // $request->validate(['email' => 'required|email|unique:godfathers,email,' . $request->id]);
-
         return parent::updateCrud($request);
     }
 }

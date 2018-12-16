@@ -313,7 +313,7 @@ class AppointmentCrudController extends CrudController
         }
 
         if (!is('admin', 'appointments')) {
-            $this->crud->denyAccess(['update', 'delete']);
+            $this->crud->denyAccess(['update', 'create', 'delete']);
 
             $this->crud->addClause('where', 'user_id', backpack_user()->id);
         }

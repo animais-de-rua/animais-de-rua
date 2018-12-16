@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Admin\Traits\Permissions;
 use App\Http\Requests\AdopterRequest as UpdateRequest;
 use App\Http\Requests\AdopterStoreRequest as StoreRequest;
 use App\User;
@@ -14,6 +15,8 @@ use Carbon\Carbon;
  */
 class AdopterCrudController extends CrudController
 {
+    use Permissions;
+
     public function setup()
     {
         /*

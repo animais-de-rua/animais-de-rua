@@ -57,7 +57,7 @@ class Adoption extends Model
 
     public function fat()
     {
-        return $this->belongsTo('App\User', 'fat_id');
+        return $this->belongsTo('App\Models\Fat', 'fat_id');
     }
 
     public function adopter()

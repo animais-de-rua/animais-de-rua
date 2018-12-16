@@ -5,6 +5,7 @@ use App\Models\Adopter;
 use App\Models\Adoption;
 use App\Models\Appointment;
 use App\Models\Donation;
+use App\Models\Fat;
 use App\Models\Godfather;
 use App\Models\Process;
 use App\Models\Protocol;
@@ -33,6 +34,7 @@ class FakeSeeder extends Seeder
         DB::table('vets')->truncate();
         DB::table('treatments')->truncate();
         DB::table('appointments')->truncate();
+        DB::table('fats')->truncate();
         DB::table('adopters')->truncate();
         DB::table('adoptions')->truncate();
         DB::table('protocols_requests')->truncate();
@@ -89,6 +91,10 @@ class FakeSeeder extends Seeder
         // Treatments
         $this->log('Treatments');
         factory(Treatment::class, 120)->create();
+
+        // Fats
+        $this->log('Fats');
+        factory(Fat::class, 50)->create();
 
         // Adoptions
         $this->log('Adoptions');
