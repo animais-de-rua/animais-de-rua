@@ -77,6 +77,11 @@ class SponsorCrudController extends CrudController
             'label' => __('URL'),
         ]);
 
+        // ------ CRUD ACCESS
+        if (!is('admin')) {
+            $this->crud->denyAccess(['list', 'create', 'update', 'delete']);
+        }
+
         // add asterisk for fields that are required in CampaignRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');

@@ -190,9 +190,9 @@ class DonationCrudController extends CrudController
                 $this->crud->addClause('where', 'user_id', $value);
             });
 
-        // ------ ADVANCED QUERIES
+        // ------ CRUD ACCESS
         if (!is('admin', 'accountancy')) {
-            $this->crud->denyAccess(['update', 'create', 'list']);
+            $this->crud->denyAccess(['list', 'create', 'update']);
         }
 
         if (!is('admin')) {
@@ -203,6 +203,7 @@ class DonationCrudController extends CrudController
             })->get();
         }
 
+        // ------ ADVANCED QUERIES
         $this->crud->query->with(['process', 'godfather']);
 
         $this->crud->addClause('orderBy', 'id', 'DESC');

@@ -56,6 +56,17 @@ class PartnerCategoryCrudController extends CrudController
             'type' => 'wysiwyg',
         ]);
 
+        // ------ CRUD ACCESS
+        if (!is('admin', 'friend card')) {
+            $this->crud->denyAccess(['list', 'create', 'update']);
+        }
+
+        if (!is('admin')) {
+            $this->crud->denyAccess(['delete']);
+        }
+
+        // ------ ADVANCED QUERIES
+
         // ------ DATATABLE EXPORT BUTTONS
         $this->crud->enableExportButtons();
 

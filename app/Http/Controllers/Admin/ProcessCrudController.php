@@ -489,9 +489,9 @@ class ProcessCrudController extends CrudController
                 $this->crud->addClause('where', 'user_id', $value);
             });
 
-        // ------ ADVANCED QUERIES
+        // ------ CRUD ACCESS
         if (!is(['admin', 'volunteer'], 'processes')) {
-            $this->crud->denyAccess(['list', 'show']);
+            $this->crud->denyAccess(['list', 'show', 'create']);
         }
 
         if (!is('admin', 'processes')) {
@@ -499,13 +499,13 @@ class ProcessCrudController extends CrudController
         }
 
         if (!is('admin')) {
-            $this->crud->addClause('where', 'headquarter_id', restrictToHeadquarter());
-
             $this->crud->denyAccess(['delete']);
 
+            $this->crud->addClause('where', 'headquarter_id', restrictToHeadquarter());
             $this->crud->removeColumn('headquarter');
         }
 
+        // ------ ADVANCED QUERIES
         $this->crud->addClause('with', ['donations' => function ($query) {
             $query->selectRaw('process_id, sum(value) as total_donations')
                 ->groupBy('process_id');

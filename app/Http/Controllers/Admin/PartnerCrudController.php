@@ -284,6 +284,16 @@ class PartnerCrudController extends CrudController
                 $this->crud->addClause('where', 'status', $value);
             });
 
+        // ------ CRUD ACCESS
+        if (!is('admin', 'friend card')) {
+            $this->crud->denyAccess(['list', 'create', 'update']);
+        }
+
+        if (!is('admin')) {
+            $this->crud->denyAccess(['delete']);
+        }
+
+        // ------ ADVANCED QUERIES
         $this->crud->query->with(['categories', 'territories', 'user']);
 
         // ------ DATATABLE EXPORT BUTTONS

@@ -82,6 +82,17 @@ class CampaignCrudController extends CrudController
             'label' => __('Introduction'),
         ]);
 
+        // ------ CRUD ACCESS
+        if (!is('admin', 'website')) {
+            $this->crud->denyAccess(['list', 'create', 'update']);
+        }
+
+        if (!is('admin')) {
+            $this->crud->denyAccess(['delete']);
+        }
+
+        // ------ ADVANCED QUERIES
+
         // add asterisk for fields that are required in CampaignRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');

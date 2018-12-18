@@ -324,13 +324,13 @@ class AdoptionCrudController extends CrudController
                 $this->crud->addClause('whereIn', 'status', json_decode($values));
             });
 
-        // ------ ADVANCED QUERIES
-        if (!is(['admin', 'volunteer'], 'processes')) {
-            $this->crud->denyAccess(['list', 'show']);
+        // ------ CRUD ACCESS
+        if (!is(['admin', 'volunteer'])) {
+            $this->crud->denyAccess(['list']);
         }
 
         if (!is('admin', 'adoptions')) {
-            $this->crud->denyAccess(['update', 'create']);
+            $this->crud->denyAccess(['create', 'update']);
         }
 
         if (!is('admin')) {
@@ -341,6 +341,7 @@ class AdoptionCrudController extends CrudController
             $this->crud->denyAccess(['delete']);
         }
 
+        // ------ ADVANCED QUERIES
         $this->crud->query->with(['process', 'user', 'fat']);
 
         $this->crud->addClause('orderBy', 'id', 'DESC');

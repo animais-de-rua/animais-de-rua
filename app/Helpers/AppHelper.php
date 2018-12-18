@@ -25,7 +25,7 @@ if (!function_exists('hasRole')) {
 if (!function_exists('hasPermission')) {
     function hasPermission($permission)
     {
-        return backpack_user() && backpack_user()->hasPermission($permission);
+        return backpack_user() && backpack_user()->hasPermissionTo($permission);
     }
 }
 

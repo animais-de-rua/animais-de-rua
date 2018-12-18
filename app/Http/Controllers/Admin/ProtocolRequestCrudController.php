@@ -212,6 +212,16 @@ class ProtocolRequestCrudController extends CrudController
                 $this->crud->addClause('where', 'user_id', $value);
             });
 
+        // ------ CRUD ACCESS
+        if (!is('admin', 'protocols')) {
+            $this->crud->denyAccess(['list', 'create', 'update']);
+        }
+
+        if (!is('admin')) {
+            $this->crud->denyAccess(['delete']);
+        }
+
+        // ------ ADVANCED QUERIES
         $this->crud->query->with(['process', 'territory', 'user']);
 
         $this->crud->addClause('orderBy', 'id', 'DESC');

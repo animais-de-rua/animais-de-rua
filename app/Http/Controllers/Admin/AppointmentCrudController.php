@@ -307,17 +307,18 @@ class AppointmentCrudController extends CrudController
                 $this->crud->addClause('whereIn', 'status', json_decode($values));
             });
 
-        // ------ ADVANCED QUERIES
-        if (!is(['admin', 'volunteer'], 'processes')) {
-            $this->crud->denyAccess(['list', 'show']);
+        // ------ CRUD ACCESS
+        if (!is(['admin', 'volunteer'])) {
+            $this->crud->denyAccess(['list']);
         }
 
         if (!is('admin', 'appointments')) {
-            $this->crud->denyAccess(['update', 'create', 'delete']);
+            $this->crud->denyAccess(['create', 'update', 'delete']);
 
             $this->crud->addClause('where', 'user_id', backpack_user()->id);
         }
 
+        // ------ ADVANCED QUERIES
         if (!is('admin')) {
             $this->crud->addClause('whereHas', 'process', function ($query) {
                 $query->where('headquarter_id', restrictToHeadquarter());

@@ -84,6 +84,13 @@ class FriendCardModalityCrudController extends CrudController
             'label' => __('Type'),
         ]);
 
+        // ------ CRUD ACCESS
+        if (!is('admin')) {
+            $this->crud->denyAccess(['list', 'create', 'update', 'delete']);
+        }
+
+        // ------ ADVANCED QUERIES
+
         // add asterisk for fields that are required in FriendCardModalityRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');

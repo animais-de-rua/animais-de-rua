@@ -206,6 +206,19 @@ class AdopterCrudController extends CrudController
                 $this->crud->addClause('where', 'user_id', $value);
             });
 
+        // ------ CRUD ACCESS
+        if (!is(['admin', 'volunteer'])) {
+            $this->crud->denyAccess(['list']);
+        }
+
+        if (!is('admin', 'adoptions')) {
+            $this->crud->denyAccess(['create', 'update']);
+        }
+
+        if (!is('admin')) {
+            $this->crud->denyAccess(['delete']);
+        }
+
         // ------ ADVANCED QUERIES
         $this->crud->query->with(['adoption']);
 

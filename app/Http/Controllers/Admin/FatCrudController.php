@@ -161,9 +161,9 @@ class FatCrudController extends CrudController
                 });
         }
 
-        // ------ ADVANCED QUERIES
+        // ------ CRUD ACCESS
         if (!is('admin', 'adoptions')) {
-            $this->crud->denyAccess(['update', 'create', 'list']);
+            $this->crud->denyAccess(['list', 'create', 'update']);
         }
 
         if (!is('admin')) {
@@ -172,6 +172,7 @@ class FatCrudController extends CrudController
             $this->crud->addClause('where', 'headquarter_id', restrictToHeadquarter());
         }
 
+        // ------ ADVANCED QUERIES
         $this->crud->addClause('orderBy', 'id', 'DESC');
 
         // Add asterisk for fields that are required

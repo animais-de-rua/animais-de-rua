@@ -349,21 +349,26 @@ class TreatmentCrudController extends CrudController
         // ------ DATATABLE EXPORT BUTTONS
         $this->crud->enableExportButtons();
 
-        // ------ ADVANCED QUERIES
+        // ------ CRUD ACCESS
+        if (!is(['admin', 'volunteer'])) {
+            $this->crud->denyAccess(['list', 'create']);
+        }
+
         if (!is('admin', 'treatments')) {
             $this->crud->denyAccess(['update']);
         }
 
         if (!is('admin')) {
+            $this->crud->denyAccess(['delete']);
+
             $this->crud->addClause('whereHas', 'appointment', function ($query) {
                 $query->whereHas('process', function ($query) {
                     $query->where('headquarter_id', restrictToHeadquarter());
                 });
             })->get();
-
-            $this->crud->denyAccess(['delete']);
         }
 
+        // ------ ADVANCED QUERIES
         $this->crud->query->with(['appointment', 'vet', 'user', 'treatment_type']);
 
         $this->crud->addClause('orderBy', 'id', 'DESC');

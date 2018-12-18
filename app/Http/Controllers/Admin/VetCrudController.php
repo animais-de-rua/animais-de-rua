@@ -219,6 +219,15 @@ class VetCrudController extends CrudController
                 });
             });
 
+        // ------ CRUD ACCESS
+        if (!is('admin', 'vets')) {
+            $this->crud->denyAccess(['list', 'create', 'update']);
+        }
+
+        if (!is('admin')) {
+            $this->crud->denyAccess(['delete']);
+        }
+
         // ------ ADVANCED QUERIES
         $this->crud->addClause('with', ['treatments' => function ($query) {
             $query->selectRaw('vet_id, sum(expense) as total_expenses, count(*) as total_operations')

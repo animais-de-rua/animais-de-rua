@@ -132,6 +132,11 @@ class TreatmentTypeCrudController extends CrudController
                 });
             });
 
+        // ------ CRUD ACCESS
+        if (!is('admin')) {
+            $this->crud->denyAccess(['list', 'create', 'update', 'delete']);
+        }
+
         // ------ DATATABLE EXPORT BUTTONS
         $this->crud->enableExportButtons();
 

@@ -83,6 +83,11 @@ class TerritoryCrudController extends CrudController
                 $this->crud->addClause('where', 'parent_id', $value);
             });
 
+        // ------ CRUD ACCESS
+        if (!is('admin')) {
+            $this->crud->denyAccess(['list', 'create', 'update', 'delete']);
+        }
+
         // Add asterisk for fields that are required
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');

@@ -206,9 +206,9 @@ class GodfatherCrudController extends CrudController
                 });
         }
 
-        // ------ ADVANCED QUERIES
+        // ------ CRUD ACCESS
         if (!is('admin', 'accountancy')) {
-            $this->crud->denyAccess(['update', 'create', 'list']);
+            $this->crud->denyAccess(['list', 'create', 'update']);
         }
 
         if (!is('admin')) {
@@ -217,6 +217,7 @@ class GodfatherCrudController extends CrudController
             $this->crud->addClause('where', 'headquarter_id', restrictToHeadquarter());
         }
 
+        // ------ ADVANCED QUERIES
         $this->crud->addClause('orderBy', 'id', 'DESC');
 
         $this->crud->addClause('with', ['donations' => function ($query) {

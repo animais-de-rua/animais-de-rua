@@ -89,7 +89,13 @@ class HeadquarterCrudController extends CrudController
         ]);
 
         // ------ CRUD ACCESS
+        if (!is('admin')) {
+            $this->crud->denyAccess(['list', 'create', 'update', 'delete']);
+        }
+
         $this->crud->denyAccess(['delete']);
+
+        // ------ ADVANCED QUERIES
 
         // ------ DATATABLE EXPORT BUTTONS
         $this->crud->enableExportButtons();

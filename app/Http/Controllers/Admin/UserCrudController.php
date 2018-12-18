@@ -16,9 +16,6 @@ class UserCrudController extends OriginalUserCrudController
     {
         parent::setup();
 
-        $this->restrictTo('admin');
-        $this->removeDefaultActions();
-
         // Fields
         $this->crud->addField([
             'label' => __('Phone'),
@@ -88,46 +85,59 @@ class UserCrudController extends OriginalUserCrudController
                 $this->crud->addClause('whereIn', 'headquarter_id', json_decode($values));
             });
 
-        $this->crud->addFilter([
-            'name' => 'roles',
-            'type' => 'select2_multiple',
-            'label' => ucfirst(__('backpack::permissionmanager.roles')),
-            'placeholder' => __('Select a role'),
-        ],
-            EnumHelper::translate('user.roles'),
-            function ($values) {
-                $this->crud->query->whereHas('roles', function ($query) use ($values) {
-                    $query
-                        ->selectRaw('role_id')
-                        ->whereIn('role_id', json_decode($values));
+        if (is('admin')) {
+            $this->crud->addFilter([
+                'name' => 'roles',
+                'type' => 'select2_multiple',
+                'label' => ucfirst(__('backpack::permissionmanager.roles')),
+                'placeholder' => __('Select a role'),
+            ],
+                EnumHelper::translate('user.roles'),
+                function ($values) {
+                    $this->crud->query->whereHas('roles', function ($query) use ($values) {
+                        $query
+                            ->selectRaw('role_id')
+                            ->whereIn('role_id', json_decode($values));
+                    });
                 });
-            });
 
-        $this->crud->addFilter([
-            'name' => 'permissions',
-            'type' => 'select2_multiple',
-            'label' => ucfirst(__('backpack::permissionmanager.permission_plural')),
-            'placeholder' => __('Select a permission'),
-        ],
-            EnumHelper::translate('user.permissions'),
-            function ($values) {
-                $this->crud->query->whereHas('permissions', function ($query) use ($values) {
-                    $query
-                        ->selectRaw('permission_id')
-                        ->whereIn('permission_id', json_decode($values));
+            $this->crud->addFilter([
+                'name' => 'permissions',
+                'type' => 'select2_multiple',
+                'label' => ucfirst(__('backpack::permissionmanager.permission_plural')),
+                'placeholder' => __('Select a permission'),
+            ],
+                EnumHelper::translate('user.permissions'),
+                function ($values) {
+                    $this->crud->query->whereHas('permissions', function ($query) use ($values) {
+                        $query
+                            ->selectRaw('permission_id')
+                            ->whereIn('permission_id', json_decode($values));
+                    });
                 });
-            });
 
-        $this->crud->addFilter([
-            'name' => 'friend_card_modality2',
-            'type' => 'simple',
-            'label' => ucfirst(__('friend card')),
-            'placeholder' => __('Select a modality'),
-        ],
-            1,
-            function ($value) {
-                $this->crud->addClause('whereNotNull', 'friend_card_modality_id');
-            });
+            $this->crud->addFilter([
+                'name' => 'status',
+                'type' => 'select2',
+                'label' => __('Status'),
+                'placeholder' => __('Select a status'),
+            ],
+                EnumHelper::translate('user.status'),
+                function ($value) {
+                    $this->crud->addClause('where', 'status', $value);
+                });
+
+            $this->crud->addFilter([
+                'name' => 'friend_card_modality2',
+                'type' => 'simple',
+                'label' => ucfirst(__('friend card')),
+                'placeholder' => __('Select a modality'),
+            ],
+                1,
+                function ($value) {
+                    $this->crud->addClause('whereNotNull', 'friend_card_modality_id');
+                });
+        }
 
         $this->crud->addFilter([
             'name' => 'friend_card_modality',
@@ -140,18 +150,23 @@ class UserCrudController extends OriginalUserCrudController
                 $this->crud->addClause('whereIn', 'friend_card_modality_id', json_decode($values));
             });
 
-        $this->crud->addFilter([
-            'name' => 'status',
-            'type' => 'select2',
-            'label' => __('Status'),
-            'placeholder' => __('Select a status'),
-        ],
-            EnumHelper::translate('user.status'),
-            function ($value) {
-                $this->crud->addClause('where', 'status', $value);
-            });
-
+        // ------ DATATABLE EXPORT BUTTONS
         $this->crud->enableExportButtons();
+
+        // ------ CRUD ACCESS
+        if (!is('admin', 'friend card')) {
+            $this->crud->denyAccess(['list']);
+        }
+
+        if (!is('admin')) {
+            $this->crud->denyAccess(['create', 'update', 'delete']);
+
+            if (is([], 'friend card')) {
+                $this->crud->addClause('whereNotNull', 'friend_card_modality_id');
+                $this->crud->removeColumn('roles');
+                $this->crud->removeColumn('permissions');
+            }
+        }
     }
 
     public function terminal()
