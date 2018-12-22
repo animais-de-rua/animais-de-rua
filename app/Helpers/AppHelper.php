@@ -25,7 +25,7 @@ if (!function_exists('hasRole')) {
 if (!function_exists('hasPermission')) {
     function hasPermission($permission)
     {
-        return backpack_user() && backpack_user()->hasPermissionTo($permission);
+        return backpack_user() && backpack_user()->hasAnyPermission($permission, backpack_guard_name());
     }
 }
 
@@ -51,7 +51,7 @@ if (!function_exists('restrictTo')) {
 
         // Default
         if (!$session_role && !$session_permissions) {
-            return hasRole($roles) || hasPermission($permissions);
+            return ($roles && hasRole($roles)) || ($permissions && hasPermission($permissions));
         }
 
         // View as
