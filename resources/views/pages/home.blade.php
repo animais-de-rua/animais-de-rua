@@ -52,6 +52,46 @@
         </div>
     </div>
 
+    <div class="container products three-slider">
+        <h1>{{ $page['products_title'] }}</h1>
+        <p>{{ $page['products_subtitle'] }}</p>
+        <div class="flex-slider swipeable">
+            @php
+            $pages = ceil(count($products) / 3);
+            @endphp
+            <ul class="touchable">
+                @for($i=0; $i<$pages; $i++)
+                <li>
+                    <div class="slide">
+                        @for($j=0; $j<3 && isset($products[$j + $i * 3]); $j++)
+                        @php
+                            $product = $products[$j + $i * 3];
+                        @endphp
+                        <div class="card">
+                            <a href="{{ $product->url }}">
+                                <div class="image">
+                                    <div style="background-image:url('{{ $product->image }}')"></div>
+                                </div>
+                                <div>
+                                    <h1>{{ $product->name }}</h1>
+                                    <div class="price">{{ number_format($product->price, 2, '.', '') }}€</div>
+                                </div>
+                            </a>
+                        </div>
+                        @endfor
+                    </div>
+                </li>
+                @endfor
+            </ul>
+            <ul class="dots">
+                @for($i=0; $i<$pages; $i++)
+                <li class="{{ $i == 0 ? 'active' : '' }}"></li>
+                @endfor
+            </ul>
+        </div>
+    </div>
+
+
     @component('components.banner.risk')
     @endcomponent
 

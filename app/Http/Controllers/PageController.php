@@ -71,6 +71,7 @@ class PageController extends Controller
         return [
             'processes' => $this->_urgent_help(),
             'campaigns' => $campaigns,
+            'products' => app('App\Http\Controllers\PrestaShopController')->getProducts(),
         ];
     }
 

@@ -1,4 +1,4 @@
-<div class="container processes">
+<div class="container processes three-slider">
     <h1>{{ $page['processes_title'] }}</h1>
     <p>{{ $page['processes_subtitle'] }}</p>
     <div class="flex-slider swipeable">

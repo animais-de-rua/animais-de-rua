@@ -56,7 +56,7 @@
         </div>
     </div>
     @if(isset($other))
-    <div class="container processes region">
+    <div class="container region three-slider">
         <div class="row row-wrap">
             <h1>{{ __("web.animals.territory") }}</h1>
         </div>

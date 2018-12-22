@@ -43,6 +43,21 @@ trait PageTemplates
         ]);
 
         // --------------------
+        $this->header('Loja');
+
+        $this->addField([
+            'name' => 'products_title',
+            'label' => '',
+            'type' => 'text',
+        ]);
+
+        $this->addField([
+            'name' => 'products_subtitle',
+            'label' => 'sub-título',
+            'type' => 'text',
+        ]);
+
+        // --------------------
         $this->header('Como ajudar?');
 
         $this->addField([

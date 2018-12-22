@@ -109,7 +109,8 @@ class Adoption extends Model
 
     public function getDetailAttribute()
     {
-        return "{$this->id} - {$this->name} ({$this->process->name})";
+        $process = $this->process ? ' (' . $this->process->name . ')' : '';
+        return "{$this->id} - {$this->name}{$process}";
     }
 
     /*
