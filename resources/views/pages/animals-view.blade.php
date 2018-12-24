@@ -20,7 +20,9 @@
                 <div>
                     {!! $animal['history'] !!}
                 </div>
-                <button class="btn dark">{{ __("Become a Godfather") }}</button>
+                @if($option == 'godfather')
+                <button class="btn dark" onclick="return app.openGodfatherForm()">{{ __("Become a Godfather") }}</button>
+                @endif
             </div>
             <div class="column column-40">
                 @if($animal['images'])

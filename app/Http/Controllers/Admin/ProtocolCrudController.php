@@ -60,6 +60,16 @@ class ProtocolCrudController extends CrudController
             'function_name' => 'getUserLinkAttribute',
         ]);
 
+        if (is('admin')) {
+            $this->crud->addColumn([
+                'label' => ucfirst(__('headquarter')),
+                'type' => 'select',
+                'entity' => 'headquarter',
+                'attribute' => 'name',
+                'model' => "App\Models\Headquarter",
+            ]);
+        }
+
         $this->crud->addFields(['name', 'email', 'phone', 'territory_id']);
 
         $this->crud->addField([
@@ -87,6 +97,16 @@ class ProtocolCrudController extends CrudController
         ]);
 
         if (is('admin')) {
+            $this->crud->addField([
+                'label' => ucfirst(__('headquarter')),
+                'name' => 'headquarter_id',
+                'type' => 'select2',
+                'entity' => 'headquarter',
+                'attribute' => 'name',
+                'model' => 'App\Models\Headquarter',
+                'default' => restrictToHeadquarter(),
+            ]);
+
             $this->crud->addField([
                 'label' => ucfirst(__('volunteer')),
                 'name' => 'user_id',

@@ -24,7 +24,7 @@
                 <div class="white-box">
                     <h2>{{ $page['volunteer_title'] }}</h2>
                     <div class="text">{!! $page['volunteer_text'] !!}</div>
-                    <a class="link lined">{{ $page['volunteer_link'] }}</a>
+                    <a onclick="return app.openForm('volunteer')" class="lined">{{ $page['volunteer_link'] }}</a>
                 </div>
                 <div class="white-box">
                     <h2>{{ $page['friend_title'] }}</h2>
@@ -36,12 +36,10 @@
                 <div class="white-box">
                     <h2>{{ $page['call_title'] }}</h2>
                     <div class="text">{!! $page['call_text'] !!}</div>
-                    <a href="/friends" class="link lined">{{ $page['call_link'] }}</a>
                 </div>
                 <div class="white-box">
                     <h2>{{ $page['associate_title'] }}</h2>
                     <div class="text">{!! $page['associate_text'] !!}</div>
-                    <a href="/friends" class="link lined">{{ $page['associate_link'] }}</a>
                 </div>
             </div>
             <div class="column column-50">
@@ -50,12 +48,12 @@
                 <div class="white-box">
                     <h2>{{ $page['adopt_title'] }}</h2>
                     <div class="text">{!! $page['adopt_text'] !!}</div>
-                    <a href="/friends" class="link lined">{{ $page['adopt_link'] }}</a>
+                    <a href="/animals" class="link lined">{{ $page['adopt_link'] }}</a>
                 </div>
                 <div class="white-box">
                     <h2>{{ $page['store_title'] }}</h2>
                     <div class="text">{!! $page['store_text'] !!}</div>
-                    <a href="/friends" class="link lined">{{ $page['store_link'] }}</a>
+                    <a href="/store" class="lined">{{ $page['store_link'] }}</a>
                 </div>
                 <div class="white-box">
                     <h2>{{ $page['donate_title'] }}</h2>

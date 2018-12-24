@@ -15,9 +15,14 @@ use App\Models\Process;
 use App\Models\Sponsor;
 use App\Models\Territory;
 use App\Models\Treatment;
+use Cache;
+use DB;
 
 class PageController extends Controller
 {
+    const DAY = 1440;
+    const WEEK = 10080;
+
     public function index($slug = 'home')
     {
         // \Debugbar::disable();
@@ -54,8 +59,41 @@ class PageController extends Controller
             $treated = Treatment::selectRaw('SUM(affected_animals_new) as total')->first()->total;
             $adopted = Adoption::selectRaw('COUNT(processed) as total')->where('processed', 0)->first()->total;
 
+            $form_acting_territories = Cache::remember('form_acting_territories', 1, function () {
+                $territoriesRaw = DB::table('headquarters_territories')
+                    ->join('territories', function ($query) {
+                        $query->on('territories.id', 'LIKE', DB::raw('CONCAT(headquarters_territories.territory_id, "%")'))
+                            ->orOn('territories.id', '=', DB::raw('LEFT(headquarters_territories.territory_id, 4)'))
+                            ->orOn('territories.id', '=', DB::raw('LEFT(headquarters_territories.territory_id, 2)'));
+                    })
+                    ->select(['id', 'name', 'parent_id'])
+                    ->groupBy('id')
+                    ->orderByRaw('LENGTH(id), id')
+                    ->get();
+
+                $territories = [
+                    0 => [], // Districts
+                    1 => [], // County
+                    2 => [], // Parish
+                ];
+
+                foreach ($territoriesRaw as $value) {
+                    $territories[strlen($value->id) / 2 - 1][] = (array) $value;
+                }
+                return $territories;
+            });
+
+            $form_all_territories = Cache::remember('form_all_territories', 1, function () {
+                return [
+                    0 => Territory::select(['id', 'name'])->where('level', 1)->get()->toArray(), // Districts
+                    1 => Territory::select(['id', 'name', 'parent_id'])->where('level', 2)->get()->toArray(), // County
+                ];
+            });
+
             $data = [
                 'total_interventions' => $treated + $adopted,
+                'form_acting_territories' => $form_acting_territories,
+                'form_all_territories' => $form_all_territories,
             ];
         }
 
@@ -77,7 +115,9 @@ class PageController extends Controller
 
     private function association()
     {
-        $headquarters = Headquarter::select(['name', 'mail'])->get();
+        $headquarters = Cache::remember('headquarters', 1, function () {
+            return Headquarter::select(['name', 'mail'])->get();
+        });
 
         return [
             'headquarters' => $headquarters,
@@ -92,7 +132,7 @@ class PageController extends Controller
     private function animals()
     {
         $districts_godfather = Process::select(['territories.id', 'territories.name'])
-            ->join('territories', 'territories.id', '=', \DB::raw('LEFT(territory_id, 2)'))
+            ->join('territories', 'territories.id', '=', DB::raw('LEFT(territory_id, 2)'))
             ->where('status', 'waiting_godfather')
             ->orderBy('territories.id', 'asc')
             ->distinct()
@@ -100,7 +140,7 @@ class PageController extends Controller
 
         $districts_adoption = Adoption::select(['territories.id', 'territories.name'])
             ->join('processes', 'processes.id', '=', 'adoptions.process_id')
-            ->join('territories', 'territories.id', '=', \DB::raw('LEFT(territory_id, 2)'))
+            ->join('territories', 'territories.id', '=', DB::raw('LEFT(territory_id, 2)'))
             ->where('adoptions.status', 'open')
             ->orderBy('territories.id', 'asc')
             ->distinct()
@@ -123,8 +163,8 @@ class PageController extends Controller
         switch ($option) {
             case 'godfather':
                 $animal = Process::select(['processes.name', 'history', 'specie', 'images', 'created_at', 'district.name as district', 'district.id as district_id', 'county.name as county'])
-                    ->join('territories as district', 'district.id', '=', \DB::raw('LEFT(territory_id, 2)'))
-                    ->join('territories as county', 'county.id', '=', \DB::raw('LEFT(territory_id, 4)'))
+                    ->join('territories as district', 'district.id', '=', DB::raw('LEFT(territory_id, 2)'))
+                    ->join('territories as county', 'county.id', '=', DB::raw('LEFT(territory_id, 4)'))
                     ->where('processes.id', $id)
                     ->firstOrFail()->toArray();
 
@@ -134,8 +174,8 @@ class PageController extends Controller
             case 'adoption':
                 $animal = Adoption::select(['adoptions.name', 'adoptions.history', 'specie', 'adoptions.images', 'adoptions.created_at', 'district.id as district_id', 'district.name as district', 'county.name as county'])
                     ->join('processes', 'processes.id', '=', 'adoptions.process_id')
-                    ->join('territories as district', 'district.id', '=', \DB::raw('LEFT(territory_id, 2)'))
-                    ->join('territories as county', 'county.id', '=', \DB::raw('LEFT(territory_id, 4)'))
+                    ->join('territories as district', 'district.id', '=', DB::raw('LEFT(territory_id, 2)'))
+                    ->join('territories as county', 'county.id', '=', DB::raw('LEFT(territory_id, 4)'))
                     ->where('adoptions.id', $id)
                     ->firstOrFail()->toArray();
 
@@ -144,7 +184,7 @@ class PageController extends Controller
                 $other = Adoption::select(['adoptions.id', 'adoptions.name', 'adoptions.history', 'specie', 'adoptions.images', 'adoptions.created_at'])
                     ->join('processes', 'processes.id', '=', 'adoptions.process_id')
                     ->where('adoptions.id', '<>', $id)
-                    ->where(\DB::raw('LEFT(territory_id, 2)'), $district)
+                    ->where(DB::raw('LEFT(territory_id, 2)'), $district)
                     ->orderBy('created_at', 'desc')
                     ->limit(3)
                     ->get()->toArray();
@@ -152,7 +192,7 @@ class PageController extends Controller
         }
 
         // Common data to all pages
-        $data = array_merge(['animal' => $animal, 'other' => $other], $this->common());
+        $data = array_merge(['animal' => $animal, 'other' => $other, 'option' => $option], $this->common());
 
         return view('pages.animals-view', $data);
     }
@@ -230,8 +270,8 @@ class PageController extends Controller
     {
         $data = Adoption::select(['adoptions.id', 'adoptions.name', 'specie', 'adoptions.images', 'adoptions.created_at', 'district.name as district', 'county.name as county'])
             ->join('processes', 'processes.id', '=', 'adoptions.process_id')
-            ->join('territories as district', 'district.id', '=', \DB::raw('LEFT(territory_id, 2)'))
-            ->join('territories as county', 'county.id', '=', \DB::raw('LEFT(territory_id, 4)'))
+            ->join('territories as district', 'district.id', '=', DB::raw('LEFT(territory_id, 2)'))
+            ->join('territories as county', 'county.id', '=', DB::raw('LEFT(territory_id, 4)'))
             ->where('adoptions.status', 'open')
             ->orderBy('created_at', 'desc')
             ->limit(20);
@@ -253,8 +293,8 @@ class PageController extends Controller
     public function getAnimalsGodfather($territory = 0, $specie = 0)
     {
         $data = Process::select(['processes.id', 'processes.name', 'specie', 'images', 'created_at', 'district.name as district', 'county.name as county'])
-            ->join('territories as district', 'district.id', '=', \DB::raw('LEFT(territory_id, 2)'))
-            ->join('territories as county', 'county.id', '=', \DB::raw('LEFT(territory_id, 4)'))
+            ->join('territories as district', 'district.id', '=', DB::raw('LEFT(territory_id, 2)'))
+            ->join('territories as county', 'county.id', '=', DB::raw('LEFT(territory_id, 4)'))
             ->where('status', 'waiting_godfather')
             ->orderBy('created_at', 'desc')
             ->limit(20);

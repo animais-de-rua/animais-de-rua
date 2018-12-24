@@ -6,7 +6,7 @@
                 <h4>{{ __("web.operations") }}</h4>
             </div>
             <div class="column column-33 logo">
-                @svg('img/logo/logo.svg')
+                <i class="icon icon-logo"></i>
             </div>
         </div>
 
@@ -40,7 +40,7 @@
                 <a target="_blank" class="color-link" rel="noopener" title="Youtube" href="https://www.youtube.com/user/animaisderuaAdR"><i class="icon icon-youtube"></i></a>
             </div>
             <div class="column column-33 contact">
-                <p><a class="color-link lined light">{{ __("web.contact") }}</a></p>
+                <p><a onclick="return app.openForm('contact')" class="color-link lined light">{{ __("web.contact") }}</a></p>
                 <p><a href="/privacy-policy" class="link color-link lined light">{{ __("web.privacy") }}</a></p>
             </div>
         </div>

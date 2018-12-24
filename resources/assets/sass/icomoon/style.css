@@ -21,6 +21,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-close:before {
+  content: "\e908";
+}
 .icon-twitter:before {
   content: "\e907";
 }
@@ -39,6 +42,9 @@
 .icon-cart:before {
   content: "\e906";
   color: #fff;
+}
+.icon-logo:before {
+  content: "\e90a";
 }
 .icon-card:before {
   content: "\e900";

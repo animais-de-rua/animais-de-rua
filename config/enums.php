@@ -102,4 +102,11 @@ return [
             11 => 'council',
         ],
     ],
+
+    'forms' => [
+        'themes' => [
+            'adoption' => 'adoption',
+            'sterilization' => 'sterilization',
+        ],
+    ],
 ];

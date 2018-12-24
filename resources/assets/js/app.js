@@ -4,6 +4,7 @@ import * as utils from './utils.js';
 const _loading = document.getElementById('loading'),
     _content = document.getElementById('content'),
     _navbar = document.getElementById('navbar'),
+    _forms = document.getElementById('forms'),
     _fetchOptions = {
         credentials: 'same-origin',
         headers: {'X-Requested-With': 'XMLHttpRequest'}
@@ -106,8 +107,8 @@ window.navbar = {
     onMobileCardClick: i => {
         _navbar.classList.toggle('card-view');
 
-        this.navbarMobileCards.forEach(card => card.style.display = 'none');
-        this.navbarMobileCards[i].style.display = 'block';
+        this.navbarMobileCards.forEach(card => card.hide());
+        this.navbarMobileCards[i].show();
     },
 
     onCardClick: (e, i) => {
@@ -231,7 +232,7 @@ window.isotope = {
                 isotope.queryAll('.box' + filters.join('')).forEach(box => box.classList.add('active'));
 
                 let empty = isotope.query('.empty');
-                if(empty) empty.style.display = isotope.queryAll('.box.active').length ? 'none' : 'block';
+                if(empty) empty.display(!isotope.queryAll('.box.active').length);
             });
         });
     }
@@ -359,9 +360,9 @@ window.app = {
         let isotope = query('.isotope');
 
         loading.start();
-        isotope.query('.results-loading').style.display = 'block';
+        isotope.query('.results-loading').show();
         isotope.queryAll('.box').forEach(e => isotope.removeChild(e));
-        isotope.query('.results-empty').style.display = 'none';
+        isotope.query('.results-empty').hide();
 
         let option = isotope.query('.options a.active').getAttribute('option');
         let district = isotope.query('select.toggle:not(.hide)').value;
@@ -369,7 +370,7 @@ window.app = {
 
         fetch(`/api/animals/${option}/${district}/${specie}/`, _fetchOptions).then(response => {
             response.json().then(data => {
-                isotope.query('.results-loading').style.display = 'none';
+                isotope.query('.results-loading').hide();
 
                 let template = document.getElementById('animal-box-template');
                 data.forEach(elem => {
@@ -391,7 +392,7 @@ window.app = {
                 });
 
                 if(!data.length) {
-                    isotope.query('.results-empty').style.display = 'block';
+                    isotope.query('.results-empty').show();
                 }
 
                 router.initLinks();
@@ -399,6 +400,54 @@ window.app = {
                 loading.end();
             })
         }).catch(e => { });
+    },
+    
+    checkEmptySelect: e => {
+        let value = e.children[e.selectedIndex].value;
+        value ? e.classList.remove('empty') : e.classList.remove('empty');
+    },
+
+    onFormCategorySelect: e => {
+        let select = _forms.query('.options');
+        let className = select.children[select.selectedIndex].value;
+
+        _forms.queryAll('.form').forEach(e => e.hide());
+        _forms.query(`.form.${className}`).show();
+    },
+
+    onFormDistrictSelect: e => {
+        app.checkEmptySelect(e);
+
+        let id = e.children[e.selectedIndex].value;
+        let countyOptions = e.nextElementSibling.queryAll('option');
+
+        countyOptions.forEach(e => e.display(e.getAttribute('parent') == id));
+        countyOptions[0].selected = true;
+    },
+
+    openForm: e => {
+        _forms.query('.header').show();
+        _forms.query('.godfather').hide();
+
+        _forms.classList.add('open');
+        _forms.query(`.options > option[value="${e}"]`).selected = true;
+        app.onFormCategorySelect();
+        return false;
+    },
+
+    openGodfatherForm: e => {
+        _forms.query('.header').hide();
+        _forms.query('.godfather').show();
+        _forms.queryAll('.form').forEach(e => e.hide());
+        _forms.query('.form.godfather').show();
+        _forms.query('.godfather h1').innerHTML = query('#animals-view h1').innerText;
+
+        _forms.classList.add('open');
+        return false;
+    },
+
+    closeForm: e => {
+        _forms.classList.remove('open');
     }
 }
 

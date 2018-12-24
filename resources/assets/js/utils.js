@@ -27,6 +27,10 @@ Node.prototype.index = function() {
     return i;
 }
 
+Node.prototype.hide = function() { this.classList.add('hide') }
+Node.prototype.show = function() { this.classList.remove('hide') }
+Node.prototype.display = function(display) { display ? this.show() : this.hide() }
+
 // App
 export function ajax(url, data, success, error, method) {
     const params = typeof data == 'string' ? data : Object.keys(data).map(

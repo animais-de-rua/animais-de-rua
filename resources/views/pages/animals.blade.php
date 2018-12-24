@@ -51,8 +51,8 @@
             </select>
         </div>
 
-        <p class="status results-empty">{{ __("No results") }}...</p>
-        <p class="status results-loading">{{ __("Loading results") }}...</p>
+        <p class="status results-empty hide">{{ __("No results") }}...</p>
+        <p class="status results-loading hide">{{ __("Loading results") }}...</p>
 
         <template id="animal-box-template">
             <div class="box active" onclick="" option="" animal="0">

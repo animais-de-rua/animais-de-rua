@@ -91,7 +91,7 @@
                 @endforeach
             </select>
         </div>
-        <p class="empty">{{ __("No results") }}...</p>
+        <p class="empty hide">{{ __("No results") }}...</p>
         @foreach($partners['list'] as $partner)
         <div class="box active" categories="{{ join(' ', $partner->categories) }}" territories="{{ join(' ', $partner->territories) }}">
             <div class="image" title="{{ $partner->name }}">

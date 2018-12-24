@@ -79,6 +79,12 @@ Route::any('lang/{locale}', function ($locale) {
     return redirect(url()->previous());
 })->where('locale', '[a-z]{2}(-[A-Z]{2})?')->name('lang');
 
+// Forms
+Route::get('form/{slug}', function ($slug) {
+    Session::put('form', $slug);
+    return redirect('/');
+})->where('slug', 'volunteer|contact|apply|training|godfather')->name('form');
+
 // Pages
 Route::get('animals/{option}/{id}', 'PageController@animalsView');
 Route::get('{page}/{subs?}', ['uses' => 'PageController@index'])

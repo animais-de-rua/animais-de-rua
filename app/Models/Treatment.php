@@ -68,7 +68,7 @@ class Treatment extends Model
 
     public function getProcessLinkAttribute()
     {
-        return $this->getLink($this->appointment->process, true, '');
+        return $this->getLink($this->appointment ? $this->appointment->process : null, true, '');
     }
 
     public function getVetLinkAttribute()
