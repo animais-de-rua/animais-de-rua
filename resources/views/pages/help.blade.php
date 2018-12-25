@@ -24,7 +24,7 @@
                 <div class="white-box">
                     <h2>{{ $page['volunteer_title'] }}</h2>
                     <div class="text">{!! $page['volunteer_text'] !!}</div>
-                    <a onclick="return app.openForm('volunteer')" class="lined">{{ $page['volunteer_link'] }}</a>
+                    <a onclick="return modal.open('volunteer')" class="lined">{{ $page['volunteer_link'] }}</a>
                 </div>
                 <div class="white-box">
                     <h2>{{ $page['friend_title'] }}</h2>

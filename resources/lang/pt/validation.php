@@ -32,6 +32,7 @@ return [
     'boolean' => 'O campo :attribute deverá conter o valor verdadeiro ou falso.',
     'confirmed' => 'A confirmação para o campo :attribute não coincide.',
     'date' => 'O campo :attribute não contém uma data válida.',
+    'date_equals' => 'O campo :attribute deverá ser uma data igual a :date.',
     'date_format' => 'A data indicada para o campo :attribute não respeita o formato :format.',
     'different' => 'Os campos :attribute e :other deverão conter valores diferentes.',
     'digits' => 'O campo :attribute deverá conter :digits caracteres.',
@@ -107,6 +108,7 @@ return [
         'string' => 'O campo :attribute deverá conter :size caracteres.',
         'array' => 'O campo :attribute deverá conter :size elementos.',
     ],
+    'starts_with' => 'O campo :attribute deverá começar com um dos seguintes valores: :values',
     'string' => 'O campo :attribute deverá conter texto.',
     'timezone' => 'O campo :attribute deverá ter um fuso horário válido.',
     'unique' => 'O valor indicado para o campo :attribute já se encontra registado.',
@@ -136,9 +138,9 @@ return [
     | Custom Validation Attributes
     |--------------------------------------------------------------------------
     |
-    | The following language lines are used to swap attribute place-holders
-    | with something more reader friendly such as E-Mail Address instead
-    | of "email". This simply helps us make messages a little cleaner.
+    | The following language lines are used to swap our attribute placeholder
+    | with something more reader friendly such as "E-Mail Address" instead
+    | of "email". This simply helps us make our message more expressive.
     |
     */
 
@@ -192,6 +194,8 @@ return [
         'vet_id' => 'veterinário',
         'vet_id_1' => 'veterinário',
         'vet_id_2' => 'veterinário',
+        'images' => 'imagens',
+        'images.*' => 'imagens',
     ],
 
 ];

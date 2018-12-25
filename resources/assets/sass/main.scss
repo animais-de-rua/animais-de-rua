@@ -1691,6 +1691,10 @@ footer {
         }
     }
 
+    form {
+        margin-bottom: 0;
+    }
+
     .form, .submit {
         margin-top: 10px;
     }
@@ -1711,6 +1715,10 @@ footer {
 
     input, textarea {
         color: #FFF;
+    }
+
+    input.error {
+        border-color: red;
     }
 
     .last-child {
@@ -1745,7 +1753,7 @@ footer {
         }
     }
 
-    .colab {
+    .checkbox {
         h1 {
             font-size: 2rem;
         }
@@ -1773,11 +1781,61 @@ footer {
             display: flex;
             margin-bottom: 6px;
         }
+
+        &.interests {
+            h1 {
+                margin-bottom: 4px;
+            }
+            div {
+                margin-bottom: 2px;
+            }
+
+        }
+    }
+
+    div.sending h1, .success {
+        display: none;
+    }
+
+    &.sending {
+        div.sending h1 {
+            display: block;
+        }
+        .content {
+            opacity: 0.3;
+            pointer-events: none;
+
+            h1.title {
+                display: none;
+            }
+        }
+    }
+
+    &.success {
+        .success {
+            display: block;
+        }
+        .content {
+            display: none;
+        }
+    }
+
+    .errors {
+        font-size: 1.3rem;
+        background-color: #612424;
+        border: 1px solid #733232;
+        padding: 4px 6px;
+        border-radius: 2px;
+
+        p {
+            margin: 0;
+        }
     }
 
     .scrollable {
         overflow-y: auto;
         max-height: calc(100vh - 220px);
+        transition: opacity .5s;
     }
 
     .godfather h1 {

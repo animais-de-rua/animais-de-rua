@@ -2,6 +2,7 @@
     "description": "A Associação Animais de Rua é uma associação de protecção animal sediada em Portugal que tem como principal objectivo a esterilização de animais carenciados.",
     "keywords": "associação, animais, esterilização, animais, de, rua, animais de rua, adopção, cão, gato, cães, gatos",
     "Admin Panel": "Painel de administração",
+    "All rights reserved.": "Todos os direitos reservados.",
 
     "Home": "Início",
     "Store": "Loja",
@@ -28,6 +29,8 @@
     "Dashboard": "Painel",
     "Cancel": "Cancelar",
     "Name": "Nome",
+    "Age": "Idade",
+    "Job": "Profissão",
     "Observations": "Observações",
     "Availability Schedule": "Disponibilidade de horário",
     "Send": "Enviar",
@@ -96,6 +99,10 @@
     "Number of Animals": "Nº de Animais",
     "Photos": "Fotografias",
     "Godfather value": "Valor do apadrinhamento",
+    "Subject": "Assunto",
+    "Sending": "A enviar",
+    "Your message has been successfully sent.": "A sua mensagem foi enviada com successo.",
+    "We will contact you as soon as possible to follow up on your request.": "Logo que possível, entraremos em contacto consigo para darmos seguimento ao seu pedido.",
 
     "Go Home": "Voltar ao início",
     "Go Back": "Voltar",

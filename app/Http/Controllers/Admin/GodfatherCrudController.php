@@ -75,9 +75,6 @@ class GodfatherCrudController extends CrudController
                 'attribute' => 'name',
                 'model' => 'App\Models\Headquarter',
                 'default' => restrictToHeadquarter(),
-                'attributes' => [
-                    'disabled' => 'disabled',
-                ],
             ]);
 
             $this->crud->addField([

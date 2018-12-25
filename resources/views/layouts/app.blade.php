@@ -91,11 +91,6 @@
         gtag('js', new Date());
         gtag('config', 'UA-118312120-1');
     </script>
-    @if(\Session::has('form'))
-    <script>
-        app.openForm('{{ \Session::pull('form') }}');
-    </script>
-    @endif
 </body>
 </html>
 @endif

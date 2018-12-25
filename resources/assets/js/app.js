@@ -401,41 +401,21 @@ window.app = {
             })
         }).catch(e => { });
     },
-    
-    checkEmptySelect: e => {
-        let value = e.children[e.selectedIndex].value;
-        value ? e.classList.remove('empty') : e.classList.remove('empty');
-    },
+}
 
-    onFormCategorySelect: e => {
-        let select = _forms.query('.options');
-        let className = select.children[select.selectedIndex].value;
-
-        _forms.queryAll('.form').forEach(e => e.hide());
-        _forms.query(`.form.${className}`).show();
-    },
-
-    onFormDistrictSelect: e => {
-        app.checkEmptySelect(e);
-
-        let id = e.children[e.selectedIndex].value;
-        let countyOptions = e.nextElementSibling.queryAll('option');
-
-        countyOptions.forEach(e => e.display(e.getAttribute('parent') == id));
-        countyOptions[0].selected = true;
-    },
-
-    openForm: e => {
+window.modal = {
+    open: e => {
         _forms.query('.header').show();
         _forms.query('.godfather').hide();
 
         _forms.classList.add('open');
+        _forms.classList.remove('sending', 'success');
         _forms.query(`.options > option[value="${e}"]`).selected = true;
-        app.onFormCategorySelect();
+        modal.onCategorySelect();
         return false;
     },
 
-    openGodfatherForm: e => {
+    openGodfather: e => {
         _forms.query('.header').hide();
         _forms.query('.godfather').show();
         _forms.queryAll('.form').forEach(e => e.hide());
@@ -446,8 +426,71 @@ window.app = {
         return false;
     },
 
-    closeForm: e => {
+    close: e => {
         _forms.classList.remove('open');
+    },
+
+    onCategorySelect: e => {
+        let select = _forms.query('.options');
+        let className = select.children[select.selectedIndex].value;
+
+        _forms.queryAll('.form').forEach(e => e.hide());
+        _forms.query(`.form.${className}`).show();
+    },
+
+    onDistrictSelect: e => {
+        modal.checkEmptySelect(e);
+
+        let id = e.children[e.selectedIndex].value;
+        let countyOptions = e.nextElementSibling.queryAll('option');
+
+        countyOptions.forEach(e => e.display(e.getAttribute('parent') == id));
+        countyOptions[0].selected = true;
+    },
+
+    checkEmptySelect: e => {
+        let value = e.children[e.selectedIndex].value;
+        value ? e.classList.remove('empty') : e.classList.remove('empty');
+    },
+
+    submit: form => {
+        let options = Object.assign(_fetchOptions, {
+            method: 'POST',
+            body: new FormData(form),
+        });
+
+        loading.start();
+        _forms.classList.add("sending");
+        _forms.query('.errors').hide();
+        _forms.queryAll('input.error').forEach(e => e.classList.remove('error'));
+
+        fetch(form.action, options).then(response => {
+            response.json().then(result => {
+                if(result.errors) {
+                    let errorsHTML = "";
+                    for (var error in result.errors) {
+                        errorsHTML += "<p>" + result.errors[error][0] + "</p>";
+
+                        let input = form.query(`input[name="${error.replace(/\.\d/, '[]')}"]`);
+                        if(input) input.classList.add('error');
+                    }
+
+                    _forms.query('.errors').show();
+                    _forms.query('.errors').innerHTML = errorsHTML;
+                } else {
+                    _forms.classList.add("success");
+                    _forms.query('.success > p').innerHTML = result.message;
+                    form.reset();
+                }
+            });
+        }).catch(e => {
+            
+        }).finally(e => {
+            loading.end();
+            _forms.classList.remove("sending");
+        });
+
+        return false;
     }
 }
 

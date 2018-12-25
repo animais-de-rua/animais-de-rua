@@ -436,7 +436,7 @@ class ProcessCrudController extends CrudController
                 $range = json_decode($value);
 
                 $this->crud->query->whereHas('treatments', function ($query) use ($range) {
-                    $query->selectRaw('process_id, count(*) as total_operations')
+                    $query->selectRaw('process_id, sum(affected_animals) as total_operations')
                         ->groupBy('process_id');
 
                     if (is_numeric($range->from)) {
@@ -603,10 +603,6 @@ class ProcessCrudController extends CrudController
     {
         // Add user
         $request->merge(['user_id' => backpack_user()->id]);
-
-        // if (!restrictTo('admin')) {
-        //     dd($request);
-        // }
 
         return parent::storeCrud($request);
     }

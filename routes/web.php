@@ -80,10 +80,8 @@ Route::any('lang/{locale}', function ($locale) {
 })->where('locale', '[a-z]{2}(-[A-Z]{2})?')->name('lang');
 
 // Forms
-Route::get('form/{slug}', function ($slug) {
-    Session::put('form', $slug);
-    return redirect('/');
-})->where('slug', 'volunteer|contact|apply|training|godfather')->name('form');
+Route::get('form/{slug}', 'FormController@form_view')->where('slug', '[a-z]{2,12}')->name('form');
+Route::post('form/{slug}', 'FormController@form_submit')->where('slug', 'volunteer|contact|apply|training|godfather');
 
 // Pages
 Route::get('animals/{option}/{id}', 'PageController@animalsView');

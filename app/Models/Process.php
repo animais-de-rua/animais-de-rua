@@ -152,7 +152,7 @@ class Process extends Model
     public function getAnimalsValue()
     {
         $result = '';
-        if ($this->amount_males && $this->amount_females) {
+        if ($this->amount_males || $this->amount_females) {
             $result .= $this->amount_males . ' / ' . $this->amount_females;
             if ($this->amount_other) {
                 $result .= ' | ' . $this->amount_other;

@@ -60,11 +60,13 @@
     <div id="{{ $field['name'] }}-existing" class="dropzone dropzone-previews">
     	@if (isset($field['value']) && count($field['value']))
         	@foreach($field['value'] as $key => $file_path)
+                @if($file_path)
         		<div class="dz-preview dz-image-preview dz-complete">
                     <input type="hidden" name="{{ $field['name'] }}[]" value="{{ $file_path }}" />
                     <div class="dz-image-no-hover" style="background-image:url('{{ url($file_path) }}');" /></div>
                     <a class="dz-remove dz-remove-existing" href="javascript:undefined;">{{ trans('backpack::dropzone.remove_file') }}</a>
                 </div>
+                @endif
         	@endforeach
         @endif
     </div>

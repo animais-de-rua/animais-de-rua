@@ -129,9 +129,12 @@ class TreatmentCrudController extends CrudController
         if ($treatment_id) {
             $treatment = Treatment::find($treatment_id);
             $appointment = Appointment::find($treatment->appointment_id);
-            $process = Process::find($appointment->process_id);
+            if ($appointment) {
+                $process = Process::find($appointment->process_id);
+            }
         }
 
+        $total_animals = $total_affected_animals_new = 0;
         if (isset($process)) {
             $total_affected_animals_new = 0;
             $total_animals = $max = $process->amount;

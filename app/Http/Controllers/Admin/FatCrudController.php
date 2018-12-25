@@ -26,7 +26,7 @@ class FatCrudController extends CrudController
         */
         $this->crud->setModel('App\Models\Fat');
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/fat');
-        $this->crud->setEntityNameStrings('FAT', 'FATs');
+        $this->crud->setEntityNameStrings('FAT', 'FAT');
 
         /*
         |--------------------------------------------------------------------------
@@ -36,11 +36,6 @@ class FatCrudController extends CrudController
         $this->crud->addField([
             'label' => __('Name'),
             'name' => 'name',
-            'type' => 'text',
-        ]);
-        $this->crud->addField([
-            'label' => __('Alias'),
-            'name' => 'alias',
             'type' => 'text',
         ]);
         $this->crud->addField([
@@ -75,9 +70,6 @@ class FatCrudController extends CrudController
                 'attribute' => 'name',
                 'model' => 'App\Models\Headquarter',
                 'default' => restrictToHeadquarter(),
-                'attributes' => [
-                    'disabled' => 'disabled',
-                ],
             ]);
 
             $this->crud->addField([

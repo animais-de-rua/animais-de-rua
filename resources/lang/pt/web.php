@@ -44,12 +44,25 @@ return [
     ],
 
     'forms' => [
+        'title' => 'Contactar Animais de Rua',
         'interest' => 'O que pretende?',
         'options' => [
             'volunteer' => 'Fazer voluntariado',
             'contact' => 'Contactar a Animais de Rua',
             'apply' => 'Fazer candidatura de esterilização',
             'training' => 'Informação sobre formação',
+        ],
+        'interests' => [
+            'title' => 'Áreas de interesse',
+            '1' => 'Capturas e outro trabalho de terreno',
+            '2' => 'Eventos',
+            '3' => 'FAT',
+            '4' => 'Gestão de redes sociais',
+            '5' => 'Loja Solidária',
+            '6' => 'Cartão Amigo',
+            '7' => 'Fotografia',
+            '8' => 'Design Gráfico',
+            '9' => 'Tarefas administrativas e de Back Office',
         ],
         'colab' => [
             'title' => 'Indique como está disposto a colaborar:',

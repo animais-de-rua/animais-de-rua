@@ -31,8 +31,8 @@ class DashboardController extends CrudController
         return view('backpack::dashboard')->with('stats', [
             'treatments' => DB::table('treatments')->selectRaw('SUM(affected_animals) as total')->first()->total,
             'sterilizations' => DB::table('treatments')->selectRaw('SUM(affected_animals) as total')->whereRaw('treatment_type_id BETWEEN 30 AND 33')->first()->total,
-            'top_headquarter_sterilizations_name' => $headquarter_sterilizations->name,
-            'top_headquarter_sterilizations_value' => $headquarter_sterilizations->total,
+            'top_headquarter_sterilizations_name' => $headquarter_sterilizations ? $headquarter_sterilizations->name : '...',
+            'top_headquarter_sterilizations_value' => $headquarter_sterilizations ? $headquarter_sterilizations->total : '...',
             'appointments' => DB::table('treatments')->selectRaw('COUNT(*) as total')->whereRaw('treatment_type_id BETWEEN 30 AND 33')->first()->total,
             'vets' => DB::table('treatments')->selectRaw('COUNT(DISTINCT vet_id) as total')->whereRaw('treatment_type_id BETWEEN 30 AND 33')->first()->total,
             'volunteers' => DB::table('user_has_roles')->selectRaw('COUNT(DISTINCT model_id) as total')->where('role_id', 2)->first()->total,
