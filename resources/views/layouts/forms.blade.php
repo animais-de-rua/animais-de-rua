@@ -16,7 +16,7 @@
                     <h1>{{ __("Sending") }} ...</h1>
                 </div>
                 <div class="success">
-                    <h1>Sucesso</h1>
+                    <h1>{{ __("Sucess") }}</h1>
                     <p></p>
                 </div>
                 <div class="content">
@@ -156,8 +156,14 @@
                             <div class="column column-50">
                                 @csrf
                                 <input type="text" required name="name" placeholder="{{ __("Name") }}" />
-                                <input type="email" required name="email" placeholder="{{ __("Email") }}" />
-                                <input type="tel" required name="phone" placeholder="{{ __("Phone") }}" />
+                                <div class="row row-wrap">
+                                    <div class="column column-50">
+                                        <input type="email" required name="email" placeholder="{{ __("Email") }}" />
+                                    </div>
+                                    <div class="column column-50">
+                                        <input type="tel" required name="phone" placeholder="{{ __("Phone") }}" />
+                                    </div>
+                                </div>
                                 <input type="text" required name="process" placeholder="{{ __("Process name") }}" />
                                 <div class="row row-wrap">
                                     <div class="column column-50">
@@ -206,6 +212,9 @@
                                 <div class="submit" style="margin: 0">
                                     <input type="submit" value="{{ __("Send") }}" />
                                 </div>
+                            </div>
+                            <div class="column notes">
+                                <p>Os concelhos disponíveis para selecção neste formulário são os abrangidos pelos núcleos de actuação da Animais de Rua. Caso o concelho que pretende indicar não se encontre nesta lista, sugerimos que contacte as associações locais questionando sobre a possibilidade de implementação de um programa CED.</p>
                             </div>
                         </div>
                     </form>

@@ -18,7 +18,7 @@ class Godfather extends Model
     protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['name', 'alias', 'email', 'phone', 'headquarter_id', 'territory_id', 'user_id'];
+    protected $fillable = ['name', 'email', 'phone', 'headquarter_id', 'territory_id', 'user_id'];
     // protected $hidden = [];
     // protected $dates = [];
 

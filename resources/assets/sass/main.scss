@@ -1774,7 +1774,7 @@ footer {
         label {
             font-size: 1.4rem;
             margin-left: 10px;
-            line-height: 20px;
+            line-height: 18px;
         }
 
         div {
@@ -1859,6 +1859,13 @@ footer {
                 margin-right: 12px;
             }
         }   
+    }
+
+    .notes {
+        margin-top: 10px;
+        font-size: 1.3rem;
+        font-style: italic;
+        line-height: 18px;
     }
 }
 

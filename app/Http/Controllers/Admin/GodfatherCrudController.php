@@ -39,11 +39,6 @@ class GodfatherCrudController extends CrudController
             'type' => 'text',
         ]);
         $this->crud->addField([
-            'label' => __('Alias'),
-            'name' => 'alias',
-            'type' => 'text',
-        ]);
-        $this->crud->addField([
             'label' => __('Email'),
             'name' => 'email',
             'type' => 'email',
@@ -67,6 +62,7 @@ class GodfatherCrudController extends CrudController
         ]);
 
         if (is('admin')) {
+            $headquarters = restrictToHeadquarters();
             $this->crud->addField([
                 'label' => ucfirst(__('headquarter')),
                 'name' => 'headquarter_id',
@@ -74,7 +70,7 @@ class GodfatherCrudController extends CrudController
                 'entity' => 'headquarter',
                 'attribute' => 'name',
                 'model' => 'App\Models\Headquarter',
-                'default' => restrictToHeadquarter(),
+                'default' => count($headquarters) ? $headquarters[0] : null,
             ]);
 
             $this->crud->addField([
@@ -211,7 +207,7 @@ class GodfatherCrudController extends CrudController
         if (!is('admin')) {
             $this->crud->denyAccess(['delete']);
 
-            $this->crud->addClause('where', 'headquarter_id', restrictToHeadquarter());
+            $this->crud->addClause('whereIn', 'headquarter_id', restrictToHeadquarters());
         }
 
         // ------ ADVANCED QUERIES
@@ -230,22 +226,17 @@ class GodfatherCrudController extends CrudController
     public function store(StoreRequest $request)
     {
         // Add user
+        $headquarters = restrictToHeadquarters();
         $request->merge([
             'user_id' => backpack_user()->id,
-            'headquarter_id' => restrictToHeadquarter(),
+            'headquarter_id' => count($headquarters) ? $headquarters[0] : null,
         ]);
-
-        // Validate email
-        // $request->validate(['email' => 'required|email|unique:godfathers,email']);
 
         return parent::storeCrud($request);
     }
 
     public function update(UpdateRequest $request)
     {
-        // Validate email with except id
-        // $request->validate(['email' => 'required|email|unique:godfathers,email,' . $request->id]);
-
         return parent::updateCrud($request);
     }
 }

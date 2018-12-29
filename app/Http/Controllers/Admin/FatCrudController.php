@@ -62,6 +62,7 @@ class FatCrudController extends CrudController
         ]);
 
         if (is('admin')) {
+            $headquarters = restrictToHeadquarters();
             $this->crud->addField([
                 'label' => ucfirst(__('headquarter')),
                 'name' => 'headquarter_id',
@@ -69,7 +70,7 @@ class FatCrudController extends CrudController
                 'entity' => 'headquarter',
                 'attribute' => 'name',
                 'model' => 'App\Models\Headquarter',
-                'default' => restrictToHeadquarter(),
+                'default' => count($headquarters) ? $headquarters[0] : null,
             ]);
 
             $this->crud->addField([
@@ -161,7 +162,7 @@ class FatCrudController extends CrudController
         if (!is('admin')) {
             $this->crud->denyAccess(['delete']);
 
-            $this->crud->addClause('where', 'headquarter_id', restrictToHeadquarter());
+            $this->crud->addClause('whereIn', 'headquarter_id', restrictToHeadquarters());
         }
 
         // ------ ADVANCED QUERIES
@@ -175,9 +176,10 @@ class FatCrudController extends CrudController
     public function store(StoreRequest $request)
     {
         // Add user
+        $headquarters = restrictToHeadquarters();
         $request->merge([
             'user_id' => backpack_user()->id,
-            'headquarter_id' => restrictToHeadquarter(),
+            'headquarter_id' => count($headquarters) ? $headquarters[0] : null,
         ]);
 
         return parent::storeCrud($request);

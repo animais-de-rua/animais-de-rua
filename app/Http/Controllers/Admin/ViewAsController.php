@@ -49,13 +49,29 @@ class ViewAsController extends \App\Http\Controllers\Controller
         return redirect(url()->previous());
     }
 
-    public function view_as_headquarter($headquarter)
+    public function view_as_headquarter($headquarter, $state)
     {
         if (!admin()) {
             abort(403);
         }
 
-        Session::put('headquarter', $headquarter);
+        if ($headquarter != 'all') {
+            $headquarters = Session::get('headquarters', []);
+
+            if ($state) {
+                array_push($headquarters, $headquarter);
+            } else {
+                unset($headquarters[array_search($headquarter, $headquarters)]);
+            }
+
+            if (sizeof($headquarters)) {
+                Session::put('headquarters', $headquarters);
+            } else {
+                Session::remove('headquarters');
+            }
+        } else {
+            $this->clearAll();
+        }
 
         return redirect(url()->previous());
     }
@@ -64,6 +80,6 @@ class ViewAsController extends \App\Http\Controllers\Controller
     {
         Session::remove('role');
         Session::remove('permissions');
-        Session::remove('headquarter');
+        Session::remove('headquarters');
     }
 }

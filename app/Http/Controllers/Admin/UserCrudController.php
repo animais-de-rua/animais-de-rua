@@ -33,11 +33,11 @@ class UserCrudController extends OriginalUserCrudController
 
         $this->crud->addField([
             'label' => ucfirst(__('headquarter')),
-            'name' => 'headquarter_id',
-            'type' => 'select2',
-            'entity' => 'headquarter',
+            'type' => 'select2_multiple_data_source',
+            'name' => 'headquarters',
             'attribute' => 'name',
-            'model' => 'App\Models\Headquarter',
+            'model' => api()->headquarterSearch(),
+            'pivot' => true,
         ])->afterField('status');
 
         $this->crud->addField([
@@ -53,7 +53,7 @@ class UserCrudController extends OriginalUserCrudController
             'label' => ucfirst(__('headquarter')),
             'name' => 'headquarter',
             'type' => 'select',
-            'entity' => 'headquarter',
+            'entity' => 'headquarters',
             'attribute' => 'name',
             'model' => "App\Models\Headquarter",
         ])->afterColumn('email');

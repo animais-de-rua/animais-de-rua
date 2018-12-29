@@ -36,7 +36,7 @@ class ProcessCrudController extends CrudController
         */
 
         // ------ CRUD FIELDS
-        $this->crud->addFields(['name', 'contact', 'phone', 'email', 'latlong', 'territory_id', 'headquarter_id', 'specie', 'amount_males', 'amount_females', 'amount_other', 'status', 'images', 'history', 'notes', 'donations', 'treatments', 'stats']);
+        $this->crud->addFields(['name', 'contact', 'phone', 'email', 'address', 'territory_id', 'headquarter_id', 'specie', 'amount_males', 'amount_females', 'amount_other', 'status', 'images', 'history', 'notes', 'donations', 'treatments', 'stats']);
 
         $this->crud->addField([
             'label' => __('Name'),
@@ -44,7 +44,7 @@ class ProcessCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'label' => __('Contact'),
+            'label' => __('Applicant'),
             'name' => 'contact',
         ]);
 
@@ -99,7 +99,7 @@ class ProcessCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'label' => __('Others Amount'),
+            'label' => __('Undefined Amount'),
             'type' => 'number',
             'name' => 'amount_other',
             'default' => 0,
@@ -124,12 +124,9 @@ class ProcessCrudController extends CrudController
         }
 
         $this->crud->addField([
-            'label' => __('Location'),
-            'type' => 'latlng',
-            'name' => 'latlong',
-            'map_style' => 'width:100%; height:320px;',
-            'google_api_key' => env('GOOGLE_API_KEY'),
-            'default_zoom' => '9',
+            'label' => __('Address'),
+            'name' => 'address',
+            'type' => 'address',
         ]);
 
         $this->crud->addField([
@@ -227,7 +224,7 @@ class ProcessCrudController extends CrudController
 
         $this->crud->setColumnDetails('animal_count', [
             'name' => 'animal_count',
-            'label' => __('Animals') . ' M/F | O',
+            'label' => __('Animals') . ' M/F | ?',
             'type' => 'model_function',
             'function_name' => 'getAnimalsValue',
         ]);
@@ -501,7 +498,7 @@ class ProcessCrudController extends CrudController
         if (!is('admin')) {
             $this->crud->denyAccess(['delete']);
 
-            $this->crud->addClause('where', 'headquarter_id', restrictToHeadquarter());
+            $this->crud->addClause('whereIn', 'headquarter_id', restrictToHeadquarters());
             $this->crud->removeColumn('headquarter');
         }
 
@@ -535,7 +532,7 @@ class ProcessCrudController extends CrudController
         $this->crud->removeColumn('total_operations');
 
         $this->crud->setColumnDetails('contact', [
-            'label' => __('Contact'),
+            'label' => __('Applicant'),
         ]);
         $this->crud->setColumnDetails('phone', [
             'label' => __('Phone'),

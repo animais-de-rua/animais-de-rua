@@ -58,7 +58,7 @@ class FriendCardModalityCrudController extends CrudController
             'type' => 'number',
             'default' => 0,
             'suffix' => '€',
-            'attributes' => ['min' => 0, 'max' => 1000000],
+            'attributes' => ['min' => 0, 'max' => 1000000, 'step' => .01],
         ]);
 
         $this->crud->addField([

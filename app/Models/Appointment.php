@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Backpack\CRUD\CrudTrait;
+use Carbon\Carbon;
 
 class Appointment extends Model
 {
@@ -30,8 +31,13 @@ class Appointment extends Model
 
     public function addTreatment()
     {
-        $disabled = $this->status == 'approving';
-        $btn_color = $this->getTreatmentsCountValue() ? 'btn-primary' : 'btn-warning';
+        $date =
+        $this->status == 'approved_option_1' ? $this->date_1 :
+        $this->status == 'approved_option_2' ? $this->date_2 : null;
+        $future = $date && Carbon::parse($date) > Carbon::today();
+
+        $disabled = $this->status == 'approving' || $future;
+        $btn_color = $future || $disabled ? 'btn-default' : ($this->getTreatmentsCountValue() ? 'btn-primary' : 'btn-warning');
 
         return '
         <a class="btn btn-xs ' . $btn_color . ' ' . ($disabled ? 'disabled' : '') . '" href="/admin/treatment/create?appointment=' . $this->id . '" title="' . __('Add treatment') . '">
@@ -105,7 +111,7 @@ class Appointment extends Model
     public function getAnimalsValue()
     {
         $result = '';
-        if ($this->amount_males && $this->amount_females) {
+        if ($this->amount_males || $this->amount_females) {
             $result .= $this->amount_males . ' / ' . $this->amount_females;
             if ($this->amount_other) {
                 $result .= ' | ' . $this->amount_other;

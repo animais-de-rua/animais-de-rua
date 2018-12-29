@@ -144,6 +144,10 @@ class TreatmentCrudController extends CrudController
             $max = max(0, $total_animals - $total_affected_animals_new);
         }
 
+        if ($treatment_id) {
+            $max += $treatment->affected_animals_new;
+        }
+
         $this->crud->addField([
             'label' => ucfirst(__('appointment')),
             'name' => 'appointment_id',
@@ -227,6 +231,7 @@ class TreatmentCrudController extends CrudController
             'attributes' => array_merge($attributes, [
                 'min' => 0,
                 'max' => 1000000,
+                'step' => .01,
             ]),
             'prefix' => '€',
         ]);
@@ -359,6 +364,8 @@ class TreatmentCrudController extends CrudController
 
         if (!is('admin', 'treatments')) {
             $this->crud->denyAccess(['update']);
+        } else if (is('volunteer', 'treatments') && $treatment_id && $treatment->status == 'approved') {
+            $this->crud->denyAccess(['update']);
         }
 
         if (!is('admin')) {
@@ -366,7 +373,7 @@ class TreatmentCrudController extends CrudController
 
             $this->crud->addClause('whereHas', 'appointment', function ($query) {
                 $query->whereHas('process', function ($query) {
-                    $query->where('headquarter_id', restrictToHeadquarter());
+                    $query->whereIn('headquarter_id', restrictToHeadquarters());
                 });
             })->get();
         }

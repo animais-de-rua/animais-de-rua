@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Helpers\EnumHelper;
 use App\Http\Controllers\Admin\Traits\Permissions;
 use App\Http\Requests\AppointmentRequest as StoreRequest;
 use App\Http\Requests\AppointmentRequest as UpdateRequest;
@@ -84,7 +83,7 @@ class AppointmentCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'label' => __('Date'),
+            'label' => __('Date') . ' 1',
             'name' => 'date_1',
             'type' => 'date',
             'default' => Carbon::today()->toDateString(),
@@ -104,7 +103,7 @@ class AppointmentCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'label' => __('Date'),
+            'label' => __('Date') . ' 2',
             'name' => 'date_2',
             'type' => 'date',
         ]);
@@ -126,7 +125,7 @@ class AppointmentCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'label' => __('Others Amount'),
+            'label' => __('Undefined Amount'),
             'type' => 'number',
             'name' => 'amount_other',
             'default' => 0,
@@ -188,7 +187,7 @@ class AppointmentCrudController extends CrudController
 
         $this->crud->setColumnDetails('date_1', [
             'type' => 'date',
-            'label' => __('Date'),
+            'label' => __('Date') . ' 1',
         ]);
 
         $this->crud->setColumnDetails('vet_id_2', [
@@ -201,12 +200,12 @@ class AppointmentCrudController extends CrudController
 
         $this->crud->setColumnDetails('date_2', [
             'type' => 'date',
-            'label' => __('Date'),
+            'label' => __('Date') . ' 2',
         ]);
 
         $this->crud->setColumnDetails('animal_count', [
             'name' => 'animal_count',
-            'label' => __('Animals') . ' M/F | O',
+            'label' => __('Animals') . ' M/F | ?',
             'type' => 'model_function',
             'function_name' => 'getAnimalsValue',
         ]);
@@ -302,9 +301,17 @@ class AppointmentCrudController extends CrudController
             'label' => __('Status'),
             'placeholder' => __('Select a status'),
         ],
-            EnumHelper::translate('appointment.status'),
+            [
+                'approving' => __('approving'),
+                'approved' => __('approved'),
+            ],
             function ($values) {
-                $this->crud->addClause('whereIn', 'status', json_decode($values));
+                if ($values == 'approving') {
+                    $this->crud->addClause('whereIn', 'status', json_decode($values));
+                } else {
+                    $this->crud->addClause('whereIn', 'status', ['approved_option_1', 'approved_option_2']);
+                }
+
             });
 
         // ------ CRUD ACCESS
@@ -321,7 +328,7 @@ class AppointmentCrudController extends CrudController
         // ------ ADVANCED QUERIES
         if (!is('admin')) {
             $this->crud->addClause('whereHas', 'process', function ($query) {
-                $query->where('headquarter_id', restrictToHeadquarter());
+                $query->whereIn('headquarter_id', restrictToHeadquarters());
             })->get();
         } else {
             // Headquarter filter
@@ -384,6 +391,17 @@ class AppointmentCrudController extends CrudController
         // add asterisk for fields that are required in AppointmentRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
+    }
+
+    public function destroy($id)
+    {
+        // Avoid destroy if there are appointments
+        $appointment = Appointment::with('treatments')->find($id);
+        if (count($appointment->treatments) > 0) {
+            return false;
+        }
+
+        return parent::destroy($id);
     }
 
     public function store(StoreRequest $request)

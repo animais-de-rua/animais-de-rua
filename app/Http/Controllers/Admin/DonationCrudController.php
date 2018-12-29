@@ -42,7 +42,7 @@ class DonationCrudController extends CrudController
             'name' => 'value',
             'type' => 'number',
             'default' => 0,
-            'attributes' => ['min' => 0, 'max' => 1000000],
+            'attributes' => ['min' => 0, 'max' => 1000000, 'step' => .01],
             'prefix' => '€',
         ]);
 
@@ -199,7 +199,7 @@ class DonationCrudController extends CrudController
             $this->crud->denyAccess(['delete']);
 
             $this->crud->addClause('whereHas', 'process', function ($query) {
-                $query->where('headquarter_id', restrictToHeadquarter());
+                $query->whereIn('headquarter_id', restrictToHeadquarters());
             })->get();
         }
 

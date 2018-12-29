@@ -48,7 +48,7 @@ hr {
 @php
 $current_role = Session::get('role', 'admin');
 $current_permissions = Session::get('permissions', []);
-$current_headquarter = Session::get('headquarter', '');
+$current_headquarters = Session::get('headquarters', []);
 $roles = Config::get("enums.user.roles");
 $permissions = Config::get("enums.user.permissions");
 $headquarters = \App\Models\Headquarter::select(['id', 'name'])->get();
@@ -85,7 +85,7 @@ $headquarters = \App\Models\Headquarter::select(['id', 'name'])->get();
 		<hr />
 		@foreach($headquarters as $headquarter)
 		@php
-			$state = $current_headquarter == $headquarter->id;
+			$state = in_array($headquarter->id, $current_headquarters);
 		@endphp
 		<li class="toggle {{ $state ? "active" : "" }}">
 			<a href="{{ route('view-as-headquarter', ['headquarter' => $headquarter->id, 'state' => $state ? 0 : 1]) }}">

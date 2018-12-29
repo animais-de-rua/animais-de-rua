@@ -41,7 +41,7 @@ class APICrudController extends CrudController
         return $request ? ($request->has('q') || $request->has('term') ? $request->input('q') . $request->input('term') : false) : false;
     }
 
-    public function entitySearch($entity, $searchFields = null, $where = null)
+    public function entitySearch($entity, $searchFields = null, $where = null, $whereIn = null)
     {
         $search_term = $this->getSearchParam();
         $results = $entity::select();
@@ -59,6 +59,12 @@ class APICrudController extends CrudController
         if ($where) {
             foreach ($where as $key => $value) {
                 $results = $results->where($key, $value);
+            }
+        }
+
+        if ($whereIn) {
+            foreach ($whereIn as $key => $value) {
+                $results = $results->whereIn($key, $value);
             }
         }
 
@@ -129,10 +135,10 @@ class APICrudController extends CrudController
     */
     public function godfatherSearch()
     {
-        $headquarter = restrictToHeadquarter();
-        $where = $headquarter ? ['headquarter_id' => $headquarter] : [];
+        $headquarters = restrictToHeadquarters();
+        $whereIn = $headquarters ? ['headquarter_id' => $headquarters] : [];
 
-        return $this->entitySearch(Godfather::class, ['name', 'email']);
+        return $this->entitySearch(Godfather::class, ['name', 'email'], null, $whereIn);
     }
 
     public function godfatherFilter()
@@ -147,10 +153,10 @@ class APICrudController extends CrudController
     */
     public function fatSearch()
     {
-        $headquarter = restrictToHeadquarter();
-        $where = $headquarter ? ['headquarter_id' => $headquarter] : [];
+        $headquarters = restrictToHeadquarters();
+        $whereIn = $headquarters ? ['headquarter_id' => $headquarters] : [];
 
-        return $this->entitySearch(Fat::class, ['name', 'email'], $where);
+        return $this->entitySearch(Fat::class, ['name', 'email'], null, $whereIn);
     }
 
     public function fatFilter()
@@ -226,20 +232,21 @@ class APICrudController extends CrudController
     public function processSearch()
     {
         $search_term = $this->getSearchParam();
-        $headquarter = restrictToHeadquarter();
 
         $results = Process::with('headquarter')->whereIn('status', ['waiting_godfather', 'waiting_capture', 'open']);
 
         // Headquarter filter
-        if ($headquarter) {
-            $results = $results->where('headquarter_id', $headquarter);
+        $headquarters = restrictToHeadquarters();
+        if ($headquarters) {
+            $results = $results->whereIn('headquarter_id', $headquarters);
         }
 
         // Search
         if ($search_term) {
-            $results = $results
-                ->where('id', "$search_term")
-                ->orWhere('name', 'LIKE', "%$search_term%");
+            $results = $results->where(function ($query) use ($search_term) {
+                $query->where('id', "$search_term")
+                    ->orWhere('name', 'LIKE', "%$search_term%");
+            });
         }
 
         return $results->paginate(10);
@@ -274,14 +281,15 @@ class APICrudController extends CrudController
 
         $users = User::whereIn('id', DB::table('user_has_roles')->select('model_id')->whereIn('role_id', $roles));
 
-        $headquarter = restrictToHeadquarter();
-        if ($headquarter) {
-            $users = $users->where('headquarter_id', $headquarter);
+        $headquarters = restrictToHeadquarters();
+        if ($headquarters) {
+            $users = $users->whereIn('headquarter_id', $headquarters);
         }
 
         if ($search_term) {
             $users = $users->where(function ($query) use ($search_term) {
-                $query->where('name', 'LIKE', "%$search_term%")->orWhere('email', 'LIKE', "%$search_term%");
+                $query->where('name', 'LIKE', "%$search_term%")
+                    ->orWhere('email', 'LIKE', "%$search_term%");
             });
         }
 
@@ -406,5 +414,54 @@ class APICrudController extends CrudController
     public function territoryList($level = Territory::ALL)
     {
         return $this->territoryFilter($level);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Acting Territories
+    |--------------------------------------------------------------------------
+    */
+
+    public function actingTerritorySearch()
+    {
+        $search_term = $this->getSearchParam();
+
+        $territories = DB::table('headquarters_territories')
+            ->join('territories as a', function ($query) use ($search_term) {
+                $query->on('a.id', 'LIKE', DB::raw('CONCAT(headquarters_territories.territory_id, "%")'))
+                    ->orOn('a.id', '=', DB::raw('LEFT(headquarters_territories.territory_id, 4)'))
+                    ->orOn('a.id', '=', DB::raw('LEFT(headquarters_territories.territory_id, 2)'));
+
+                if ($search_term) {
+                    $query->where('name', 'LIKE', "%$search_term%");
+                }
+            })
+            ->leftJoin('territories as b', 'a.parent_id', '=', 'b.id')
+            ->leftJoin('territories as c', 'b.parent_id', '=', 'c.id')
+            ->selectRaw('a.id, CONCAT(a.name, IF(b.name is null, "", CONCAT(", ", b.name)), IF(c.name is null, "", CONCAT(", ", c.name))) as name, a.parent_id')
+            ->groupBy('a.id')
+            ->orderByRaw('LENGTH(a.id), a.id')
+            ->get()
+            ->toArray();
+
+        $data = Territory::hydrate($territories);
+
+        return $data;
+    }
+
+    public function actingTerritoryFilter()
+    {
+        $data = [];
+
+        foreach ($this->actingTerritorySearch() as $elem) {
+            $data[$elem->id] = $elem->name;
+        }
+
+        return $data;
+    }
+
+    public function actingTerritoryList()
+    {
+        return $this->actingTerritoryFilter();
     }
 }

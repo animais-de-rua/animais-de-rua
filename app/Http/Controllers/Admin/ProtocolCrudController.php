@@ -92,11 +92,12 @@ class ProtocolCrudController extends CrudController
             'label' => ucfirst(__('territory')),
             'name' => 'territory_id',
             'type' => 'select2_from_array',
-            'options' => $this->wantsJSON() ? null : api()->territoryList(),
+            'options' => $this->wantsJSON() ? null : api()->actingTerritoryList(),
             'allows_null' => true,
         ]);
 
         if (is('admin')) {
+            $headquarters = restrictToHeadquarters();
             $this->crud->addField([
                 'label' => ucfirst(__('headquarter')),
                 'name' => 'headquarter_id',
@@ -104,7 +105,7 @@ class ProtocolCrudController extends CrudController
                 'entity' => 'headquarter',
                 'attribute' => 'name',
                 'model' => 'App\Models\Headquarter',
-                'default' => restrictToHeadquarter(),
+                'default' => count($headquarters) ? $headquarters[0] : null,
             ]);
 
             $this->crud->addField([

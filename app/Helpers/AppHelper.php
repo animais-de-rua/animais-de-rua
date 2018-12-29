@@ -75,10 +75,10 @@ if (!function_exists('restrictTo')) {
     }
 }
 
-if (!function_exists('restrictToHeadquarter')) {
-    function restrictToHeadquarter()
+if (!function_exists('restrictToHeadquarters')) {
+    function restrictToHeadquarters()
     {
-        return is('admin') ? null : (Session::get('headquarter', null) ?: backpack_user()->headquarter_id ?: null);
+        return is('admin') ? null : (Session::get('headquarters', null) ?: backpack_user()->headquarters->pluck('id')->toArray() ?: null);
     }
 }
 

@@ -26,7 +26,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name', 'email', 'password',
-        'phone', 'headquarter_id', 'friend_card_modality', 'status',
+        'phone', 'friend_card_modality', 'status',
     ];
 
     /**
@@ -55,9 +55,9 @@ class User extends Authenticatable
     |--------------------------------------------------------------------------
     */
 
-    public function headquarter()
+    public function headquarters()
     {
-        return $this->belongsTo('App\Models\Headquarter', 'headquarter_id');
+        return $this->belongsToMany('App\Models\Headquarter', 'users_headquarters', 'user_id', 'headquarter_id');
     }
 
     public function friend_card_modality()

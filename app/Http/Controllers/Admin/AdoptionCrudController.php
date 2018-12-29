@@ -334,8 +334,8 @@ class AdoptionCrudController extends CrudController
         }
 
         if (!is('admin')) {
-            $this->crud->addClause('whereHas', 'process', function ($query) {
-                $query->where('headquarter_id', restrictToHeadquarter());
+            $this->crud->addClause('whereHas', 'process', function ($query) use ($headquarters) {
+                $query->whereIn('headquarter_id', restrictToHeadquarters());
             })->get();
 
             $this->crud->denyAccess(['delete']);

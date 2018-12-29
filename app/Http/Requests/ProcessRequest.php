@@ -31,7 +31,7 @@ class ProcessRequest extends FormRequest
             'contact' => 'required|min:3|max:255',
             'phone' => 'required|min:9|max:16',
             'email' => 'required|email',
-            'latlong' => 'required|min:3|max:255',
+            'address' => 'required|min:3|max:255',
             'territory_id' => 'required|exists:territories,id',
             'headquarter_id' => 'required|exists:headquarters,id',
             'amount_males' => 'required|numeric|min:0|max:100',

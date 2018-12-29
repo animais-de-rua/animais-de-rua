@@ -25,7 +25,7 @@ class CreateFriendCardTable extends Migration
         });
 
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('friend_card_modality_id')->after('headquarter_id')->unsigned()->nullable();
+            $table->integer('friend_card_modality_id')->after('phone')->unsigned()->nullable();
 
             $table->index(['friend_card_modality_id']);
             $table->foreign('friend_card_modality_id')
