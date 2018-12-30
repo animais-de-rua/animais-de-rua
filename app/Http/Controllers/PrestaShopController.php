@@ -29,7 +29,7 @@ class PrestaShopController extends Controller
                 'id' => (int) $product->id,
                 'name' => (string) $nameLanguage[0],
                 'price' => (float) $product->price,
-                'image' => $url . '/img/p/' . join('/', str_split($idImage)) . '/' . $idImage . '.jpg',
+                'image' => "$url/$idImage-home_default/default.jpg",
                 'description' => (string) $descriptionLanguage[0],
                 'url' => $url . '/index.php?controller=product&id_product=' . $product->id,
             ];

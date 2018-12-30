@@ -422,7 +422,7 @@ class APICrudController extends CrudController
     |--------------------------------------------------------------------------
     */
 
-    public function actingTerritorySearch()
+    public function actingTerritorySearch($level = Territory::ALL)
     {
         $search_term = $this->getSearchParam();
 
@@ -440,28 +440,110 @@ class APICrudController extends CrudController
             ->leftJoin('territories as c', 'b.parent_id', '=', 'c.id')
             ->selectRaw('a.id, CONCAT(a.name, IF(b.name is null, "", CONCAT(", ", b.name)), IF(c.name is null, "", CONCAT(", ", c.name))) as name, a.parent_id')
             ->groupBy('a.id')
-            ->orderByRaw('LENGTH(a.id), a.id')
-            ->get()
-            ->toArray();
+            ->orderByRaw('LENGTH(a.id), a.id');
 
-        $data = Territory::hydrate($territories);
+        $territories = $territories->where(function ($query) use ($level) {
+            if ($level & Territory::FREGUESIA) {
+                $query->whereRaw('LENGTH(a.id) = 6');
+            }
+
+            if ($level & Territory::CONCELHO) {
+                $query->orWhereRaw('LENGTH(a.id) = 4');
+            }
+
+            if ($level & Territory::DISTRITO) {
+                $query->orWhereRaw('LENGTH(a.id) = 2');
+            }
+        });
+
+        if (!is('admin') && $headquarters) {
+            $territories->whereIn('headquarter_id', $headquarters);
+        }
+
+        $data = Territory::hydrate($territories)->get()->toArray();
 
         return $data;
     }
 
-    public function actingTerritoryFilter()
+    public function actingTerritoryFilter($level = Territory::ALL)
     {
         $data = [];
 
-        foreach ($this->actingTerritorySearch() as $elem) {
+        foreach ($this->actingTerritorySearch($level) as $elem) {
             $data[$elem->id] = $elem->name;
         }
 
         return $data;
     }
 
-    public function actingTerritoryList()
+    public function actingTerritoryList($level = Territory::ALL)
     {
-        return $this->actingTerritoryFilter();
+        return $this->actingTerritoryFilter($level);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Range Territories
+    |--------------------------------------------------------------------------
+    */
+
+    public function rangeTerritorySearch($level = Territory::ALL)
+    {
+        $search_term = $this->getSearchParam();
+        $headquarters = restrictToHeadquarters();
+
+        $territories = DB::table('headquarters_territories_range')
+            ->join('territories as a', function ($query) use ($search_term, $level) {
+                $query->on('a.id', 'LIKE', DB::raw('CONCAT(headquarters_territories_range.territory_id, "%")'))
+                    ->orOn('a.id', '=', DB::raw('LEFT(headquarters_territories_range.territory_id, 2)'))
+                    ->orOn('a.id', '=', DB::raw('LEFT(headquarters_territories_range.territory_id, 4)'));
+
+                if ($search_term) {
+                    $query->where('name', 'LIKE', "%$search_term%");
+                }
+            })
+            ->leftJoin('territories as b', 'a.parent_id', '=', 'b.id')
+            ->leftJoin('territories as c', 'b.parent_id', '=', 'c.id')
+            ->selectRaw('a.id, CONCAT(a.name, IF(b.name is null, "", CONCAT(", ", b.name)), IF(c.name is null, "", CONCAT(", ", c.name))) as name, a.parent_id')
+            ->groupBy('a.id')
+            ->orderByRaw('LENGTH(a.id), a.id');
+
+        $territories = $territories->where(function ($query) use ($level) {
+            if ($level & Territory::FREGUESIA) {
+                $query->whereRaw('LENGTH(a.id) = 6');
+            }
+
+            if ($level & Territory::CONCELHO) {
+                $query->orWhereRaw('LENGTH(a.id) = 4');
+            }
+
+            if ($level & Territory::DISTRITO) {
+                $query->orWhereRaw('LENGTH(a.id) = 2');
+            }
+        });
+
+        if (!is('admin') && $headquarters) {
+            $territories->whereIn('headquarter_id', $headquarters);
+        }
+
+        $data = Territory::hydrate($territories->get()->toArray());
+
+        return $data;
+    }
+
+    public function rangeTerritoryFilter($level = Territory::ALL)
+    {
+        $data = [];
+
+        foreach ($this->rangeTerritorySearch($level) as $elem) {
+            $data[$elem->id] = $elem->name;
+        }
+
+        return $data;
+    }
+
+    public function rangeTerritoryList($level = Territory::ALL)
+    {
+        return $this->rangeTerritoryFilter($level);
     }
 }

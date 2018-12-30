@@ -7,6 +7,7 @@ if ($items == '') {
     return;
 }
 
+$crudRouteOriginal = $crud->route;
 $crud->route = $field['route'];
 ?>
 
@@ -64,3 +65,5 @@ $crud->route = $field['route'];
 
     </div>
 </div>
+
+<?php $crud->route = $crudRouteOriginal;?>

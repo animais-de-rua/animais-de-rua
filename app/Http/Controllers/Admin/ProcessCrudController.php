@@ -10,6 +10,7 @@ use App\Models\Adoption;
 use App\Models\Appointment;
 use App\Models\Donation;
 use App\Models\Process;
+use App\Models\Territory;
 use App\Models\Treatment;
 use App\User;
 use DB;
@@ -36,7 +37,7 @@ class ProcessCrudController extends CrudController
         */
 
         // ------ CRUD FIELDS
-        $this->crud->addFields(['name', 'contact', 'phone', 'email', 'address', 'territory_id', 'headquarter_id', 'specie', 'amount_males', 'amount_females', 'amount_other', 'status', 'images', 'history', 'notes', 'donations', 'treatments', 'stats']);
+        $this->crud->addFields(['name', 'contact', 'phone', 'email', 'address', 'territory_id', 'specie', 'amount_males', 'amount_females', 'amount_other', 'status', 'images', 'history', 'notes', 'donations', 'treatments', 'stats']);
 
         $this->crud->addField([
             'label' => __('Name'),
@@ -63,18 +64,22 @@ class ProcessCrudController extends CrudController
             'label' => ucfirst(__('territory')),
             'name' => 'territory_id',
             'type' => 'select2_from_array',
-            'options' => $this->wantsJSON() ? null : api()->territoryList(),
+            'options' => $this->wantsJSON() ? null : api()->rangeTerritoryList(Territory::FREGUESIA),
             'allows_null' => true,
         ]);
 
-        $this->crud->addField([
-            'label' => ucfirst(__('headquarter')),
-            'name' => 'headquarter_id',
-            'type' => 'select2',
-            'entity' => 'headquarter',
-            'attribute' => 'name',
-            'model' => 'App\Models\Headquarter',
-        ]);
+        if (is('admin')) {
+            $headquarters = restrictToHeadquarters();
+            $this->crud->addField([
+                'label' => ucfirst(__('headquarter')),
+                'name' => 'headquarter_id',
+                'type' => 'select2',
+                'entity' => 'headquarter',
+                'attribute' => 'name',
+                'model' => 'App\Models\Headquarter',
+                'default' => count($headquarters) ? $headquarters[0] : null,
+            ])->afterField('territory_id');
+        }
 
         $this->crud->addField([
             'label' => __('Specie'),
@@ -126,7 +131,7 @@ class ProcessCrudController extends CrudController
         $this->crud->addField([
             'label' => __('Address'),
             'name' => 'address',
-            'type' => 'address',
+            'type' => 'text',
         ]);
 
         $this->crud->addField([
@@ -600,6 +605,14 @@ class ProcessCrudController extends CrudController
     {
         // Add user
         $request->merge(['user_id' => backpack_user()->id]);
+
+        if (!$request->headquarter_id) {
+            $request->merge(['headquarter_id' => restrictToHeadquarters()[0]]);
+        }
+
+        if (!$request->status) {
+            $request->merge(['status' => 'approving']);
+        }
 
         return parent::storeCrud($request);
     }

@@ -2,7 +2,7 @@
 
 return [
 
-    'operations' => 'Intervenções até hoje',
+    'operations' => 'Animais ajudados até hoje',
     'subscribe' => 'Subscreva a nossa Newsletter',
     'solidary' => [
         'title' => 'Número Solidário',

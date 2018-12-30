@@ -31,9 +31,18 @@ class Appointment extends Model
 
     public function addTreatment()
     {
-        $date =
-        $this->status == 'approved_option_1' ? $this->date_1 :
-        $this->status == 'approved_option_2' ? $this->date_2 : null;
+        switch ($this->status) {
+            case 'approved_option_1':
+                $date = $this->date_1;
+                break;
+            case 'approved_option_2':
+                $date = $this->date_2;
+                break;
+            default:
+                $date = null;
+                break;
+        }
+
         $future = $date && Carbon::parse($date) > Carbon::today();
 
         $disabled = $this->status == 'approving' || $future;

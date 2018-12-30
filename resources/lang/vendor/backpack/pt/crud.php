@@ -49,7 +49,7 @@ return [
     'all'                       => 'Todos ',
     'in_the_database'           => 'na base de dados',
     'list'                      => 'Lista',
-    'actions'                   => 'Ações',
+    'actions'                   => 'Acções',
     'preview'                   => 'Visualizar',
     'delete'                    => 'Apagar',
     'admin'                     => 'Administrar',

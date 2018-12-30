@@ -33,6 +33,26 @@ class CreateHeadquarterTerritories extends Migration
             $table->primary(['headquarter_id', 'territory_id']);
             $table->unique(['territory_id']);
         });
+
+        Schema::create('headquarters_territories_range', function (Blueprint $table) {
+
+            $table->integer('headquarter_id')->unsigned();
+            $table->string('territory_id', 6);
+
+            $table->index(['headquarter_id']);
+            $table->foreign('headquarter_id')
+                ->references('id')
+                ->on('headquarters')
+                ->onDelete('cascade');
+
+            $table->index(['territory_id']);
+            $table->foreign('territory_id')
+                ->references('id')
+                ->on('territories')
+                ->onDelete('cascade');
+
+            $table->primary(['headquarter_id', 'territory_id']);
+        });
     }
 
     /**
@@ -43,5 +63,6 @@ class CreateHeadquarterTerritories extends Migration
     public function down()
     {
         Schema::dropIfExists('headquarters_territories');
+        Schema::dropIfExists('headquarters_territories_range');
     }
 }

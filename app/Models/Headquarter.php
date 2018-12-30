@@ -39,6 +39,11 @@ class Headquarter extends Model
         return $this->belongsToMany('App\Models\Territory', 'headquarters_territories', 'headquarter_id', 'territory_id');
     }
 
+    public function territories_range()
+    {
+        return $this->belongsToMany('App\Models\Territory', 'headquarters_territories_range', 'headquarter_id', 'territory_id');
+    }
+
     /*
     |--------------------------------------------------------------------------
     | SCOPES

@@ -23,9 +23,20 @@ if (!function_exists('hasRole')) {
 }
 
 if (!function_exists('hasPermission')) {
-    function hasPermission($permission)
+    function hasPermission($permissions)
     {
-        return backpack_user() && backpack_user()->hasAnyPermission($permission, backpack_guard_name());
+        if (backpack_user()) {
+            if (!is_array($permissions)) {
+                $permissions = [$permissions];
+            }
+
+            foreach ($permissions as $permission) {
+                if (backpack_user()->checkPermissionTo($permission, backpack_guard_name())) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
 

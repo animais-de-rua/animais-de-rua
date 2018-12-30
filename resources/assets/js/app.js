@@ -291,7 +291,7 @@ window.swipeable = {
                 touchable.addEventListener('touchstart', e => {
                     touchable.style.setProperty('transition', 'initial');
                     startDrag = e.changedTouches[0];
-                }, false);
+                }, {passive: true});
 
                 touchable.addEventListener('touchmove', e => {
                     let [dx, dy] = [
@@ -310,13 +310,13 @@ window.swipeable = {
 
                     touchable.style.setProperty('--x', dx + 'px');
                     touchable.style.setProperty('--y', dy + 'px');
-                }, false);
+                }, {passive: true});
 
                 touchable.addEventListener('touchend', e => {
                     touchable.style.removeProperty('transition');
                     touchable.style.setProperty('--x', '0px');
                     touchable.style.setProperty('--y', '0px');
-                }, false);
+                }, {passive: true});
             });
         });
     }

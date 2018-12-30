@@ -70,6 +70,15 @@ class HeadquarterCrudController extends CrudController
             'pivot' => true,
         ]);
 
+        $this->crud->addField([
+            'label' => __('Range Zone'),
+            'type' => 'select2_multiple_data_source',
+            'name' => 'territories_range',
+            'attribute' => 'name',
+            'model' => api()->territorySearch(Territory::DISTRITO | Territory::CONCELHO, new Request()),
+            'pivot' => true,
+        ]);
+
         // ------ CRUD COLUMNS
         $this->crud->addColumns(['name', 'address', 'phone']);
 

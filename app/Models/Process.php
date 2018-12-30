@@ -3,10 +3,12 @@
 namespace App\Models;
 
 use Backpack\CRUD\CrudTrait;
+use Backpack\CRUD\ModelTraits\SpatieTranslatable\HasTranslations;
 
 class Process extends Model
 {
     use CrudTrait;
+    use HasTranslations;
 
     /*
     |--------------------------------------------------------------------------
@@ -18,10 +20,11 @@ class Process extends Model
     protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['name', 'contact', 'phone', 'email', 'address', 'territory_id', 'headquarter_id', 'specie', 'amount_males', 'amount_females', 'amount_other', 'status', 'urgent', 'history', 'notes', 'latlong', 'images'];
+    protected $fillable = ['name', 'contact', 'phone', 'email', 'address', 'territory_id', 'headquarter_id', 'specie', 'amount_males', 'amount_females', 'amount_other', 'status', 'urgent', 'history', 'notes', 'latlong', 'images', 'user_id'];
     protected $casts = ['images' => 'array'];
     // protected $hidden = [];
     // protected $dates = [];
+    protected $translatable = ['history'];
 
     /*
     |--------------------------------------------------------------------------

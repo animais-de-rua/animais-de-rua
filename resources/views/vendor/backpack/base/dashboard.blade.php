@@ -18,7 +18,7 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-header with-border">
-                    <div class="box-title">{{ __('Intranet Stats') }}</div>
+                    <div class="box-title">{{ __('Stats') }}</div>
                 </div>
                 <div class="box-body">
                   <p>Esterilizámos <b>{{ $stats['sterilizations'] }}</b> animais em <b>{{ $stats['appointments'] }}</b> consultas recorrendo a <b>{{ $stats['vets'] }}</b> veterinários, só o núcleo de <b>{{ $stats['top_headquarter_sterilizations_name'] }}</b> já leva <b>{{ $stats['top_headquarter_sterilizations_value'] }}</b> operações feitas.</p>

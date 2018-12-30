@@ -6,6 +6,7 @@ $items = old($column['name']) ? (old($column['name'])) : (isset($column['value']
 if ($items == '') {
     return;
 }
+$crudRouteOriginal = $crud->route;
 $crud->route = $column['route'];
 ?>
 
@@ -60,3 +61,5 @@ $crud->route = $column['route'];
         @endif
     </div>
 </div>
+
+<?php $crud->route = $crudRouteOriginal;?>
