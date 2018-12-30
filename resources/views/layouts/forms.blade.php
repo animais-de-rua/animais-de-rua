@@ -43,7 +43,7 @@
 
                     {{-- FORM Voluntary --}}
                     <form action="/form/volunteer" onsubmit="return modal.submit(this)">
-                        <div class="form volunteer row row-wrap">
+                        <div class="form volunteer row row-wrap hide">
                             <div class="column column-50">
                                 @csrf
                                 <input type="text" required name="name" placeholder="{{ __("Name") }}" />
@@ -70,7 +70,7 @@
 
                                 @for ($i = 1; $i <= 9; $i++)
                                 <div>
-                                    <input type="checkbox" id="interest{{ $i }}" name="interest[]" value="interest{{ $i }}" />
+                                    <input type="checkbox" id="interest{{ $i }}" name="interest[]" value="{{ $i }}" />
                                     <label for="interest{{ $i }}">{{ __("web.forms.interests.$i") }}</label>
                                 </div>
                                 @endfor
@@ -227,21 +227,23 @@
                                 <input type="text" required name="name" placeholder="{{ __("Name") }}" />
                                 <input type="email" required name="email" placeholder="{{ __("Email") }}" />
                                 <input type="tel" required name="phone" placeholder="{{ __("Phone") }}" />
+                                <input type="hidden" name="process_id" />
+                                <input type="hidden" name="process_name" />
                                 <div class="value">
                                     <h2>{{ __("Godfather value") }}</h2>
                                     <div class="input">
-                                        <input type="checkbox" id="value01" name="value01" value="15€" />
+                                        <input type="radio" id="value01" name="value" value="15" />
                                         <label for="value01">15€</label>
-                                        <input type="checkbox" id="value02" name="value02" value="30€" />
+                                        <input type="radio" id="value02" name="value" value="30" />
                                         <label for="value02">30€</label>
-                                        <input type="text" name="other" placeholder="{{ ucfirst(__("other")) }}" class="last-child" />
+                                        <input type="number" name="other" placeholder="{{ ucfirst(__("other")) }}" class="last-child" onchange="modal.clearGroup(this)" />
                                     </div>
                                 </div>
                             </div>
                             <div class="column column-50 colab">
                                 <textarea required name="observations" style="height: calc(100% - 56px); margin: 0 0 6px;" placeholder="{{ __("Observations") }}"></textarea>
                                 <div class="submit" style="margin: 0">
-                                    <input type="submit" value="{{ __("Send") }}" />
+                                    <input type="submit" value="{{ __("Send") }}" style="margin:0;" />
                                 </div>
                             </div>
                         </div>

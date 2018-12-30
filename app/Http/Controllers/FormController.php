@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Helpers\EnumHelper;
 use App\Mail\ApplyForm;
+use App\Mail\ContactForm;
+use App\Mail\VolunteerForm;
 use App\Models\Headquarter;
 use App\Models\Process;
 use Image;
@@ -39,12 +41,47 @@ class FormController extends Controller
 
     public function form_submit_volunteer()
     {
-        // TODO
+        $validatedData = request()->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'phone' => 'required|numeric',
+            'age' => 'required|numeric',
+            'job' => 'required',
+            'district' => 'required',
+            'county' => 'required',
+            'schedule' => 'required',
+            'interest' => 'required',
+            'observations' => 'required',
+        ]);
+
+        // Mail to AdR
+        $result = Mail::to(Config::get('settings.form_volunteer'))->send(new VolunteerForm(request()));
+
+        return response()->json([
+            'errors' => '',
+            'message' => __('Your message has been successfully sent.') . '<br />' . __('We will contact you as soon as possible to follow up on your request.'),
+        ]);
     }
 
     public function form_submit_contact()
     {
-        // TODO
+        $validatedData = request()->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'phone' => 'required|numeric',
+            'district' => 'required',
+            'county' => 'required',
+            'subject' => 'required',
+            'observations' => 'required',
+        ]);
+
+        // Mail to AdR
+        $result = Mail::to(Config::get('settings.form_contact'))->send(new ContactForm(request()));
+
+        return response()->json([
+            'errors' => '',
+            'message' => __('Your message has been successfully sent.') . '<br />' . __('We will contact you as soon as possible to follow up on your request.'),
+        ]);
     }
 
     public function form_submit_apply()
@@ -129,11 +166,41 @@ class FormController extends Controller
 
     public function form_submit_training()
     {
-        // TODO
+        $validatedData = request()->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'phone' => 'required|numeric',
+            'district' => 'required',
+            'county' => 'required',
+            'theme' => 'required',
+            'observations' => 'required',
+        ]);
+
+        // Mail to AdR
+        $result = Mail::to(Config::get('settings.form_training'))->send(new VolunteerForm(request()));
+
+        return response()->json([
+            'errors' => '',
+            'message' => __('Your message has been successfully sent.') . '<br />' . __('We will contact you as soon as possible to follow up on your request.'),
+        ]);
     }
 
     public function form_submit_godfather()
     {
-        // TODO
+        $validatedData = request()->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'phone' => 'required|numeric',
+            'other' => 'nullable|numeric',
+            'observations' => 'required',
+        ]);
+
+        // Mail to AdR
+        $result = Mail::to(Config::get('settings.form_godfather'))->send(new VolunteerForm(request()));
+
+        return response()->json([
+            'errors' => '',
+            'message' => __('Your message has been successfully sent.') . '<br />' . __('We will contact you as soon as possible to follow up on your request.'),
+        ]);
     }
 }

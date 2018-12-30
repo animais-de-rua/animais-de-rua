@@ -1082,6 +1082,7 @@ footer {
 
         a {
             padding: 16px;
+            width: 100%;
 
             &:hover {
                 color: #000;
@@ -1699,7 +1700,7 @@ footer {
         margin-top: 10px;
     }
 
-    select, input:not([type="checkbox"]), textarea {
+    select, input:not([type="checkbox"]):not([type="radio"]), textarea {
         border: 1px solid white;
         padding: 2px 16px;
         font-weight: bold;
@@ -1834,7 +1835,7 @@ footer {
 
     .scrollable {
         overflow-y: auto;
-        max-height: calc(100vh - 220px);
+        max-height: calc(100vh - 236px);
         transition: opacity .5s;
     }
 
@@ -2034,10 +2035,10 @@ footer {
             flex-direction: row;
 
             .image {
-                width: 60%;
+                // width: 60%;
 
                 + div {
-                    width: 40%;
+                    // width: 40%;
                 }
             }
 

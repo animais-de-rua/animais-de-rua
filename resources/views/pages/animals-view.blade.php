@@ -21,7 +21,7 @@
                     {!! $animal['history'] !!}
                 </div>
                 @if($option == 'godfather')
-                <button class="btn dark" onclick="return app.openGodfatherForm()">{{ __("Become a Godfather") }}</button>
+                <button class="btn dark" onclick="return modal.openGodfather()">{{ __("Become a Godfather") }}</button>
                 @endif
             </div>
             <div class="column column-40">

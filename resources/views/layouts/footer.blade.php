@@ -1,6 +1,6 @@
 <footer>
     <div class="container">
-        <div class="row responsive">
+        <div class="row row-wrap">
             <div class="column column-67 stats">
                 <h1>{{ $total_interventions }}</h1>
                 <h4>{{ __("web.operations") }}</h4>
@@ -10,7 +10,7 @@
             </div>
         </div>
 
-        <div class="row responsive">
+        <div class="row row-wrap">
             <div class="column column-67 newsletter">
                 <form target="_blank" name="theform" action="https://my.sendinblue.com/users/subscribe/js_id/2gxys/id/1" method="post">
                     <input type="hidden" name="js_id" value="2mxq1"/>
@@ -32,7 +32,7 @@
             </div>
         </div>
 
-        <div class="row responsive" style="margin-top: 24px;">
+        <div class="row row-wrap" style="margin-top: 24px;">
             <div class="column column-67 social">
                 <h4>{{ __('web.social') }}</h4>
                 <a target="_blank" class="color-link" rel="noopener" title="Facebook" href="https://www.facebook.com/animaisderua"><i class="icon icon-facebook"></i></a>

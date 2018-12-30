@@ -121,6 +121,13 @@ window.navbar = {
 }
 
 window.sliders = {
+    boot: e => {
+        // Window resize
+        window.addEventListener('resize', function() {
+            queryAll('.flex-slider').forEach(elem => sliders.resizePlayer(elem));
+        }, true);
+    },
+
     init: e => {
         queryAll('.flex-slider').forEach(elem => {
             // Start slider interval
@@ -202,9 +209,12 @@ window.sliders = {
     },
 
     resizePlayer: slider => {
-        let index = slider.query('.dots').query('.active').index();
-        let ul = slider.query('ul');
-        ul.style.height = ul.children[index].clientHeight + "px";
+        let activeDot = slider.query('.dots').query('.active');
+        if(activeDot) {
+            let index = activeDot ? activeDot.index() : 0;
+            let ul = slider.query('ul');
+            ul.style.height = ul.children[index].clientHeight + "px";
+        }
     }
 }
 
@@ -313,6 +323,11 @@ window.swipeable = {
 }
 
 window.app = {
+    boot: e => {
+        // Sliders
+        sliders.boot();
+    },
+
     init: e => {
         // Load initial page scripts
         let script = document.getElementById('onLoad');
@@ -420,10 +435,15 @@ window.modal = {
         _forms.query('.godfather').show();
         _forms.queryAll('.form').forEach(e => e.hide());
         _forms.query('.form.godfather').show();
-        _forms.query('.godfather h1').innerHTML = query('#animals-view h1').innerText;
+        _forms.query('.godfather h1').innerHTML = _forms.query('.godfather [name="process_name"]').value = query('#animals-view h1').innerText;
+        _forms.query('.godfather [name="process_id"]').value = window.location.href.match(/\d+$/)[0];
 
         _forms.classList.add('open');
         return false;
+    },
+
+    clearGroup: e => {
+        e.parentElement.queryAll('[type="radio"]').forEach(e => e.checked = false);
     },
 
     close: e => {
@@ -495,6 +515,8 @@ window.modal = {
 }
 
 document.addEventListener('DOMContentLoaded', e => {
+    app.boot();
+
     app.init();
     router.init();
     navbar.init();

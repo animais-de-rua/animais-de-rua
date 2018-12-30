@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             PagesSeeder::class,
             CampaignsSeeder::class,
             SponsorsSeeder::class,
+            SettingsSeeder::class,
             FakeSeeder::class,
         ]);
 
