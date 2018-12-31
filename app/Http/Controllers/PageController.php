@@ -22,7 +22,7 @@ class PageController extends Controller
 {
     public function index($slug = 'home')
     {
-        \Debugbar::disable();
+        // \Debugbar::disable();
 
         $this->data = Cache::rememberForever("page_$slug", function () use ($slug) {
             $page = Page::findBySlug($slug);

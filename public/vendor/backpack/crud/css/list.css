@@ -15,17 +15,17 @@
 	#crudTable_wrapper .dataTables_processing {
 		background: rgba(255,255,255,0.9);
 		top: 26px;
-		height: 98%;
+		height: calc(100% - 6px);
 		left: 115px;
-		width: 97%;
+		width: calc(100% - 30px);
 		z-index: 999;
 		border: none;
 		box-shadow: none;
 	}
 
 	#crudTable_wrapper .dataTables_processing > img {
-		top: 48%;
-		left: 48%;
+		top: calc(50% - 16px)!important;
+		left: calc(50% - 16px)!important;
 		position: absolute;
 	}
 
@@ -94,6 +94,7 @@
 
     .navbar-filters .navbar-collapse {
     	padding: 0;
+    	border: 0;
     }
 
     .navbar-filters .navbar-toggle {
@@ -176,10 +177,40 @@
 		margin-top: 0px!important;
 	}
 
+	.content-wrapper {
+		min-height: calc(100% - 100px);
+	}
+
+	#datatable_search_stack {
+		min-height: 35px;
+	}
+
+	#crudTable thead>tr>th, table.dataTable thead>tr>td {
+		padding-right: 30px;
+	}
+
+	.navbar-filters li>a:active,
+	.navbar-filters .navbar-nav>.active>a, .navbar-filters .navbar-nav>.active>a:focus, .navbar-filters .navbar-nav>.active>a:hover,
+	.navbar-filters .navbar-nav>.open>a, .navbar-filters .navbar-nav>.open>a:focus, .navbar-filters .navbar-nav>.open>a:hover {
+		background-color: #e0e0e9;
+	}
+	.navbar-filters li {
+		margin: 0 2px;
+	}
+	.navbar-filters li>a {
+		border-radius: 2px;
+	}
+	.navbar-filters .nav.navbar-nav {
+		float: none;
+	}
+
+	/* Custom */
 	.navbar-filters {
 		background-color: #f8f8f8;
 		border: 1px solid #e7e7e7;
 		margin-bottom: 10px;
 		padding: 6px 0;
-		border-radius: 2px;
+	}
+	.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+		padding: 8px 6px;
 	}

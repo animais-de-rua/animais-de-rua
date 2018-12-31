@@ -59,4 +59,7 @@ class CrudController extends \Backpack\CRUD\app\Http\Controllers\CrudController
 
         return $result;
     }
+
+    public function sync()
+    {}
 }

@@ -2,12 +2,12 @@
 
 return [
 
-    'operations' => 'Operations until today',
+    'operations' => 'Animals helped until today',
     'subscribe' => 'Subscribe to our Newsletter',
     'solidary' => [
         'title' => 'Solidary number',
         'number' => '760 300 161',
-        'description' => '0,60€ + FAT calling costs',
+        'description' => '0,60€ + VAT calling costs',
     ],
     'social' => 'Social Networks',
     'contact' => 'Contact Form',

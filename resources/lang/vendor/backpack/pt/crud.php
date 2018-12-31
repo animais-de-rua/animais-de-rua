@@ -21,9 +21,9 @@ return [
 
     // Create form
     'add'                 => 'Adicionar',
-    'back_to_all'         => 'Voltar a todos ',
+    'back_to_all'         => 'Voltar à lista de ',
     'cancel'              => 'Cancelar',
-    'add_a_new'           => 'Adicionar novo ',
+    'add_a_new'           => 'Adicionar ',
 
     // Edit form
     'edit'                 => 'Editar',
@@ -32,8 +32,8 @@ return [
     // Revisions
     'revisions'            => 'Revisões',
     'no_revisions'         => 'Não foram encontradas revisões',
-    'created_this'         => 'criou isto',
-    'changed_the'          => 'alterou isto',
+    'created_this'         => 'criou este',
+    'changed_the'          => 'alterou este',
     'restore_this_value'   => 'Restaurou este valor',
     'from'                 => 'de',
     'to'                   => 'para',
@@ -60,23 +60,38 @@ return [
     'delete_confirm'                              => 'Tem a certeza que quer apagar este item?',
     'delete_confirmation_title'                   => 'Item apagado',
     'delete_confirmation_message'                 => 'O item foi apagado com sucesso.',
-    'delete_confirmation_not_title'               => 'NÃO apagado',
-    'delete_confirmation_not_message'             => 'Houve um erro. O item pode não ter sido apagado.',
+    'delete_confirmation_not_title'               => 'Não apagado',
+    'delete_confirmation_not_message'             => 'Ocorreu um erro. O item pode não ter sido apagado.',
     'delete_confirmation_not_deleted_title'       => 'Não apagado',
-    'delete_confirmation_not_deleted_message'     => 'Está tudo bem!. O item não foi apagado.',
+    'delete_confirmation_not_deleted_message'     => 'Está tudo bem! O item não foi apagado.',
 
-     // DataTables translation
+    // Bulk actions
+    'bulk_no_entries_selected_title' => 'Nenhum item selecionado',
+    'bulk_no_entries_selected_message' => 'Por favor seleccione um ou mais itens para realizar uma acção em massa aos mesmos.',
+
+    // Bulk confirmation
+    'bulk_delete_are_you_sure' => 'Tem a certeza que quer apagar estes :number itens?',
+    'bulk_delete_sucess_title' => 'Itens apagados',
+    'bulk_delete_sucess_message' => ' itens foram apagados',
+    'bulk_delete_error_title' => 'Ocorreu um erro ao apagar o item',
+    'bulk_delete_error_message' => 'Um ou mais itens não puderam ser apagados',
+
+    // Ajax errors
+    'ajax_error_title' => 'Erro',
+    'ajax_error_text'  => 'Erro ao carregar a página. Por favor atualize a página.',
+
+    // DataTables translation
     'emptyTable'     => 'Sem dados disponíveis na tabela',
-    'info'           => 'A mostrar _START_ a _END_ de _TOTAL_ registos',
-    'infoEmpty'      => 'A mostrar 0 a 0 de 0 registos',
-    'infoFiltered'   => '(filtrado de _MAX_ registos no total)',
+    'info'           => 'A mostrar _START_ a _END_ de _TOTAL_ itens',
+    'infoEmpty'      => 'A mostrar 0 de 0 itens',
+    'infoFiltered'   => '(filtrado de um total de _MAX_ itens)',
     'infoPostFix'    => '',
     'thousands'      => ',',
-    'lengthMenu'     => '_MENU_ registos por página',
+    'lengthMenu'     => '_MENU_ itens por página',
     'loadingRecords' => 'A carregar...',
     'processing'     => 'A processar...',
     'search'         => 'Procurar: ',
-    'zeroRecords'    => 'Nenhum registo encontrado',
+    'zeroRecords'    => 'Nenhum item encontrado',
     'paginate'       => [
         'first'    => 'Primeiro',
         'last'     => 'Último',
@@ -86,6 +101,15 @@ return [
     'aria' => [
         'sortAscending'  => ': activar para colocar por ordem ascendente',
         'sortDescending' => ': activar para colocar por ordem descendente',
+    ],
+    'export' => [
+        'export'            => 'Exportar',
+        'copy'              => 'Copiar',
+        'excel'             => 'Excel',
+        'csv'               => 'CSV',
+        'pdf'               => 'PDF',
+        'print'             => 'Imprimir',
+        'column_visibility' => 'Colunas visíveis',
     ],
 
     // global crud - errors
@@ -115,8 +139,11 @@ return [
 
     // Fields
     'browse_uploads' => 'Procurar uploads',
+    'select_all' => 'Seleccionar todos',
+    'select_files' => 'Seleccionar ficheiros',
+    'select_file' => 'Seleccionar ficheiro',
     'clear' => 'Limpar',
-    'page_link' => 'Page link',
+    'page_link' => 'Link da página',
     'page_link_placeholder' => 'http://example.com/a-sua-pagina',
     'internal_link' => 'Link interno',
     'internal_link_placeholder' => 'Slug interno. Ex: \'admin/page\' (sem aspas) para \':url\'',
@@ -124,8 +151,8 @@ return [
     'choose_file' => 'Escolher ficheiro',
 
     //Table field
-    'table_cant_add' => 'Não é possível adicionar :entity',
-    'table_max_reached' => 'O número máximo de :max foi atingido',
+    'table_cant_add' => 'Não foi possível adicionar novo :entity',
+    'table_max_reached' => 'Limite de :max itens atingido',
 
     // File manager
     'file_manager' => 'Gestor de ficheiros',
