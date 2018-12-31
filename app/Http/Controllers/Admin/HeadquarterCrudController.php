@@ -123,4 +123,10 @@ class HeadquarterCrudController extends CrudController
     {
         return parent::updateCrud($request);
     }
+
+    public function sync()
+    {
+        \Cache::forget('headquarters');
+        \Cache::forget('headquarters_territories_acting');
+    }
 }

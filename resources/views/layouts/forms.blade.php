@@ -41,6 +41,21 @@
                         <h1></h1>
                     </div>
 
+                    <div class="address-selects hide">
+                        <select required name="district" autocomplete="address-level1" class="dark empty" onchange="modal.onDistrictSelect(this)">
+                            <option value="" disabled selected>{{ ucfirst(__("district")) }}</option>
+                            @foreach($form_all_territories[0] as $district)
+                            <option value="{{ $district['id'] }}">{{ $district['name'] }}</option>
+                            @endforeach
+                        </select>
+                        <select required name="county" autocomplete="address-level2" class="dark empty" onchange="modal.checkEmptySelect(this)">
+                            <option value="" disabled selected>{{ ucfirst(__("county")) }}</option>
+                            @foreach($form_all_territories[1] as $county)
+                            <option value="{{ $county['id'] }}" parent="{{ $county['parent_id'] }}" class="hide">{{ $county['name'] }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
                     {{-- FORM Voluntary --}}
                     <form action="/form/volunteer" onsubmit="return modal.submit(this)">
                         <div class="form volunteer row row-wrap hide">
@@ -51,18 +66,7 @@
                                 <input type="tel" required name="phone" placeholder="{{ __("Phone") }}" />
                                 <input type="number" min="15" max="99" required name="age" placeholder="{{ __("Age") }}" />
                                 <input type="text" required name="job" placeholder="{{ __("Job") }}" />
-                                <select required name="district" autocomplete="address-level1" class="dark empty" onchange="modal.onDistrictSelect(this)">
-                                    <option value="" disabled selected>{{ ucfirst(__("district")) }}</option>
-                                    @foreach($form_all_territories[0] as $district)
-                                    <option value="{{ $district['id'] }}">{{ $district['name'] }}</option>
-                                    @endforeach
-                                </select>
-                                <select required name="county" autocomplete="address-level2" class="dark empty" onchange="modal.checkEmptySelect(this)">
-                                    <option value="" disabled selected>{{ ucfirst(__("county")) }}</option>
-                                    @foreach($form_all_territories[1] as $county)
-                                    <option value="{{ $county['id'] }}" parent="{{ $county['parent_id'] }}" class="hide">{{ $county['name'] }}</option>
-                                    @endforeach
-                                </select>
+                                <div class="address-selects"></div>
                                 <input type="text" required name="schedule" class="last-child" placeholder="{{ __("Availability Schedule") }}" />
                             </div>
                             <div class="column column-50 checkbox interests">
@@ -91,18 +95,7 @@
                                 <input type="text" required name="name" placeholder="{{ __("Name") }}" />
                                 <input type="email" required name="email" placeholder="{{ __("Email") }}" />
                                 <input type="tel" required name="phone" placeholder="{{ __("Phone") }}" />
-                                <select required name="district" autocomplete="address-level1" class="dark empty" onchange="modal.onDistrictSelect(this)">
-                                    <option value="" disabled selected>{{ ucfirst(__("district")) }}</option>
-                                    @foreach($form_all_territories[0] as $district)
-                                    <option value="{{ $district['id'] }}">{{ $district['name'] }}</option>
-                                    @endforeach
-                                </select>
-                                <select required name="county" autocomplete="address-level2" class="dark last-child empty" onchange="modal.checkEmptySelect(this)">
-                                    <option value="" disabled selected>{{ ucfirst(__("county")) }}</option>
-                                    @foreach($form_all_territories[1] as $county)
-                                    <option value="{{ $county['id'] }}" parent="{{ $county['parent_id'] }}" class="hide">{{ $county['name'] }}</option>
-                                    @endforeach
-                                </select>
+                                <div class="address-selects"></div>
                             </div>
                             <div class="column column-50">
                                 <input type="text" required name="subject" placeholder="{{ __("Subject") }}" />
@@ -122,18 +115,7 @@
                                 <input type="text" required name="name" placeholder="{{ __("Name") }}" />
                                 <input type="email" required name="email" placeholder="{{ __("Email") }}" />
                                 <input type="tel" required name="phone" placeholder="{{ __("Phone") }}" />
-                                <select required name="district" autocomplete="address-level1" class="dark empty" onchange="modal.onDistrictSelect(this)">
-                                    <option value="" disabled selected>{{ ucfirst(__("district")) }}</option>
-                                    @foreach($form_all_territories[0] as $district)
-                                    <option value="{{ $district['id'] }}">{{ $district['name'] }}</option>
-                                    @endforeach
-                                </select>
-                                <select required name="county" autocomplete="address-level2" class="dark empty" onchange="modal.checkEmptySelect(this)">
-                                    <option value="" disabled selected>{{ ucfirst(__("county")) }}</option>
-                                    @foreach($form_all_territories[1] as $county)
-                                    <option value="{{ $county['id'] }}" parent="{{ $county['parent_id'] }}" class="hide">{{ $county['name'] }}</option>
-                                    @endforeach
-                                </select>
+                                <div class="address-selects"></div>
                                 <select required name="theme" class="dark last-child empty" onchange="modal.checkEmptySelect(this)">
                                     <option value="" disabled selected>{{ ucfirst(__("Themes of interest")) }}</option>
                                     @foreach(\App\Helpers\EnumHelper::get('forms.themes') as $key => $value)

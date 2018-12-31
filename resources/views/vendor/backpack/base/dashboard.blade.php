@@ -16,6 +16,34 @@
 @section('content')
     <div class="row">
         <div class="col-md-12">
+            @if(is('admin'))
+            <div class="box">
+                <div class="box-header with-border">
+                    <div class="box-title">Acções administrativas</div>
+                </div>
+                <div class="box-body">
+                  <button id="update-store" class="btn btn-primary">Atualizar produtos na página inícial</button>
+                  <script>
+                    document.querySelector('#update-store').addEventListener('click', e => {
+                      fetch('/admin/update-products', {
+                        method: 'POST',
+                        credentials: "same-origin",
+                        headers: {
+                          'X-Requested-With': 'XMLHttpRequest',
+                          'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        }
+                      });
+                      new PNotify({
+                        title: "Sucesso",
+                        text: "Produtos atualizados.",
+                        type: "success",
+                      });
+                    });
+                  </script>
+                </div>
+            </div>
+            @endif
+
             <div class="box">
                 <div class="box-header with-border">
                     <div class="box-title">{{ __('Stats') }}</div>

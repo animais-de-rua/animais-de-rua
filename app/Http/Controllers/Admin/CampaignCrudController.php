@@ -110,4 +110,9 @@ class CampaignCrudController extends CrudController
     {
         return parent::updateCrud($request);
     }
+
+    public function sync()
+    {
+        \Cache::forget('campaigns');
+    }
 }

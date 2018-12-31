@@ -95,7 +95,7 @@
         @foreach($partners['list'] as $partner)
         <div class="box active" categories="{{ join(' ', $partner->categories) }}" territories="{{ join(' ', $partner->territories) }}">
             <div class="image" title="{{ $partner->name }}">
-                <img src="/uploads/{{ $partner->image }}" alt="{{ $partner->name }}" />
+                <img data-src="/uploads/{{ $partner->image }}" alt="{{ $partner->name }}" />
             </div>
             <div class="contact">
                 <h1>{{ __("Contacts") }}</h1>

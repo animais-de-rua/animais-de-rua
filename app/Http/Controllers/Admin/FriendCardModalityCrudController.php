@@ -105,4 +105,9 @@ class FriendCardModalityCrudController extends CrudController
     {
         return parent::updateCrud($request);
     }
+
+    public function sync()
+    {
+        \Cache::forget('friend_card_modalities');
+    }
 }

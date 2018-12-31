@@ -60,6 +60,8 @@ Route::group(['prefix' => config('backpack.base.route_prefix'), 'middleware' => 
     Route::post('dropzone/{column}/{entity}/{thumb}/{size}/{quality}', 'CrudController@handleDropzoneUploadRaw');
     Route::post('dropzone/{column}/{entity}/remove', 'CrudController@handleDropzoneRemoveRaw');
 
+    Route::post('update-products', '\App\Http\Controllers\PageController@updateStoreProducts');
+
     // View as
     Route::any('/view-as-role/{role}', 'ViewAsController@view_as_role')->name('view-as-role');
     Route::any('/view-as-permission/{permission}/{state}', 'ViewAsController@view_as_permission')->name('view-as-permission');

@@ -20,23 +20,22 @@ use DB;
 
 class PageController extends Controller
 {
-    const DAY = 1440;
-    const WEEK = 10080;
-
     public function index($slug = 'home')
     {
-        // \Debugbar::disable();
+        \Debugbar::disable();
 
-        $page = Page::findBySlug($slug);
+        $this->data = Cache::rememberForever("page_$slug", function () use ($slug) {
+            $page = Page::findBySlug($slug);
 
-        if (!$page) {
-            abort(404);
-        }
+            if (!$page) {
+                abort(404);
+            }
 
-        $this->data = [
-            'title' => $page->title,
-            'page' => $page->withFakes(),
-        ];
+            return [
+                'title' => $page->title,
+                'page' => $page->withFakes(),
+            ];
+        });
 
         // Common data to all pages
         $this->data = array_merge($this->data, $this->common());
@@ -46,7 +45,7 @@ class PageController extends Controller
             $this->data = array_merge($this->data, call_user_func(array($this, $slug)));
         }
 
-        return view('pages.' . $page->template, $this->data);
+        return view('pages.' . $this->data['page']->template, $this->data);
     }
 
     private function common()
@@ -56,10 +55,17 @@ class PageController extends Controller
         if (\Request::ajax()) {
             $data = [];
         } else {
-            $treated = Treatment::selectRaw('SUM(affected_animals_new) as total')->where('status', 'approved')->first()->total;
-            $adopted = Adoption::selectRaw('COUNT(processed) as total')->where('processed', 0)->first()->total;
+            $treated = Cache::rememberForever('treatments_affected_animals_new', function () {
+                $total = Treatment::selectRaw('SUM(affected_animals_new) as total')->where('status', 'approved')->first()->total;
+                return $total;
+            });
 
-            $form_acting_territories = Cache::remember('form_acting_territories', 1, function () {
+            $adopted = Cache::rememberForever('adoptions_count', function () {
+                $total = Adoption::selectRaw('COUNT(processed) as total')->where('processed', 0)->first()->total;
+                return $total;
+            });
+
+            $form_acting_territories = Cache::rememberForever('headquarters_territories_acting', function () {
                 $territoriesRaw = DB::table('headquarters_territories')
                     ->join('territories', function ($query) {
                         $query->on('territories.id', 'LIKE', DB::raw('CONCAT(headquarters_territories.territory_id, "%")'))
@@ -83,7 +89,7 @@ class PageController extends Controller
                 return $territories;
             });
 
-            $form_all_territories = Cache::remember('form_all_territories', 1, function () {
+            $form_all_territories = Cache::rememberForever('territories_form_all', function () {
                 return [
                     0 => Territory::select(['id', 'name'])->where('level', 1)->get()->toArray(), // Districts
                     1 => Territory::select(['id', 'name', 'parent_id'])->where('level', 2)->get()->toArray(), // County
@@ -102,20 +108,26 @@ class PageController extends Controller
 
     private function home()
     {
-        $campaigns = Campaign::select(['name', 'introduction', 'description', 'image'])
-            ->orderBy('lft', 'asc')
-            ->get();
+        $campaigns = Cache::rememberForever('campaigns', function () {
+            return Campaign::select(['name', 'introduction', 'description', 'image'])
+                ->orderBy('lft', 'asc')
+                ->get();
+        });
+
+        $products = Cache::rememberForever('products', function () {
+            return app('App\Http\Controllers\PrestaShopController')->getProducts();
+        });
 
         return [
             'processes' => $this->_urgent_help(),
             'campaigns' => $campaigns,
-            'products' => app('App\Http\Controllers\PrestaShopController')->getProducts(),
+            'products' => $products,
         ];
     }
 
     private function association()
     {
-        $headquarters = Cache::remember('headquarters', 1, function () {
+        $headquarters = Cache::rememberForever('headquarters', function () {
             return Headquarter::select(['name', 'mail'])->get();
         });
 
@@ -131,20 +143,24 @@ class PageController extends Controller
 
     private function animals()
     {
-        $districts_godfather = Process::select(['territories.id', 'territories.name'])
-            ->join('territories', 'territories.id', '=', DB::raw('LEFT(territory_id, 2)'))
-            ->where('status', 'waiting_godfather')
-            ->orderBy('territories.id', 'asc')
-            ->distinct()
-            ->get();
+        $districts_godfather = Cache::rememberForever('processes_districts_godfather', function () {
+            return Process::select(['territories.id', 'territories.name'])
+                ->join('territories', 'territories.id', '=', DB::raw('LEFT(territory_id, 2)'))
+                ->where('status', 'waiting_godfather')
+                ->orderBy('territories.id', 'asc')
+                ->distinct()
+                ->get();
+        });
 
-        $districts_adoption = Adoption::select(['territories.id', 'territories.name'])
-            ->join('processes', 'processes.id', '=', 'adoptions.process_id')
-            ->join('territories', 'territories.id', '=', DB::raw('LEFT(territory_id, 2)'))
-            ->where('adoptions.status', 'open')
-            ->orderBy('territories.id', 'asc')
-            ->distinct()
-            ->get();
+        $districts_adoption = Cache::rememberForever('adoptions_districts_adoption', function () {
+            return Adoption::select(['territories.id', 'territories.name'])
+                ->join('processes', 'processes.id', '=', 'adoptions.process_id')
+                ->join('territories', 'territories.id', '=', DB::raw('LEFT(territory_id, 2)'))
+                ->where('adoptions.status', 'open')
+                ->orderBy('territories.id', 'asc')
+                ->distinct()
+                ->get();
+        });
 
         $species = EnumHelper::translate('process.specie');
 
@@ -204,9 +220,11 @@ class PageController extends Controller
 
     private function partners()
     {
-        $sponsors = Sponsor::select(['name', 'url', 'image'])
-            ->orderBy('lft')
-            ->get();
+        $sponsors = Cache::rememberForever('sponsors', function () {
+            return Sponsor::select(['name', 'url', 'image'])
+                ->orderBy('lft')
+                ->get();
+        });
 
         return [
             'sponsors' => $sponsors,
@@ -215,35 +233,45 @@ class PageController extends Controller
 
     private function friends()
     {
-        $modalities = FriendCardModality::select(['name', 'description', 'paypal_code', 'amount', 'type'])
-            ->orderBy('id', 'asc')
-            ->get();
+        $modalities = Cache::rememberForever('friend_card_modalities', function () {
+            return FriendCardModality::select(['name', 'description', 'paypal_code', 'amount', 'type'])
+                ->orderBy('id', 'asc')
+                ->get();
+        });
 
-        $partners = Partner::select(['id', 'name', 'image', 'benefit', 'email', 'url', 'facebook', 'phone1', 'phone1_info', 'phone2', 'phone2_info', 'address', 'address_info'])
-            ->with('territories', 'categories')
-            ->orderBy('updated_at', 'DESC')
-            ->get();
+        $partners = Cache::rememberForever('partners', function () {
+            $partners = Partner::select(['id', 'name', 'image', 'benefit', 'email', 'url', 'facebook', 'phone1', 'phone1_info', 'phone2', 'phone2_info', 'address', 'address_info'])
+                ->with('territories', 'categories')
+                ->orderBy('updated_at', 'DESC')
+                ->get();
 
-        foreach ($partners as $partner) {
-            $partner->categories = $partner->categories->pluck('id')->toArray();
-            $partner->territories = $partner->territories->pluck('id')->toArray();
-        }
+            foreach ($partners as $partner) {
+                $partner->categories = $partner->categories->pluck('id')->toArray();
+                $partner->territories = $partner->territories->pluck('id')->toArray();
+            }
 
-        $partner_categories = PartnerCategory::select(['id', 'name'])
-            ->whereIn('id', function ($query) {
-                $query->select('partner_category_list_id')
-                    ->distinct()
-                    ->from('partners_categories');
-            })
-            ->get();
+            return $partners;
+        });
 
-        $partner_territories = Territory::select(['id', 'name'])
-            ->whereIn('id', function ($query) {
-                $query->select('territory_id')
-                    ->distinct()
-                    ->from('partners_territories');
-            })
-            ->get();
+        $partner_categories = Cache::rememberForever('partner_categories', function () {
+            return PartnerCategory::select(['id', 'name'])
+                ->whereIn('id', function ($query) {
+                    $query->select('partner_category_list_id')
+                        ->distinct()
+                        ->from('partners_categories');
+                })
+                ->get();
+        });
+
+        $partner_territories = Cache::rememberForever('partners_territories', function () {
+            return Territory::select(['id', 'name'])
+                ->whereIn('id', function ($query) {
+                    $query->select('territory_id')
+                        ->distinct()
+                        ->from('partners_territories');
+                })
+                ->get();
+        });
 
         return [
             'modalities' => $modalities,
@@ -257,12 +285,16 @@ class PageController extends Controller
 
     private function _urgent_help()
     {
-        return Process::select(['id', 'name', 'images'])
-            ->where('status', 'waiting_godfather')
-            ->orderBy('urgent', 'desc')
-            ->orderBy('created_at', 'desc')
-            ->limit(6)
-            ->get();
+        $processes = Cache::rememberForever('processes_urgent', function () {
+            return Process::select(['id', 'name', 'images'])
+                ->where('status', 'waiting_godfather')
+                ->orderBy('urgent', 'desc')
+                ->orderBy('created_at', 'desc')
+                ->limit(6)
+                ->get();
+        });
+
+        return $processes;
     }
 
     // API
@@ -311,5 +343,10 @@ class PageController extends Controller
         }
 
         return response()->json($data->get());
+    }
+
+    public function updateStoreProducts()
+    {
+        \Cache::forget('products');
     }
 }

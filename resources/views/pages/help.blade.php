@@ -31,7 +31,7 @@
                     <div class="text">{!! $page['friend_text'] !!}</div>
                     <a href="/friends" class="link lined">{{ $page['friend_link'] }}</a>
                 </div>
-                @component('components.picture', ['image' => 'help02'])
+                @component('components.picture', ['image' => 'help02', 'lazy' => true])
                 @endcomponent
                 <div class="white-box">
                     <h2>{{ $page['call_title'] }}</h2>

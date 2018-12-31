@@ -33,7 +33,7 @@
                 <li>
                     <div class="slide">
                         <div>
-                            <img src="/uploads/{{ $campaign->image }}" alt="{{ $campaign->name }}"/>
+                            <img {{ $loop->first ? '' : 'data-' }}src="/uploads/{{ $campaign->image }}" alt="{{ $campaign->name }}"/>
                         </div>
                         <div>
                             <blockquote>{{ __("campaigns") }}</blockquote>
@@ -70,7 +70,7 @@
                         <div class="card">
                             <a href="{{ $product->url }}">
                                 <div class="image">
-                                    <div style="background-image:url('{{ $product->image }}')"></div>
+                                    <div data-style="background-image:url('{{ $product->image }}')"></div>
                                 </div>
                                 <div>
                                     <h1>{{ $product->name }}</h1>

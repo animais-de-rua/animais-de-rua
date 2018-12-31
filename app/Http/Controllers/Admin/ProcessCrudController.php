@@ -622,6 +622,12 @@ class ProcessCrudController extends CrudController
         return parent::updateCrud($request);
     }
 
+    public function sync()
+    {
+        \Cache::forget('processes_urgent');
+        \Cache::forget('processes_districts_godfather');
+    }
+
     // Table Helper
     private function tableDonations()
     {

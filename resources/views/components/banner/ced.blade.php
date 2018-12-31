@@ -1,8 +1,8 @@
 <div class="ced banner">
     <picture>
-        <source srcset="/img/banner_ced.webp" type="image/webp"/>
-        <source srcset="/img/banner_ced.jpg" type="image/jpeg"/>
-        <img src="/img/banner_ced.jpg" alt="CED">
+        <source data-srcset="/img/banner_ced.webp" type="image/webp"/>
+        <source data-srcset="/img/banner_ced.jpg" type="image/jpeg"/>
+        <img data-src="/img/banner_ced.jpg" alt="CED">
     </picture>
     <a onclick="return modal.open('training')" class="box">
         <h2>{{ __("web.ced.title") }}</h2>

@@ -407,4 +407,9 @@ class TreatmentCrudController extends CrudController
     {
         return parent::updateCrud($request);
     }
+
+    public function sync()
+    {
+        \Cache::forget('treatments_affected_animals_new');
+    }
 }

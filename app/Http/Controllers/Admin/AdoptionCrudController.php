@@ -368,4 +368,10 @@ class AdoptionCrudController extends CrudController
     {
         return parent::updateCrud($request);
     }
+
+    public function sync()
+    {
+        \Cache::forget('adoptions_count');
+        \Cache::forget('adoptions_districts_adoption');
+    }
 }

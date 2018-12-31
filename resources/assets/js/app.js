@@ -347,6 +347,11 @@ window.app = {
 
         // Isotope
         isotope.init();
+
+        // Lazy load images
+        queryAll('[data-style]').forEach(elem => elem.setAttribute('style', elem.getAttribute('data-style')));
+        queryAll('[data-srcset]').forEach(elem => elem.setAttribute('srcset', elem.getAttribute('data-srcset')));
+        queryAll('[data-src]').forEach(elem => elem.setAttribute('src', elem.getAttribute('data-src')));
     },
 
     onModalitiesClick: e => {
@@ -455,7 +460,20 @@ window.modal = {
         let className = select.children[select.selectedIndex].value;
 
         _forms.queryAll('.form').forEach(e => e.hide());
-        _forms.query(`.form.${className}`).show();
+        
+        let form = _forms.query(`.form.${className}`);
+        form.show();
+
+        modal.moveAddressSelects(form);
+    },
+
+    moveAddressSelects: form => {
+        let selects = queryAll('.address-selects > select');
+        let destination = form.query('.address-selects');
+
+        if(destination) {
+            selects.forEach(e => destination.appendChild(e));
+        }
     },
 
     onDistrictSelect: e => {

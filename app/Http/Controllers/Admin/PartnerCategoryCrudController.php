@@ -84,4 +84,9 @@ class PartnerCategoryCrudController extends CrudController
     {
         return parent::updateCrud($request);
     }
+
+    public function sync()
+    {
+        \Cache::forget('partner_categories');
+    }
 }

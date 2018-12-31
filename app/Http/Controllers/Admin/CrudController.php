@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Helpers\HandleDropzoneUploadHelper;
 use App\Http\Controllers\Admin\Traits\Permissions;
+use Illuminate\Http\Request;
 
 class CrudController extends \Backpack\CRUD\app\Http\Controllers\CrudController
 {
@@ -32,5 +33,30 @@ class CrudController extends \Backpack\CRUD\app\Http\Controllers\CrudController
     {
         preg_match('/\w+\/(\d+)/', $_SERVER['REQUEST_URI'], $matches);
         return $matches && sizeof($matches) > 1 ? intval($matches[1]) : null;
+    }
+
+    // Overrides to deal with cache
+    public function storeCrud(Request $request = null)
+    {
+        $result = parent::storeCrud($request);
+        $this->sync();
+
+        return $result;
+    }
+
+    public function updateCrud(Request $request = null)
+    {
+        $result = parent::updateCrud($request);
+        $this->sync();
+
+        return $result;
+    }
+
+    public function destroy($id)
+    {
+        $result = parent::destroy($id);
+        $this->sync();
+
+        return $result;
     }
 }

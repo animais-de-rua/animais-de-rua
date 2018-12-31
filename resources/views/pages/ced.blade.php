@@ -63,11 +63,11 @@
     <div class="container">
         <div class="row row-wrap">
             <div class="column column-50">
-                @component('components.picture', ['image' => 'ced02'])
+                @component('components.picture', ['image' => 'ced02', 'lazy' => true])
                 @endcomponent
             </div>
             <div class="column column-50">
-                @component('components.picture', ['image' => 'ced01'])
+                @component('components.picture', ['image' => 'ced01', 'lazy' => true])
                 @endcomponent
             </div>
         </div>

@@ -99,4 +99,9 @@ class SponsorCrudController extends CrudController
     {
         return parent::updateCrud($request);
     }
+
+    public function sync()
+    {
+        \Cache::forget('sponsors');
+    }
 }

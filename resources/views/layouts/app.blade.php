@@ -47,13 +47,16 @@
 
     <link rel="preload" href="{{ mix('js/app.js') }}" as="script"/>
     <link rel="preload" href="{{ mix('css/app.css') }}" as="style"/>
+    <link rel="preload" href="{{ '/img/logo/logo.svg' }}" as="image"/>
+    <link rel="preload" href="{{ "/fonts/icomoon.woff2?58c2d240bb8f452ceba24cac9e697d8e" }}" as="font" type="font/woff2" crossorigin="anonymous"/>
 
     <link rel="preconnect" href="https://www.google-analytics.com"/>
     <link rel="preconnect" href="https://www.googletagmanager.com"/>
 
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 
-    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet" />
+
     @yield('style')
 </head>
 <body>

@@ -37,11 +37,11 @@
     <div class="container">
         <div class="row row-wrap">
             <div class="column column-50">
-                @component('components.picture', ['image' => 'association01'])
+                @component('components.picture', ['image' => 'association01', 'lazy' => true])
                 @endcomponent
             </div>
             <div class="column column-50">
-                @component('components.picture', ['image' => 'association02'])
+                @component('components.picture', ['image' => 'association02', 'lazy' => true])
                 @endcomponent
             </div>
         </div>

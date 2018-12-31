@@ -316,4 +316,10 @@ class PartnerCrudController extends CrudController
     {
         return parent::updateCrud($request);
     }
+
+    public function sync()
+    {
+        \Cache::forget('partners');
+        \Cache::forget('partners_territories');
+    }
 }
