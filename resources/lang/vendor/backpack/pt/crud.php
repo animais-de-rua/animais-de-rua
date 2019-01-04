@@ -66,7 +66,7 @@ return [
     'delete_confirmation_not_deleted_message'     => 'Está tudo bem! O item não foi apagado.',
 
     // Bulk actions
-    'bulk_no_entries_selected_title' => 'Nenhum item selecionado',
+    'bulk_no_entries_selected_title' => 'Nenhum item seleccionado',
     'bulk_no_entries_selected_message' => 'Por favor seleccione um ou mais itens para realizar uma acção em massa aos mesmos.',
 
     // Bulk confirmation
@@ -78,7 +78,7 @@ return [
 
     // Ajax errors
     'ajax_error_title' => 'Erro',
-    'ajax_error_text'  => 'Erro ao carregar a página. Por favor atualize a página.',
+    'ajax_error_text'  => 'Erro ao carregar a página. Por favor actualize a página.',
 
     // DataTables translation
     'emptyTable'     => 'Sem dados disponíveis na tabela',

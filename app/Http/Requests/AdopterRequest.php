@@ -27,8 +27,8 @@ class AdopterRequest extends FormRequest
     {
         return [
             'name' => 'required|min:5|max:255',
-            'email' => 'required_without_all:phone|email',
-            'phone' => 'required_without_all:email|min:9|max:16',
+            'email' => 'nullable|required_without:phone|email',
+            'phone' => 'nullable|required_without:email|min:9|max:16',
             'address' => 'required|min:2|max:255',
             'zip_code' => 'required|min:2|max:255',
             'adoption_date' => 'required|date',

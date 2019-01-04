@@ -456,11 +456,12 @@ class APICrudController extends CrudController
             }
         });
 
+        $headquarters = restrictToHeadquarters();
         if (!is('admin') && $headquarters) {
             $territories->whereIn('headquarter_id', $headquarters);
         }
 
-        $data = Territory::hydrate($territories)->get()->toArray();
+        $data = Territory::hydrate($territories->get()->toArray());
 
         return $data;
     }

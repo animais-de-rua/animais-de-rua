@@ -145,11 +145,16 @@ class Process extends Model
 
     public function getBalanceValue()
     {
+        return $this->colorizeValue($this->getBalance());
+    }
+
+    public function getBalance()
+    {
         $donations = data_get_first($this, 'donations', 'total_donations', 0);
         $expenses = data_get_first($this, 'treatments', 'total_expenses', 0);
         $balance = $donations - $expenses;
 
-        return $this->colorizeValue($balance);
+        return $balance;
     }
 
     public function getAnimalsValue()

@@ -34,9 +34,9 @@ class Vet extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function headquarter()
+    public function headquarters()
     {
-        return $this->belongsTo('App\Models\Headquarter', 'headquarter_id');
+        return $this->belongsToMany('App\Models\Headquarter', 'vets_headquarters', 'vet_id', 'headquarter_id');
     }
 
     public function treatments()

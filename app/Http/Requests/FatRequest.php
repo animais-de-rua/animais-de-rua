@@ -27,10 +27,10 @@ class FatRequest extends FormRequest
     {
         return [
             'name' => 'required|min:5|max:255',
-            'phone' => 'required_without:email',
-            'email' => 'required_without:phone|email',
-            'territory_id' => 'nullable|exists:territories,id',
-            'headquarter_id' => 'nullable|exists:headquarters,id',
+            'email' => 'nullable|required_without:phone|email',
+            'phone' => 'nullable|required_without:email|min:9|max:16',
+            'territory_id' => 'required|exists:territories,id',
+            'headquarter_id' => 'required|exists:headquarters,id',
         ];
     }
 

@@ -40,6 +40,7 @@ class AdoptionRequest extends FormRequest
             'processed' => 'nullable|in:0,1',
             'features' => 'nullable|max:4096',
             'history' => 'nullable|max:4096',
+            'images' => 'required',
         ];
     }
 

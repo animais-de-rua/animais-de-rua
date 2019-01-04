@@ -170,6 +170,7 @@ return [
         'gender' => 'gender',
         'godfather_id' => 'godfather',
         'headquarter_id' => 'headquarter',
+        'headquarters' => 'headquarters',
         'history' => 'history',
         'image' => 'image',
         'introduction' => 'introduction',

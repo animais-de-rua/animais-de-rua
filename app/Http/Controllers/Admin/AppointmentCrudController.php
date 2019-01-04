@@ -306,12 +306,11 @@ class AppointmentCrudController extends CrudController
                 'approved' => __('approved'),
             ],
             function ($values) {
-                if ($values == 'approving') {
-                    $this->crud->addClause('whereIn', 'status', json_decode($values));
-                } else {
-                    $this->crud->addClause('whereIn', 'status', ['approved_option_1', 'approved_option_2']);
+                $values = json_decode($values);
+                if (in_array('approved', $values)) {
+                    $values = array_merge($values, ['approved_option_1', 'approved_option_2']);
                 }
-
+                $this->crud->addClause('whereIn', 'status', $values);
             });
 
         // ------ CRUD ACCESS

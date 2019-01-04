@@ -28,10 +28,10 @@ class VetRequest extends FormRequest
     {
         return [
             'name' => 'required|min:3|max:255',
-            'phone' => 'required_without:email|min:9|max:16',
-            'email' => 'required_without:phone|email',
+            'email' => 'nullable|required_without:phone|email',
+            'phone' => 'nullable|required_without:email|min:9|max:16',
             'url' => 'nullable|url',
-            'headquarter_id' => 'required|exists:headquarters,id',
+            'address' => 'required|min:3|max:1024',
             'status' => 'in:' . EnumHelper::keys('vet.status', ','),
         ];
     }

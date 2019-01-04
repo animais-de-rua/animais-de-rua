@@ -37,7 +37,7 @@ class ProtocolRequestCrudController extends CrudController
         ]);
 
         $this->crud->setColumnDetails('council', [
-            'label' => 'ID ' . ucfirst(__('council')),
+            'label' => 'ID ' . ucfirst(__('request')),
         ]);
 
         $this->crud->setColumnDetails('name', [
@@ -80,7 +80,7 @@ class ProtocolRequestCrudController extends CrudController
         $this->crud->addFields(['protocol_id', 'process_id', 'council', 'name', 'email', 'phone', 'address', 'territory_id', 'description']);
 
         $this->crud->addField([
-            'label' => 'ID ' . ucfirst(__('council')),
+            'label' => 'ID ' . ucfirst(__('request')),
             'name' => 'council',
         ]);
 

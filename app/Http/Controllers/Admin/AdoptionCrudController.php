@@ -117,7 +117,7 @@ class AdoptionCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'label' => ucfirst(__('processed')) . '<br /><i>Ativar se o animal já tiver sido tratado na AdR.</i>',
+            'label' => ucfirst(__('processed')) . '<br /><i>Activar se o animal já tiver sido tratado na AdR.</i>',
             'name' => 'processed',
             'type' => 'checkbox',
         ]);
@@ -334,7 +334,7 @@ class AdoptionCrudController extends CrudController
         }
 
         if (!is('admin')) {
-            $this->crud->addClause('whereHas', 'process', function ($query) use ($headquarters) {
+            $this->crud->addClause('whereHas', 'process', function ($query) {
                 $query->whereIn('headquarter_id', restrictToHeadquarters());
             })->get();
 

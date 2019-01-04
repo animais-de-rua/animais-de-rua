@@ -199,6 +199,7 @@
     "Search for the date or the ID of the appointment": "Pesquise pela data da marcação ou o ID",
     "There are no treatments in the process, so this animal can't be already treated": "Não existem tratamentos no processo, por isso este animal não pode ter sido tratado na AdR.",
     "Adoption status is :status, it must be open in order to add an Adopter.": "A adopção tem o estado :status, para adicionar um adoptante o estado da adopção deve ser Aberto.",
+    "As this process balance is :balance€, you cannot set the status to :status.": "Como o balanço deste processo é de :balance€, não pode definir o estado como :status.",
     "All Districts": "Todos os distritos",
     "All Categories": "Todas as categorias",
     "All Species": "Todas as espécies",

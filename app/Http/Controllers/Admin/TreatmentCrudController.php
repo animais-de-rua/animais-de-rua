@@ -141,6 +141,7 @@ class TreatmentCrudController extends CrudController
 
             $total_animals = $process->amount;
             $total_affected_animals_new = $process->getTotalAffectedAnimalsNew();
+
             $max = max(0, $total_animals - $total_affected_animals_new);
         }
 
@@ -362,10 +363,12 @@ class TreatmentCrudController extends CrudController
             $this->crud->denyAccess(['list', 'create']);
         }
 
-        if (!is('admin', 'treatments')) {
-            $this->crud->denyAccess(['update']);
-        } else if (is('volunteer', 'treatments') && $treatment_id && $treatment->status == 'approved') {
-            $this->crud->denyAccess(['update']);
+        if (!is('admin')) {
+            if (!is('admin', 'treatments')) {
+                $this->crud->denyAccess(['update']);
+            } else if (is('volunteer', 'treatments') && $treatment_id && $treatment->status == 'approved') {
+                $this->crud->denyAccess(['update']);
+            }
         }
 
         if (!is('admin')) {

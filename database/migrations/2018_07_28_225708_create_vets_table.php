@@ -22,15 +22,8 @@ class CreateVetsTable extends Migration
             $table->string('url', 255)->nullable();
             $table->string('address', 255)->nullable();
             $table->string('latlong', 255)->nullable();
-            $table->integer('headquarter_id')->nullable()->unsigned();
             $table->enum('status', EnumHelper::values('vet.status'))->default('active');
             $table->timestamps();
-
-            $table->index(['headquarter_id']);
-            $table->foreign('headquarter_id')
-                ->references('id')
-                ->on('headquarters')
-                ->onDelete('set null');
         });
     }
 

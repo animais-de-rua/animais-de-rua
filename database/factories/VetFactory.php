@@ -1,7 +1,6 @@
 <?php
 
 use App\Helpers\EnumHelper;
-use App\Models\Headquarter;
 use App\Models\Vet;
 use Faker\Generator as Faker;
 
@@ -20,7 +19,6 @@ $factory->define(Vet::class, function (Faker $faker) {
         'phone' => $faker->phoneNumber,
         'url' => $faker->domainName,
         'latlong' => $faker->latitude(41.76, 37.26) . ', ' . $faker->longitude(-8.62, -7.21),
-        'headquarter_id' => $faker->randomElement(Headquarter::all()->pluck('id')->toArray()),
         'status' => $faker->randomElement(EnumHelper::get('vet.status')),
         'created_at' => $date,
         'updated_at' => $date,

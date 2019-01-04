@@ -54,10 +54,11 @@ class VetCrudController extends CrudController
             'label' => __('Website'),
         ]);
 
-        $this->crud->setColumnDetails('headquarter', [
+        $this->crud->addColumn([
             'label' => ucfirst(__('headquarter')),
+            'name' => 'headquarter',
             'type' => 'select',
-            'entity' => 'headquarter',
+            'entity' => 'headquarters',
             'attribute' => 'name',
             'model' => "App\Models\Headquarter",
         ]);
@@ -104,14 +105,16 @@ class VetCrudController extends CrudController
             'name' => 'url',
         ]);
 
-        $this->crud->addField([
-            'label' => ucfirst(__('headquarter')),
-            'name' => 'headquarter_id',
-            'type' => 'select2',
-            'entity' => 'headquarter',
-            'attribute' => 'name',
-            'model' => 'App\Models\Headquarter',
-        ]);
+        if (is('admin')) {
+            $this->crud->addField([
+                'label' => ucfirst(__('headquarter')),
+                'type' => 'select2_multiple_data_source',
+                'name' => 'headquarters',
+                'attribute' => 'name',
+                'model' => api()->headquarterSearch(),
+                'pivot' => true,
+            ]);
+        }
 
         $this->crud->addField([
             'label' => __('Status'),
@@ -120,12 +123,9 @@ class VetCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'label' => __('Location'),
-            'type' => 'latlng',
-            'name' => 'latlong',
-            'map_style' => 'width:100%; height:320px;',
-            'google_api_key' => env('GOOGLE_API_KEY'),
-            'default_zoom' => '9',
+            'label' => __('Address'),
+            'name' => 'address',
+            'type' => 'text',
         ]);
 
         $this->crud->addField([
@@ -226,6 +226,12 @@ class VetCrudController extends CrudController
 
         if (!is('admin')) {
             $this->crud->denyAccess(['delete']);
+
+            $this->crud->addClause('whereHas', 'headquarters', function ($query) {
+                $query->whereIn('headquarter_id', restrictToHeadquarters());
+            })->get();
+
+            $this->crud->removeColumn('headquarter');
         }
 
         // ------ ADVANCED QUERIES

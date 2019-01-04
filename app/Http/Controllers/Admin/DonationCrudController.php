@@ -192,11 +192,11 @@ class DonationCrudController extends CrudController
 
         // ------ CRUD ACCESS
         if (!is('admin', 'accountancy')) {
-            $this->crud->denyAccess(['list', 'create', 'update']);
+            $this->crud->denyAccess(['list', 'create']);
         }
 
         if (!is('admin')) {
-            $this->crud->denyAccess(['delete']);
+            $this->crud->denyAccess(['delete', 'update']);
 
             $this->crud->addClause('whereHas', 'process', function ($query) {
                 $query->whereIn('headquarter_id', restrictToHeadquarters());
