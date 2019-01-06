@@ -327,7 +327,8 @@ class AppointmentCrudController extends CrudController
         // ------ ADVANCED QUERIES
         if (!is('admin')) {
             $this->crud->addClause('whereHas', 'process', function ($query) {
-                $query->whereIn('headquarter_id', restrictToHeadquarters());
+                $headquarters = restrictToHeadquarters();
+                $query->whereIn('headquarter_id', $headquarters ?: []);
             })->get();
         } else {
             // Headquarter filter

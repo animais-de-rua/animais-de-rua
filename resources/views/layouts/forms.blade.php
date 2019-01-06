@@ -4,7 +4,7 @@
 @endsection
 @endif
 
-<div id="forms">
+<div id="forms" style="display: none;">
     <div class="container">
         <div class="nav">
             <i class="icon icon-logo"></i>
@@ -63,7 +63,7 @@
                                 @csrf
                                 <input type="text" required name="name" placeholder="{{ __("Name") }}" />
                                 <input type="email" required name="email" placeholder="{{ __("Email") }}" />
-                                <input type="tel" required name="phone" placeholder="{{ __("Phone") }}" />
+                                <input type="tel" pattern="[0-9\s]{9,16}" title="{{ __('Valid phone number') }}" required name="phone" placeholder="{{ __("Phone") }}" />
                                 <input type="number" min="15" max="99" required name="age" placeholder="{{ __("Age") }}" />
                                 <input type="text" required name="job" placeholder="{{ __("Job") }}" />
                                 <div class="address-selects"></div>
@@ -94,7 +94,7 @@
                                 @csrf
                                 <input type="text" required name="name" placeholder="{{ __("Name") }}" />
                                 <input type="email" required name="email" placeholder="{{ __("Email") }}" />
-                                <input type="tel" required name="phone" placeholder="{{ __("Phone") }}" />
+                                <input type="tel" pattern="[0-9\s]{9,16}" title="{{ __('Valid phone number') }}" required name="phone" placeholder="{{ __("Phone") }}" />
                                 <div class="address-selects"></div>
                             </div>
                             <div class="column column-50">
@@ -114,7 +114,7 @@
                                 @csrf
                                 <input type="text" required name="name" placeholder="{{ __("Name") }}" />
                                 <input type="email" required name="email" placeholder="{{ __("Email") }}" />
-                                <input type="tel" required name="phone" placeholder="{{ __("Phone") }}" />
+                                <input type="tel" pattern="[0-9\s]{9,16}" title="{{ __('Valid phone number') }}" required name="phone" placeholder="{{ __("Phone") }}" />
                                 <div class="address-selects"></div>
                                 <select required name="theme" class="dark last-child empty" onchange="modal.checkEmptySelect(this)">
                                     <option value="" disabled selected>{{ ucfirst(__("Themes of interest")) }}</option>
@@ -143,7 +143,7 @@
                                         <input type="email" required name="email" placeholder="{{ __("Email") }}" />
                                     </div>
                                     <div class="column column-50">
-                                        <input type="tel" required name="phone" placeholder="{{ __("Phone") }}" />
+                                        <input type="tel" pattern="[0-9\s]{9,16}" title="{{ __('Valid phone number') }}" required name="phone" placeholder="{{ __("Phone") }}" />
                                     </div>
                                 </div>
                                 <input type="text" required name="process" placeholder="{{ __("Process name") }}" />
@@ -208,7 +208,7 @@
                                 @csrf
                                 <input type="text" required name="name" placeholder="{{ __("Name") }}" />
                                 <input type="email" required name="email" placeholder="{{ __("Email") }}" />
-                                <input type="tel" required name="phone" placeholder="{{ __("Phone") }}" />
+                                <input type="tel" pattern="[0-9\s]{9,16}" title="{{ __('Valid phone number') }}" required name="phone" placeholder="{{ __("Phone") }}" />
                                 <input type="hidden" name="process_id" />
                                 <input type="hidden" name="process_name" />
                                 <div class="value">

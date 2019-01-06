@@ -228,7 +228,8 @@ class VetCrudController extends CrudController
             $this->crud->denyAccess(['delete']);
 
             $this->crud->addClause('whereHas', 'headquarters', function ($query) {
-                $query->whereIn('headquarter_id', restrictToHeadquarters());
+                $headquarters = restrictToHeadquarters();
+                $query->whereIn('headquarter_id', $headquarters ?: []);
             })->get();
 
             $this->crud->removeColumn('headquarter');

@@ -45,7 +45,7 @@ class Appointment extends Model
 
         $future = $date && Carbon::parse($date) > Carbon::today();
 
-        $disabled = $this->status == 'approving' || $future;
+        $disabled = $this->status == 'approving' || $future || (is('admin') ? false : ($this->user_id != backpack_user()->id));
         $btn_color = $future || $disabled ? 'btn-default' : ($this->getTreatmentsCountValue() ? 'btn-primary' : 'btn-warning');
 
         return '

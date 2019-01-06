@@ -31,10 +31,8 @@ class AdopterRequest extends FormRequest
             'phone' => 'nullable|required_without:email|min:9|max:16',
             'address' => 'required|min:2|max:255',
             'zip_code' => 'required|min:2|max:255',
-            'adoption_date' => 'required|date',
             'id_card' => 'required|min:6|max:14',
             'territory_id' => 'required|exists:territories,id',
-            'adoption_id' => 'required|exists:adoptions,id',
         ];
     }
 

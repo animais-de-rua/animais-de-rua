@@ -104,9 +104,11 @@
     "Godfather value": "Valor do apadrinhamento",
     "Subject": "Assunto",
     "Sending": "A enviar",
+    "Sucess": "Sucesso",
     "Your message has been successfully sent.": "A sua mensagem foi enviada com successo.",
     "We will contact you as soon as possible to follow up on your request.": "Logo que possível, entraremos em contacto consigo para darmos seguimento ao seu pedido.",
     "This Appointment has one or more Treatments associated, therefore cannot be deleted.": "Este apontamento tem um ou mais tratamentos associados, por isso não pode ser apagado.",
+    "Valid phone number": "Número de telefone válido.",
 
     "Go Home": "Voltar ao início",
     "Go Back": "Voltar",

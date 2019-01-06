@@ -1,8 +1,12 @@
 @extends('layouts.app')
 
+@php
+$locale = Session::get('locale', 'pt');
+@endphp
+
 @section('facebook')
     <meta property="og:title" content="{{ env('APP_NAME') }}: {{ $animal['name'] }}"/>
-    <meta property="og:description" content="{{ strip_tags($animal['history']) }}"/>
+    <meta property="og:description" content="{{ strip_tags($animal['history'][$locale]) }}"/>
     <meta property="og:image" content="{{ env('APP_URL') . $animal['images'][0] }}"/>
 @endsection
 
@@ -18,7 +22,7 @@
                 @endphp
                 <p class="date"><span>{{ __("Beginning of the process") }}</span><br/>{{ __(date("F", $date)) }}, {{ date("Y", $date) }}</p>
                 <div>
-                    {!! $animal['history'] !!}
+                    {!! $animal['history'][$locale] !!}
                 </div>
                 @if($option == 'godfather')
                 <button class="btn dark" onclick="return modal.openGodfather()">{{ __("Become a Godfather") }}</button>

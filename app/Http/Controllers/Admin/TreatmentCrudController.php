@@ -376,7 +376,8 @@ class TreatmentCrudController extends CrudController
 
             $this->crud->addClause('whereHas', 'appointment', function ($query) {
                 $query->whereHas('process', function ($query) {
-                    $query->whereIn('headquarter_id', restrictToHeadquarters());
+                    $headquarters = restrictToHeadquarters();
+                    $query->whereIn('headquarter_id', $headquarters ?: []);
                 });
             })->get();
         }

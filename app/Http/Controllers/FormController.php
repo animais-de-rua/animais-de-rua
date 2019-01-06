@@ -8,6 +8,7 @@ use App\Mail\ContactForm;
 use App\Mail\VolunteerForm;
 use App\Models\Headquarter;
 use App\Models\Process;
+use Config;
 use Image;
 use Mail;
 use Storage;
@@ -44,7 +45,7 @@ class FormController extends Controller
         $validatedData = request()->validate([
             'name' => 'required',
             'email' => 'required|email',
-            'phone' => 'required|numeric',
+            'phone' => 'required|min:9|max:16',
             'age' => 'required|numeric',
             'job' => 'required',
             'district' => 'required',
@@ -68,7 +69,7 @@ class FormController extends Controller
         $validatedData = request()->validate([
             'name' => 'required',
             'email' => 'required|email',
-            'phone' => 'required|numeric',
+            'phone' => 'required|min:9|max:16',
             'district' => 'required',
             'county' => 'required',
             'subject' => 'required',
@@ -91,7 +92,7 @@ class FormController extends Controller
         $validatedData = $request->validate([
             'name' => 'required',
             'email' => 'required|email',
-            'phone' => 'required|numeric',
+            'phone' => 'required|min:9|max:16',
             'process' => 'required',
             'animals' => 'required|numeric',
             'specie' => 'required|in:' . EnumHelper::keys('process.specie', ',') . ',other',
@@ -169,7 +170,7 @@ class FormController extends Controller
         $validatedData = request()->validate([
             'name' => 'required',
             'email' => 'required|email',
-            'phone' => 'required|numeric',
+            'phone' => 'required|min:9|max:16',
             'district' => 'required',
             'county' => 'required',
             'theme' => 'required',
@@ -190,7 +191,7 @@ class FormController extends Controller
         $validatedData = request()->validate([
             'name' => 'required',
             'email' => 'required|email',
-            'phone' => 'required|numeric',
+            'phone' => 'required|min:9|max:16',
             'other' => 'nullable|numeric',
             'observations' => 'required',
         ]);

@@ -199,7 +199,8 @@ class DonationCrudController extends CrudController
             $this->crud->denyAccess(['delete', 'update']);
 
             $this->crud->addClause('whereHas', 'process', function ($query) {
-                $query->whereIn('headquarter_id', restrictToHeadquarters());
+                $headquarters = restrictToHeadquarters();
+                $query->whereIn('headquarter_id', $headquarters ?: []);
             })->get();
         }
 
@@ -218,7 +219,14 @@ class DonationCrudController extends CrudController
         // Add user
         $request->merge(['user_id' => backpack_user()->id]);
 
-        return parent::storeCrud($request);
+        $redirect = parent::storeCrud($request);
+
+        if ($request->save_action == 'save_and_new') {
+            $referer = $request->header('referer');
+            $redirect = redirect($referer);
+        }
+
+        return $redirect;
     }
 
     public function update(UpdateRequest $request)

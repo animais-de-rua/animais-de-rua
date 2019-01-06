@@ -1656,6 +1656,7 @@ footer {
     top: 0;
     transition: transform 0.6s cubic-bezier(0.8, -0.4, 0.4, 1);
     transform: translateY(-100%);
+    display: block!important;
 
     &.open {
         transform: translateY(0);

@@ -22,7 +22,7 @@ class PageController extends Controller
 {
     public function index($slug = 'home')
     {
-        // \Debugbar::disable();
+        \Debugbar::disable();
 
         $this->data = Cache::rememberForever("page_$slug", function () use ($slug) {
             $page = Page::findBySlug($slug);
@@ -97,7 +97,7 @@ class PageController extends Controller
             });
 
             $data = [
-                'total_interventions' => $treated + $adopted,
+                'total_interventions' => 26000 + $treated + $adopted,
                 'form_acting_territories' => $form_acting_territories,
                 'form_all_territories' => $form_all_territories,
             ];
