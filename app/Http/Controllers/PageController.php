@@ -288,9 +288,9 @@ class PageController extends Controller
         $processes = Cache::rememberForever('processes_urgent', function () {
             return Process::select(['id', 'name', 'images'])
                 ->where('status', 'waiting_godfather')
-                ->orderBy('urgent', 'desc')
+                ->where('urgent', 1)
                 ->orderBy('created_at', 'desc')
-                ->limit(6)
+                ->limit(9)
                 ->get();
         });
 

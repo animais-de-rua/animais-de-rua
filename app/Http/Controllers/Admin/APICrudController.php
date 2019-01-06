@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Admin\Traits\Permissions;
+use App\Models\Adopter;
 use App\Models\Adoption;
 use App\Models\Appointment;
 use App\Models\Fat;
@@ -84,6 +85,16 @@ class APICrudController extends CrudController
     public function adoptionFilter()
     {
         return $this->adoptionSearch()->pluck('name', 'id');
+    }
+
+    public function adopterSearch()
+    {
+        return $this->entitySearch(Adopter::class, ['name', 'email', 'phone']);
+    }
+
+    public function adopterFilter()
+    {
+        return $this->adopterSearch()->pluck('name', 'id');
     }
 
     /*

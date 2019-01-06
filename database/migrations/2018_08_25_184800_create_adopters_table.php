@@ -20,10 +20,8 @@ class CreateAdoptersTable extends Migration
             $table->string('phone', 255)->nullable();
             $table->string('address', 255);
             $table->string('zip_code', 255);
-            $table->date('adoption_date');
             $table->string('id_card', 255);
             $table->string('territory_id', 6)->nullable();
-            $table->integer('adoption_id')->unsigned()->nullable();
             $table->integer('user_id')->unsigned()->nullable();
             $table->timestamps();
 
@@ -31,12 +29,6 @@ class CreateAdoptersTable extends Migration
             $table->foreign('territory_id')
                 ->references('id')
                 ->on('territories')
-                ->onDelete('set null');
-
-            $table->index(['adoption_id']);
-            $table->foreign('adoption_id')
-                ->references('id')
-                ->on('adoptions')
                 ->onDelete('set null');
 
             $table->index(['user_id']);

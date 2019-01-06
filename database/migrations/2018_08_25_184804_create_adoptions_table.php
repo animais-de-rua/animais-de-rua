@@ -31,6 +31,8 @@ class CreateAdoptionsTable extends Migration
             $table->text('images')->nullable();
             $table->text('features')->nullable();
             $table->text('history')->nullable();
+            $table->date('adoption_date');
+            $table->integer('adopter_id')->unsigned()->nullable();
             $table->enum('status', EnumHelper::values('adoption.status'))->default('open');
             $table->timestamps();
 
@@ -50,6 +52,12 @@ class CreateAdoptionsTable extends Migration
             $table->foreign('fat_id')
                 ->references('id')
                 ->on('users')
+                ->onDelete('set null');
+
+            $table->index(['adopter_id']);
+            $table->foreign('adopter_id')
+                ->references('id')
+                ->on('adopters')
                 ->onDelete('set null');
         });
     }

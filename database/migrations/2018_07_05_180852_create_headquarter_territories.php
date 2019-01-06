@@ -51,7 +51,7 @@ class CreateHeadquarterTerritories extends Migration
                 ->on('territories')
                 ->onDelete('cascade');
 
-            $table->primary(['headquarter_id', 'territory_id']);
+            $table->primary(['headquarter_id', 'territory_id'], 'headquarters_territories_range_primary');
         });
     }
 

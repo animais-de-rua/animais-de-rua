@@ -1,6 +1,7 @@
 <?php
 
 use App\Helpers\EnumHelper;
+use App\Models\Adopter;
 use App\Models\Adoption;
 use App\Models\Process;
 use App\User;
@@ -30,6 +31,8 @@ $factory->define(Adoption::class, function (Faker $faker) {
         'processed' => rand(0, 1),
         'features' => $faker->text(80),
         'history' => $faker->text(80),
+        'adopter_id' => $faker->randomElement(Adopter::all()->pluck('id')->toArray()),
+        'adoption_date' => $date,
         'status' => $faker->randomElement(EnumHelper::get('adoption.status')),
         'created_at' => $date,
         'updated_at' => $date,

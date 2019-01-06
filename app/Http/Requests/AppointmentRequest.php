@@ -30,10 +30,10 @@ class AppointmentRequest extends FormRequest
             'process_id' => 'required|exists:processes,id',
             'vet_id_1' => 'required|exists:vets,id',
             'date_1' => 'required|date',
-            'vet_id_2' => 'required|exists:vets,id',
-            'date_2' => 'required|date',
-            'amount_males' => 'required|numeric|min:0|max:100',
-            'amount_females' => 'required|numeric|min:0|max:100',
+            'vet_id_2' => 'nullable|exists:vets,id',
+            'date_2' => 'nullable|date',
+            'amount_males' => 'required|numeric|min:0|max:200',
+            'amount_females' => 'required|numeric|min:0|max:200',
             'status' => 'in:' . EnumHelper::keys('appointment.status', ','),
         ];
     }

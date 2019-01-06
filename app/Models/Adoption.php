@@ -18,7 +18,7 @@ class Adoption extends Model
     protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['process_id', 'user_id', 'fat_id', 'name', 'age', 'gender', 'sterilized', 'vaccinated', 'processed', 'history', 'images'];
+    protected $fillable = ['process_id', 'user_id', 'fat_id', 'name', 'age', 'gender', 'sterilized', 'vaccinated', 'processed', 'history', 'images', 'status'];
     protected $casts = ['images' => 'array', 'age' => 'array'];
     // protected $hidden = [];
     // protected $dates = [];
@@ -34,7 +34,7 @@ class Adoption extends Model
         $disabled = $this->status != 'open';
 
         return '
-        <a class="btn btn-xs btn-' . ($disabled ? 'default' : 'primary') . ' ' . ($disabled ? 'disabled' : '') . '" href="/admin/adopter/create?adoption=' . $this->id . '" title="' . __('Add adopter') . '">
+        <a class="btn btn-xs btn-' . ($disabled ? 'default' : 'primary') . ' ' . ($disabled ? 'disabled' : '') . '" href="/admin/adoption/' . $this->id . '/edit" title="' . __('Add adopter') . '">
         <i class="fa fa-plus"></i> ' . ucfirst(__('adopter')) . '
         </a>';
     }
@@ -62,7 +62,7 @@ class Adoption extends Model
 
     public function adopter()
     {
-        return $this->hasOne('App\Models\Adopter', 'adoption_id');
+        return $this->belongsTo('App\Models\Adopter', 'adopter_id');
     }
 
     /*

@@ -76,7 +76,7 @@ class TreatmentTypeCrudController extends CrudController
             'name' => 'operation_time',
             'type' => 'time',
             'default' => 0,
-            'attributes' => ['min' => 0, 'max' => 24 * 60],
+            'attributes' => ['min' => 0, 'max' => 3 * 24 * 60],
         ]);
 
         // Filter

@@ -18,7 +18,7 @@ class Adopter extends Model
     protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['name', 'email', 'phone', 'address', 'zip_code', 'adoption_date', 'id_card', 'territory_id', 'adoption_id', 'user_id'];
+    protected $fillable = ['name', 'email', 'phone', 'address', 'zip_code', 'adoption_date', 'id_card', 'territory_id', 'user_id'];
     // protected $hidden = [];
     // protected $dates = [];
 
@@ -36,7 +36,7 @@ class Adopter extends Model
 
     public function adoption()
     {
-        return $this->belongsTo('App\Models\Adoption', 'adoption_id');
+        return $this->hasOne('App\Models\Adoption', 'adopter_id');
     }
 
     public function territory()

@@ -113,7 +113,7 @@ class AppointmentCrudController extends CrudController
             'type' => 'number',
             'name' => 'amount_males',
             'default' => 0,
-            'attributes' => ['min' => 0, 'max' => 100],
+            'attributes' => ['min' => 0, 'max' => 200],
         ]);
 
         $this->crud->addField([
@@ -121,7 +121,7 @@ class AppointmentCrudController extends CrudController
             'type' => 'number',
             'name' => 'amount_females',
             'default' => 0,
-            'attributes' => ['min' => 0, 'max' => 100],
+            'attributes' => ['min' => 0, 'max' => 200],
         ]);
 
         $this->crud->addField([
@@ -129,7 +129,7 @@ class AppointmentCrudController extends CrudController
             'type' => 'number',
             'name' => 'amount_other',
             'default' => 0,
-            'attributes' => ['min' => 0, 'max' => 100],
+            'attributes' => ['min' => 0, 'max' => 200],
         ]);
 
         $this->crud->addField([

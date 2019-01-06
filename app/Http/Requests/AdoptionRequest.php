@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Helpers\EnumHelper;
 use App\Http\Requests\Request;
+use App\Models\Adoption;
 use App\Models\Process;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -41,6 +42,7 @@ class AdoptionRequest extends FormRequest
             'features' => 'nullable|max:4096',
             'history' => 'nullable|max:4096',
             'images' => 'required',
+            'status' => 'in:' . EnumHelper::keys('adoption.status', ','),
         ];
     }
 
@@ -72,7 +74,9 @@ class AdoptionRequest extends FormRequest
     {
         $validator->after(function ($validator) {
             $process = Process::where('id', $this->input('process_id'))->first();
+            $adoption = Adoption::where('id', $this->input('id'))->first();
 
+            // Check if process has treatments
             if ($this->input('processed')) {
                 $count = 0;
                 foreach ($process->appointments as $appointment) {
@@ -81,6 +85,13 @@ class AdoptionRequest extends FormRequest
                 if (!$count) {
                     $validator->errors()->add('processed', __("There are no treatments in the process, so this animal can't be already treated"));
                 }
+            }
+
+            // Check if status is open with an adopter
+            if ($this->input('adopter_id') && !in_array($this->input('status'), ['closed', 'archived'])) {
+                return $validator->errors()->add('status', __('Adoption status is :status, it must be set to closed in order to add an Adopter.', [
+                    'status' => __($this->input('status')),
+                ]));
             }
         });
     }

@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Admin\Traits\Permissions;
+use App\Http\Requests\AdopterRequest as StoreRequest;
 use App\Http\Requests\AdopterRequest as UpdateRequest;
-use App\Http\Requests\AdopterStoreRequest as StoreRequest;
 use App\User;
-use Carbon\Carbon;
 
 /**
  * Class AdopterCrudController
@@ -35,20 +34,7 @@ class AdopterCrudController extends CrudController
         */
 
         // ------ CRUD FIELDS
-        $this->crud->addFields(['adoption_id', 'territory_id', 'name', 'email', 'phone', 'address', 'zip_code', 'id_card', 'adoption_date']);
-
-        $this->crud->addField([
-            'label' => ucfirst(__('adoption')),
-            'name' => 'adoption_id',
-            'type' => 'select2_from_ajax',
-            'entity' => 'adoption',
-            'attribute' => 'detail',
-            'model' => '\App\Models\Adoption',
-            'data_source' => url('admin/adoption/ajax/search'),
-            'placeholder' => __('Select a adoption'),
-            'minimum_input_length' => 2,
-            'default' => \Request::get('adoption') ?: false,
-        ]);
+        $this->crud->addFields(['territory_id', 'name', 'email', 'phone', 'address', 'zip_code', 'id_card']);
 
         $this->crud->addField([
             'label' => ucfirst(__('territory')),
@@ -94,13 +80,6 @@ class AdopterCrudController extends CrudController
             'type' => 'text',
         ]);
 
-        $this->crud->addField([
-            'label' => __('Adoption Date'),
-            'name' => 'adoption_date',
-            'type' => 'date',
-            'default' => Carbon::today()->toDateString(),
-        ]);
-
         if (is('admin')) {
             $this->crud->addField([
                 'label' => ucfirst(__('volunteer')),
@@ -119,18 +98,10 @@ class AdopterCrudController extends CrudController
         }
 
         // ------ CRUD COLUMNS
-        $this->crud->addColumns(['id', 'adoption_id', 'territory_id', 'name', 'email', 'phone', 'adoption_date', 'user_id']);
+        $this->crud->addColumns(['id', 'territory_id', 'name', 'email', 'phone', 'user_id']);
 
         $this->crud->setColumnDetails('id', [
             'label' => 'ID',
-        ]);
-
-        $this->crud->setColumnDetails('adoption_id', [
-            'name' => 'adoption',
-            'label' => ucfirst(__('adoption')),
-            'type' => 'model_function',
-            'limit' => 120,
-            'function_name' => 'getAdoptionLinkAttribute',
         ]);
 
         $this->crud->setColumnDetails('territory_id', [
@@ -151,11 +122,6 @@ class AdopterCrudController extends CrudController
 
         $this->crud->setColumnDetails('phone', [
             'label' => __('Phone'),
-        ]);
-
-        $this->crud->setColumnDetails('adoption_date', [
-            'label' => __('Adoption Date'),
-            'type' => 'date',
         ]);
 
         $this->crud->setColumnDetails('user_id', [
@@ -180,19 +146,6 @@ class AdopterCrudController extends CrudController
                 $values = array_map(function ($field) {return $field . '%';}, $values);
 
                 $this->crud->query->whereRaw($where, $values);
-            });
-
-        $this->crud->addFilter([
-            'type' => 'date_range',
-            'name' => 'from_to',
-            'label' => __('Date range'),
-            'format' => 'DD/MM/YYYY',
-            'firstDay' => 1,
-        ],
-            false,
-            function ($value) {
-                $dates = json_decode($value);
-                $this->crud->query->whereRaw('adoption_date >= ? AND adoption_date <= DATE_ADD(?, INTERVAL 1 DAY)', [$dates->from, $dates->to]);
             });
 
         $this->crud->addFilter([

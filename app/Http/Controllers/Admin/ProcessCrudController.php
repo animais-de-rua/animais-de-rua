@@ -64,7 +64,7 @@ class ProcessCrudController extends CrudController
             'label' => ucfirst(__('territory')),
             'name' => 'territory_id',
             'type' => 'select2_from_array',
-            'options' => $this->wantsJSON() ? null : api()->rangeTerritoryList(Territory::FREGUESIA),
+            'options' => $this->wantsJSON() ? null : is('admin') ? api()->territoryList(Territory::FREGUESIA) : api()->rangeTerritoryList(Territory::FREGUESIA),
             'allows_null' => true,
         ]);
 
@@ -92,7 +92,7 @@ class ProcessCrudController extends CrudController
             'type' => 'number',
             'name' => 'amount_males',
             'default' => 0,
-            'attributes' => ['min' => 0, 'max' => 100],
+            'attributes' => ['min' => 0, 'max' => 200],
         ]);
 
         $this->crud->addField([
@@ -100,7 +100,7 @@ class ProcessCrudController extends CrudController
             'type' => 'number',
             'name' => 'amount_females',
             'default' => 0,
-            'attributes' => ['min' => 0, 'max' => 100],
+            'attributes' => ['min' => 0, 'max' => 200],
         ]);
 
         $this->crud->addField([
@@ -108,7 +108,7 @@ class ProcessCrudController extends CrudController
             'type' => 'number',
             'name' => 'amount_other',
             'default' => 0,
-            'attributes' => ['min' => 0, 'max' => 100],
+            'attributes' => ['min' => 0, 'max' => 200],
         ]);
 
         $this->crud->addField([
@@ -181,7 +181,7 @@ class ProcessCrudController extends CrudController
         $this->crud->addField($this->tableStats());
 
         // ------ CRUD COLUMNS
-        $this->crud->addColumns(['id', 'name', 'headquarter', 'created_at', 'specie', 'animal_count', 'status', 'urgent', 'total_donations', 'total_expenses', 'balance', 'total_operations', 'user_id', 'territory_id']);
+        $this->crud->addColumns(['id', 'name', 'headquarter', 'created_at', 'specie', 'animal_count', 'status', 'urgent', 'total_donations', 'total_expenses', 'balance', 'total_operations', 'user_id', 'territory_id', 'notes', 'history']);
 
         $this->crud->setColumnDetails('id', [
             'label' => 'ID',
@@ -271,14 +271,25 @@ class ProcessCrudController extends CrudController
         ]);
 
         // For search proposes only
-        $this->crud->addColumn('notes', [
+        $this->crud->setColumnDetails('notes', [
             'name' => 'notes',
-            'type' => 'text',
+            'type' => 'textarea',
             'label' => __('Notes'),
             'visibleInTable' => false,
             'visibleInModal' => false,
             'visibleInExport' => false,
-            'visibleInShow' => false,
+            'visibleInShow' => true,
+        ]);
+
+        // For search proposes only
+        $this->crud->setColumnDetails('history', [
+            'name' => 'history',
+            'type' => 'textarea',
+            'label' => __('History'),
+            'visibleInTable' => false,
+            'visibleInModal' => false,
+            'visibleInExport' => false,
+            'visibleInShow' => true,
         ]);
 
         // ------ CRUD DETAILS ROW
@@ -535,6 +546,7 @@ class ProcessCrudController extends CrudController
         $this->crud->removeColumn('total_expenses');
         $this->crud->removeColumn('balance');
         $this->crud->removeColumn('total_operations');
+        $this->crud->removeColumn('latlong');
 
         $this->crud->setColumnDetails('contact', [
             'label' => __('Applicant'),

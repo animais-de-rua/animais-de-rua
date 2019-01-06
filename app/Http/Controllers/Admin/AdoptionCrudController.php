@@ -8,6 +8,7 @@ use App\Http\Requests\AdoptionRequest as StoreRequest;
 use App\Http\Requests\AdoptionRequest as UpdateRequest;
 use App\Models\Adoption;
 use App\User;
+use Carbon\Carbon;
 
 /**
  * Class AdoptionCrudController
@@ -36,7 +37,7 @@ class AdoptionCrudController extends CrudController
         */
 
         // ------ CRUD FIELDS
-        $this->crud->addFields(['process_id', 'fat_id', 'name', 'name_after', 'age', 'gender', 'sterilized', 'vaccinated', 'processed', 'images', 'features', 'history', 'status']);
+        $this->crud->addFields(['process_id', 'fat_id', 'name', 'name_after', 'age', 'gender', 'sterilized', 'vaccinated', 'processed', 'images', 'features', 'history', 'adopter_id', 'adoption_date', 'status']);
 
         $this->crud->addField([
             'label' => ucfirst(__('process')),
@@ -144,6 +145,27 @@ class AdoptionCrudController extends CrudController
             'name' => 'history',
         ]);
 
+        $this->separator()->afterField('history');
+
+        $this->crud->addField([
+            'label' => __('Adoption Date'),
+            'name' => 'adoption_date',
+            'type' => 'date',
+            'default' => Carbon::today()->toDateString(),
+        ]);
+
+        $this->crud->addField([
+            'label' => ucfirst(__('adopter')),
+            'name' => 'adopter_id',
+            'type' => 'select2_from_ajax',
+            'entity' => 'adopter',
+            'attribute' => 'name',
+            'model' => '\App\Models\Adopter',
+            'data_source' => url('admin/adopter/ajax/search'),
+            'placeholder' => __('Select an adopter'),
+            'minimum_input_length' => 2,
+        ]);
+
         $this->crud->addField([
             'label' => __('Status'),
             'type' => 'enum',
@@ -154,7 +176,7 @@ class AdoptionCrudController extends CrudController
         ]);
 
         // ------ CRUD COLUMNS
-        $this->crud->addColumns(['id', 'name', 'process_id', 'fat_id', 'age', 'gender', 'sterilized', 'vaccinated', 'processed', 'status', 'user_id']);
+        $this->crud->addColumns(['id', 'name', 'process_id', 'fat_id', 'age', 'gender', 'sterilized', 'vaccinated', 'processed', 'adoption_date', 'status', 'user_id']);
 
         $this->crud->setColumnDetails('id', [
             'label' => 'ID',
@@ -213,6 +235,19 @@ class AdoptionCrudController extends CrudController
         $this->crud->setColumnDetails('processed', [
             'type' => 'boolean',
             'label' => ucfirst(__('processed')),
+        ]);
+
+        $this->crud->setColumnDetails('adopter_id', [
+            'name' => 'adopter',
+            'label' => ucfirst(__('adopter')),
+            'type' => 'model_function',
+            'limit' => 120,
+            'function_name' => 'getAdopterLinkAttribute',
+        ]);
+
+        $this->crud->setColumnDetails('adoption_date', [
+            'label' => __('Adoption Date'),
+            'type' => 'date',
         ]);
 
         $this->crud->setColumnDetails('status', [
@@ -311,6 +346,30 @@ class AdoptionCrudController extends CrudController
                 if ($range->to) {
                     $this->crud->addClause('where', 'age', '<=', (float) $range->to);
                 }
+            });
+
+        $this->crud->addFilter([
+            'name' => 'adopter',
+            'type' => 'select2_ajax',
+            'label' => ucfirst(__('adopter')),
+            'placeholder' => __('Select an adopter'),
+        ],
+            url('admin/adopter/ajax/filter'),
+            function ($value) {
+                $this->crud->addClause('where', 'adopter_id', $value);
+            });
+
+        $this->crud->addFilter([
+            'type' => 'date_range',
+            'name' => 'from_to',
+            'label' => __('Adoption Date'),
+            'format' => 'DD/MM/YYYY',
+            'firstDay' => 1,
+        ],
+            false,
+            function ($value) {
+                $dates = json_decode($value);
+                $this->crud->query->whereRaw('adoption_date >= ? AND adoption_date <= DATE_ADD(?, INTERVAL 1 DAY)', [$dates->from, $dates->to]);
             });
 
         $this->crud->addFilter([
