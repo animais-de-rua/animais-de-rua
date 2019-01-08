@@ -27,7 +27,7 @@
         </li>
 
         <li class="active">
-            {{ trans('Terminal') }}
+            {{ trans('Symlink') }}
         </li>
 
     </ol>
@@ -37,11 +37,11 @@
 
 @section('after_scripts')
 <script type="text/javascript">
-    $("#terminal").submit(function(e) {
+    $("#symlink").submit(function(e) {
         $.ajax({
             type: "POST",
-            url: '{{ route('terminal_run') }}',
-            data: $("#terminal").serialize(),
+            url: '{{ route('symlink_run') }}',
+            data: $("#symlink").serialize(),
             success: function(data) {
                 $("pre").text(data);
             }
@@ -58,8 +58,7 @@
         @include('backpack::auth.account.sidemenu')
     </div>
     <div class="col-md-9">
-
-        <form id="terminal" class="form" action="{{ route('terminal_run') }}" method="post">
+        <form id="symlink" class="form" action="{{ route('symlink_run') }}" method="post">
             {!! csrf_field() !!}
 
             <div class="box">
@@ -82,21 +81,23 @@
                     @endif
 
                     <div class="form-group">
-                        <label class="required">{{ trans('Command') }}</label>
+                        <label>Symlink</label><br />
+                        <p>Base directory: <i>{{ base_path() }}</i></p>
                         <hr />
-                        <input id="cmd" required class="form-control" type="text" name="cmd" value="">
+                        <label class="required">Target</label>
+                        <input required class="form-control" type="text" name="target" placeholder="/home/user/project/target" />
+                        <label class="required">Link</label>
+                        <input required class="form-control" type="text" name="link" placeholder="/home/user/project/link" />
+                    </div>
+
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-success"><span class="ladda-label"><i class="fa fa-terminal"></i> {{ trans('Run') }}</span></button>
                     </div>
 
                     <pre style="min-height: 180px;"></pre>
                 </div>
-
-                <div class="box-footer">
-                    <button type="submit" class="btn btn-success"><span class="ladda-label"><i class="fa fa-terminal"></i> {{ trans('Run') }}</span></button>
-                </div>
             </div>
-
         </form>
-
     </div>
 </div>
 @endsection

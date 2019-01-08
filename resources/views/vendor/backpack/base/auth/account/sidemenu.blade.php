@@ -24,6 +24,12 @@
 	  	class="active"
 	  	@endif
 	  	><a href="{{ route('terminal') }}">{{ trans('Artisan Terminal') }}</a></li>
+
+	  <li role="presentation"
+		@if (Request::route()->getName() == 'symlink')
+	  	class="active"
+	  	@endif
+	  	><a href="{{ route('symlink') }}">{{ trans('Symlink') }}</a></li>
 	  @endif
 	</ul>
 </div>

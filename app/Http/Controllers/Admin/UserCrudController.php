@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Helpers\EnumHelper;
 use App\Http\Controllers\Admin\Traits\Permissions;
-use App\User;
 use Backpack\PermissionManager\app\Http\Controllers\UserCrudController as OriginalUserCrudController;
 use Illuminate\Http\Request;
 
@@ -171,16 +170,25 @@ class UserCrudController extends OriginalUserCrudController
 
     public function terminal()
     {
-        $this->data['title'] = trans('Terminal');
-        $this->data['user'] = \Auth::user();
-
-        return view('auth.terminal', $this->data);
+        return view('auth.terminal', []);
     }
 
     public function terminal_run(Request $request)
     {
         if (admin()) {
             echo shell_exec($request->input('cmd'));
+        }
+    }
+
+    public function symlink()
+    {
+        return view('auth.symlink', []);
+    }
+
+    public function symlink_run(Request $request)
+    {
+        if (admin()) {
+            echo symlink(base_path() . $request->input('target'), base_path() . $request->input('link')) ? 'Success' : 'Error';
         }
     }
 

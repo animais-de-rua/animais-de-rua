@@ -30,6 +30,8 @@ Route::group(['prefix' => config('backpack.base.route_prefix'), 'middleware' => 
     // Terminal
     Route::get('/terminal', 'UserCrudController@terminal')->name('terminal');
     Route::post('/terminal/run', 'UserCrudController@terminal_run')->name('terminal_run');
+    Route::get('/symlink', 'UserCrudController@symlink')->name('symlink');
+    Route::post('/symlink/run', 'UserCrudController@symlink_run')->name('symlink_run');
 
     // CRUD
     CRUD::resource('user', 'UserCrudController');
