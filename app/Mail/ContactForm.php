@@ -33,7 +33,8 @@ class ContactForm extends Mailable
     public function build()
     {
         return $this->markdown('emails.form.contact')
-            ->subject(config('app.name') . ' - Contacto')
+            ->subject(config('app.name') . ' - Contacto - ' . $this->request->name)
+            ->replyTo($this->request->email, $this->request->name)
             ->with([
                 'request' => $this->request,
             ]);

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Helpers\EnumHelper;
 use App\Mail\ApplyForm;
 use App\Mail\ContactForm;
+use App\Mail\GodfatherForm;
+use App\Mail\TrainingForm;
 use App\Mail\VolunteerForm;
 use App\Models\Headquarter;
 use App\Models\Process;
@@ -97,7 +99,7 @@ class FormController extends Controller
             'animals' => 'required|numeric',
             'specie' => 'required|in:' . EnumHelper::keys('process.specie', ',') . ',other',
             'parish' => 'required|exists:territories,id',
-            'images.*' => 'required|mimes:jpeg,jpg|max:5000',
+            'images.*' => 'required|mimes:jpeg,jpg,png|max:5000',
             'observations' => 'required',
         ]);
 
@@ -116,7 +118,7 @@ class FormController extends Controller
                     $image = Image::make($file);
 
                     // Filename
-                    $filename = preg_replace('/\\.[^.\\s]{3,4}$/', '', $file->getClientOriginalName()) . '_' . time() . '.' . $file->extension();
+                    $filename = preg_replace('/\\.[^.\\s]{3,4}$/', '', $file->getClientOriginalName()) . '_' . time() . '.jpg';
 
                     // Save Image
                     Storage::disk('uploads')->put("process/$filename", $image
@@ -178,7 +180,7 @@ class FormController extends Controller
         ]);
 
         // Mail to AdR
-        $result = Mail::to(Config::get('settings.form_training'))->send(new VolunteerForm(request()));
+        $result = Mail::to(Config::get('settings.form_training'))->send(new TrainingForm(request()));
 
         return response()->json([
             'errors' => '',
@@ -197,7 +199,7 @@ class FormController extends Controller
         ]);
 
         // Mail to AdR
-        $result = Mail::to(Config::get('settings.form_godfather'))->send(new VolunteerForm(request()));
+        $result = Mail::to(Config::get('settings.form_godfather'))->send(new GodfatherForm(request()));
 
         return response()->json([
             'errors' => '',

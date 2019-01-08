@@ -33,7 +33,8 @@ class VolunteerForm extends Mailable
     public function build()
     {
         return $this->markdown('emails.form.volunteer')
-            ->subject(config('app.name') . ' - Voluntariado')
+            ->subject(config('app.name') . ' - Voluntariado - ' . $this->request->name)
+            ->replyTo($this->request->email, $this->request->name)
             ->with([
                 'request' => $this->request,
             ]);

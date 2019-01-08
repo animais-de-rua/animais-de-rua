@@ -39,10 +39,10 @@
     </IfModule>
 
     RewriteEngine On
-    
-    RewriteCond %{HTTPS} !on
-    RewriteCond %{HTTP_HOST} animaisderua.org [NC,OR]
-    RewriteRule ^(.*)$ https://animaisderua.org/$1 [L,R=301]
+
+    # HTTPS
+    RewriteCond %{HTTPS} off
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [L,R=301]
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .

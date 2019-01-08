@@ -32,7 +32,8 @@ class GodfatherForm extends Mailable
     public function build()
     {
         return $this->markdown('emails.form.godfather')
-            ->subject(config('app.name') . ' - Apadrinhamento')
+            ->subject(config('app.name') . ' - Apadrinhamento - ' . $this->request->name)
+            ->replyTo($this->request->email, $this->request->name)
             ->with([
                 'request' => $this->request,
             ]);

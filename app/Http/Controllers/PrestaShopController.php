@@ -8,7 +8,7 @@ class PrestaShopController extends Controller
 {
     public function getProducts()
     {
-        $url = 'https://www.animaisderua.org/store';
+        $url = 'http://animaisderua.org/store';
         $webService = new PrestaShopWebservice($url, env('PRESTASHOP_SECRET'), false);
 
         $productsXML = $webService->get([

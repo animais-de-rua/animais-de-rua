@@ -25,3 +25,4 @@ yarn-error.log
 /public/fonts
 /public/mix-manifest.json
 /public/vendor/adminlte
+/public/sftp-config.json
