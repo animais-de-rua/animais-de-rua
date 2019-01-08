@@ -31,7 +31,6 @@ class CreateHeadquarterTerritories extends Migration
                 ->onDelete('cascade');
 
             $table->primary(['headquarter_id', 'territory_id']);
-            $table->unique(['territory_id']);
         });
 
         Schema::create('headquarters_territories_range', function (Blueprint $table) {

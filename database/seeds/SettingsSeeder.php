@@ -62,6 +62,18 @@ class SettingsSeeder extends Seeder
                 ]),
                 'active' => 1,
             ],
+            [
+                'key' => 'base_counter',
+                'name' => 'Contador Base',
+                'description' => 'Número base para o contador de intervenções.',
+                'value' => '26000',
+                'field' => json_encode([
+                    'name' => 'value',
+                    'label' => 'Valor',
+                    'type' => 'number',
+                ]),
+                'active' => 1,
+            ],
         ];
 
         foreach ($settings as $index => $setting) {

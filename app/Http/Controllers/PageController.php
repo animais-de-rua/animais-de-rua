@@ -96,8 +96,10 @@ class PageController extends Controller
                 ];
             });
 
+            $base_counter = \Config::get('settings.base_counter', 0);
+
             $data = [
-                'total_interventions' => 26000 + $treated + $adopted,
+                'total_interventions' => $base_counter + $treated + $adopted,
                 'form_acting_territories' => $form_acting_territories,
                 'form_all_territories' => $form_all_territories,
             ];
