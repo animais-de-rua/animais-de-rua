@@ -145,16 +145,20 @@ class VetCrudController extends CrudController
         ]);
 
         // Filtrers
-        $this->crud->addFilter([
-            'name' => 'headquarter_id',
-            'type' => 'select2_multiple',
-            'label' => ucfirst(__('headquarter')),
-            'placeholder' => __('Select a headquarter'),
-        ],
-            $this->wantsJSON() ? null : api()->headquarterList(),
-            function ($values) {
-                $this->crud->addClause('whereIn', 'headquarter_id', json_decode($values));
-            });
+        if (is('admin')) {
+            $this->crud->addFilter([
+                'name' => 'headquarter_id',
+                'type' => 'select2_multiple',
+                'label' => ucfirst(__('headquarter')),
+                'placeholder' => __('Select a headquarter'),
+            ],
+                $this->wantsJSON() ? null : api()->headquarterList(),
+                function ($values) {
+                    $this->crud->addClause('whereHas', 'headquarters', function ($query) use ($values) {
+                        $query->whereIn('headquarter_id', json_decode($values) ?: []);
+                    })->get();
+                });
+        }
 
         $this->crud->addFilter([
             'name' => 'status',

@@ -100,7 +100,7 @@ class FormController extends Controller
             'specie' => 'required|in:' . EnumHelper::keys('process.specie', ',') . ',other',
             'parish' => 'required|exists:territories,id',
             'images.*' => 'required|mimes:jpeg,jpg,png|max:5000',
-            'observations' => 'required',
+            'observations' => 'required|min:3',
         ]);
 
         // Get Headquarter

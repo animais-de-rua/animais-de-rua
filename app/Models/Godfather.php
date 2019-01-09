@@ -18,7 +18,7 @@ class Godfather extends Model
     protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['name', 'email', 'phone', 'headquarter_id', 'territory_id', 'user_id'];
+    protected $fillable = ['name', 'email', 'phone', 'notes', 'territory_id', 'user_id'];
     // protected $hidden = [];
     // protected $dates = [];
 
@@ -44,9 +44,9 @@ class Godfather extends Model
         return $this->belongsTo('App\Models\Territory', 'territory_id');
     }
 
-    public function headquarter()
+    public function headquarters()
     {
-        return $this->belongsTo('App\Models\Headquarter', 'headquarter_id');
+        return $this->belongsToMany('App\Models\Headquarter', 'godfathers_headquarters', 'godfather_id', 'headquarter_id');
     }
 
     public function user()

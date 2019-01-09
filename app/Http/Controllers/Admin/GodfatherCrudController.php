@@ -62,15 +62,13 @@ class GodfatherCrudController extends CrudController
         ]);
 
         if (is('admin')) {
-            $headquarters = restrictToHeadquarters();
             $this->crud->addField([
                 'label' => ucfirst(__('headquarter')),
-                'name' => 'headquarter_id',
-                'type' => 'select2',
-                'entity' => 'headquarter',
+                'type' => 'select2_multiple_data_source',
+                'name' => 'headquarters',
                 'attribute' => 'name',
-                'model' => 'App\Models\Headquarter',
-                'default' => count($headquarters) ? $headquarters[0] : null,
+                'model' => api()->headquarterSearch(),
+                'pivot' => true,
             ]);
 
             $this->crud->addField([
@@ -88,6 +86,12 @@ class GodfatherCrudController extends CrudController
                 ],
             ]);
         }
+
+        $this->crud->addField([
+            'label' => __('Notes'),
+            'name' => 'notes',
+            'type' => 'textarea',
+        ]);
 
         $this->separator();
 
@@ -154,6 +158,14 @@ class GodfatherCrudController extends CrudController
             'label' => __('Total Donated'),
             'type' => 'model_function',
             'function_name' => 'getTotalDonatedValue',
+
+            'orderable' => true,
+            'orderLogic' => function ($query, $column, $columnDirection) {
+                return $query->selectRaw('godfathers.*, sum(value) as total')
+                    ->leftJoin('donations', 'godfathers.id', '=', 'donations.godfather_id')
+                    ->groupBy('godfather_id')
+                    ->orderBy('total', $columnDirection);
+            },
         ]);
 
         $this->crud->setColumnDetails('user_id', [
@@ -167,8 +179,9 @@ class GodfatherCrudController extends CrudController
         if (is('admin')) {
             $this->crud->addColumn([
                 'label' => ucfirst(__('headquarter')),
+                'name' => 'headquarter',
                 'type' => 'select',
-                'entity' => 'headquarter',
+                'entity' => 'headquarters',
                 'attribute' => 'name',
                 'model' => "App\Models\Headquarter",
             ]);
@@ -195,9 +208,15 @@ class GodfatherCrudController extends CrudController
             ],
                 $this->wantsJSON() ? null : api()->headquarterList(),
                 function ($values) {
-                    $this->crud->addClause('whereIn', 'headquarter_id', json_decode($values));
+                    $this->crud->addClause('whereHas', 'headquarters', function ($query) use ($values) {
+                        $query->whereIn('headquarter_id', json_decode($values) ?: []);
+                    })->get();
                 });
         }
+
+        // ------ CRUD DETAILS ROW
+        $this->crud->enableDetailsRow();
+        $this->crud->allowAccess('details_row');
 
         // ------ CRUD ACCESS
         if (!is('admin', 'accountancy')) {
@@ -207,7 +226,10 @@ class GodfatherCrudController extends CrudController
         if (!is('admin')) {
             $this->crud->denyAccess(['delete', 'update']);
 
-            $this->crud->addClause('whereIn', 'headquarter_id', restrictToHeadquarters());
+            $this->crud->addClause('whereHas', 'headquarters', function ($query) {
+                $headquarters = restrictToHeadquarters();
+                $query->whereIn('headquarter_id', $headquarters ?: []);
+            })->get();
         }
 
         // ------ ADVANCED QUERIES
@@ -221,6 +243,15 @@ class GodfatherCrudController extends CrudController
         // Add asterisk for fields that are required
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
+    }
+
+    public function showDetailsRow($id)
+    {
+        $godfather = Godfather::select(['name', 'notes'])->find($id);
+
+        return "<div style='margin:5px 8px'>
+                <p><i>Notas</i>: $godfather->notes</p>
+            </div>";
     }
 
     public function store(StoreRequest $request)

@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\Godfather;
-use App\Models\Headquarter;
 use App\Models\Territory;
 use App\User;
 use Faker\Generator as Faker;
@@ -19,7 +18,6 @@ $factory->define(Godfather::class, function (Faker $faker) {
         'name' => $faker->firstName . ' ' . $faker->lastName,
         'email' => $faker->unique()->safeEmail,
         'territory_id' => $faker->randomElement(Territory::all()->pluck('id')->toArray()),
-        'headquarter_id' => $faker->randomElement(Headquarter::all()->pluck('id')->toArray()),
         'user_id' => $faker->randomElement(User::all()->pluck('id')->toArray()),
         'created_at' => $date,
         'updated_at' => $date,

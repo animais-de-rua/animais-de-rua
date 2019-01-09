@@ -146,10 +146,28 @@ class APICrudController extends CrudController
     */
     public function godfatherSearch()
     {
-        $headquarters = restrictToHeadquarters();
-        $whereIn = $headquarters ? ['headquarter_id' => $headquarters] : [];
+        $search_term = $this->getSearchParam();
+        $results = Godfather::select();
+        $searchFields = ['name', 'email'];
 
-        return $this->entitySearch(Godfather::class, ['name', 'email'], null, $whereIn);
+        if ($search_term) {
+            $results = Godfather::where(function ($query) use ($search_term, $searchFields) {
+                $query->where(array_shift($searchFields), 'LIKE', "%$search_term%");
+
+                foreach ($searchFields as $field) {
+                    $query->orWhere($field, 'LIKE', "%$search_term%");
+                }
+            });
+        }
+
+        if (!is('admin')) {
+            $results->whereHas('headquarters', function ($query) {
+                $headquarters = restrictToHeadquarters();
+                $query->whereIn('headquarter_id', $headquarters ?: []);
+            })->get();
+        }
+
+        return $results->paginate(10);
     }
 
     public function godfatherFilter()
@@ -292,9 +310,11 @@ class APICrudController extends CrudController
 
         $users = User::whereIn('id', DB::table('user_has_roles')->select('model_id')->whereIn('role_id', $roles));
 
-        $headquarters = restrictToHeadquarters();
-        if ($headquarters) {
-            $users = $users->whereIn('headquarter_id', $headquarters);
+        if (!is('admin')) {
+            $users->whereHas('headquarters', function ($query) {
+                $headquarters = restrictToHeadquarters();
+                $query->whereIn('headquarter_id', $headquarters ?: []);
+            })->get();
         }
 
         if ($search_term) {
@@ -319,7 +339,28 @@ class APICrudController extends CrudController
     */
     public function vetSearch()
     {
-        return $this->entitySearch(Vet::class, ['name']);
+        $search_term = $this->getSearchParam();
+        $results = Vet::select();
+        $searchFields = ['name'];
+
+        if ($search_term) {
+            $results = Vet::where(function ($query) use ($search_term, $searchFields) {
+                $query->where(array_shift($searchFields), 'LIKE', "%$search_term%");
+
+                foreach ($searchFields as $field) {
+                    $query->orWhere($field, 'LIKE', "%$search_term%");
+                }
+            });
+        }
+
+        if (!is('admin')) {
+            $results->whereHas('headquarters', function ($query) {
+                $headquarters = restrictToHeadquarters();
+                $query->whereIn('headquarter_id', $headquarters ?: []);
+            })->get();
+        }
+
+        return $results->paginate(10);
     }
 
     public function vetFilter()

@@ -30,7 +30,6 @@ class GodfatherRequest extends FormRequest
             'email' => 'nullable|required_without:phone|email',
             'phone' => 'nullable|required_without:email|min:9|max:16',
             'territory_id' => 'nullable|exists:territories,id',
-            'headquarter_id' => 'nullable|exists:headquarters,id',
         ];
     }
 

@@ -19,15 +19,9 @@ class CreateGodfathersTable extends Migration
             $table->string('alias', 255)->nullable();
             $table->string('email', 127)->nullable();
             $table->string('phone', 255)->nullable();
-            $table->integer('headquarter_id')->nullable()->unsigned();
+            $table->text('notes')->nullable();
             $table->string('territory_id', 6)->nullable();
             $table->integer('user_id')->nullable()->unsigned();
-
-            $table->index(['headquarter_id']);
-            $table->foreign('headquarter_id')
-                ->references('id')
-                ->on('headquarters')
-                ->onDelete('set null');
 
             $table->index(['territory_id']);
             $table->foreign('territory_id')

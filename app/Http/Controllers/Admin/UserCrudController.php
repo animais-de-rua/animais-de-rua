@@ -81,7 +81,9 @@ class UserCrudController extends OriginalUserCrudController
         ],
             api()->headquarterList(),
             function ($values) {
-                $this->crud->addClause('whereIn', 'headquarter_id', json_decode($values));
+                $this->crud->addClause('whereHas', 'headquarters', function ($query) use ($values) {
+                    $query->whereIn('headquarter_id', json_decode($values) ?: []);
+                })->get();
             });
 
         if (is('admin')) {
