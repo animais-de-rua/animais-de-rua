@@ -326,6 +326,12 @@ window.app = {
     boot: e => {
         // Sliders
         sliders.boot();
+
+        window.onresize = e => {
+            if(window.innerWidth <= 768) 
+                _navbar.query('.mobile').style.height = `${window.innerHeight}px`;
+        };
+        window.onresize();
     },
 
     init: e => {

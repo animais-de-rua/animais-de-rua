@@ -384,8 +384,10 @@ class AdoptionCrudController extends CrudController
             });
 
         // ------ CRUD ACCESS
+        $this->crud->allowAccess('show');
+
         if (!is(['admin', 'volunteer'])) {
-            $this->crud->denyAccess(['list']);
+            $this->crud->denyAccess(['list', 'show']);
         }
 
         if (!is('admin', 'adoptions')) {
@@ -414,6 +416,29 @@ class AdoptionCrudController extends CrudController
         // add asterisk for fields that are required in AdoptionRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
+    }
+
+    public function show($id)
+    {
+        $content = parent::show($id);
+
+        $this->crud->setColumnDetails('history', [
+            'label' => __('History'),
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'features',
+            'label' => __('Features'),
+            'type' => 'textarea',
+        ]);
+
+        $this->crud->setColumnDetails('images', [
+            'name' => 'images',
+            'label' => __('Images'),
+            'type' => 'upload_multiple_image',
+        ]);
+
+        return $content;
     }
 
     public function store(StoreRequest $request)

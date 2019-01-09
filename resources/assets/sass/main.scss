@@ -473,7 +473,7 @@ a {
         z-index: 1;
         background-color: #F7F7F7;
         overflow: hidden;
-        transition: transform .3s, left .3s;
+        transition: transform .3s, left .3s, height .15s;
         transform: translate(var(--x, "0px"));
 
         .list {
