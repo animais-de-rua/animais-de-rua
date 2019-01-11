@@ -666,6 +666,20 @@ footer {
         label {
             margin-bottom: .8rem;
         }
+        input {
+            margin-bottom: 0;
+        }
+        .result {
+            margin: 0;
+            font-weight: normal;
+            font-style: italic;
+        }
+
+        .error {
+            input {
+                border-color: #840000;
+            }
+        }
     }
 
     .social {

@@ -19,27 +19,47 @@
             @if(is('admin'))
             <div class="box">
                 <div class="box-header with-border">
-                    <div class="box-title">Acções administrativas</div>
+                  <a data-toggle="collapse" href="#collapseOne">
+                    <div class="box-title" style="color: #000">Acções administrativas <span class="glyphicon glyphicon-chevron-down" aria-hidden="true" style="font-size: 12px; margin-left: 10px;"></span></div>
+                  </a>
                 </div>
-                <div class="box-body">
-                  <button id="update-store" class="btn btn-primary">Actualizar produtos na página inicial</button>
-                  <script>
-                    document.querySelector('#update-store').addEventListener('click', e => {
-                      fetch('/admin/update-products', {
-                        method: 'POST',
-                        credentials: "same-origin",
-                        headers: {
-                          'X-Requested-With': 'XMLHttpRequest',
-                          'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                        }
+                <div id="collapseOne" class="collapse out">
+                  <div class="panel-body">
+                    <button path="/admin/update-products" success="Produtos atualizados." class="btn btn-primary ajax">Actualizar produtos na página inicial</button>
+                    @if(backpack_user()->id == 1)
+                      <button path="/admin/cache/flush" success="Cache limpa" class="btn btn-primary ajax">Limpar cache</button>
+                      <hr />
+                      <div style="margin-bottom: 5px;"></div>
+                      <button path="/admin/cache/config" success="Configurações em cache" class="btn btn-default ajax">Cache config</button>
+                      <button path="/admin/cache/config/clear" success="Cache das configurações limpas" class="btn btn-default ajax">Limpar cache config</button>
+                      {{-- <button path="/admin/cache/route" success="Routes em cache" class="btn btn-default ajax">Cache route</button>
+                      <button path="/admin/cache/route/clear" success="Cache das routes limpas" class="btn btn-default ajax">Limpar cache route</button>
+                      <button path="/admin/cache/view" success="Views em cache" class="btn btn-default ajax">Cache view</button>
+                      <button path="/admin/cache/view/clear" success="Cache das views limpas" class="btn btn-default ajax">Limpar cache view</button> --}}
+                      <div style="margin-bottom: 5px;"></div>
+                      <button path="/admin/maintenance/down" success="Modo de manuntenção activado" class="btn btn-danger ajax">Activar manutenção</button>
+                      <button path="/admin/maintenance/up" success="Modo de manuntenção desactivado" class="btn btn-success ajax">Desativar manutenção</button>
+                    @endif
+                    <script>
+                      document.querySelectorAll('.btn.ajax').forEach(btn => {
+                        btn.addEventListener('click', e => {
+                          fetch(btn.getAttribute('path'), {
+                            method: 'POST',
+                            credentials: "same-origin",
+                            headers: {
+                              'X-Requested-With': 'XMLHttpRequest',
+                              'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            }
+                          });
+                          new PNotify({
+                            title: "Sucesso",
+                            text: btn.getAttribute('success'),
+                            type: "success",
+                          });
+                        });
                       });
-                      new PNotify({
-                        title: "Sucesso",
-                        text: "Produtos atualizados.",
-                        type: "success",
-                      });
-                    });
-                  </script>
+                    </script>
+                  </div>
                 </div>
             </div>
             @endif

@@ -62,7 +62,18 @@ Route::group(['prefix' => config('backpack.base.route_prefix'), 'middleware' => 
     Route::post('dropzone/{column}/{entity}/{thumb}/{size}/{quality}', 'CrudController@handleDropzoneUploadRaw');
     Route::post('dropzone/{column}/{entity}/remove', 'CrudController@handleDropzoneRemoveRaw');
 
-    Route::post('update-products', '\App\Http\Controllers\PageController@updateStoreProducts');
+    // Cache
+    Route::post('cache/flush', function () {\Cache::flush();});
+    Route::post('cache/config', function () {Artisan::call('config:cache');});
+    Route::post('cache/config/clear', function () {Artisan::call('config:clear');});
+    Route::post('cache/route', function () {Artisan::call('route:cache');});
+    Route::post('cache/route/clear', function () {Artisan::call('route:clear');});
+    Route::post('cache/view', function () {Artisan::call('view:cache');});
+    Route::post('cache/view/clear', function () {Artisan::call('view:clear');});
+    Route::post('maintenance/up', function () {Artisan::call('up');});
+    Route::post('maintenance/down', function () {Artisan::call('down', ['--allow' => $_SERVER['REMOTE_ADDR']]);});
+
+    Route::post('cache/update-products', function () {\Cache::forget('products');});
 
     // View as
     Route::any('/view-as-role/{role}', 'ViewAsController@view_as_role')->name('view-as-role');
@@ -86,6 +97,7 @@ Route::any('lang/{locale}', function ($locale) {
 // Forms
 Route::get('form/{slug}', 'FormController@form_view')->where('slug', '[a-z]{2,12}')->name('form');
 Route::post('form/{slug}', 'FormController@form_submit')->where('slug', 'volunteer|contact|apply|training|godfather');
+Route::post('newsletter', 'PageController@subscribeNewsletter');
 
 // Pages
 Route::get('animals/{option}/{id}', 'PageController@animalsView');

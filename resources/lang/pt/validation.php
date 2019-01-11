@@ -199,4 +199,5 @@ return [
         'images.*' => 'imagens',
     ],
 
+    'message' => 'Os dados fornecidos são inválidos.',
 ];

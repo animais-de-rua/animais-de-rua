@@ -18,10 +18,11 @@
         "barryvdh/laravel-elfinder": "^0.4",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.7.*",
-        "laravel/socialite": "^3.0",
+        "laravel/socialite": "^4.0",
         "laravel/tinker": "^1.0",
         "prestashop/prestashop-webservice-lib": "dev-master",
         "spatie/laravel-cookie-consent": "^2.4",
+        "spatie/laravel-newsletter": "^4.2",
         "spatie/laravel-translatable": "^3.1"
     },
     "require-dev": {

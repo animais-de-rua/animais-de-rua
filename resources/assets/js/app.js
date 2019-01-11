@@ -358,6 +358,43 @@ window.app = {
         queryAll('[data-style]').forEach(elem => elem.setAttribute('style', elem.getAttribute('data-style')));
         queryAll('[data-srcset]').forEach(elem => elem.setAttribute('srcset', elem.getAttribute('data-srcset')));
         queryAll('[data-src]').forEach(elem => elem.setAttribute('src', elem.getAttribute('data-src')));
+
+        // Ajax forms
+        queryAll('form.ajax').forEach(form => {
+            form.classList.remove('ajax');
+
+            form.onsubmit = e => {
+                let options = Object.assign(_fetchOptions, {
+                    method: 'POST',
+                    body: new FormData(form),
+                });
+
+                let resultsDom = form.query('.result');
+                resultsDom.innerHTML = "";
+
+                form.classList.remove('error');
+
+                loading.start();
+                fetch(form.action, options).then(response => {
+                    response.json().then(result => {
+                        if(result.errors) {
+                            form.classList.add('error');
+                            for(let error in result.errors)
+                                resultsDom.innerHTML += result.errors[error] + "<br />";
+                        } else {
+                            resultsDom.innerHTML = result.message;
+                            form.reset();
+                        }
+                    });
+                }).catch(e => {
+                    
+                }).finally(e => {
+                    loading.end();
+                });
+
+                return false;
+            }
+        });
     },
 
     onModalitiesClick: e => {

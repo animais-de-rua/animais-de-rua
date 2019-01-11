@@ -46,6 +46,7 @@ class CreateGodfathersTable extends Migration
 
             $table->decimal('value', 8, 2)->nullable()->unsigned()->default(0);
             $table->date('date')->nullable();
+            $table->text('notes')->nullable();
 
             $table->index(['process_id']);
             $table->foreign('process_id')

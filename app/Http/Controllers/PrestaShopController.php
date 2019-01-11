@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Config;
 use PrestaShopWebservice;
 
 class PrestaShopController extends Controller
@@ -9,7 +10,8 @@ class PrestaShopController extends Controller
     public function getProducts()
     {
         $url = 'http://animaisderua.org/store';
-        $webService = new PrestaShopWebservice($url, env('PRESTASHOP_SECRET'), false);
+
+        $webService = new PrestaShopWebservice($url, Config::get('app.prestashop_secret'), false);
 
         $productsXML = $webService->get([
             'resource' => 'products',

@@ -142,7 +142,7 @@ class Appointment extends Model
 
     public function getDetailAttribute()
     {
-        return "{$this->id} - {$this->process->name} ({$this->process->id}) - " . ($this->user ? $this->user->name : '') . " ({$this->date_1} / {$this->date_2})";
+        return "{$this->id} - " . ($this->process ? "{$this->process->name} ({$this->process->id}) - " : '') . ($this->user ? $this->user->name : '') . " ({$this->date_1} / {$this->date_2})";
     }
 
     /*

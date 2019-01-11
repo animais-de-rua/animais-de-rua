@@ -71,6 +71,7 @@ return [
             '3' => 'Fazer o transporte dos animais para as clínicas (devidamente acondicionados em caixas transportadoras fornecidas pela associação);',
             '4' => 'Fazer o pós operatório de 24h a 48h (com o devido acompanhamento da associação, sendo que durante este período os animais nunca saem das caixas transportadoras em que são entregues);',
         ],
+        'newsletter' => 'Subscribe to newsletter',
     ],
 
 ];

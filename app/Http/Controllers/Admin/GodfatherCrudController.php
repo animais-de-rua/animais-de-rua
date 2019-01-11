@@ -247,7 +247,7 @@ class GodfatherCrudController extends CrudController
 
     public function showDetailsRow($id)
     {
-        $godfather = Godfather::select(['name', 'notes'])->find($id);
+        $godfather = Godfather::select(['notes'])->find($id);
 
         return "<div style='margin:5px 8px'>
                 <p><i>Notas</i>: $godfather->notes</p>

@@ -134,6 +134,7 @@ class TreatmentCrudController extends CrudController
             }
         }
 
+        $max = 0;
         $total_animals = $total_affected_animals_new = 0;
         if (isset($process)) {
             $total_affected_animals_new = 0;
@@ -276,6 +277,23 @@ class TreatmentCrudController extends CrudController
                     $query->where('process_id', $value);
                 })->get();
             });
+
+        if (is('admin')) {
+            $this->crud->addFilter([
+                'name' => 'headquarter_id',
+                'type' => 'select2_multiple',
+                'label' => ucfirst(__('headquarter')),
+                'placeholder' => __('Select a headquarter'),
+            ],
+                $this->wantsJSON() ? null : api()->headquarterList(),
+                function ($values) {
+                    $this->crud->addClause('whereHas', 'appointment', function ($query) use ($values) {
+                        $query->whereHas('process', function ($query) use ($values) {
+                            $query->whereIn('headquarter_id', json_decode($values));
+                        });
+                    });
+                });
+        }
 
         $this->crud->addFilter([
             'name' => 'treatment_type_id',

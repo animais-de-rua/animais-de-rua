@@ -60,7 +60,7 @@
                     <div class="text dash-list">{!! $page['donate_text'] !!}</div>
                     <form name="_xclick" action="https://www.paypal.com/yt/cgi-bin/webscr" method="post" target="_blank">
                         <input type="hidden" name="cmd" value="_xclick">
-                        <input type="hidden" name="business" value="{{ env("PAYPAL") }}">
+                        <input type="hidden" name="business" value="{{ Config::get("app.paypal") }}">
                         <input type="hidden" name="item_name" value="{{ __("Donate") }}">
                         <input type="hidden" name="currency_code" value="EUR">
                         <button class="btn" type="submit" src="" border="0" name="submit" alt="Make payments with PayPal - it's fast, free and secure!">{{ $page['donate_link'] }}</button>

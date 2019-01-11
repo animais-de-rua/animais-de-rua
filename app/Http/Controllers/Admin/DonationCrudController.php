@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Admin\Traits\Permissions;
 use App\Http\Requests\DonationRequest as StoreRequest;
 use App\Http\Requests\DonationRequest as UpdateRequest;
+use App\Models\Donation;
 use App\User;
 use Carbon\Carbon;
 
@@ -77,6 +78,12 @@ class DonationCrudController extends CrudController
             'name' => 'date',
             'type' => 'date',
             'default' => Carbon::today()->toDateString(),
+        ]);
+
+        $this->crud->addField([
+            'label' => __('Notes'),
+            'name' => 'notes',
+            'type' => 'textarea',
         ]);
 
         if (is('admin')) {
@@ -191,6 +198,9 @@ class DonationCrudController extends CrudController
             });
 
         // ------ CRUD ACCESS
+        $this->crud->enableDetailsRow();
+        $this->crud->allowAccess('details_row');
+
         if (!is('admin', 'accountancy')) {
             $this->crud->denyAccess(['list', 'create']);
         }
@@ -212,6 +222,15 @@ class DonationCrudController extends CrudController
         // Add asterisk for fields that are required
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
+    }
+
+    public function showDetailsRow($id)
+    {
+        $donation = Donation::select(['notes'])->find($id);
+
+        return "<div style='margin:5px 8px'>
+                <p><i>Notas</i>: $donation->notes</p>
+            </div>";
     }
 
     public function store(StoreRequest $request)

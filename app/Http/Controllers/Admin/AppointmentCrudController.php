@@ -133,6 +133,44 @@ class AppointmentCrudController extends CrudController
         ]);
 
         $this->crud->addField([
+            'label' => ucfirst(__('treatments')),
+            'name' => 'treatments',
+            'type' => 'relation_table',
+            'route' => '/admin/treatment',
+            'buttons' => is('admin', 'accountancy') ? ['add'] : [],
+            'columns' => [
+                'id' => [
+                    'label' => 'ID',
+                    'name' => 'id',
+                ],
+                'name' => [
+                    'label' => ucfirst(__('treatment type')),
+                    'name' => 'treatmentTypeName',
+                ],
+                'affected_animals' => [
+                    'label' => __('Affected Animals'),
+                    'name' => 'affected_animals',
+                ],
+                'affected_animals_new' => [
+                    'label' => __('New affected Animals'),
+                    'name' => 'affected_animals_new',
+                ],
+                'expense' => [
+                    'label' => __('Expense'),
+                    'name' => 'fullExpense',
+                ],
+                'date' => [
+                    'label' => __('Date'),
+                    'name' => 'date',
+                ],
+                'status' => [
+                    'label' => __('Status'),
+                    'name' => 'fullStatus',
+                ],
+            ],
+        ]);
+
+        $this->crud->addField([
             'label' => __('Notes'),
             'type' => 'wysiwyg',
             'name' => 'notes',
@@ -315,11 +353,11 @@ class AppointmentCrudController extends CrudController
 
         // ------ CRUD ACCESS
         if (!is(['admin', 'volunteer'])) {
-            $this->crud->denyAccess(['list', 'create']);
+            $this->crud->denyAccess(['list', 'create', 'delete']);
         }
 
         if (!is('admin', ['appointments', 'accountancy'])) {
-            $this->crud->denyAccess(['update', 'delete']);
+            $this->crud->denyAccess(['update']);
 
             $this->crud->addClause('where', 'user_id', backpack_user()->id);
         }
@@ -395,11 +433,19 @@ class AppointmentCrudController extends CrudController
 
     public function destroy($id)
     {
-        // Avoid destroy if there are appointments
         $appointment = Appointment::with('treatments')->find($id);
+
+        // Avoid destroy if there are treatments
         if (count($appointment->treatments) > 0) {
             return false;
         }
+
+        // Common volunteers can only destroy their own appointments
+        // if (!is('admin', ['appointments', 'accountancy'])) {
+        //     if ($appointment->user_id != backpack_user()->id) {
+        //         return false;
+        //     }
+        // }
 
         return parent::destroy($id);
     }

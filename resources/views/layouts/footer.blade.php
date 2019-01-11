@@ -12,15 +12,14 @@
 
         <div class="row row-wrap">
             <div class="column column-67 newsletter">
-                <form target="_blank" action="https://animaisderua.us19.list-manage.com/subscribe/post?u=a1458853c374b6db4fc079c1c&id=3bf06054b8" method="post">
-                    <input type="hidden" name="b_a1458853c374b6db4fc079c1c_3bf06054b8" value="">
-                    <input type="hidden" name="req_hid" id="req_hid" value="">
-
+                <form action="/newsletter" method="post" class="ajax">
+                    @csrf
                     <label for="email">{{ __('web.subscribe') }}</label>
-                    <input type="email" name="EMAIL" id="email" placeholder="{{ __('Your Email Address') }}" value=""/>
+                    <input type="email" name="email" id="email" placeholder="{{ __('Your Email Address') }}" value=""/>
                     <button type="submit" name="subscribe" title="{{ __('web.subscribe') }}">
                         <i class="icon icon-arrow"></i>
                     </button>
+                    <p class="result"></p>
                 </form>
             </div>
             <div class="column column-33 solidarity">

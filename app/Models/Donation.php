@@ -18,7 +18,7 @@ class Donation extends Model
     protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['process_id', 'godfather_id', 'value', 'status', 'date', 'user_id'];
+    protected $fillable = ['process_id', 'godfather_id', 'value', 'status', 'date', 'user_id', 'notes'];
     // protected $hidden = [];
     // protected $dates = [];
 

@@ -86,6 +86,16 @@ class Treatment extends Model
         return $this->expense . '€';
     }
 
+    public function getTreatmentTypeNameAttribute()
+    {
+        return $this->treatment_type->name;
+    }
+
+    public function getFullStatusAttribute()
+    {
+        return __($this->status);
+    }
+
     public function getAffectedAnimalsNew($appointment_id)
     {
         return Treatment::selectRaw('SUM(affected_animals_new) as total')->where('appointment_id', $appointment_id)->first()->total;

@@ -37,8 +37,8 @@
                 <form action="https://www.paypal.com/yt/cgi-bin/webscr" method="post" target="_blank">
                     <input type="hidden" name="cmd" value="_s-xclick">
                     <input type="hidden" name="charset" value="utf-8">
-                    <input type="hidden" name="email" value="{{ env('PAYPAL') }}">
-                    <input type="hidden" name="hosted_button_id" value="{{ env('PAYPAL_ID') }}">
+                    <input type="hidden" name="email" value="{{ Config::get("app.paypal") }}">
+                    <input type="hidden" name="hosted_button_id" value="{{ Config::get("app.paypal_id") }}">
                     <input type="hidden" name="on0" value="{{ ucfirst(__('friend card')) }}">
                     <select name="os0">
                         @foreach($modalities as $modality)

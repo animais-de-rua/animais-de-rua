@@ -17,6 +17,10 @@ use App\Models\Territory;
 use App\Models\Treatment;
 use Cache;
 use DB;
+use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
+use Newsletter;
+use Validator;
 
 class PageController extends Controller
 {
@@ -347,8 +351,29 @@ class PageController extends Controller
         return response()->json($data->get());
     }
 
-    public function updateStoreProducts()
+    public function subscribeNewsletter(Request $request)
     {
-        \Cache::forget('products');
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+        ]);
+
+        Newsletter::subscribe($request->email);
+
+        // Check if subscribed
+        if (Newsletter::isSubscribed($request->email)) {
+            $validator->errors()->add('email', __('Your email is already subscribed.'));
+            throw new ValidationException($validator);
+        }
+
+        // Check if success
+        if (!Newsletter::lastActionSucceeded()) {
+            $validator->errors()->add('email', __('Something went wrong, please try again later.'));
+            throw new ValidationException($validator);
+        }
+
+        return response()->json([
+            'errors' => false,
+            'message' => __('Thank you for subscribing to our newsletter.'),
+        ]);
     }
 }
