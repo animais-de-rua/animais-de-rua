@@ -6,7 +6,7 @@ $locale = Session::get('locale', 'pt');
 
 @section('facebook')
     <meta property="og:title" content="{{ env('APP_NAME') }}: {{ $animal['name'] }}"/>
-    <meta property="og:description" content="{{ strip_tags($animal['history'][$locale]) }}"/>
+    <meta property="og:description" content="{{ strip_tags($animal['history'][$locale] ?? '') }}"/>
     <meta property="og:image" content="{{ env('APP_URL') . $animal['images'][0] }}"/>
 @endsection
 
@@ -22,7 +22,7 @@ $locale = Session::get('locale', 'pt');
                 @endphp
                 <p class="date"><span>{{ __("Beginning of the process") }}</span><br/>{{ __(date("F", $date)) }}, {{ date("Y", $date) }}</p>
                 <div>
-                    {!! $animal['history'][$locale] !!}
+                    {!! $animal['history'][$locale] ?? '' !!}
                 </div>
                 @if($option == 'godfather')
                 <button class="btn dark" onclick="return modal.openGodfather()">{{ __("Become a Godfather") }}</button>
@@ -30,7 +30,7 @@ $locale = Session::get('locale', 'pt');
             </div>
             <div class="column column-40">
                 @if($animal['images'])
-                <div class="flex-slider swipeable">
+                <div class="flex-slider swipeable" auto-scroll="3500">
                     <ul class="touchable">
                         @foreach($animal['images'] as $image)
                         <li>

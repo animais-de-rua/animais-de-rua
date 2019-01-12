@@ -14,6 +14,7 @@ return [
     'privacy' => 'Política de privacidade',
 
     'friendcard' => 'A partir de 3€ mensais poderá subscrever o Cartão do Amigo da Animais de Rua e ajudar-nos a chegar a cada vez mais animais.',
+    'subscribed' => 'Obrigada! Entraremos em contacto consigo brevemente.',
 
     'donate' => [
         'title' => 'O seu donativo salva vidas!',

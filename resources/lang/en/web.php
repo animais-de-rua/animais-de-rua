@@ -14,6 +14,7 @@ return [
     'privacy' => 'Privacy Policy',
 
     'friendcard' => 'From 3€ a month you can subscribe the Friend Card and help us reach more and more animals.',
+    'subscribed' => 'Thank you! We\'ll contact you as soon as possible.',
 
     'donate' => [
         'title' => 'Your donation saves lifes!',

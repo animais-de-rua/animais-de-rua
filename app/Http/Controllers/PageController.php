@@ -280,6 +280,7 @@ class PageController extends Controller
         });
 
         return [
+            'subscribed' => isset($_GET['success']),
             'modalities' => $modalities,
             'partners' => [
                 'list' => $partners,

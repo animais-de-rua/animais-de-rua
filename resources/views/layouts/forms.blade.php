@@ -81,7 +81,11 @@
 
                                 <textarea required name="observations" style="height: 168px; margin: 10px 0 6px;" placeholder="{{ __("Observations") }}"></textarea>
                             </div>
-                            <div class="submit column column-50 column-offset-50">
+                            <div class="submit column column-50 column-offset-50 checkbox">
+                                <div>
+                                    <input type="checkbox" name="newsletter" value="newsletter" id="newsletter1" />
+                                    <label for="newsletter1">{{ __("web.forms.newsletter") }}</label>
+                                </div>
                                 <input type="submit" value="{{ __("Send") }}" />
                             </div>
                         </div>
@@ -101,7 +105,11 @@
                                 <input type="text" required name="subject" placeholder="{{ __("Subject") }}" />
                                 <textarea required name="observations" style="height: calc(100% - 54px)" placeholder="{{ __("Observations") }}"></textarea>
                             </div>
-                            <div class="submit column column-50 column-offset-50">
+                            <div class="submit column column-50 column-offset-50 checkbox">
+                                <div>
+                                    <input type="checkbox" name="newsletter" value="newsletter" id="newsletter2" />
+                                    <label for="newsletter2">{{ __("web.forms.newsletter") }}</label>
+                                </div>
                                 <input type="submit" value="{{ __("Send") }}" />
                             </div>
                         </div>
@@ -126,7 +134,11 @@
                             <div class="column column-50">
                                 <textarea required name="observations" style="height: 100%" placeholder="{{ __("Observations") }}"></textarea>
                             </div>
-                            <div class="submit column column-50 column-offset-50">
+                            <div class="submit column column-50 column-offset-50 checkbox">
+                                <div>
+                                    <input type="checkbox" name="newsletter" value="newsletter" id="newsletter3" />
+                                    <label for="newsletter3">{{ __("web.forms.newsletter") }}</label>
+                                </div>
                                 <input type="submit" value="{{ __("Send") }}" />
                             </div>
                         </div>
@@ -190,8 +202,12 @@
                                     <label for="colab{{ $i }}">{{ __("web.forms.colab.$i") }}</label>
                                 </div>
                                 @endfor
-                                <textarea required name="observations" style="height: 160px; margin: 10px 0 6px;" placeholder="{{ __("Observations") }}"></textarea>
-                                <div class="submit" style="margin: 0">
+                                <textarea required name="observations" style="height: 132px; margin: 10px 0 6px;" placeholder="{{ __("Observations") }}"></textarea>
+                                <div class="submit" style="margin: 0; display: block;">
+                                    <div class="checkbox">
+                                        <input type="checkbox" name="newsletter" value="newsletter" id="newsletter4" />
+                                        <label for="newsletter4">{{ __("web.forms.newsletter") }}</label>
+                                    </div>
                                     <input type="submit" value="{{ __("Send") }}" />
                                 </div>
                             </div>
@@ -223,8 +239,12 @@
                                 </div>
                             </div>
                             <div class="column column-50 colab">
-                                <textarea required name="observations" style="height: calc(100% - 56px); margin: 0 0 6px;" placeholder="{{ __("Observations") }}"></textarea>
-                                <div class="submit" style="margin: 0">
+                                <textarea required name="observations" style="height: calc(100% - 84px); margin: 0 0 6px;" placeholder="{{ __("Observations") }}"></textarea>
+                                <div class="submit checkbox" style="margin: 0">
+                                    <div>
+                                        <input type="checkbox" name="newsletter" value="newsletter" id="newsletter5" />
+                                        <label for="newsletter5">{{ __("web.forms.newsletter") }}</label>
+                                    </div>
                                     <input type="submit" value="{{ __("Send") }}" style="margin:0;" />
                                 </div>
                             </div>

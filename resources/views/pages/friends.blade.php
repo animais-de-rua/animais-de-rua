@@ -3,6 +3,9 @@
 @section('content')
 <div id="friends">
     <div class="container">
+        @if($subscribed)
+        <div class="friend-alert">{{ __('web.subscribed') }}</div>
+        @endif
         <div class="row row-wrap header">
             <div class="column column-50">
                 <div class="flex-vertical-align">
@@ -39,7 +42,7 @@
                     <input type="hidden" name="charset" value="utf-8">
                     <input type="hidden" name="email" value="{{ Config::get("app.paypal") }}">
                     <input type="hidden" name="hosted_button_id" value="{{ Config::get("app.paypal_id") }}">
-                    <input type="hidden" name="on0" value="{{ ucfirst(__('friend card')) }}">
+                    <input type="hidden" name="on0" value="Cartão Amigo da Animais de Rua">
                     <select name="os0">
                         @foreach($modalities as $modality)
                         <option {{ $loop->first ? "selected" : "" }} value="{{ $modality->paypal_code }}">{{ $modality->paypal_code }} : €{{ $modality->amount }},00 EUR - {{ ucfirst(__($modality->type)) }}</option>

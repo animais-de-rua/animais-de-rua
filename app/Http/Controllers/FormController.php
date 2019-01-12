@@ -13,6 +13,7 @@ use App\Models\Process;
 use Config;
 use Image;
 use Mail;
+use Newsletter;
 use Storage;
 
 class FormController extends Controller
@@ -57,6 +58,8 @@ class FormController extends Controller
             'observations' => 'required',
         ]);
 
+        $this->subscribe_newsletter();
+
         // Mail to AdR
         $result = Mail::to(Config::get('settings.form_volunteer'))->send(new VolunteerForm(request()));
 
@@ -77,6 +80,8 @@ class FormController extends Controller
             'subject' => 'required',
             'observations' => 'required',
         ]);
+
+        $this->subscribe_newsletter();
 
         // Mail to AdR
         $result = Mail::to(Config::get('settings.form_contact'))->send(new ContactForm(request()));
@@ -102,6 +107,8 @@ class FormController extends Controller
             'images.*' => 'required|mimes:jpeg,jpg,png|max:5000',
             'observations' => 'required|min:3',
         ]);
+
+        $this->subscribe_newsletter();
 
         // Get Headquarter
         $headquarter = Headquarter::whereHas('territories', function ($query) use ($request) {
@@ -179,6 +186,8 @@ class FormController extends Controller
             'observations' => 'required',
         ]);
 
+        $this->subscribe_newsletter();
+
         // Mail to AdR
         $result = Mail::to(Config::get('settings.form_training'))->send(new TrainingForm(request()));
 
@@ -198,6 +207,8 @@ class FormController extends Controller
             'observations' => 'required',
         ]);
 
+        $this->subscribe_newsletter();
+
         // Mail to AdR
         $result = Mail::to(Config::get('settings.form_godfather'))->send(new GodfatherForm(request()));
 
@@ -205,5 +216,12 @@ class FormController extends Controller
             'errors' => '',
             'message' => __('Your message has been successfully sent.') . '<br />' . __('We will contact you as soon as possible to follow up on your request.'),
         ]);
+    }
+
+    private function subscribe_newsletter()
+    {
+        if (request()->input('newsletter')) {
+            Newsletter::subscribe(request()->input('email'));
+        }
     }
 }
