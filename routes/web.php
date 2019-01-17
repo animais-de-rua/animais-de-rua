@@ -83,6 +83,8 @@ Route::group(['prefix' => config('backpack.base.route_prefix'), 'middleware' => 
 
 // API
 Route::group(['prefix' => 'api', 'middleware' => ['web']], function () {
+    Route::any('token', function () {return ['token' => csrf_token()];})->name('token');
+
     Route::get('animals/adoption/{district}/{specie}', 'PageController@getAnimalsAdoption');
     Route::get('animals/godfather/{district}/{specie}', 'PageController@getAnimalsGodfather');
     // Route::get('prestashop/products', 'PrestaShopController@getProducts');
@@ -101,5 +103,7 @@ Route::post('newsletter', 'PageController@subscribeNewsletter');
 
 // Pages
 Route::get('animals/{option}/{id}', 'PageController@animalsView');
+Route::get('blank', 'PageController@blank');
+
 Route::get('{page}/{subs?}', ['uses' => 'PageController@index'])
     ->where(['page' => '^((?!admin).)*$', 'subs' => '.*']);

@@ -11,10 +11,12 @@ use App\Mail\VolunteerForm;
 use App\Models\Headquarter;
 use App\Models\Process;
 use Config;
+use Illuminate\Validation\ValidationException;
 use Image;
 use Mail;
 use Newsletter;
 use Storage;
+use Validator;
 
 class FormController extends Controller
 {
@@ -64,7 +66,7 @@ class FormController extends Controller
         $result = Mail::to(Config::get('settings.form_volunteer'))->send(new VolunteerForm(request()));
 
         return response()->json([
-            'errors' => '',
+            'success' => true,
             'message' => __('Your message has been successfully sent.') . '<br />' . __('We will contact you as soon as possible to follow up on your request.'),
         ]);
     }
@@ -87,7 +89,7 @@ class FormController extends Controller
         $result = Mail::to(Config::get('settings.form_contact'))->send(new ContactForm(request()));
 
         return response()->json([
-            'errors' => '',
+            'success' => true,
             'message' => __('Your message has been successfully sent.') . '<br />' . __('We will contact you as soon as possible to follow up on your request.'),
         ]);
     }
@@ -96,7 +98,7 @@ class FormController extends Controller
     {
         $request = request();
 
-        $validatedData = $request->validate([
+        $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|email',
             'phone' => 'required|min:9|max:16',
@@ -107,6 +109,12 @@ class FormController extends Controller
             'images.*' => 'required|mimes:jpeg,jpg,png|max:5000',
             'observations' => 'required|min:3',
         ]);
+
+        // Check for 3 minimum images
+        if (count($request->file('images')) < 3) {
+            $validator->errors()->add('images', __('You must upload at least 3 images.'));
+            throw new ValidationException($validator);
+        }
 
         $this->subscribe_newsletter();
 
@@ -169,7 +177,7 @@ class FormController extends Controller
         $result = Mail::to($request->email)->send(new ApplyForm($process));
 
         return response()->json([
-            'errors' => '',
+            'success' => true,
             'message' => __('Your message has been successfully sent.') . '<br />' . __('We will contact you as soon as possible to follow up on your request.'),
         ]);
     }
@@ -192,7 +200,7 @@ class FormController extends Controller
         $result = Mail::to(Config::get('settings.form_training'))->send(new TrainingForm(request()));
 
         return response()->json([
-            'errors' => '',
+            'success' => true,
             'message' => __('Your message has been successfully sent.') . '<br />' . __('We will contact you as soon as possible to follow up on your request.'),
         ]);
     }
@@ -213,7 +221,7 @@ class FormController extends Controller
         $result = Mail::to(Config::get('settings.form_godfather'))->send(new GodfatherForm(request()));
 
         return response()->json([
-            'errors' => '',
+            'success' => true,
             'message' => __('Your message has been successfully sent.') . '<br />' . __('We will contact you as soon as possible to follow up on your request.'),
         ]);
     }

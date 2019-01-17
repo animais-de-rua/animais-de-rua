@@ -25,7 +25,7 @@
                 </div>
                 <div id="collapseOne" class="collapse out">
                   <div class="panel-body">
-                    <button path="/admin/update-products" success="Produtos atualizados." class="btn btn-primary ajax">Actualizar produtos na página inicial</button>
+                    <button path="/admin/cache/update-products" success="Produtos atualizados." class="btn btn-primary ajax">Actualizar produtos na página inicial</button>
                     @if(backpack_user()->id == 1)
                       <button path="/admin/cache/flush" success="Cache limpa" class="btn btn-primary ajax">Limpar cache</button>
                       <hr />

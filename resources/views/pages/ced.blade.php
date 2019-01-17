@@ -9,7 +9,9 @@
                     <div class="info-text">
                         <h1 class="label-title">{{ $page['ced_title'] }}</h1>
                         <p>{!! $page['ced_text'] !!}</p>
+                        @if($page['ced_link'])
                         <a href="/ced" class="link lined">{{ $page['ced_link'] }}</a>
+                        @endif
                     </div>
                 </div>
             </div>

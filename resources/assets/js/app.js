@@ -334,6 +334,10 @@ window.app = {
         window.onresize();
     },
 
+    token: e => {
+        return fetch('/api/token').then(response => response.json().then(result => result.token));
+    },
+
     init: e => {
         // Load initial page scripts
         let script = document.getElementById('onLoad');
@@ -364,32 +368,38 @@ window.app = {
             form.classList.remove('ajax');
 
             form.onsubmit = e => {
-                let options = Object.assign(_fetchOptions, {
-                    method: 'POST',
-                    body: new FormData(form),
-                });
+                app.token().then(token => {
+                    // Update token
+                    form.query('[name="_token"]').value = token;
 
-                let resultsDom = form.query('.result');
-                resultsDom.innerHTML = "";
+                    let options = {
+                        credentials: _fetchOptions.credentials,
+                        headers: _fetchOptions.headers,
+                        method: 'POST',
+                        body: new FormData(form),
+                    };
 
-                form.classList.remove('error');
+                    let resultsDom = form.query('.result');
+                    resultsDom.innerHTML = "";
+                    form.classList.remove('error');
 
-                loading.start();
-                fetch(form.action, options).then(response => {
-                    response.json().then(result => {
-                        if(result.errors) {
-                            form.classList.add('error');
-                            for(let error in result.errors)
-                                resultsDom.innerHTML += result.errors[error] + "<br />";
-                        } else {
-                            resultsDom.innerHTML = result.message;
-                            form.reset();
-                        }
+                    loading.start();
+                    fetch(form.action, options).then(response => {
+                        response.json().then(result => {
+                            if(result.errors) {
+                                form.classList.add('error');
+                                for(let error in result.errors)
+                                    resultsDom.innerHTML += result.errors[error] + "<br />";
+                            } else {
+                                resultsDom.innerHTML = result.message;
+                                form.reset();
+                            }
+                        });
+                    }).catch(e => {
+                        
+                    }).finally(e => {
+                        loading.end();
                     });
-                }).catch(e => {
-                    
-                }).finally(e => {
-                    loading.end();
                 });
 
                 return false;
@@ -535,40 +545,57 @@ window.modal = {
     },
 
     submit: form => {
-        let options = Object.assign(_fetchOptions, {
-            method: 'POST',
-            body: new FormData(form),
-        });
-
         loading.start();
         _forms.classList.add("sending");
         _forms.query('.errors').hide();
         _forms.queryAll('input.error').forEach(e => e.classList.remove('error'));
 
-        fetch(form.action, options).then(response => {
-            response.json().then(result => {
-                if(result.errors) {
-                    let errorsHTML = "";
-                    for (var error in result.errors) {
-                        errorsHTML += "<p>" + result.errors[error][0] + "</p>";
+        // Update token
+        app.token().then(token => {
+            form.query('[name="_token"]').value = token;
 
-                        let input = form.query(`input[name="${error.replace(/\.\d/, '[]')}"]`);
-                        if(input) input.classList.add('error');
-                    }
-
-                    _forms.query('.errors').show();
-                    _forms.query('.errors').innerHTML = errorsHTML;
-                } else {
-                    _forms.classList.add("success");
-                    _forms.query('.success > p').innerHTML = result.message;
-                    form.reset();
-                }
+            let options = Object.assign(_fetchOptions, {
+                method: 'POST',
+                body: new FormData(form),
             });
-        }).catch(e => {
-            
-        }).finally(e => {
-            loading.end();
-            _forms.classList.remove("sending");
+
+            fetch(form.action, options).then(response => {
+                response.json().then(result => {
+
+                    if(result.success) {
+                        _forms.classList.add("success");
+                        _forms.query('.success > p').innerHTML = result.message;
+                        form.reset();
+                    } else {
+                        let errorsDiv = _forms.query('.errors');
+
+                        errorsDiv.show();
+                        errorsDiv.innerHTML = "Error";
+
+                        if(result.errors) {
+                            let errorsList = "";
+                            for (var error in result.errors) {
+                                errorsList += "<p>" + result.errors[error][0] + "</p>";
+
+                                let input = form.query(`input[name="${error.replace(/\.\d/, '[]')}"]`);
+                                if(input) input.classList.add('error');
+                            }
+
+                            errorsDiv.innerHTML = errorsList;
+                        } else {
+                            // Unknown error
+                            if(result.message)
+                                errorsDiv.innerHTML = result.message;
+                        }
+                    }
+                });
+            }).catch(e => {
+
+            }).finally(e => {
+                loading.end();
+                _forms.classList.remove("sending");
+            });
+
         });
 
         return false;
@@ -581,6 +608,9 @@ document.addEventListener('DOMContentLoaded', e => {
     app.init();
     router.init();
     navbar.init();
+
+    // Website info log
+    console.log('%canimais de rua\n%cThis is a free and open source project by %cpromatik.pt\n%cIf you find any bugs or security issues please report at %cgithub.com/animais-de-rua/intranet', 'color:#e03322; font-weight: bold', 'color:#444', 'color:#050055;font-weight:700', 'color:#777;font-style:italic', 'color:#050055;font-weight:700;font-style:italic');
 });
 
 window.utils = utils;

@@ -15,13 +15,12 @@ class PageCrudController extends \Backpack\PageManager\app\Http\Controllers\Admi
 
         $this->crud->removeButton('create');
         $this->crud->removeButton('delete');
-
     }
 
     public function addDefaultPageFields($template = false)
     {
         $result = parent::addDefaultPageFields($template);
-        $this->crud->modifyField('template', ['disabled' => 'disabled']);
+        $this->crud->modifyField('template', ['readonly' => 'readonly', 'style' => 'pointer-events: none;']);
         $this->crud->modifyField('slug', ['attributes' => ['readonly' => 'readonly'], 'hint' => null]);
 
         return $result;
@@ -29,7 +28,7 @@ class PageCrudController extends \Backpack\PageManager\app\Http\Controllers\Admi
 
     public function update(UpdateRequest $request)
     {
-        \Cache::forget('page_' . $request->slug);
+        \Cache::forget("page_{$request->slug}_{$request->locale}");
         return parent::update($request);
     }
 }

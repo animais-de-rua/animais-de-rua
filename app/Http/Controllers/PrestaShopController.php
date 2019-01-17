@@ -9,7 +9,7 @@ class PrestaShopController extends Controller
 {
     public function getProducts()
     {
-        $url = 'http://animaisderua.org/store';
+        $url = 'https://animaisderua.org/store';
 
         $webService = new PrestaShopWebservice($url, Config::get('app.prestashop_secret'), false);
 
@@ -31,7 +31,7 @@ class PrestaShopController extends Controller
                 'id' => (int) $product->id,
                 'name' => (string) $nameLanguage[0],
                 'price' => (float) $product->price,
-                'image' => "$url/$idImage-home_default/default.jpg",
+                'image' => "$url/$idImage-home_default/prestashop-$idImage.jpg",
                 'description' => (string) $descriptionLanguage[0],
                 'url' => $url . '/index.php?controller=product&id_product=' . $product->id,
             ];
