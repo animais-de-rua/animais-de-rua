@@ -257,13 +257,20 @@ class GodfatherCrudController extends CrudController
     public function store(StoreRequest $request)
     {
         // Add user
-        $headquarters = restrictToHeadquarters();
         $request->merge([
             'user_id' => backpack_user()->id,
-            'headquarter_id' => count($headquarters) ? $headquarters[0] : null,
         ]);
 
-        return parent::storeCrud($request);
+        $store = parent::storeCrud($request);
+
+        // Add headquarters
+        $headquarters = restrictToHeadquarters();
+        if (!$request->headquarters && $headquarters) {
+            $godfather_id = \DB::getPdo()->lastInsertId();
+            Godfather::find($godfather_id)->headquarters()->attach($headquarters);
+        }
+
+        return $store;
     }
 
     public function update(UpdateRequest $request)
