@@ -28,7 +28,9 @@ class PageController extends Controller
     {
         \Debugbar::disable();
 
-        $this->data = Cache::rememberForever("page_$slug", function () use ($slug) {
+        $locale = \Session::get('locale');
+
+        $this->data = Cache::rememberForever("page_{$slug}_{$locale}", function () use ($slug) {
             $page = Page::findBySlug($slug);
 
             if (!$page) {
@@ -50,6 +52,11 @@ class PageController extends Controller
         }
 
         return view('pages.' . $this->data['page']->template, $this->data);
+    }
+
+    public function blank()
+    {
+        return view('pages.blank', $this->common());
     }
 
     private function common()

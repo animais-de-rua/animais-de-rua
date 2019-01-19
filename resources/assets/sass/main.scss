@@ -1893,6 +1893,33 @@ footer {
     }
 }
 
+
+body {
+    transition: margin-top .2s;
+
+    &.offline {
+        margin-top: 36px;
+
+        .network {
+            max-height: 36px;
+        }
+    }
+}
+.network {
+    background-color: #3e3e3e;
+    text-align: center;
+    line-height: 36px;
+    font-size: 1.3rem;
+    color: #fff;
+    width: 100%;
+    top: 0;
+    position: fixed;
+    z-index: 1;
+    max-height: 0px;
+    overflow: hidden;
+    transition: max-height .2s;
+}
+
 // ----------
 // Media Queries
 
@@ -2131,5 +2158,9 @@ footer {
     .isotope .box {
         margin: 8px 0;
         flex: 0 0 calc(100%);
+    }
+
+    .network {
+        font-size: 1.1rem;
     }
 }

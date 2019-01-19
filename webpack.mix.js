@@ -13,8 +13,9 @@ let mix = require('laravel-mix');
 
 mix.js('resources/assets/js/app.js', 'public/js')
    .sass('resources/assets/sass/app.scss', 'public/css')
+   .babel('resources/assets/js/sw.js', 'public/sw.js')
    .options({
-     extractVueStyles: true,
+     // extractVueStyles: true,
      // autoprefixer: false
    })
    .version();

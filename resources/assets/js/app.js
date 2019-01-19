@@ -10,6 +10,10 @@ const _loading = document.getElementById('loading'),
         headers: {'X-Requested-With': 'XMLHttpRequest'}
     };
 
+if('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js', { scope: '/' });
+}
+
 window.router = {
     init: e => {
         window.history.pushState({'html': _content.innerHTML}, '', location.pathname);
@@ -31,14 +35,41 @@ window.router = {
         queryAll('a.link').forEach(link => {
             link.classList.remove('link');
             link.addEventListener('click', e => {
-                let urlPath = e.target.closest('a').href;
+                let urlPath = e.target.closest('a').href + "?ajax";
 
                 window.scrollTo(0, 0);
                 loading.start();
-                _content.classList.remove('anim');
+                // _content.classList.remove('anim');
 
                 e.preventDefault();
-                fetch(urlPath, _fetchOptions).then(response => {
+
+                // First content from cache
+                caches.open('adr').then(cache => {
+                    cache.match(urlPath).then(response => {
+                        if(response) {
+                            processResponse(response);
+                        }
+                    });
+                });
+
+                // Always refresh cache
+                if(navigator.onLine) {
+                    fetch(urlPath + "_updated", _fetchOptions).
+                        then(responseUpdated => {
+                            // Update view
+                            processResponse(responseUpdated.clone(), false);
+
+                            // Update cache
+                            caches.open('adr').then(cache => {
+                                cache.put(urlPath, responseUpdated);
+                            });
+                        }).
+                        catch(e => {
+                            window.location = urlPath.replace('?ajax', '');
+                        });
+                }
+
+                function processResponse(response, updateRoute = true) {
                     // Closes mobile menu
                     navbar.close();
 
@@ -47,13 +78,13 @@ window.router = {
                         app.init();
 
                         loading.end();
-                        _content.classList.add('anim');
+                        // _content.classList.add('anim');
 
-                        router.push(html, urlPath);
-                    })
-                }).catch(e => {
-                    window.location = urlPath;
-                });
+                        if(updateRoute) {
+                            router.push(html, urlPath.replace('?ajax', ''));
+                        }
+                    });
+                }
             })
         });
 
@@ -299,8 +330,8 @@ window.swipeable = {
                         Math.round(e.changedTouches[0].clientY - startDrag.clientY)
                     ];
                     
-                    if(Math.abs(dx) > 32 || Math.abs(dy) > 32)
-                        e.preventDefault();
+                    /*if(Math.abs(dx) > 32 || Math.abs(dy) > 32)
+                        e.preventDefault();*/
 
                     // Normalize values
                     if(range.min.x && dx < range.min.x) dx = range.min.x;
@@ -332,6 +363,15 @@ window.app = {
                 _navbar.query('.mobile').style.height = `${window.innerHeight}px`;
         };
         window.onresize();
+
+        // Network events
+        if(!'onLine' in navigator) navigator.onLine = true;
+        let updateOnlineStatus = e => navigator.onLine ?
+            document.body.classList.remove('offline'):
+            document.body.classList.add('offline');
+        window.addEventListener('online',  updateOnlineStatus);
+        window.addEventListener('offline', updateOnlineStatus);
+        updateOnlineStatus();
     },
 
     token: e => {

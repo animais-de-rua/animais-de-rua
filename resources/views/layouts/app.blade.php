@@ -1,4 +1,4 @@
-@if(Request::ajax())
+@if(Request::ajax() || Request::has('ajax'))
     <script>document.body || window.location.reload()</script>
     @yield('content')
 @else
@@ -63,6 +63,8 @@
 
     @include('layouts.navbar')
 
+    <div class="network">{{ __('You are browsing offline, some features may not work.') }}</div>
+
     <section id="content">
         @yield('content')
     </section>
@@ -81,10 +83,10 @@
             '{{ __('September') }}', '{{ __('October') }}', '{{ __('November') }}', '{{ __('December') }}']};
     </script>
     <script src="{{ mix('js/app.js') }}"></script>
-    <script>
+    {{-- <script>
         if(typeof onDocumentReady === 'function')
             document.addEventListener("DOMContentLoaded", onDocumentReady);
-    </script>
+    </script> --}}
     @yield('script')
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-118312120-1" max-age=604800></script>
