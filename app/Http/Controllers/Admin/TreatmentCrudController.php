@@ -405,6 +405,12 @@ class TreatmentCrudController extends CrudController
 
         $this->crud->addClause('orderBy', 'id', 'DESC');
 
+        // Buttons
+        $this->crud->removeButton('update');
+        if ($this->crud->hasAccess('update')) {
+            $this->crud->addButtonFromModelFunction('line', 'custom_update_button', 'customUpdateButton', 'beginning');
+        }
+
         // add asterisk for fields that are required in TreatmentRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');

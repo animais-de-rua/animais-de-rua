@@ -88,8 +88,15 @@ class AdoptionRequest extends FormRequest
             }
 
             // Check if status is open with an adopter
-            if ($this->input('adopter_id') && !in_array($this->input('status'), ['closed', 'archived'])) {
+            if ($this->input('adopter_id') && !in_array($this->input('status'), ['closed'])) {
                 return $validator->errors()->add('status', __('Adoption status is :status, it must be set to closed in order to add an Adopter.', [
+                    'status' => __($this->input('status')),
+                ]));
+            }
+
+            // Check if status is closed or archived with NO adopter
+            if (!$this->input('adopter_id') && in_array($this->input('status'), ['closed'])) {
+                return $validator->errors()->add('status', __('Adoption cannot be :status without an Adopter.', [
                     'status' => __($this->input('status')),
                 ]));
             }
