@@ -264,6 +264,12 @@ class TreatmentCrudController extends CrudController
             ], 'update');
         }
 
+        $this->crud->addField([
+            'label' => __('Notes'),
+            'name' => 'notes',
+            'type' => 'textarea',
+        ]);
+
         // Filter
         $this->crud->addFilter([
             'name' => 'process',
@@ -411,9 +417,21 @@ class TreatmentCrudController extends CrudController
             $this->crud->addButtonFromModelFunction('line', 'custom_update_button', 'customUpdateButton', 'beginning');
         }
 
+        $this->crud->enableDetailsRow();
+        $this->crud->allowAccess('details_row');
+
         // add asterisk for fields that are required in TreatmentRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
+    }
+
+    public function showDetailsRow($id)
+    {
+        $treatment = Treatment::select(['notes'])->find($id);
+
+        return "<div style='margin:5px 8px'>
+                <p><i>Notas</i>: $treatment->notes</p>
+            </div>";
     }
 
     public function store(StoreRequest $request)

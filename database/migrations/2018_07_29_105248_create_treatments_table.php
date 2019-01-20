@@ -32,6 +32,7 @@ class CreateTreatmentsTable extends Migration
             $table->decimal('expense', 8, 2)->nullable()->unsigned()->default(0);
             $table->enum('status', EnumHelper::values('treatment.status'))->default('approving');
             $table->date('date');
+            $table->text('notes')->nullable();
             $table->timestamps();
 
             $table->index(['appointment_id']);

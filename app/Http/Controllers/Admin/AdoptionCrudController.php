@@ -37,7 +37,7 @@ class AdoptionCrudController extends CrudController
         */
 
         // ------ CRUD FIELDS
-        $this->crud->addFields(['process_id', 'fat_id', 'name', 'name_after', 'age', 'gender', 'sterilized', 'vaccinated', 'processed', 'images', 'features', 'history', 'adopter_id', 'adoption_date', 'status']);
+        $this->crud->addFields(['process_id', 'fat_id', 'name', 'name_after', 'age', 'gender', 'sterilized', 'vaccinated', 'processed', 'individual', 'docile', 'abandoned', 'images', 'features', 'history', 'adopter_id', 'adoption_date', 'status']);
 
         $this->crud->addField([
             'label' => ucfirst(__('process')),
@@ -120,6 +120,24 @@ class AdoptionCrudController extends CrudController
         $this->crud->addField([
             'label' => ucfirst(__('processed')) . '<br /><i>Activar se o animal já tiver sido tratado na AdR.</i>',
             'name' => 'processed',
+            'type' => 'checkbox',
+        ]);
+
+        $this->crud->addField([
+            'label' => __('Individual Animal'),
+            'name' => 'individual',
+            'type' => 'checkbox',
+        ]);
+
+        $this->crud->addField([
+            'label' => __('Docile cat of colony'),
+            'name' => 'docile',
+            'type' => 'checkbox',
+        ]);
+
+        $this->crud->addField([
+            'label' => __('Abandoned cat of colony'),
+            'name' => 'abandoned',
             'type' => 'checkbox',
         ]);
 
@@ -436,6 +454,24 @@ class AdoptionCrudController extends CrudController
             'name' => 'images',
             'label' => __('Images'),
             'type' => 'upload_multiple_image',
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'individual',
+            'label' => __('Individual Animal'),
+            'type' => 'boolean',
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'docile',
+            'label' => __('Docile cat of colony'),
+            'type' => 'boolean',
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'abandoned',
+            'label' => __('Abandoned cat of colony'),
+            'type' => 'boolean',
         ]);
 
         return $content;

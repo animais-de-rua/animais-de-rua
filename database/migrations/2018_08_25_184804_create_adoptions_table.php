@@ -28,6 +28,9 @@ class CreateAdoptionsTable extends Migration
             $table->boolean('sterilized')->default(0);
             $table->boolean('vaccinated')->default(0);
             $table->boolean('processed')->default(0);
+            $table->boolean('individual')->default(0);
+            $table->boolean('docile')->default(0);
+            $table->boolean('abandoned')->default(0);
             $table->text('images')->nullable();
             $table->text('features')->nullable();
             $table->text('history')->nullable();
