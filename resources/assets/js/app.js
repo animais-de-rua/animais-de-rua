@@ -98,12 +98,6 @@ window.router = {
 
 window.navbar = {
     init: e => {
-        this.navbarCards = _navbar.queryAll('.cards > .card');
-        this.navbarSwipeable = _navbar.query('.swipeable');
-        this.navbarMobile = _navbar.query('.mobile');
-        this.navbarMobileMenu = _navbar.query('.menu');
-        this.navbarMobileCards = _navbar.queryAll('.mobile-card-view > .menu-panel');
-
         // Close navbar cards when clicking out of them
         _content.addEventListener('click', e => {
             if(_navbar.query('.card.active'))
@@ -111,17 +105,17 @@ window.navbar = {
         });
 
         // Simple Handler for touch on mobile menu
-        this.navbarSwipeable.addEventListener('swipe', e => {
+        _navbar.query('.swipeable').addEventListener('swipe', e => {
             if(e.detail.y < 0 || e.detail.x > 0)
-                this.navbarMobileMenu.click();
+                _navbar.query('.menu').click();
         });
     },
 
     close: e => {
-        if(this.navbarMobile.classList.contains('active')) {
-            this.navbarMobileMenu.click();
+        if(_navbar.query('.mobile').classList.contains('active')) {
+            _navbar.query('.menu').click();
             // In case second menu is oppened
-            if(this.navbarMobile.classList.contains('active'))
+            if(_navbar.query('.mobile').classList.contains('active'))
                 setTimeout(e => _navbar.query('.menu').click(), 250);
         }
     },
@@ -131,22 +125,23 @@ window.navbar = {
             return _navbar.classList.remove('card-view');
 
         e.classList.toggle('active');
-        this.navbarMobile.classList.toggle('active');
+        _navbar.query('.mobile').classList.toggle('active');
         document.body.classList.toggle('overflow');
     },
 
     onMobileCardClick: i => {
         _navbar.classList.toggle('card-view');
+        let cards = _navbar.queryAll('.mobile-card-view > .menu-panel');
 
-        this.navbarMobileCards.forEach(card => card.hide());
-        this.navbarMobileCards[i].show();
+        cards.forEach(card => card.hide());
+        cards[i].show();
     },
 
     onCardClick: (e, i) => {
         if(e.classList.contains('active'))
             return e.classList.remove('active');
 
-        this.navbarCards.forEach(card => card.classList.remove('active'));
+        _navbar.queryAll('.cards > .card').forEach(card => card.classList.remove('active'));
         e.classList.add('active');
     }
 }
@@ -170,7 +165,7 @@ window.sliders = {
             // Dots
             elem.queryAll('.dots > li').forEach(dot => {
                 dot.addEventListener('click', e => {
-                    // Index of this element in parent
+                    // Index of the dot element in parent
                     let index = dot.index();
                     let slider = dot.closest('.flex-slider');
 

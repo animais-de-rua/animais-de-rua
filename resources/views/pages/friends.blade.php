@@ -98,7 +98,13 @@
         @foreach($partners['list'] as $partner)
         <div class="box active" categories="{{ join(' ', $partner->categories) }}" territories="{{ join(' ', $partner->territories) }}">
             <div class="image" title="{{ $partner->name }}">
+                @if($partner->url)
+                <a target="_blank" href="{{ $partner->url }}">
+                @endif
                 <img data-src="/uploads/{{ $partner->image }}" alt="{{ $partner->name }}" />
+                @if($partner->url)
+                </a>
+                @endif
             </div>
             <div class="contact">
                 <h1>{{ __("Contacts") }}</h1>
@@ -112,8 +118,8 @@
                 @if($partner->facebook)
                 <p><a target="_blank" href="{{ $partner->facebook }}">{{ __("Facebook") }}</a></p>
                 @endif
-                @if($partner->website)
-                <p><a target="_blank" href="{{ $partner->website }}">{{ __("Website") }}</a></p>
+                @if($partner->url)
+                <p><a class="ellipsis" target="_blank" href="{{ $partner->url }}">{{ preg_replace("/(https?:\/\/)|(\/$)|(www.)/", "", $partner->url) }}</a></p>
                 @endif
                 @if($partner->address)
                 <hr />

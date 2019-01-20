@@ -104,10 +104,15 @@ class DonationCrudController extends CrudController
         }
 
         // ------ CRUD COLUMNS
-        $this->crud->addColumns(['id', 'godfather', 'process', 'value', 'user_id']);
+        $this->crud->addColumns(['id', 'godfather', 'process', 'value', 'date', 'user_id']);
 
         $this->crud->setColumnDetails('id', [
             'label' => 'ID',
+        ]);
+
+        $this->crud->setColumnDetails('date', [
+            'type' => 'date',
+            'label' => __('Date'),
         ]);
 
         $this->crud->setColumnDetails('godfather', [

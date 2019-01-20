@@ -1534,10 +1534,16 @@ footer {
     &.friends {
         .box {
             padding: 16px;
-        }
-        .box .image {
-            background-color: #FFF;
-            background: none;
+
+            .image {
+                background-color: #FFF;
+                background: none;
+
+                & a {
+                    padding: 0;
+                    height: 0;
+                }
+            }
         }
     }
 
