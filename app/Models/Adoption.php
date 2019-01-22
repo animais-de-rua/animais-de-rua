@@ -77,6 +77,11 @@ class Adoption extends Model
     |--------------------------------------------------------------------------
     */
 
+    public function getNameLinkAttribute()
+    {
+        return $this->getLink($this, true, '');
+    }
+
     public function getProcessLinkAttribute()
     {
         return $this->getLink($this->process, '');

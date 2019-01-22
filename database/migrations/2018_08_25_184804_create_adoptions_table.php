@@ -54,7 +54,7 @@ class CreateAdoptionsTable extends Migration
             $table->index(['fat_id']);
             $table->foreign('fat_id')
                 ->references('id')
-                ->on('users')
+                ->on('fats')
                 ->onDelete('set null');
 
             $table->index(['adopter_id']);

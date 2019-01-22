@@ -90,7 +90,7 @@ class LoginController extends Controller
      */
     public function providerCallback($provider)
     {
-        $social_user = Socialite::driver($provider)->user();
+        $social_user = Socialite::driver($provider)->stateless()->user();
         $user = $this->createOrGetUser($social_user, $provider);
         auth(backpack_guard_name())->login($user);
 

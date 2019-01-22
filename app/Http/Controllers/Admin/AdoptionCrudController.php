@@ -202,6 +202,9 @@ class AdoptionCrudController extends CrudController
 
         $this->crud->setColumnDetails('name', [
             'label' => __('Name'),
+            'type' => 'model_function',
+            'limit' => 120,
+            'function_name' => 'getNameLinkAttribute',
         ]);
 
         $this->crud->setColumnDetails('process_id', [
@@ -403,6 +406,7 @@ class AdoptionCrudController extends CrudController
 
         // ------ CRUD ACCESS
         $this->crud->allowAccess('show');
+        $this->crud->removeButton('show');
 
         if (!is(['admin', 'volunteer'])) {
             $this->crud->denyAccess(['list', 'show']);

@@ -1,4 +1,4 @@
-const VERSION = '0.0.3';
+const VERSION = '0.0.4';
 const CACHE = 'adr';
 
 let cacheAssets = [
@@ -48,6 +48,14 @@ self.onactivate = e => {
 self.onfetch = e => {
 	// Avoid chrome strange error
 	if (e.request.cache === 'only-if-cached' && e.request.mode !== 'same-origin')
+		return;
+
+	// Avoid external requests
+	if(!e.request.url.match(/animaisderua.org/))
+		return;
+
+	// Avoid admin and store areas
+	if(e.request.url.match(/\/admin|\/store|\/vendor/))
 		return;
 
 	// If it's a page access, retreive blank

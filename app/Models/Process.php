@@ -105,6 +105,11 @@ class Process extends Model
         return $this->getLink($this->user, is('admin'));
     }
 
+    public function getNameLinkAttribute()
+    {
+        return $this->getLink($this, true, '');
+    }
+
     public function getDateAttribute()
     {
         return $this->created_at ? explode(' ', $this->created_at)[0] : '';

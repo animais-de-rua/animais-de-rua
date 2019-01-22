@@ -189,6 +189,9 @@ class ProcessCrudController extends CrudController
 
         $this->crud->setColumnDetails('name', [
             'label' => __('Name'),
+            'type' => 'model_function',
+            'limit' => 120,
+            'function_name' => 'getNameLinkAttribute',
         ]);
 
         $this->crud->setColumnDetails('created_at', [
@@ -532,6 +535,7 @@ class ProcessCrudController extends CrudController
         $this->crud->addClause('orderBy', 'processes.id', 'DESC');
 
         $this->crud->allowAccess('show');
+        $this->crud->removeButton('show');
 
         // Add asterisk for fields that are required
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
