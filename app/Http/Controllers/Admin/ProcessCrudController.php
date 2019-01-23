@@ -311,7 +311,7 @@ class ProcessCrudController extends CrudController
             'label' => ucfirst(__('territory')),
             'placeholder' => __('Select a territory'),
         ],
-            $this->wantsJSON() ? null : api()->territoryList(),
+            $this->wantsJSON() ? null : api()->rangeTerritoryList(),
             function ($values) {
                 $values = json_decode($values);
                 $where = join(' OR ', array_fill(0, count($values), 'territory_id LIKE ?'));

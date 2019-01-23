@@ -54,6 +54,26 @@ class Appointment extends Model
         </a>';
     }
 
+    public function approveAppointment()
+    {
+        $disabled = $this->status != 'approving';
+        $btn_color = $disabled ? 'btn-default' : 'btn-primary';
+
+        return '
+    <div class="btn-group">
+      <button type="button" ' . ($disabled ? 'disabled' : '') . ' class="btn btn-xs ' . $btn_color . ' dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fa fa-check"></i> ' . __('approve') . '
+        <span class="caret" style="margin-left:2px"></span>
+        <span class="sr-only">Toggle Dropdown</span>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-right">
+        <li><a href="#" onclick="return approveAppointment(this, ' . $this->id . ', 1)">' . ucfirst(__('option')) . ' 1</a></li>
+        <li><a href="#" onclick="return approveAppointment(this, ' . $this->id . ', 2)">' . ucfirst(__('option')) . ' 2</a></li>
+      </ul>
+    </div>';
+
+    }
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONS
@@ -115,6 +135,11 @@ class Appointment extends Model
     public function getVet2LinkAttribute()
     {
         return $this->getLink($this->vet2, is('admin', 'vet'));
+    }
+
+    public function getStatusWithClassAttribute()
+    {
+        return "<span class='status'>" . __($this->status) . '</span>';
     }
 
     public function getAnimalsValue()

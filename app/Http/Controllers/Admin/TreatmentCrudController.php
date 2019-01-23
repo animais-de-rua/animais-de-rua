@@ -71,7 +71,8 @@ class TreatmentCrudController extends CrudController
         ]);
 
         $this->crud->setColumnDetails('status', [
-            'type' => 'trans',
+            'type' => 'model_function',
+            'function_name' => 'getStatusWithClassAttribute',
             'label' => __('Status'),
         ]);
 
@@ -382,6 +383,14 @@ class TreatmentCrudController extends CrudController
         // ------ DATATABLE EXPORT BUTTONS
         $this->crud->enableExportButtons();
 
+        // Buttons
+        $this->crud->removeButton('update');
+        if ($this->crud->hasAccess('update')) {
+            $this->crud->addButtonFromModelFunction('line', 'custom_update_button', 'customUpdateButton', 'beginning');
+        }
+
+        $this->crud->addButtonFromModelFunction('line', 'approve_treatment', 'approveTreatment', 'beginning');
+
         // ------ CRUD ACCESS
         if (!is(['admin', 'volunteer'])) {
             $this->crud->denyAccess(['list', 'create']);
@@ -406,16 +415,14 @@ class TreatmentCrudController extends CrudController
             })->get();
         }
 
+        if (!is('admin', 'treatments')) {
+            $this->crud->removeButton('approve_appointment', 'line');
+        }
+
         // ------ ADVANCED QUERIES
         $this->crud->query->with(['appointment', 'vet', 'user', 'treatment_type']);
 
         $this->crud->addClause('orderBy', 'id', 'DESC');
-
-        // Buttons
-        $this->crud->removeButton('update');
-        if ($this->crud->hasAccess('update')) {
-            $this->crud->addButtonFromModelFunction('line', 'custom_update_button', 'customUpdateButton', 'beginning');
-        }
 
         $this->crud->enableDetailsRow();
         $this->crud->allowAccess('details_row');

@@ -14,6 +14,7 @@ use App\Models\PartnerCategory;
 use App\Models\Process;
 use App\Models\Protocol;
 use App\Models\Territory;
+use App\Models\Treatment;
 use App\Models\TreatmentType;
 use App\Models\Vet;
 use App\User as UserBase;
@@ -598,5 +599,19 @@ class APICrudController extends CrudController
     public function rangeTerritoryList($level = Territory::ALL)
     {
         return $this->rangeTerritoryFilter($level);
+    }
+
+    public function approveAppointment()
+    {
+        $appointment = Appointment::find(request()->input('id'));
+        $appointment->status = 'approved_option_' . request()->input('option');
+        return ['result' => $appointment->save()];
+    }
+
+    public function approveTreatment()
+    {
+        $treatment = Treatment::find(request()->input('id'));
+        $treatment->status = 'approved';
+        return ['result' => $treatment->save()];
     }
 }

@@ -91,6 +91,12 @@ class ProcessRequest extends FormRequest
                     ]));
                 }
             }
+
+            // Validate one animal at least
+            if ($this->input('amount_males') + $this->input('amount_females') + $this->input('amount_other') <= 0) {
+                return $validator->errors()->add('animal_count', __('There must be at least one animal in the process, either male, female or undefined.'));
+            }
+
         });
     }
 }

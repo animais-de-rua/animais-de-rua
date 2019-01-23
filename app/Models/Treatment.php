@@ -35,6 +35,18 @@ class Treatment extends Model
         return '<a href=' . url("admin/treatment/{$this->id}/edit") . " class='btn btn-xs btn-default " . ($disabled ? 'disabled' : '') . "'><i class='fa fa-edit'></i> " . __('backpack::crud.edit') . '</a>';
     }
 
+    public function approveTreatment()
+    {
+        $disabled = $this->status == 'approved';
+        $btn_color = $disabled ? 'btn-default' : 'btn-primary';
+
+        return '
+      <button type="button" ' . ($disabled ? 'disabled' : '') . ' class="btn btn-xs ' . $btn_color . ' dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="return approveTreatment(this, ' . $this->id . ')">
+        <i class="fa fa-check"></i> ' . __('approve') . '
+      </button>';
+
+    }
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONS
@@ -101,6 +113,11 @@ class Treatment extends Model
     public function getFullStatusAttribute()
     {
         return __($this->status);
+    }
+
+    public function getStatusWithClassAttribute()
+    {
+        return "<span class='status'>" . __($this->status) . '</span>';
     }
 
     public function getAffectedAnimalsNew($appointment_id)

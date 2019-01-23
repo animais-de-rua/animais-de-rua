@@ -186,13 +186,16 @@
                                     <option value="{{ $county['id'] }}" parent="{{ $county['parent_id'] }}" class="hide">{{ $county['name'] }}</option>
                                     @endforeach
                                 </select>
-                                <select required name="parish" autocomplete="address-level3" class="dark empty" onchange="modal.checkEmptySelect(this)">
+                                <select required name="parish" autocomplete="address-level3" class="dark empty" onchange="modal.checkEmptySelect(this)" style="margin-bottom: 2px;">
                                     <option value="" disabled selected>{{ ucfirst(__("parish")) }}</option>
                                     @foreach($form_acting_territories[2] as $parish)
                                     <option value="{{ $parish['id'] }}" parent="{{ $parish['parent_id'] }}" class="hide">{{ $parish['name'] }}</option>
                                     @endforeach
                                 </select>
-                                <input type="file" class="last-child" required multiple name="images[]" placeholder="{{ __("Photos") }}" style="padding: 9px;"/>
+                                <div>
+                                    <span style="font-size:1.2rem;color:#fff;font-weight:bold;">{{ __("Select at least 3 pictures.") }}</span>
+                                    <input type="file" class="last-child" required multiple name="images[]" placeholder="{{ __("Photos") }}" style="padding: 9px;"/>
+                                </div>
                             </div>
                             <div class="column column-50 checkbox">
                                 <h1>{{ __("web.forms.colab.title") }}</h1>

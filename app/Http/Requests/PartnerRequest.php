@@ -29,7 +29,7 @@ class PartnerRequest extends FormRequest
             'name' => 'required|min:2|max:255',
             'description' => 'nullable|min:2|max:4096',
             'email' => 'required|email',
-            'phone1' => 'required|min:9|max:16',
+            'phone1' => 'nullable|min:9|max:16',
             'phone2' => 'nullable|min:9|max:16',
             'url' => 'required_without_all:facebook,instagram',
             'facebook' => 'required_without_all:url,instagram',

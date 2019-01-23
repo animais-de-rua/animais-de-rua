@@ -256,7 +256,8 @@ class AppointmentCrudController extends CrudController
         ]);
 
         $this->crud->setColumnDetails('status', [
-            'type' => 'trans',
+            'type' => 'model_function',
+            'function_name' => 'getStatusWithClassAttribute',
             'label' => __('Status'),
         ]);
 
@@ -351,6 +352,10 @@ class AppointmentCrudController extends CrudController
                 $this->crud->addClause('whereIn', 'status', $values);
             });
 
+        // Buttons
+        $this->crud->addButtonFromModelFunction('line', 'add_treatment', 'addTreatment', 'beginning');
+        $this->crud->addButtonFromModelFunction('line', 'approve_appointment', 'approveAppointment', 'beginning');
+
         // ------ CRUD ACCESS
         if (!is(['admin', 'volunteer'])) {
             $this->crud->denyAccess(['list', 'create', 'delete']);
@@ -360,6 +365,10 @@ class AppointmentCrudController extends CrudController
             $this->crud->denyAccess(['update']);
 
             $this->crud->addClause('where', 'user_id', backpack_user()->id);
+        }
+
+        if (!is('admin', 'appointments')) {
+            $this->crud->removeButton('approve_appointment', 'line');
         }
 
         // ------ ADVANCED QUERIES
@@ -386,9 +395,6 @@ class AppointmentCrudController extends CrudController
         }]);
 
         $this->crud->addClause('orderBy', 'appointments.id', 'DESC');
-
-        // Buttons
-        $this->crud->addButtonFromModelFunction('line', 'add_treatment', 'addTreatment', 'beginning');
 
         // Extra filter
         // Must be here because of a previous declaration of ->with(treatment)

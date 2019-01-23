@@ -83,6 +83,16 @@
         }
 
         $curentPageLink.parents('li').addClass('active');
+
+        window.Laravel = {
+          translations: {
+            confirmApprove: '{{ __('Are you sure you want to approve this item?') }}',
+            approving: '{{ __('approving') }}',
+            approved: '{{ __('approved') }}',
+            approved_option_1: '{{ __('approved_option_1') }}',
+            approved_option_2: '{{ __('approved_option_2') }}',
+          }
+        }
     </script>
 
     <!-- JavaScripts -->
