@@ -205,6 +205,9 @@ class AdoptionCrudController extends CrudController
             'type' => 'model_function',
             'limit' => 120,
             'function_name' => 'getNameLinkAttribute',
+            'searchLogic' => function ($query, $column, $searchTerm) {
+                $query->orWhere('name', 'like', "%$searchTerm%");
+            },
         ]);
 
         $this->crud->setColumnDetails('process_id', [

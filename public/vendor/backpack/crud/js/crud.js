@@ -65,3 +65,16 @@ approveTreatment = (btn, id, option) => {
 
     return false;
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    // Duplicate actions row on show
+    let table = document.querySelector('#show-table > tbody');
+    if(table) {
+        let trs = table.querySelectorAll('tr');
+        let actions = trs[trs.length - 1];
+
+        table.insertBefore(actions.cloneNode(true), table.querySelector('tr'));
+    }
+
+});

@@ -1,10 +1,10 @@
-const VERSION = '0.0.5';
+const VERSION = '0.0.9';
 const CACHE = 'adr';
 
 let cacheAssets = [
 	// Dynamic Assets
 	'/sw.js?id=' + VERSION,
-	'/js/app.js?id=0e7ef38a1eae5cb2c8db',
+	'/js/app.js?id=d92dac58f1f283ca13f7',
 	'/css/app.css?id=82bbbb7a6b40d467b8e7',
 	'/fonts/icomoon.woff2?58c2d240bb8f452ceba24cac9e697d8e',
 
@@ -35,6 +35,8 @@ let cachePages = [
 ];
 
 self.oninstall = e => {
+	self.skipWaiting();
+
 	e.waitUntil(caches.open(CACHE).then(function (cache) {
 		cache.addAll(cachePages);
 		cache.addAll(cacheAssets);
@@ -50,12 +52,14 @@ self.onfetch = e => {
 	if (e.request.cache === 'only-if-cached' && e.request.mode !== 'same-origin')
 		return;
 
+	// Avoid admin and store areas
+	if(e.request.url.match(/\/admin|\/store|\/vendor|\/pdf/)) {
+		console.log("Avoided: " + e.request.url);
+		return;
+	}
+
 	// Avoid external requests
 	if(!e.request.url.match(/animaisderua.org/))
-		return;
-
-	// Avoid admin and store areas
-	if(e.request.url.match(/\/admin|\/store|\/vendor/))
 		return;
 
 	// If it's a page access, retreive blank

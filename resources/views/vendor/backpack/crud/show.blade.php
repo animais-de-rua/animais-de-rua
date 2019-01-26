@@ -44,7 +44,7 @@
 	    @else
 	    @endif
 	    <div class="box no-padding no-border">
-			<table class="table table-striped">
+			<table id="show-table" class="table table-striped">
 		        <tbody>
 		        @foreach ($crud->columns as $column)
 		            <tr>

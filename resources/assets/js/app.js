@@ -43,15 +43,6 @@ window.router = {
 
                 e.preventDefault();
 
-                // First content from cache
-                caches.open('adr').then(cache => {
-                    cache.match(urlPath).then(response => {
-                        if(response) {
-                            processResponse(response);
-                        }
-                    });
-                });
-
                 // Always refresh cache
                 if(navigator.onLine) {
                     fetch(urlPath + "_updated", _fetchOptions).
@@ -60,7 +51,7 @@ window.router = {
                             processResponse(responseUpdated.clone(), false);
 
                             // Update cache
-                            caches.open('adr').then(cache => {
+                            caches && caches.open('adr').then(cache => {
                                 cache.put(urlPath, responseUpdated);
                             });
                         }).
@@ -68,6 +59,15 @@ window.router = {
                             window.location = urlPath.replace('?ajax', '');
                         });
                 }
+
+                // First content from cache
+                caches && caches.open('adr').then(cache => {
+                    cache.match(urlPath).then(response => {
+                        if(response) {
+                            processResponse(response);
+                        }
+                    });
+                });
 
                 function processResponse(response, updateRoute = true) {
                     // Closes mobile menu

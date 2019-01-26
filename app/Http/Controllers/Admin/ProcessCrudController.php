@@ -181,7 +181,7 @@ class ProcessCrudController extends CrudController
         $this->crud->addField($this->tableStats());
 
         // ------ CRUD COLUMNS
-        $this->crud->addColumns(['id', 'name', 'headquarter', 'created_at', 'specie', 'animal_count', 'status', 'urgent', 'total_donations', 'total_expenses', 'balance', 'total_operations', 'user_id', 'territory_id', 'notes', 'history']);
+        $this->crud->addColumns(['id', 'name', 'headquarter', 'created_at', 'specie', 'animal_count', 'status', 'urgent', 'total_donations', 'total_expenses', 'balance', 'total_operations', 'user_id', 'territory_id', 'phone', 'contact', 'address', 'notes', 'history']);
 
         $this->crud->setColumnDetails('id', [
             'label' => 'ID',
@@ -192,6 +192,9 @@ class ProcessCrudController extends CrudController
             'type' => 'model_function',
             'limit' => 120,
             'function_name' => 'getNameLinkAttribute',
+            'searchLogic' => function ($query, $column, $searchTerm) {
+                $query->orWhere('name', 'like', "%$searchTerm%");
+            },
         ]);
 
         $this->crud->setColumnDetails('created_at', [
@@ -289,6 +292,39 @@ class ProcessCrudController extends CrudController
             'name' => 'history',
             'type' => 'textarea',
             'label' => __('History'),
+            'visibleInTable' => false,
+            'visibleInModal' => false,
+            'visibleInExport' => false,
+            'visibleInShow' => true,
+        ]);
+
+        // For search proposes only
+        $this->crud->setColumnDetails('phone', [
+            'name' => 'phone',
+            'type' => 'text',
+            'label' => __('Phone'),
+            'visibleInTable' => false,
+            'visibleInModal' => false,
+            'visibleInExport' => false,
+            'visibleInShow' => true,
+        ]);
+
+        // For search proposes only
+        $this->crud->setColumnDetails('contact', [
+            'name' => 'contact',
+            'type' => 'text',
+            'label' => __('Applicant'),
+            'visibleInTable' => false,
+            'visibleInModal' => false,
+            'visibleInExport' => false,
+            'visibleInShow' => true,
+        ]);
+
+        // For search proposes only
+        $this->crud->setColumnDetails('address', [
+            'name' => 'address',
+            'type' => 'text',
+            'label' => __('Address'),
             'visibleInTable' => false,
             'visibleInModal' => false,
             'visibleInExport' => false,
@@ -552,15 +588,6 @@ class ProcessCrudController extends CrudController
         $this->crud->removeColumn('total_operations');
         $this->crud->removeColumn('latlong');
 
-        $this->crud->setColumnDetails('contact', [
-            'label' => __('Applicant'),
-        ]);
-        $this->crud->setColumnDetails('phone', [
-            'label' => __('Phone'),
-        ]);
-        $this->crud->setColumnDetails('address', [
-            'label' => __('Address'),
-        ]);
         $this->crud->setColumnDetails('headquarter_id', [
             'label' => ucfirst(__('headquarter')),
             'type' => 'select',
