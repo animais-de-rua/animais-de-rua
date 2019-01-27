@@ -37,7 +37,7 @@ class AdoptionCrudController extends CrudController
         */
 
         // ------ CRUD FIELDS
-        $this->crud->addFields(['process_id', 'fat_id', 'name', 'name_after', 'age', 'gender', 'sterilized', 'vaccinated', 'processed', 'individual', 'docile', 'abandoned', 'images', 'features', 'history', 'adopter_id', 'adoption_date', 'status']);
+        $this->crud->addFields(['process_id', 'fat_id', 'name', 'name_after', 'age', 'gender', 'sterilized', 'vaccinated', 'processed', 'individual', 'docile', 'abandoned', 'foal', 'images', 'features', 'history', 'adopter_id', 'adoption_date', 'status']);
 
         $this->crud->addField([
             'label' => ucfirst(__('process')),
@@ -142,6 +142,12 @@ class AdoptionCrudController extends CrudController
         ]);
 
         $this->crud->addField([
+            'label' => __('Foal'),
+            'name' => 'foal',
+            'type' => 'checkbox',
+        ]);
+
+        $this->crud->addField([
             'name' => 'images',
             'label' => __('Images'),
             'type' => 'dropzone',
@@ -217,6 +223,16 @@ class AdoptionCrudController extends CrudController
             'limit' => 120,
             'function_name' => 'getProcessLinkAttribute',
         ]);
+
+        if (is('admin') || count(restrictToHeadquarters()) > 1) {
+            $this->crud->addColumn([
+                'name' => 'headquarter',
+                'label' => ucfirst(__('headquarter')),
+                'type' => 'model_function',
+                'limit' => 120,
+                'function_name' => 'getHeadquarterAttribute',
+            ])->afterColumn('process_id');
+        }
 
         $this->crud->setColumnDetails('user_id', [
             'name' => 'user',
@@ -429,7 +445,7 @@ class AdoptionCrudController extends CrudController
         }
 
         // ------ ADVANCED QUERIES
-        $this->crud->query->with(['process', 'user', 'fat']);
+        $this->crud->query->with(['process.headquarter', 'user', 'fat']);
 
         $this->crud->addClause('orderBy', 'id', 'DESC');
 
@@ -480,6 +496,12 @@ class AdoptionCrudController extends CrudController
             'label' => __('Abandoned cat of colony'),
             'type' => 'boolean',
         ]);
+
+        $this->crud->addColumn([
+            'name' => 'foal',
+            'label' => __('Foal'),
+            'type' => 'boolean',
+        ])->afterColumn('abandoned');
 
         return $content;
     }

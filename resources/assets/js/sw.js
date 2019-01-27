@@ -1,4 +1,4 @@
-const VERSION = '0.0.9';
+const VERSION = '0.0.10';
 const CACHE = 'adr';
 
 let cacheAssets = [
@@ -53,10 +53,8 @@ self.onfetch = e => {
 		return;
 
 	// Avoid admin and store areas
-	if(e.request.url.match(/\/admin|\/store|\/vendor|\/pdf/)) {
-		console.log("Avoided: " + e.request.url);
+	if(e.request.url.match(/\/admin|\/store|\/vendor|\/pdf/))
 		return;
-	}
 
 	// Avoid external requests
 	if(!e.request.url.match(/animaisderua.org/))

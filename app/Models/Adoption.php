@@ -84,7 +84,12 @@ class Adoption extends Model
 
     public function getProcessLinkAttribute()
     {
-        return $this->getLink($this->process, '');
+        return $this->getLink($this->process, true, '');
+    }
+
+    public function getHeadquarterAttribute()
+    {
+        return $this->process->headquarter->name;
     }
 
     public function getUserLinkAttribute()

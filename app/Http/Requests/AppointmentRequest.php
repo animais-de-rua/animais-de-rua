@@ -35,6 +35,10 @@ class AppointmentRequest extends FormRequest
             'amount_males' => 'required|numeric|min:0|max:200',
             'amount_females' => 'required|numeric|min:0|max:200',
             'status' => 'in:' . EnumHelper::keys('appointment.status', ','),
+            'notes_deliver' => 'required|min:3',
+            'notes_collect' => 'required|min:3',
+            'notes_contact' => 'required|min:3',
+            'notes_godfather' => 'required|min:3',
         ];
     }
 

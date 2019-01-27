@@ -197,6 +197,10 @@ return [
         'vet_id_2' => 'veterinário',
         'images' => 'imagens',
         'images.*' => 'imagens',
+        'notes_deliver' => 'Notas: Quem entrega o animal na clínica',
+        'notes_collect' => 'Notas: Quem vai buscar o animal ao final do dia',
+        'notes_contact' => 'Notas: O teu contacto telefónico',
+        'notes_godfather' => 'Notas: Quem apadrinha o animal',
     ],
 
     'message' => 'Os dados fornecidos são inválidos.',

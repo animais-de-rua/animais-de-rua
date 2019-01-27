@@ -37,7 +37,7 @@ class AppointmentCrudController extends CrudController
         */
 
         // ------ CRUD FIELDS
-        $this->crud->addFields(['process_id', 'vet_id_1', 'date_1', 'vet_id_2', 'date_2', 'amount_males', 'amount_females', 'amount_other', 'notes', 'status']);
+        $this->crud->addFields(['process_id', 'vet_id_1', 'date_1', 'vet_id_2', 'date_2', 'amount_males', 'amount_females', 'amount_other', 'notes_deliver', 'notes_collect', 'notes_contact', 'notes_godfather', 'notes_info', 'notes', 'status']);
 
         $this->crud->addField([
             'label' => ucfirst(__('process')),
@@ -170,18 +170,45 @@ class AppointmentCrudController extends CrudController
             ],
         ]);
 
+        $this->separator(__('Notes'))->afterField('amount_other');
+
         $this->crud->addField([
-            'label' => __('Notes'),
-            'type' => 'wysiwyg',
-            'name' => 'notes',
-            'default' => 'a)&nbsp;<br />b)&nbsp;<br />c)&nbsp;<br />d)&nbsp;<br />e)&nbsp;',
-            'hint' => '<ul style="list-style:lower-alpha;padding-left:16px;"><li>Quem entrega o animal na clínica</li>
-<li>Quem vai buscar o animal ao final do dia</li>
-<li>O teu contacto telefónico<br /><i style="font-size:14px;">Como voluntário responsável por esses animais, é crucial que as clínicas tenham o teu contacto, para saber com quem falar caso haja algum contratempo;</i></li>
-<li>Quem apadrinha o animal</li>
-<li>Informações relevantes<br /><i style="font-size:14px;">Se há gatas gestantes, se há animais doentes, se há crias, etc.</i></li></ul>
-<p>No caso de consulta, indica sempre o motivo, o intervalo de horas para a mesma e um dia alternativo.</p>',
+            'label' => 'Quem entrega o animal na clínica',
+            'type' => 'textarea',
+            'name' => 'notes_deliver',
         ]);
+
+        $this->crud->addField([
+            'label' => 'Quem vai buscar o animal ao final do dia',
+            'type' => 'textarea',
+            'name' => 'notes_collect',
+        ]);
+
+        $this->crud->addField([
+            'label' => 'O teu contacto telefónico<br /><i style="font-size:14px;">Como voluntário responsável por esses animais, é crucial que as clínicas tenham o teu contacto, para saber com quem falar caso haja algum contratempo.</i>',
+            'type' => 'textarea',
+            'name' => 'notes_contact',
+        ]);
+
+        $this->crud->addField([
+            'label' => 'Quem apadrinha o animal',
+            'type' => 'textarea',
+            'name' => 'notes_godfather',
+        ]);
+
+        $this->crud->addField([
+            'label' => 'Informações relevantes<br /><i style="font-size:14px;">Se há gatas gestantes, se há animais doentes, se há crias, etc.<br />No caso de consulta, indica sempre o motivo, o intervalo de horas para a mesma e um dia alternativo.</i>',
+            'type' => 'textarea',
+            'name' => 'notes_info',
+        ]);
+
+        $this->crud->addField([
+            'label' => 'Outras notas',
+            'type' => 'textarea',
+            'name' => 'notes',
+        ]);
+
+        $this->separator()->afterField('notes');
 
         $this->crud->addField([
             'label' => __('Status'),

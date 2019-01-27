@@ -31,6 +31,7 @@ class CreateAdoptionsTable extends Migration
             $table->boolean('individual')->default(0);
             $table->boolean('docile')->default(0);
             $table->boolean('abandoned')->default(0);
+            $table->boolean('foal')->default(0);
             $table->text('images')->nullable();
             $table->text('features')->nullable();
             $table->text('history')->nullable();

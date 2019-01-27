@@ -17,12 +17,12 @@ class CrudController extends \Backpack\CRUD\app\Http\Controllers\CrudController
     }
 
     private $i = 0;
-    public function separator()
+    public function separator($title = '')
     {
         return $this->crud->addField([
             'name' => 'separator' . $this->i++,
             'type' => 'custom_html',
-            'value' => '<hr />',
+            'value' => $title ? "<hr /><h2>$title</h2>" : '<hr />',
             'wrapperAttributes' => [
                 'style' => 'margin:0',
             ],

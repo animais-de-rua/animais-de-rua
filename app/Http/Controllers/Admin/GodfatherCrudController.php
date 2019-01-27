@@ -220,11 +220,11 @@ class GodfatherCrudController extends CrudController
 
         // ------ CRUD ACCESS
         if (!is('admin', 'accountancy')) {
-            $this->crud->denyAccess(['list', 'create']);
+            $this->crud->denyAccess(['list', 'create', 'update']);
         }
 
         if (!is('admin')) {
-            $this->crud->denyAccess(['delete', 'update']);
+            $this->crud->denyAccess(['delete']);
 
             $this->crud->addClause('whereHas', 'headquarters', function ($query) {
                 $headquarters = restrictToHeadquarters();

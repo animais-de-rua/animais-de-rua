@@ -97,6 +97,16 @@ class ProcessRequest extends FormRequest
                 return $validator->errors()->add('animal_count', __('There must be at least one animal in the process, either male, female or undefined.'));
             }
 
+            // Check for 3 minimum valid images
+            $images = array_filter($this->input('images'), function ($image) {
+                preg_match('/\.(jpe?g|png)$/i', $image, $matches, PREG_OFFSET_CAPTURE);
+                return $image && $matches;
+            });
+
+            if (count($images) < 3) {
+                return $validator->errors()->add('images', __('You must upload at least 3 images.'));
+            }
+
         });
     }
 }
