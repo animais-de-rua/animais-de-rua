@@ -115,16 +115,8 @@ class TreatmentCrudController extends CrudController
             $appointment = Appointment::find($appointment_id);
             $process = Process::find($appointment->process_id);
 
-            switch ($appointment->status) {
-                case 'approved_option_1':
-                    $vet_id = $appointment->vet1->id;
-                    $date = $appointment->date_1;
-                    break;
-                case 'approved_option_2':
-                    $vet_id = $appointment->vet2->id;
-                    $date = $appointment->date_2;
-                    break;
-            }
+            $date = $appointment->getApprovedDate();
+            $vet_id = $appointment->getApprovedVetID();
         }
 
         if ($treatment_id) {
@@ -186,7 +178,7 @@ class TreatmentCrudController extends CrudController
             'name' => 'date',
             'type' => 'date',
             'default' => $date ?: (isset($appointment) ? $appointment->date_1 : Carbon::today()->toDateString()),
-            'attributes' => $date ? ['readonly' => 'readonly'] : $attributes,
+            'attributes' => $date || isset($appointment) ? ['readonly' => 'readonly'] : $attributes,
         ]);
 
         $this->separator();
@@ -452,6 +444,13 @@ class TreatmentCrudController extends CrudController
             $referer = $request->header('referer');
             $redirect = redirect($referer);
         }
+
+        // Force Date and Vet
+        $appointment = Appointment::find(\Request::get('appointment_id'));
+        $request->merge([
+            'date' => $appointment->getApprovedDate(),
+            'vet_id' => $appointment->getApprovedVetID(),
+        ]);
 
         return $redirect;
     }

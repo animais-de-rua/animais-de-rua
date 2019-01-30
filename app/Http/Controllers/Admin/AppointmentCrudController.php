@@ -170,7 +170,7 @@ class AppointmentCrudController extends CrudController
             ],
         ]);
 
-        $this->separator(__('Notes'))->afterField('amount_other');
+        $this->separator(__('Infos'))->afterField('amount_other');
 
         $this->crud->addField([
             'label' => 'Quem entrega o animal na clínica',
@@ -197,13 +197,13 @@ class AppointmentCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'label' => 'Informações relevantes<br /><i style="font-size:14px;">Se há gatas gestantes, se há animais doentes, se há crias, etc.<br />No caso de consulta, indica sempre o motivo, o intervalo de horas para a mesma e um dia alternativo.</i>',
+            'label' => 'Informações relevantes<br /><i style="font-size:14px;">Se há gatas gestantes, se há animais doentes, se há crias, o tamanho do corte, o peso no caso das cadelas/cães, etc.<br />No caso de consulta, indica sempre o motivo, o intervalo de horas para a mesma e um dia alternativo.</i>',
             'type' => 'textarea',
             'name' => 'notes_info',
         ]);
 
         $this->crud->addField([
-            'label' => 'Outras notas',
+            'label' => __('Notes'),
             'type' => 'textarea',
             'name' => 'notes',
         ]);

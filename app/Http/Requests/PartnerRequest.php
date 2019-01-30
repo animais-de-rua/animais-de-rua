@@ -28,7 +28,7 @@ class PartnerRequest extends FormRequest
         return [
             'name' => 'required|min:2|max:255',
             'description' => 'nullable|min:2|max:4096',
-            'email' => 'required|email',
+            'email' => 'nullable|email',
             'phone1' => 'nullable|min:9|max:16',
             'phone2' => 'nullable|min:9|max:16',
             'url' => 'required_without_all:facebook,instagram',

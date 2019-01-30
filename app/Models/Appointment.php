@@ -170,6 +170,29 @@ class Appointment extends Model
         return "{$this->id} - " . ($this->process ? "{$this->process->name} ({$this->process->id}) - " : '') . ($this->user ? $this->user->name : '') . " ({$this->date_1} / {$this->date_2})";
     }
 
+    public function getApprovedDate()
+    {
+        switch ($this->status) {
+            case 'approved_option_1':return $this->date_1;
+            case 'approved_option_2':return $this->date_2;
+            default:return null;
+        }
+    }
+
+    public function getApprovedVet()
+    {
+        switch ($this->status) {
+            case 'approved_option_1':return $this->vet1;
+            case 'approved_option_2':return $this->vet2;
+            default:return null;
+        }
+    }
+
+    public function getApprovedVetID()
+    {
+        return $this->getApprovedVet() ? $this->getApprovedVet()->id : null;
+    }
+
     /*
     |--------------------------------------------------------------------------
     | MUTATORS
