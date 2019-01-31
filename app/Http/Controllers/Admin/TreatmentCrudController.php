@@ -389,9 +389,7 @@ class TreatmentCrudController extends CrudController
         }
 
         if (!is('admin')) {
-            if (!is('admin', 'treatments')) {
-                $this->crud->denyAccess(['update']);
-            } else if (is('volunteer', 'treatments') && $treatment_id && $treatment->status == 'approved') {
+            if (!is('admin', 'treatments') || (is('volunteer', 'treatments') && $treatment_id && $treatment->status == 'approved')) {
                 $this->crud->denyAccess(['update']);
             }
         }

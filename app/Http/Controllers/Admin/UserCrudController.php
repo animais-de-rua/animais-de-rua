@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Helpers\EnumHelper;
 use App\Http\Controllers\Admin\Traits\Permissions;
+use App\User;
 use Backpack\PermissionManager\app\Http\Controllers\UserCrudController as OriginalUserCrudController;
 use Illuminate\Http\Request;
 
@@ -46,7 +47,13 @@ class UserCrudController extends OriginalUserCrudController
             'entity' => 'friend_card_modality',
             'attribute' => 'fullname',
             'model' => 'App\Models\FriendCardModality',
-        ])->afterField('headquarter_id');
+        ])->afterField('headquarters');
+
+        $this->crud->addField([
+            'label' => __('Notes'),
+            'type' => 'textarea',
+            'name' => 'notes',
+        ])->afterField('friend_card_modality_id');
 
         $this->crud->addColumn([
             'label' => ucfirst(__('headquarter')),
@@ -154,6 +161,9 @@ class UserCrudController extends OriginalUserCrudController
         // ------ DATATABLE EXPORT BUTTONS
         $this->crud->enableExportButtons();
 
+        $this->crud->enableDetailsRow();
+        $this->crud->allowAccess('details_row');
+
         // ------ CRUD ACCESS
         if (!is('admin', 'friend card')) {
             $this->crud->denyAccess(['list']);
@@ -168,6 +178,15 @@ class UserCrudController extends OriginalUserCrudController
                 $this->crud->removeColumn('permissions');
             }
         }
+    }
+
+    public function showDetailsRow($id)
+    {
+        $user = User::select(['notes'])->find($id);
+
+        return "<div style='margin:5px 8px'>
+                <p><i>Notas</i>: $user->notes</p>
+            </div>";
     }
 
     public function terminal()

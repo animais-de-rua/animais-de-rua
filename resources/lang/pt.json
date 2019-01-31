@@ -219,6 +219,7 @@
     "Adoption status is :status, it must be set to closed in order to add an Adopter.": "A adopção tem o estado :status, o estado deve passar a ser Encerrado para poder adicionar um adoptante.",
     "Adoption cannot be :status without an Adopter.": "A adopção não pode ter o estado :status sem ter um Adoptante",
     "As this process balance is :balance€, you cannot set the status to :status.": "Como o balanço deste processo é de :balance€, não pode definir o estado como :status.",
+    "You can not apporve option :option because date :option and vet :option are not set.": "Não pode aprovar a opção :option, sem que a data :option e o veterinário :option estejam preenchidos.",
     "All Districts": "Todos os distritos",
     "All Categories": "Todas as categorias",
     "All Species": "Todas as espécies",

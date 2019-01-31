@@ -42,6 +42,7 @@ class AdoptionRequest extends FormRequest
             'features' => 'nullable|max:4096',
             'history' => 'nullable|max:4096',
             'images' => 'required',
+            'adoption_date' => 'nullable|date',
             'status' => 'in:' . EnumHelper::keys('adoption.status', ','),
         ];
     }

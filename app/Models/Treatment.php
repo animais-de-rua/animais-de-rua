@@ -30,7 +30,7 @@ class Treatment extends Model
 
     public function customUpdateButton()
     {
-        $disabled = !is('admin') && $this->status == 'approved';
+        $disabled = !is('admin', 'treatments') || (is('volunteer', 'treatments') && $this->status == 'approved');
 
         return '<a href=' . url("admin/treatment/{$this->id}/edit") . " class='btn btn-xs btn-default " . ($disabled ? 'disabled' : '') . "'><i class='fa fa-edit'></i> " . __('backpack::crud.edit') . '</a>';
     }

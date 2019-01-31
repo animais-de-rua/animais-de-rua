@@ -9,7 +9,7 @@
                 max="20"
                 min="0"
                 name="{{ $field['name'] }}[0]"
-                value="{{ old($field['name']) ? old($field['name'][0]) : 
+                value="{{ old($field['name']) ? old($field['name'])[0] :
                     (isset($field['value']) ? $field['value'][0] :
                     (isset($field['default']) ? $field['default'][0] :'' )) }}"
                 @include('crud::inc.field_attributes')
@@ -23,7 +23,7 @@
                 max="11"
                 min="0"
                 name="{{ $field['name'] }}[1]"
-                value="{{ old($field['name']) ? old($field['name'][1]) : 
+                value="{{ old($field['name']) ? old($field['name'])[1] :
                     (isset($field['value']) ? $field['value'][1] :
                     (isset($field['default']) ? $field['default'][1] :'' )) }}"
                 @include('crud::inc.field_attributes')

@@ -35,10 +35,11 @@ class AppointmentRequest extends FormRequest
             'amount_males' => 'required|numeric|min:0|max:200',
             'amount_females' => 'required|numeric|min:0|max:200',
             'status' => 'in:' . EnumHelper::keys('appointment.status', ','),
-            'notes_deliver' => 'required|min:3',
-            'notes_collect' => 'required|min:3',
-            'notes_contact' => 'required|min:3',
-            'notes_godfather' => 'required|min:3',
+            'notes' => 'nullable|min:3',
+            'notes_deliver' => 'nullable|min:3',
+            'notes_collect' => 'nullable|min:3',
+            'notes_contact' => 'nullable|min:3',
+            'notes_godfather' => 'nullable|min:3',
         ];
     }
 
@@ -64,5 +65,25 @@ class AppointmentRequest extends FormRequest
         return [
             //
         ];
+    }
+
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+
+            // Validate approvement of a valid date and vet
+            if ($this->input('status') == 'approved_option_1' && (!$this->input('vet_id_1') || !$this->input('date_1'))) {
+                return $validator->errors()->add('status', __('You can not apporve option :option because date :option and vet :option are not set.', [
+                    'option' => 1,
+                ]));
+            }
+
+            if ($this->input('status') == 'approved_option_2' && (!$this->input('vet_id_2') || !$this->input('date_2'))) {
+                return $validator->errors()->add('status', __('You can not apporve option :option because date :option and vet :option are not set.', [
+                    'option' => 2,
+                ]));
+            }
+
+        });
     }
 }

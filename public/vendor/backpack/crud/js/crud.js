@@ -8,7 +8,7 @@ approveAppointment = (elem, id, option) => {
     if(!confirm(window.Laravel.translations.confirmApprove))
         return false;
 
-    fetch('/admin/api/appointment/approve/', {
+    fetch('/admin/api/appointment/approve', {
         credentials: 'same-origin',
         headers: {
             'X-Requested-With': 'XMLHttpRequest',
@@ -40,7 +40,7 @@ approveTreatment = (btn, id, option) => {
     if(!confirm(window.Laravel.translations.confirmApprove))
         return false;
 
-    fetch('/admin/api/treatment/approve/', {
+    fetch('/admin/api/treatment/approve', {
         credentials: 'same-origin',
         headers: {
             'X-Requested-With': 'XMLHttpRequest',
