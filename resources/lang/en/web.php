@@ -16,6 +16,19 @@ return [
     'friendcard' => 'From 3€ a month you can subscribe the Friend Card and help us reach more and more animals.',
     'subscribed' => 'Thank you! We\'ll contact you as soon as possible.',
 
+    'friend_card_login' => [
+        'login_success' => 'Successfully logged in',
+        'login_error' => 'Login error',
+        'logout_success' => 'Successfully logged out',
+        'title' => 'Friend Card Login',
+        'welcome' => 'Hi :name!',
+        'messages' => [
+            '1' => 'Promotional codes are now listed.',
+            '2' => 'You don\'t have any friend card subscription at the moment.',
+            '3' => 'If you have a friend card subscription, login to access your promotional codes.',
+        ],
+    ],
+
     'donate' => [
         'title' => 'Your donation saves lifes!',
         'values' => [

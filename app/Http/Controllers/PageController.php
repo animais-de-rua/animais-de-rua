@@ -26,7 +26,7 @@ class PageController extends Controller
 {
     public function index($slug = 'home')
     {
-        \Debugbar::disable();
+        // \Debugbar::disable();
 
         $locale = \Session::get('locale');
 
@@ -214,6 +214,7 @@ class PageController extends Controller
                     ->join('processes', 'processes.id', '=', 'adoptions.process_id')
                     ->where('adoptions.id', '<>', $id)
                     ->where(DB::raw('LEFT(territory_id, 2)'), $district)
+                    ->where('adoptions.status', 'open')
                     ->orderBy('created_at', 'desc')
                     ->limit(3)
                     ->get()->toArray();
@@ -253,7 +254,7 @@ class PageController extends Controller
         });
 
         $partners = Cache::rememberForever('partners', function () {
-            $partners = Partner::select(['id', 'name', 'image', 'benefit', 'email', 'url', 'facebook', 'phone1', 'phone1_info', 'phone2', 'phone2_info', 'address', 'address_info'])
+            $partners = Partner::select(['id', 'name', 'image', 'benefit', 'email', 'url', 'facebook', 'phone1', 'phone1_info', 'phone2', 'phone2_info', 'address', 'address_info', 'promo_code'])
                 ->with('territories', 'categories')
                 ->orderBy('updated_at', 'DESC')
                 ->get();
@@ -288,6 +289,7 @@ class PageController extends Controller
 
         return [
             'subscribed' => isset($_GET['success']),
+            'hasAccess' => backpack_user() && backpack_user()->friend_card_modality()->first(),
             'modalities' => $modalities,
             'partners' => [
                 'list' => $partners,
@@ -383,5 +385,17 @@ class PageController extends Controller
             'errors' => false,
             'message' => __('Thank you for subscribing to our newsletter.'),
         ]);
+    }
+
+    public function login()
+    {
+        $result = \Auth::guard(backpack_guard_name())->attempt(request()->only('email', 'password'));
+        return redirect('/friends')->with('login', $result);
+    }
+
+    public function logout()
+    {
+        \Auth::guard(backpack_guard_name())->logout();
+        return redirect('/friends')->with('logout', true);
     }
 }

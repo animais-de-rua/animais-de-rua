@@ -16,6 +16,19 @@ return [
     'friendcard' => 'A partir de 3€ mensais poderá subscrever o Cartão do Amigo da Animais de Rua e ajudar-nos a chegar a cada vez mais animais.',
     'subscribed' => 'Obrigada! Entraremos em contacto consigo brevemente.',
 
+    'friend_card_login' => [
+        'login_success' => 'Entrou com sucesso',
+        'login_error' => 'Erro ao tentar entrar',
+        'logout_success' => 'Saiu com sucesso',
+        'title' => 'Login cartão amigo',
+        'welcome' => 'Olá :name!',
+        'messages' => [
+            '1' => 'Os códigos promocionais já se encontram disponíveis.',
+            '2' => 'Não tem nenhum pacote cartão amigo subscrito de momento.',
+            '3' => 'Caso já tenha cartão amigo, faça Login para aceder aos códigos promocionais.',
+        ],
+    ],
+
     'donate' => [
         'title' => 'O seu donativo salva vidas!',
         'values' => [

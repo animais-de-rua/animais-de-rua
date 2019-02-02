@@ -1,11 +1,11 @@
-const VERSION = '0.0.10';
+const VERSION = '0.0.14';
 const CACHE = 'adr';
 
 let cacheAssets = [
 	// Dynamic Assets
 	'/sw.js?id=' + VERSION,
 	'/js/app.js?id=d92dac58f1f283ca13f7',
-	'/css/app.css?id=82bbbb7a6b40d467b8e7',
+	'/css/app.css?id=c22d227b10d1517a7c60',
 	'/fonts/icomoon.woff2?58c2d240bb8f452ceba24cac9e697d8e',
 
 	// Other Assets	
@@ -53,7 +53,7 @@ self.onfetch = e => {
 		return;
 
 	// Avoid admin and store areas
-	if(e.request.url.match(/\/admin|\/store|\/vendor|\/pdf/))
+	if(e.request.url.match(/\/admin|\/api|\/store|\/vendor|\/pdf/))
 		return;
 
 	// Avoid external requests

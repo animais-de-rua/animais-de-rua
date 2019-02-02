@@ -6,6 +6,11 @@
         @if($subscribed)
         <div class="friend-alert">{{ __('web.subscribed') }}</div>
         @endif
+
+        @if (session('logout'))
+        <div class="friend-alert">{{ __('web.friend_card_login.logout_success') }}</div>
+        @endif
+
         <div class="row row-wrap header">
             <div class="column column-50">
                 <div class="flex-vertical-align">
@@ -79,6 +84,42 @@
         </div>
     </div>
 
+    <div class="container card-login">
+
+        @if (session()->has('login'))
+        <div class="friend-alert {{ session('login') ? 'success' : 'error' }}">{{ session('login') ? __('web.friend_card_login.login_success') : __('web.friend_card_login.login_error') }}</div>
+        @endif
+
+        <h1>{{ __('web.friend_card_login.title') }}</h1>
+
+        @if(backpack_user())
+            <div class="box">
+                <span>{!! __('web.friend_card_login.welcome', ['name' => '<strong>'.backpack_user()->name.'</strong>']) !!}</span>
+                @if($hasAccess)
+                <p>{{ __('web.friend_card_login.messages.1') }}</p>
+                @else
+                <p>{{ __('web.friend_card_login.messages.2') }}</p>
+                @endif
+                <a href="{{ url('/logout') }}"><button class="btn">{{ trans('backpack::base.logout') }}</button></a>
+            </div>
+        @else
+            <p>{{ __('web.friend_card_login.messages.3') }}</p>
+
+            <div class="box">
+                <form method="POST" action="{{ url('/login') }}">
+                    @csrf
+                    <label>{{ trans('backpack::base.email_address') }}</label>
+                    <input name="email" type="email" />
+                    <label>{{ trans('backpack::base.password') }}</label>
+                    <input name="password" type="password" />
+                    <br />
+                    <input type="submit" class="btn" value="{{ trans('backpack::base.login') }}" />
+                </form>
+                <p class="password-reset"><a href="{{ url('/admin/password/reset') }}">{{ trans('backpack::base.forgot_your_password') }}</a></p>
+            </div>
+        @endif
+    </div>
+
     <div class="container isotope friends">
         <div class="selects">
             <select type="territories">
@@ -131,10 +172,21 @@
                 <h1>{{ __("Discounts") }}</h1>
                 <p>{{ $partner->benefit }}</p>
                 @endif
+
+                {{-- Promo code for users with friend card --}}
+                @if($hasAccess && $partner->promo_code)
+                <hr />
+                <i><h1>{{ __("Promo Code") }}</h1></i>
+                <i><p>{{ $partner->promo_code }}</p></i>
+                @endif
             </div>
         </div>
         @endforeach
     </div>
+
+    @if (session()->has('login'))
+    <script>window.scrollTo(0, document.querySelector('.card-login').offsetTop - 20);</script>
+    @endif
 
 </div>
 @endsection

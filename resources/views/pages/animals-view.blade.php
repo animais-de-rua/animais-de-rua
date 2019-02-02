@@ -22,7 +22,11 @@ $locale = Session::get('locale', 'pt');
                 @endphp
                 <p class="date"><span>{{ __("Beginning of the process") }}</span><br/>{{ __(date("F", $date)) }}, {{ date("Y", $date) }}</p>
                 <div>
+                    @if($animal['history'] && gettype($animal['history']) == 'array')
                     {!! $animal['history'][$locale] ?? '' !!}
+                    @else
+                    {!! $animal['history'] ?? '' !!}
+                    @endif
                 </div>
                 @if($option == 'godfather')
                 <button class="btn dark" onclick="return modal.openGodfather()">{{ __("Become a Godfather") }}</button>
