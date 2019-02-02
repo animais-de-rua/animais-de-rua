@@ -77,4 +77,7 @@ document.addEventListener("DOMContentLoaded", function() {
         table.insertBefore(actions.cloneNode(true), table.querySelector('tr'));
     }
 
+    // Paint approved rows on process treatments table
+    document.querySelectorAll('td.approved').forEach(e => e.closest('tr').classList.add('approved'));
+
 });

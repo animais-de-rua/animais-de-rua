@@ -21,9 +21,9 @@ $crud->route = $field['route'];
 
             <thead>
                 <tr>
-                    @foreach( $field['columns'] as $column )
+                    @foreach( $field['columns'] as $col )
                     <th>
-                        {{ __($column['label']) }}
+                        {{ __($col['label']) }}
                     </th>
                     @endforeach
                     <th data-orderable="false">{{ trans('backpack::crud.actions') }}</th>
@@ -32,9 +32,14 @@ $crud->route = $field['route'];
             <tbody class="table-striped">
                 @foreach( $items as $item)
                 <tr class="array-row">
-                    @foreach( $field['columns'] as $column)
-                    <td>
-                        {!! isset($column['attribute']) ? $item->{$column['name']}->{$column['attribute']} : $item->{$column['name']} !!}
+                    @foreach( $field['columns'] as $col)
+                    @php
+                    $value = $raw_value = isset($col['attribute']) ? $item->{$col['name']}->{$col['attribute']} : $item->{$col['name']};
+                    if(isset($col['translate']))
+                        $value = __($value);
+                    @endphp
+                    <td class="{{ isset($col['classify']) ? $raw_value : '' }}">
+                        {!! $value !!}
                     </td>
                     @endforeach
                     <td>

@@ -735,6 +735,12 @@ class ProcessCrudController extends CrudController
                     'label' => __('Date'),
                     'name' => 'date',
                 ],
+                'status' => [
+                    'label' => __('Status'),
+                    'name' => 'status',
+                    'translate' => true,
+                    'classify' => true,
+                ],
             ],
         ];
     }

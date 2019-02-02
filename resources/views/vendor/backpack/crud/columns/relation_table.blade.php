@@ -30,8 +30,13 @@ $crud->route = $column['route'];
                 @foreach( $items as $item)
                 <tr class="array-row">
                     @foreach( $column['columns'] as $col)
-                    <td>
-                        {!! isset($col['attribute']) ? $item->{$col['name']}->{$col['attribute']} : $item->{$col['name']} !!}
+                    @php
+                    $value = $raw_value = isset($col['attribute']) ? $item->{$col['name']}->{$col['attribute']} : $item->{$col['name']};
+                    if(isset($col['translate']))
+                        $value = __($value);
+                    @endphp
+                    <td class="{{ isset($col['classify']) ? $raw_value : '' }}">
+                        {!! $value !!}
                     </td>
                     @endforeach
                     <td>
