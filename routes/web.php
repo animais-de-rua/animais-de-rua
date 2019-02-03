@@ -14,6 +14,11 @@
 // Home
 Route::get('/', 'PageController@index', 'home');
 
+// Old routes
+Route::get('{lang}/{subs?}', function () {
+    return Redirect::to('/', 301);
+})->where(['lang' => '^(en|pt)$', 'subs' => '.*']);
+
 // Auth
 Auth::routes();
 
