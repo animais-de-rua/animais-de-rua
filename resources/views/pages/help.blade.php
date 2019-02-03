@@ -1,6 +1,10 @@
 @extends('layouts.app')
 
+@section('title', $title)
+
 @section('content')
+<div page-title="{{ $title }}"></div>
+
 <div id="help">
     <div class="container">
         <div class="row row-wrap header">

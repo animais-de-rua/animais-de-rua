@@ -1,6 +1,6 @@
 @if(Request::ajax() || Request::has('ajax'))
-    <script>document.body || window.location.reload()</script>
-    @yield('content')
+<script>document.body || window.location.reload();</script>
+@yield('content')
 @else
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
@@ -13,7 +13,7 @@
     <meta name="author" content="promatik.pt">
     <meta name="mobile-web-app-capable" content="yes">
 
-    <title>{{ config('app.name') }}</title>
+    <title>@hasSection('title')@yield('title')@else{{ config('app.name') }}@endif</title>
 
     <link rel="apple-touch-icon" sizes="57x57" href="/img/icons/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="/img/icons/apple-icon-60x60.png">
@@ -76,7 +76,7 @@
     @include('cookieConsent::index')
 
     <script>
-        window.Laravel = {token: '{{ csrf_token() }}'};
+        window.Laravel = {token: '{{ csrf_token() }}', title: '{{ config('app.name') }}'};
         window.translations = {month: [
             '{{ __('January') }}', '{{ __('February') }}', '{{ __('March') }}', '{{ __('April') }}',
             '{{ __('May') }}', '{{ __('June') }}', '{{ __('July') }}', '{{ __('August') }}',

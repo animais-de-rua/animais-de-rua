@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+<div page-title="{{ config('app.name') }}"></div>
+
 <div id="home">
     <div class="container">
         <div class="row row-wrap header">

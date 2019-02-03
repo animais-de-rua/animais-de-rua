@@ -6,11 +6,14 @@ $items = old($column['name']) ? (old($column['name'])) : (isset($column['value']
 if ($items == '') {
     return;
 }
+
 $crudRouteOriginal = $crud->route;
 $crud->route = $column['route'];
 ?>
 
 <div @include('crud::inc.field_wrapper_attributes') >
+
+
 
     <div class="array-container form-group">
 

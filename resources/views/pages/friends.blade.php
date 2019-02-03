@@ -1,6 +1,10 @@
 @extends('layouts.app')
 
+@section('title', $title)
+
 @section('content')
+<div page-title="{{ $title }}"></div>
+
 <div id="friends">
     <div class="container">
         @if($subscribed)

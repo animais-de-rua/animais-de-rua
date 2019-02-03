@@ -83,6 +83,9 @@ window.router = {
                         if(updateRoute) {
                             router.push(html, urlPath.replace('?ajax', ''));
                         }
+
+                        let elem = query('[page-title]')
+                        document.title = elem ? elem.getAttribute('page-title') : window.Laravel.title;
                     });
                 }
             })

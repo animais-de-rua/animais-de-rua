@@ -38,7 +38,7 @@ class PageController extends Controller
             }
 
             return [
-                'title' => $page->title,
+                'title' => config('app.name') . ' - ' . $page->title,
                 'page' => $page->withFakes(),
             ];
         });
@@ -257,6 +257,7 @@ class PageController extends Controller
             $partners = Partner::select(['id', 'name', 'image', 'benefit', 'email', 'url', 'facebook', 'phone1', 'phone1_info', 'phone2', 'phone2_info', 'address', 'address_info', 'promo_code'])
                 ->with('territories', 'categories')
                 ->orderBy('updated_at', 'DESC')
+                ->where('status', 1)
                 ->get();
 
             foreach ($partners as $partner) {

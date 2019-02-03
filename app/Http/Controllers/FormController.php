@@ -116,6 +116,12 @@ class FormController extends Controller
             throw new ValidationException($validator);
         }
 
+        // Check for colab
+        if (!$request->input('colab')) {
+            $validator->errors()->add('colab', __('You must select at least one option on how you may collaborate.'));
+            throw new ValidationException($validator);
+        }
+
         $this->subscribe_newsletter();
 
         // Get Headquarter
@@ -152,8 +158,10 @@ class FormController extends Controller
 
         // Notes
         $notes = 'O candidato oferece-se para:<br />';
-        foreach ($request->colab as $colab) {
-            $notes .= '- ' . __("web.forms.$colab") . '<br />';
+        if (is_array($request->colab)) {
+            foreach ($request->colab as $colab) {
+                $notes .= '- ' . __("web.forms.$colab") . '<br />';
+            }
         }
 
         // Process
