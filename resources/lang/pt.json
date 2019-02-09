@@ -74,6 +74,7 @@
     "Expense": "Custo",
     "Balance": "Balanço",
     "Stats": "Estatísticas",
+    "Graphs": "Gráficos",
     "Attribute": "Atributo",
     "Affected Animals": "Animais intervencionados",
     "New affected Animals": "Novos animais intervencionados",
@@ -228,6 +229,7 @@
     "Add adopter": "Adicionar adoptante",
     "No treatments": "Sem tratamentos",
     "Archive": "Arquivo",
+    "Reports": "Relatórios",
 
     "Users": "Utilizadores",
     "Pages": "Páginas",

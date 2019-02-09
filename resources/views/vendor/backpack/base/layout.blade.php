@@ -2,6 +2,7 @@
 <html lang="{{ app()->getLocale() }}">
 <head>
     @include('backpack::inc.head')
+    @yield('style')
 </head>
 <body class="hold-transition {{ config('backpack.base.skin') }} sidebar-mini">
 	<script type="text/javascript">

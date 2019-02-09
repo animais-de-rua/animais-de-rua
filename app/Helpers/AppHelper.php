@@ -7,6 +7,13 @@ if (!function_exists('api')) {
     }
 }
 
+if (!function_exists('collect_only')) {
+    function collect_only($model, $attributes)
+    {
+        return collect($model->toArray())->only($attributes)->all();
+    }
+}
+
 if (!function_exists('data_get_first')) {
     function data_get_first($target, $key, $attribute, $default = 0)
     {

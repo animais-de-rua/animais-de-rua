@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Admin\Traits\Permissions;
+use App\Models\Headquarter;
 use DB;
 
 class DashboardController extends CrudController
@@ -11,6 +12,7 @@ class DashboardController extends CrudController
 
     public function dashboard()
     {
+        // Stats
         $rule = 'BETWEEN 30 AND 33 OR treatment_type_id BETWEEN 6 AND 8';
 
         $headquarter_sterilizations = DB::table('treatments')
@@ -28,7 +30,7 @@ class DashboardController extends CrudController
             ->selectRaw('SUM(operation_time * affected_animals) as total')
             ->first()->total / 60;
 
-        return view('backpack::dashboard')->with('stats', [
+        $stats = [
             'treatments' => DB::table('treatments')->selectRaw('SUM(affected_animals) as total')->first()->total,
             'sterilizations' => DB::table('treatments')->selectRaw('SUM(affected_animals) as total')->whereRaw("treatment_type_id $rule")->first()->total,
             'top_headquarter_sterilizations_name' => $headquarter_sterilizations ? $headquarter_sterilizations->name : '...',
@@ -40,6 +42,78 @@ class DashboardController extends CrudController
             'godfathers' => DB::table('donations')->selectRaw('COUNT(DISTINCT godfather_id) as total')->first()->total,
             'donations' => DB::table('donations')->selectRaw('SUM(value) as total')->first()->total,
             'godfathers_processes' => DB::table('donations')->selectRaw('COUNT(DISTINCT process_id) as total')->first()->total,
-        ]);
+        ];
+
+        // Graphs
+        $graphs = [
+            'treatments_headquarter' => DB::table('treatments')
+                ->join('appointments', 'treatments.appointment_id', '=', 'appointments.id')
+                ->join('processes', 'appointments.process_id', '=', 'processes.id')
+                ->join('headquarters', 'processes.headquarter_id', '=', 'headquarters.id')
+                ->selectRaw('SUM(affected_animals_new) as total, headquarters.name')
+                ->groupBy('headquarters.id')
+                ->orderBy('total', 'DESC')
+                ->get(),
+
+            'treatments_headquarter_sterilizations' => DB::table('treatments')
+                ->join('appointments', 'treatments.appointment_id', '=', 'appointments.id')
+                ->join('processes', 'appointments.process_id', '=', 'processes.id')
+                ->join('headquarters', 'processes.headquarter_id', '=', 'headquarters.id')
+                ->selectRaw('SUM(affected_animals) as total, headquarters.name')
+                ->whereRaw("treatment_type_id $rule")
+                ->groupBy('headquarters.id')
+                ->orderBy('total', 'DESC')
+                ->get(),
+
+            'treatments_month' => DB::table('treatments')
+                ->join('appointments', 'treatments.appointment_id', '=', 'appointments.id')
+                ->join('processes', 'appointments.process_id', '=', 'processes.id')
+                ->selectRaw('SUM(affected_animals) as total, LEFT(date, 7) as date')
+                ->whereRaw('date > DATE_ADD(CURDATE(), INTERVAL -1 YEAR)')
+                ->groupBy(DB::raw('LEFT(date, 7)'))
+                ->orderBy('date', 'DESC')
+                ->get(),
+
+            'treatments_specie' => DB::table('treatments')
+                ->join('appointments', 'treatments.appointment_id', '=', 'appointments.id')
+                ->join('processes', 'appointments.process_id', '=', 'processes.id')
+                ->selectRaw('SUM(affected_animals) as total, specie')
+                ->groupBy('specie')
+                ->orderBy('total', 'DESC')
+                ->get(),
+        ];
+
+        $dates = $graphs['treatments_month']->pluck('date');
+        for ($i = 1; $i <= 12; $i++) {
+            $date = date('Y-m', strtotime("-$i months"));
+            if (!$dates->contains($date)) {
+                $graphs['treatments_month']->push((object) ['total' => 0, 'date' => $date]);
+            }
+        }
+
+        // foreach ($graphs['treatments_month'] as &$treatment) {
+        //     $treatment->date = __($treatment->specie);
+        // }
+
+        foreach ($graphs['treatments_specie'] as &$treatment) {
+            $treatment->specie = __($treatment->specie);
+        }
+
+        return view('backpack::dashboard')
+            ->with('stats', $stats)
+            ->with('graphs', $graphs);
+    }
+
+    public function reports()
+    {
+        $headquarters = Headquarter::select(['id', 'name'])->get();
+
+        return view('admin.reports')->with('headquarters', $headquarters);
+    }
+
+    public function report_treatment_type()
+    {
+        $q = 'SELECT tt.name, SUM(t.expense) expense, SUM(t.affected_animals) interventions FROM `treatments` t, `treatment_types` tt WHERE t.treatment_type_id = tt.id GROUP BY t.treatment_type_id ORDER BY SUM(t.affected_animals) DESC';
+        return [];
     }
 }
