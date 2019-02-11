@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Admin\Traits\Permissions;
-use App\Models\Headquarter;
 use DB;
 
 class DashboardController extends CrudController
@@ -91,10 +90,6 @@ class DashboardController extends CrudController
             }
         }
 
-        // foreach ($graphs['treatments_month'] as &$treatment) {
-        //     $treatment->date = __($treatment->specie);
-        // }
-
         foreach ($graphs['treatments_specie'] as &$treatment) {
             $treatment->specie = __($treatment->specie);
         }
@@ -102,18 +97,5 @@ class DashboardController extends CrudController
         return view('backpack::dashboard')
             ->with('stats', $stats)
             ->with('graphs', $graphs);
-    }
-
-    public function reports()
-    {
-        $headquarters = Headquarter::select(['id', 'name'])->get();
-
-        return view('admin.reports')->with('headquarters', $headquarters);
-    }
-
-    public function report_treatment_type()
-    {
-        $q = 'SELECT tt.name, SUM(t.expense) expense, SUM(t.affected_animals) interventions FROM `treatments` t, `treatment_types` tt WHERE t.treatment_type_id = tt.id GROUP BY t.treatment_type_id ORDER BY SUM(t.affected_animals) DESC';
-        return [];
     }
 }

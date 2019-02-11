@@ -15,13 +15,15 @@
 @section('after_scripts')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
 <script>
+let colors = ["#3cbbbc"].concat(Array(5).fill("#3c8dbc"));
+
 var graph01 = new Chart(document.querySelector('.graph01 > canvas').getContext("2d"), {
     type: 'bar',
     data: {
         labels: JSON.parse('{!! json_encode($graphs['treatments_headquarter']->pluck('name')) !!}'),
         datasets: [
             {
-                backgroundColor: "#3c8dbc",
+                backgroundColor: colors,
                 data: JSON.parse('{!! json_encode($graphs['treatments_headquarter']->pluck('total')) !!}')
             }
         ]
@@ -38,7 +40,7 @@ var graph02 = new Chart(document.querySelector('.graph02 > canvas').getContext("
         labels: JSON.parse('{!! json_encode($graphs['treatments_headquarter_sterilizations']->pluck('name')) !!}'),
         datasets: [
             {
-                backgroundColor: "#3c8dbc",
+                backgroundColor: colors,
                 data: JSON.parse('{!! json_encode($graphs['treatments_headquarter_sterilizations']->pluck('total')) !!}')
             }
         ]
@@ -72,13 +74,13 @@ var graph04 = new Chart(document.querySelector('.graph04 > canvas').getContext("
         labels: JSON.parse('{!! json_encode($graphs['treatments_specie']->pluck('specie')) !!}'),
         datasets: [
             {
-                backgroundColor: "#3c8dbc",
+                backgroundColor: ["#3c8dbc", "#3cbbbc"],
                 data: JSON.parse('{!! json_encode($graphs['treatments_specie']->pluck('total')) !!}')
             }
         ]
     },
     options: {
-        legend: { display: false },
+        legend: { display: true },
         title: { display: false },
     }
 });
