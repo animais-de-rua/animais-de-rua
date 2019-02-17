@@ -2,7 +2,7 @@
 # Olá {{ $process->contact }},
 
 A sua candidatura foi recebida com sucesso.<br />
-A baixo seguem as informações enviadas.<br />
+Abaixo seguem as informações enviadas.<br />
 
 <strong>E-Mail:</strong> {{ $process->email }}<br />
 <strong>Telefone:</strong> {{ $process->phone }}<br />
@@ -17,6 +17,6 @@ A baixo seguem as informações enviadas.<br />
 Voltar ao site
 @endcomponent
 
-Obrigado,<br>
+Obrigada,<br>
 {{ config('app.name') }}
 @endcomponent

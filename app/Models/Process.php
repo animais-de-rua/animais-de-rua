@@ -159,7 +159,7 @@ class Process extends Model
         $expenses = data_get_first($this, 'treatments', 'total_expenses', 0);
         $balance = $donations - $expenses;
 
-        return $balance;
+        return round($balance, 2);
     }
 
     public function getAnimalsValue()
@@ -210,7 +210,7 @@ class Process extends Model
 
     public function getBalanceStats()
     {
-        $balance = $this->getDonated() - $this->getExpenses();
+        $balance = round($this->getDonated() - $this->getExpenses(), 2);
         return $this->colorizeValue($balance);
     }
 

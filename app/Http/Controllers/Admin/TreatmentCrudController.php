@@ -178,7 +178,7 @@ class TreatmentCrudController extends CrudController
             'name' => 'date',
             'type' => 'date',
             'default' => $date ?: (isset($appointment) ? $appointment->date_1 : Carbon::today()->toDateString()),
-            'attributes' => $date || isset($appointment) ? ['readonly' => 'readonly'] : $attributes,
+            'attributes' => (($date || isset($appointment)) && !is('admin')) ? ['readonly' => 'readonly'] : $attributes,
         ]);
 
         $this->separator();

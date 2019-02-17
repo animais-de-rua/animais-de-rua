@@ -52,6 +52,14 @@ class CrudController extends \Backpack\CRUD\app\Http\Controllers\CrudController
         return $result;
     }
 
+    public function saveReorder(Request $request = null)
+    {
+        $result = parent::saveReorder($request);
+        $this->sync();
+
+        return $result;
+    }
+
     public function destroy($id)
     {
         $result = parent::destroy($id);
