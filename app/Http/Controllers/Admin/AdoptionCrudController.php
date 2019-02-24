@@ -151,7 +151,7 @@ class AdoptionCrudController extends CrudController
             'name' => 'images',
             'label' => __('Images'),
             'type' => 'dropzone',
-            'upload-url' => '/admin/dropzone/images/adoptions',
+            'upload-url' => '/admin/dropzone/images/adoption',
             'thumb' => 340,
             'size' => 800,
             'quality' => 82,

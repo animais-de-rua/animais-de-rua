@@ -201,6 +201,7 @@ return [
         'notes_collect' => 'Notas: Quem vai buscar o animal ao final do dia',
         'notes_contact' => 'Notas: O teu contacto telefónico',
         'notes_godfather' => 'Notas: Quem apadrinha o animal',
+        'protocol_id' => 'protocolo',
     ],
 
     'message' => 'Os dados fornecidos são inválidos.',

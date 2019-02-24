@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\EnumHelper;
 use App\Http\Controllers\Admin\Traits\Permissions;
 use App\Http\Requests\DonationRequest as StoreRequest;
 use App\Http\Requests\DonationRequest as UpdateRequest;
@@ -36,7 +37,7 @@ class DonationCrudController extends CrudController
         */
 
         // ------ CRUD FIELDS
-        $this->crud->addFields(['godfather_id', 'process_id', 'value', 'date']);
+        $this->crud->addFields(['process_id', 'type', 'godfather_id', 'headquarter_id', 'protocol_id', 'value', 'date']);
 
         $this->crud->addField([
             'label' => __('Value'),
@@ -61,6 +62,17 @@ class DonationCrudController extends CrudController
         ]);
 
         $this->crud->addField([
+            'label' => __('Type'),
+            'name' => 'type',
+            'type' => 'enum',
+            'attributes' => [
+                'donation_type' => 'selector',
+            ],
+        ]);
+
+        $this->separator()->afterField('process_id');
+
+        $this->crud->addField([
             'label' => ucfirst(__('godfather')),
             'name' => 'godfather_id',
             'type' => 'select2_from_ajax',
@@ -71,7 +83,44 @@ class DonationCrudController extends CrudController
             'placeholder' => __('Select a godfather'),
             'minimum_input_length' => 2,
             'default' => \Request::get('godfather') ?: false,
+            'attributes' => [
+                'donation_type_select' => 'private',
+            ],
         ]);
+
+        $this->crud->addField([
+            'label' => ucfirst(__('headquarter')),
+            'name' => 'headquarter_id',
+            'type' => 'select2_from_ajax',
+            'entity' => 'headquarter',
+            'attribute' => 'name',
+            'model' => '\App\Models\Headquarter',
+            'data_source' => url('admin/headquarter/ajax/search'),
+            'placeholder' => __('Select a headquarter'),
+            'minimum_input_length' => 2,
+            'default' => \Request::get('headquarter') ?: false,
+            'attributes' => [
+                'donation_type_select' => 'headquarter',
+            ],
+        ]);
+
+        $this->crud->addField([
+            'label' => ucfirst(__('protocol')),
+            'name' => 'protocol_id',
+            'type' => 'select2_from_ajax',
+            'entity' => 'protocol',
+            'attribute' => 'name',
+            'model' => '\App\Models\Protocol',
+            'data_source' => url('admin/protocol/ajax/search'),
+            'placeholder' => __('Select a protocol'),
+            'minimum_input_length' => 2,
+            'default' => \Request::get('protocol') ?: false,
+            'attributes' => [
+                'donation_type_select' => 'protocol',
+            ],
+        ]);
+
+        $this->separator()->afterField('protocol_id');
 
         $this->crud->addField([
             'label' => __('Date'),
@@ -104,7 +153,7 @@ class DonationCrudController extends CrudController
         }
 
         // ------ CRUD COLUMNS
-        $this->crud->addColumns(['id', 'godfather', 'process', 'value', 'date', 'user_id']);
+        $this->crud->addColumns(['id', 'type', 'godfather', 'headquarter', 'protocol', 'process', 'value', 'date', 'user_id']);
 
         $this->crud->setColumnDetails('id', [
             'label' => 'ID',
@@ -115,12 +164,33 @@ class DonationCrudController extends CrudController
             'label' => __('Date'),
         ]);
 
+        $this->crud->setColumnDetails('type', [
+            'type' => 'trans',
+            'label' => __('Type'),
+        ]);
+
         $this->crud->setColumnDetails('godfather', [
             'name' => 'godfather',
             'label' => ucfirst(__('godfather')),
             'type' => 'model_function',
             'limit' => 120,
             'function_name' => 'getGodfatherLinkAttribute',
+        ]);
+
+        $this->crud->setColumnDetails('headquarter', [
+            'name' => 'headquarter',
+            'label' => ucfirst(__('headquarter')),
+            'type' => 'model_function',
+            'limit' => 120,
+            'function_name' => 'getHeadquarterLinkAttribute',
+        ]);
+
+        $this->crud->setColumnDetails('protocol', [
+            'name' => 'protocol',
+            'label' => ucfirst(__('protocol')),
+            'type' => 'model_function',
+            'limit' => 120,
+            'function_name' => 'getProtocolLinkAttribute',
         ]);
 
         $this->crud->setColumnDetails('process', [
@@ -151,6 +221,17 @@ class DonationCrudController extends CrudController
 
         // Filtrers
         $this->crud->addFilter([
+            'name' => 'type',
+            'type' => 'select2',
+            'label' => __('Type'),
+            'placeholder' => __('Select a type'),
+        ],
+            EnumHelper::translate('donation.type'),
+            function ($value) {
+                $this->crud->addClause('where', 'type', $value);
+            });
+
+        $this->crud->addFilter([
             'name' => 'godfather',
             'type' => 'select2_ajax',
             'label' => ucfirst(__('godfather')),
@@ -159,6 +240,28 @@ class DonationCrudController extends CrudController
             url('admin/godfather/ajax/filter'),
             function ($value) {
                 $this->crud->addClause('where', 'godfather_id', $value);
+            });
+
+        $this->crud->addFilter([
+            'name' => 'headquarter',
+            'type' => 'select2_ajax',
+            'label' => ucfirst(__('headquarter')),
+            'placeholder' => __('Select a headquarter'),
+        ],
+            url('admin/headquarter/ajax/filter'),
+            function ($value) {
+                $this->crud->addClause('where', 'headquarter_id', $value);
+            });
+
+        $this->crud->addFilter([
+            'name' => 'protocol',
+            'type' => 'select2_ajax',
+            'label' => ucfirst(__('protocol')),
+            'placeholder' => __('Select a protocol'),
+        ],
+            url('admin/protocol/ajax/filter'),
+            function ($value) {
+                $this->crud->addClause('where', 'protocol_id', $value);
             });
 
         $this->crud->addFilter([

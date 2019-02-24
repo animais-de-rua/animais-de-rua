@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row row-wrap">
             <div class="column column-67 stats">
-                <h1>{{ $total_interventions }}</h1>
+                <h1>{{ $total_interventions ?? 0 }}</h1>
                 <h4>{{ __("web.operations") }}</h4>
             </div>
             <div class="column column-33 logo">
@@ -15,7 +15,7 @@
                 <form action="/newsletter" method="post" class="ajax">
                     @csrf
                     <label for="email">{{ __('web.subscribe') }}</label>
-                    <input type="email" name="email" id="email" placeholder="{{ __('Your Email Address') }}" value=""/>
+                    <input type="email" name="email" id="email" placeholder="{{ __('Your Email Address') }}" value="" required/>
                     <button type="submit" name="subscribe" title="{{ __('web.subscribe') }}">
                         <i class="icon icon-arrow"></i>
                     </button>

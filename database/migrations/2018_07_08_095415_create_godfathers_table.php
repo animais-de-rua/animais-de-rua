@@ -1,5 +1,6 @@
 <?php
 
+use App\Helpers\EnumHelper;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -41,8 +42,12 @@ class CreateGodfathersTable extends Migration
         Schema::create('donations', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('process_id')->nullable()->unsigned();
-            $table->integer('godfather_id')->nullable()->unsigned();
             $table->integer('user_id')->nullable()->unsigned();
+
+            $table->enum('type', EnumHelper::values('donation.type'));
+            $table->integer('godfather_id')->nullable()->unsigned();
+            $table->integer('headquarter_id')->nullable()->unsigned();
+            $table->integer('protocol_id')->nullable()->unsigned();
 
             $table->decimal('value', 8, 2)->nullable()->unsigned()->default(0);
             $table->date('date')->nullable();
@@ -64,6 +69,18 @@ class CreateGodfathersTable extends Migration
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
+                ->onDelete('set null');
+
+            $table->index(['headquarter_id']);
+            $table->foreign('headquarter_id')
+                ->references('id')
+                ->on('headquarters')
+                ->onDelete('set null');
+
+            $table->index(['protocol_id']);
+            $table->foreign('protocol_id')
+                ->references('id')
+                ->on('protocols')
                 ->onDelete('set null');
 
             // $table->unique(['process_id', 'godfather_id']);

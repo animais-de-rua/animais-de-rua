@@ -40,6 +40,7 @@ class AppointmentRequest extends FormRequest
             'notes_collect' => 'nullable|min:3',
             'notes_contact' => 'nullable|min:3',
             'notes_godfather' => 'nullable|min:3',
+            'notes_info' => 'nullable|min:3',
         ];
     }
 

@@ -19,7 +19,7 @@ class Appointment extends Model
     protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['process_id', 'user_id', 'vet_id_1', 'date_1', 'vet_id_2', 'date_2', 'amount_males', 'amount_females', 'amount_other', 'notes', 'notes_deliver', 'notes_collect', 'notes_contact', 'notes_godfather', 'status'];
+    protected $fillable = ['process_id', 'user_id', 'vet_id_1', 'date_1', 'vet_id_2', 'date_2', 'amount_males', 'amount_females', 'amount_other', 'notes', 'notes_deliver', 'notes_collect', 'notes_contact', 'notes_godfather', 'notes_info', 'status'];
     // protected $hidden = [];
     // protected $dates = [];
 

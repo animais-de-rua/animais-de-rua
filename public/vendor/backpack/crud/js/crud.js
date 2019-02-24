@@ -80,4 +80,17 @@ document.addEventListener("DOMContentLoaded", function() {
     // Paint approved rows on process treatments table
     document.querySelectorAll('td.approved').forEach(e => e.closest('tr').classList.add('approved'));
 
+    // Donation type
+    let donationTypeSelect = document.querySelector('select[donation_type]');
+    if(donationTypeSelect) {
+        let donationTypeSelectChange = e => {
+            document.querySelectorAll("select[donation_type_select]").forEach(e => {
+                e.parentElement.style.display = "none";
+            });
+            document.querySelector(`select[donation_type_select="${donationTypeSelect.value}"]`).parentElement.style.display = "block";
+        }
+        donationTypeSelect.onchange = donationTypeSelectChange;
+        donationTypeSelectChange();
+    }
+
 });

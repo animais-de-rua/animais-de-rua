@@ -18,7 +18,7 @@ class Donation extends Model
     protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['process_id', 'godfather_id', 'value', 'status', 'date', 'user_id', 'notes'];
+    protected $fillable = ['process_id', 'type', 'godfather_id', 'headquarter_id', 'protocol_id', 'value', 'status', 'date', 'user_id', 'notes'];
     // protected $hidden = [];
     // protected $dates = [];
 
@@ -42,6 +42,16 @@ class Donation extends Model
     public function godfather()
     {
         return $this->belongsTo('App\Models\Godfather', 'godfather_id');
+    }
+
+    public function headquarter()
+    {
+        return $this->belongsTo('App\Models\Headquarter', 'headquarter_id');
+    }
+
+    public function protocol()
+    {
+        return $this->belongsTo('App\Models\Protocol', 'protocol_id');
     }
 
     public function user()
@@ -69,6 +79,16 @@ class Donation extends Model
     public function getGodfatherLinkAttribute()
     {
         return $this->getLink($this->godfather, is('admin', 'accountancy'));
+    }
+
+    public function getHeadquarterLinkAttribute()
+    {
+        return $this->getLink($this->headquarter, is('admin', 'accountancy'));
+    }
+
+    public function getProtocolLinkAttribute()
+    {
+        return $this->getLink($this->protocol, is('admin', 'accountancy'));
     }
 
     public function getFullValueAttribute()

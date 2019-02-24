@@ -215,6 +215,7 @@
     "Select an appointment": "Seleccione uma marcação",
     "Select a gender": "Seleccione um género",
     "Select a modality": "Seleccione uma modalidade",
+    "Select a type": "Seleccione um tipo",
     "Search for the date or the ID of the appointment": "Pesquise pela data da marcação ou o ID",
     "There are no treatments in the process, so this animal can't be already treated": "Não existem tratamentos no processo, por isso este animal não pode ter sido tratado na AdR.",
     "Adoption status is :status, it must be open in order to add an Adopter.": "A adopção tem o estado :status, para adicionar um adoptante o estado da adopção deve ser Aberto.",
@@ -222,6 +223,10 @@
     "Adoption cannot be :status without an Adopter.": "A adopção não pode ter o estado :status sem ter um Adoptante",
     "As this process balance is :balance€, you cannot set the status to :status.": "Como o balanço deste processo é de :balance€, não pode definir o estado como :status.",
     "You can not apporve option :option because date :option and vet :option are not set.": "Não pode aprovar a opção :option, sem que a data :option e o veterinário :option estejam preenchidos.",
+
+    "The field :field is required.": "É obrigatória a indicação de um valor para o campo :field.",
+    "If you wish to add a Donation to a :field, please change the type of this Donation.": "Se deseja adicionar um donativo a um :field, por favor troque o tipo deste Donativo.",
+
     "All Districts": "Todos os distritos",
     "All Categories": "Todas as categorias",
     "All Species": "Todas as espécies",
@@ -285,6 +290,7 @@
     "monthly": "mensal",
     "yearly": "anual",
     "Select": "Escolher",
+    "private": "particular",
 
     "Today": "Hoje",
     "Yesterday": "Ontem",

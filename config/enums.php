@@ -40,6 +40,14 @@ return [
         ],
     ],
 
+    'donation' => [
+        'type' => [
+            'private' => 'private',
+            'headquarter' => 'headquarter',
+            'protocol' => 'protocol',
+        ],
+    ],
+
     'process' => [
         'specie' => [
             'dog' => 'dog',

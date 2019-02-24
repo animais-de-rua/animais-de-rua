@@ -368,6 +368,8 @@ class PageController extends Controller
             'email' => 'required|email',
         ]);
 
+        $validator->validate();
+
         Newsletter::subscribe($request->email);
 
         // Check if subscribed

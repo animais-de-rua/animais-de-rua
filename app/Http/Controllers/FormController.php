@@ -110,6 +110,8 @@ class FormController extends Controller
             'observations' => 'required|min:3',
         ]);
 
+        $validator->validate();
+
         // Check for 3 minimum images
         if (count($request->file('images')) < 3) {
             $validator->errors()->add('images', __('You must upload at least 3 images.'));
