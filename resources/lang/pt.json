@@ -223,6 +223,7 @@
     "Adoption cannot be :status without an Adopter.": "A adopção não pode ter o estado :status sem ter um Adoptante",
     "As this process balance is :balance€, you cannot set the status to :status.": "Como o balanço deste processo é de :balance€, não pode definir o estado como :status.",
     "You can not apporve option :option because date :option and vet :option are not set.": "Não pode aprovar a opção :option, sem que a data :option e o veterinário :option estejam preenchidos.",
+    "The date must be a date before or equal to today.": "O Campo data deverá conter uma data anterior ou igual a hoje.",
 
     "The field :field is required.": "É obrigatória a indicação de um valor para o campo :field.",
     "If you wish to add a Donation to a :field, please change the type of this Donation.": "Se deseja adicionar um donativo a um :field, por favor troque o tipo deste Donativo.",

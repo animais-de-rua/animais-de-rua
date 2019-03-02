@@ -32,7 +32,7 @@ class TreatmentRequest extends FormRequest
             'affected_animals' => 'required|numeric|min:1|max:100',
             'affected_animals_new' => 'required|numeric|min:0|max:100',
             'expense' => 'required|numeric|min:0|max:1000000',
-            'date' => 'required|date',
+            'date' => 'required|date|before_or_equal:today',
         ];
     }
 
@@ -56,7 +56,7 @@ class TreatmentRequest extends FormRequest
     public function messages()
     {
         return [
-            //
+            'date.before_or_equal' => __('The date must be a date before or equal to today.'),
         ];
     }
 }

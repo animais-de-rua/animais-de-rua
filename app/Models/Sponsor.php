@@ -54,7 +54,7 @@ class Sponsor extends Model
 
     public function setImageAttribute($value)
     {
-        $filename = $this->attributes['name'];
+        $filename = $this->attributes['name'] . time();
         $this->saveImage($this, $value, 'sponsors/', $filename, 144, 90);
     }
 }

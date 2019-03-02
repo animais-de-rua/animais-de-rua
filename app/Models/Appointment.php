@@ -217,9 +217,9 @@ class Appointment extends Model
     {
         parent::boot();
         static::deleting(function ($appointment) {
-            if (!is('admin') && $appointment->status != 'approving') {
+            /*if (!is('admin') && $appointment->status != 'approving') {
                 abort(403);
-            }
+            }*/
         });
     }
 }

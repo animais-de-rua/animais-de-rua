@@ -84,7 +84,7 @@ class ProcessRequest extends FormRequest
                     $query->selectRaw('process_id, sum(expense) as total_expenses')->where('process_id', $id);
                 }])->find($id);
 
-                if ($process->getBalance() < 0) {
+                if ($process && $process->getBalance() < 0) {
                     return $validator->errors()->add('status', __('As this process balance is :balance€, you cannot set the status to :status.', [
                         'status' => __($this->input('status')),
                         'balance' => $process->getBalance(),

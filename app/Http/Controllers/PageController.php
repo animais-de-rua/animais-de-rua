@@ -290,7 +290,7 @@ class PageController extends Controller
 
         return [
             'subscribed' => isset($_GET['success']),
-            'hasAccess' => backpack_user() && backpack_user()->friend_card_modality()->first(),
+            'hasAccess' => backpack_user() && (is(['admin', 'volunteer']) || backpack_user()->friend_card_modality()->first()),
             'modalities' => $modalities,
             'partners' => [
                 'list' => $partners,
@@ -345,6 +345,7 @@ class PageController extends Controller
             ->join('territories as district', 'district.id', '=', DB::raw('LEFT(territory_id, 2)'))
             ->join('territories as county', 'county.id', '=', DB::raw('LEFT(territory_id, 4)'))
             ->where('status', 'waiting_godfather')
+            ->where('processes.urgent', 1)
             ->orderBy('created_at', 'desc')
             ->limit(20);
 

@@ -588,6 +588,14 @@ class ProcessCrudController extends CrudController
         $this->crud->removeColumn('total_operations');
         $this->crud->removeColumn('latlong');
 
+        $this->crud->setColumnDetails('territory_id', [
+            'label' => ucfirst(__('territory')),
+            'type' => 'select',
+            'entity' => 'territory',
+            'attribute' => 'fullname',
+            'model' => "App\Models\Territory",
+        ]);
+
         $this->crud->setColumnDetails('headquarter_id', [
             'label' => ucfirst(__('headquarter')),
             'type' => 'select',
@@ -685,9 +693,17 @@ class ProcessCrudController extends CrudController
                     'label' => 'ID',
                     'name' => 'id',
                 ],
-                'name' => [
+                'godfather' => [
                     'label' => ucfirst(__('godfather')),
                     'name' => 'godfatherLink',
+                ],
+                'headquarter' => [
+                    'label' => ucfirst(__('headquarter')),
+                    'name' => 'headquarterLink',
+                ],
+                'protocol' => [
+                    'label' => ucfirst(__('protocol')),
+                    'name' => 'protocolLink',
                 ],
                 'value' => [
                     'label' => __('Value'),

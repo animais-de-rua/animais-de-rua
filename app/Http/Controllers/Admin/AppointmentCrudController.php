@@ -243,7 +243,7 @@ class AppointmentCrudController extends CrudController
         ]);
 
         $this->crud->setColumnDetails('vet_id_1', [
-            'name' => 'vet1',
+            'name' => 'vet_id_1',
             'label' => ucfirst(__('vet')) . ' 1',
             'type' => 'model_function',
             'limit' => 120,
@@ -256,7 +256,7 @@ class AppointmentCrudController extends CrudController
         ]);
 
         $this->crud->setColumnDetails('vet_id_2', [
-            'name' => 'vet2',
+            'name' => 'vet_id_2',
             'label' => ucfirst(__('vet')) . ' 2',
             'type' => 'model_function',
             'limit' => 120,

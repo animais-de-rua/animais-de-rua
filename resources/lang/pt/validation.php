@@ -159,6 +159,7 @@ return [
         'benefit' => 'benefício',
         'contact' => 'contacto',
         'council' => 'concelho',
+        'date' => 'data',
         'date_1' => 'data',
         'date_2' => 'data',
         'description' => 'descrição',

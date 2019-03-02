@@ -88,7 +88,13 @@ class Donation extends Model
 
     public function getProtocolLinkAttribute()
     {
-        return $this->getLink($this->protocol, is('admin', 'accountancy'));
+        if (!$this->protocol) {
+            return '-';
+        }
+
+        $name = "{$this->protocol->name} ({$this->protocol->headquarter->name})";
+
+        return is('admin', 'accountancy') ? "<a href='/admin/protocol/{$this->protocol->id}/edit'>$name</a>" : $name;
     }
 
     public function getFullValueAttribute()
