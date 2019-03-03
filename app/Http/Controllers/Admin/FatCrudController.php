@@ -62,15 +62,13 @@ class FatCrudController extends CrudController
         ]);
 
         if (is('admin')) {
-            $headquarters = restrictToHeadquarters();
             $this->crud->addField([
                 'label' => ucfirst(__('headquarter')),
-                'name' => 'headquarter_id',
-                'type' => 'select2',
-                'entity' => 'headquarter',
+                'type' => 'select2_multiple_data_source',
+                'name' => 'headquarters',
                 'attribute' => 'name',
-                'model' => 'App\Models\Headquarter',
-                'default' => count($headquarters) ? $headquarters[0] : null,
+                'model' => api()->headquarterSearch(),
+                'pivot' => true,
             ]);
 
             $this->crud->addField([
@@ -123,7 +121,7 @@ class FatCrudController extends CrudController
             $this->crud->addColumn([
                 'label' => ucfirst(__('headquarter')),
                 'type' => 'select',
-                'entity' => 'headquarter',
+                'entity' => 'headquarters',
                 'attribute' => 'name',
                 'model' => "App\Models\Headquarter",
             ]);
@@ -150,7 +148,9 @@ class FatCrudController extends CrudController
             ],
                 $this->wantsJSON() ? null : api()->headquarterList(),
                 function ($values) {
-                    $this->crud->addClause('whereIn', 'headquarter_id', json_decode($values));
+                    $this->crud->addClause('whereHas', 'headquarters', function ($query) use ($values) {
+                        $query->whereIn('headquarter_id', json_decode($values) ?: []);
+                    })->get();
                 });
         }
 

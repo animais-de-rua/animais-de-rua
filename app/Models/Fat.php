@@ -18,7 +18,7 @@ class Fat extends Model
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['name', 'email', 'phone', 'headquarter_id', 'territory_id', 'user_id'];
+    protected $fillable = ['name', 'email', 'phone', 'territory_id', 'user_id'];
     // protected $hidden = [];
     // protected $dates = [];
 
@@ -44,9 +44,9 @@ class Fat extends Model
         return $this->belongsTo('App\Models\Territory', 'territory_id');
     }
 
-    public function headquarter()
+    public function headquarters()
     {
-        return $this->belongsTo('App\Models\Headquarter', 'headquarter_id');
+        return $this->belongsToMany('App\Models\Headquarter', 'fats_headquarters', 'fat_id', 'headquarter_id');
     }
 
     public function user()
