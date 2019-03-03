@@ -1813,6 +1813,11 @@ footer {
         }
     }
 
+    input[type="file"] {
+        padding: 6px 4px!important;
+        margin-bottom: 10px!important;
+    }
+
     input, textarea {
         color: #FFF;
     }
@@ -1966,6 +1971,12 @@ footer {
         font-size: 1.3rem;
         font-style: italic;
         line-height: 18px;
+    }
+
+    .apply {
+        input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]), select {
+            height: 36px;
+        }
     }
 }
 

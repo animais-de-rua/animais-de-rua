@@ -194,7 +194,14 @@
                                 </select>
                                 <div>
                                     <span style="font-size:1.2rem;color:#fff;font-weight:bold;">{{ __("Select at least 3 pictures.") }}</span>
-                                    <input type="file" class="last-child" required multiple name="images[]" placeholder="{{ __("Photos") }}" style="padding: 9px;"/>
+                                    <div class="row row-wrap">
+                                        <div class="column column-50"><input type="file" class="last-child" required name="images[0]" placeholder="{{ __("Photos") }}"/></div>
+                                        <div class="column column-50"><input type="file" class="last-child" required name="images[1]" placeholder="{{ __("Photos") }}"/></div>
+                                    </div>
+                                    <div class="row row-wrap">
+                                        <div class="column column-50"><input type="file" class="last-child" required name="images[2]" placeholder="{{ __("Photos") }}"/></div>
+                                        <div class="column column-50"><input type="file" class="last-child" name="images[3]" placeholder="{{ __("Photos") }}"/></div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="column column-50 checkbox">
@@ -205,7 +212,7 @@
                                     <label for="colab{{ $i }}">{{ __("web.forms.colab.$i") }}</label>
                                 </div>
                                 @endfor
-                                <textarea required name="observations" style="height: 132px; margin: 10px 0 6px;" placeholder="{{ __("Observations") }}"></textarea>
+                                <textarea required name="observations" style="height: 125px; margin: 10px 0 6px;" placeholder="{{ __("Observations") }}"></textarea>
                                 <div class="submit" style="margin: 0; display: block;">
                                     <div class="checkbox">
                                         <input type="checkbox" name="newsletter" value="newsletter" id="newsletter4" />
