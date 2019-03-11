@@ -108,6 +108,8 @@ return [
             9 => 'vets',
             10 => 'protocols',
             11 => 'council',
+            12 => 'store_orders',
+            13 => 'store_shippments',
         ],
     ],
 

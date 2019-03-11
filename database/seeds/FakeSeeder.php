@@ -10,6 +10,8 @@ use App\Models\Godfather;
 use App\Models\Process;
 use App\Models\Protocol;
 use App\Models\ProtocolRequest;
+use App\Models\StoreOrder;
+use App\Models\StoreProduct;
 use App\Models\Treatment;
 use App\Models\Vet;
 use Backpack\Base\app\Models\BackpackUser as User;
@@ -39,6 +41,9 @@ class FakeSeeder extends Seeder
         DB::table('adoptions')->truncate();
         DB::table('protocols_requests')->truncate();
         DB::table('protocols')->truncate();
+        DB::table('store_products')->truncate();
+        DB::table('store_orders')->truncate();
+        DB::table('store_orders_products')->truncate();
 
         $permissions = EnumHelper::keys('user.permissions');
 
@@ -108,6 +113,18 @@ class FakeSeeder extends Seeder
         $this->log('Protocols');
         factory(Protocol::class, 6)->create();
         factory(ProtocolRequest::class, 80)->create();
+
+        // Store
+        $this->log('Store Products');
+        factory(StoreProduct::class, 8)->create();
+        
+        $this->log('Store Orders');
+        factory(StoreOrder::class, 80)->create()->each(function ($order) {
+            $products = StoreProduct::inRandomOrder()->get();
+            for ($i = 0; $i < rand(1, 5); $i++) {
+                $order->products()->attach([$products[$i]->id => ['quantity' => rand(1, 3)]]);
+            }
+        });
     }
 
     public function log($entity)

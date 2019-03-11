@@ -93,4 +93,17 @@ document.addEventListener("DOMContentLoaded", function() {
         donationTypeSelectChange();
     }
 
+    // Order sent
+    let orderSent = document.querySelector('input[order=sent]');
+    if(orderSent) {
+        let orderSentSelectChange = e => {
+            document.querySelectorAll("[order=details]").forEach(e => {
+                orderSent.checked ? e.removeAttribute('disabled') : e.setAttribute('disabled', 'disabled');
+            });
+        }
+        orderSent.onchange = orderSentSelectChange;
+        orderSentSelectChange();
+    }
+    
+
 });

@@ -64,6 +64,11 @@ Route::group(['prefix' => config('backpack.base.route_prefix'), 'middleware' => 
     CRUD::resource('sponsor', 'SponsorCrudController');
     CRUD::resource('fat', 'FatCrudController');
 
+    // Store
+    CRUD::resource('store/products', 'StoreProductCrudController');
+    CRUD::resource('store/orders', 'StoreOrderCrudController');
+    CRUD::resource('store/shipments', 'StoreShipmentCrudController');
+
     // API
     Route::get('{entity}/ajax/{action}/{extra?}', 'APICrudController@ajax');
     Route::post('api/appointment/approve', 'APICrudController@approveAppointment');

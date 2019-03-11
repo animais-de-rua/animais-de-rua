@@ -13,6 +13,7 @@ use App\Models\Headquarter;
 use App\Models\PartnerCategory;
 use App\Models\Process;
 use App\Models\Protocol;
+use App\Models\StoreProduct;
 use App\Models\Territory;
 use App\Models\Treatment;
 use App\Models\TreatmentType;
@@ -377,6 +378,16 @@ class APICrudController extends CrudController
     public function treatmentTypeList()
     {
         return TreatmentType::get()->pluck('name', 'id')->toArray();
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Store Products
+    |--------------------------------------------------------------------------
+    */
+    public function storeProductList()
+    {
+        return StoreProduct::get()->pluck('name', 'id')->toArray();
     }
 
     /*

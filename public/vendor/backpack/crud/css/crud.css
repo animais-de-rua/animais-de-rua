@@ -7,3 +7,13 @@
 tr.approved {
 	background-color: #ECF0F5!important;
 }
+
+.order-table td {
+	min-width: 100px;
+	border: 1px solid #ccc;
+	padding: 1px 4px;
+}
+
+.order-table td.right {
+	text-align: right;
+}
