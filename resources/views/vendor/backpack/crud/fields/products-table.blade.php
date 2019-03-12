@@ -5,10 +5,13 @@ $max = -1;
 $min = 1;
 $item_name = __('product');
 
-$items = old(square_brackets_to_dots($field['name'])) ?? $field['value'] ?? $field['default'] ?? '';
+$items = old(square_brackets_to_dots($field['name'])) ?? $field['value'] ?? $field['default'] ?? [];
 
 // make sure not matter the attribute casting
 // the $items variable contains a properly defined JSON
+if (is_object($items)) {
+    $items = $items->toArray();
+}
 if (is_array($items)) {
     if (count($items)) {
         $items = json_encode($items);
@@ -29,7 +32,7 @@ if (is_array($items)) {
 
     <div class="array-container form-group">
 
-        <table class="table table-bordered table-striped m-b-0" ng-init="field = '#{{ $field['name'] }}'; items = {{ json_encode($items) }}; max = {{$max}}; min = {{$min}}; maxErrorTitle = '{{trans('backpack::crud.table_cant_add', ['entity' => $item_name])}}'; maxErrorMessage = '{{trans('backpack::crud.table_max_reached', ['max' => $max])}}'">
+        <table class="table table-bordered table-striped m-b-0" ng-init="field = '#{{ $field['name'] }}'; items = {{ $items }}; max = {{$max}}; min = {{$min}}; maxErrorTitle = '{{trans('backpack::crud.table_cant_add', ['entity' => $item_name])}}'; maxErrorMessage = '{{trans('backpack::crud.table_max_reached', ['max' => $max])}}'">
 
             <thead>
                 <tr>
@@ -39,8 +42,11 @@ if (is_array($items)) {
                     <th style="font-weight: 600!important;">
                         {{ __('Quantity') }}
                     </th>
+
+                    @if(!$field['readonly'])
                     <th style="width: 50px;" class="text-center" ng-if="max == -1 || max > 1"> {{-- <i class="fa fa-sort"></i> --}} </th>
                     <th style="width: 50px;" class="text-center" ng-if="max == -1 || max > 1"> {{-- <i class="fa fa-trash"></i> --}} </th>
+                    @endif
                 </tr>
             </thead>
 
@@ -62,24 +68,33 @@ if (is_array($items)) {
                     </td>
 
                     <td>
-                        <input class="form-control input-sm" type="number" step="1" ng-model="item.pivot.quantity" style="height: 34px;">
+                        <input
+                            @include('crud::inc.field_attributes', ['default_class' => 'form-control input-sm'])
+                            type="number"
+                            step="1"
+                            ng-model="item.pivot.quantity"
+                            style="height: 34px;">
                     </td>
 
+                    @if(!$field['readonly'])
                     <td ng-if="max == -1 || max > 1">
                         <span class="btn btn-sm btn-default sort-handle"><span class="sr-only">sort item</span><i class="fa fa-sort" role="presentation" aria-hidden="true"></i></span>
                     </td>
                     <td ng-if="max == -1 || max > 1">
                         <button ng-hide="min > -1 && $index < min" class="btn btn-sm btn-default" type="button" ng-click="removeItem(item);"><span class="sr-only">delete item</span><i class="fa fa-trash" role="presentation" aria-hidden="true"></i></button>
                     </td>
+                    @endif
                 </tr>
 
             </tbody>
 
         </table>
 
+        @if(!$field['readonly'])
         <div class="array-controls btn-group m-t-10">
             <button ng-if="max == -1 || items.length < max" class="btn btn-sm btn-default" type="button" ng-click="addItem()"><i class="fa fa-plus"></i> {{trans('backpack::crud.add')}} {{ $item_name }}</button>
         </div>
+        @endif
 
     </div>
 

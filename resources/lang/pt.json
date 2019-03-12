@@ -115,6 +115,7 @@
     "Sells": "Vendas",
     "Profit": "Lucro",
     "Sent": "Enviado",
+    "Not sent": "Não enviado",
     "Total products": "Artigos",
     "Shipment date": "Data de envio",
     "Your message has been successfully sent.": "A sua mensagem foi enviada com successo.",
@@ -208,6 +209,8 @@
     "accountancy": "contabilidade",
     "store": "loja",
     "friend card": "cartão amigo",
+    "store orders": "loja, encomendas",
+    "store shippments": "loja, envios",
 
     "Select a godfather": "Seleccione um padrinho",
     "Select a process": "Seleccione um processo",

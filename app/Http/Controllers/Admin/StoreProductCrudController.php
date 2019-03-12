@@ -64,32 +64,39 @@ class StoreProductCrudController extends CrudController
             'suffix' => '€',
         ]);
 
-        $this->crud->addColumn([
-            'name' => 'expense',
-            'label' => __('Expense'),
-            'suffix' => '€',
-        ]);
+        if (is('admin')) {
+            $this->crud->addColumn([
+                'name' => 'expense',
+                'label' => __('Expense'),
+                'suffix' => '€',
+            ]);
 
-        $this->crud->addColumn([
-            'name' => 'sells',
-            'label' => __('Sells'),
-            'type' => 'model_function',
-            'function_name' => 'getTotalSellsValue',
-        ]);
+            $this->crud->addColumn([
+                'name' => 'sells',
+                'label' => __('Sells'),
+                'type' => 'model_function',
+                'function_name' => 'getTotalSellsValue',
+            ]);
 
-        $this->crud->addColumn([
-            'name' => 'profit',
-            'label' => __('Profit'),
-            'type' => 'model_function',
-            'function_name' => 'getTotalProfitValue',
-            'suffix' => '€',
-        ]);
+            $this->crud->addColumn([
+                'name' => 'profit',
+                'label' => __('Profit'),
+                'type' => 'model_function',
+                'function_name' => 'getTotalProfitValue',
+                'suffix' => '€',
+            ]);
+        }
 
         // ------ ADVANCED QUERIES
         $this->crud->addClause('with', ['orders' => function ($query) {
             $query->selectRaw('store_product_id, SUM(quantity) as sells')
                 ->groupBy('store_product_id');
         }]);
+
+        // ------ CRUD ACCESS
+        if (!is('admin')) {
+            $this->crud->denyAccess(['show', 'create', 'update', 'delete']);
+        }
 
         // add asterisk for fields that are required in StoreProductsRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');

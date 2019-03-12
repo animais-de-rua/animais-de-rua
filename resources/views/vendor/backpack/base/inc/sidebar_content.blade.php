@@ -59,7 +59,7 @@
 </li>
 @endif
 
-@if(restrictTo('admin', ['store_orders', 'store_shippments']))
+@if(restrictTo('admin', ['store orders', 'store shippments']))
 <li class="header">{{ __("Store") }}</li>
 <li><a href="{{ backpack_url('store/products') }}"><i class="fa fa-cubes"></i> <span class="text-capitalize">{{ __("products") }}</span></a></li>
 <li><a href="{{ backpack_url('store/orders') }}"><i class="fa fa-shopping-cart"></i> <span class="text-capitalize">{{ __("orders") }}</span></a></li>

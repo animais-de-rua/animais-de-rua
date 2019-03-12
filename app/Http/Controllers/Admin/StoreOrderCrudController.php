@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\StoreOrderRequest as StoreRequest;
 use App\Http\Requests\StoreOrderRequest as UpdateRequest;
 use App\Models\StoreOrder;
+use App\User;
 
 /**
  * Class StoreOrdersCrudController
@@ -30,22 +31,29 @@ class StoreOrderCrudController extends CrudController
         |--------------------------------------------------------------------------
         */
 
+        $attributes = is('admin', 'store orders') ? [] : [
+            'disabled' => 'disabled',
+        ];
+
         $this->crud->addField([
             'label' => __('Reference'),
             'name' => 'reference',
             'type' => 'text',
+            'attributes' => $attributes,
         ]);
 
         $this->crud->addField([
             'label' => __('Recipient'),
             'name' => 'recipient',
             'type' => 'text',
+            'attributes' => $attributes,
         ]);
 
         $this->crud->addField([
             'label' => __('Address'),
             'name' => 'address',
             'type' => 'textarea',
+            'attributes' => $attributes,
         ]);
 
         $this->crud->addField([
@@ -57,22 +65,23 @@ class StoreOrderCrudController extends CrudController
             'model' => '\App\User',
             'placeholder' => '',
             'minimum_input_length' => 2,
-            'data_source' => null,
-            // 'attributes' => [
-            //     'disabled' => 'disabled',
-            // ],
+            'data_source' => url('admin/user/ajax/search/' . User::VOLUNTEER),
+            'attributes' => $attributes,
         ]);
 
         $this->crud->addField([
             'name' => 'products',
             'type' => 'products-table',
             'options' => $this->wantsJSON() ? null : api()->storeProductList(),
+            'attributes' => $attributes,
+            'readonly' => !is('admin', 'store orders'),
         ]);
 
         $this->crud->addField([
             'label' => __('Notes'),
             'name' => 'notes',
             'type' => 'textarea',
+            'attributes' => $attributes,
         ]);
 
         $this->separator(ucfirst(__('shipment')))->afterField('notes');
@@ -148,6 +157,57 @@ class StoreOrderCrudController extends CrudController
             'label' => __('Shipment date'),
         ]);
 
+        // Filtrers
+        if (is('admin')) {
+            $this->crud->addFilter([
+                'name' => 'user',
+                'type' => 'select2_ajax',
+                'label' => ucfirst(__('volunteer')),
+                'placeholder' => __('Select a volunteer'),
+            ],
+                url('admin/user/ajax/filter/' . User::VOLUNTEER),
+                function ($value) {
+                    $this->crud->addClause('where', 'user_id', $value);
+                });
+        }
+
+        $this->crud->addFilter([
+            'type' => 'date_range',
+            'name' => 'from_to',
+            'label' => __('Shipment date'),
+            'format' => 'DD/MM/YYYY',
+            'firstDay' => 1,
+        ],
+            false,
+            function ($value) {
+                $dates = json_decode($value);
+                $this->crud->query->whereRaw('shipment_date >= ? AND shipment_date <= DATE_ADD(?, INTERVAL 1 DAY)', [$dates->from, $dates->to]);
+            });
+
+        $this->crud->addFilter([
+            'type' => 'simple',
+            'name' => 'sent',
+            'label' => __('Sent'),
+        ],
+            false,
+            function ($value) {
+                if ($value) {
+                    $this->crud->addClause('where', 'shipment_date', '>', '0');
+                }
+            });
+
+        $this->crud->addFilter([
+            'type' => 'simple',
+            'name' => 'not_sent',
+            'label' => __('Not sent'),
+        ],
+            false,
+            function ($value) {
+                if ($value) {
+                    $this->crud->addClause('where', 'shipment_date', null);
+                }
+            });
+
         // ------ CRUD DETAILS ROW
         $this->crud->enableDetailsRow();
         $this->crud->allowAccess('details_row');
@@ -162,6 +222,25 @@ class StoreOrderCrudController extends CrudController
             $query->selectRaw('store_product_id, SUM(quantity) as sells')
                 ->groupBy('store_order_id');
         }]);
+
+        // ------ CRUD ACCESS
+        if (!is('admin')) {
+            $this->crud->denyAccess(['delete']);
+        }
+
+        if (!is('admin', ['store orders', 'store shippments'])) {
+            $this->crud->denyAccess(['list', 'show', 'create', 'update']);
+        }
+
+        if (!is('admin', 'store orders')) {
+            $this->crud->denyAccess(['create']);
+
+            // Filter by user
+            $this->crud->addClause('where', 'user_id', backpack_user()->id);
+        }
+
+        $this->crud->addClause('orderBy', 'id', 'DESC');
+        // $this->crud->addClause('orderBy', 'shipment_date', 'ASC');
 
         // add asterisk for fields that are required in StoreOrdersRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
@@ -184,24 +263,28 @@ class StoreOrderCrudController extends CrudController
 
     public function store(StoreRequest $request)
     {
-        return parent::storeCrud($request);
+        $result = parent::storeCrud($request);
+
+        $this->inserProductRelation($this->crud->entry->id, $request);
+
+        return $result;
     }
 
     public function update(UpdateRequest $request)
     {
-        $order = StoreOrder::find($request->id);
+        $this->inserProductRelation($request->id, $request);
+
+        return parent::updateCrud($request);
+    }
+
+    private function inserProductRelation($id, $request)
+    {
+        $order = StoreOrder::find($id);
         $order->products()->detach();
 
         $products = json_decode($request->products);
         foreach ($products as $product) {
             $order->products()->attach([$product->pivot->store_product_id => (array) $product->pivot]);
         }
-
-        if (!$request->sent) {
-            $request->request->set('shipment_date', null);
-            $request->request->set('expense', null);
-        }
-
-        return parent::updateCrud($request);
     }
 }
