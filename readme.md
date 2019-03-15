@@ -1,4 +1,4 @@
-<p align="center"><img src="https://admin.animaisderua.org/img/logo/logo-text.svg" width="460"></p>
+<p align="center"><img src="https://animaisderua.org/img/logo/logo-text.svg" width="460"></p>
 
 <p align="center">
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
