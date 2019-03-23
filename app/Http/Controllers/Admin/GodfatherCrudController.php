@@ -238,7 +238,7 @@ class GodfatherCrudController extends CrudController
         $this->crud->addClause('with', ['donations' => function ($query) {
             $query->selectRaw('godfather_id, sum(value) as total')
                 ->groupBy(['godfather_id']);
-        }]);
+        }, 'user']);
 
         // Add asterisk for fields that are required
         $this->crud->setRequiredFields(StoreRequest::class, 'create');

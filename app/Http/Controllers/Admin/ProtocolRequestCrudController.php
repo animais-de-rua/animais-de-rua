@@ -222,7 +222,7 @@ class ProtocolRequestCrudController extends CrudController
         }
 
         // ------ ADVANCED QUERIES
-        $this->crud->query->with(['process', 'territory', 'user']);
+        $this->crud->addClause('with', ['process', 'protocol', 'territory', 'user']);
 
         $this->crud->addClause('orderBy', 'id', 'DESC');
 

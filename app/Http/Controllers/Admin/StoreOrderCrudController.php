@@ -221,7 +221,7 @@ class StoreOrderCrudController extends CrudController
         $this->crud->addClause('with', ['products' => function ($query) {
             $query->selectRaw('store_product_id, SUM(quantity) as sells')
                 ->groupBy('store_order_id');
-        }]);
+        }, 'user']);
 
         // ------ CRUD ACCESS
         if (!is('admin')) {

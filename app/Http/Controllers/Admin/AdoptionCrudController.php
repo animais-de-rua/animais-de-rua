@@ -224,7 +224,8 @@ class AdoptionCrudController extends CrudController
             'function_name' => 'getProcessLinkAttribute',
         ]);
 
-        if (is('admin') || count(restrictToHeadquarters()) > 1) {
+        $headquarters = restrictToHeadquarters();
+        if (is('admin') || $headquarters && count($headquarters) > 1) {
             $this->crud->addColumn([
                 'name' => 'headquarter',
                 'label' => ucfirst(__('headquarter')),

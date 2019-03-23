@@ -105,7 +105,7 @@ class ProtocolCrudController extends CrudController
                 'entity' => 'headquarter',
                 'attribute' => 'name',
                 'model' => 'App\Models\Headquarter',
-                'default' => count($headquarters) ? $headquarters[0] : null,
+                'default' => $headquarters && count($headquarters) ? $headquarters[0] : null,
             ]);
 
             $this->crud->addField([

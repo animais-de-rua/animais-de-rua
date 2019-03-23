@@ -166,6 +166,8 @@ class FatCrudController extends CrudController
         }
 
         // ------ ADVANCED QUERIES
+        $this->crud->addClause('with', ['user']);
+
         $this->crud->addClause('orderBy', 'id', 'DESC');
 
         // Add asterisk for fields that are required
@@ -179,7 +181,7 @@ class FatCrudController extends CrudController
         $headquarters = restrictToHeadquarters();
         $request->merge([
             'user_id' => backpack_user()->id,
-            'headquarter_id' => count($headquarters) ? $headquarters[0] : null,
+            'headquarter_id' => $headquarters && count($headquarters) ? $headquarters[0] : null,
         ]);
 
         return parent::storeCrud($request);

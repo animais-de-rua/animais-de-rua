@@ -173,7 +173,7 @@ class AdopterCrudController extends CrudController
         }
 
         // ------ ADVANCED QUERIES
-        $this->crud->query->with(['adoption']);
+        $this->crud->addClause('with', ['adoption', 'user']);
 
         $this->crud->addClause('orderBy', 'id', 'DESC');
 

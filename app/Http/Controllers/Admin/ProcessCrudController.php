@@ -77,7 +77,7 @@ class ProcessCrudController extends CrudController
                 'entity' => 'headquarter',
                 'attribute' => 'name',
                 'model' => 'App\Models\Headquarter',
-                'default' => count($headquarters) ? $headquarters[0] : null,
+                'default' => $headquarters && count($headquarters) ? $headquarters[0] : null,
             ])->afterField('territory_id');
         }
 
@@ -567,6 +567,8 @@ class ProcessCrudController extends CrudController
             $query->selectRaw('process_id, sum(expense) as total_expenses, sum(affected_animals) as total_operations')
                 ->groupBy('process_id');
         }]);
+
+        $this->crud->addClause('with', ['user']);
 
         $this->crud->addClause('orderBy', 'processes.id', 'DESC');
 

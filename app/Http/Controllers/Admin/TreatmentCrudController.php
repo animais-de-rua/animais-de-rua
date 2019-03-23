@@ -410,7 +410,7 @@ class TreatmentCrudController extends CrudController
         }
 
         // ------ ADVANCED QUERIES
-        $this->crud->query->with(['appointment', 'vet', 'user', 'treatment_type']);
+        $this->crud->addClause('with', ['appointment.process', 'vet', 'user', 'treatment_type']);
 
         $this->crud->addClause('orderBy', 'id', 'DESC');
 

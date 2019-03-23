@@ -323,7 +323,7 @@ class DonationCrudController extends CrudController
         }
 
         // ------ ADVANCED QUERIES
-        $this->crud->query->with(['process', 'godfather']);
+        $this->crud->addClause('with', ['process', 'godfather', 'user']);
 
         $this->crud->addClause('orderBy', 'id', 'DESC');
 
