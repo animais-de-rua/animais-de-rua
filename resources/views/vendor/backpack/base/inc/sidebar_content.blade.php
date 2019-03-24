@@ -59,7 +59,7 @@
 </li>
 @endif
 
-@if(restrictTo('admin', ['store orders', 'store shippments']))
+@if(restrictTo(['admin', 'store'], ['store orders', 'store shippments']))
 <li class="header">{{ __("Store") }}</li>
 <li><a href="{{ backpack_url('store/products') }}"><i class="fa fa-cubes"></i> <span class="text-capitalize">{{ __("products") }}</span></a></li>
 <li><a href="{{ backpack_url('store/orders') }}"><i class="fa fa-shopping-cart"></i> <span class="text-capitalize">{{ __("orders") }}</span></a></li>
@@ -80,12 +80,17 @@
 @endif
 
 
-@if(restrictTo('admin', ['website', 'friend card']))
+@if(restrictTo(['admin', 'translator'], ['website', 'friend card']))
 <li class="header">Admin</li>
-@if(restrictTo('admin', 'website'))
+@if(restrictTo(['admin', 'translator'], 'website'))
+<li class="treeview">
+    <a href="#"><i class="fa fa-window-maximize"></i> <span>Website</span> <i class="fa fa-angle-left pull-right"></i></a>
     <ul class="treeview-menu">
         <li><a href="{{ backpack_url('page') }}"><i class="fa fa-file-o"></i> <span>{{ __("Pages") }}</span></a></li>
+
+        @if(restrictTo('admin', 'website'))
         <li><a href="{{ backpack_url('campaign') }}"><i class="fa fa-file-o"></i> <span class="text-capitalize">{{ __("campaigns") }}</span></a></li>
+        @endif
     </ul>
 </li>
 @endif

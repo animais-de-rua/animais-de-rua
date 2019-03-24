@@ -214,9 +214,6 @@ class StoreOrderCrudController extends CrudController
 
         $this->crud->enableExportButtons();
 
-        // Buttons
-        $this->crud->addButtonFromModelFunction('line', 'add_shipment', 'addShipment', 'beginning');
-
         // ------ ADVANCED QUERIES
         $this->crud->addClause('with', ['products' => function ($query) {
             $query->selectRaw('store_product_id, SUM(quantity) as sells')
@@ -228,8 +225,12 @@ class StoreOrderCrudController extends CrudController
             $this->crud->denyAccess(['delete']);
         }
 
+        if (!is(['admin', 'store'])) {
+            $this->crud->denyAccess('list');
+        }
+
         if (!is('admin', ['store orders', 'store shippments'])) {
-            $this->crud->denyAccess(['list', 'show', 'create', 'update']);
+            $this->crud->denyAccess(['show', 'create', 'update']);
         }
 
         if (!is('admin', 'store orders')) {
@@ -237,6 +238,11 @@ class StoreOrderCrudController extends CrudController
 
             // Filter by user
             $this->crud->addClause('where', 'user_id', backpack_user()->id);
+        }
+
+        // Add Shipment button
+        if (is('admin', ['store shippments'])) {
+            $this->crud->addButtonFromModelFunction('line', 'add_shipment', 'addShipment', 'beginning');
         }
 
         $this->crud->addClause('orderBy', 'id', 'DESC');

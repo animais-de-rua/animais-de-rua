@@ -95,6 +95,7 @@ return [
             1 => 'admin',
             2 => 'volunteer',
             3 => 'store',
+            4 => 'translator',
         ],
         'permissions' => [
             1 => 'processes',

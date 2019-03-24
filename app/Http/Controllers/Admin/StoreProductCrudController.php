@@ -94,6 +94,10 @@ class StoreProductCrudController extends CrudController
         }]);
 
         // ------ CRUD ACCESS
+        if (!is(['admin', 'store'])) {
+            $this->crud->denyAccess(['list']);
+        }
+
         if (!is('admin')) {
             $this->crud->denyAccess(['show', 'create', 'update', 'delete']);
         }

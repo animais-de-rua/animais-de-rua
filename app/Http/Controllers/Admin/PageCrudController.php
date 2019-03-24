@@ -13,8 +13,11 @@ class PageCrudController extends \Backpack\PageManager\app\Http\Controllers\Admi
     {
         parent::setup($template_name);
 
-        $this->crud->removeButton('create');
-        $this->crud->removeButton('delete');
+        if (!is(['admin', 'translator'], 'website')) {
+            $this->crud->denyAccess(['list', 'update']);
+        }
+
+        $this->crud->denyAccess(['create', 'delete']);
     }
 
     public function addDefaultPageFields($template = false)
