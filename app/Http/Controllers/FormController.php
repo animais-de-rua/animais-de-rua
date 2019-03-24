@@ -177,6 +177,7 @@ class FormController extends Controller
         $process->history = $request->observations;
         $process->images = $images_value;
         $process->notes = $notes;
+        $process->address = $request->address . ', ' . $request->postalcode;
 
         $process->status = 'approving';
         $process->urgent = 0;

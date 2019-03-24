@@ -173,7 +173,14 @@
                                         </select>
                                     </div>
                                 </div>
-                                <input type="text" required name="address" placeholder="{{ __("Address") }}" />
+                                <div class="row row-wrap">
+                                    <div class="column column-50">
+                                        <input type="text" required name="address" placeholder="{{ __("Address") }}" />
+                                    </div>
+                                    <div class="column column-50">
+                                        <input type="text" required name="postalcode" placeholder="{{ __("Postal Code") }}" />
+                                    </div>
+                                </div>
                                 <select required name="district" autocomplete="address-level1" class="dark empty" onchange="modal.onDistrictSelect(this)">
                                     <option value="" disabled selected>{{ ucfirst(__("district")) }}</option>
                                     @foreach($form_acting_territories[0] as $district)
