@@ -572,6 +572,11 @@ class ProcessCrudController extends CrudController
 
         $this->crud->addClause('orderBy', 'processes.id', 'DESC');
 
+        // Checks if status filter is in use
+        if (!$this->crud->filters->pluck('currentValue', 'name')['status']) {
+            $this->crud->addClause('where', 'processes.status', 'NOT LIKE', 'archived');
+        }
+
         $this->crud->allowAccess('show');
         $this->crud->removeButton('show');
 
