@@ -169,7 +169,6 @@ class GodfatherCrudController extends CrudController
         ]);
 
         $this->crud->setColumnDetails('user_id', [
-            'name' => 'user',
             'label' => ucfirst(__('volunteer')),
             'type' => 'model_function',
             'limit' => 120,

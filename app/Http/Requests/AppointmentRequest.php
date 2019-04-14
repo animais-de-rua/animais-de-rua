@@ -34,6 +34,7 @@ class AppointmentRequest extends FormRequest
             'date_2' => 'nullable|date',
             'amount_males' => 'required|numeric|min:0|max:200',
             'amount_females' => 'required|numeric|min:0|max:200',
+            'amount_other' => 'required|numeric|min:0|max:200',
             'status' => 'in:' . EnumHelper::keys('appointment.status', ','),
             'notes' => 'nullable|min:3',
             'notes_deliver' => 'nullable|min:3',

@@ -217,7 +217,6 @@ class AdoptionCrudController extends CrudController
         ]);
 
         $this->crud->setColumnDetails('process_id', [
-            'name' => 'process',
             'label' => ucfirst(__('process')),
             'type' => 'model_function',
             'limit' => 120,
@@ -227,7 +226,7 @@ class AdoptionCrudController extends CrudController
         $headquarters = restrictToHeadquarters();
         if (is('admin') || $headquarters && count($headquarters) > 1) {
             $this->crud->addColumn([
-                'name' => 'headquarter',
+                'name' => 'headquarter_id',
                 'label' => ucfirst(__('headquarter')),
                 'type' => 'model_function',
                 'limit' => 120,
@@ -236,7 +235,6 @@ class AdoptionCrudController extends CrudController
         }
 
         $this->crud->setColumnDetails('user_id', [
-            'name' => 'user',
             'label' => ucfirst(__('volunteer')),
             'type' => 'model_function',
             'limit' => 120,
@@ -244,7 +242,6 @@ class AdoptionCrudController extends CrudController
         ]);
 
         $this->crud->setColumnDetails('fat_id', [
-            'name' => 'fat',
             'label' => __('FAT'),
             'type' => 'model_function',
             'limit' => 120,

@@ -110,7 +110,6 @@ class FatCrudController extends CrudController
         ]);
 
         $this->crud->setColumnDetails('user_id', [
-            'name' => 'user',
             'label' => ucfirst(__('volunteer')),
             'type' => 'model_function',
             'limit' => 120,
@@ -162,7 +161,7 @@ class FatCrudController extends CrudController
         if (!is('admin')) {
             $this->crud->denyAccess(['delete']);
 
-            $this->crud->addClause('whereIn', 'headquarter_id', restrictToHeadquarters());
+            $this->crud->addClause('whereIn', 'headquarter_id', restrictToHeadquarters() ?: []);
         }
 
         // ------ ADVANCED QUERIES

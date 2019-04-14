@@ -184,15 +184,33 @@ class APICrudController extends CrudController
     */
     public function fatSearch()
     {
-        $headquarters = restrictToHeadquarters();
-        $whereIn = $headquarters ? ['headquarter_id' => $headquarters] : [];
+        $search_term = $this->getSearchParam();
+        $results = Fat::select();
+        $searchFields = ['name', 'email'];
 
-        return $this->entitySearch(Fat::class, ['name', 'email'], null, $whereIn);
+        if ($search_term) {
+            $results = Fat::where(function ($query) use ($search_term, $searchFields) {
+                $query->where(array_shift($searchFields), 'LIKE', "%$search_term%");
+
+                foreach ($searchFields as $field) {
+                    $query->orWhere($field, 'LIKE', "%$search_term%");
+                }
+            });
+        }
+
+        if (!is('admin')) {
+            $results->whereHas('headquarters', function ($query) {
+                $headquarters = restrictToHeadquarters();
+                $query->whereIn('headquarter_id', $headquarters ?: []);
+            })->get();
+        }
+
+        return $results->paginate(10);
     }
 
     public function fatFilter()
     {
-        return $this->godfatherSearch()->pluck('name', 'id');
+        return $this->fatSearch()->pluck('name', 'id');
     }
 
     /*

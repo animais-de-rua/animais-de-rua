@@ -181,7 +181,7 @@ class ProcessCrudController extends CrudController
         $this->crud->addField($this->tableStats());
 
         // ------ CRUD COLUMNS
-        $this->crud->addColumns(['id', 'name', 'headquarter', 'created_at', 'specie', 'animal_count', 'status', 'urgent', 'total_donations', 'total_expenses', 'balance', 'total_operations', 'user_id', 'territory_id', 'phone', 'contact', 'address', 'notes', 'history']);
+        $this->crud->addColumns(['id', 'name', 'headquarter_id', 'created_at', 'specie', 'animal_count', 'status', 'urgent', 'total_donations', 'total_expenses', 'balance', 'total_operations', 'user_id', 'territory_id', 'phone', 'contact', 'address', 'notes', 'history']);
 
         $this->crud->setColumnDetails('id', [
             'label' => 'ID',
@@ -210,7 +210,7 @@ class ProcessCrudController extends CrudController
             'model' => "App\Models\Territory",
         ]);
 
-        $this->crud->setColumnDetails('headquarter', [
+        $this->crud->setColumnDetails('headquarter_id', [
             'label' => ucfirst(__('headquarter')),
             'type' => 'select',
             'entity' => 'headquarter',
@@ -269,7 +269,6 @@ class ProcessCrudController extends CrudController
         ]);
 
         $this->crud->setColumnDetails('user_id', [
-            'name' => 'user',
             'label' => ucfirst(__('volunteer')),
             'type' => 'model_function',
             'limit' => 120,

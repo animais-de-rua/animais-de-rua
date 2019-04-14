@@ -178,7 +178,7 @@
                                         <input type="text" required name="address" placeholder="{{ __("Address") }}" />
                                     </div>
                                     <div class="column column-50">
-                                        <input type="text" required name="postalcode" placeholder="{{ __("Postal Code") }}" />
+                                        <input type="text" required pattern="\d{4}-\d{3}" title="0000-000" name="postalcode" placeholder="{{ __("Postal Code") }}" />
                                     </div>
                                 </div>
                                 <select required name="district" autocomplete="address-level1" class="dark empty" onchange="modal.onDistrictSelect(this)">

@@ -153,7 +153,7 @@ class DonationCrudController extends CrudController
         }
 
         // ------ CRUD COLUMNS
-        $this->crud->addColumns(['id', 'type', 'godfather', 'headquarter', 'protocol', 'process', 'value', 'date', 'user_id']);
+        $this->crud->addColumns(['id', 'type', 'godfather_id', 'headquarter_id', 'protocol_id', 'process_id', 'value', 'date', 'user_id']);
 
         $this->crud->setColumnDetails('id', [
             'label' => 'ID',
@@ -169,32 +169,28 @@ class DonationCrudController extends CrudController
             'label' => __('Type'),
         ]);
 
-        $this->crud->setColumnDetails('godfather', [
-            'name' => 'godfather',
+        $this->crud->setColumnDetails('godfather_id', [
             'label' => ucfirst(__('godfather')),
             'type' => 'model_function',
             'limit' => 120,
             'function_name' => 'getGodfatherLinkAttribute',
         ]);
 
-        $this->crud->setColumnDetails('headquarter', [
-            'name' => 'headquarter',
+        $this->crud->setColumnDetails('headquarter_id', [
             'label' => ucfirst(__('headquarter')),
             'type' => 'model_function',
             'limit' => 120,
             'function_name' => 'getHeadquarterLinkAttribute',
         ]);
 
-        $this->crud->setColumnDetails('protocol', [
-            'name' => 'protocol',
+        $this->crud->setColumnDetails('protocol_id', [
             'label' => ucfirst(__('protocol')),
             'type' => 'model_function',
             'limit' => 120,
             'function_name' => 'getProtocolLinkAttribute',
         ]);
 
-        $this->crud->setColumnDetails('process', [
-            'name' => 'process',
+        $this->crud->setColumnDetails('process_id', [
             'label' => ucfirst(__('process')),
             'type' => 'model_function',
             'limit' => 120,
@@ -209,7 +205,6 @@ class DonationCrudController extends CrudController
         ]);
 
         $this->crud->setColumnDetails('user_id', [
-            'name' => 'user',
             'label' => ucfirst(__('volunteer')),
             'type' => 'model_function',
             'limit' => 120,

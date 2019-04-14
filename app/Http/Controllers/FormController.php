@@ -103,6 +103,8 @@ class FormController extends Controller
             'email' => 'required|email',
             'phone' => 'required|min:9|max:16',
             'process' => 'required',
+            'address' => 'required',
+            'postalcode' => 'required',
             'animals' => 'required|numeric',
             'specie' => 'required|in:' . EnumHelper::keys('process.specie', ',') . ',other',
             'parish' => 'required|exists:territories,id',
