@@ -12,6 +12,7 @@
     <meta name="keywords" content="{{ __('keywords') }}">
     <meta name="author" content="promatik.pt">
     <meta name="mobile-web-app-capable" content="yes">
+    <meta name="generator" content="Laravel">
 
     <title>@hasSection('title')@yield('title')@else{{ config('app.name') }}@endif</title>
 

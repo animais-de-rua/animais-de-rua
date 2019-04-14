@@ -33,16 +33,15 @@ return [
 
     // Date & Datetime Format Syntax: https://github.com/jenssegers/date#usage
     // (same as Carbon)
-    'default_date_format' => 'j F Y',
-    'default_datetime_format' => 'j F Y H:i',
+    'default_date_format' => 'D MMMM YYYY',
+    'default_datetime_format' => 'D MMMM YYYY, HH:mm',
 
     // Content of the HTML meta robots tag to prevent indexing and link following
     'meta_robots_content' => 'noindex, nofollow',
 
     // Overlays - CSS files that change the look and feel of the admin panel
     'overlays' => [
-        // 'vendor/backpack/base/backpack.bold.css',
-        // 'vendor/backpack/base/backpack.content.is.king.css',
+        // 'vendor/backpack/overlays/backpack.bold.css',
     ],
 
     /*
@@ -94,6 +93,7 @@ return [
     // Can be a single class or an array of clases
     'middleware_class' => [
         \Backpack\Base\app\Http\Middleware\CheckIfAdmin::class,
+        \App\Http\Middleware\AdminPanelAccess::class,
     ],
 
     // Alias for that middleware

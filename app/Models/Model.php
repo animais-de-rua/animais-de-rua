@@ -16,11 +16,8 @@ class Model extends \Illuminate\Database\Eloquent\Model
         return $link ? "<a href='/admin/$class/{$entity->id}/$action'>$name</a>" : $name;
     }
 
-    public function saveImage($model, $value, $path, $name, $max_width, $quality)
+    public function saveImage($model, $value, $path, $name, $max_width, $quality = 85, $attribute_name = 'image', $disk = 'uploads', $store = true)
     {
-        $attribute_name = 'image';
-        $disk = 'uploads';
-
         // if the image was erased
         if ($value == null) {
             \Storage::disk($disk)->delete($model->{$attribute_name});
@@ -29,7 +26,8 @@ class Model extends \Illuminate\Database\Eloquent\Model
 
         // if a base64 was sent, store it in the db
         if (starts_with($value, 'data:image')) {
-            $filename = str_slug($name) . '.jpg';
+            $timestamp = \Carbon\Carbon::now()->timestamp;
+            $filename = str_slug("$name $timestamp") . '.jpg';
 
             $image = \Image::make($value);
             if ($image->width() > $max_width) {
@@ -37,7 +35,30 @@ class Model extends \Illuminate\Database\Eloquent\Model
             }
 
             \Storage::disk($disk)->put($path . $filename, $image->stream('jpg', $quality));
-            $model->attributes[$attribute_name] = $path . $filename;
+            $model->attributes[$attribute_name] = str_replace(\Config::get('app.url'), '', $path . $filename);
+
+            return $model->attributes[$attribute_name];
+        } else {
+            $model->attributes[$attribute_name] = $value;
         }
+
+        // Clean path
+        $model->attributes[$attribute_name] = $this->cleanPath($model->attributes[$attribute_name], $disk);
+    }
+
+    public function cleanPath($path, $disk)
+    {
+        // Remove URL
+        $path = str_replace(\Config::get('app.url'), '', $path);
+
+        // Remove Disk
+        if ($disk) {
+            $path = preg_replace("/\/?$disk\/?/", '', $path);
+        }
+
+        // Remove First slash
+        $path = preg_replace("/^\//", '', $path);
+
+        return $path;
     }
 }
