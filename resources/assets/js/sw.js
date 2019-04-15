@@ -1,4 +1,4 @@
-const VERSION = '0.0.18';
+const VERSION = '0.0.20';
 const CACHE = 'adr';
 
 let cacheAssets = [
@@ -57,7 +57,7 @@ self.onfetch = e => {
 		return;
 
 	// Avoid external requests
-	if(!e.request.url.match(/animaisderua.org/))
+	if(!e.request.url.match(/https?:\/\/animaisderua.org/))
 		return;
 
 	// If it's a page access, retreive blank

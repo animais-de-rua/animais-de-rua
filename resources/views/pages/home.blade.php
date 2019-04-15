@@ -72,7 +72,7 @@
                         <div class="card">
                             <a href="{{ $product->url }}">
                                 <div class="image">
-                                    <div data-style="background-image:url('{{ $product->image }}')"></div>
+                                    <div style="background-image:url('{{ $product->image }}')"></div>
                                 </div>
                                 <div>
                                     <h1>{{ $product->name }}</h1>

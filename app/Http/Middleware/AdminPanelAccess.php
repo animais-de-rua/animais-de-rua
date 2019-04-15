@@ -15,7 +15,7 @@ class AdminPanelAccess
      */
     public function handle($request, Closure $next)
     {
-        if (!is('admin')) {
+        if (!is(['admin', 'volunteer', 'store', 'translator'])) {
             abort(401);
         }
 
