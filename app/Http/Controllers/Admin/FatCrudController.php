@@ -161,7 +161,10 @@ class FatCrudController extends CrudController
         if (!is('admin')) {
             $this->crud->denyAccess(['delete']);
 
-            $this->crud->addClause('whereIn', 'headquarter_id', restrictToHeadquarters() ?: []);
+            $this->crud->addClause('whereHas', 'headquarters', function ($query) {
+                $headquarters = restrictToHeadquarters();
+                $query->whereIn('headquarter_id', $headquarters ?: []);
+            });
         }
 
         // ------ ADVANCED QUERIES
@@ -183,7 +186,21 @@ class FatCrudController extends CrudController
             'headquarter_id' => $headquarters && count($headquarters) ? $headquarters[0] : null,
         ]);
 
-        return parent::storeCrud($request);
+        // Add user
+        $request->merge([
+            'user_id' => backpack_user()->id,
+        ]);
+
+        $store = parent::storeCrud($request);
+
+        // Add headquarters
+        $headquarters = restrictToHeadquarters();
+        if (!$request->headquarters && $headquarters) {
+            $fat_id = \DB::getPdo()->lastInsertId();
+            Fat::find($fat_id)->headquarters()->attach($headquarters);
+        }
+
+        return $store;
     }
 
     public function update(UpdateRequest $request)
