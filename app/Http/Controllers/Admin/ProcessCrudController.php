@@ -513,19 +513,22 @@ class ProcessCrudController extends CrudController
                 $range = json_decode($value);
 
                 $this->crud->query
-                    ->join('donations', 'processes.id', '=', 'donations.process_id')
-                    ->join('appointments', 'processes.id', '=', 'appointments.process_id')
-                    ->join('treatments', 'appointments.id', '=', 'treatments.appointment_id')
-                    ->select('processes.*')
-                    ->selectRaw('sum(donations.value) - sum(treatments.expense) as balance')
-                    ->groupBy('processes.id');
+                    ->leftJoin(
+                        DB::raw("(SELECT process_id, SUM(value) as value FROM `donations` GROUP BY process_id) `income`"),
+                        'processes.id', '=', 'income.process_id'
+                    )
+                    ->leftJoin(
+                        DB::raw("(SELECT appointments.process_id, SUM(expense) as value FROM `treatments`, `appointments` WHERE treatments.appointment_id = appointments.id GROUP BY appointments.process_id) `outcome`"),
+                        'processes.id', '=', 'outcome.process_id'
+                    )
+                    ->selectRaw('processes.*, income.value - outcome.value as balance');
 
                 if (is_numeric($range->from)) {
-                    $this->crud->query->having(DB::raw('sum(donations.value) - sum(treatments.expense)'), '>=', $range->from);
+                    $this->crud->query->where(DB::raw('income.value - outcome.value'), '>=', $range->from);
                 }
 
                 if (is_numeric($range->to)) {
-                    $this->crud->query->having(DB::raw('sum(donations.value) - sum(treatments.expense)'), '<=', $range->to);
+                    $this->crud->query->where(DB::raw('income.value - outcome.value'), '<=', $range->to);
                 }
             });
 
