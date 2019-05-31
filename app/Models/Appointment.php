@@ -45,7 +45,19 @@ class Appointment extends Model
 
         $future = $date && Carbon::parse($date) > Carbon::today();
 
-        $disabled = $this->status == 'approving' || $future || (is('admin', ['accountancy']) ? false : ($this->user_id != backpack_user()->id));
+        // Disabled by default
+        $disabled = true;
+
+        // Enable in case of own appointment or treatments or appointments permission
+        if (is('admin', ['treatments', 'appointments']) || $this->user_id === backpack_user()->id) {
+            $disabled = false;
+        }
+
+        // Always disable in case of not yet approved or future appointment
+        if ($this->status == 'approving' || $future) {
+            $disabled = true;
+        }
+
         $btn_color = $future || $disabled ? 'btn-default' : ($this->getTreatmentsCountValue() ? 'btn-primary' : 'btn-warning');
 
         return '
