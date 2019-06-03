@@ -21,7 +21,7 @@ class PartnerCategory extends Model
     // public $timestamps = false;
     // protected $guarded = ['id'];
     protected $fillable = ['name', 'description'];
-    // protected $hidden = [];
+    protected $hidden = ['pivot'];
     // protected $dates = [];
     protected $translatable = ['name', 'description'];
 

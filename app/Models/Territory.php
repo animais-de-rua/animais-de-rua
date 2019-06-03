@@ -19,7 +19,7 @@ class Territory extends Model
     public $timestamps = false;
     // protected $guarded = ['id'];
     protected $fillable = [];
-    // protected $hidden = [];
+    protected $hidden = ['pivot'];
     // protected $dates = [];
     protected $casts = [
         'id' => 'string',

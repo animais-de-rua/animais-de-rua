@@ -41,6 +41,7 @@ class Kernel extends HttpKernel
         'api' => [
             'throttle:30,1',
             'bindings',
+            \App\Http\Middleware\RapidAPIValidation::class,
         ],
     ];
 
