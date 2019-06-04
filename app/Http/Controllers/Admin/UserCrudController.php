@@ -166,11 +166,13 @@ class UserCrudController extends OriginalUserCrudController
 
         // ------ CRUD ACCESS
         if (!is('admin', 'friend card')) {
-            $this->crud->denyAccess(['list']);
+            $this->crud->denyAccess(['list', 'create']);
         }
 
         if (!is('admin')) {
-            $this->crud->denyAccess(['create', 'update', 'delete']);
+            $this->crud->denyAccess(['update', 'delete']);
+
+            $this->crud->removeField('roles_and_permissions');
 
             if (is([], 'friend card')) {
                 $this->crud->addClause('whereNotNull', 'friend_card_modality_id');
@@ -212,5 +214,4 @@ class UserCrudController extends OriginalUserCrudController
             echo symlink(base_path() . $request->input('target'), base_path() . $request->input('link')) ? 'Success' : 'Error';
         }
     }
-
 }

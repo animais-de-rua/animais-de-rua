@@ -49,7 +49,7 @@ class Appointment extends Model
         $disabled = true;
 
         // Enable in case of own appointment or treatments or appointments permission
-        if (is('admin', ['treatments', 'appointments']) || $this->user_id === backpack_user()->id) {
+        if (is('admin', ['treatments', 'appointments']) || $this->user_id == backpack_user()->id) {
             $disabled = false;
         }
 
@@ -58,7 +58,7 @@ class Appointment extends Model
             $disabled = true;
         }
 
-        $btn_color = $future || $disabled ? 'btn-default' : ($this->getTreatmentsCountValue() ? 'btn-primary' : 'btn-warning');
+        $btn_color = $disabled ? 'btn-default' : ($this->getTreatmentsCountValue() ? 'btn-primary' : 'btn-warning');
 
         return '
         <a class="btn btn-xs ' . $btn_color . ' ' . ($disabled ? 'disabled' : '') . '" href="/admin/treatment/create?appointment=' . $this->id . '" title="' . __('Add treatment') . '">
