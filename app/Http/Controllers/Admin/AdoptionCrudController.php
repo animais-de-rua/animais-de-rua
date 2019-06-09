@@ -311,7 +311,7 @@ class AdoptionCrudController extends CrudController
             'label' => __('FAT'),
             'placeholder' => __('Select a FAT'),
         ],
-            url('admin/user/ajax/filter/' . User::FAT),
+            url('admin/user/ajax/filter/' . User::VOLUNTEER),
             function ($value) {
                 $this->crud->addClause('where', 'user_id', $value);
             });

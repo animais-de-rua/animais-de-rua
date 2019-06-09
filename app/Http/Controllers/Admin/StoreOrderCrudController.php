@@ -65,7 +65,7 @@ class StoreOrderCrudController extends CrudController
             'model' => '\App\User',
             'placeholder' => '',
             'minimum_input_length' => 2,
-            'data_source' => url('admin/user/ajax/search/' . User::VOLUNTEER),
+            'data_source' => url('admin/user/ajax/search/' . User::STORE),
             'attributes' => $attributes,
         ]);
 
