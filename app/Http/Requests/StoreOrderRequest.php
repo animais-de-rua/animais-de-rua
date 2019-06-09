@@ -26,7 +26,10 @@ class StoreOrderRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|min:5|max:255'
+            'reference' => 'required',
+            'recipient' => 'required',
+            'address' => 'required',
+            'user_id' => 'required|exists:users,id',
         ];
     }
 

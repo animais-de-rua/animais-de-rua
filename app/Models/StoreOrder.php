@@ -51,7 +51,7 @@ class StoreOrder extends Model
 
     public function products()
     {
-        return $this->belongsToMany('App\Models\StoreProduct', 'store_orders_products', 'store_order_id', 'store_product_id')->withPivot('quantity');
+        return $this->belongsToMany('App\Models\StoreProduct', 'store_orders_products', 'store_order_id', 'store_product_id')->withPivot(['quantity', 'discount']);
     }
 
     /*

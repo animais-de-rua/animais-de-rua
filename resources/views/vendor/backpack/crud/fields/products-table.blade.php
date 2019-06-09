@@ -42,6 +42,9 @@ if (is_array($items)) {
                     <th style="font-weight: 600!important;">
                         {{ __('Quantity') }}
                     </th>
+                    <th style="font-weight: 600!important;">
+                        {{ __('Discount') }}
+                    </th>
 
                     @if(!$field['readonly'])
                     <th style="width: 50px;" class="text-center" ng-if="max == -1 || max > 1"> {{-- <i class="fa fa-sort"></i> --}} </th>
@@ -70,10 +73,20 @@ if (is_array($items)) {
                     <td>
                         <input
                             @include('crud::inc.field_attributes', ['default_class' => 'form-control input-sm'])
-                            type="number"
+                            type="number" string-to-number
                             step="1"
                             ng-model="item.pivot.quantity"
                             style="height: 34px;">
+                    </td>
+
+                    <td style="display: flex;">
+                        <input
+                            @include('crud::inc.field_attributes', ['default_class' => 'form-control input-sm'])
+                            type="number" string-to-number
+                            step="0.01"
+                            ng-model="item.pivot.discount"
+                            min="0"
+                            style="height: 34px;"> <span style="margin: 6px;">€</span>
                     </td>
 
                     @if(!$field['readonly'])
@@ -173,7 +186,7 @@ if (is_array($items)) {
                         }
                     }
                     else {
-                        var item = { pivot: { quantity: 1 } };
+                        var item = { pivot: { quantity: 1, discount: 0 } };
                         $scope.items.push(item);
                     }
 
@@ -218,7 +231,17 @@ if (is_array($items)) {
                         angular.bootstrap(ctrl, [ctrlDom.attr('ng-app')]);
                     }
                 });
-            })
+            });
+
+            window.angularApp.directive('stringToNumber', function() {
+              return {
+                require: 'ngModel',
+                link: function(scope, element, attrs, ngModel) {
+                  ngModel.$parsers.push(value => '' + value);
+                  ngModel.$formatters.push(value => parseFloat(value));
+                }
+              };
+            });
 
         </script>
 

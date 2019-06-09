@@ -44,6 +44,7 @@ class CreateStoreManagementTables extends Migration
             $table->integer('store_product_id')->nullable()->unsigned();
             $table->integer('store_order_id')->nullable()->unsigned();
             $table->integer('quantity')->default(1)->unsigned();
+            $table->decimal('discount', 8, 2)->unsigned()->default(0);
 
             $table->index(['store_product_id']);
             $table->foreign('store_product_id')
