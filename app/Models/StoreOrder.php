@@ -78,6 +78,14 @@ class StoreOrder extends Model
         return $sells != 0 ? $sells : '-';
     }
 
+
+    public function getTotalValue()
+    {
+        $total = data_get_first($this, 'products', 'total', 0);
+
+        return $total != 0 ? $total : '-';
+    }
+
     /*
     |--------------------------------------------------------------------------
     | MUTATORS
