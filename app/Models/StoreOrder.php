@@ -51,7 +51,7 @@ class StoreOrder extends Model
 
     public function products()
     {
-        return $this->belongsToMany('App\Models\StoreProduct', 'store_orders_products', 'store_order_id', 'store_product_id')->withPivot('quantity');
+        return $this->belongsToMany('App\Models\StoreProduct', 'store_orders_products', 'store_order_id', 'store_product_id')->withPivot(['quantity', 'discount']);
     }
 
     /*
@@ -76,6 +76,14 @@ class StoreOrder extends Model
         $sells = data_get_first($this, 'products', 'sells', 0);
 
         return $sells != 0 ? $sells : '-';
+    }
+
+
+    public function getTotalValue()
+    {
+        $total = data_get_first($this, 'products', 'total', 0);
+
+        return $total != 0 ? $total : '-';
     }
 
     /*

@@ -8,12 +8,12 @@ tr.approved {
 	background-color: #ECF0F5!important;
 }
 
-.order-table td {
+.order-table td, .order-table th {
 	min-width: 100px;
 	border: 1px solid #ccc;
 	padding: 1px 4px;
 }
 
-.order-table td.right {
+.order-table .right {
 	text-align: right;
 }

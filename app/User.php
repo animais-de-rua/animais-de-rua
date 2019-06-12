@@ -16,8 +16,9 @@ class User extends Authenticatable
 
     const ADMIN = 1;
     const VOLUNTEER = 2;
-    const FAT = 4;
-    const ALL = 7;
+    const STORE = 4;
+    const TRANSLATOR = 8;
+    const ALL = 15;
 
     /**
      * The attributes that are mass assignable.

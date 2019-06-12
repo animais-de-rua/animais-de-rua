@@ -315,17 +315,11 @@ class APICrudController extends CrudController
     {
         $search_term = $this->getSearchParam();
 
-        $roles = [];
-        if ($role & UserBase::ADMIN) {
-            $roles[] = 1;
-        }
-
-        if ($role & UserBase::VOLUNTEER) {
-            $roles[] = 2;
-        }
-
-        if ($role & UserBase::FAT) {
-            $roles[] = 3;
+        // Deal with User roles
+        for ($i = 1, $roles = []; $role; $role >>= 1, $i++) { 
+            if($role & 1) {
+                $roles[] = $i;
+            }
         }
 
         $users = User::whereIn('id', DB::table('user_has_roles')->select('model_id')->whereIn('role_id', $roles));

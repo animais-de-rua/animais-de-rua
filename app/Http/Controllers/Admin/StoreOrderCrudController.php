@@ -65,7 +65,7 @@ class StoreOrderCrudController extends CrudController
             'model' => '\App\User',
             'placeholder' => '',
             'minimum_input_length' => 2,
-            'data_source' => url('admin/user/ajax/search/' . User::VOLUNTEER),
+            'data_source' => url('admin/user/ajax/search/' . User::STORE),
             'attributes' => $attributes,
         ]);
 
@@ -145,6 +145,14 @@ class StoreOrderCrudController extends CrudController
         ]);
 
         $this->crud->addColumn([
+            'name' => 'total',
+            'label' => __('Total'),
+            'type' => 'model_function',
+            'function_name' => 'getTotalValue',
+            'suffix' => '€',
+        ]);
+
+        $this->crud->addColumn([
             'name' => 'user_id',
             'label' => ucfirst(__('volunteer')),
             'type' => 'model_function',
@@ -216,7 +224,7 @@ class StoreOrderCrudController extends CrudController
 
         // ------ ADVANCED QUERIES
         $this->crud->addClause('with', ['products' => function ($query) {
-            $query->selectRaw('store_product_id, SUM(quantity) as sells')
+            $query->selectRaw('store_product_id, SUM(quantity) as sells, SUM(price * quantity - discount) as total')
                 ->groupBy('store_order_id');
         }, 'user']);
 
@@ -257,12 +265,47 @@ class StoreOrderCrudController extends CrudController
     {
         $order = StoreOrder::select(['id', 'notes'])->with('products')->find($id);
 
-        $products = join('', array_map(function ($product) {
-            return "<tr><td>{$product['name']}</td><td class='right'>{$product['pivot']['quantity']}</td><td class='right'>{$product['price']}€</td></tr>";
-        }, $order->products->toArray()));
+        $totals = [0, 0, 0, 0];
+        $products = "";
+
+        foreach ($order->products->toArray() as $product) {
+            $quantity = $product['pivot']['quantity'];
+            $price = $product['price'] * $product['pivot']['quantity'];
+            $discount = $product['pivot']['discount'];
+            $total = $price - $discount;
+
+            $totals[0] += $quantity;
+            $totals[1] += $price;
+            $totals[2] += $discount;
+            $totals[3] += $total;
+
+            $products .= "<tr>
+                <td>{$product['name']}</td>
+                <td class='right'>{$quantity}</td>
+                <td class='right'>{$price}€</td>
+                <td class='right'>{$discount}€</td>
+                <td class='right'>{$total}€</td>
+                </tr>";
+        }
 
         return "<div style='margin:5px 8px'>
-                <table class='order-table'>$products</table>
+                <table class='order-table'>
+                <tr style='border-bottom: 2px solid #ccc'>
+                    <th>".__("Name")."</th>
+                    <th class='right'>".__("Quantity")."</th>
+                    <th class='right'>".__("Price")."</th>
+                    <th class='right'>".__("Discount")."</th>
+                    <th class='right'>".__("Total")."</th>
+                </tr>
+                $products
+                <tr style='border-top: 2px solid #ccc'>
+                    <th>".__("Total")."</th>
+                    <th class='right'>{$totals[0]}</th>
+                    <th class='right'>" . number_format((float) $totals[1], 2, '.', '') . "€</th>
+                    <th class='right'>" . number_format((float) $totals[2], 2, '.', '') . "€</th>
+                    <th class='right'>" . number_format((float) $totals[3], 2, '.', '') . "€</th>
+                </tr>
+                </table>
                 <p><i>$order->notes</i></p>
             </div>";
     }
