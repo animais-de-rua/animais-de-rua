@@ -15,11 +15,11 @@ class RapidAPIValidation
      */
     public function handle($request, Closure $next)
     {
-        $rapidAPI = $_SERVER['RAPID_API_SECRET'] ?? null;
+        $rapidAPI = $_SERVER['HTTP_X_RAPIDAPI_PROXY_SECRET'] ?? null;
 
         if (!$rapidAPI || $rapidAPI !== config('app.rapid_api_secret')) {
             return \Response::json([
-                'error' => 'If you wish to use this API go to https://rapidapi.com/promatik/api/animais-de-rua',
+                'message' => 'Missing RapidAPI proxy secret. Go to https://rapidapi.com/promatik/api/animais-de-rua to learn how to get your API application key.',
             ]);
         }
 
