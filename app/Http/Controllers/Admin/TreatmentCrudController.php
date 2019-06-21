@@ -395,8 +395,6 @@ class TreatmentCrudController extends CrudController
         }
 
         if (!is('admin')) {
-            $this->crud->denyAccess(['delete']);
-
             $this->crud->addClause('whereHas', 'appointment', function ($query) {
                 $query->whereHas('process', function ($query) {
                     $headquarters = restrictToHeadquarters();
@@ -406,6 +404,8 @@ class TreatmentCrudController extends CrudController
         }
 
         if (!is('admin', 'treatments')) {
+            $this->crud->denyAccess(['delete']);
+
             $this->crud->removeButton('approve_appointment', 'line');
         }
 
@@ -429,6 +429,18 @@ class TreatmentCrudController extends CrudController
         return "<div style='margin:5px 8px'>
                 <p><i>Notas</i>: $treatment->notes</p>
             </div>";
+    }
+
+    public function destroy($id)
+    {
+        $treatment = Treatment::find($id);
+
+        // Avoid destroy if it is approved
+        if (!is('admin') && $treatment->status == 'approved') {
+            return false;
+        }
+
+        return parent::destroy($id);
     }
 
     public function store(StoreRequest $request)
