@@ -241,13 +241,14 @@ class PageController extends Controller
 
         $validator->validate();
 
-        Newsletter::subscribe($request->email);
-
         // Check if subscribed
         if (Newsletter::isSubscribed($request->email)) {
             $validator->errors()->add('email', __('Your email is already subscribed.'));
             throw new ValidationException($validator);
         }
+
+        // Subscribe
+        Newsletter::subscribe($request->email);
 
         // Check if success
         if (!Newsletter::lastActionSucceeded()) {

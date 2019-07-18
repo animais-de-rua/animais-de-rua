@@ -1,4 +1,4 @@
-const VERSION = '0.0.20';
+const VERSION = '0.0.21';
 const CACHE = 'adr';
 
 let cacheAssets = [
@@ -53,7 +53,7 @@ self.onfetch = e => {
 		return;
 
 	// Avoid admin and store areas
-	if(e.request.url.match(/\/admin|\/api|\/form|\/lang|\/store|\/vendor|\/pdf/))
+	if(e.request.url.match(/\/admin|\/api|\/form|\/lang|\/store|\/loja|\/vendor|\/pdf/))
 		return;
 
 	// Avoid external requests
