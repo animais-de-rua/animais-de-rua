@@ -8,6 +8,13 @@ use Config;
 class APIController extends Controller
 {
 
+    public function getToken()
+    {
+        return [
+            'token' => csrf_token(),
+        ];
+    }
+
     public function getStats()
     {
         $treated = LocalCache::treated();

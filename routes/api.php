@@ -13,6 +13,8 @@
 
 Route::group(['middleware' => ['api']], function () {
 
+    Route::get('/token', 'APIController@getToken');
+
     Route::get('/stats', 'APIController@getStats');
 
     Route::get('/headquarters', 'APIController@getHeadquarters');
