@@ -266,7 +266,7 @@ class StoreOrderCrudController extends CrudController
         $order = StoreOrder::select(['id', 'notes'])->with('products')->find($id);
 
         $totals = [0, 0, 0, 0];
-        $products = "";
+        $products = '';
 
         foreach ($order->products->toArray() as $product) {
             $quantity = $product['pivot']['quantity'];
@@ -291,15 +291,15 @@ class StoreOrderCrudController extends CrudController
         return "<div style='margin:5px 8px'>
                 <table class='order-table'>
                 <tr style='border-bottom: 2px solid #ccc'>
-                    <th>".__("Name")."</th>
-                    <th class='right'>".__("Quantity")."</th>
-                    <th class='right'>".__("Price")."</th>
-                    <th class='right'>".__("Discount")."</th>
-                    <th class='right'>".__("Total")."</th>
+                    <th>" . __('Name') . "</th>
+                    <th class='right'>" . __('Quantity') . "</th>
+                    <th class='right'>" . __('Price') . "</th>
+                    <th class='right'>" . __('Discount') . "</th>
+                    <th class='right'>" . __('Total') . "</th>
                 </tr>
                 $products
                 <tr style='border-top: 2px solid #ccc'>
-                    <th>".__("Total")."</th>
+                    <th>" . __('Total') . "</th>
                     <th class='right'>{$totals[0]}</th>
                     <th class='right'>" . number_format((float) $totals[1], 2, '.', '') . "€</th>
                     <th class='right'>" . number_format((float) $totals[2], 2, '.', '') . "€</th>
@@ -332,8 +332,17 @@ class StoreOrderCrudController extends CrudController
         $order->products()->detach();
 
         $products = json_decode($request->products);
+
+        $store_product_ids = [];
+
         foreach ($products as $product) {
-            $order->products()->attach([$product->pivot->store_product_id => (array) $product->pivot]);
+            // Ignore repeated entries
+            if (!in_array($product->pivot->store_product_id, $store_product_ids)) {
+                array_push($store_product_ids, $product->pivot->store_product_id);
+
+                // Add to database
+                $order->products()->attach([$product->pivot->store_product_id => (array) $product->pivot]);
+            }
         }
     }
 }
