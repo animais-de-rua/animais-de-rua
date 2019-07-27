@@ -43,7 +43,10 @@ if (is_array($items)) {
                         {{ __('Quantity') }}
                     </th>
                     <th style="font-weight: 600!important;">
-                        {{ __('Discount') }}
+                        {{ __('Discount') }} ({{ __("with VAT") . ' ' . \Config::get('settings.vat') . '%' }})
+                    </th>
+                    <th style="font-weight: 600!important;">
+                        {{ __('Discount') }} ({{ __("no VAT") }})
                     </th>
 
                     @if(!$field['readonly'])
@@ -79,14 +82,30 @@ if (is_array($items)) {
                             style="height: 34px;">
                     </td>
 
-                    <td style="display: flex;">
-                        <input
-                            @include('crud::inc.field_attributes', ['default_class' => 'form-control input-sm'])
-                            type="number" string-to-number
-                            step="0.01"
-                            ng-model="item.pivot.discount"
-                            min="0"
-                            style="height: 34px;"> <span style="margin: 6px;">€</span>
+                    <td>
+                        <div style="display:flex">
+                            <input
+                                @include('crud::inc.field_attributes', ['default_class' => 'input-vat form-control input-sm'])
+                                type="number" string-to-number
+                                step="0.01"
+                                ng-model="item.pivot.discount"
+                                min="0"
+                                ng-change="calcTax(item)"
+                                style="height: 34px;"> <span style="margin: 6px;">€</span>
+                        </div>
+                    </td>
+
+                    <td>
+                        <div style="display:flex">
+                            <input
+                                @include('crud::inc.field_attributes', ['default_class' => 'input-no-vat form-control input-sm'])
+                                type="number" string-to-number
+                                step="0.01"
+                                ng-model="item.pivot.discount_no_vat"
+                                min="0"
+                                readonly
+                                style="height: 34px;"> <span style="margin: 6px;">€</span>
+                        </div>
                     </td>
 
                     @if(!$field['readonly'])
@@ -137,6 +156,9 @@ if (is_array($items)) {
 
         <script src="{{ asset('vendor/adminlte/bower_components/select2/dist/js/select2.min.js') }}"></script>
         <script>
+            // Store VAT
+            const vat = {{ \Config::get('settings.vat') }};
+
             function initSelect2() {
                 setTimeout(function(){
                     $('.select2_from_array').each(function (i, obj) {
@@ -170,6 +192,10 @@ if (is_array($items)) {
                         return ui;
                     },
                 };
+
+                $scope.calcTax = function(item){
+                    item.pivot.discount_no_vat = (item.pivot.discount / (vat / 100 + 1)).toFixed(2);
+                }
 
                 $scope.addItem = function(){
 

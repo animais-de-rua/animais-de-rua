@@ -51,7 +51,7 @@ class StoreOrder extends Model
 
     public function products()
     {
-        return $this->belongsToMany('App\Models\StoreProduct', 'store_orders_products', 'store_order_id', 'store_product_id')->withPivot(['quantity', 'discount']);
+        return $this->belongsToMany('App\Models\StoreProduct', 'store_orders_products', 'store_order_id', 'store_product_id')->withPivot(['quantity', 'discount', 'discount_no_vat']);
     }
 
     /*
@@ -77,7 +77,6 @@ class StoreOrder extends Model
 
         return $sells != 0 ? $sells : '-';
     }
-
 
     public function getTotalValue()
     {

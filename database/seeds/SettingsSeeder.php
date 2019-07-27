@@ -74,6 +74,18 @@ class SettingsSeeder extends Seeder
                 ]),
                 'active' => 1,
             ],
+            [
+                'key' => 'tax',
+                'name' => 'IVA',
+                'description' => 'Valor do IVA.',
+                'value' => '23',
+                'field' => json_encode([
+                    'name' => 'value',
+                    'label' => 'Valor',
+                    'type' => 'number',
+                ]),
+                'active' => 1,
+            ],
         ];
 
         foreach ($settings as $index => $setting) {
