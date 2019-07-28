@@ -18,7 +18,7 @@ class StoreProduct extends Model
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['name', 'price', 'expense'];
+    protected $fillable = ['name', 'price', 'price_no_vat', 'expense'];
     // protected $hidden = [];
     // protected $dates = [];
 
@@ -58,11 +58,19 @@ class StoreProduct extends Model
         return $sells != 0 ? $sells : '-';
     }
 
+    public function getShipmentExpenseValue()
+    {
+        $shipment_expense = data_get_first($this, 'orders', 'shipment_expense', 0);
+
+        return $shipment_expense != 0 ? number_format($shipment_expense, 2) : '-';
+    }
+
     public function getTotalProfitValue()
     {
         $sells = data_get_first($this, 'orders', 'sells', 0);
+        $shipment_expense = data_get_first($this, 'orders', 'shipment_expense', 0);
 
-        return $sells * ($this->price - $this->expense);
+        return number_format($sells * ($this->price_no_vat - $this->expense) - $shipment_expense, 2);
     }
 
     /*

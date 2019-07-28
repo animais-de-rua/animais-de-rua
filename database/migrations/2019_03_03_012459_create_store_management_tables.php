@@ -17,6 +17,7 @@ class CreateStoreManagementTables extends Migration
             $table->increments('id');
             $table->string('name', 255);
             $table->decimal('price', 8, 2)->unsigned()->default(0);
+            $table->decimal('price_no_vat', 8, 2)->unsigned()->default(0);
             $table->decimal('expense', 8, 2)->nullable()->unsigned()->default(0);
             $table->timestamps();
         });

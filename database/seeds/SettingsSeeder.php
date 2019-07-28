@@ -75,7 +75,7 @@ class SettingsSeeder extends Seeder
                 'active' => 1,
             ],
             [
-                'key' => 'tax',
+                'key' => 'vat',
                 'name' => 'IVA',
                 'description' => 'Valor do IVA.',
                 'value' => '23',

@@ -36,16 +36,16 @@ if (is_array($items)) {
 
             <thead>
                 <tr>
-                    <th style="font-weight: 600!important;">
+                    <th style="font-weight: 600!important; min-width: 200px;">
                         {{ ucfirst(__('product')) }}
                     </th>
-                    <th style="font-weight: 600!important;">
+                    <th style="font-weight: 600!important; min-width: 100px;">
                         {{ __('Quantity') }}
                     </th>
-                    <th style="font-weight: 600!important;">
-                        {{ __('Discount') }} ({{ __("with VAT") . ' ' . \Config::get('settings.vat') . '%' }})
+                    <th style="font-weight: 600!important; min-width: 100px;">
+                        {{ __('Discount') }} ({{ __('with :vat% VAT', ['vat' => \Config::get('settings.vat')]) }})
                     </th>
-                    <th style="font-weight: 600!important;">
+                    <th style="font-weight: 600!important; min-width: 100px;">
                         {{ __('Discount') }} ({{ __("no VAT") }})
                     </th>
 

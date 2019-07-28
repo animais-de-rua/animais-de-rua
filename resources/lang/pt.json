@@ -115,6 +115,7 @@
     "Discount": "Desconto",
     "Sells": "Vendas",
     "Profit": "Lucro",
+    "Shippment Expense": "Despesas de envio",
     "Sent": "Enviado",
     "Not sent": "Não enviado",
     "Total products": "Artigos",
@@ -314,6 +315,7 @@
     "Select": "Escolher",
     "private": "particular",
     "with VAT": "com IVA",
+    "with :vat% VAT": "com IVA a :vat%",
     "no VAT": "sem IVA",
 
     "Today": "Hoje",

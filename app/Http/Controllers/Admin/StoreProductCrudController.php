@@ -36,11 +36,24 @@ class StoreProductCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'label' => __('Price'),
+            'label' => __('Price') . ' (' . __('with :vat% VAT', ['vat' => \Config::get('settings.vat')]) . ')',
             'name' => 'price',
             'type' => 'number',
+            'suffix' => '€',
             'attributes' => [
                 'step' => 0.01,
+            ],
+        ]);
+
+        $this->crud->addField([
+            'label' => __('Price') . ' (' . __('no VAT') . ')',
+            'name' => 'price_no_vat',
+            'type' => 'number_vat',
+            'base' => 'price',
+            'suffix' => '€',
+            'attributes' => [
+                'step' => 0.01,
+                'readonly' => true,
             ],
         ]);
 
@@ -48,6 +61,7 @@ class StoreProductCrudController extends CrudController
             'label' => __('Expense'),
             'name' => 'expense',
             'type' => 'number',
+            'suffix' => '€',
             'attributes' => [
                 'step' => 0.01,
             ],
@@ -79,6 +93,14 @@ class StoreProductCrudController extends CrudController
             ]);
 
             $this->crud->addColumn([
+                'name' => 'shipment_expense',
+                'label' => __('Shipment Expense'),
+                'type' => 'model_function',
+                'function_name' => 'getShipmentExpenseValue',
+                'suffix' => '€',
+            ]);
+
+            $this->crud->addColumn([
                 'name' => 'profit',
                 'label' => __('Profit'),
                 'type' => 'model_function',
@@ -89,7 +111,14 @@ class StoreProductCrudController extends CrudController
 
         // ------ ADVANCED QUERIES
         $this->crud->addClause('with', ['orders' => function ($query) {
-            $query->selectRaw('store_product_id, SUM(quantity) as sells')
+            $query->selectRaw('store_product_id, SUM(quantity) as sells, SUM(expenses.expense_by_product * store_orders_products.quantity) as shipment_expense')
+                ->join(
+                    // This query shares the shipment expense by each product for each order
+                    \DB::raw('(SELECT store_orders.id, store_orders.expense / SUM(quantity) as expense_by_product
+                        FROM store_orders, store_orders_products
+                        WHERE store_orders_products.store_order_id = store_orders.id AND store_orders.expense > 0
+                        GROUP BY store_orders.id) expenses'),
+                    'store_orders.id', '=', 'expenses.id')
                 ->groupBy('store_product_id');
         }]);
 
