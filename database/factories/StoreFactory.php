@@ -22,6 +22,7 @@ $factory->define(StoreProduct::class, function (Faker $faker) {
         'price' => $price,
         'price_no_vat' => $price / 1.23,
         'expense' => $faker->randomFloat(2, 1, 3),
+        'notes' => $faker->text(80),
         'created_at' => $date,
         'updated_at' => $date,
     ];

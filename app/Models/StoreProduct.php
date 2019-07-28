@@ -18,7 +18,7 @@ class StoreProduct extends Model
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['name', 'price', 'price_no_vat', 'expense'];
+    protected $fillable = ['name', 'price', 'price_no_vat', 'expense', 'notes'];
     // protected $hidden = [];
     // protected $dates = [];
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\StoreProductRequest as StoreRequest;
 use App\Http\Requests\StoreProductRequest as UpdateRequest;
+use App\Models\StoreProduct;
 
 /**
  * Class StoreProductsCrudController
@@ -65,6 +66,12 @@ class StoreProductCrudController extends CrudController
             'attributes' => [
                 'step' => 0.01,
             ],
+        ]);
+
+        $this->crud->addField([
+            'label' => __('Notes'),
+            'name' => 'notes',
+            'type' => 'textarea',
         ]);
 
         $this->crud->addColumn([
@@ -131,9 +138,22 @@ class StoreProductCrudController extends CrudController
             $this->crud->denyAccess(['show', 'create', 'update', 'delete']);
         }
 
+        // ------ CRUD DETAILS ROW
+        $this->crud->enableDetailsRow();
+        $this->crud->allowAccess('details_row');
+
         // add asterisk for fields that are required in StoreProductsRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
+    }
+
+    public function showDetailsRow($id)
+    {
+        $storeProduct = StoreProduct::select(['notes'])->find($id);
+
+        return "<div style='margin:5px 8px'>
+                <p><i>Notas</i>: $storeProduct->notes</p>
+            </div>";
     }
 
     public function store(StoreRequest $request)

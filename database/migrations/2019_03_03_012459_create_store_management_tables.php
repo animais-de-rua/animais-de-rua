@@ -19,6 +19,7 @@ class CreateStoreManagementTables extends Migration
             $table->decimal('price', 8, 2)->unsigned()->default(0);
             $table->decimal('price_no_vat', 8, 2)->unsigned()->default(0);
             $table->decimal('expense', 8, 2)->nullable()->unsigned()->default(0);
+            $table->text('notes')->nullable();
             $table->timestamps();
         });
 
@@ -31,6 +32,7 @@ class CreateStoreManagementTables extends Migration
             $table->integer('user_id')->nullable()->unsigned();
             $table->date('shipment_date')->nullable();
             $table->decimal('expense', 8, 2)->unsigned()->default(0);
+            $table->text('receipt')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();
 

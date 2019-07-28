@@ -78,6 +78,13 @@ class StoreOrderCrudController extends CrudController
         ]);
 
         $this->crud->addField([
+            'label' => __('Receipt'),
+            'name' => 'receipt',
+            'type' => 'text',
+            'attributes' => $attributes,
+        ]);
+
+        $this->crud->addField([
             'label' => __('Notes'),
             'name' => 'notes',
             'type' => 'textarea',
@@ -303,10 +310,12 @@ class StoreOrderCrudController extends CrudController
                     <th class='right'>{$totals[0]}</th>
                     <th class='right'>" . number_format((float) $totals[1], 2, '.', '') . "€</th>
                     <th class='right'>" . number_format((float) $totals[2], 2, '.', '') . "€</th>
-                    <th class='right'>" . number_format((float) $totals[3], 2, '.', '') . "€</th>
+                    <th class='right'>" . number_format((float) $totals[3], 2, '.', '') . '€</th>
                 </tr>
                 </table>
-                <p><i>$order->notes</i></p>
+                <br />
+                <b>' . __('Notes') . ":</b>
+                <p>$order->notes</p>
             </div>";
     }
 
