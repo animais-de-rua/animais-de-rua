@@ -31,7 +31,7 @@ class StoreOrderCrudController extends CrudController
         |--------------------------------------------------------------------------
         */
 
-        $attributes = is('admin', 'store orders') ? [] : [
+        $attributeDisabled = is('admin', 'store orders') ? [] : [
             'disabled' => 'disabled',
         ];
 
@@ -39,21 +39,21 @@ class StoreOrderCrudController extends CrudController
             'label' => __('Reference'),
             'name' => 'reference',
             'type' => 'text',
-            'attributes' => $attributes,
+            'attributes' => $attributeDisabled,
         ]);
 
         $this->crud->addField([
             'label' => __('Recipient'),
             'name' => 'recipient',
             'type' => 'text',
-            'attributes' => $attributes,
+            'attributes' => $attributeDisabled,
         ]);
 
         $this->crud->addField([
             'label' => __('Address'),
             'name' => 'address',
             'type' => 'textarea',
-            'attributes' => $attributes,
+            'attributes' => $attributeDisabled,
         ]);
 
         $this->crud->addField([
@@ -66,14 +66,14 @@ class StoreOrderCrudController extends CrudController
             'placeholder' => '',
             'minimum_input_length' => 2,
             'data_source' => url('admin/user/ajax/search/' . User::STORE),
-            'attributes' => $attributes,
+            'attributes' => $attributeDisabled,
         ]);
 
         $this->crud->addField([
             'name' => 'products',
             'type' => 'products-table',
             'options' => $this->wantsJSON() ? null : api()->storeProductList(),
-            'attributes' => $attributes,
+            'attributes' => $attributeDisabled,
             'readonly' => !is('admin', 'store orders'),
         ]);
 
@@ -81,14 +81,14 @@ class StoreOrderCrudController extends CrudController
             'label' => __('Receipt'),
             'name' => 'receipt',
             'type' => 'text',
-            'attributes' => $attributes,
+            'attributes' => $attributeDisabled,
         ]);
 
         $this->crud->addField([
             'label' => __('Notes'),
             'name' => 'notes',
             'type' => 'textarea',
-            'attributes' => $attributes,
+            'attributes' => $attributeDisabled,
         ]);
 
         $this->separator(ucfirst(__('shipment')))->afterField('notes');
@@ -97,14 +97,18 @@ class StoreOrderCrudController extends CrudController
         $id = $this->getEntryID();
         $sent = $id && StoreOrder::find($id)->shipment_date;
 
+        $sentAttributes = is('admin', 'store orders') ? [] : $sent ? [
+            'disabled' => 'disabled',
+        ] : [];
+
         $this->crud->addField([
             'label' => __('Sent'),
             'name' => 'sent',
             'type' => 'checkbox',
             'value' => $sent,
-            'attributes' => [
+            'attributes' => array_merge($sentAttributes, [
                 'order' => 'sent',
-            ],
+            ]),
         ]);
 
         $this->crud->addField([
@@ -331,6 +335,15 @@ class StoreOrderCrudController extends CrudController
     public function update(UpdateRequest $request)
     {
         $this->inserProductRelation($request->id, $request);
+
+        // Clean up request in case the user has not the required permissions
+        if (!is('admin', 'store orders')) {
+            $request = new \Illuminate\Http\Request([
+                'id' => $request->id,
+                'shipment_date' => $request->shipment_date,
+                'expense' => $request->expense,
+            ]);
+        }
 
         return parent::updateCrud($request);
     }

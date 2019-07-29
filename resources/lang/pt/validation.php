@@ -191,6 +191,7 @@ return [
         'treatment_type_id' => 'tipo de tratamento',
         'type' => 'tipo',
         'url' => 'url',
+        'user_id' => 'voluntário',
         'vaccinated' => 'vacinado',
         'value' => 'valor',
         'vet_id' => 'veterinário',

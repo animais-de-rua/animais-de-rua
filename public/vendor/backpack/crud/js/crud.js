@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Order sent
-    let orderSent = document.querySelector('input[order=sent]');
+    let orderSent = document.querySelector('input[order=sent]:not(:disabled)');
     if(orderSent) {
         let orderSentSelectChange = e => {
             document.querySelectorAll("[order=details]").forEach(e => {
