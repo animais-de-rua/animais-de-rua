@@ -132,6 +132,16 @@ class StoreOrderCrudController extends CrudController
             ],
         ]);
 
+        $this->crud->addField([
+            'label' => __('Invoice'),
+            'name' => 'invoice',
+            'type' => 'text',
+            'attributes' => [
+                'order' => 'details',
+                'disabled' => 'disabled',
+            ],
+        ]);
+
         $this->crud->addColumn([
             'name' => 'reference',
             'label' => __('Reference'),
@@ -274,7 +284,7 @@ class StoreOrderCrudController extends CrudController
 
     public function showDetailsRow($id)
     {
-        $order = StoreOrder::select(['id', 'notes'])->with('products')->find($id);
+        $order = StoreOrder::select(['id', 'notes', 'receipt', 'invoice'])->with('products')->find($id);
 
         $totals = [0, 0, 0, 0];
         $products = '';
@@ -300,7 +310,7 @@ class StoreOrderCrudController extends CrudController
         }
 
         return "<div style='margin:5px 8px'>
-                <table class='order-table'>
+                <table class='order-table' style='margin-bottom: 8px;'>
                 <tr style='border-bottom: 2px solid #ccc'>
                     <th>" . __('Name') . "</th>
                     <th class='right'>" . __('Quantity') . "</th>
@@ -317,7 +327,10 @@ class StoreOrderCrudController extends CrudController
                     <th class='right'>" . number_format((float) $totals[3], 2, '.', '') . '€</th>
                 </tr>
                 </table>
-                <br />
+                <p>
+                    <b>' . __('Receipt') . ':</b> ' . ($order->receipt ? "<code>$order->receipt</code>" : '') . '<br />
+                    <b>' . __('Invoice') . ':</b> ' . ($order->invoice ? "<code>$order->invoice</code>" : '') . '
+                </p>
                 <b>' . __('Notes') . ":</b>
                 <p>$order->notes</p>
             </div>";

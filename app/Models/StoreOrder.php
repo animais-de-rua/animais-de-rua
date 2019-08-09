@@ -18,7 +18,7 @@ class StoreOrder extends Model
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['reference', 'cart', 'recipient', 'address', 'user_id', 'shipment_date', 'expense', 'receipt', 'notes'];
+    protected $fillable = ['reference', 'cart', 'recipient', 'address', 'user_id', 'shipment_date', 'expense', 'receipt', 'notes', 'invoice'];
     // protected $hidden = [];
     // protected $dates = [];
 

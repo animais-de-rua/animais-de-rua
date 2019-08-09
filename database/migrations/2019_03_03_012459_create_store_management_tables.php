@@ -33,6 +33,7 @@ class CreateStoreManagementTables extends Migration
             $table->date('shipment_date')->nullable();
             $table->decimal('expense', 8, 2)->unsigned()->default(0);
             $table->text('receipt')->nullable();
+            $table->text('invoice')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();
 
