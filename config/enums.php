@@ -111,6 +111,8 @@ return [
             11 => 'council',
             12 => 'store orders',
             13 => 'store shippments',
+            14 => 'store stock',
+            15 => 'store transaction',
         ],
     ],
 
@@ -118,6 +120,13 @@ return [
         'themes' => [
             'adoption' => 'adoption',
             'sterilization' => 'sterilization',
+        ],
+    ],
+
+    'store' => [
+        'transaction' => [
+            -1 => 'debit',
+            1 => 'credit',
         ],
     ],
 ];

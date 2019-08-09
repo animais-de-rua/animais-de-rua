@@ -275,6 +275,26 @@ class APICrudController extends CrudController
 
     /*
     |--------------------------------------------------------------------------
+    | Store Product
+    |--------------------------------------------------------------------------
+    */
+    public function storeProductSearch()
+    {
+        return $this->entitySearch(StoreProduct::class, ['name']);
+    }
+
+    public function storeProductFilter()
+    {
+        return $this->storeProductSearch()->pluck('name', 'id');
+    }
+
+    public function storeProductList()
+    {
+        return $this->storeProductFilter()->toArray();
+    }
+
+    /*
+    |--------------------------------------------------------------------------
     | Process
     |--------------------------------------------------------------------------
     */
@@ -316,8 +336,8 @@ class APICrudController extends CrudController
         $search_term = $this->getSearchParam();
 
         // Deal with User roles
-        for ($i = 1, $roles = []; $role; $role >>= 1, $i++) { 
-            if($role & 1) {
+        for ($i = 1, $roles = []; $role; $role >>= 1, $i++) {
+            if ($role & 1) {
                 $roles[] = $i;
             }
         }
@@ -390,16 +410,6 @@ class APICrudController extends CrudController
     public function treatmentTypeList()
     {
         return TreatmentType::get()->pluck('name', 'id')->toArray();
-    }
-
-    /*
-    |--------------------------------------------------------------------------
-    | Store Products
-    |--------------------------------------------------------------------------
-    */
-    public function storeProductList()
-    {
-        return StoreProduct::get()->pluck('name', 'id')->toArray();
     }
 
     /*

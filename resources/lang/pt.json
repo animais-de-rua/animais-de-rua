@@ -50,6 +50,7 @@
     "Management": "Gestão",
     "Location": "Localização",
     "Specie": "Espécie",
+    "Amount": "Quantidade",
     "Males Amount": "Nº Machos",
     "Females Amount": "Nº Fêmeas",
     "Others Amount": "Nº Outros",
@@ -182,6 +183,8 @@
     "orders": "encomendas",
     "shipment": "envio",
     "shipments": "envios",
+    "transaction": "transacção",
+    "transactions": "transacções",
 
     "headquarter": "núcleo",
     "process": "processo",
@@ -216,6 +219,8 @@
     "friend card": "cartão amigo",
     "store orders": "loja, encomendas",
     "store shippments": "loja, envios",
+    "store stock": "loja, gestor de stock",
+    "store transaction": "loja, gestor de transações",
 
     "Select a godfather": "Seleccione um padrinho",
     "Select a process": "Seleccione um processo",
@@ -240,6 +245,7 @@
     "Select a gender": "Seleccione um género",
     "Select a modality": "Seleccione uma modalidade",
     "Select a type": "Seleccione um tipo",
+    "Select a product": "Seleccione um produto",
     "Search for the date or the ID of the appointment": "Pesquise pela data da marcação ou o ID",
     "There are no treatments in the process, so this animal can't be already treated": "Não existem tratamentos no processo, por isso este animal não pode ter sido tratado na AdR.",
     "Adoption status is :status, it must be open in order to add an Adopter.": "A adopção tem o estado :status, para adicionar um adoptante o estado da adopção deve ser Aberto.",
@@ -320,6 +326,9 @@
     "with VAT": "com IVA",
     "with :vat% VAT": "com IVA a :vat%",
     "no VAT": "sem IVA",
+    "credit": "crédito",
+    "debit": "débito",
+    "Merge with sent data": "Juntar com dados dos envios",
 
     "Today": "Hoje",
     "Yesterday": "Ontem",

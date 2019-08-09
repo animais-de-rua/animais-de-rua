@@ -17,3 +17,11 @@ tr.approved {
 .order-table .right {
 	text-align: right;
 }
+
+@media screen and (max-width: 480px) {
+	#crudTable_filter label {
+		display: flex;
+		flex-direction: column;
+		text-align: center;
+	}
+}
