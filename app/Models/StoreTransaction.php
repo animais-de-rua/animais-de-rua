@@ -18,7 +18,7 @@ class StoreTransaction extends Model
     protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['description', 'user_id', 'amount', 'notes'];
+    protected $fillable = ['description', 'user_id', 'amount', 'invoice', 'notes'];
     // protected $hidden = [];
     // protected $dates = [];
 

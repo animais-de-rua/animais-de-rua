@@ -83,7 +83,7 @@ class StoreStockCrudController extends CrudController
             'model' => '\App\User',
             'placeholder' => '',
             'minimum_input_length' => 2,
-            'data_source' => null,
+            'data_source' => url('admin/user/ajax/search/' . User::STORE),
         ]);
 
         $this->crud->addField([
@@ -95,7 +95,7 @@ class StoreStockCrudController extends CrudController
             'model' => '\App\Models\StoreProduct',
             'placeholder' => '',
             'minimum_input_length' => 2,
-            'data_source' => null,
+            'data_source' => url('admin/storeProduct/ajax/search/'),
         ]);
 
         $this->crud->addField([

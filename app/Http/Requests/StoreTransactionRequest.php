@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Helpers\EnumHelper;
 use App\Http\Requests\Request;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -27,11 +26,11 @@ class StoreTransactionRequest extends FormRequest
     public function rules()
     {
         return [
-            'description' => 'required',
-            'user_id' => 'required|exists:users,id',
+            'description' => 'nullable',
+            'user_id' => (is('admin') ? 'required' : 'nullable') . '|exists:users,id',
             'amount' => 'required|numeric',
-            'type' => 'required|in:' . EnumHelper::keys('store.transaction', ','),
             'notes' => 'nullable',
+            'invoice' => 'required_without:user_id',
         ];
     }
 

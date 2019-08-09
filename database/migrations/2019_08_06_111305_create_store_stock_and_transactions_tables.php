@@ -40,6 +40,7 @@ class CreateStoreStockAndTransactionsTables extends Migration
             $table->text('description')->nullable();
             $table->integer('user_id')->nullable()->unsigned();
             $table->integer('amount');
+            $table->text('invoice')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();
 

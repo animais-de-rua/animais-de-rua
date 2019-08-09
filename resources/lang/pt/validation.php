@@ -204,6 +204,7 @@ return [
         'notes_contact' => 'Notas: O teu contacto telefónico',
         'notes_godfather' => 'Notas: Quem apadrinha o animal',
         'protocol_id' => 'protocolo',
+        'invoice' => 'fatura',
     ],
 
     'message' => 'Os dados fornecidos são inválidos.',

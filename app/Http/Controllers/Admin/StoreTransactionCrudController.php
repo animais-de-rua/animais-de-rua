@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Helpers\EnumHelper;
 use App\Http\Requests\StoreTransactionRequest as StoreRequest;
 use App\Http\Requests\StoreTransactionRequest as UpdateRequest;
 use App\User;
@@ -59,7 +58,7 @@ class StoreTransactionCrudController extends CrudController
 
         // ----------
         // Fields
-        $this->crud->addFields(['description', 'user_id', 'type', 'amount', 'notes']);
+        $this->crud->addFields(['description', 'user_id', 'amount', 'invoice', 'notes']);
 
         $this->crud->addField([
             'label' => __('Description'),
@@ -76,16 +75,7 @@ class StoreTransactionCrudController extends CrudController
             'model' => '\App\User',
             'placeholder' => '',
             'minimum_input_length' => 2,
-            'data_source' => null,
-        ]);
-
-        $this->crud->addField([
-            'name' => 'type',
-            'label' => __('Type'),
-            'type' => 'select_from_array',
-            'options' => EnumHelper::translate('store.transaction'),
-            'allows_null' => false,
-            'default' => '1',
+            'data_source' => url('admin/user/ajax/search/' . User::STORE),
         ]);
 
         $this->crud->addField([
@@ -95,10 +85,16 @@ class StoreTransactionCrudController extends CrudController
             'default' => 0,
             'suffix' => '€',
             'attributes' => [
-                'min' => 0,
+                'min' => -1000000,
                 'max' => 1000000,
                 'step' => .01,
             ],
+        ]);
+
+        $this->crud->addField([
+            'label' => __('Invoice'),
+            'name' => 'invoice',
+            'type' => 'text',
         ]);
 
         $this->crud->addField([
@@ -167,10 +163,18 @@ class StoreTransactionCrudController extends CrudController
         $this->crud->addClause('orderBy', 'store_transactions.id', 'DESC');
 
         // Permissions
+        if (!is(['admin', 'store'])) {
+            $this->crud->denyAccess(['create']);
+        }
+
         if (!is(['admin'], ['store transaction'])) {
-            $this->crud->denyAccess(['create', 'update', 'delete']);
+            $this->crud->denyAccess(['update', 'delete']);
 
             $this->crud->addClause('where', 'user_id', backpack_user()->id);
+        }
+
+        if (!is('admin')) {
+            $this->crud->removeField('user_id');
         }
 
         // add asterisk for fields that are required in StoreTransactionRequest
@@ -180,6 +184,10 @@ class StoreTransactionCrudController extends CrudController
 
     public function store(StoreRequest $request)
     {
+        if (!is(['admin'])) {
+            $request->merge(['user_id' => backpack_user()->id]);
+        }
+
         return parent::storeCrud($request);
     }
 
