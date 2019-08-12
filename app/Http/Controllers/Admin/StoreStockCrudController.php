@@ -36,7 +36,7 @@ class StoreStockCrudController extends CrudController
         $this->crud->addColumns(['id', 'user_id', 'store_product_id', 'quantity', 'description']);
 
         $this->crud->setColumnDetails('user_id', [
-            'name' => 'user',
+            'name' => 'user_id',
             'label' => ucfirst(__('volunteer')),
             'type' => 'model_function',
             'limit' => 120,
@@ -121,7 +121,7 @@ class StoreStockCrudController extends CrudController
         // Filters
         if (is(['admin'], ['store stock'])) {
             $this->crud->addFilter([
-                'name' => 'user',
+                'name' => 'user_id',
                 'type' => 'select2_ajax',
                 'label' => ucfirst(__('volunteer')),
                 'placeholder' => __('Select a volunteer'),

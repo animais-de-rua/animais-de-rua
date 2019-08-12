@@ -349,7 +349,7 @@ class APICrudController extends CrudController
 
         $users = User::whereIn('id', DB::table('user_has_roles')->select('model_id')->whereIn('role_id', $roles));
 
-        if (!is('admin')) {
+        if (!is(['admin', 'store'])) {
             $users->whereHas('headquarters', function ($query) {
                 $headquarters = restrictToHeadquarters();
                 $query->whereIn('headquarter_id', $headquarters ?: []);
