@@ -72,7 +72,7 @@ class StoreOrderCrudController extends CrudController
         $this->crud->addField([
             'name' => 'products',
             'type' => 'products-table',
-            'options' => $this->wantsJSON() ? null : api()->storeProductList(),
+            'options' => $this->wantsJSON() ? null : api()->storeProductListFull(),
             'attributes' => $attributeDisabled,
             'readonly' => !is('admin', 'store orders'),
         ]);

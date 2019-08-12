@@ -293,6 +293,11 @@ class APICrudController extends CrudController
         return $this->storeProductFilter()->toArray();
     }
 
+    public function storeProductListFull()
+    {
+        return StoreProduct::get()->pluck('name', 'id')->toArray();
+    }
+
     /*
     |--------------------------------------------------------------------------
     | Process
