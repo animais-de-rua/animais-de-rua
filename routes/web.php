@@ -72,7 +72,7 @@ Route::group(['prefix' => config('backpack.base.route_prefix'), 'middleware' => 
     CRUD::resource('store/user/transaction', 'StoreTransactionCrudController');
 
     // API
-    Route::get('{entity}/ajax/{action}/{extra?}', 'APICrudController@ajax');
+    Route::get('{entity}/ajax/{action}/{arg1?}/{arg2?}', 'APICrudController@ajax');
     Route::post('api/appointment/approve', 'APICrudController@approveAppointment');
     Route::post('api/treatment/approve', 'APICrudController@approveTreatment');
 

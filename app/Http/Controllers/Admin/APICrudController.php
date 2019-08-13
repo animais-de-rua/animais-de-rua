@@ -336,19 +336,37 @@ class APICrudController extends CrudController
     | User
     |--------------------------------------------------------------------------
     */
-    public function userSearch($role = UserBase::ALL)
+    public function userSearch($role = null, $permission = null)
     {
         $search_term = $this->getSearchParam();
 
+        $users = User::select('id', 'name', 'email', 'phone', 'avatar')->active();
+
         // Deal with User roles
-        for ($i = 1, $roles = []; $role; $role >>= 1, $i++) {
-            if ($role & 1) {
-                $roles[] = $i;
+        if ($role > 0) {
+            for ($i = 1, $roles = []; $role; $role >>= 1, $i++) {
+                if ($role & 1) {
+                    $roles[] = $i;
+                }
             }
+
+            $ids = DB::table('user_has_roles')->select('model_id')->whereIn('role_id', $roles);
+            $users = $users->whereIn('id', $ids);
         }
 
-        $users = User::whereIn('id', DB::table('user_has_roles')->select('model_id')->whereIn('role_id', $roles));
+        // Deal with User permissions
+        if ($permission > 0) {
+            for ($i = 1, $permissions = []; $permission; $permission >>= 1, $i++) {
+                if ($permission & 1) {
+                    $permissions[] = $i;
+                }
+            }
 
+            $ids = DB::table('user_has_permissions')->select('model_id')->whereIn('permission_id', $permissions);
+            $users = $users->whereIn('id', $ids);
+        }
+
+        // Other users than admin and store are limited to their headquarters
         if (!is(['admin', 'store'])) {
             $users->whereHas('headquarters', function ($query) {
                 $headquarters = restrictToHeadquarters();
@@ -366,7 +384,7 @@ class APICrudController extends CrudController
         return $users->paginate(10);
     }
 
-    public function userFilter($role = UserBase::ALL)
+    public function userFilter($role = UserBase::ROLE_ALL)
     {
         return $this->userSearch($role)->pluck('name', 'id');
     }

@@ -194,7 +194,7 @@ class GodfatherCrudController extends CrudController
                 'label' => ucfirst(__('volunteer')),
                 'placeholder' => __('Select a volunteer'),
             ],
-                url('admin/user/ajax/filter/' . User::VOLUNTEER),
+                url('admin/user/ajax/filter/' . User::ROLE_VOLUNTEER),
                 function ($value) {
                     $this->crud->addClause('where', 'user_id', $value);
                 });

@@ -514,11 +514,11 @@ class ProcessCrudController extends CrudController
 
                 $this->crud->query
                     ->leftJoin(
-                        DB::raw("(SELECT process_id, SUM(value) as value FROM `donations` GROUP BY process_id) `income`"),
+                        DB::raw('(SELECT process_id, SUM(value) as value FROM `donations` GROUP BY process_id) `income`'),
                         'processes.id', '=', 'income.process_id'
                     )
                     ->leftJoin(
-                        DB::raw("(SELECT appointments.process_id, SUM(expense) as value FROM `treatments`, `appointments` WHERE treatments.appointment_id = appointments.id GROUP BY appointments.process_id) `outcome`"),
+                        DB::raw('(SELECT appointments.process_id, SUM(expense) as value FROM `treatments`, `appointments` WHERE treatments.appointment_id = appointments.id GROUP BY appointments.process_id) `outcome`'),
                         'processes.id', '=', 'outcome.process_id'
                     )
                     ->selectRaw('processes.*, income.value - outcome.value as balance');
@@ -538,7 +538,7 @@ class ProcessCrudController extends CrudController
             'label' => ucfirst(__('volunteer')),
             'placeholder' => __('Select a volunteer'),
         ],
-            url('admin/user/ajax/filter/' . User::VOLUNTEER),
+            url('admin/user/ajax/filter/' . User::ROLE_VOLUNTEER),
             function ($value) {
                 $this->crud->addClause('where', 'user_id', $value);
             });
