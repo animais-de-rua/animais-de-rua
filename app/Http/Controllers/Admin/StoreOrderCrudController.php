@@ -284,7 +284,7 @@ class StoreOrderCrudController extends CrudController
 
     public function showDetailsRow($id)
     {
-        $order = StoreOrder::select(['id', 'notes', 'receipt', 'invoice'])->with('products')->find($id);
+        $order = StoreOrder::select(['id', 'notes', 'receipt', 'invoice', 'recipient', 'address'])->with('products')->find($id);
 
         $totals = [0, 0, 0, 0];
         $products = '';
@@ -330,6 +330,10 @@ class StoreOrderCrudController extends CrudController
                 <p>
                     <b>' . __('Receipt') . ':</b> ' . ($order->receipt ? "<code>$order->receipt</code>" : '') . '<br />
                     <b>' . __('Invoice') . ':</b> ' . ($order->invoice ? "<code>$order->invoice</code>" : '') . '
+                </p>
+                <p>
+                    <b>' . __('Recipient') . ':</b> ' . ($order->recipient ? "$order->recipient" : '') . '<br />
+                    <b>' . __('Address') . ':</b> ' . ($order->address ? "$order->address" : '') . '
                 </p>
                 <b>' . __('Notes') . ":</b>
                 <p>$order->notes</p>

@@ -44,7 +44,7 @@ class StoreStockCrudController extends CrudController
         ]);
 
         $this->crud->setColumnDetails('store_product_id', [
-            'name' => 'product',
+            'name' => 'store_product_id',
             'label' => ucfirst(__('product')),
             'type' => 'model_function',
             'limit' => 120,
@@ -133,7 +133,7 @@ class StoreStockCrudController extends CrudController
         }
 
         $this->crud->addFilter([
-            'name' => 'product',
+            'name' => 'store_product_id',
             'type' => 'select2_ajax',
             'label' => ucfirst(__('product')),
             'placeholder' => __('Select a product'),

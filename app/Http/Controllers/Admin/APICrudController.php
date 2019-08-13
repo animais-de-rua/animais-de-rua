@@ -295,7 +295,7 @@ class APICrudController extends CrudController
 
     public function storeProductListFull()
     {
-        return StoreProduct::get()->pluck('name', 'id')->toArray();
+        return StoreProduct::orderBy('name')->pluck('name', 'id')->toArray();
     }
 
     /*
