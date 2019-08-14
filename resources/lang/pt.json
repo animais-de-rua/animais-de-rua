@@ -256,6 +256,7 @@
     "You can not apporve option :option because date :option and vet :option are not set.": "Não pode aprovar a opção :option, sem que a data :option e o veterinário :option estejam preenchidos.",
     "The date must be a date before or equal to today.": "O Campo data deverá conter uma data anterior ou igual a hoje.",
     "You don't have the permissions to update an order already shipped.": "Não tem permissão para atualizar uma encomenda já enviada.",
+    "store_order_assing_error": "{0} Está a tentar atribuir :amount ':product' e o voluntário :user não tem esse item disponível.|{1} Está a tentar atribuir :amount ':product' e o voluntário :user tem apenas 1 item disponível.|[2,*] Está a tentar atribuir :amount ':product' e o voluntário :user tem apenas :quantity itens disponíveis.",
 
     "The field :field is required.": "É obrigatória a indicação de um valor para o campo :field.",
     "If you wish to add a Donation to a :field, please change the type of this Donation.": "Se deseja adicionar um donativo a um :field, por favor troque o tipo deste Donativo.",

@@ -17,5 +17,7 @@
     "active": "Active",
     "inactive": "Inactive",
 
-    "Languages": "Languages"
+    "Languages": "Languages",
+
+    "store_order_assing_error": "{0} You are trying to assing :amount ':product' and :user has no items of that kind available.|{1} You are trying to assing :amount ':product' and :user has only 1 item available.|[2,*] You are trying to assing :amount :product and :user has only :quantity items available."
 }
