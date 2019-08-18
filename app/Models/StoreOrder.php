@@ -85,9 +85,23 @@ class StoreOrder extends Model
         return $total != 0 ? $total : '-';
     }
 
+    public function getNameAttribute()
+    {
+        return join(' - ', [$this->reference, $this->recipient]);
+    }
+
     /*
     |--------------------------------------------------------------------------
     | MUTATORS
     |--------------------------------------------------------------------------
     */
+
+    public function toArray()
+    {
+        $data = parent::toArray();
+
+        $data['name'] = $this->name;
+
+        return $data;
+    }
 }

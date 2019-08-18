@@ -7,7 +7,7 @@ use Faker\Generator as Faker;
 
 /*
 |--------------------------------------------------------------------------
-| Vet Model Factories
+| Store Product and Store Order Model Factories
 |--------------------------------------------------------------------------
 */
 

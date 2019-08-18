@@ -16,6 +16,8 @@
     "unconfirmed": "Unconfirmed",
     "active": "Active",
     "inactive": "Inactive",
+    "waiting_payment": "waiting payment",
+    "paid_out": "paid out",
 
     "Languages": "Languages",
 

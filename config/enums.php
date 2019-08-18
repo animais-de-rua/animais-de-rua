@@ -128,5 +128,9 @@ return [
             -1 => 'debit',
             1 => 'credit',
         ],
+        'supplier' => [
+            'waiting_payment' => 'waiting_payment',
+            'paid_out' => 'paid_out',
+        ],
     ],
 ];

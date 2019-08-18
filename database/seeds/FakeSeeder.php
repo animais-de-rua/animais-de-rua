@@ -14,6 +14,7 @@ use App\Models\StoreOrder;
 use App\Models\StoreProduct;
 use App\Models\StoreStock;
 use App\Models\StoreTransaction;
+use App\Models\Supplier;
 use App\Models\Treatment;
 use App\Models\Vet;
 use Backpack\Base\app\Models\BackpackUser as User;
@@ -48,6 +49,7 @@ class FakeSeeder extends Seeder
         DB::table('store_orders_products')->truncate();
         DB::table('store_stock')->truncate();
         DB::table('store_transactions')->truncate();
+        DB::table('suppliers')->truncate();
 
         $permissions = EnumHelper::keys('user.permissions');
 
@@ -137,6 +139,10 @@ class FakeSeeder extends Seeder
         // Store Transactions
         $this->log('Store Transactions');
         factory(StoreTransaction::class, 30)->create();
+
+        // Supliers
+        $this->log('Suppliers');
+        factory(Supplier::class, 30)->create();
     }
 
     public function log($entity)

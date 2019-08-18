@@ -70,6 +70,7 @@ Route::group(['prefix' => config('backpack.base.route_prefix'), 'middleware' => 
     CRUD::resource('store/shipments', 'StoreShipmentCrudController');
     CRUD::resource('store/user/stock', 'StoreStockCrudController');
     CRUD::resource('store/user/transaction', 'StoreTransactionCrudController');
+    CRUD::resource('store/supplier', 'SupplierCrudController');
 
     // API
     Route::get('{entity}/ajax/{action}/{arg1?}/{arg2?}', 'APICrudController@ajax');

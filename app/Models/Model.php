@@ -4,13 +4,13 @@ namespace App\Models;
 
 class Model extends \Illuminate\Database\Eloquent\Model
 {
-    public function getLink($entity, $link = true, $action = 'edit')
+    public function getLink($entity, $link = true, $action = 'edit', $attribute = 'name')
     {
         if (!$entity) {
             return '-';
         }
 
-        $name = str_limit($entity->name, 60, '...');
+        $name = str_limit($entity->{$attribute}, 60, '...');
         $class = strtolower(class_basename($entity));
 
         return $link ? "<a href='/admin/$class/{$entity->id}/$action'>$name</a>" : $name;

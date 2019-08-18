@@ -9,7 +9,7 @@ use Faker\Generator as Faker;
 
 /*
 |--------------------------------------------------------------------------
-| Appointment Model Factories
+| ProtocolRequest Model Factories
 |--------------------------------------------------------------------------
 */
 

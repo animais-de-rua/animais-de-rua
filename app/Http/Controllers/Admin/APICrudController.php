@@ -13,6 +13,7 @@ use App\Models\Headquarter;
 use App\Models\PartnerCategory;
 use App\Models\Process;
 use App\Models\Protocol;
+use App\Models\StoreOrder;
 use App\Models\StoreProduct;
 use App\Models\Territory;
 use App\Models\Treatment;
@@ -296,6 +297,26 @@ class APICrudController extends CrudController
     public function storeProductListFull()
     {
         return StoreProduct::orderBy('name')->pluck('name', 'id')->toArray();
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Store Order
+    |--------------------------------------------------------------------------
+    */
+    public function storeOrderSearch()
+    {
+        return $this->entitySearch(StoreOrder::class, ['reference', 'recipient']);
+    }
+
+    public function storeOrderFilter()
+    {
+        return $this->storeOrderSearch()->pluck('name', 'id');
+    }
+
+    public function storeOrderList()
+    {
+        return $this->storeOrderFilter()->toArray();
     }
 
     /*

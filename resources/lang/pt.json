@@ -186,6 +186,8 @@
     "shipments": "envios",
     "transaction": "transacção",
     "transactions": "transacções",
+    "supplier": "fornecedor",
+    "suppliers": "fornecedores",
 
     "headquarter": "núcleo",
     "process": "processo",
@@ -292,6 +294,8 @@
     "waiting_godfather": "A aguardar padrinhos",
     "waiting_adoption": "A aguardar adopção",
     "waiting_capture": "A aguardar captura",
+    "waiting_payment": "A aguardar pagamento",
+    "paid_out": "Pago",
     "capture": "captura",
     "open": "Aberto",
     "pending": "Pendente",
