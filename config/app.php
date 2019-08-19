@@ -11,6 +11,7 @@ return [
     'paypal' => env('PAYPAL'),
     'paypal_id' => env('PAYPAL_ID'),
     'prestashop_secret' => env('PRESTASHOP_SECRET'),
+    'prestashop_categories' => env('PRESTASHOP_CATEGORIES'),
     'rapid_api_secret' => env('RAPID_API_SECRET'),
 
     /*

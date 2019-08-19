@@ -16,7 +16,7 @@ class PrestaShopController extends Controller
         $productsXML = $webService->get([
             'resource' => 'products',
             'display' => 'full',
-            'filter[id_category_default]' => '[16]',
+            'filter[id_category_default]' => Config::get('app.prestashop_categories'),
             'limit' => 6,
         ])->products->children();
 
