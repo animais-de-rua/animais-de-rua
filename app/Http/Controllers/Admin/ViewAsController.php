@@ -76,7 +76,14 @@ class ViewAsController extends \App\Http\Controllers\Controller
         return redirect(url()->previous());
     }
 
-    private function clearAll()
+    public function view_as_clear()
+    {
+        $this->clearAll();
+
+        return redirect(url()->previous());
+    }
+
+    public function clearAll()
     {
         Session::remove('role');
         Session::remove('permissions');

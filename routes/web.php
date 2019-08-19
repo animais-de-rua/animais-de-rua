@@ -99,6 +99,9 @@ Route::group(['prefix' => config('backpack.base.route_prefix'), 'middleware' => 
     Route::any('/view-as-headquarter/{headquarter}/{state}', 'ViewAsController@view_as_headquarter')->name('view-as-headquarter');
 });
 
+// View as clear all
+Route::any('/view-as-clear', 'Admin\ViewAsController@view_as_clear')->name('view-as-clear');
+
 // API
 Route::group(['prefix' => 'api', 'middleware' => ['web']], function () {
     Route::any('token', function () {return ['token' => csrf_token()];})->name('token');

@@ -480,11 +480,23 @@
                         @yield('message')
                     </p>
 
-                    <a href="{{ URL::previous() }}">
-                        <button class="font-bold uppercase tracking-wide py-3 px-6 border-2 rounded-lg">
-                            {{ __('Go Back') }}
-                        </button>
-                    </a>
+                    <p>
+                        <a href="{{ URL::previous() }}">
+                            <button class="font-bold uppercase tracking-wide py-3 px-6 border-2 rounded-lg">
+                                {{ __('Go Back') }}
+                            </button>
+                        </a>
+                    </p>
+
+                    <p style="margin-top: 20px;">
+                        @if(Session::get('permissions'))
+                        <a href="{{ url('/view-as-clear') }}">
+                            <button class="font-bold uppercase tracking-wide py-3 px-6 border-2 rounded-lg">
+                                {{ __('Clear permissions') }}
+                            </button>
+                        </a>
+                    </p>
+                    @endif
                 </div>
             </div>
 
