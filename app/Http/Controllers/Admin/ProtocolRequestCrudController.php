@@ -219,12 +219,18 @@ class ProtocolRequestCrudController extends CrudController
 
         if (!is('admin')) {
             $this->crud->denyAccess(['delete']);
+
+            $this->crud->query->join('protocols', 'protocols_requests.protocol_id', '=', 'protocols.id');
+            $this->crud->query->selectRaw('protocols_requests.*');
+
+            $headquarters = restrictToHeadquarters();
+            $this->crud->query->whereIn('protocols.headquarter_id', $headquarters ?: []);
         }
 
         // ------ ADVANCED QUERIES
         $this->crud->addClause('with', ['process', 'protocol', 'territory', 'user']);
 
-        $this->crud->addClause('orderBy', 'id', 'DESC');
+        $this->crud->addClause('orderBy', 'protocols_requests.id', 'DESC');
 
         // ------ DATATABLE EXPORT BUTTONS
         $this->crud->enableExportButtons();

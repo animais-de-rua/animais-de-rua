@@ -158,6 +158,10 @@ class ProtocolCrudController extends CrudController
 
         if (!is('admin')) {
             $this->crud->denyAccess(['delete']);
+
+            $headquarters = restrictToHeadquarters();
+            $this->crud->addClause('whereIn', 'headquarter_id', $headquarters ?: []);
+            $this->crud->removeColumn('headquarter');
         }
 
         // ------ ADVANCED QUERIES
