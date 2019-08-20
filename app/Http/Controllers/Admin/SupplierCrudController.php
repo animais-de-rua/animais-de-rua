@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Helpers\EnumHelper;
 use App\Http\Requests\SupplierRequest as StoreRequest;
 use App\Http\Requests\SupplierRequest as UpdateRequest;
+use App\Models\Supplier;
 use Backpack\CRUD\CrudPanel;
 
 /**
@@ -142,9 +143,26 @@ class SupplierCrudController extends CrudController
                 $this->crud->addClause('whereIn', 'status', json_decode($values));
             });
 
+        // ------ CRUD DETAILS ROW
+        $this->crud->enableDetailsRow();
+        $this->crud->allowAccess('details_row');
+
+        $this->crud->enableExportButtons();
+
         // add asterisk for fields that are required in SupplierRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
+    }
+
+    public function showDetailsRow($id)
+    {
+        $supplier = Supplier::select(['id', 'notes'])->find($id);
+        $notes = str_replace('\\n', '<br />', $supplier->notes);
+
+        return "<div style='margin:5px 8px'>
+                <b>" . __('Notes') . ":</b>
+                <p style='white-space: pre-wrap;'><i>" . __('Notes') . "</i>: $notes</p>
+            </div>";
     }
 
     public function store(StoreRequest $request)

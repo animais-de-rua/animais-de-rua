@@ -88,7 +88,9 @@ class StoreOrderCrudController extends CrudController
             'label' => __('Notes'),
             'name' => 'notes',
             'type' => 'textarea',
-            'attributes' => $attributeDisabled,
+            'attributes' => array_merge($attributeDisabled, [
+                'style' => 'height: 140px;',
+            ]),
         ]);
 
         $this->separator(ucfirst(__('shipment')))->afterField('notes');
@@ -336,7 +338,7 @@ class StoreOrderCrudController extends CrudController
                     <b>' . __('Address') . ':</b> ' . ($order->address ? "$order->address" : '') . '
                 </p>
                 <b>' . __('Notes') . ":</b>
-                <p>$order->notes</p>
+                <p style='white-space: pre-wrap;'>$order->notes</p>
             </div>";
     }
 

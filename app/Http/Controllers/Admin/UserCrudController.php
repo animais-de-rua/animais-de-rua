@@ -187,7 +187,7 @@ class UserCrudController extends OriginalUserCrudController
         $user = User::select(['notes'])->find($id);
 
         return "<div style='margin:5px 8px'>
-                <p><i>Notas</i>: $user->notes</p>
+                <p style='white-space: pre-wrap;'><i>" . __('Notes') . "</i> : $user->notes</p>
             </div>";
     }
 

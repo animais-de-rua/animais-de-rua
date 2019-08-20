@@ -249,7 +249,7 @@ class GodfatherCrudController extends CrudController
         $godfather = Godfather::select(['notes'])->find($id);
 
         return "<div style='margin:5px 8px'>
-                <p><i>Notas</i>: $godfather->notes</p>
+                <p style='white-space: pre-wrap;'><i>" . __('Notes') . "</i>: $godfather->notes</p>
             </div>";
     }
 

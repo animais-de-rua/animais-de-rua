@@ -655,9 +655,9 @@ class ProcessCrudController extends CrudController
         $process = Process::select(['history', 'notes', 'contact', 'phone', 'email'])->find($id);
 
         return "<div style='margin:5px 8px'>
-                <p>$process->contact, <a href='tel:$process->phone'>$process->phone</a><br /><a href='mailto:$process->email'>$process->email</a></p>
-                <p>$process->history</p>
-                <p>$process->notes</p>
+                <p style='white-space: pre-wrap;'><i>" . __('Contact') . "</i>: $process->contact, <a href='tel:$process->phone'>$process->phone</a><br /><a href='mailto:$process->email'>$process->email</a></p>
+                <p style='white-space: pre-wrap;'><i>" . __('History') . "</i>: $process->history</p>
+                <p style='white-space: pre-wrap;'><i>" . __('Notes') . "</i>: $process->notes</p>
             </div>";
     }
 

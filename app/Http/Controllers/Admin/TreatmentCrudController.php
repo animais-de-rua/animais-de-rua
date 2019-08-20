@@ -427,7 +427,7 @@ class TreatmentCrudController extends CrudController
         $treatment = Treatment::select(['notes'])->find($id);
 
         return "<div style='margin:5px 8px'>
-                <p><i>Notas</i>: $treatment->notes</p>
+                <p style='white-space: pre-wrap;'><i>" . __('Notes') . "</i>: $treatment->notes</p>
             </div>";
     }
 

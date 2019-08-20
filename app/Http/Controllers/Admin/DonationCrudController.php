@@ -332,7 +332,7 @@ class DonationCrudController extends CrudController
         $donation = Donation::select(['notes'])->find($id);
 
         return "<div style='margin:5px 8px'>
-                <p><i>Notas</i>: $donation->notes</p>
+                <p style='white-space: pre-wrap;'><i>" . __('Notes') . "</i>: $donation->notes</p>
             </div>";
     }
 

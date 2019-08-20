@@ -152,7 +152,7 @@ class StoreProductCrudController extends CrudController
         $storeProduct = StoreProduct::select(['notes'])->find($id);
 
         return "<div style='margin:5px 8px'>
-                <p><i>Notas</i>: $storeProduct->notes</p>
+                <p style='white-space: pre-wrap;'><i>" . __('Notes') . "</i>: $storeProduct->notes</p>
             </div>";
     }
 
