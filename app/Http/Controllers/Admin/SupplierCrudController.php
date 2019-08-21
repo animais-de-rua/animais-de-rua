@@ -149,6 +149,15 @@ class SupplierCrudController extends CrudController
 
         $this->crud->enableExportButtons();
 
+        // ------ CRUD ACCESS
+        if (!is('admin')) {
+            $this->crud->denyAccess(['delete']);
+        }
+
+        if (!is('admin', 'store orders')) {
+            $this->crud->denyAccess(['list', 'create', 'update']);
+        }
+
         // add asterisk for fields that are required in SupplierRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
