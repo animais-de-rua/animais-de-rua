@@ -39,7 +39,7 @@ class CreateStoreStockAndTransactionsTables extends Migration
             $table->increments('id');
             $table->text('description')->nullable();
             $table->integer('user_id')->nullable()->unsigned();
-            $table->integer('amount');
+            $table->decimal('amount', 8, 2)->default(0);
             $table->text('invoice')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();
