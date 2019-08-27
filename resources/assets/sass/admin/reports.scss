@@ -1,0 +1,109 @@
+.report {
+    &.row {
+        display: flex;
+    }
+
+    .form-control {
+        display: inline;
+        width: initial;
+    }
+
+    .filters p,
+    .order p,
+    .actions p {
+        margin: 0;
+        font-style: italic;
+        line-height: initial;
+    }
+
+    .filters {
+        line-height: 40px;
+
+        & > * {
+            white-space: nowrap;
+        }
+    }
+
+    .actions {
+        margin-top: 6px;
+
+        button {
+            margin: 6px 6px 0 0;
+        }
+    }
+
+    table {
+        position: relative;
+
+        thead {
+            font-weight: bold;
+        }
+
+        td {
+            padding: 4px 8px!important;
+        }
+
+        .close {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+    }
+
+    .col-md-12 {
+        transition: width .2s;
+    }
+
+    .preview {
+        display: none;
+        width: 100%;
+
+        .close {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: #777;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            margin: 10px;
+            color: #FFF;
+            text-align: center;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+            line-height: 20px;
+            opacity: 1;
+            text-shadow: none;
+            z-index: 1;
+
+            & :hover {
+                background-color: #888;
+            }
+        }
+
+        & > .box {
+            max-height: 282px;
+            overflow-x: hidden;
+            overflow-y: scroll;
+        }
+    }
+
+    &.active {
+        .preview {
+            display: block;
+        }
+
+        & > .col-md-12 {
+            width: 440px;
+        }
+    }
+
+    .box {
+        min-height: 282px;
+    }
+
+    select {
+        max-width: 180px;
+    }
+}

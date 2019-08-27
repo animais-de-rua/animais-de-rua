@@ -35,6 +35,10 @@ Route::get('/logout', 'PageController@logout');
 Route::group(['prefix' => config('backpack.base.route_prefix'), 'middleware' => ['admin'], 'namespace' => 'Admin'], function () {
     Route::get('/dashboard', 'DashboardController@dashboard')->name('dashboard');
 
+    // Reports
+    Route::get('/reports', 'ReportController@report')->name('reports');
+    Route::post('/reports/{type}/{action}', 'ReportController@action');
+
     // Terminal
     Route::get('/terminal', 'UserCrudController@terminal')->name('terminal');
     Route::post('/terminal/run', 'UserCrudController@terminal_run')->name('terminal_run');

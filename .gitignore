@@ -18,8 +18,8 @@ yarn-error.log
 /public/vendor/adminlte/dist/img/user*
 *.map
 /public/vendor/backpack/colorbox/content/*.jpg
-/public/css/app.css
-/public/js/app.js
+/public/css/*.css
+/public/js/*.js
 /sftp-config.json
 /public/uploads/
 /public/fonts
@@ -27,3 +27,5 @@ yarn-error.log
 /public/vendor/adminlte
 /public/sftp-config.json
 /public/sw.js
+/public/css/admin/*.css
+/public/js/admin/*.js
