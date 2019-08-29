@@ -16,7 +16,6 @@ class ViewAsController extends \App\Http\Controllers\Controller
             Session::put('role', $role);
         } else {
             $this->clearAll();
-            $this->clearAll();
         }
 
         return redirect(url()->previous());

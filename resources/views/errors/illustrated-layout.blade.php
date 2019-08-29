@@ -489,7 +489,7 @@
                     </p>
 
                     <p style="margin-top: 20px;">
-                        @if(Session::get('permissions'))
+                        @if(Session::get('permissions') || Session::get('role'))
                         <a href="{{ url('/view-as-clear') }}">
                             <button class="font-bold uppercase tracking-wide py-3 px-6 border-2 rounded-lg">
                                 {{ __('Clear permissions') }}
