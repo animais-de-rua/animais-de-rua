@@ -30,7 +30,7 @@ class PrestaShopController extends Controller
             $products[] = (object) [
                 'id' => (int) $product->id,
                 'name' => (string) $nameLanguage[0],
-                'price' => (float) $product->price * 1.23,
+                'price' => (float) $product->price,
                 'image' => "$url/$idImage-home_default/prestashop-$idImage.jpg",
                 'description' => (string) $descriptionLanguage[0],
                 'url' => $url . '/index.php?controller=product&id_product=' . $product->id,
