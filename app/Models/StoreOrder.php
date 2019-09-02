@@ -18,7 +18,7 @@ class StoreOrder extends Model
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['reference', 'cart', 'recipient', 'address', 'user_id', 'shipment_date', 'expense', 'receipt', 'notes', 'invoice'];
+    protected $fillable = ['reference', 'cart', 'recipient', 'address', 'user_id', 'shipment_date', 'expense', 'receipt', 'notes', 'invoice', 'status'];
     // protected $hidden = [];
     // protected $dates = [];
 
@@ -30,7 +30,7 @@ class StoreOrder extends Model
 
     public function addShipment()
     {
-        $disabled = $this->shipment_date != null;
+        $disabled = $this->status == 'shipped';
 
         return '
         <a class="btn btn-xs btn-' . ($disabled ? 'default' : 'primary') . ' ' . ($disabled ? 'disabled' : '') . '" href="/admin/store/orders/' . $this->id . '/edit" title="' . __('Add shipment') . '">
@@ -65,6 +65,11 @@ class StoreOrder extends Model
     | ACCESORS
     |--------------------------------------------------------------------------
     */
+
+    public function getShippedAttribute()
+    {
+        return $this->status == 'shipped';
+    }
 
     public function getUserLinkAttribute()
     {

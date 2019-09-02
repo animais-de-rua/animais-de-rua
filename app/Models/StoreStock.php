@@ -18,7 +18,7 @@ class StoreStock extends Model
     protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['description', 'user_id', 'store_product_id', 'quantity', 'type', 'notes'];
+    protected $fillable = ['user_id', 'store_product_id', 'quantity', 'type', 'notes'];
     // protected $hidden = [];
     // protected $dates = [];
 

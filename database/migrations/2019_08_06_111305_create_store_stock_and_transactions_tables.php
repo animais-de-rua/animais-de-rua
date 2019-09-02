@@ -15,7 +15,6 @@ class CreateStoreStockAndTransactionsTables extends Migration
     {
         Schema::create('store_stock', function (Blueprint $table) {
             $table->increments('id');
-            $table->text('description')->nullable();
             $table->integer('user_id')->nullable()->unsigned();
             $table->integer('store_product_id')->nullable()->unsigned();
             $table->integer('quantity');

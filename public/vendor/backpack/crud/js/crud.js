@@ -94,16 +94,15 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Order sent
-    let orderSent = document.querySelector('input[order=sent]:not(:disabled)');
+    let orderSent = document.querySelector('select[order=sent]:not(:disabled)');
     if(orderSent) {
         let orderSentSelectChange = e => {
             document.querySelectorAll("[order=details]").forEach(e => {
-                orderSent.checked ? e.removeAttribute('disabled') : e.setAttribute('disabled', 'disabled');
+                orderSent.value == 'shipped' ? e.removeAttribute('disabled') : e.setAttribute('disabled', 'disabled');
             });
         }
         orderSent.onchange = orderSentSelectChange;
         orderSentSelectChange();
     }
-    
 
 });

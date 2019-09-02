@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Helpers\EnumHelper;
 use App\Http\Requests\Request;
 use App\Models\StoreOrder;
 use App\Models\StoreStock;
@@ -35,6 +36,7 @@ class StoreOrderRequest extends FormRequest
             'user_id' => 'required_without:id|exists:users,id',
             'shipment_date' => 'nullable|date',
             'expense' => 'nullable|numeric|min:0|max:1000000',
+            'status' => 'in:' . EnumHelper::keys('store.order', ','),
         ];
     }
 
@@ -108,6 +110,17 @@ class StoreOrderRequest extends FormRequest
                         'user' => $username,
                         'quantity' => $total,
                     ]));
+                }
+            }
+
+            // Invoice required when status == shipped
+            if ($this->input('status') == 'shipped') {
+                if (!strlen($this->input('invoice'))) {
+                    $validator->errors()->add('invoice', __('Invoice is required when the order is shipped.'));
+                }
+
+                if (!$this->input('shipment_date')) {
+                    $validator->errors()->add('shipment_date', __('Shipment Date is required when the order is shipped.'));
                 }
             }
 

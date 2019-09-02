@@ -33,7 +33,7 @@ class StoreTransactionCrudController extends CrudController
 
         // ----------
         // Columns
-        $this->crud->addColumns(['id', 'user_id', 'type', 'description']);
+        $this->crud->addColumns(['id', 'user_id', 'type', 'invoice', 'description']);
 
         $this->crud->setColumnDetails('user_id', [
             'name' => 'user',
@@ -49,6 +49,11 @@ class StoreTransactionCrudController extends CrudController
             'type' => 'model_function',
             'limit' => 120,
             'function_name' => 'getAmountColorize',
+        ]);
+
+        $this->crud->setColumnDetails('invoice', [
+            'type' => 'text',
+            'label' => __('Invoice'),
         ]);
 
         $this->crud->setColumnDetails('description', [
@@ -112,7 +117,7 @@ class StoreTransactionCrudController extends CrudController
                 'label' => ucfirst(__('volunteer')),
                 'placeholder' => __('Select a volunteer'),
             ],
-                url('admin/user/ajax/filter/' . User::ROLE_VOLUNTEER),
+                url('admin/user/ajax/filter/' . User::ROLE_STORE),
                 function ($value) {
                     $this->crud->addClause('where', 'user_id', $value);
                 });

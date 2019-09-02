@@ -1,5 +1,6 @@
 <?php
 
+use App\Helpers\EnumHelper;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -35,6 +36,7 @@ class CreateStoreManagementTables extends Migration
             $table->text('receipt')->nullable();
             $table->text('invoice')->nullable();
             $table->text('notes')->nullable();
+            $table->enum('status', EnumHelper::values('store.order'))->default('waiting');
             $table->timestamps();
 
             $table->index(['user_id']);

@@ -1,5 +1,6 @@
 <?php
 
+use App\Helpers\EnumHelper;
 use App\Models\StoreOrder;
 use App\Models\StoreProduct;
 use App\User;
@@ -30,7 +31,8 @@ $factory->define(StoreProduct::class, function (Faker $faker) {
 
 $factory->define(StoreOrder::class, function (Faker $faker) {
     $date = $faker->dateTimeBetween('-2 months', 'now');
-    $sent = rand(0, 1);
+    $status = $faker->randomElement(EnumHelper::get('store.order'));
+    $sent = $status == 'shipped';
 
     return [
         'reference' => $faker->isbn10(),
@@ -38,6 +40,7 @@ $factory->define(StoreOrder::class, function (Faker $faker) {
         'address' => $faker->address,
         'user_id' => $faker->randomElement(User::all()->pluck('id')->toArray()),
         'notes' => $faker->text(80),
+        'status' => $status,
         'shipment_date' => $sent ? $date : null,
         'expense' => $sent ? $faker->randomFloat(2, 1, 3) : 0,
         'created_at' => $date,

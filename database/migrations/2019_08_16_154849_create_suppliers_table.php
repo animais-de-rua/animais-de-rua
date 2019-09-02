@@ -19,6 +19,7 @@ class CreateSuppliersTable extends Migration
             $table->string('reference', 255);
             $table->integer('store_order_id')->nullable()->unsigned();
             $table->integer('store_product_id')->nullable()->unsigned();
+            $table->text('invoice')->nullable();
             $table->text('notes')->nullable();
             $table->enum('status', EnumHelper::values('store.supplier'))->default('waiting_payment');
             $table->timestamps();
@@ -44,6 +45,6 @@ class CreateSuppliersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('supplier');
+        Schema::dropIfExists('suppliers');
     }
 }

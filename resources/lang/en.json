@@ -18,6 +18,9 @@
     "inactive": "Inactive",
     "waiting_payment": "waiting payment",
     "paid_out": "paid out",
+    "waiting": "waiting",
+    "in_progress": "in progress",
+    "shipped": "shipped",
 
     "Languages": "Languages",
 

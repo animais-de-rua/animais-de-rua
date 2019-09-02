@@ -15,7 +15,6 @@ $factory->define(StoreStock::class, function (Faker $faker) {
     $date = $faker->dateTimeBetween('-2 months', 'now');
 
     return [
-        'description' => $faker->text(40),
         'user_id' => $faker->randomElement(User::all()->pluck('id')->toArray()),
         'store_product_id' => $faker->randomElement(StoreProduct::all()->pluck('id')->toArray()),
         'quantity' => $faker->randomElement([5, 10, 20, 50]) * (rand(0, 1) ? -1 : 1),

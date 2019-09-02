@@ -124,6 +124,11 @@ return [
     ],
 
     'store' => [
+        'order' => [
+            'waiting' => 'waiting',
+            'in_progress' => 'in_progress',
+            'shipped' => 'shipped',
+        ],
         'transaction' => [
             -1 => 'debit',
             1 => 'credit',

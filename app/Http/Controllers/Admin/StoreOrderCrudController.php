@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\EnumHelper;
 use App\Http\Requests\StoreOrderRequest as StoreRequest;
 use App\Http\Requests\StoreOrderRequest as UpdateRequest;
 use App\Models\StoreOrder;
@@ -97,17 +98,16 @@ class StoreOrderCrudController extends CrudController
 
         // Order sent?
         $id = $this->getEntryID();
-        $sent = $id && StoreOrder::find($id)->shipment_date;
+        $sent = $id && StoreOrder::find($id)->shipped;
 
         $sentAttributes = is('admin', 'store orders') ? [] : $sent ? [
             'disabled' => 'disabled',
         ] : [];
 
         $this->crud->addField([
-            'label' => __('Sent'),
-            'name' => 'sent',
-            'type' => 'checkbox',
-            'value' => $sent,
+            'label' => __('Status'),
+            'type' => 'enum',
+            'name' => 'status',
             'attributes' => array_merge($sentAttributes, [
                 'order' => 'sent',
             ]),
@@ -188,6 +188,18 @@ class StoreOrderCrudController extends CrudController
             'label' => __('Shipment date'),
         ]);
 
+        $this->crud->addColumn([
+            'name' => 'invoice',
+            'type' => 'text',
+            'label' => __('Invoice'),
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'status',
+            'type' => 'trans',
+            'label' => __('Status'),
+        ]);
+
         // Filtrers
         if (is('admin')) {
             $this->crud->addFilter([
@@ -216,27 +228,14 @@ class StoreOrderCrudController extends CrudController
             });
 
         $this->crud->addFilter([
-            'type' => 'simple',
-            'name' => 'sent',
-            'label' => __('Sent'),
+            'name' => 'status',
+            'type' => 'select2_multiple',
+            'label' => __('Status'),
+            'placeholder' => __('Select a status'),
         ],
-            false,
-            function ($value) {
-                if ($value) {
-                    $this->crud->addClause('where', 'shipment_date', '>', '0');
-                }
-            });
-
-        $this->crud->addFilter([
-            'type' => 'simple',
-            'name' => 'not_sent',
-            'label' => __('Not sent'),
-        ],
-            false,
-            function ($value) {
-                if ($value) {
-                    $this->crud->addClause('where', 'shipment_date', null);
-                }
+            EnumHelper::translate('store.order'),
+            function ($values) {
+                $this->crud->addClause('whereIn', 'status', json_decode($values));
             });
 
         // ------ CRUD DETAILS ROW
@@ -359,8 +358,17 @@ class StoreOrderCrudController extends CrudController
         if (!is('admin', 'store orders')) {
             $request = new \Illuminate\Http\Request([
                 'id' => $request->id,
+                'status' => $request->status,
                 'shipment_date' => $request->shipment_date,
                 'expense' => $request->expense,
+            ]);
+        }
+
+        // Clean up shippment info
+        if ($request->status != 'shipped') {
+            $request->merge([
+                'shipment_date' => null,
+                'expense' => 0,
             ]);
         }
 

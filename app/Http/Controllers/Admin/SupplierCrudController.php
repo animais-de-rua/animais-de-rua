@@ -64,7 +64,7 @@ class SupplierCrudController extends CrudController
 
         // ----------
         // Fields
-        $this->crud->addFields(['reference', 'store_order_id', 'store_product_id', 'notes', 'status']);
+        $this->crud->addFields(['reference', 'store_order_id', 'store_product_id', 'invoice', 'notes', 'status']);
 
         $this->crud->addField([
             'label' => __('Reference'),
@@ -94,6 +94,12 @@ class SupplierCrudController extends CrudController
             'placeholder' => '',
             'minimum_input_length' => 2,
             'data_source' => url('admin/storeProduct/ajax/search/'),
+        ]);
+
+        $this->crud->addField([
+            'label' => __('Invoice'),
+            'name' => 'invoice',
+            'type' => 'text',
         ]);
 
         $this->crud->addField([
@@ -165,13 +171,16 @@ class SupplierCrudController extends CrudController
 
     public function showDetailsRow($id)
     {
-        $supplier = Supplier::select(['id', 'notes'])->find($id);
+        $supplier = Supplier::select(['id', 'invoice', 'notes'])->find($id);
         $notes = str_replace('\\n', '<br />', $supplier->notes);
 
         return "<div style='margin:5px 8px'>
                 <b>" . __('Notes') . ":</b>
                 <p style='white-space: pre-wrap;'><i>" . __('Notes') . "</i>: $notes</p>
-            </div>";
+                <p>
+                    <b>" . __('Invoice') . ':</b> ' . ($supplier->invoice ? "<code>$supplier->invoice</code>" : '') . '
+                </p>
+            </div>';
     }
 
     public function store(StoreRequest $request)

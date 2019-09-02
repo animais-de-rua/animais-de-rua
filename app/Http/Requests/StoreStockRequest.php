@@ -26,7 +26,6 @@ class StoreStockRequest extends FormRequest
     public function rules()
     {
         return [
-            'description' => 'nullable',
             'user_id' => 'required|exists:users,id',
             'store_product_id' => 'required|exists:store_products,id',
             'quantity' => 'required|numeric',

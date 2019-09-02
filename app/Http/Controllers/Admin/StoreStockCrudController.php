@@ -33,7 +33,7 @@ class StoreStockCrudController extends CrudController
 
         // ----------
         // Columns
-        $this->crud->addColumns(['id', 'user_id', 'store_product_id', 'quantity', 'description']);
+        $this->crud->addColumns(['id', 'user_id', 'store_product_id', 'quantity']);
 
         $this->crud->setColumnDetails('user_id', [
             'name' => 'user_id',
@@ -59,20 +59,9 @@ class StoreStockCrudController extends CrudController
             'function_name' => 'getQuantityColorize',
         ]);
 
-        $this->crud->setColumnDetails('description', [
-            'type' => 'text',
-            'label' => __('Description'),
-        ]);
-
         // ----------
         // Fields
-        $this->crud->addFields(['description', 'user_id', 'store_product_id', 'quantity', 'notes']);
-
-        $this->crud->addField([
-            'label' => __('Description'),
-            'type' => 'textarea',
-            'name' => 'description',
-        ]);
+        $this->crud->addFields(['user_id', 'store_product_id', 'quantity', 'notes']);
 
         $this->crud->addField([
             'label' => ucfirst(__('volunteer')),
@@ -126,7 +115,7 @@ class StoreStockCrudController extends CrudController
                 'label' => ucfirst(__('volunteer')),
                 'placeholder' => __('Select a volunteer'),
             ],
-                url('admin/user/ajax/filter/' . User::ROLE_VOLUNTEER),
+                url('admin/user/ajax/filter/' . User::ROLE_STORE),
                 function ($value) {
                     $this->crud->addClause('where', 'user_id', $value);
                 });

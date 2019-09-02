@@ -18,7 +18,7 @@ class Supplier extends Model
     protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['reference', 'store_order_id', 'store_product_id', 'notes', 'status'];
+    protected $fillable = ['reference', 'store_order_id', 'store_product_id', 'invoice', 'notes', 'status'];
     // protected $hidden = [];
     // protected $dates = [];
 
