@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use App\Helpers\EnumHelper;
 use App\Http\Requests\Request;
 use App\Models\StoreOrder;
+use App\Models\StoreProduct;
 use App\Models\StoreStock;
 use App\User;
 use Illuminate\Foundation\Http\FormRequest;
@@ -78,17 +79,17 @@ class StoreOrderRequest extends FormRequest
             // Validate user has all the products
             $products = json_decode($this->input('products'));
             foreach ($products as $product) {
-                $product_id = $product->id;
-                $product_quantity = $product->pivot->quantity;
+                $quantity = $product->pivot->quantity;
+                $product = StoreProduct::find($product->pivot->store_product_id);
 
                 // Stock quantity
                 $quantity_stock = StoreStock::where('user_id', $user_id)
-                    ->where('store_product_id', $product_id)
+                    ->where('store_product_id', $product->id)
                     ->sum('quantity');
 
                 // Sent quantity
                 $quantity_sent = StoreOrder::join('store_orders_products', 'store_orders_products.store_order_id', '=', 'store_orders.id')
-                    ->where('store_product_id', $product_id)
+                    ->where('store_product_id', $product->id)
                     ->where('user_id', $user_id);
 
                 // In case it is an edit, itens on that order doesn't count
@@ -101,11 +102,11 @@ class StoreOrderRequest extends FormRequest
                 // Total normalized
                 $total = max(0, $quantity_stock - $quantity_sent);
 
-                if ($product_quantity > $total) {
+                if ($quantity > $total) {
                     $username = User::select('name')->where('id', $user_id)->first()->name;
 
                     $validator->errors()->add('products', trans_choice(__('store_order_assing_error'), $total, [
-                        'amount' => $product_quantity,
+                        'amount' => $quantity,
                         'product' => $product->name,
                         'user' => $username,
                         'quantity' => $total,
