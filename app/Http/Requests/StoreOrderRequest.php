@@ -69,12 +69,8 @@ class StoreOrderRequest extends FormRequest
     {
         $validator->after(function ($validator) {
             $id = $this->input('id');
-            $user_id = $this->input('user_id');
-
-            // Common user cannot edit a shipped order
-            if (!is('admin', 'store orders') && StoreOrder::find($id)->shipment_date) {
-                return $validator->errors()->add('sent', __("You don't have the permissions to update an order already shipped."));
-            }
+            $user_id = $this->input('user_id') ?: StoreOrder::find($id)->user_id;
+            $user_name = null;
 
             // Validate user has all the products
             $products = json_decode($this->input('products'));
@@ -103,12 +99,12 @@ class StoreOrderRequest extends FormRequest
                 $total = max(0, $quantity_stock - $quantity_sent);
 
                 if ($quantity > $total) {
-                    $username = User::select('name')->where('id', $user_id)->first()->name;
+                    $user_name = $user_name ?: User::select('name')->where('id', $user_id)->first()->name;
 
                     $validator->errors()->add('products', trans_choice(__('store_order_assing_error'), $total, [
                         'amount' => $quantity,
                         'product' => $product->name,
-                        'user' => $username,
+                        'user' => $user_name,
                         'quantity' => $total,
                     ]));
                 }

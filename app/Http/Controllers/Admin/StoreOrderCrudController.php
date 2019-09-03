@@ -96,21 +96,13 @@ class StoreOrderCrudController extends CrudController
 
         $this->separator(ucfirst(__('shipment')))->afterField('notes');
 
-        // Order sent?
-        $id = $this->getEntryID();
-        $sent = $id && StoreOrder::find($id)->shipped;
-
-        $sentAttributes = is('admin', 'store orders') ? [] : $sent ? [
-            'disabled' => 'disabled',
-        ] : [];
-
         $this->crud->addField([
             'label' => __('Status'),
             'type' => 'enum',
             'name' => 'status',
-            'attributes' => array_merge($sentAttributes, [
+            'attributes' => [
                 'order' => 'sent',
-            ]),
+            ],
         ]);
 
         $this->crud->addField([
@@ -119,7 +111,6 @@ class StoreOrderCrudController extends CrudController
             'type' => 'date',
             'attributes' => [
                 'order' => 'details',
-                'disabled' => 'disabled',
             ],
         ]);
 
@@ -129,7 +120,6 @@ class StoreOrderCrudController extends CrudController
             'type' => 'number',
             'attributes' => [
                 'order' => 'details',
-                'disabled' => 'disabled',
                 'step' => '0.01',
             ],
         ]);
@@ -140,7 +130,6 @@ class StoreOrderCrudController extends CrudController
             'type' => 'text',
             'attributes' => [
                 'order' => 'details',
-                'disabled' => 'disabled',
             ],
         ]);
 
@@ -361,6 +350,7 @@ class StoreOrderCrudController extends CrudController
                 'status' => $request->status,
                 'shipment_date' => $request->shipment_date,
                 'expense' => $request->expense,
+                'invoice' => $request->invoice,
             ]);
         }
 
@@ -368,6 +358,7 @@ class StoreOrderCrudController extends CrudController
         if ($request->status != 'shipped') {
             $request->merge([
                 'shipment_date' => null,
+                'invoice' => null,
                 'expense' => 0,
             ]);
         }
