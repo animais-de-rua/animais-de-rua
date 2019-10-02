@@ -29,7 +29,7 @@
             <div class="grid">
                 @foreach($sponsors as $sponsor)
                 <a href="{{ $sponsor->url }}" target="_blank">
-                    <img data-src="{{ url('uploads/' . $sponsor->image) }}" alt="{{ $sponsor->name }}" />
+                    <img src="{{ url('uploads/' . $sponsor->image) }}" alt="{{ $sponsor->name }}" loading="lazy"/>
                 </a>
                 @endforeach
             </div>

@@ -17,7 +17,7 @@
                         <a class="link" href="/animals/godfather/{{ $process->id }}">
                             <div class="image">
                                 @if($process->images && count($process->images))
-                                <div style="background-image:url('{{ str_replace('process', 'process/thumb', $process->images[0]) }}')"></div>
+                                <img src="{{ str_replace('process', 'process/thumb', $process->images[0]) }}" alt="{{ $process->name }}" loading="lazy"/>
                                 @endif
                             </div>
                             <div>

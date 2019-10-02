@@ -146,7 +146,7 @@
                 @if($partner->url)
                 <a target="_blank" href="{{ $partner->url }}">
                 @endif
-                <img data-src="/uploads/{{ $partner->image }}" alt="{{ $partner->name }}" />
+                <img src="/uploads/{{ $partner->image }}" alt="{{ $partner->name }}" loading="lazy"/>
                 @if($partner->url)
                 </a>
                 @endif

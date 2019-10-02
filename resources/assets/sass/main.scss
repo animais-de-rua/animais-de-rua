@@ -1127,10 +1127,10 @@ footer {
             background-size: 35%;
             border: 0;
 
-            div {
+            img {
                 height: 100%;
-                background: #F7F7F7 url() no-repeat center;
-                background-size: cover;
+                width: 100%;
+                object-fit: contain;
             }
         }
 

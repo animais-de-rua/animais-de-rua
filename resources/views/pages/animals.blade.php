@@ -61,7 +61,7 @@
         <template id="animal-box-template">
             <div class="box active" onclick="" option="" animal="0">
                 <a class="link" href="">
-                    <div class="image"><img src="" /></div>
+                    <div class="image"><img src="" alt="{{ __("Animals") }}" loading="lazy"/></div>
                     <div class="content">
                         <h1 class="name"></h1>
                         <div class="location"></div>

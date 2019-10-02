@@ -396,11 +396,6 @@ window.app = {
         // Isotope
         isotope.init();
 
-        // Lazy load images
-        queryAll('[data-style]').forEach(elem => elem.setAttribute('style', elem.getAttribute('data-style')));
-        queryAll('[data-srcset]').forEach(elem => elem.setAttribute('srcset', elem.getAttribute('data-srcset')));
-        queryAll('[data-src]').forEach(elem => elem.setAttribute('src', elem.getAttribute('data-src')));
-
         // Ajax forms
         queryAll('form.ajax').forEach(form => {
             form.classList.remove('ajax');

@@ -53,6 +53,7 @@
 
     <link rel="preconnect" href="https://www.google-analytics.com"/>
     <link rel="preconnect" href="https://www.googletagmanager.com"/>
+    <link rel="preconnect" href="https://stats.g.doubleclick.net"/>
 
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
