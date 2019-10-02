@@ -16,7 +16,7 @@
                     @csrf
                     <label for="email">{{ __('web.subscribe') }}</label>
                     <input type="email" name="email" id="email" placeholder="{{ __('Your Email Address') }}" value="" required/>
-                    <button type="submit" name="subscribe" title="{{ __('web.subscribe') }}">
+                    <button type="submit" name="subscribe" aria-label="{{ __('web.subscribe') }}">
                         <i class="icon icon-arrow"></i>
                     </button>
                     <p class="result"></p>
