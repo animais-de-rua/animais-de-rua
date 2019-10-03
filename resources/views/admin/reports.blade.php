@@ -24,7 +24,9 @@
 @section('content')
 
 {{-- Treatment type --}}
-@component('admin.reports.treatment_type', ['headquarters' => $headquarters])
-@endcomponent
+@include('admin.reports.treatment_type')
+
+{{-- Store --}}
+@include('admin.reports.store')
 
 @endsection

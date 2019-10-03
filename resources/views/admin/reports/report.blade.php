@@ -11,12 +11,12 @@
 
                     <div class="filters">
                         <p>{{ __("Filters") }}</p>
-                        @yield('filters')
+                        {{ $filters }}
                     </div>
 
                     <div class="order">
                         <p>{{ __("Order") }}</p>
-                        @yield('order')
+                        {{ $order }}
                     </div>
 
                     <div class="actions">
