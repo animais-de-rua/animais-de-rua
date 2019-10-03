@@ -2210,6 +2210,10 @@ body {
         flex: 0 0 calc(50% - 16px);
     }
 
+    .isotope.animals .image {
+        height: 235px;
+    }
+
     #forms {
         .last-child {
             margin-bottom: 10px!important;

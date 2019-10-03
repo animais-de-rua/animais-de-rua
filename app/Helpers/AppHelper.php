@@ -106,3 +106,13 @@ if (!function_exists('is')) {
         return restrictTo($roles, $permissions);
     }
 }
+
+if (!function_exists('thumb_image')) {
+    function thumb_image($path)
+    {
+        if (($pos = strrpos($path, '/')) !== false) {
+            $path = substr_replace($path, '/thumb/', $pos, 1);
+        }
+        return $path;
+    }
+}

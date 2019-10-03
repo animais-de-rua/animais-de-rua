@@ -484,7 +484,7 @@ window.app = {
                     let date = new Date(elem.created_at);
 
                     if(elem.images)
-                        box.query('.image img').src = elem.images[0];
+                        box.query('.image img').src = elem.thumb;
                     box.query('.name').innerText = elem.name;
                     box.query('.location').innerText = elem.county + ", " + elem.district;
                     box.query('.date').innerText = translations.month[date.getMonth()] + " " + date.getFullYear();
