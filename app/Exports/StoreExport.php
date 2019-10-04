@@ -50,7 +50,7 @@ class StoreExport extends Export implements FromCollection, WithHeadings
             $conditions[] = "o.created_at <= '$end'";
         }
 
-        if (sizeof(array_filter($products))) {
+        if ($products && sizeof(array_filter($products))) {
             $products = join(',', $products);
             $conditions[] = "p.id IN ($products)";
         }

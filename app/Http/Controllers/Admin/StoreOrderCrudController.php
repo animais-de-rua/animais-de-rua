@@ -210,6 +210,19 @@ class StoreOrderCrudController extends CrudController
         }
 
         $this->crud->addFilter([
+            'name' => 'store_product_id',
+            'type' => 'select2_ajax',
+            'label' => ucfirst(__('product')),
+            'placeholder' => __('Select a product'),
+        ],
+            url('admin/storeProduct/ajax/filter/'),
+            function ($value) {
+                $this->crud->addClause('whereHas', 'products', function ($query) use ($value) {
+                    $query->where('store_product_id', $value);
+                })->get();
+            });
+
+        $this->crud->addFilter([
             'type' => 'date_range',
             'name' => 'from_to',
             'label' => __('Shipment date'),
