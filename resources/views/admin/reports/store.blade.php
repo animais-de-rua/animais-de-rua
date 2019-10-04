@@ -5,15 +5,16 @@
     ])
 
     @slot('filters')
-    <select class="form-control form-control-sm" name="headquarter">
-        <option value="">{{ __("Every headquarter") }}</option>
+    <select multiple="multiple" class="form-control form-control-sm" name="products[]">
+        <option value="">{{ __("Every product") }}</option>
         @foreach($store_products as $product)
         <option value="{{ $product->id }}">{{ $product->name }}</option>
         @endforeach
     </select>
+    <br />
     <select class="form-control form-control-sm" name="status">
-        <option value="">{{ __("Any status") }}</option>
-        <option value="waiting" selected>{{ ucfirst(__('waiting')) }}</option>
+        <option value="" selected>{{ __("Any status") }}</option>
+        <option value="waiting">{{ ucfirst(__('waiting')) }}</option>
         <option value="in_progress">{{ ucfirst(__('in_progress')) }}</option>
         <option value="shipped">{{ ucfirst(__('shipped')) }}</option>
     </select>

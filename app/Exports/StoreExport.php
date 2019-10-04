@@ -19,6 +19,7 @@ class StoreExport extends Export implements FromCollection, WithHeadings
             'status' => 'nullable|in:' . EnumHelper::keys('store.order', ','),
             'start' => 'nullable|date',
             'end' => 'nullable|date',
+            'products.*' => 'nullable|exists:store_products,id',
             'order.column' => 'required|in:' . join(',', array_keys(self::order())),
             'order.direction' => 'required|in:ASC,DESC',
         ]);
@@ -27,6 +28,7 @@ class StoreExport extends Export implements FromCollection, WithHeadings
         $status = $this->input('status');
         $start = $this->input('start');
         $end = $this->input('end');
+        $products = $this->input('products');
         $orderColumn = $this->input('order.column');
         $orderDirection = $this->input('order.direction');
 
@@ -46,6 +48,11 @@ class StoreExport extends Export implements FromCollection, WithHeadings
 
         if ($end) {
             $conditions[] = "o.created_at <= '$end'";
+        }
+
+        if (sizeof(array_filter($products))) {
+            $products = join(',', $products);
+            $conditions[] = "p.id IN ($products)";
         }
 
         // Merge conditions
