@@ -8,7 +8,8 @@ use Illuminate\Support\Str;
 
 class ReportController extends CrudController
 {
-    const EXPORT = 'export';
+    const CSV = 'export-csv';
+    const PDF = 'export-pdf';
     const PREVIEW = 'preview';
 
     public function report()
@@ -24,8 +25,12 @@ class ReportController extends CrudController
         switch ($type) {
             default:
 
-            case self::EXPORT:
+            case self::CSV:
                 return Excel::download($model, 'data.csv');
+                break;
+
+            case self::PDF:
+                return Excel::download($model, 'data.pdf', 'Mpdf'); // Dompdf | Mpdf
                 break;
 
             case self::PREVIEW:

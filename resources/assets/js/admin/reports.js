@@ -14,21 +14,23 @@ document.addEventListener("DOMContentLoaded", e => {
             });
         }
 
-        // Export btn
-        form.querySelector('button[value="export"]').onclick = e => {
+        // Export CSV
+        form.querySelectorAll('button[value="export"]').forEach(btn => btn.onclick = e => {
             e.preventDefault();
 
-            fetchData(form.action)
-            .then(response => response.blob())
-            .then(blob => {
-                let a = document.createElement('a');
-                a.href = window.URL.createObjectURL(blob);
-                a.download = `${form.getAttribute('filename')}.csv`;
-                document.body.appendChild(a);
-                a.click();
-                a.remove();
-            });
-        }
+            let format = e.target.getAttribute('format');
+
+            fetchData(`${form.action}-${format}`)
+                .then(response => response.blob())
+                .then(blob => {
+                    let a = document.createElement('a');
+                    a.href = window.URL.createObjectURL(blob);
+                    a.download = `${form.getAttribute('filename')}.${format}`;
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                });
+        });
 
         // Preview btn
         form.querySelector('button[value="preview"]').onclick = e => {
