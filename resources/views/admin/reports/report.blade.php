@@ -16,7 +16,15 @@
 
                     <div class="order">
                         <p>{{ __("Order") }}</p>
-                        {{ $order }}
+                        <select class="form-control form-control-sm" name="order[column]">
+                            @foreach($order as $key => $translation)
+                            <option value="{{ $key }}">{{ $translation }}</option>
+                            @endforeach()
+                        </select>
+                        <select class="form-control form-control-sm" name="order[direction]">
+                            <option value="ASC">{{ __("Ascendent") }}</option>
+                            <option value="DESC" selected>{{ __("Descendent") }}</option>
+                        </select>
                     </div>
 
                     <div class="actions">

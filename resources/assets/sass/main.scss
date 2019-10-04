@@ -861,6 +861,10 @@ footer {
             display: flex;
         }
     }
+
+    &.animals .image {
+        height: 235px;
+    }
 }
 
 .arrow-links {
@@ -2208,10 +2212,6 @@ body {
 
     .isotope .box {
         flex: 0 0 calc(50% - 16px);
-    }
-
-    .isotope.animals .image {
-        height: 235px;
     }
 
     #forms {

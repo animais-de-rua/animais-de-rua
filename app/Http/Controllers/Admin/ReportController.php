@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Headquarter;
 use DB;
 use Excel;
 use Illuminate\Support\Str;
@@ -14,10 +13,7 @@ class ReportController extends CrudController
 
     public function report()
     {
-        $headquarters = Headquarter::select(['id', 'name'])->get();
-
-        return view('admin.reports')
-            ->with('headquarters', $headquarters);
+        return view('admin.reports');
     }
 
     public function action($action, $type)
@@ -38,7 +34,7 @@ class ReportController extends CrudController
                 $raw = Excel::raw($model, 'Csv');
                 $data = array_filter(explode(PHP_EOL, str_replace('"', '', $raw)));
                 foreach ($data as &$row) {
-                    $row = explode(',', $row);
+                    $row = explode(';', $row);
                 }
 
                 return $data;

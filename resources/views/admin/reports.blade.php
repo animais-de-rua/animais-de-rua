@@ -1,3 +1,10 @@
+@php
+use App\Exports\TreatmentTypeExport;
+use App\Exports\StoreExport;
+use App\Models\Headquarter;
+use App\Models\StoreProduct;
+@endphp
+
 @extends('backpack::layout')
 
 @section('header')
@@ -23,10 +30,19 @@
 
 @section('content')
 
+
 {{-- Treatment type --}}
-@include('admin.reports.treatment_type')
+@include('admin.reports.treatment_type', [
+    'order' => TreatmentTypeExport::order(),
+    'headquarters' => Headquarter::select(['id', 'name'])->get()
+])
+
 
 {{-- Store --}}
-@include('admin.reports.store')
+@include('admin.reports.store', [
+    'order' => StoreExport::order(),
+    'store_products' => StoreProduct::select(['id', 'name'])->get()
+])
+
 
 @endsection

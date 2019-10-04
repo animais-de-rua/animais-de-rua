@@ -1,7 +1,7 @@
 @component('admin.reports.report', [
         'title' => __('treatment types'),
         'action' => 'treatment_type',
-        'headquarters' => $headquarters
+        'order' => $order,
     ])
 
     @slot('filters')
@@ -21,20 +21,6 @@
         <input class="form-control form-control-sm" type="date" name="start" />
         <input class="form-control form-control-sm" type="date" name="end" />
     </span>
-    @endslot
-
-
-    @slot('order')
-    <select class="form-control form-control-sm" name="order[column]">
-        <option value="affected_animals">{{ __("Affected Animals") }}</option>
-        <option value="affected_animals_new">{{ __("New affected Animals") }}</option>
-        <option value="expense" selected>{{ __("Expense") }}</option>
-        <option value="name">{{ __("Name") }}</option>
-    </select>
-    <select class="form-control form-control-sm" name="order[direction]">
-        <option value="ASC">{{ __("Ascendent") }}</option>
-        <option value="DESC" selected>{{ __("Descendent") }}</option>
-    </select>
     @endslot
 
 @endcomponent

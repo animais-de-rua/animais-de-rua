@@ -189,6 +189,12 @@ class StoreOrderCrudController extends CrudController
             'label' => __('Status'),
         ]);
 
+        $this->crud->addColumn([
+            'name' => 'created_at',
+            'type' => 'date',
+            'label' => __('Date'),
+        ]);
+
         // Filtrers
         if (is('admin')) {
             $this->crud->addFilter([
@@ -266,6 +272,9 @@ class StoreOrderCrudController extends CrudController
 
         $this->crud->addClause('orderBy', 'id', 'DESC');
         // $this->crud->addClause('orderBy', 'shipment_date', 'ASC');
+
+        // Button to open all details
+        $this->crud->addButtonFromModelFunction('top', 'open_all', 'openAll', 'end');
 
         // add asterisk for fields that are required in StoreOrdersRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');

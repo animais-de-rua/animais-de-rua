@@ -105,4 +105,7 @@ document.addEventListener("DOMContentLoaded", function() {
         orderSentSelectChange();
     }
 
+    // Open all button
+    document.querySelector('.openall').onclick = e => document.querySelectorAll('.details-row-button.fa-plus-square-o').forEach(e => e.click());
+
 });

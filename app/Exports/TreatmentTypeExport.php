@@ -19,12 +19,7 @@ class TreatmentTypeExport extends Export implements FromCollection, WithHeadings
             'start' => 'nullable|date',
             'end' => 'nullable|date',
             'headquarter' => 'nullable|exists:headquarters,id',
-            'order.column' => 'required|in:' . join(',', [
-                'name',
-                'expense',
-                'affected_animals',
-                'affected_animals_new',
-            ]),
+            'order.column' => 'required|in:' . join(',', array_keys(self::order())),
             'order.direction' => 'required|in:ASC,DESC',
         ]);
 
@@ -73,6 +68,16 @@ class TreatmentTypeExport extends Export implements FromCollection, WithHeadings
         $query .= $this->appendLimit();
 
         return $this->collectResults($query);
+    }
+
+    public static function order(): array
+    {
+        return [
+            'name' => __('Name'),
+            'expense' => __('Expense'),
+            'affected_animals' => __('Affected Animals'),
+            'affected_animals_new' => __('New affected Animals'),
+        ];
     }
 
     public function headings(): array

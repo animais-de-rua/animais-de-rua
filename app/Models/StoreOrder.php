@@ -38,6 +38,14 @@ class StoreOrder extends Model
         </a>';
     }
 
+    public function openAll()
+    {
+        return '
+        <a class="openall btn btn-primary ladda-button" data-style="zoom-in">
+            <span class="ladda-label"><i class="fa fa-plus-square-o"></i> ' . ucfirst(__('Open All')) . '</span>
+        </a>';
+    }
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONS

@@ -8,6 +8,7 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class StoreExport extends Export implements FromCollection, WithHeadings
 {
+
     /**
      * @return \Illuminate\Support\Collection
      */
@@ -18,20 +19,7 @@ class StoreExport extends Export implements FromCollection, WithHeadings
             'status' => 'nullable|in:' . EnumHelper::keys('store.order', ','),
             'start' => 'nullable|date',
             'end' => 'nullable|date',
-            'order.column' => 'required|in:' . join(',', [
-                'reference',
-                'created_at',
-                'receipt',
-                'expense',
-                'invoice',
-                'price',
-                'price_no_vat',
-                'discount',
-                'discount_no_vat',
-                'expense',
-                'total_no_vat',
-                'quantity',
-            ]),
+            'order.column' => 'required|in:' . join(',', array_keys(self::order())),
             'order.direction' => 'required|in:ASC,DESC',
         ]);
 
@@ -70,14 +58,14 @@ class StoreExport extends Export implements FromCollection, WithHeadings
                 o.recipient,
                 o.receipt,
                 o.invoice,
-                SUM(p.price) as price,
-                SUM(p.price_no_vat) as price_no_vat,
+                SUM(p.price * op.quantity) as price,
+                SUM(p.price_no_vat * op.quantity) as price_no_vat,
                 SUM(op.discount) as discount,
                 SUM(op.discount_no_vat) as discount_no_vat,
                 o.expense,
-                SUM(p.price_no_vat) - SUM(op.discount_no_vat) - o.expense as total_no_vat,
+                SUM(p.price_no_vat * op.quantity) - SUM(op.discount_no_vat) - o.expense as total_no_vat,
                 SUM(op.quantity) as quantity,
-                GROUP_CONCAT(p.name SEPARATOR '; ') as products
+                GROUP_CONCAT(CONCAT(op.quantity, ' ', p.name) SEPARATOR ', ') as products
             FROM store_orders o, store_orders_products op, store_products p
             WHERE $conditions
             GROUP BY o.id
@@ -87,6 +75,24 @@ class StoreExport extends Export implements FromCollection, WithHeadings
         $query .= $this->appendLimit();
 
         return $this->collectResults($query);
+    }
+
+    public static function order(): array
+    {
+        return [
+            'created_at' => __('Date'),
+            'reference' => __('Reference'),
+            'receipt' => __('Receipt'),
+            'expense' => __('Expense'),
+            'invoice' => __('Invoice'),
+            'price' => __('Price'),
+            'price_no_vat' => __('Price'),
+            'discount' => __('Discounts'),
+            'discount_no_vat' => __('Discounts'),
+            'expense' => __('Expense'),
+            'total_no_vat' => __('Total products'),
+            'quantity' => __('Quantity'),
+        ];
     }
 
     public function headings(): array
