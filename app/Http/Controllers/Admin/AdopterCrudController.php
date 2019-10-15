@@ -132,6 +132,21 @@ class AdopterCrudController extends CrudController
             'function_name' => 'getUserLinkAttribute',
         ]);
 
+        $this->crud->addColumn([
+            'name' => 'address',
+            'visibleInTable' => false,
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'zip_code',
+            'visibleInTable' => false,
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'id_card',
+            'visibleInTable' => false,
+        ]);
+
         // Filters
         $this->crud->addFilter([
             'name' => 'territory_id',

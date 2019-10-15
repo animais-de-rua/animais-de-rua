@@ -195,6 +195,21 @@ class StoreOrderCrudController extends CrudController
             'label' => __('Date'),
         ]);
 
+        $this->crud->addColumn([
+            'name' => 'address',
+            'visibleInTable' => false,
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'receipt',
+            'visibleInTable' => false,
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'notes',
+            'visibleInTable' => false,
+        ]);
+
         // Filtrers
         if (is('admin')) {
             $this->crud->addFilter([

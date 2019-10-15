@@ -104,6 +104,11 @@ class TreatmentCrudController extends CrudController
             'type' => 'date',
         ]);
 
+        $this->crud->addColumn([
+            'name' => 'notes',
+            'visibleInTable' => false,
+        ]);
+
         // ------ CRUD FIELDS
         $appointment_id = \Request::get('appointment') ?: false;
         $treatment_id = $this->getEntryID();

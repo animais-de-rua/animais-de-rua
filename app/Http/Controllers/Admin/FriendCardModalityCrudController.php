@@ -84,6 +84,16 @@ class FriendCardModalityCrudController extends CrudController
             'label' => __('Type'),
         ]);
 
+        $this->crud->addColumn([
+            'name' => 'description',
+            'visibleInTable' => false,
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'paypal_code',
+            'visibleInTable' => false,
+        ]);
+
         // ------ CRUD ACCESS
         if (!is('admin')) {
             $this->crud->denyAccess(['list', 'create', 'update', 'delete']);

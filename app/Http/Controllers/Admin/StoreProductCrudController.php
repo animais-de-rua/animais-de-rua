@@ -116,6 +116,11 @@ class StoreProductCrudController extends CrudController
             ]);
         }
 
+        $this->crud->addColumn([
+            'name' => 'notes',
+            'visibleInTable' => false,
+        ]);
+
         // ------ ADVANCED QUERIES
         $this->crud->addClause('with', ['orders' => function ($query) {
             $query->selectRaw('store_product_id, SUM(quantity) as sells, SUM(expenses.expense_by_product * store_orders_products.quantity) as shipment_expense')

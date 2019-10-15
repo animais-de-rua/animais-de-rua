@@ -59,6 +59,11 @@ class StoreStockCrudController extends CrudController
             'function_name' => 'getQuantityColorize',
         ]);
 
+        $this->crud->addColumn([
+            'name' => 'notes',
+            'visibleInTable' => false,
+        ]);
+
         // ----------
         // Fields
         $this->crud->addFields(['user_id', 'store_product_id', 'quantity', 'notes']);

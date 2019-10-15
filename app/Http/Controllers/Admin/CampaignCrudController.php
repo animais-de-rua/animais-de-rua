@@ -82,6 +82,11 @@ class CampaignCrudController extends CrudController
             'label' => __('Introduction'),
         ]);
 
+        $this->crud->addColumn([
+            'name' => 'description',
+            'visibleInTable' => false,
+        ]);
+
         // ------ CRUD ACCESS
         if (!is('admin', 'website')) {
             $this->crud->denyAccess(['list', 'create', 'update']);

@@ -95,6 +95,61 @@ class PartnerCrudController extends CrudController
             'label' => __('Promo Code'),
         ]);
 
+        $this->crud->addColumn([
+            'name' => 'description',
+            'visibleInTable' => false,
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'benefit',
+            'visibleInTable' => false,
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'phone1',
+            'visibleInTable' => false,
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'phone1_info',
+            'visibleInTable' => false,
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'phone2',
+            'visibleInTable' => false,
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'phone2_info',
+            'visibleInTable' => false,
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'facebook',
+            'visibleInTable' => false,
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'instagram',
+            'visibleInTable' => false,
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'address',
+            'visibleInTable' => false,
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'address_info',
+            'visibleInTable' => false,
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'notes',
+            'visibleInTable' => false,
+        ]);
+
         // ------ CRUD FIELDS
         $this->crud->addFields(['name', 'benefit', 'categories', 'territories', 'email', 'phone1', 'phone1_info', 'phone2', 'phone2_info', 'url', 'facebook', 'instagram', 'address', 'address_info', 'image', 'notes', 'promo_code', 'status']);
 

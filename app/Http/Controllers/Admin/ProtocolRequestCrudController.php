@@ -77,6 +77,26 @@ class ProtocolRequestCrudController extends CrudController
             'function_name' => 'getUserLinkAttribute',
         ]);
 
+        $this->crud->addColumn([
+            'name' => 'email',
+            'visibleInTable' => false,
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'phone',
+            'visibleInTable' => false,
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'address',
+            'visibleInTable' => false,
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'description',
+            'visibleInTable' => false,
+        ]);
+
         $this->crud->addFields(['protocol_id', 'process_id', 'council', 'name', 'email', 'phone', 'address', 'territory_id', 'description']);
 
         $this->crud->addField([

@@ -293,6 +293,26 @@ class AdoptionCrudController extends CrudController
             'label' => __('Status'),
         ]);
 
+        $this->crud->addColumn([
+            'name' => 'name_after',
+            'visibleInTable' => false,
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'features',
+            'visibleInTable' => false,
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'history',
+            'visibleInTable' => false,
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'adoption_date',
+            'visibleInTable' => false,
+        ]);
+
         // Filtrers
         $this->crud->addFilter([
             'name' => 'process',

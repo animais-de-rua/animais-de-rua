@@ -62,6 +62,11 @@ class SupplierCrudController extends CrudController
             'label' => __('Status'),
         ]);
 
+        $this->crud->addColumn([
+            'name' => 'invoice',
+            'visibleInTable' => false,
+        ]);
+
         // ----------
         // Fields
         $this->crud->addFields(['reference', 'store_order_id', 'store_product_id', 'invoice', 'notes', 'status']);

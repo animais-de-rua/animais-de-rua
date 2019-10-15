@@ -61,6 +61,11 @@ class StoreTransactionCrudController extends CrudController
             'label' => __('Description'),
         ]);
 
+        $this->crud->addColumn([
+            'name' => 'notes',
+            'visibleInTable' => false,
+        ]);
+
         // ----------
         // Fields
         $this->crud->addFields(['description', 'user_id', 'amount', 'invoice', 'notes']);

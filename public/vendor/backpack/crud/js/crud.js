@@ -106,6 +106,9 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Open all button
-    document.querySelector('.openall').onclick = e => document.querySelectorAll('.details-row-button.fa-plus-square-o').forEach(e => e.click());
+    let openAllBtn = document.querySelector('.openall');
+    if(openAllBtn) {
+        openAllBtn.onclick = e => document.querySelectorAll('.details-row-button.fa-plus-square-o').forEach(e => e.click());
+    }
 
 });

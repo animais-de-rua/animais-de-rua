@@ -70,6 +70,11 @@ class ProtocolCrudController extends CrudController
             ]);
         }
 
+        $this->crud->addColumn([
+            'name' => 'email',
+            'visibleInTable' => false,
+        ]);
+
         $this->crud->addFields(['name', 'email', 'phone', 'territory_id']);
 
         $this->crud->addField([

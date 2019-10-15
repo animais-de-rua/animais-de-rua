@@ -97,6 +97,11 @@ class HeadquarterCrudController extends CrudController
             'label' => __('Phone'),
         ]);
 
+        $this->crud->addColumn([
+            'name' => 'description',
+            'visibleInTable' => false,
+        ]);
+
         // ------ CRUD ACCESS
         if (!is('admin')) {
             $this->crud->denyAccess(['list', 'create', 'update', 'delete']);

@@ -284,6 +284,36 @@ class AppointmentCrudController extends CrudController
             'label' => __('Status'),
         ]);
 
+        $this->crud->addColumn([
+            'name' => 'notes_deliver',
+            'visibleInTable' => false,
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'notes_collect',
+            'visibleInTable' => false,
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'notes_contact',
+            'visibleInTable' => false,
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'notes_godfather',
+            'visibleInTable' => false,
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'notes_info',
+            'visibleInTable' => false,
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'notes',
+            'visibleInTable' => false,
+        ]);
+
         // ------ CRUD DETAILS ROW
         $this->crud->enableExportButtons();
 

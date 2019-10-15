@@ -82,6 +82,11 @@ class VetCrudController extends CrudController
             'function_name' => 'getTotalOperationsValue',
         ]);
 
+        $this->crud->addColumn([
+            'name' => 'address',
+            'visibleInTable' => false,
+        ]);
+
         // ------ CRUD FIELDS
 
         $this->crud->addField([
