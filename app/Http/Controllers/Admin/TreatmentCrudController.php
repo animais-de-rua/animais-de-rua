@@ -377,6 +377,21 @@ class TreatmentCrudController extends CrudController
                 $this->crud->addClause('whereIn', 'status', json_decode($values));
             });
 
+        $this->crud->addFilter([
+            'name' => 'specie',
+            'type' => 'select2_multiple',
+            'label' => __('Specie'),
+            'placeholder' => __('Select a specie'),
+        ],
+            EnumHelper::translate('process.specie'),
+            function ($values) {
+                $this->crud->addClause('whereHas', 'appointment', function ($query) use ($values) {
+                    $query->whereHas('process', function ($query) use ($values) {
+                        $query->whereIn('specie', json_decode($values));
+                    });
+                });
+            });
+
         // ------ DATATABLE EXPORT BUTTONS
         $this->crud->enableExportButtons();
 
