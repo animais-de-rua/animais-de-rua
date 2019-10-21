@@ -14,6 +14,23 @@ document.addEventListener("DOMContentLoaded", e => {
             });
         }
 
+        // Togglers
+        document.querySelectorAll('select[toggler]').forEach(select => {
+            let name = select.getAttribute('toggler');
+            select.addEventListener('change', e => {
+                // Disable children
+                document.querySelectorAll(`select[parent-toggler=${name}]`).forEach(child => child.setAttribute('disabled', 'disabled'));
+
+                // Enable select 
+                if(select.value) {
+                    let input = document.querySelector(`select[parent-toggler=${name}][name=${select.value}]`);
+                    if(input) {
+                        input.removeAttribute('disabled');
+                    }
+                }
+            });
+        });
+
         // Export CSV
         form.querySelectorAll('button[value="export"]').forEach(btn => btn.onclick = e => {
             e.preventDefault();

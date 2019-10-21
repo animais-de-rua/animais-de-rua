@@ -348,6 +348,7 @@
 
     "Filters": "Filtros",
     "Order": "Ordem",
+    "Group by": "Agrupar por",
     "Actions": "Acções",
     "Preview": "Pré-visualizar",
     "Export": "Exportar",
@@ -357,6 +358,8 @@
     "Any status": "Qualquer estado",
     "Every headquarter": "Todos os núcleos",
     "Every product": "Todos os productos",
+    "Every type": "Todos os tipos",
+    "Every protocol": "Todos os protocolos",
 
     "Today": "Hoje",
     "Yesterday": "Ontem",

@@ -1,8 +1,10 @@
 @php
 use App\Exports\TreatmentTypeExport;
 use App\Exports\StoreExport;
+use App\Exports\DonationExport;
 use App\Models\Headquarter;
 use App\Models\StoreProduct;
+use App\Models\Protocol;
 @endphp
 
 @extends('backpack::layout')
@@ -42,6 +44,15 @@ use App\Models\StoreProduct;
 @include('admin.reports.store', [
     'order' => StoreExport::order(),
     'store_products' => StoreProduct::select(['id', 'name'])->get()
+])
+
+
+{{-- Donations --}}
+@include('admin.reports.donations', [
+    'order' => DonationExport::order(),
+    'group' => DonationExport::group(),
+    'headquarters' => Headquarter::select(['id', 'name'])->get(),
+    'protocols' => Protocol::select(['id', 'name'])->get()
 ])
 
 

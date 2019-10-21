@@ -9,11 +9,25 @@
                 <form action="{{ url("/admin/reports/$action/export") }}" filename="{{ Illuminate\Support\Str::camel(strtolower($title)) }}">
                     @csrf
 
+                    @if(isset($filters))
                     <div class="filters">
                         <p>{{ __("Filters") }}</p>
                         {{ $filters }}
                     </div>
+                    @endif
 
+                    @if(isset($group))
+                    <div class="group">
+                        <p>{{ __("Group by") }}</p>
+                        <select class="form-control form-control-sm" name="group">
+                            @foreach($group as $key => $translation)
+                            <option value="{{ $key }}">{{ $translation }}</option>
+                            @endforeach()
+                        </select>
+                    </div>
+                    @endif
+
+                    @if(isset($order))
                     <div class="order">
                         <p>{{ __("Order") }}</p>
                         <select class="form-control form-control-sm" name="order[column]">
@@ -26,6 +40,7 @@
                             <option value="DESC" selected>{{ __("Descendent") }}</option>
                         </select>
                     </div>
+                    @endif
 
                     <div class="actions">
                         <p>{{ __("Actions") }}</p>
