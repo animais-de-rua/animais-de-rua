@@ -19,6 +19,10 @@ class TreatmentTypeExport extends Export implements FromCollection, WithHeadings
             'start' => 'nullable|date',
             'end' => 'nullable|date',
             'headquarter' => 'nullable|exists:headquarters,id',
+            'district' => 'nullable|exists:territories,id',
+            'county' => 'nullable|exists:territories,id',
+            'parish' => 'nullable|exists:territories,id',
+            'protocol' => 'nullable|exists:territories,id',
             'order.column' => 'required|in:' . join(',', array_keys(self::order())),
             'order.direction' => 'required|in:ASC,DESC',
         ]);
@@ -28,6 +32,10 @@ class TreatmentTypeExport extends Export implements FromCollection, WithHeadings
         $start = $this->input('start');
         $end = $this->input('end');
         $headquarter = $this->input('headquarter');
+        $district = $this->input('district');
+        $county = $this->input('county');
+        $parish = $this->input('parish');
+        $protocol = $this->input('protocol');
         $orderColumn = $this->input('order.column');
         $orderDirection = $this->input('order.direction');
 
@@ -37,6 +45,15 @@ class TreatmentTypeExport extends Export implements FromCollection, WithHeadings
             't.appointment_id = a.id',
             'a.process_id = p.id',
         ];
+
+        if ($district) {
+            $territory_id = $parish ?: $county ?: $district;
+            $conditions[] = "p.territory_id LIKE '$territory_id%'";
+        }
+
+        if ($protocol) {
+            $conditions[] = "p.territory_id LIKE '$protocol%'";
+        }
 
         if ($status) {
             $conditions[] = "t.status = '$status'";

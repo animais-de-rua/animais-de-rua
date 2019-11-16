@@ -4,6 +4,7 @@ use App\Exports\StoreExport;
 use App\Exports\DonationExport;
 use App\Models\Headquarter;
 use App\Models\StoreProduct;
+use App\Models\Territory;
 use App\Models\Protocol;
 @endphp
 
@@ -36,14 +37,20 @@ use App\Models\Protocol;
 {{-- Treatment type --}}
 @include('admin.reports.treatment_type', [
     'order' => TreatmentTypeExport::order(),
-    'headquarters' => Headquarter::select(['id', 'name'])->get()
+    'headquarters' => Headquarter::select(['id', 'name'])->get(),
+    'territories' => [
+        'district' => Territory::select(['id', 'name'])->district()->get(),
+        'county' => Territory::select(['id', 'name', 'parent_id'])->county()->get(),
+        'parish' => Territory::select(['id', 'name', 'parent_id'])->parish()->get(),
+    ],
+    'protocols' => Protocol::select(['id', 'name', 'territory_id'])->get(),
 ])
 
 
 {{-- Store --}}
 @include('admin.reports.store', [
     'order' => StoreExport::order(),
-    'store_products' => StoreProduct::select(['id', 'name'])->get()
+    'store_products' => StoreProduct::select(['id', 'name'])->get(),
 ])
 
 
@@ -52,7 +59,7 @@ use App\Models\Protocol;
     'order' => DonationExport::order(),
     'group' => DonationExport::group(),
     'headquarters' => Headquarter::select(['id', 'name'])->get(),
-    'protocols' => Protocol::select(['id', 'name'])->get()
+    'protocols' => Protocol::select(['id', 'name'])->get(),
 ])
 
 

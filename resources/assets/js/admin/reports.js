@@ -31,6 +31,15 @@ document.addEventListener("DOMContentLoaded", e => {
             });
         });
 
+        // Territories
+        document.querySelectorAll('select[name=district],select[name=county]').forEach(select => {
+            select.onchange = e => {
+                select.nextElementSibling.querySelectorAll('option').forEach(option => {
+                    option.style.display = option.getAttribute('parent') == select.value || !option.value ? 'block' : 'none';
+                });
+            }
+        });
+
         // Export CSV
         form.querySelectorAll('button[value="export"]').forEach(btn => btn.onclick = e => {
             e.preventDefault();

@@ -58,6 +58,21 @@ class Territory extends Model
     |--------------------------------------------------------------------------
     */
 
+    public function scopeDistrict($query)
+    {
+        return $query->where('level', 1);
+    }
+
+    public function scopeCounty($query)
+    {
+        return $query->where('level', 2);
+    }
+
+    public function scopeParish($query)
+    {
+        return $query->where('level', 3);
+    }
+
     /*
     |--------------------------------------------------------------------------
     | ACCESORS
