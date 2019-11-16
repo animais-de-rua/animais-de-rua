@@ -1,5 +1,8 @@
 <li><a href="{{ backpack_url('dashboard') }}"><i class="fa fa-dashboard"></i> <span>{{ trans('backpack::base.dashboard') }}</span></a></li>
+
+@if(restrictTo('admin', 'reports'))
 <li><a href="{{ backpack_url('reports') }}"><i class="fa fa-bar-chart"></i> <span>{{ __('Reports') }}</span></a></li>
+@endif
 
 @if(restrictTo(['admin', 'volunteer']))
 <li class="header">{{ __("Management") }}</li>

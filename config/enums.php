@@ -113,6 +113,7 @@ return [
             13 => 'store shippments',
             14 => 'store stock',
             15 => 'store transaction',
+            16 => 'reports',
         ],
     ],
 

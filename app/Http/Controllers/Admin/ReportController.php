@@ -14,6 +14,10 @@ class ReportController extends CrudController
 
     public function report()
     {
+        if (!restrictTo('admin', 'reports')) {
+            abort(401);
+        }
+
         return view('admin.reports');
     }
 
