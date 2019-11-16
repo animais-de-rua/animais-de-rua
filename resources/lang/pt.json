@@ -314,6 +314,8 @@
     "unconfirmed": "Por confirmar",
     "active": "Activo",
     "inactive": "Inactivo",
+    "bank_transfer": "transferência bancária",
+    "paypal": "PayPal",
     "entry": "entrada",
     "donations": "donativos",
     "Total Donated": "Total doado",
@@ -345,6 +347,7 @@
     "debit": "débito",
     "Merge with sent data": "Juntar com dados dos envios",
     "Clear permissions": "Limpar permissões",
+    "Payment": "Pagamento",
 
 
     "Filters": "Filtros",

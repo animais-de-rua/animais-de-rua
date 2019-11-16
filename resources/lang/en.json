@@ -21,6 +21,10 @@
     "waiting": "waiting",
     "in_progress": "in progress",
     "shipped": "shipped",
+    "paypal": "PayPal",
+    "bank_transfer": "bank transfer",
+    "approved_option_1": "Aproved option 1",
+    "approved_option_2": "Aproved option 2",
 
     "Languages": "Languages",
 

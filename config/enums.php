@@ -138,5 +138,9 @@ return [
             'waiting_payment' => 'waiting_payment',
             'paid_out' => 'paid_out',
         ],
+        'payment' => [
+            'bank_transfer' => 'banktransfer',
+            'paypal' => 'paypal',
+        ],
     ],
 ];

@@ -33,6 +33,7 @@ class CreateStoreManagementTables extends Migration
             $table->integer('user_id')->nullable()->unsigned();
             $table->date('shipment_date')->nullable();
             $table->decimal('expense', 8, 2)->unsigned()->default(0);
+            $table->enum('payment', EnumHelper::values('store.payment'))->default('bank_transfer');
             $table->text('receipt')->nullable();
             $table->text('invoice')->nullable();
             $table->text('notes')->nullable();

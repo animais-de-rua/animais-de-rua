@@ -79,6 +79,12 @@ class StoreOrderCrudController extends CrudController
         ]);
 
         $this->crud->addField([
+            'label' => __('Payment'),
+            'type' => 'enum',
+            'name' => 'payment',
+        ]);
+
+        $this->crud->addField([
             'label' => __('Receipt'),
             'name' => 'receipt',
             'type' => 'text',
@@ -175,6 +181,12 @@ class StoreOrderCrudController extends CrudController
         $this->crud->addColumn([
             'name' => 'shipment_date',
             'label' => __('Shipment date'),
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'payment',
+            'type' => 'trans',
+            'label' => __('Payment'),
         ]);
 
         $this->crud->addColumn([
