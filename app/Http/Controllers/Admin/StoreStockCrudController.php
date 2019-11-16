@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\StoreStockRequest as StoreRequest;
 use App\Http\Requests\StoreStockRequest as UpdateRequest;
+use App\Models\StoreStock;
 use App\User;
 use DB;
 
@@ -182,6 +183,10 @@ class StoreStockCrudController extends CrudController
                 }
             });
 
+        // ------ CRUD DETAILS ROW
+        $this->crud->enableDetailsRow();
+        $this->crud->allowAccess('details_row');
+
         $this->crud->addClause('with', ['user', 'product']);
 
         $this->crud->addClause('orderBy', 'store_stock.id', 'DESC');
@@ -196,6 +201,15 @@ class StoreStockCrudController extends CrudController
         // add asterisk for fields that are required in StoreTransactionRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
+    }
+
+    public function showDetailsRow($id)
+    {
+        $stock = StoreStock::select(['notes'])->find($id);
+
+        return "<div style='margin:5px 8px'>
+                <p style='white-space: pre-wrap;'><i>" . __('Notes') . "</i>: $stock->notes</p>
+            </div>";
     }
 
     public function store(StoreRequest $request)
