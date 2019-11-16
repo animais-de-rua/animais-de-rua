@@ -223,7 +223,7 @@ class StoreOrderCrudController extends CrudController
         ]);
 
         // Filtrers
-        if (is('admin')) {
+        if (is('admin', 'store orders')) {
             $this->crud->addFilter([
                 'name' => 'user',
                 'type' => 'select2_ajax',

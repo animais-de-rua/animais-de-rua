@@ -173,7 +173,7 @@ class StoreTransactionCrudController extends CrudController
         $this->crud->addClause('orderBy', 'store_transactions.id', 'DESC');
 
         // Permissions
-        if (!is(['admin', 'store'])) {
+        if (!is(['admin', 'store'], 'store transaction')) {
             $this->crud->denyAccess(['create']);
         }
 

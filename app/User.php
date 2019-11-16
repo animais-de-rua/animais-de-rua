@@ -4,6 +4,7 @@ namespace App;
 
 use Backpack\Base\app\Notifications\ResetPasswordNotification as ResetPasswordNotification;
 use Backpack\CRUD\CrudTrait;
+use DB;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
@@ -92,5 +93,36 @@ class User extends Authenticatable
     public function scopeActive($query)
     {
         return $query->where('status', 1);
+    }
+
+    public function scopeVolunteerRole($query)
+    {
+        $ids = $this->getUserIDsByRole('volunteer');
+
+        return $query->whereIn('id', $ids);
+    }
+
+    public function scopeStoreRole($query)
+    {
+        $ids = $this->getUserIDsByRole('store');
+
+        return $query->whereIn('id', $ids);
+    }
+
+    private function getUserIDsByRole($roles)
+    {
+        if (!is_array($roles)) {
+            $roles = [$roles];
+        }
+
+        $roles_id = DB::table('roles')
+            ->select('id')
+            ->whereIn('name', $roles)
+            ->pluck('id');
+
+        return DB::table('user_has_roles')
+            ->select('model_id')
+            ->whereIn('role_id', $roles_id)
+            ->pluck('model_id');
     }
 }

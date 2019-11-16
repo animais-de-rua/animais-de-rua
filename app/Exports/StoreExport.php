@@ -20,6 +20,7 @@ class StoreExport extends Export implements FromCollection, WithHeadings
             'start' => 'nullable|date',
             'end' => 'nullable|date',
             'products.*' => 'nullable|exists:store_products,id',
+            'volunteer' => 'nullable|exists:users,id',
             'order.column' => 'required|in:' . join(',', array_keys(self::order())),
             'order.direction' => 'required|in:ASC,DESC',
         ]);
@@ -29,6 +30,7 @@ class StoreExport extends Export implements FromCollection, WithHeadings
         $start = $this->input('start');
         $end = $this->input('end');
         $products = $this->input('products');
+        $volunteer = $this->input('volunteer');
         $orderColumn = $this->input('order.column');
         $orderDirection = $this->input('order.direction');
 
@@ -36,6 +38,7 @@ class StoreExport extends Export implements FromCollection, WithHeadings
         $conditions = [
             'o.id = op.store_order_id',
             'op.store_product_id = p.id',
+            'o.user_id = u.id',
         ];
 
         if ($status) {
@@ -55,6 +58,10 @@ class StoreExport extends Export implements FromCollection, WithHeadings
             $conditions[] = "p.id IN ($products)";
         }
 
+        if ($volunteer) {
+            $conditions[] = "o.user_id = '$volunteer'";
+        }
+
         // Merge conditions
         $conditions = join(' AND ', $conditions);
 
@@ -70,10 +77,12 @@ class StoreExport extends Export implements FromCollection, WithHeadings
                 SUM(op.discount) as discount,
                 SUM(op.discount_no_vat) as discount_no_vat,
                 o.expense,
+                SUM(p.price * op.quantity) - SUM(op.discount) - o.expense as total,
                 SUM(p.price_no_vat * op.quantity) - SUM(op.discount_no_vat) - o.expense as total_no_vat,
                 SUM(op.quantity) as quantity,
+                u.name as volunteer,
                 GROUP_CONCAT(CONCAT(op.quantity, ' ', p.name) SEPARATOR ', ') as products
-            FROM store_orders o, store_orders_products op, store_products p
+            FROM store_orders o, store_orders_products op, store_products p, users u
             WHERE $conditions
             GROUP BY o.id
             ORDER BY $orderColumn $orderDirection";
@@ -93,12 +102,14 @@ class StoreExport extends Export implements FromCollection, WithHeadings
             'expense' => __('Expense'),
             'invoice' => __('Invoice'),
             'price' => __('Price'),
-            'price_no_vat' => __('Price'),
-            'discount' => __('Discounts'),
-            'discount_no_vat' => __('Discounts'),
+            'price_no_vat' => __('Price') . ' (' . __('no VAT') . ')',
+            'discount' => __('Discount'),
+            'discount_no_vat' => __('Discount') . ' (' . __('no VAT') . ')',
             'expense' => __('Expense'),
-            'total_no_vat' => __('Total products'),
+            'total' => __('Total'),
+            'total_no_vat' => __('Total') . ' (' . __('no VAT') . ')',
             'quantity' => __('Quantity'),
+            'user_id' => __('Volunteer'),
         ];
     }
 
@@ -115,8 +126,10 @@ class StoreExport extends Export implements FromCollection, WithHeadings
             __('Discount'),
             __('Discount') . ' (' . __('no VAT') . ')',
             __('Expense'),
+            __('Total'),
             __('Total') . ' (' . __('no VAT') . ')',
             __('Quantity'),
+            __('Volunteer'),
             __('Products'),
         ];
     }

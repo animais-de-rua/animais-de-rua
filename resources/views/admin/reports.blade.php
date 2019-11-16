@@ -6,6 +6,7 @@ use App\Models\Headquarter;
 use App\Models\StoreProduct;
 use App\Models\Territory;
 use App\Models\Protocol;
+use App\User;
 @endphp
 
 @extends('backpack::layout')
@@ -51,6 +52,7 @@ use App\Models\Protocol;
 @include('admin.reports.store', [
     'order' => StoreExport::order(),
     'store_products' => StoreProduct::select(['id', 'name'])->get(),
+    'volunteers' => User::select(['id', 'name'])->storeRole()->orderBy('name')->get(),
 ])
 
 
