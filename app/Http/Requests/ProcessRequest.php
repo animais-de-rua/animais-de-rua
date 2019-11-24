@@ -93,7 +93,8 @@ class ProcessRequest extends FormRequest
             }
 
             // Validate one animal at least
-            if ($this->input('amount_males') + $this->input('amount_females') + $this->input('amount_other') <= 0) {
+            $total_animals = $this->input('amount_males') + $this->input('amount_females') + $this->input('amount_other');
+            if ($total_animals <= 0) {
                 return $validator->errors()->add('animal_count', __('There must be at least one animal in the process, either male, female or undefined.'));
             }
 
@@ -108,6 +109,16 @@ class ProcessRequest extends FormRequest
 
             if (count($images) < 3) {
                 return $validator->errors()->add('images', __('You must upload at least 3 images.'));
+            }
+
+            // Validate there are no less animals than treatments
+            if ($this->input('id')) {
+                $process = Process::find($this->input('id'));
+                $process_affected_animals = $process->getTotalAffectedAnimalsNew();
+
+                if ($total_animals < $process_affected_animals) {
+                    return $validator->errors()->add('animal_count', __("There are :total animals treated on this process, you can't update process animal count to a lower value than the treated animals.", ['total' => $process_affected_animals]));
+                }
             }
 
         });
