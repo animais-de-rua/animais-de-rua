@@ -325,6 +325,38 @@ class AdoptionCrudController extends CrudController
                 $this->crud->addClause('where', 'process_id', $value);
             });
 
+        if (is('admin')) {
+            $this->crud->addFilter([
+                'name' => 'headquarter_id',
+                'type' => 'select2_multiple',
+                'label' => ucfirst(__('headquarter')),
+                'placeholder' => __('Select a headquarter'),
+            ],
+                $this->wantsJSON() ? null : api()->headquarterList(),
+                function ($values) {
+                    $this->crud->addClause('whereHas', 'process', function ($query) use ($values) {
+                        $query->whereIn('headquarter_id', json_decode($values));
+                    })->get();
+                });
+        }
+
+        $this->crud->addFilter([
+            'name' => 'territory_id',
+            'type' => 'select2_multiple',
+            'label' => ucfirst(__('territory')),
+            'placeholder' => __('Select a territory'),
+        ],
+            $this->wantsJSON() ? null : api()->rangeTerritoryList(),
+            function ($values) {
+                $values = json_decode($values);
+                $where = join(' OR ', array_fill(0, count($values), 'territory_id LIKE ?'));
+                $values = array_map(function ($field) {return $field . '%';}, $values);
+
+                $this->crud->addClause('whereHas', 'process', function ($query) use ($where, $values) {
+                    $query->whereRaw($where, $values);
+                })->get();
+            });
+
         $this->crud->addFilter([
             'name' => 'fat',
             'type' => 'select2_ajax',
