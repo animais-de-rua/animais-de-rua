@@ -32,9 +32,9 @@
         <div class="row row-wrap" style="margin-top: 24px;">
             <div class="column column-67 social">
                 <h4>{{ __('web.social') }}</h4>
-                <a target="_blank" class="color-link" rel="noopener" title="Facebook" href="https://www.facebook.com/animaisderua"><i class="icon icon-facebook"></i></a>
-                <a target="_blank" class="color-link" rel="noopener" title="Instagram" href="https://www.instagram.com/animaisderua/"><i class="icon icon-instagram"></i></a>
-                <a target="_blank" class="color-link" rel="noopener" title="Youtube" href="https://www.youtube.com/user/animaisderuaAdR"><i class="icon icon-youtube"></i></a>
+                <a target="_blank" class="color-link" rel="noopener" onclick="app.track('ViewContent', {'path': 'facebook'})" title="Facebook" href="https://www.facebook.com/animaisderua"><i class="icon icon-facebook"></i></a>
+                <a target="_blank" class="color-link" rel="noopener" onclick="app.track('ViewContent', {'path': 'instagram'})" title="Instagram" href="https://www.instagram.com/animaisderua/"><i class="icon icon-instagram"></i></a>
+                <a target="_blank" class="color-link" rel="noopener" onclick="app.track('ViewContent', {'path': 'youtube'})" title="Youtube" href="https://www.youtube.com/user/animaisderuaAdR"><i class="icon icon-youtube"></i></a>
             </div>
             <div class="column column-33 contact">
                 <p><a onclick="return modal.open('contact')" class="color-link lined light">{{ __("web.contact") }}</a></p>

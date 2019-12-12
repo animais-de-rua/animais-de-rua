@@ -24,7 +24,7 @@
             </div>
 
             <a href="{{ url('/store') }}">
-                <div class="card">
+                <div class="card" onclick="app.track('ViewContent', {'card': 'store'})">
                     <div class="icon icon-cart"></div>
                     <p>{{ __("Store") }}</p>
                 </div>

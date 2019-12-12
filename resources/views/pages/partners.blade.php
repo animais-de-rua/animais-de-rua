@@ -28,7 +28,7 @@
             <h1 class="title">{{ $page['partners_title'] }}</h1>
             <div class="grid">
                 @foreach($sponsors as $sponsor)
-                <a href="{{ $sponsor->url }}" target="_blank">
+                <a href="{{ $sponsor->url }}" target="_blank" onclick="app.track('ViewContent', {'sponsor': '{{ $sponsor->name }}'})">
                     <img src="{{ url('uploads/' . $sponsor->image) }}" alt="{{ $sponsor->name }}" loading="lazy"/>
                 </a>
                 @endforeach

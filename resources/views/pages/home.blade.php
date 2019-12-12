@@ -69,7 +69,7 @@
                         @php
                             $product = $products[$j + $i * 3];
                         @endphp
-                        <div class="card">
+                        <div class="card" onclick="app.track('ViewContent', {'product': '{{ $product->name }}'})">
                             <a href="{{ $product->url }}">
                                 <div class="image">
                                     <img src="{{ $product->image }}" alt="{{ $product->name }}" loading="lazy" />

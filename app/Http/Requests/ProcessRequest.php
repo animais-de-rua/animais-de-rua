@@ -112,8 +112,8 @@ class ProcessRequest extends FormRequest
             }
 
             // Validate there are no less animals than treatments
-            if ($this->input('id')) {
-                $process = Process::find($this->input('id'));
+            $process = Process::find($this->input('id'));
+            if ($process) {
                 $process_affected_animals = $process->getTotalAffectedAnimalsNew();
 
                 if ($total_animals < $process_affected_animals) {

@@ -37,6 +37,11 @@ window.router = {
             link.addEventListener('click', e => {
                 let urlPath = e.target.closest('a').href + "?ajax";
 
+                // Pixel track
+                app.track('PageView', {
+                    'path': window.location.pathname
+                });
+
                 window.scrollTo(0, 0);
                 loading.start();
                 // _content.classList.remove('anim');
@@ -146,6 +151,11 @@ window.navbar = {
 
         _navbar.queryAll('.cards > .card').forEach(card => card.classList.remove('active'));
         e.classList.add('active');
+
+        // Pixel track
+        app.track('ViewContent', {
+            'card': i ? "donate" : "friend_card"
+        });
     }
 }
 
@@ -433,6 +443,11 @@ window.app = {
                     }).finally(e => {
                         loading.end();
                     });
+
+                    // Pixel track
+                    app.track('ViewContent', {
+                        'form': form.action
+                    });
                 });
 
                 return false;
@@ -460,6 +475,11 @@ window.app = {
         isotope.query('select.' + option).classList.remove('hide');
 
         app.searchAnimals();
+
+        // Pixel track
+        app.track('ViewContent', {
+            'form': option
+        });
     },
 
     searchAnimals: e => {
@@ -507,6 +527,10 @@ window.app = {
             })
         }).catch(e => { });
     },
+
+    track: (event, data) => {
+        fbq('track', event, data);
+    }
 }
 
 window.modal = {
@@ -518,6 +542,12 @@ window.modal = {
         _forms.classList.remove('sending', 'success');
         _forms.query(`.options > option[value="${e}"]`).selected = true;
         modal.onCategorySelect();
+
+        // Pixel track
+        app.track('ViewContent', {
+            'modal': e
+        });
+
         return false;
     },
 
@@ -530,6 +560,12 @@ window.modal = {
         _forms.query('.godfather [name="process_id"]').value = window.location.href.match(/\d+$/)[0];
 
         _forms.classList.add('open');
+
+        // Pixel track
+        app.track('ViewContent', {
+            'modal': 'godfather'
+        });
+
         return false;
     },
 
@@ -551,6 +587,11 @@ window.modal = {
         form.show();
 
         modal.moveAddressSelects(form);
+
+        // Pixel track
+        app.track('ViewContent', {
+            'modal': e
+        });
     },
 
     moveAddressSelects: form => {

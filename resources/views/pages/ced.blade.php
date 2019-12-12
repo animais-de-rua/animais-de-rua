@@ -36,7 +36,7 @@
                 <ul class="arrow-links">
                 @if($page['info_links'])
                     @foreach(json_decode($page['info_links']) as $link)
-                        <li><a href="{{ $link->url }}" target="_blank">{{ $link->name }} <span class="icon icon-arrow"></span></a></li>
+                        <li><a href="{{ $link->url }}" target="_blank" onclick="app.track('ViewContent', {'path': {{ $link->url }}, 'name': {{ $link->name }} })" >{{ $link->name }} <span class="icon icon-arrow"></span></a></li>
                     @endforeach
                 @endif
                 </ul>

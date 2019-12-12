@@ -32,7 +32,7 @@
                 <hr />
                 <h2>{{ __("web.association.report") }}</h2>
                 <ul class="arrow-links">
-                    <li><a href="{{ $page['report_link'] }}">{{ __("web.association.report_year", ['year' => $page['report_year']]) }} <span class="icon icon-arrow"></span></a></li>
+                    <li><a href="{{ $page['report_link'] }}" onclick="app.track('ViewContent', {'path': 'association/report'})" target="_blank" >{{ __("web.association.report_year", ['year' => $page['report_year']]) }} <span class="icon icon-arrow"></span></a></li>
                 </ul>
             </div>
         </div>
