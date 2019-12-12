@@ -266,6 +266,7 @@
     "store_order_assing_error": "{0} Está a tentar atribuir :amount ':product' e o voluntário :user não tem esse artigo disponível.|{1} Está a tentar atribuir :amount ':product' e o voluntário :user tem apenas 1 artigo disponível.|[2,*] Está a tentar atribuir :amount ':product' e o voluntário :user tem apenas :quantity artigos disponíveis.",
     "Invoice is required when the order is shipped.": "O campo fatura é obrigatório quando a encomenda passa a enviada.",
     "Shipment Date is required when the order is shipped.": "A data de envio é obrigatória quando a encomenda passa a enviada.",
+    "Only processes 'waiting for godfather' can be urgent.": "Apenas processos a aguardar padrinhos podem ser urgentes.",
 
     "The field :field is required.": "É obrigatória a indicação de um valor para o campo :field.",
     "If you wish to add a Donation to a :field, please change the type of this Donation.": "Se deseja adicionar um donativo a um :field, por favor troque o tipo deste Donativo.",

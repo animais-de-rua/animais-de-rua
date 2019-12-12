@@ -77,8 +77,8 @@ class StoreExport extends Export implements FromCollection, WithHeadings
                 SUM(op.discount) as discount,
                 SUM(op.discount_no_vat) as discount_no_vat,
                 o.expense,
-                SUM(p.price * op.quantity) - SUM(op.discount) - o.expense as total,
-                SUM(p.price_no_vat * op.quantity) - SUM(op.discount_no_vat) - o.expense as total_no_vat,
+                SUM(p.price * op.quantity) - SUM(op.discount) as total,
+                SUM(p.price_no_vat * op.quantity) - SUM(op.discount_no_vat) as total_no_vat,
                 SUM(op.quantity) as quantity,
                 u.name as volunteer,
                 GROUP_CONCAT(CONCAT(op.quantity, ' ', p.name) SEPARATOR ', ') as products

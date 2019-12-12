@@ -801,7 +801,7 @@ class ProcessCrudController extends CrudController
                 ],
                 'name' => [
                     'label' => __('Name'),
-                    'name' => 'name',
+                    'name' => 'nameLink',
                 ],
                 'fat' => [
                     'label' => 'FAT',
