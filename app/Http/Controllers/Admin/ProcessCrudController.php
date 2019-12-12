@@ -543,6 +543,18 @@ class ProcessCrudController extends CrudController
                 $this->crud->addClause('where', 'user_id', $value);
             });
 
+        $this->crud->addFilter([
+            'type' => 'simple',
+            'name' => 'urgent',
+            'label' => __('Urgent'),
+        ],
+            false,
+            function ($values) {
+                if ($values) {
+                    $this->crud->addClause('where', 'urgent', 1);
+                }
+            });
+
         // ------ CRUD ACCESS
         if (!is(['admin', 'volunteer'], 'processes')) {
             $this->crud->denyAccess(['list', 'show', 'create']);
