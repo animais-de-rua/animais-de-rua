@@ -300,6 +300,25 @@ class TreatmentCrudController extends CrudController
         }
 
         $this->crud->addFilter([
+            'name' => 'territory_id',
+            'type' => 'select2_multiple',
+            'label' => ucfirst(__('territory')),
+            'placeholder' => __('Select a territory'),
+        ],
+            $this->wantsJSON() ? null : api()->rangeTerritoryList(),
+            function ($values) {
+                $values = json_decode($values);
+                $where = join(' OR ', array_fill(0, count($values), 'territory_id LIKE ?'));
+                $values = array_map(function ($field) {return $field . '%';}, $values);
+
+                $this->crud->addClause('whereHas', 'appointment', function ($query) use ($where, $values) {
+                    $query->whereHas('process', function ($query) use ($where, $values) {
+                        $query->whereRaw($where, $values);
+                    });
+                });
+            });
+
+        $this->crud->addFilter([
             'name' => 'treatment_type_id',
             'type' => 'select2_multiple',
             'label' => ucfirst(__('treatment type')),

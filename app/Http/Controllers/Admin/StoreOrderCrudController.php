@@ -150,6 +150,23 @@ class StoreOrderCrudController extends CrudController
         ]);
 
         $this->crud->addColumn([
+            'name' => 'status',
+            'type' => 'trans',
+            'label' => __('Status'),
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'created_at',
+            'type' => 'date',
+            'label' => __('Date'),
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'shipment_date',
+            'label' => __('Shipment date'),
+        ]);
+
+        $this->crud->addColumn([
             'name' => 'expense',
             'label' => __('Expense'),
             'suffix' => '€',
@@ -179,11 +196,6 @@ class StoreOrderCrudController extends CrudController
         ]);
 
         $this->crud->addColumn([
-            'name' => 'shipment_date',
-            'label' => __('Shipment date'),
-        ]);
-
-        $this->crud->addColumn([
             'name' => 'payment',
             'type' => 'trans',
             'label' => __('Payment'),
@@ -193,18 +205,6 @@ class StoreOrderCrudController extends CrudController
             'name' => 'invoice',
             'type' => 'text',
             'label' => __('Invoice'),
-        ]);
-
-        $this->crud->addColumn([
-            'name' => 'status',
-            'type' => 'trans',
-            'label' => __('Status'),
-        ]);
-
-        $this->crud->addColumn([
-            'name' => 'created_at',
-            'type' => 'date',
-            'label' => __('Date'),
         ]);
 
         $this->crud->addColumn([

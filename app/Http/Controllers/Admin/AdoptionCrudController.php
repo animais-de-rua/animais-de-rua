@@ -37,7 +37,7 @@ class AdoptionCrudController extends CrudController
         */
 
         // ------ CRUD FIELDS
-        $this->crud->addFields(['process_id', 'fat_id', 'name', 'name_after', 'age', 'gender', 'sterilized', 'vaccinated', 'processed', 'individual', 'docile', 'abandoned', 'foal', 'images', 'features', 'history', 'adopter_id', 'adoption_date', 'status']);
+        $this->crud->addFields(['process_id', 'fat_id', 'name', 'name_after', 'age', 'gender', 'sterilized', 'vaccinated', 'processed', 'individual', 'docile', 'abandoned', 'foal', 'images', 'history', 'adopter_id', 'adoption_date', 'status']);
 
         $this->crud->addField([
             'label' => ucfirst(__('process')),
@@ -155,12 +155,6 @@ class AdoptionCrudController extends CrudController
             'thumb' => 340,
             'size' => 800,
             'quality' => 82,
-        ]);
-
-        $this->crud->addField([
-            'label' => __('Features'),
-            'type' => 'wysiwyg',
-            'name' => 'features',
         ]);
 
         $this->crud->addField([
@@ -295,11 +289,6 @@ class AdoptionCrudController extends CrudController
 
         $this->crud->addColumn([
             'name' => 'name_after',
-            'visibleInTable' => false,
-        ]);
-
-        $this->crud->addColumn([
-            'name' => 'features',
             'visibleInTable' => false,
         ]);
 
@@ -515,12 +504,6 @@ class AdoptionCrudController extends CrudController
 
         $this->crud->setColumnDetails('history', [
             'label' => __('History'),
-        ]);
-
-        $this->crud->addColumn([
-            'name' => 'features',
-            'label' => __('Features'),
-            'type' => 'textarea',
         ]);
 
         $this->crud->setColumnDetails('images', [

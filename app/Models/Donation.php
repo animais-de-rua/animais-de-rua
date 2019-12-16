@@ -88,7 +88,7 @@ class Donation extends Model
 
     public function getProtocolLinkAttribute()
     {
-        if (!$this->protocol) {
+        if (!$this->protocol || !$this->protocol->headquarter) {
             return '-';
         }
 

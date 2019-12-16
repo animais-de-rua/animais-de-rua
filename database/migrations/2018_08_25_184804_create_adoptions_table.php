@@ -22,7 +22,7 @@ class CreateAdoptionsTable extends Migration
 
             // Animal
             $table->string('name', 255);
-            $table->string('name_after', 255);
+            $table->string('name_after', 255)->nullable();
             $table->integer('age')->unsigned()->default(0);
             $table->enum('gender', EnumHelper::values('animal.gender'))->nullable();
             $table->boolean('sterilized')->default(0);

@@ -64,7 +64,7 @@ class ProcessCrudController extends CrudController
             'label' => ucfirst(__('territory')),
             'name' => 'territory_id',
             'type' => 'select2_from_array',
-            'options' => $this->wantsJSON() ? null : is('admin') ? api()->territoryList(Territory::FREGUESIA) : api()->rangeTerritoryList(Territory::FREGUESIA),
+            'options' => $this->wantsJSON() ? null : (is('admin') ? api()->territoryList(Territory::FREGUESIA) : api()->rangeTerritoryList(Territory::FREGUESIA)),
             'allows_null' => true,
         ]);
 
