@@ -238,14 +238,27 @@ class DonationCrudController extends CrudController
             });
 
         $this->crud->addFilter([
-            'name' => 'headquarter',
+            'name' => 'headquarter_type',
             'type' => 'select2_ajax',
-            'label' => ucfirst(__('headquarter')),
+            'label' => ucfirst(__('headquarter')) . ' (' . __('Type') . ')',
             'placeholder' => __('Select a headquarter'),
         ],
             url('admin/headquarter/ajax/filter'),
             function ($value) {
                 $this->crud->addClause('where', 'headquarter_id', $value);
+            });
+
+        $this->crud->addFilter([
+            'name' => 'headquarter',
+            'type' => 'select2_ajax',
+            'label' => ucfirst(__('headquarter')) . ' (' . ucfirst(__('process')) . ')',
+            'placeholder' => __('Select a headquarter'),
+        ],
+            url('admin/headquarter/ajax/filter'),
+            function ($value) {
+                $this->crud->addClause('whereHas', 'process', function ($query) use ($value) {
+                    $query->where('headquarter_id', $value);
+                });
             });
 
         $this->crud->addFilter([
