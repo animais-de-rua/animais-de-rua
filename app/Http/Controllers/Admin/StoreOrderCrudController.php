@@ -82,6 +82,7 @@ class StoreOrderCrudController extends CrudController
             'label' => __('Payment'),
             'type' => 'enum',
             'name' => 'payment',
+            'attributes' => $attributeDisabled,
         ]);
 
         $this->crud->addField([
@@ -95,9 +96,9 @@ class StoreOrderCrudController extends CrudController
             'label' => __('Notes'),
             'name' => 'notes',
             'type' => 'textarea',
-            'attributes' => array_merge($attributeDisabled, [
+            'attributes' => [
                 'style' => 'height: 140px;',
-            ]),
+            ],
         ]);
 
         $this->separator(ucfirst(__('shipment')))->afterField('notes');
