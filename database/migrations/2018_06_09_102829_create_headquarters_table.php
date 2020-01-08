@@ -20,6 +20,7 @@ class CreateHeadquartersTable extends Migration
             $table->string('phone', 255)->nullable();
             $table->string('mail', 255)->nullable();
             $table->text('description')->nullable();
+            $table->tinyInteger('active')->unsigned()->default('1');
             $table->timestamps();
         });
     }

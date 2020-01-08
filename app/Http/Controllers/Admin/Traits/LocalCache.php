@@ -105,7 +105,7 @@ trait LocalCache
     public static function headquarters()
     {
         return Cache::rememberForever('headquarters', function () {
-            return Headquarter::select(['id', 'name', 'address', 'phone', 'mail'])->get();
+            return Headquarter::select(['id', 'name', 'address', 'phone', 'mail'])->where('active', 1)->get();
         });
     }
 

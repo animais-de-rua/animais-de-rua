@@ -79,8 +79,14 @@ class HeadquarterCrudController extends CrudController
             'pivot' => true,
         ]);
 
+        $this->crud->addField([
+            'label' => ucfirst(__('active')),
+            'name' => 'active',
+            'type' => 'checkbox',
+        ]);
+
         // ------ CRUD COLUMNS
-        $this->crud->addColumns(['name', 'address', 'phone']);
+        $this->crud->addColumns(['name', 'address', 'phone', 'active']);
 
         $this->crud->setColumnDetails('name', [
             'name' => 'name',
@@ -100,6 +106,12 @@ class HeadquarterCrudController extends CrudController
         $this->crud->addColumn([
             'name' => 'description',
             'visibleInTable' => false,
+        ]);
+
+        $this->crud->addColumn([
+            'label' => ucfirst(__('active')),
+            'name' => 'active',
+            'type' => 'check',
         ]);
 
         // ------ CRUD ACCESS

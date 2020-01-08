@@ -18,7 +18,7 @@ class Headquarter extends Model
     protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['name', 'address', 'phone', 'mail', 'description'];
+    protected $fillable = ['name', 'address', 'phone', 'mail', 'description', 'active'];
     // protected $hidden = [];
     // protected $dates = [];
 
