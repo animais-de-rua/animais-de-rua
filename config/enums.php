@@ -96,6 +96,7 @@ return [
             2 => 'volunteer',
             3 => 'store',
             4 => 'translator',
+            5 => 'friend card',
         ],
         'permissions' => [
             1 => 'processes',
@@ -104,8 +105,8 @@ return [
             4 => 'adoptions',
             5 => 'accountancy',
             6 => 'website',
-            7 => 'store',
-            8 => 'friend card',
+            // 7 => 'store',
+            // 8 => 'friend card',
             9 => 'vets',
             10 => 'protocols',
             11 => 'council',

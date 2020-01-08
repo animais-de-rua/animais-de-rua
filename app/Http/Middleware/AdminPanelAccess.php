@@ -15,7 +15,7 @@ class AdminPanelAccess
      */
     public function handle($request, Closure $next)
     {
-        if (!is(['admin', 'volunteer', 'store', 'translator'])) {
+        if (!is(['admin', 'volunteer', 'store', 'translator', 'friend card'])) {
 
             // Friend Card users
             if (backpack_user() && backpack_user()->friend_card_modality()->first()) {

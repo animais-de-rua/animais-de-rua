@@ -340,7 +340,7 @@ class PartnerCrudController extends CrudController
             });
 
         // ------ CRUD ACCESS
-        if (!is('admin', 'friend card')) {
+        if (!is(['admin', 'friend card'])) {
             $this->crud->denyAccess(['list', 'create', 'update']);
         }
 

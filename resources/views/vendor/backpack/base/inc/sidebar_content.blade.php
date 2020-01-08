@@ -53,7 +53,7 @@
 <li><a href="{{ backpack_url('vet') }}"><i class="fa icon-vet"></i> <span class="text-capitalize">{{ __("vets") }}</span></a></li>
 @endif
 
-@if(restrictTo('admin', 'friend card'))
+@if(restrictTo(['admin', 'friend card']))
 <li class="treeview">
     <a href="#"><i class="fa icon-partner"></i> <span class="text-capitalize">{{ __("partners") }}</span> <i class="fa fa-angle-left pull-right"></i></a>
     <ul class="treeview-menu">
@@ -87,7 +87,7 @@
 @endif
 
 
-@if(restrictTo(['admin', 'translator'], ['website', 'friend card']))
+@if(restrictTo(['admin', 'translator', 'friend card'], ['website']))
 <li class="header">Admin</li>
 @if(restrictTo(['admin', 'translator'], 'website'))
 <li class="treeview">
@@ -117,13 +117,13 @@
 </li>
 @endif
 
-@if(restrictTo('admin', 'friend card'))
+@if(restrictTo(['admin', 'friend card']))
 @if(restrictTo('admin'))
 <li class="treeview">
     <a href="#"><i class="fa fa-group"></i> <span>{{ __("Users") }}</span> <i class="fa fa-angle-left pull-right"></i></a>
     <ul class="treeview-menu">
 @endif
-@if(restrictTo('admin', 'friend card'))
+@if(restrictTo(['admin', 'friend card']))
         <li><a href="{{ url(config('backpack.base.route_prefix', 'admin') . '/user') }}"><i class="fa fa-user"></i> <span>{{ __("Users") }}</span></a></li>
 @endif
 @if(restrictTo('admin'))

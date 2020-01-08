@@ -165,7 +165,7 @@ class UserCrudController extends OriginalUserCrudController
         $this->crud->allowAccess('details_row');
 
         // ------ CRUD ACCESS
-        if (!is('admin', 'friend card')) {
+        if (!is(['admin', 'friend card'])) {
             $this->crud->denyAccess(['list', 'create']);
         }
 
@@ -174,7 +174,7 @@ class UserCrudController extends OriginalUserCrudController
 
             $this->crud->removeField('roles_and_permissions');
 
-            if (is([], 'friend card')) {
+            if (is('friend card')) {
                 $this->crud->addClause('whereNotNull', 'friend_card_modality_id');
                 $this->crud->removeColumn('roles');
                 $this->crud->removeColumn('permissions');
