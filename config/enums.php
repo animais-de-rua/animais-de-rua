@@ -143,5 +143,9 @@ return [
             'bank_transfer' => 'banktransfer',
             'paypal' => 'paypal',
         ],
+        'voucher' => [
+            'used' => 'used',
+            'unused' => 'unused',
+        ],
     ],
 ];

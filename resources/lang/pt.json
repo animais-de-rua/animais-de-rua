@@ -121,6 +121,10 @@
     "Sells": "Vendas",
     "Profit": "Lucro",
     "Shippment Expense": "Despesas de envio",
+    "Voucher": "Cheque Oferta",
+    "Client Name": "Nome do cliente",
+    "Client Email": "Email do cliente",
+    "Expiration Date": "Validade",
     "Sent": "Enviado",
     "Not sent": "Não enviado",
     "Total products": "Artigos",
@@ -192,6 +196,8 @@
     "transactions": "transacções",
     "supplier": "fornecedor",
     "suppliers": "fornecedores",
+    "voucher": "cheque oferta",
+    "vouchers": "cheques oferta",
 
     "headquarter": "núcleo",
     "process": "processo",
@@ -350,7 +356,8 @@
     "Merge with sent data": "Juntar com dados dos envios",
     "Clear permissions": "Limpar permissões",
     "Payment": "Pagamento",
-
+    "used": "Utilizado",
+    "unused": "Por utilizar",
 
     "Filters": "Filtros",
     "Order": "Ordem",
