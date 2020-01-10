@@ -114,6 +114,7 @@ return [
             13 => 'store shippments',
             14 => 'store stock',
             15 => 'store transaction',
+            17 => 'store vouchers',
             16 => 'reports',
         ],
     ],

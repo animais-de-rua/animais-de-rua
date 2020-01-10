@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\EnumHelper;
 use App\Http\Requests\VoucherRequest as StoreRequest;
 use App\Http\Requests\VoucherRequest as UpdateRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
@@ -42,7 +43,7 @@ class VoucherCrudController extends CrudController
         ]);
 
         $this->crud->addColumn([
-            'label' => __('Voucher'),
+            'label' => __('Code'),
             'name' => 'voucher',
             'type' => 'text',
         ]);
@@ -92,7 +93,7 @@ class VoucherCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'label' => __('Voucher'),
+            'label' => __('Code'),
             'name' => 'voucher',
             'type' => 'text',
         ]);
@@ -126,6 +127,62 @@ class VoucherCrudController extends CrudController
             'name' => 'status',
             'type' => 'enum',
         ]);
+
+        // ----------
+        // Filters
+        $this->crud->addFilter([
+            'name' => 'status',
+            'type' => 'select2_multiple',
+            'label' => __('Status'),
+            'placeholder' => __('Select a status'),
+        ],
+            EnumHelper::translate('store.voucher'),
+            function ($values) {
+                $this->crud->addClause('whereIn', 'status', json_decode($values));
+            });
+
+        $this->crud->addFilter([
+            'name' => 'value',
+            'type' => 'range',
+            'label' => __('Value'),
+            'label_from' => __('Min value'),
+            'label_to' => __('Max value'),
+        ],
+            true,
+            function ($value) {
+                $range = json_decode($value);
+                if (is_numeric($range->from)) {
+                    $this->crud->addClause('where', 'value', '>=', $range->from);
+                }
+
+                if (is_numeric($range->to)) {
+                    $this->crud->addClause('where', 'value', '<=', $range->to);
+                }
+            });
+
+        $this->crud->addFilter([
+            'type' => 'date_range',
+            'name' => 'from_to',
+            'label' => __('Date range'),
+            'format' => 'DD/MM/YYYY',
+            'firstDay' => 1,
+        ],
+            false,
+            function ($value) {
+                $dates = json_decode($value);
+                $this->crud->query->whereRaw('expiration >= ? AND expiration <= DATE_ADD(?, INTERVAL 1 DAY)', [$dates->from, $dates->to]);
+            });
+
+        $this->crud->enableExportButtons();
+
+        // ------ CRUD ACCESS
+        if (!is('admin')) {
+            $this->crud->denyAccess(['delete']);
+        }
+
+        if (!is('admin', 'store vouchers')) {
+            $this->crud->denyAccess(['list', 'create', 'update']);
+        }
 
         // add asterisk for fields that are required in VoucherRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');

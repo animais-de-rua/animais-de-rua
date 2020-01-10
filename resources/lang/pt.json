@@ -39,6 +39,7 @@
     "Type": "Tipo",
     "Phone": "Telefone",
     "URL": "URL",
+    "Code": "Código",
     "Description": "Descrição",
     "Introduction": "Introdução",
     "Address": "Morada",
@@ -234,6 +235,7 @@
     "store shippments": "loja, envios",
     "store stock": "loja, gestor de stock",
     "store transaction": "loja, gestor de transacções",
+    "store vouchers": "loja, cheques oferta",
     "reports": "relatórios",
 
     "Select a godfather": "Seleccione um padrinho",
