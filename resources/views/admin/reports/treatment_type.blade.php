@@ -40,6 +40,15 @@
         @endforeach
     </select>
 
+    {{-- Vets --}}
+    <br/>
+    <select class="form-control form-control-sm" name="vet">
+        <option value="">{{ __("Every vet") }}</option>
+        @foreach($vets as $vet)
+        <option value="{{ $vet->id }}">{{ $vet->id }} - {{ $vet->name }}</option>
+        @endforeach
+    </select>
+
     <br/>
     <span>
         <input class="form-control form-control-sm" type="date" name="start" />

@@ -23,6 +23,7 @@ class TreatmentTypeExport extends Export implements FromCollection, WithHeadings
             'county' => 'nullable|exists:territories,id',
             'parish' => 'nullable|exists:territories,id',
             'protocol' => 'nullable|exists:territories,id',
+            'vet' => 'nullable|exists:vets,id',
             'order.column' => 'required|in:' . join(',', array_keys(self::order())),
             'order.direction' => 'required|in:ASC,DESC',
         ]);
@@ -36,6 +37,7 @@ class TreatmentTypeExport extends Export implements FromCollection, WithHeadings
         $county = $this->input('county');
         $parish = $this->input('parish');
         $protocol = $this->input('protocol');
+        $vet = $this->input('vet');
         $orderColumn = $this->input('order.column');
         $orderDirection = $this->input('order.direction');
 
@@ -44,6 +46,7 @@ class TreatmentTypeExport extends Export implements FromCollection, WithHeadings
             't.treatment_type_id = tt.id',
             't.appointment_id = a.id',
             'a.process_id = p.id',
+            't.vet_id = v.id',
         ];
 
         if ($district) {
@@ -53,6 +56,10 @@ class TreatmentTypeExport extends Export implements FromCollection, WithHeadings
 
         if ($protocol) {
             $conditions[] = "p.territory_id LIKE '$protocol%'";
+        }
+
+        if ($vet) {
+            $conditions[] = "p.id = '$vet%'";
         }
 
         if ($status) {
@@ -76,7 +83,7 @@ class TreatmentTypeExport extends Export implements FromCollection, WithHeadings
 
         // Query
         $query = "SELECT tt.name, SUM(t.expense) expense, SUM(t.affected_animals) affected_animals, SUM(t.affected_animals_new) affected_animals_new
-            FROM treatments t, treatment_types tt, appointments a, processes p
+            FROM treatments t, treatment_types tt, appointments a, processes p, vets v
             WHERE $conditions
             GROUP BY t.treatment_type_id
             ORDER BY $orderColumn $orderDirection";

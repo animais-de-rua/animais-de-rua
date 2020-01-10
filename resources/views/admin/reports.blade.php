@@ -6,6 +6,7 @@ use App\Models\Headquarter;
 use App\Models\StoreProduct;
 use App\Models\Territory;
 use App\Models\Protocol;
+use App\Models\Vet;
 use App\User;
 @endphp
 
@@ -45,6 +46,7 @@ use App\User;
         'parish' => Territory::select(['id', 'name', 'parent_id'])->parish()->get(),
     ],
     'protocols' => Protocol::select(['id', 'name', 'territory_id'])->get(),
+    'vets' => Vet::select(['id', 'name'])->get(),
 ])
 
 
