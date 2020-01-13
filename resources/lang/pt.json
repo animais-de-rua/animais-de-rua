@@ -82,6 +82,7 @@
     "Graphs": "Gráficos",
     "Attribute": "Atributo",
     "Affected Animals": "Animais intervencionados",
+    "Total Affected Animals": "Total de Animais intervencionados",
     "New affected Animals": "Novos animais intervencionados",
     "New": "Novos",
     "Animals": "Animais",
@@ -275,6 +276,7 @@
     "Invoice is required when the order is shipped.": "O campo fatura é obrigatório quando a encomenda passa a enviada.",
     "Shipment Date is required when the order is shipped.": "A data de envio é obrigatória quando a encomenda passa a enviada.",
     "Only processes 'waiting for godfather' can be urgent.": "Apenas processos a aguardar padrinhos podem ser urgentes.",
+    "OVH and Castration": "OVH e Castração",
 
     "The field :field is required.": "É obrigatória a indicação de um valor para o campo :field.",
     "If you wish to add a Donation to a :field, please change the type of this Donation.": "Se deseja adicionar um donativo a um :field, por favor troque o tipo deste Donativo.",
@@ -328,6 +330,7 @@
     "paypal": "PayPal",
     "entry": "entrada",
     "donations": "donativos",
+    "Total": "Total",
     "Total Donated": "Total doado",
     "Total Donations": "Total de doações",
     "Total Expenses": "Total despesas",

@@ -1,4 +1,5 @@
 @php
+use App\Exports\AffectedAnimalsExport;
 use App\Exports\TreatmentTypeExport;
 use App\Exports\StoreExport;
 use App\Exports\DonationExport;
@@ -35,26 +36,35 @@ use App\User;
 
 @section('content')
 
+@php
+// Vars
+$headquarters = Headquarter::select(['id', 'name'])->get();
+$protocols = Protocol::select(['id', 'name', 'territory_id'])->get();
+$vets = Vet::select(['id', 'name'])->get();
+$volunteers = User::select(['id', 'name'])->storeRole()->orderBy('name')->get();
+$store_products = StoreProduct::select(['id', 'name'])->get();
+$territories = [
+    'district' => Territory::select(['id', 'name'])->district()->get(),
+    'county' => Territory::select(['id', 'name', 'parent_id'])->county()->get(),
+    'parish' => Territory::select(['id', 'name', 'parent_id'])->parish()->get(),
+];
+@endphp
 
 {{-- Treatment type --}}
 @include('admin.reports.treatment_type', [
     'order' => TreatmentTypeExport::order(),
-    'headquarters' => Headquarter::select(['id', 'name'])->get(),
-    'territories' => [
-        'district' => Territory::select(['id', 'name'])->district()->get(),
-        'county' => Territory::select(['id', 'name', 'parent_id'])->county()->get(),
-        'parish' => Territory::select(['id', 'name', 'parent_id'])->parish()->get(),
-    ],
-    'protocols' => Protocol::select(['id', 'name', 'territory_id'])->get(),
-    'vets' => Vet::select(['id', 'name'])->get(),
+    'headquarters' => $headquarters,
+    'territories' => $territories,
+    'protocols' => $protocols,
+    'vets' => $vets,
 ])
 
 
 {{-- Store --}}
 @include('admin.reports.store', [
     'order' => StoreExport::order(),
-    'store_products' => StoreProduct::select(['id', 'name'])->get(),
-    'volunteers' => User::select(['id', 'name'])->storeRole()->orderBy('name')->get(),
+    'store_products' => $store_products,
+    'volunteers' => $volunteers,
 ])
 
 
@@ -62,9 +72,26 @@ use App\User;
 @include('admin.reports.donations', [
     'order' => DonationExport::order(),
     'group' => DonationExport::group(),
-    'headquarters' => Headquarter::select(['id', 'name'])->get(),
-    'protocols' => Protocol::select(['id', 'name'])->get(),
+    'headquarters' => $headquarters,
+    'protocols' => $protocols,
 ])
 
+
+{{-- Affected Animals --}}
+@include('admin.reports.affected_animals', [
+    'headquarters' => $headquarters,
+    'territories' => $territories,
+    'protocols' => $protocols,
+    'vets' => $vets,
+])
+
+
+{{-- Total Affected Animals --}}
+@include('admin.reports.affected_animals_total', [
+    'headquarters' => $headquarters,
+    'territories' => $territories,
+    'protocols' => $protocols,
+    'vets' => $vets,
+])
 
 @endsection

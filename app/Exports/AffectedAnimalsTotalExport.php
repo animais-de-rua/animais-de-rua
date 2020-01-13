@@ -2,11 +2,10 @@
 
 namespace App\Exports;
 
-use App\Helpers\EnumHelper;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class TreatmentTypeExport extends Export implements FromCollection, WithHeadings
+class AffectedAnimalsTotalExport extends Export implements FromCollection, WithHeadings
 {
     /**
      * @return \Illuminate\Support\Collection
@@ -15,7 +14,6 @@ class TreatmentTypeExport extends Export implements FromCollection, WithHeadings
     {
         // Validate data
         $validatedData = request()->validate([
-            'status' => 'nullable|in:' . EnumHelper::keys('treatment.status', ','),
             'start' => 'nullable|date',
             'end' => 'nullable|date',
             'headquarter' => 'nullable|exists:headquarters,id',
@@ -24,12 +22,9 @@ class TreatmentTypeExport extends Export implements FromCollection, WithHeadings
             'parish' => 'nullable|exists:territories,id',
             'protocol' => 'nullable|exists:territories,id',
             'vet' => 'nullable|exists:vets,id',
-            'order.column' => 'required|in:' . join(',', array_keys(self::order())),
-            'order.direction' => 'required|in:ASC,DESC',
         ]);
 
         // Store variables
-        $status = $this->input('status');
         $start = $this->input('start');
         $end = $this->input('end');
         $headquarter = $this->input('headquarter');
@@ -38,14 +33,13 @@ class TreatmentTypeExport extends Export implements FromCollection, WithHeadings
         $parish = $this->input('parish');
         $protocol = $this->input('protocol');
         $vet = $this->input('vet');
-        $orderColumn = $this->input('order.column');
-        $orderDirection = $this->input('order.direction');
 
         // Set conditions
         $conditions = [
-            't.treatment_type_id = tt.id',
             't.appointment_id = a.id',
             'a.process_id = p.id',
+            'p.territory_id = tr.id',
+            'p.headquarter_id = h.id',
             't.vet_id = v.id',
         ];
 
@@ -60,10 +54,6 @@ class TreatmentTypeExport extends Export implements FromCollection, WithHeadings
 
         if ($vet) {
             $conditions[] = "v.id = '$vet'";
-        }
-
-        if ($status) {
-            $conditions[] = "t.status = '$status'";
         }
 
         if ($start) {
@@ -81,12 +71,9 @@ class TreatmentTypeExport extends Export implements FromCollection, WithHeadings
         // Merge conditions
         $conditions = join(' AND ', $conditions);
 
-        // Query
-        $query = "SELECT tt.name, SUM(t.expense) expense, SUM(t.affected_animals) affected_animals, SUM(t.affected_animals_new) affected_animals_new
-            FROM treatments t, treatment_types tt, appointments a, processes p, vets v
-            WHERE $conditions
-            GROUP BY t.treatment_type_id
-            ORDER BY $orderColumn $orderDirection";
+        $query = "SELECT SUM(t.affected_animals_new) as total
+            FROM `treatments` t, `appointments` a, `processes` p, `territories` tr, `headquarters` h, `vets` v
+            WHERE $conditions";
 
         // Add Limit
         $query .= $this->appendLimit();
@@ -94,23 +81,10 @@ class TreatmentTypeExport extends Export implements FromCollection, WithHeadings
         return $this->collectResults($query);
     }
 
-    public static function order(): array
-    {
-        return [
-            'name' => __('Name'),
-            'expense' => __('Expense'),
-            'affected_animals' => __('Affected Animals'),
-            'affected_animals_new' => __('New affected Animals'),
-        ];
-    }
-
     public function headings(): array
     {
         return [
-            __('Name'),
-            __('Expense'),
-            __('Affected Animals'),
-            __('New'),
+            __('Total'),
         ];
     }
 }
