@@ -94,4 +94,12 @@ $territories = [
     'vets' => $vets,
 ])
 
+
+{{-- Adopted Animals --}}
+@include('admin.reports.adopted_animals', [
+    'headquarters' => $headquarters,
+    'territories' => $territories,
+    'protocols' => $protocols,
+])
+
 @endsection
