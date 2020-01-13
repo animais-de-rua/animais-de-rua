@@ -91,5 +91,9 @@ document.addEventListener("DOMContentLoaded", e => {
 
         // Close btn
         report.querySelector('.close').onclick = e => report.classList.remove('active');
+
+        // Toggle Visibility
+        let header = report.querySelector('.box-header');
+        header.onclick = e => header.classList.toggle('active');
     });
 });
