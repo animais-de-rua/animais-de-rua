@@ -147,6 +147,7 @@ trait LocalCache
     {
         return Cache::rememberForever('friend_card_modalities', function () {
             return FriendCardModality::select(['name', 'description', 'paypal_code', 'amount', 'type'])
+                ->where('amount', '>', 0)
                 ->orderBy('id', 'asc')
                 ->get();
         });

@@ -104,6 +104,20 @@ class FriendCardModalitiesSeeder extends Seeder
                 'created_at' => $date,
                 'updated_at' => $date,
             ],
+            [
+                'name' => json_encode([
+                    'pt' => 'Modalidade oferta',
+                    'en' => 'Offer',
+                ]),
+                'description' => json_encode([
+                    'pt' => 'O aderente tem direito ao cartão (renovável todos os anos), com todos os descontos disponíveis.',
+                ]),
+                'paypal_code' => '',
+                'amount' => 0,
+                'type' => self::MONTHLY,
+                'created_at' => $date,
+                'updated_at' => $date,
+            ],
         ]);
 
     }
