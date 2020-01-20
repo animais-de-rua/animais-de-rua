@@ -76,37 +76,41 @@ class StoreOrderRequest extends FormRequest
             $products = json_decode($this->input('products'));
             foreach ($products as $product) {
                 $quantity = $product->pivot->quantity;
-                $product = StoreProduct::find($product->pivot->store_product_id);
+                $store_product_id = $product->pivot->store_product_id ?? null;
 
-                // Stock quantity
-                $quantity_stock = StoreStock::where('user_id', $user_id)
-                    ->where('store_product_id', $product->id)
-                    ->sum('quantity');
+                if ($quantity > 0 && $store_product_id) {
+                    $product = StoreProduct::find($store_product_id);
 
-                // Sent quantity
-                $quantity_sent = StoreOrder::join('store_orders_products', 'store_orders_products.store_order_id', '=', 'store_orders.id')
-                    ->where('store_product_id', $product->id)
-                    ->where('user_id', $user_id);
+                    // Stock quantity
+                    $quantity_stock = StoreStock::where('user_id', $user_id)
+                        ->where('store_product_id', $product->id)
+                        ->sum('quantity');
 
-                // In case it is an edit, itens on that order doesn't count
-                if ($id) {
-                    $quantity_sent = $quantity_sent->where('id', '<>', $id);
-                }
+                    // Sent quantity
+                    $quantity_sent = StoreOrder::join('store_orders_products', 'store_orders_products.store_order_id', '=', 'store_orders.id')
+                        ->where('store_product_id', $product->id)
+                        ->where('user_id', $user_id);
 
-                $quantity_sent = $quantity_sent->sum('quantity');
+                    // In case it is an edit, itens on that order doesn't count
+                    if ($id) {
+                        $quantity_sent = $quantity_sent->where('id', '<>', $id);
+                    }
 
-                // Total normalized
-                $total = max(0, $quantity_stock - $quantity_sent);
+                    $quantity_sent = $quantity_sent->sum('quantity');
 
-                if ($quantity > $total) {
-                    $user_name = $user_name ?: User::select('name')->where('id', $user_id)->first()->name;
+                    // Total normalized
+                    $total = max(0, $quantity_stock - $quantity_sent);
 
-                    $validator->errors()->add('products', trans_choice(__('store_order_assing_error'), $total, [
-                        'amount' => $quantity,
-                        'product' => $product->name,
-                        'user' => $user_name,
-                        'quantity' => $total,
-                    ]));
+                    if ($quantity > $total) {
+                        $user_name = $user_name ?: User::select('name')->where('id', $user_id)->first()->name;
+
+                        $validator->errors()->add('products', trans_choice(__('store_order_assing_error'), $total, [
+                            'amount' => $quantity,
+                            'product' => $product->name,
+                            'user' => $user_name,
+                            'quantity' => $total,
+                        ]));
+                    }
                 }
             }
 
