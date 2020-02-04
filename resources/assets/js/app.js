@@ -79,8 +79,10 @@ window.router = {
                     navbar.close();
 
                     response.text().then(html => {
-                        _content.innerHTML = html;
-                        app.init();
+                        if(_content.innerHTML != html) {
+                            _content.innerHTML = html;
+                            app.init();
+                        }
 
                         loading.end();
                         // _content.classList.add('anim');
