@@ -9,6 +9,7 @@ use App\Models\Territory;
 use App\Models\Protocol;
 use App\Models\Vet;
 use App\User;
+use App\Helpers\EnumHelper;
 @endphp
 
 @extends('backpack::layout')
@@ -57,6 +58,7 @@ $territories = [
     'territories' => $territories,
     'protocols' => $protocols,
     'vets' => $vets,
+    'status' => EnumHelper::values('treatment.status'),
 ])
 
 
@@ -65,6 +67,7 @@ $territories = [
     'order' => StoreExport::order(),
     'store_products' => $store_products,
     'volunteers' => $volunteers,
+    'status' => EnumHelper::values('store.order'),
 ])
 
 
@@ -74,6 +77,7 @@ $territories = [
     'group' => DonationExport::group(),
     'headquarters' => $headquarters,
     'protocols' => $protocols,
+    'types' => EnumHelper::values('donation.type'),
 ])
 
 
@@ -100,6 +104,7 @@ $territories = [
     'headquarters' => $headquarters,
     'territories' => $territories,
     'protocols' => $protocols,
+    'status' => EnumHelper::values('adoption.status'),
 ])
 
 @endsection

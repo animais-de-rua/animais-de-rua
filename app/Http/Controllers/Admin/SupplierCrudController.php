@@ -62,8 +62,13 @@ class SupplierCrudController extends CrudController
             'label' => __('Status'),
         ]);
 
+        $this->crud->setColumnDetails('notes', [
+            'label' => __('Notes'),
+        ]);
+
         $this->crud->addColumn([
             'name' => 'invoice',
+            'label' => __('Invoice'),
             'visibleInTable' => false,
         ]);
 

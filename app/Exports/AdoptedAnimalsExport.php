@@ -2,6 +2,7 @@
 
 namespace App\Exports;
 
+use App\Helpers\EnumHelper;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
@@ -21,6 +22,14 @@ class AdoptedAnimalsExport extends Export implements FromCollection, WithHeading
             'county' => 'nullable|exists:territories,id',
             'parish' => 'nullable|exists:territories,id',
             'protocol' => 'nullable|exists:territories,id',
+            'status' => 'nullable|in:' . EnumHelper::keys('adoption.status', ','),
+            'sterilized' => 'nullable|in:on',
+            'vaccinated' => 'nullable|in:on',
+            'processed' => 'nullable|in:on',
+            'individual' => 'nullable|in:on',
+            'docile' => 'nullable|in:on',
+            'foal' => 'nullable|in:on',
+            'abandoned' => 'nullable|in:on',
         ]);
 
         // Store variables
@@ -31,10 +40,17 @@ class AdoptedAnimalsExport extends Export implements FromCollection, WithHeading
         $county = $this->input('county');
         $parish = $this->input('parish');
         $protocol = $this->input('protocol');
+        $status = $this->input('status');
+        $sterilized = $this->input('sterilized');
+        $vaccinated = $this->input('vaccinated');
+        $processed = $this->input('processed');
+        $individual = $this->input('individual');
+        $docile = $this->input('docile');
+        $foal = $this->input('foal');
+        $abandoned = $this->input('abandoned');
 
         // Set conditions
         $conditions = [
-            "a.status = 'closed'",
             'a.process_id = p.id',
             'p.territory_id = t.id',
             'p.headquarter_id = h.id',
@@ -59,6 +75,39 @@ class AdoptedAnimalsExport extends Export implements FromCollection, WithHeading
 
         if ($headquarter) {
             $conditions[] = "p.headquarter_id = '$headquarter'";
+        }
+
+        if ($status) {
+            $conditions[] = "a.status = '$status'";
+        }
+
+        // Checkboxs
+        if ($sterilized) {
+            $conditions[] = 'a.sterilized = 1';
+        }
+
+        if ($vaccinated) {
+            $conditions[] = 'a.vaccinated = 1';
+        }
+
+        if ($processed) {
+            $conditions[] = 'a.processed = 1';
+        }
+
+        if ($individual) {
+            $conditions[] = 'a.individual = 1';
+        }
+
+        if ($docile) {
+            $conditions[] = 'a.docile = 1';
+        }
+
+        if ($foal) {
+            $conditions[] = 'a.foal = 1';
+        }
+
+        if ($abandoned) {
+            $conditions[] = 'a.abandoned = 1';
         }
 
         // Merge conditions

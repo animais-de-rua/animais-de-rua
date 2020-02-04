@@ -16,8 +16,9 @@
     {{-- Status --}}
     <select class="form-control form-control-sm" name="status">
         <option value="">{{ __("Any status") }}</option>
-        <option value="approved" selected>{{ __('approved') }}</option>
-        <option value="approving">{{ __('approving') }}</option>
+        @foreach($status as $value)
+        <option value="{{ $value }}">{{ ucfirst(__($value)) }}</option>
+        @endforeach
     </select>
 
     {{-- Territories --}}

@@ -26,9 +26,9 @@
     {{-- Status --}}
     <select class="form-control form-control-sm" name="status">
         <option value="" selected>{{ __("Any status") }}</option>
-        <option value="waiting">{{ ucfirst(__('waiting')) }}</option>
-        <option value="in_progress">{{ ucfirst(__('in_progress')) }}</option>
-        <option value="shipped">{{ ucfirst(__('shipped')) }}</option>
+        @foreach($status as $value)
+        <option value="{{ $value }}">{{ ucfirst(__($value)) }}</option>
+        @endforeach
     </select>
     <br/>
 

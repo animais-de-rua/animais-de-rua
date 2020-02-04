@@ -8,7 +8,7 @@
     @slot('filters')
     <select class="form-control form-control-sm" name="type" toggler="type">
         <option value="">{{ __("Every type") }}</option>
-        @foreach(\App\Helpers\EnumHelper::values('donation.type') as $type)
+        @foreach($types as $type)
         <option value="{{ $type }}">{{ ucfirst(__($type)) }}</option>
         @endforeach
     </select>

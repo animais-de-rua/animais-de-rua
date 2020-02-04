@@ -1,5 +1,5 @@
 @component('admin.reports.report', [
-        'title' => __('Adopted Animals'),
+        'title' => ucfirst(__('adoptions')),
         'action' => 'adopted_animals',
     ])
 
@@ -41,7 +41,27 @@
         @endforeach
     </select>
 
+    {{-- Status --}}
     <br/>
+    <select class="form-control form-control-sm" name="status">
+        <option value="" selected>{{ __("Any status") }}</option>
+        @foreach($status as $value)
+        <option value="{{ $value }}">{{ ucfirst(__($value)) }}</option>
+        @endforeach
+    </select>
+
+    {{-- Extras --}}
+    <br/>
+    <div style="line-height: 24px; margin: 10px 0px;">
+        <input type="checkbox" id="sterilized" name="sterilized"> <label for="sterilized">{{ ucfirst(__("sterilized")) }}</label><br/>
+        <input type="checkbox" id="vaccinated" name="vaccinated"> <label for="vaccinated">{{ ucfirst(__("vaccinated")) }}</label><br/>
+        <input type="checkbox" id="processed" name="processed"> <label for="processed">{{ ucfirst(__("processed")) }}</label><br/>
+        <input type="checkbox" id="individual" name="individual"> <label for="individual">{{ __("Individual Animal") }}</label><br/>
+        <input type="checkbox" id="docile" name="docile"> <label for="docile">{{ __("Docile cat of colony") }}</label><br/>
+        <input type="checkbox" id="foal" name="foal"> <label for="foal">{{ __("Foal") }}</label><br/>
+        <input type="checkbox" id="abandoned" name="abandoned"> <label for="abandoned">{{ __("Abandoned cat of colony") }}</label><br/>
+    </div>
+
     <span>
         <input class="form-control form-control-sm" type="date" name="start" />
         <input class="form-control form-control-sm" type="date" name="end" />
