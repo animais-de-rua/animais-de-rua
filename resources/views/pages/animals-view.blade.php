@@ -5,9 +5,9 @@ $locale = Session::get('locale', 'pt');
 @endphp
 
 @section('facebook')
-    <meta property="og:title" content="{{ env('APP_NAME') }}: {{ $animal['name'] }}"/>
+    <meta property="og:title" content="{{ config('app.name') }}: {{ $animal['name'] }}"/>
     <meta property="og:description" content="{{ strip_tags($animal['history'][$locale] ?? '') }}"/>
-    <meta property="og:image" content="{{ env('APP_URL') . $animal['images'][0] }}"/>
+    <meta property="og:image" content="{{ config('app.url') . $animal['images'][0] }}"/>
 @endsection
 
 @section('content')

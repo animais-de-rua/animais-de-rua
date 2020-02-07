@@ -3,7 +3,7 @@
 @section('header')
 <section class="content-header">
     <h1>
-        {{ env('APP_NAME') }} <small>{{ __('Admin Panel') }}</small>
+        {{ config('app.name') }} <small>{{ __('Admin Panel') }}</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{ backpack_url() }}">{{ config('backpack.base.project_name') }}</a></li>

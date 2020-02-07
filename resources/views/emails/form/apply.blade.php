@@ -13,7 +13,7 @@ Abaixo seguem as informações enviadas.<br />
 <strong>Morada</strong> {{ $process->address }}<br />
 <strong>Observações:</strong><br /> {{ $process->history }}<br />
 
-@component('mail::button', ['url' => env('APP_URL')])
+@component('mail::button', ['url' => config('app.url')])
 Voltar ao site
 @endcomponent
 

@@ -495,7 +495,7 @@ class AppointmentCrudController extends CrudController
         $appointment = Appointment::with('treatments')->find($id);
 
         // Avoid destroy if there are treatments
-        if (count($appointment->treatments) > 0) {
+        if ($appointment && count($appointment->treatments) > 0) {
             return false;
         }
 

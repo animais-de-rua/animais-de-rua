@@ -31,6 +31,7 @@ class StoreOrderRequest extends FormRequest
     public function rules()
     {
         return [
+            'id' => 'required_without:user_id',
             'reference' => 'required_without:id',
             'recipient' => 'required_without:id',
             'address' => 'required_without:id',
@@ -69,8 +70,14 @@ class StoreOrderRequest extends FormRequest
     {
         $validator->after(function ($validator) {
             $id = $this->input('id');
-            $user_id = $this->input('user_id') ?: StoreOrder::find($id)->user_id;
+            $order = StoreOrder::find($id);
+
+            $user_id = $this->input('user_id') ?: ($order ? $order->user_id : null);
             $user_name = null;
+
+            if (!$user_id) {
+                return $validator->errors()->add('id', "Neither order id ($id) nor user id (" . $this->input('user_id') . ') are valid.');
+            }
 
             // Validate user has all the products
             $products = json_decode($this->input('products'));

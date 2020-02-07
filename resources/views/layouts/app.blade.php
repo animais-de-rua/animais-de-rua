@@ -34,7 +34,7 @@
     <meta name="msapplication-config" content="/browserconfig.xml">
     <meta name="theme-color" content="#E53625">
 
-    <meta property="og:url" content="{{ env('APP_URL') }}"/>
+    <meta property="og:url" content="{{ config('app.url') }}"/>
     <meta property="og:type" content="website"/>
     <meta property="og:locale" content="{{ app()->getLocale() }}">
     <meta property="fb:admins" content="100000258524385">
@@ -43,7 +43,7 @@
 @else
     <meta property="og:title" content="{{ config('app.name') }}"/>
     <meta property="og:description" content="{{ __('description') }}"/>
-    <meta property="og:image" content="{{ env('APP_URL') }}/img/logo/facebook.png"/>
+    <meta property="og:image" content="{{ config('app.url') }}/img/logo/facebook.png"/>
 @endif
 
     <link rel="preload" href="{{ mix('js/app.js') }}" as="script"/>

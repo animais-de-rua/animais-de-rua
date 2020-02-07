@@ -27,7 +27,7 @@ class ProtocolRequest extends FormRequest
     {
         return [
             'name' => 'required|min:3|max:255',
-            'email' => 'nullable|email',
+            'email' => 'nullable|email|unique:protocols',
             'phone' => 'nullable|min:9|max:16',
             'territory_id' => 'required|exists:territories,id',
         ];
