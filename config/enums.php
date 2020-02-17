@@ -141,7 +141,7 @@ return [
             'paid_out' => 'paid_out',
         ],
         'payment' => [
-            'bank_transfer' => 'banktransfer',
+            'bank_transfer' => 'bank_transfer',
             'paypal' => 'paypal',
         ],
         'voucher' => [

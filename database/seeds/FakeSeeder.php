@@ -17,7 +17,7 @@ use App\Models\StoreTransaction;
 use App\Models\Supplier;
 use App\Models\Treatment;
 use App\Models\Vet;
-use App\Models\Vouchers;
+use App\Models\Voucher;
 use Backpack\Base\app\Models\BackpackUser as User;
 use Backpack\PermissionManager\app\Models\Permission;
 use Backpack\PermissionManager\app\Models\Role;
@@ -148,7 +148,7 @@ class FakeSeeder extends Seeder
 
         // Vouchers
         $this->log('Vouchers');
-        factory(Vouchers::class, 30)->create();
+        factory(Voucher::class, 30)->create();
     }
 
     public function log($entity)
