@@ -215,6 +215,13 @@ class AdoptionCrudController extends CrudController
             'type' => 'model_function',
             'limit' => 120,
             'function_name' => 'getProcessLinkAttribute',
+
+            'orderable' => true,
+            'orderLogic' => function ($query, $column, $direction) {
+                return $query->selectRaw('adoptions.*')
+                    ->leftJoin('processes', 'processes.id', '=', 'adoptions.process_id')
+                    ->orderBy('processes.name', $direction);
+            },
         ]);
 
         $headquarters = restrictToHeadquarters();
@@ -240,6 +247,13 @@ class AdoptionCrudController extends CrudController
             'type' => 'model_function',
             'limit' => 120,
             'function_name' => 'getFatLinkAttribute',
+
+            'orderable' => true,
+            'orderLogic' => function ($query, $column, $direction) {
+                return $query->selectRaw('adoptions.*')
+                    ->leftJoin('fats', 'fats.id', '=', 'adoptions.process_id')
+                    ->orderBy('fats.name', $direction);
+            },
         ]);
 
         $this->crud->setColumnDetails('age', [
@@ -289,16 +303,19 @@ class AdoptionCrudController extends CrudController
 
         $this->crud->addColumn([
             'name' => 'name_after',
+            'label' => __('Name after adoption'),
             'visibleInTable' => false,
         ]);
 
         $this->crud->addColumn([
             'name' => 'history',
+            'label' => __('History'),
             'visibleInTable' => false,
         ]);
 
         $this->crud->addColumn([
             'name' => 'adoption_date',
+            'label' => __('Adoption Date'),
             'visibleInTable' => false,
         ]);
 

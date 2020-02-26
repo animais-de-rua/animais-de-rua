@@ -89,6 +89,11 @@ class FakeSeeder extends Seeder
             $godfather->donations()->save(factory(Donation::class)->make());
         });
 
+        // Protocols
+        $this->log('Protocols');
+        factory(Protocol::class, 6)->create();
+        factory(ProtocolRequest::class, 80)->create();
+
         // Donations
         $this->log('Donations');
         factory(Donation::class, 30)->create();
@@ -109,18 +114,13 @@ class FakeSeeder extends Seeder
         $this->log('Fats');
         factory(Fat::class, 50)->create();
 
-        // Adoptions
-        $this->log('Adoptions');
-        factory(Adoption::class, 100)->create();
-
         // Adopters
         $this->log('Adopters');
         factory(Adopter::class, 50)->create();
 
-        // Protocols
-        $this->log('Protocols');
-        factory(Protocol::class, 6)->create();
-        factory(ProtocolRequest::class, 80)->create();
+        // Adoptions
+        $this->log('Adoptions');
+        factory(Adoption::class, 100)->create();
 
         // Store
         $this->log('Store Products');

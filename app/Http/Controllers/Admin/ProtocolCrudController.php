@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Admin\Traits\Permissions;
 use App\Http\Requests\ProtocolRequest as StoreRequest;
 use App\Http\Requests\ProtocolRequest as UpdateRequest;
-use App\User;
 
 /**
  * Class ProtocolCrudController
@@ -70,27 +69,11 @@ class ProtocolCrudController extends CrudController
             ]);
         }
 
-        $this->crud->addColumn([
-            'name' => 'email',
-            'visibleInTable' => false,
-        ]);
-
-        $this->crud->addFields(['name', 'email', 'phone', 'territory_id']);
+        $this->crud->addFields(['name', 'territory_id']);
 
         $this->crud->addField([
             'label' => __('Name'),
             'name' => 'name',
-        ]);
-
-        $this->crud->addField([
-            'label' => __('Email'),
-            'name' => 'email',
-            'type' => 'email',
-        ]);
-
-        $this->crud->addField([
-            'label' => __('Phone'),
-            'name' => 'phone',
         ]);
 
         $this->crud->addField([
@@ -145,16 +128,18 @@ class ProtocolCrudController extends CrudController
                 $this->crud->query->whereRaw($where, $values);
             });
 
-        $this->crud->addFilter([
-            'name' => 'user',
-            'type' => 'select2_ajax',
-            'label' => ucfirst(__('volunteer')),
-            'placeholder' => __('Select a volunteer'),
-        ],
-            url('admin/user/ajax/filter/' . User::ROLE_VOLUNTEER),
-            function ($value) {
-                $this->crud->addClause('where', 'user_id', $value);
-            });
+        if (is('admin')) {
+            $this->crud->addFilter([
+                'name' => 'headquarter_id',
+                'type' => 'select2_multiple',
+                'label' => ucfirst(__('headquarter')),
+                'placeholder' => __('Select a headquarter'),
+            ],
+                $this->wantsJSON() ? null : api()->headquarterList(),
+                function ($values) {
+                    $this->crud->addClause('whereIn', 'headquarter_id', json_decode($values));
+                });
+        }
 
         // ------ CRUD ACCESS
         if (!is('admin', 'protocols')) {

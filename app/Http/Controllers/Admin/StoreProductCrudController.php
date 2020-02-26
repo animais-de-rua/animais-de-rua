@@ -118,6 +118,7 @@ class StoreProductCrudController extends CrudController
 
         $this->crud->addColumn([
             'name' => 'notes',
+            'label' => __('Notes'),
             'visibleInTable' => false,
         ]);
 

@@ -265,8 +265,8 @@ class GodfatherCrudController extends CrudController
         // Add headquarters
         $headquarters = restrictToHeadquarters();
         if (!$request->headquarters && $headquarters) {
-            $godfather_id = \DB::getPdo()->lastInsertId();
-            Godfather::find($godfather_id)->headquarters()->attach($headquarters);
+            $godfather = $this->crud->entry;
+            $godfather->headquarters()->attach($headquarters);
         }
 
         return $store;

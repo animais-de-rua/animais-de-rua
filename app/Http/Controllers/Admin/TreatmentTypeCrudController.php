@@ -43,11 +43,20 @@ class TreatmentTypeCrudController extends CrudController
             'label' => __('Operation Time'),
         ]);
 
+        // ------ ADVANCED QUERIES
+        $this->crud->query->selectRaw('treatment_type_id, sum(expense) as total_expenses, count(*) as total_operations, sum(expense) / count(*) as average')
+            ->leftJoin('treatments', 'treatment_types.id', '=', 'treatments.treatment_type_id')
+            ->groupBy('treatment_type_id');
+
         $this->crud->setColumnDetails('total_expenses', [
             'name' => 'total_expenses',
             'label' => __('Total Expenses'),
             'type' => 'model_function',
             'function_name' => 'getTotalExpensesValue',
+            'orderable' => true,
+            'orderLogic' => function ($query, $column, $direction) {
+                return $query->orderBy('total_expenses', $direction);
+            },
         ]);
 
         $this->crud->setColumnDetails('total_operations', [
@@ -55,6 +64,10 @@ class TreatmentTypeCrudController extends CrudController
             'label' => __('Total Operations'),
             'type' => 'model_function',
             'function_name' => 'getTotalOperationsValue',
+            'orderable' => true,
+            'orderLogic' => function ($query, $column, $direction) {
+                return $query->orderBy('total_operations', $direction);
+            },
         ]);
 
         $this->crud->setColumnDetails('average_expense', [
@@ -62,6 +75,10 @@ class TreatmentTypeCrudController extends CrudController
             'label' => __('Average Expense'),
             'type' => 'model_function',
             'function_name' => 'getOperationsAverageValue',
+            'orderable' => true,
+            'orderLogic' => function ($query, $column, $direction) {
+                return $query->orderBy('average', $direction);
+            },
         ]);
 
         // ------ CRUD FIELDS
@@ -143,13 +160,6 @@ class TreatmentTypeCrudController extends CrudController
         // add asterisk for fields that are required in TreatmentTypeRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
-
-        // ------ ADVANCED QUERIES
-        $this->crud->addClause('with', ['treatments' => function ($query) {
-            $query->selectRaw('treatment_type_id, sum(expense) as total_expenses, count(*) as total_operations')
-                ->groupBy(['treatment_type_id'])
-                ->orderBy('total_expenses');
-        }]);
     }
 
     public function store(StoreRequest $request)

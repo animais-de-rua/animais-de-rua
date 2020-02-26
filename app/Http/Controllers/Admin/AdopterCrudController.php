@@ -134,16 +134,19 @@ class AdopterCrudController extends CrudController
 
         $this->crud->addColumn([
             'name' => 'address',
+            'label' => __('Address'),
             'visibleInTable' => false,
         ]);
 
         $this->crud->addColumn([
             'name' => 'zip_code',
+            'label' => __('Postal Code'),
             'visibleInTable' => false,
         ]);
 
         $this->crud->addColumn([
             'name' => 'id_card',
+            'label' => __('ID Card'),
             'visibleInTable' => false,
         ]);
 

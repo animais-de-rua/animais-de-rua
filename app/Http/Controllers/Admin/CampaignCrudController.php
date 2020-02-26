@@ -84,6 +84,7 @@ class CampaignCrudController extends CrudController
 
         $this->crud->addColumn([
             'name' => 'description',
+            'label' => __('Description'),
             'visibleInTable' => false,
         ]);
 

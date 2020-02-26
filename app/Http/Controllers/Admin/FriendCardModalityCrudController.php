@@ -86,11 +86,13 @@ class FriendCardModalityCrudController extends CrudController
 
         $this->crud->addColumn([
             'name' => 'description',
+            'label' => __('Description'),
             'visibleInTable' => false,
         ]);
 
         $this->crud->addColumn([
             'name' => 'paypal_code',
+            'label' => __('Paypal code'),
             'visibleInTable' => false,
         ]);
 

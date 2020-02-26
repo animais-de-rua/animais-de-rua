@@ -8,7 +8,6 @@ use App\Http\Requests\PartnerRequest as StoreRequest;
 use App\Http\Requests\PartnerRequest as UpdateRequest;
 use App\Models\Partner;
 use App\Models\Territory;
-use App\User;
 use DB;
 use Illuminate\Http\Request;
 
@@ -39,7 +38,7 @@ class PartnerCrudController extends CrudController
         */
 
         // ------ CRUD COLUMNS
-        $this->crud->setColumns(['image', 'name', 'url', 'categories', 'territories', 'promo_code', 'status', 'user_id']);
+        $this->crud->setColumns(['image', 'name', 'url', 'categories', 'territories', 'promo_code', 'status']);
 
         $this->crud->setColumnDetails('image', [
             'name' => 'image',
@@ -63,14 +62,6 @@ class PartnerCrudController extends CrudController
         $this->crud->setColumnDetails('status', [
             'label' => __('Status'),
             'type' => 'check',
-        ]);
-
-        $this->crud->setColumnDetails('user_id', [
-            'name' => 'user',
-            'label' => ucfirst(__('volunteer')),
-            'type' => 'model_function',
-            'limit' => 120,
-            'function_name' => 'getUserLinkAttribute',
         ]);
 
         $this->crud->setColumnDetails('categories', [
@@ -97,56 +88,67 @@ class PartnerCrudController extends CrudController
 
         $this->crud->addColumn([
             'name' => 'description',
+            'label' => __('Description'),
             'visibleInTable' => false,
         ]);
 
         $this->crud->addColumn([
             'name' => 'benefit',
+            'label' => __('Benefit'),
             'visibleInTable' => false,
         ]);
 
         $this->crud->addColumn([
             'name' => 'phone1',
+            'label' => __('Phone'),
             'visibleInTable' => false,
         ]);
 
         $this->crud->addColumn([
             'name' => 'phone1_info',
+            'label' => __('Phone') . ' (' . __('Infos') . ')',
             'visibleInTable' => false,
         ]);
 
         $this->crud->addColumn([
             'name' => 'phone2',
+            'label' => __('Phone') . ' 2',
             'visibleInTable' => false,
         ]);
 
         $this->crud->addColumn([
             'name' => 'phone2_info',
+            'label' => __('Phone') . ' 2 (' . __('Infos') . ')',
             'visibleInTable' => false,
         ]);
 
         $this->crud->addColumn([
             'name' => 'facebook',
+            'label' => 'Facebook',
             'visibleInTable' => false,
         ]);
 
         $this->crud->addColumn([
             'name' => 'instagram',
+            'label' => 'Instagram',
             'visibleInTable' => false,
         ]);
 
         $this->crud->addColumn([
             'name' => 'address',
+            'label' => __('Address'),
             'visibleInTable' => false,
         ]);
 
         $this->crud->addColumn([
             'name' => 'address_info',
+            'label' => __('Address') . ' (' . __('Infos') . ')',
             'visibleInTable' => false,
         ]);
 
         $this->crud->addColumn([
             'name' => 'notes',
+            'label' => __('Notes'),
             'visibleInTable' => false,
         ]);
 
@@ -316,17 +318,6 @@ class PartnerCrudController extends CrudController
                     $ids->orWhere('partner_category_list_id', 'LIKE', "$value%");
                 }
                 $this->crud->query->whereIn('id', $ids->pluck('partner_id')->toArray());
-            });
-
-        $this->crud->addFilter([
-            'name' => 'user',
-            'type' => 'select2_ajax',
-            'label' => ucfirst(__('volunteer')),
-            'placeholder' => __('Select a volunteer'),
-        ],
-            url('admin/user/ajax/filter/' . User::ROLE_VOLUNTEER),
-            function ($value) {
-                $this->crud->addClause('where', 'user_id', $value);
             });
 
         $this->crud->addFilter([

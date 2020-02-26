@@ -79,21 +79,25 @@ class ProtocolRequestCrudController extends CrudController
 
         $this->crud->addColumn([
             'name' => 'email',
+            'label' => __('E-Mail Address'),
             'visibleInTable' => false,
         ]);
 
         $this->crud->addColumn([
             'name' => 'phone',
+            'label' => __('Phone'),
             'visibleInTable' => false,
         ]);
 
         $this->crud->addColumn([
             'name' => 'address',
+            'label' => __('Address'),
             'visibleInTable' => false,
         ]);
 
         $this->crud->addColumn([
             'name' => 'description',
+            'label' => __('Description'),
             'visibleInTable' => false,
         ]);
 

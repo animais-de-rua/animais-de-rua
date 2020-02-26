@@ -231,6 +231,13 @@ class AppointmentCrudController extends CrudController
             'type' => 'model_function',
             'limit' => 120,
             'function_name' => 'getProcessLinkAttribute',
+
+            'orderable' => true,
+            'orderLogic' => function ($query, $column, $direction) {
+                return $query->selectRaw('appointments.*')
+                    ->leftJoin('processes', 'processes.id', '=', 'appointments.process_id')
+                    ->orderBy('processes.name', $direction);
+            },
         ]);
 
         $this->crud->setColumnDetails('user_id', [
@@ -245,6 +252,13 @@ class AppointmentCrudController extends CrudController
             'type' => 'model_function',
             'limit' => 120,
             'function_name' => 'getVet1LinkAttribute',
+
+            'orderable' => true,
+            'orderLogic' => function ($query, $column, $direction) {
+                return $query->selectRaw('appointments.*')
+                    ->leftJoin('vets', 'vets.id', '=', 'appointments.vet_id_1')
+                    ->orderBy('vets.name', $direction);
+            },
         ]);
 
         $this->crud->setColumnDetails('date_1', [
@@ -257,6 +271,13 @@ class AppointmentCrudController extends CrudController
             'type' => 'model_function',
             'limit' => 120,
             'function_name' => 'getVet2LinkAttribute',
+
+            'orderable' => true,
+            'orderLogic' => function ($query, $column, $direction) {
+                return $query->selectRaw('appointments.*')
+                    ->leftJoin('vets', 'vets.id', '=', 'appointments.vet_id_2')
+                    ->orderBy('vets.name', $direction);
+            },
         ]);
 
         $this->crud->setColumnDetails('date_2', [
@@ -286,31 +307,37 @@ class AppointmentCrudController extends CrudController
 
         $this->crud->addColumn([
             'name' => 'notes_deliver',
+            'label' => __('Notes Deliver'),
             'visibleInTable' => false,
         ]);
 
         $this->crud->addColumn([
             'name' => 'notes_collect',
+            'label' => __('Notes Collect'),
             'visibleInTable' => false,
         ]);
 
         $this->crud->addColumn([
             'name' => 'notes_contact',
+            'label' => __('Notes Contact'),
             'visibleInTable' => false,
         ]);
 
         $this->crud->addColumn([
             'name' => 'notes_godfather',
+            'label' => __('Notes Godfather'),
             'visibleInTable' => false,
         ]);
 
         $this->crud->addColumn([
             'name' => 'notes_info',
+            'label' => __('Notes Info'),
             'visibleInTable' => false,
         ]);
 
         $this->crud->addColumn([
             'name' => 'notes',
+            'label' => __('Notes'),
             'visibleInTable' => false,
         ]);
 

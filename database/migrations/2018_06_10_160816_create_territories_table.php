@@ -17,7 +17,6 @@ class CreateTerritoriesTable extends Migration
             $table->string('id', 6)->primary();
             $table->string('name', 127);
             $table->enum('level', [1, 2, 3]);
-            $table->string('sf', 4)->nullable();
             $table->string('parent_id', 6)->nullable();
 
             $table->index(['id']);

@@ -216,6 +216,13 @@ class ProcessCrudController extends CrudController
             'entity' => 'headquarter',
             'attribute' => 'name',
             'model' => "App\Models\Headquarter",
+
+            'orderable' => true,
+            'orderLogic' => function ($query, $column, $direction) {
+                return $query->select('processes.*')
+                    ->leftJoin('headquarters', 'headquarters.id', '=', 'processes.headquarter_id')
+                    ->orderBy('headquarters.name', $direction);
+            },
         ]);
 
         $this->crud->setColumnDetails('specie', [

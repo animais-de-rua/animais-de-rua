@@ -174,6 +174,13 @@ class DonationCrudController extends CrudController
             'type' => 'model_function',
             'limit' => 120,
             'function_name' => 'getGodfatherLinkAttribute',
+
+            'orderable' => true,
+            'orderLogic' => function ($query, $column, $direction) {
+                return $query->select('donations.*')
+                    ->leftJoin('godfathers', 'godfathers.id', '=', 'donations.godfather_id')
+                    ->orderBy('godfathers.name', $direction);
+            },
         ]);
 
         $this->crud->setColumnDetails('headquarter_id', [
@@ -181,6 +188,13 @@ class DonationCrudController extends CrudController
             'type' => 'model_function',
             'limit' => 120,
             'function_name' => 'getHeadquarterLinkAttribute',
+
+            'orderable' => true,
+            'orderLogic' => function ($query, $column, $direction) {
+                return $query->select('donations.*')
+                    ->leftJoin('headquarters', 'headquarters.id', '=', 'donations.headquarter_id')
+                    ->orderBy('headquarters.name', $direction);
+            },
         ]);
 
         $this->crud->setColumnDetails('protocol_id', [
@@ -188,6 +202,13 @@ class DonationCrudController extends CrudController
             'type' => 'model_function',
             'limit' => 120,
             'function_name' => 'getProtocolLinkAttribute',
+
+            'orderable' => true,
+            'orderLogic' => function ($query, $column, $direction) {
+                return $query->selectRaw('donations.*')
+                    ->leftJoin('protocols', 'protocols.id', '=', 'donations.protocol_id')
+                    ->orderBy('protocols.name', $direction);
+            },
         ]);
 
         $this->crud->setColumnDetails('process_id', [
@@ -195,6 +216,13 @@ class DonationCrudController extends CrudController
             'type' => 'model_function',
             'limit' => 120,
             'function_name' => 'getProcessLinkAttribute',
+
+            'orderable' => true,
+            'orderLogic' => function ($query, $column, $direction) {
+                return $query->selectRaw('donations.*')
+                    ->leftJoin('processes', 'processes.id', '=', 'donations.process_id')
+                    ->orderBy('processes.name', $direction);
+            },
         ]);
 
         $this->crud->setColumnDetails('value', [

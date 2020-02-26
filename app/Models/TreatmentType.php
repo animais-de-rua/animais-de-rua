@@ -56,24 +56,23 @@ class TreatmentType extends Model
 
     public function getTotalExpensesValue()
     {
-        $expenses = data_get_first($this, 'treatments', 'total_expenses', 0);
+        $expenses = $this->total_expenses ?: data_get_first($this, 'treatments', 'total_expenses', 0);
 
         return $expenses != 0 ? $expenses . '€' : '-';
     }
 
     public function getTotalOperationsValue()
     {
-        $operations = data_get_first($this, 'treatments', 'total_operations', 0);
+        $operations = $this->total_operations ?: data_get_first($this, 'treatments', 'total_operations', 0);
 
         return $operations != 0 ? $operations : '-';
     }
 
     public function getOperationsAverageValue()
     {
-        $expenses = data_get_first($this, 'treatments', 'total_expenses', 0);
-        $operations = data_get_first($this, 'treatments', 'total_operations', 0);
+        $average = $this->average ?: data_get_first($this, 'treatments', 'average', 0);
 
-        return $operations > 0 ? number_format($expenses / $operations, 2) . '€' : '-';
+        return $average > 0 ? number_format($average, 2) . '€' : '-';
     }
 
     /*

@@ -60,6 +60,12 @@ class TreatmentCrudController extends CrudController
             'entity' => 'treatment_type',
             'attribute' => 'name',
             'model' => "App\Models\TreatmentType",
+            'orderable' => true,
+            'orderLogic' => function ($query, $column, $direction) {
+                return $query->select('treatments.*')
+                    ->leftJoin('treatment_types', 'treatments.treatment_type_id', '=', 'treatment_types.id')
+                    ->orderBy('treatment_types.name', $direction);
+            },
         ]);
 
         $this->crud->setColumnDetails('vet', [
@@ -68,6 +74,13 @@ class TreatmentCrudController extends CrudController
             'type' => 'model_function',
             'limit' => 120,
             'function_name' => 'getVetLinkAttribute',
+
+            'orderable' => true,
+            'orderLogic' => function ($query, $column, $direction) {
+                return $query->selectRaw('treatments.*')
+                    ->leftJoin('vets', 'vets.id', '=', 'treatments.vet_id')
+                    ->orderBy('vets.name', $direction);
+            },
         ]);
 
         $this->crud->setColumnDetails('status', [
@@ -106,6 +119,7 @@ class TreatmentCrudController extends CrudController
 
         $this->crud->addColumn([
             'name' => 'notes',
+            'label' => __('Notes'),
             'visibleInTable' => false,
         ]);
 
@@ -196,6 +210,9 @@ class TreatmentCrudController extends CrudController
             'attribute' => 'name',
             'model' => "App\Models\TreatmentType",
             'attributes' => $attributes,
+            'options' => (function ($query) {
+                return $query->orderBy('name', 'ASC')->get();
+            }),
         ]);
 
         // Animals

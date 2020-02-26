@@ -20,6 +20,7 @@ class CreateFatsTable extends Migration
             $table->string('phone', 255)->nullable();
             $table->string('territory_id', 6)->nullable();
             $table->integer('user_id')->nullable()->unsigned();
+            $table->text('notes')->nullable();
 
             $table->index(['territory_id']);
             $table->foreign('territory_id')

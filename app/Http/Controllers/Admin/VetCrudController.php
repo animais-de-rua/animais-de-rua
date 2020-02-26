@@ -84,6 +84,7 @@ class VetCrudController extends CrudController
 
         $this->crud->addColumn([
             'name' => 'address',
+            'label' => __('Address'),
             'visibleInTable' => false,
         ]);
 

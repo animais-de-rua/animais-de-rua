@@ -210,16 +210,19 @@ class StoreOrderCrudController extends CrudController
 
         $this->crud->addColumn([
             'name' => 'address',
+            'label' => __('Address'),
             'visibleInTable' => false,
         ]);
 
         $this->crud->addColumn([
             'name' => 'receipt',
+            'label' => __('Receipt'),
             'visibleInTable' => false,
         ]);
 
         $this->crud->addColumn([
             'name' => 'notes',
+            'label' => __('Notes'),
             'visibleInTable' => false,
         ]);
 

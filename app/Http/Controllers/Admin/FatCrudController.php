@@ -87,6 +87,12 @@ class FatCrudController extends CrudController
             ]);
         }
 
+        $this->crud->addField([
+            'label' => __('Notes'),
+            'name' => 'notes',
+            'type' => 'textarea',
+        ]);
+
         $this->separator();
 
         // ------ CRUD COLUMNS
@@ -114,6 +120,13 @@ class FatCrudController extends CrudController
             'type' => 'model_function',
             'limit' => 120,
             'function_name' => 'getUserLinkAttribute',
+
+            'orderable' => true,
+            'orderLogic' => function ($query, $column, $direction) {
+                return $query->selectRaw('fats.*')
+                    ->leftJoin('users', 'users.id', '=', 'fats.user_id')
+                    ->orderBy('users.name', $direction);
+            },
         ]);
 
         if (is('admin')) {
@@ -154,6 +167,9 @@ class FatCrudController extends CrudController
         }
 
         // ------ CRUD ACCESS
+        $this->crud->enableDetailsRow();
+        $this->crud->allowAccess('details_row');
+
         if (!is('admin', 'adoptions')) {
             $this->crud->denyAccess(['list', 'create', 'update']);
         }
@@ -177,6 +193,15 @@ class FatCrudController extends CrudController
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
     }
 
+    public function showDetailsRow($id)
+    {
+        $fat = Fat::select(['notes'])->find($id);
+
+        return "<div style='margin:5px 8px'>
+                <p style='white-space: pre-wrap;'><i>" . __('Notes') . "</i>: $fat->notes</p>
+            </div>";
+    }
+
     public function store(StoreRequest $request)
     {
         // Add user
@@ -196,8 +221,8 @@ class FatCrudController extends CrudController
         // Add headquarters
         $headquarters = restrictToHeadquarters();
         if (!$request->headquarters && $headquarters) {
-            $fat_id = \DB::getPdo()->lastInsertId();
-            Fat::find($fat_id)->headquarters()->attach($headquarters);
+            $fat = $this->crud->entry;
+            $fat->headquarters()->attach($headquarters);
         }
 
         return $store;
