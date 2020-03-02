@@ -107,4 +107,12 @@ $territories = [
     'status' => EnumHelper::values('adoption.status'),
 ])
 
+
+{{-- Abandoned Animals --}}
+@include('admin.reports.abandoned_animals', [
+    'headquarters' => $headquarters,
+    'territories' => $territories,
+    'protocols' => $protocols,
+])
+
 @endsection
