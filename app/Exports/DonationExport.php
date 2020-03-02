@@ -98,6 +98,7 @@ class DonationExport extends Export implements FromCollection, WithHeadings
             ORDER BY $orderColumn $orderDirection";
 
         // Add Limit
+        $this->setLimit(6);
         $query .= $this->appendLimit();
 
         // Collect results

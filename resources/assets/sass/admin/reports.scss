@@ -1,6 +1,8 @@
 .report {
-    &.row {
-        display: flex;
+    display: flex;
+
+    .config {
+        width: 100%;
     }
 
     .form-control {
@@ -58,6 +60,7 @@
     .preview {
         display: none;
         width: 100%;
+        padding-left: 15px;
 
         .close {
             position: absolute;
@@ -91,7 +94,7 @@
 
     &.active {
         .preview {
-            display: block;
+            display: grid;
         }
 
         & > .col-md-12 {

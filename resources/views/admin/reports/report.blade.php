@@ -1,5 +1,5 @@
-<div class="row report">
-    <div class="col-md-12">
+<div class="report">
+    <div class="config">
         <div class="box">
             <div class="box-header with-border">
                 <div class="box-title">{{ ucfirst($title) }}</div>
@@ -52,7 +52,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6 preview">
+    <div class="preview">
         <div class="box">
             <div class="close">×</div>
             <div class="box-body table-responsive">

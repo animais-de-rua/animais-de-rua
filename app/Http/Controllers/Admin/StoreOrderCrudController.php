@@ -430,7 +430,7 @@ class StoreOrderCrudController extends CrudController
 
         foreach ($products as $product) {
             // Ignore repeated entries
-            if ($product->pivot && $product->pivot->store_product_id && !in_array($product->pivot->store_product_id, $store_product_ids)) {
+            if (isset($product->pivot) && isset($product->pivot->store_product_id) && !in_array($product->pivot->store_product_id, $store_product_ids)) {
                 array_push($store_product_ids, $product->pivot->store_product_id);
 
                 // Add to database

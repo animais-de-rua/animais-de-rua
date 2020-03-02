@@ -1,5 +1,5 @@
 @component('admin.reports.report', [
-        'title' => __('Abandoned Animals'),
+        'title' => __('Animals waiting intervention'),
         'action' => 'abandoned_animals',
     ])
 
