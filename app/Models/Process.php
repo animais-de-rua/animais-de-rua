@@ -42,6 +42,17 @@ class Process extends Model
         </a>';
     }
 
+    public function toggleContacted()
+    {
+        return '
+        <a href="#"
+            title="' . ($this->contacted ? __('Contacted') : __('Not yet contacted')) . '"
+            class="btn btn-xs btn-' . ($this->contacted ? 'success' : 'default') . '"
+            onclick="return toggleContacted(this, ' . $this->id . ')">
+        <i class="fa fa-phone"></i>
+        </a>';
+    }
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONS
@@ -222,6 +233,11 @@ class Process extends Model
     private function getExpenses()
     {
         return $this->treatments->reduce(function ($carry, $item) {return $carry + $item->expense;});
+    }
+
+    public function getApplicantAttribute()
+    {
+        return "$this->contact, $this->phone, $this->address";
     }
 
     private function colorizeValue($value)

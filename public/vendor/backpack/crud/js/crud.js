@@ -4,11 +4,8 @@
 *
 */
 
-approveAppointment = (elem, id, option) => {
-    if(!confirm(window.Laravel.translations.confirmApprove))
-        return false;
-
-    fetch('/admin/api/appointment/approve', {
+getFetchOptions = (body) => {
+    return {
         credentials: 'same-origin',
         headers: {
             'X-Requested-With': 'XMLHttpRequest',
@@ -16,11 +13,18 @@ approveAppointment = (elem, id, option) => {
             'Content-Type': 'application/json'
         },
         method: 'POST',
-        body: JSON.stringify({
-            'id': id,
-            'option': option,
-        }),
-    }).
+        body: JSON.stringify(body),
+    };
+}
+
+approveAppointment = (elem, id, option) => {
+    if(!confirm(window.Laravel.translations.confirmApprove))
+        return false;
+
+    fetch('/admin/api/appointment/approve', getFetchOptions({
+        'id': id,
+        'option': option,
+    })).
     then(response => response.json().then(data => {
         if(data.result) {
             let btn = elem.closest('div').querySelector('.btn');
@@ -40,18 +44,9 @@ approveTreatment = (btn, id, option) => {
     if(!confirm(window.Laravel.translations.confirmApprove))
         return false;
 
-    fetch('/admin/api/treatment/approve', {
-        credentials: 'same-origin',
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-            'X-CSRF-TOKEN': document.querySelector('[name="csrf-token"]').getAttribute('content'),
-            'Content-Type': 'application/json'
-        },
-        method: 'POST',
-        body: JSON.stringify({
-            'id': id
-        }),
-    }).
+    fetch('/admin/api/treatment/approve', getFetchOptions({
+        'id': id
+    })).
     then(response => response.json().then(data => {
         if(data.result) {
             let status = btn.closest('tr').querySelector('.status');
@@ -60,6 +55,30 @@ approveTreatment = (btn, id, option) => {
             btn.classList.remove('btn-primary');
             btn.classList.add('btn-default');
             btn.setAttribute('disabled', true);
+        }
+    }));
+
+    return false;
+}
+
+toggleContacted = (btn, id) => {
+    if(!confirm(window.Laravel.translations.confirmContact))
+        return false;
+    
+    fetch('/admin/api/process/contact', getFetchOptions({
+        'id': id
+    })).
+    then(response => response.json().then(data => {
+        if (data.result !== null) {
+            if (data.result) {
+                btn.classList.remove('btn-default');
+                btn.classList.add('btn-success');
+                btn.title = window.Laravel.translations.contacted;
+            } else {
+                btn.classList.remove('btn-success');
+                btn.classList.add('btn-default')
+                btn.title = window.Laravel.translations.notContacted;
+            }
         }
     }));
 

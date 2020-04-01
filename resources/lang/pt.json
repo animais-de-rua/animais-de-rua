@@ -151,6 +151,7 @@
     "There must be at least one animal in the process, either male, female or undefined.": "Deve haver pelo menos um animal no processo, macho, fêmea ou indefinido.",
     "There are :total animals treated on this process, you can't update process animal count to a lower value than the treated animals.": "Existem :total animais tratados neste processo, não pode atualizar o número de animais para um valor abaixo do total de animais tratados.",
     "Are you sure you want to approve this item?": "Tem a certeza que quer aprovar este item?",
+    "Are you sure you want to toggle contact state of this process?": "Tem a certeza que quer alternar o estado de contactado deste processo?",
     "Select at least 3 pictures.": "Seleccione pelo menos 3 imagens.",
     "You must select at least one option on how you may collaborate.": "Tem de selecionar pelo menos uma opção sobre como pretende colaborar.",
 
@@ -291,6 +292,10 @@
     "All Categories": "Todas as categorias",
     "All Species": "Todas as espécies",
     "Add treatment": "Adicionar tratamento",
+    "Add appointment": "Adicionar marcação",
+    "Toggle contacted": "Alternar o estado de contactado",
+    "Contacted": "Contactado",
+    "Not yet contacted": "Ainda não contactado",
     "Add adopter": "Adicionar adoptante",
     "No treatments": "Sem tratamentos",
     "Archive": "Arquivo",

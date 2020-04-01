@@ -691,4 +691,12 @@ class APICrudController extends CrudController
         $treatment->status = 'approved';
         return ['result' => $treatment->save()];
     }
+
+    public function toggleProcessContacted()
+    {
+        $process = Process::find(request()->input('id'));
+        $process->contacted = !$process->contacted;
+        $status = $process->save();
+        return ['result' => $status ? $process->contacted : null];
+    }
 }

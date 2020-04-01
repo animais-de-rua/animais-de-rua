@@ -35,6 +35,7 @@ class CreateProcessesTable extends Migration
             $table->text('notes')->nullable();
             $table->text('latlong')->nullable();
             $table->text('images')->nullable();
+            $table->boolean('contacted')->default(0);
 
             $table->index(['headquarter_id']);
             $table->foreign('headquarter_id')

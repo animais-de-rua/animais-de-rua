@@ -181,7 +181,7 @@ class ProcessCrudController extends CrudController
         $this->crud->addField($this->tableStats());
 
         // ------ CRUD COLUMNS
-        $this->crud->addColumns(['id', 'name', 'headquarter_id', 'created_at', 'specie', 'animal_count', 'status', 'urgent', 'total_donations', 'total_expenses', 'balance', 'total_operations', 'user_id', 'territory_id', 'phone', 'contact', 'address', 'notes', 'history']);
+        $this->crud->addColumns(['id', 'name', 'headquarter_id', 'created_at', 'specie', 'animal_count', 'status', 'urgent', 'total_donations', 'total_expenses', 'balance', 'total_operations', 'user_id', 'territory_id', 'phone', 'contact', 'address', 'notes', 'history', 'applicant']);
 
         $this->crud->setColumnDetails('id', [
             'label' => 'ID',
@@ -282,6 +282,11 @@ class ProcessCrudController extends CrudController
             'function_name' => 'getUserLinkAttribute',
         ]);
 
+        $this->crud->setColumnDetails('applicant', [
+            'label' => __('Applicant'),
+            'limit' => 120,
+        ]);
+
         // For search proposes only
         $this->crud->setColumnDetails('notes', [
             'name' => 'notes',
@@ -345,6 +350,7 @@ class ProcessCrudController extends CrudController
 
         // Buttons
         $this->crud->addButtonFromModelFunction('line', 'add_appointment', 'addAppointment', 'beginning');
+        $this->crud->addButtonFromModelFunction('line', 'toggle_contacted', 'toggleContacted', 'beginning');
 
         // Filtrers
         $this->crud->addFilter([

@@ -81,6 +81,7 @@ Route::group(['prefix' => config('backpack.base.route_prefix'), 'middleware' => 
     Route::get('{entity}/ajax/{action}/{arg1?}/{arg2?}', 'APICrudController@ajax');
     Route::post('api/appointment/approve', 'APICrudController@approveAppointment');
     Route::post('api/treatment/approve', 'APICrudController@approveTreatment');
+    Route::post('api/process/contact', 'APICrudController@toggleProcessContacted');
 
     Route::post('dropzone/{column}/{entity}/{thumb}/{size}/{quality}', 'CrudController@handleDropzoneUploadRaw');
     Route::post('dropzone/{column}/{entity}/remove', 'CrudController@handleDropzoneRemoveRaw');

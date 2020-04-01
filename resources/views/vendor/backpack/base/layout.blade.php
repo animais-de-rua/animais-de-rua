@@ -92,6 +92,9 @@
             approved: '{{ __('approved') }}',
             approved_option_1: '{{ __('approved_option_1') }}',
             approved_option_2: '{{ __('approved_option_2') }}',
+            confirmContact: '{{ __('Are you sure you want to toggle contact state of this process?') }}',
+            contacted: '{{ __('Contacted') }}',
+            notContacted: '{{ __('Not yet contacted') }}',
           }
         }
     </script>
