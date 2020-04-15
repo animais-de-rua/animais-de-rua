@@ -20,7 +20,7 @@ Thank you for considering contributing to the this platform! Feel free to open i
 
 ## Security Vulnerabilities
 
-If you discover a security vulnerability within this platform, please send an e-mail to Toni Almeida via [promatik@gmail.com](mailto:promatik@gmail.com). All security vulnerabilities will be promptly addressed.
+If you discover a security vulnerability within this platform, please send an e-mail to António Almeida [promatik@gmail.com](mailto:promatik@gmail.com). All security vulnerabilities will be promptly addressed.
 
 
 ## License
