@@ -356,6 +356,19 @@ class AppointmentCrudController extends CrudController
                 $this->crud->addClause('where', 'process_id', $value);
             });
 
+        $this->crud->addFilter([
+            'name' => 'headquarter',
+            'type' => 'select2_ajax',
+            'label' => ucfirst(__('headquarter')),
+            'placeholder' => __('Select a headquarter'),
+        ],
+            url('admin/headquarter/ajax/filter'),
+            function ($value) {
+                $this->crud->addClause('whereHas', 'process', function ($query) use ($value) {
+                    $query->where('headquarter_id', $value);
+                })->get();
+            });
+
         if (is('admin', 'appointments')) {
             $this->crud->addFilter([
                 'name' => 'user',
