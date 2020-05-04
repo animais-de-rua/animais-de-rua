@@ -4,17 +4,104 @@ namespace App\Http\Controllers\Admin;
 
 use App\Helpers\EnumHelper;
 use App\Http\Controllers\Admin\Traits\Permissions;
+use App\Http\Requests\UserStoreRequest as StoreRequest;
+use App\Http\Requests\UserUpdateRequest as UpdateRequest;
 use App\User;
-use Backpack\PermissionManager\app\Http\Controllers\UserCrudController as OriginalUserCrudController;
+use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
-class UserCrudController extends OriginalUserCrudController
+class UserCrudController extends CrudController
 {
     use Permissions;
 
     public function setup()
     {
-        parent::setup();
+        $this->crud->setModel(config('backpack.permissionmanager.models.user'));
+        $this->crud->setEntityNameStrings(trans('backpack::permissionmanager.user'), trans('backpack::permissionmanager.users'));
+        $this->crud->setRoute(backpack_url('user'));
+
+        // Original Columns
+        $this->crud->setColumns([
+            [
+                'name' => 'name',
+                'label' => trans('backpack::permissionmanager.name'),
+                'type' => 'text',
+            ],
+            [
+                'name' => 'email',
+                'label' => trans('backpack::permissionmanager.email'),
+                'type' => 'email',
+            ],
+            [
+                'label' => trans('backpack::permissionmanager.roles'),
+                'type' => 'select_multiple',
+                'name' => 'roles',
+                'entity' => 'roles',
+                'attribute' => 'name',
+                'model' => config('permission.models.role'),
+            ],
+            [
+                'label' => trans('backpack::permissionmanager.extra_permissions'),
+                'type' => 'select_multiple',
+                'name' => 'permissions',
+                'entity' => 'permissions',
+                'attribute' => 'name',
+                'model' => config('permission.models.permission'),
+            ],
+        ]);
+
+        // Original Fields
+        $this->crud->addFields([
+            [
+                'name' => 'name',
+                'label' => trans('backpack::permissionmanager.name'),
+                'type' => 'text',
+            ],
+            [
+                'name' => 'email',
+                'label' => trans('backpack::permissionmanager.email'),
+                'type' => 'email',
+            ],
+            [
+                'name' => 'password',
+                'label' => trans('backpack::permissionmanager.password'),
+                'type' => 'password',
+            ],
+            [
+                'name' => 'password_confirmation',
+                'label' => trans('backpack::permissionmanager.password_confirmation'),
+                'type' => 'password',
+            ],
+            [
+                'label' => trans('backpack::permissionmanager.user_role_permission'),
+                'field_unique_name' => 'user_role_permission',
+                'type' => 'checklist_dependency',
+                'name' => 'roles_and_permissions',
+                'subfields' => [
+                    'primary' => [
+                        'label' => trans('backpack::permissionmanager.roles'),
+                        'name' => 'roles',
+                        'entity' => 'roles',
+                        'entity_secondary' => 'permissions',
+                        'attribute' => 'name',
+                        'model' => config('permission.models.role'),
+                        'pivot' => true,
+                        'number_columns' => 3,
+                    ],
+                    'secondary' => [
+                        'label' => ucfirst(trans('backpack::permissionmanager.permission_singular')),
+                        'name' => 'permissions',
+                        'entity' => 'permissions',
+                        'entity_primary' => 'roles',
+                        'attribute' => 'name',
+                        'model' => config('permission.models.permission'),
+                        'pivot' => true,
+                        'number_columns' => 3,
+                    ],
+                ],
+            ],
+        ]);
 
         // Fields
         $this->crud->addField([
@@ -49,11 +136,13 @@ class UserCrudController extends OriginalUserCrudController
             'model' => 'App\Models\FriendCardModality',
         ])->afterField('headquarters');
 
-        $this->crud->addField([
-            'label' => __('Notes'),
-            'type' => 'textarea',
-            'name' => 'notes',
-        ])->afterField('friend_card_modality_id');
+        if (is('admin')) {
+            $this->crud->addField([
+                'label' => __('Notes'),
+                'type' => 'textarea',
+                'name' => 'notes',
+            ])->afterField('friend_card_modality_id');
+        }
 
         $this->crud->addColumn([
             'label' => ucfirst(__('headquarter')),
@@ -166,13 +255,30 @@ class UserCrudController extends OriginalUserCrudController
 
         // ------ CRUD ACCESS
         if (!is(['admin', 'friend card'])) {
-            $this->crud->denyAccess(['list', 'create']);
+            $this->crud->denyAccess(['list', 'create', 'update']);
         }
 
         if (!is('admin')) {
-            $this->crud->denyAccess(['update', 'delete']);
+            $this->crud->denyAccess(['delete']);
 
             $this->crud->removeField('roles_and_permissions');
+            $this->crud->removeField('password');
+            $this->crud->removeField('password_confirmation');
+
+            $hiddenAttr = [
+                'type' => 'hidden',
+            ];
+
+            $disabledAttr = [
+                'attributes' => [
+                    'disabled' => 'disabled',
+                ],
+            ];
+
+            $this->crud->modifyField('name', $disabledAttr, 'update');
+            $this->crud->modifyField('email', $disabledAttr, 'update');
+            $this->crud->modifyField('phone', $disabledAttr, 'update');
+            $this->crud->modifyField('headquarters', $disabledAttr, 'update');
 
             if (is('friend card')) {
                 $this->crud->addClause('whereNotNull', 'friend_card_modality_id');
@@ -212,6 +318,35 @@ class UserCrudController extends OriginalUserCrudController
     {
         if (admin()) {
             echo symlink(base_path() . $request->input('target'), base_path() . $request->input('link')) ? 'Success' : 'Error';
+        }
+    }
+
+    public function store(StoreRequest $request)
+    {
+        $this->handleInputs($request);
+
+        return parent::storeCrud($request);
+    }
+
+    public function update(UpdateRequest $request)
+    {
+        $this->handleInputs($request);
+
+        return parent::updateCrud($request);
+    }
+
+    protected function handleInputs(Request $request)
+    {
+        // Remove fields not present on the user.
+        $request->request->remove('password_confirmation');
+        $request->request->remove('roles_show');
+        $request->request->remove('permissions_show');
+
+        // Encrypt password if specified.
+        if ($request->input('password')) {
+            $request->request->set('password', Hash::make($request->input('password')));
+        } else {
+            $request->request->remove('password');
         }
     }
 }

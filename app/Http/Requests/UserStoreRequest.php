@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
-class UserRequest extends Backpack\PermissionManager\app\Http\Requests\UserStoreCrudRequest
+use Backpack\PermissionManager\app\Http\Requests\UserStoreCrudRequest;
+
+class UserStoreRequest extends UserStoreCrudRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -12,7 +14,7 @@ class UserRequest extends Backpack\PermissionManager\app\Http\Requests\UserStore
     public function rules()
     {
         $rules = [
-            'email' => 'required|unique:' . config('permission.table_names.users', 'users') . ',email',
+            'email' => 'required|unique:users,email',
             'name' => 'required',
             'password' => 'required|confirmed',
         ];
