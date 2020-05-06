@@ -262,8 +262,6 @@ class UserCrudController extends CrudController
             $this->crud->denyAccess(['delete']);
 
             $this->crud->removeField('roles_and_permissions');
-            $this->crud->removeField('password');
-            $this->crud->removeField('password_confirmation');
 
             $hiddenAttr = [
                 'type' => 'hidden',
@@ -279,6 +277,8 @@ class UserCrudController extends CrudController
             $this->crud->modifyField('email', $disabledAttr, 'update');
             $this->crud->modifyField('phone', $disabledAttr, 'update');
             $this->crud->modifyField('headquarters', $disabledAttr, 'update');
+            $this->crud->modifyField('password', $disabledAttr, 'update');
+            $this->crud->modifyField('password_confirmation', $disabledAttr, 'update');
 
             if (is('friend card')) {
                 $this->crud->addClause('whereNotNull', 'friend_card_modality_id');
