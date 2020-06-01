@@ -136,13 +136,11 @@ class UserCrudController extends CrudController
             'model' => 'App\Models\FriendCardModality',
         ])->afterField('headquarters');
 
-        if (is('admin')) {
-            $this->crud->addField([
-                'label' => __('Notes'),
-                'type' => 'textarea',
-                'name' => 'notes',
-            ])->afterField('friend_card_modality_id');
-        }
+        $this->crud->addField([
+            'label' => __('Notes'),
+            'type' => 'textarea',
+            'name' => 'notes',
+        ])->afterField('friend_card_modality_id');
 
         $this->crud->addColumn([
             'label' => ucfirst(__('headquarter')),
