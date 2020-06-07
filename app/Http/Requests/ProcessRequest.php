@@ -74,10 +74,11 @@ class ProcessRequest extends FormRequest
     {
         $validator->after(function ($validator) {
 
-            // Validate Process balance as positive before close or archive it
+            // Validations before close or archive
             if (in_array($this->input('status'), ['archived', 'closed'])) {
                 $id = $this->input('id');
 
+                // Validate process balance as positive
                 $process = Process::with(['donations' => function ($query) use ($id) {
                     $query->selectRaw('process_id, sum(value) as total_donations')->where('process_id', $id);
                 }])->with(['treatments' => function ($query) use ($id) {
@@ -90,6 +91,12 @@ class ProcessRequest extends FormRequest
                         'balance' => $process->getBalance(),
                     ]));
                 }
+
+                // Validate no open treatments
+                if (Process::find($id)->treatments->where('status', 'approving')->count() > 0) {
+                    $validator->errors()->add('status', __('There are some unapproved treatments, you must approve those treatments first.'));
+                }
+
             }
 
             // Validate one animal at least
