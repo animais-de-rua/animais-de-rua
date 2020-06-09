@@ -160,12 +160,17 @@
                 @if($partner->phone2)
                 <p><a target="_blank" href="tel:{{ preg_replace( '/[^0-9\+]/', '', $partner->phone2) }}">{{ preg_replace( '/\+[0-9]{1,3}\s?/', '', $partner->phone2) }}</a> <span class="details">{{ $partner->phone2_info }}</span></p>
                 @endif
-                @if($partner->facebook)
-                <p><a target="_blank" href="{{ $partner->facebook }}">{{ __("Facebook") }}</a></p>
-                @endif
                 @if($partner->url)
                 <p><a class="ellipsis" target="_blank" href="{{ $partner->url }}">{{ preg_replace("/(https?:\/\/)|(\/$)|(www.)/", "", $partner->url) }}</a></p>
                 @endif
+                <p>
+                @if($partner->facebook)
+                <a target="_blank" href="{{ $partner->facebook }}" style="margin-right: 2px;"><i class="icon icon-facebook"></i></a>
+                @endif
+                @if($partner->instagram)
+                <a target="_blank" href="{{ $partner->instagram }}"><i class="icon icon-instagram"></i></a>
+                @endif
+                </p>
                 @if($partner->address)
                 <hr />
                 <a target="_blank" href="https://maps.google.com/?q={{ $partner->address }}"><p class="address">{{ $partner->address }} <span class="details">{{ $partner->address_info }}</span></p></a>

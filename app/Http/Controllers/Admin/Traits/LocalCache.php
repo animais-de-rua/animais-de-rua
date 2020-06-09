@@ -155,9 +155,8 @@ trait LocalCache
 
     public static function partners()
     {
-        Cache::forget('partners');
         return Cache::rememberForever('partners', function () {
-            $partners = Partner::select(['id', 'name', 'image', 'benefit', 'email', 'url', 'facebook', 'phone1', 'phone1_info', 'phone2', 'phone2_info', 'address', 'address_info', 'promo_code'])
+            $partners = Partner::select(['id', 'name', 'image', 'benefit', 'email', 'url', 'facebook', 'instagram', 'phone1', 'phone1_info', 'phone2', 'phone2_info', 'address', 'address_info', 'promo_code'])
                 ->with([
                     'territories' => function ($query) {
                         $query->select(['id', 'name']);
