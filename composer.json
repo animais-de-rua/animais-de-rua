@@ -5,7 +5,7 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": "^7.2",
+        "php": "^7.3",
         "backpack/backupmanager": "^1.3",
         "backpack/base": "^1.0",
         "backpack/crud": "^3.5",
@@ -23,6 +23,7 @@
         "laravel/tinker": "^1.0",
         "maatwebsite/excel": "^3.1",
         "mpdf/mpdf": "^8.0",
+        "pixelpeter/laravel5-woocommerce-api-client": "3.0",
         "prestashop/prestashop-webservice-lib": "dev-master",
         "spatie/laravel-cookie-consent": "^2.4",
         "spatie/laravel-newsletter": "^4.2",

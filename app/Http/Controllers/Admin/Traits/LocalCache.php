@@ -98,7 +98,7 @@ trait LocalCache
     public static function products()
     {
         return Cache::rememberForever('products', function () {
-            return app('App\Http\Controllers\PrestaShopController')->getProducts();
+            return app('App\Http\Controllers\WooCommerceController')->getProducts();
         });
     }
 

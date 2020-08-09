@@ -23,7 +23,7 @@
                 @endcomponent
             </div>
 
-            <a href="{{ url('/store') }}">
+            <a href="{{ url('https://shop.animaisderua.org/') }}">
                 <div class="card" onclick="app.track('ViewContent', {'card': 'store'})">
                     <div class="icon icon-cart"></div>
                     <p>{{ __("Store") }}</p>
@@ -63,7 +63,7 @@
                 <li><a class="link" href="/animals">{{ __("Animals") }}</a></li>
                 <li><a class="link" href="/help">{{ __("Help") }}</a></li>
                 <li><a class="link" href="/partners">{{ __("Partners") }}</a></li>
-                <li><a class="link" href="/store">{{ __("Store") }}</a></li>
+                <li><a class="link" href="https://shop.animaisderua.org/">{{ __("Store") }}</a></li>
             </ul>
 
             <div class="cards">

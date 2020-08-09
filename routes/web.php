@@ -19,6 +19,11 @@ Route::get('{lang}/{subs?}', function () {
     return Redirect::to('/', 301);
 })->where(['lang' => '^(en|pt)$', 'subs' => '.*']);
 
+// Old store routes
+Route::get('{store}', function () {
+    return Redirect::to('https://shop.animaisderua.org/', 301);
+})->where(['store' => '^(store|shop|loja)$']);
+
 // Auth
 Auth::routes();
 

@@ -173,6 +173,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Spatie\CookieConsent\CookieConsentServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        Pixelpeter\Woocommerce\WoocommerceServiceProvider::class,
 
     ],
 
@@ -223,6 +224,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'Woocommerce' => Pixelpeter\Woocommerce\Facades\Woocommerce::class,
 
     ],
 
