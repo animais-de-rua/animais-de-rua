@@ -403,7 +403,7 @@ class AppointmentCrudController extends CrudController
             false,
             function ($value) {
                 $dates = json_decode($value);
-                $this->crud->query->whereRaw('((date_1 >= ? AND date_1 <= DATE_ADD(?, INTERVAL 1 DAY)) OR (date_2 >= ? AND date_2 <= DATE_ADD(?, INTERVAL 1 DAY)))',
+                $this->crud->query->whereRaw('((date_1 >= ? AND date_1 <= ?) OR (date_2 >= ? AND date_2 <= ?))',
                     [$dates->from, $dates->to, $dates->from, $dates->to]);
             });
 

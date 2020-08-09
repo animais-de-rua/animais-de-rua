@@ -465,7 +465,7 @@ class AdoptionCrudController extends CrudController
             false,
             function ($value) {
                 $dates = json_decode($value);
-                $this->crud->query->whereRaw('adoption_date >= ? AND adoption_date <= DATE_ADD(?, INTERVAL 1 DAY)', [$dates->from, $dates->to]);
+                $this->crud->query->whereRaw('adoption_date >= ? AND adoption_date <= ?', [$dates->from, $dates->to]);
             });
 
         $this->crud->addFilter([

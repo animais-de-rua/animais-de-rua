@@ -263,7 +263,7 @@ class StoreOrderCrudController extends CrudController
             false,
             function ($value) {
                 $dates = json_decode($value);
-                $this->crud->query->whereRaw('shipment_date >= ? AND shipment_date <= DATE_ADD(?, INTERVAL 1 DAY)', [$dates->from, $dates->to]);
+                $this->crud->query->whereRaw('shipment_date >= ? AND shipment_date <= ?', [$dates->from, $dates->to]);
             });
 
         $this->crud->addFilter([

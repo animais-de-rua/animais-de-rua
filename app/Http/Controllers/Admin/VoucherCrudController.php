@@ -170,7 +170,7 @@ class VoucherCrudController extends CrudController
             false,
             function ($value) {
                 $dates = json_decode($value);
-                $this->crud->query->whereRaw('expiration >= ? AND expiration <= DATE_ADD(?, INTERVAL 1 DAY)', [$dates->from, $dates->to]);
+                $this->crud->query->whereRaw('expiration >= ? AND expiration <= ?', [$dates->from, $dates->to]);
             });
 
         $this->crud->enableExportButtons();
