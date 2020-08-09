@@ -13,7 +13,6 @@
                     <div class="info-text">
                         <h1 class="label-title">{{ $page['association_title'] }}</h1>
                         <p>{!! $page['association_text'] !!}</p>
-                        <a href="/association" class="link lined">{{ $page['association_link'] }}</a>
                     </div>
                 </div>
             </div>
