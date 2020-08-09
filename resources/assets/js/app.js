@@ -559,7 +559,7 @@ window.modal = {
         _forms.queryAll('.form').forEach(e => e.hide());
         _forms.query('.form.godfather').show();
         _forms.query('.godfather h1').innerHTML = _forms.query('.godfather [name="process_name"]').value = query('#animals-view h1').innerText;
-        _forms.query('.godfather [name="process_id"]').value = window.location.href.match(/\d+$/)[0];
+        _forms.query('.godfather [name="process_id"]').value = (window.location.href.match(/\d+$/) || [0])[0];
 
         _forms.classList.add('open');
 

@@ -1,4 +1,4 @@
-const VERSION = '0.0.28';
+const VERSION = '0.0.29';
 const CACHE = 'adr';
 
 let cacheAssets = [
