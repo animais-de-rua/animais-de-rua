@@ -36,7 +36,6 @@ class StoreTransactionCrudController extends CrudController
         $this->crud->addColumns(['id', 'user_id', 'type', 'invoice', 'description']);
 
         $this->crud->setColumnDetails('user_id', [
-            'name' => 'user',
             'label' => ucfirst(__('volunteer')),
             'type' => 'model_function',
             'limit' => 120,
