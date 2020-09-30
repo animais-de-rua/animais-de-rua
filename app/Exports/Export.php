@@ -30,7 +30,7 @@ class Export
         // Parse all json fields
         foreach ($data as &$row) {
             foreach ($row as $key => $value) {
-                if ($value[0] === '{') {
+                if ($value && $value[0] === '{') {
                     $row->{$key} = json_decode($value)->{app()->getLocale()} ?? null;
                 }
             }
