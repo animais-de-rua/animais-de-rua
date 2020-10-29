@@ -7,19 +7,19 @@ const _loading = document.getElementById('loading'),
     _forms = document.getElementById('forms'),
     _fetchOptions = {
         credentials: 'same-origin',
-        headers: {'X-Requested-With': 'XMLHttpRequest'}
+        headers: { 'X-Requested-With': 'XMLHttpRequest' }
     };
 
-if('serviceWorker' in navigator) {
+if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js', { scope: '/' });
 }
 
 window.router = {
     init: e => {
-        window.history.pushState({'html': _content.innerHTML}, '', location.pathname);
+        window.history.pushState({ 'html': _content.innerHTML }, '', location.pathname);
 
         window.onpopstate = e => {
-            if(e.state) {
+            if (e.state) {
                 _content.innerHTML = e.state.html;
                 app.init();
             }
@@ -27,7 +27,7 @@ window.router = {
     },
 
     push: (content, urlPath) => {
-        window.history.pushState({'html': content}, '', urlPath);
+        window.history.pushState({ 'html': content }, '', urlPath);
     },
 
     initLinks: e => {
@@ -49,7 +49,7 @@ window.router = {
                 e.preventDefault();
 
                 // Always refresh cache
-                if(navigator.onLine) {
+                if (navigator.onLine) {
                     fetch(urlPath + "_updated", _fetchOptions).
                         then(responseUpdated => {
                             // Update view
@@ -68,7 +68,7 @@ window.router = {
                 // First content from cache
                 caches && caches.open('adr').then(cache => {
                     cache.match(urlPath).then(response => {
-                        if(response) {
+                        if (response) {
                             processResponse(response);
                         }
                     });
@@ -79,7 +79,7 @@ window.router = {
                     navbar.close();
 
                     response.text().then(html => {
-                        if(_content.innerHTML != html) {
+                        if (_content.innerHTML != html) {
                             _content.innerHTML = html;
                             app.init();
                         }
@@ -87,7 +87,7 @@ window.router = {
                         loading.end();
                         // _content.classList.add('anim');
 
-                        if(updateRoute) {
+                        if (updateRoute) {
                             router.push(html, urlPath.replace('?ajax', ''));
                         }
 
@@ -110,28 +110,28 @@ window.navbar = {
     init: e => {
         // Close navbar cards when clicking out of them
         _content.addEventListener('click', e => {
-            if(_navbar.query('.card.active'))
+            if (_navbar.query('.card.active'))
                 _navbar.query('.card.active').classList.remove('active');
         });
 
         // Simple Handler for touch on mobile menu
         _navbar.query('.swipeable').addEventListener('swipe', e => {
-            if(e.detail.y < 0 || e.detail.x > 0)
+            if (e.detail.y < 0 || e.detail.x > 0)
                 _navbar.query('.menu').click();
         });
     },
 
     close: e => {
-        if(_navbar.query('.mobile').classList.contains('active')) {
+        if (_navbar.query('.mobile').classList.contains('active')) {
             _navbar.query('.menu').click();
             // In case second menu is oppened
-            if(_navbar.query('.mobile').classList.contains('active'))
+            if (_navbar.query('.mobile').classList.contains('active'))
                 setTimeout(e => _navbar.query('.menu').click(), 250);
         }
     },
 
     onMobileMenuClick: e => {
-        if(_navbar.classList.contains('card-view'))
+        if (_navbar.classList.contains('card-view'))
             return _navbar.classList.remove('card-view');
 
         e.classList.toggle('active');
@@ -148,7 +148,7 @@ window.navbar = {
     },
 
     onCardClick: (e, i) => {
-        if(e.classList.contains('active'))
+        if (e.classList.contains('active'))
             return e.classList.remove('active');
 
         _navbar.queryAll('.cards > .card').forEach(card => card.classList.remove('active'));
@@ -164,7 +164,7 @@ window.navbar = {
 window.sliders = {
     boot: e => {
         // Window resize
-        window.addEventListener('resize', function() {
+        window.addEventListener('resize', function () {
             queryAll('.flex-slider').forEach(elem => sliders.resizePlayer(elem));
         }, true);
     },
@@ -193,7 +193,7 @@ window.sliders = {
 
             // Touch
             elem.addEventListener('swipe', e => {
-                if(e.detail.x)
+                if (e.detail.x)
                     sliders.swipe(elem, e.detail.x);
 
                 // Restart slider interval
@@ -205,9 +205,9 @@ window.sliders = {
     autoScroll: slider => {
         let scrollTimer = slider.getAttribute('auto-scroll');
 
-        if(scrollTimer) {
+        if (scrollTimer) {
             let interval = slider.getAttribute('interval');
-            if(interval)
+            if (interval)
                 clearInterval(interval);
 
             slider.setAttribute('interval', setInterval(e => sliders.play(slider), scrollTimer));
@@ -219,7 +219,7 @@ window.sliders = {
         let index = dots.query('.active').index();
 
         index++;
-        if(index == dots.children.length)
+        if (index == dots.children.length)
             index = 0;
 
         sliders.moveTo(slider, index);
@@ -229,7 +229,7 @@ window.sliders = {
         let dots = slider.query('.dots');
         let index = dots.query('.active').index();
 
-        if((index == 0 && direction < 0) || (index == dots.children.length - 1 && direction > 0))
+        if ((index == 0 && direction < 0) || (index == dots.children.length - 1 && direction > 0))
             return;
 
         index += direction;
@@ -251,7 +251,7 @@ window.sliders = {
 
     resizePlayer: slider => {
         let activeDot = slider.query('.dots').query('.active');
-        if(activeDot) {
+        if (activeDot) {
             let index = activeDot ? activeDot.index() : 0;
             let ul = slider.query('ul');
             ul.style.height = ul.children[index].clientHeight + "px";
@@ -275,7 +275,7 @@ window.isotope = {
                 let isotope = e.target.closest('.isotope');
 
                 isotope.queryAll('select').forEach(select => {
-                    if(select.value)
+                    if (select.value)
                         filters.push('[' + select.getAttribute('type') + '~="' + select.value + '"]');
                 });
 
@@ -283,7 +283,7 @@ window.isotope = {
                 isotope.queryAll('.box' + filters.join('')).forEach(box => box.classList.add('active'));
 
                 let empty = isotope.query('.empty');
-                if(empty) empty.display(!isotope.queryAll('.box.active').length);
+                if (empty) empty.display(!isotope.queryAll('.box.active').length);
             });
         });
     }
@@ -298,7 +298,7 @@ window.swipeable = {
     init: e => {
         queryAll('.swipeable').forEach(elem => {
             let startTouch;
-            elem.addEventListener('touchstart', e => startTouch = e.changedTouches[0], {passive: true});
+            elem.addEventListener('touchstart', e => startTouch = e.changedTouches[0], { passive: true });
             elem.addEventListener('touchend', e => {
                 let [dx, dy] = [
                     e.changedTouches[0].clientX - startTouch.clientX,
@@ -308,12 +308,14 @@ window.swipeable = {
                 dx = Math.abs(dx) > 120 ? (dx > 0 ? -1 : 1) : 0;
                 dy = Math.abs(dy) > 120 ? (dy > 0 ? -1 : 1) : 0;
 
-                if(dx | dy)
-                    elem.dispatchEvent(new CustomEvent('swipe', {'detail': {
-                        'x': dx,
-                        'y': dy
-                    }}));
-            }, {passive: true});
+                if (dx | dy)
+                    elem.dispatchEvent(new CustomEvent('swipe', {
+                        'detail': {
+                            'x': dx,
+                            'y': dy
+                        }
+                    }));
+            }, { passive: true });
 
             // Touchable
             elem.queryAll('.touchable').forEach(touchable => {
@@ -332,32 +334,32 @@ window.swipeable = {
                 touchable.addEventListener('touchstart', e => {
                     touchable.style.setProperty('transition', 'initial');
                     startDrag = e.changedTouches[0];
-                }, {passive: true});
+                }, { passive: true });
 
                 touchable.addEventListener('touchmove', e => {
                     let [dx, dy] = [
                         Math.round(e.changedTouches[0].clientX - startDrag.clientX),
                         Math.round(e.changedTouches[0].clientY - startDrag.clientY)
                     ];
-                    
+
                     /*if(Math.abs(dx) > 32 || Math.abs(dy) > 32)
                         e.preventDefault();*/
 
                     // Normalize values
-                    if(range.min.x && dx < range.min.x) dx = range.min.x;
-                    if(range.max.x && dx > range.max.x) dx = range.max.x;
-                    if(range.min.y && dy < range.min.y) dy = range.min.y;
-                    if(range.max.y && dy > range.max.y) dy = range.max.y;
+                    if (range.min.x && dx < range.min.x) dx = range.min.x;
+                    if (range.max.x && dx > range.max.x) dx = range.max.x;
+                    if (range.min.y && dy < range.min.y) dy = range.min.y;
+                    if (range.max.y && dy > range.max.y) dy = range.max.y;
 
                     touchable.style.setProperty('--x', dx + 'px');
                     touchable.style.setProperty('--y', dy + 'px');
-                }, {passive: true});
+                }, { passive: true });
 
                 touchable.addEventListener('touchend', e => {
                     touchable.style.removeProperty('transition');
                     touchable.style.setProperty('--x', '0px');
                     touchable.style.setProperty('--y', '0px');
-                }, {passive: true});
+                }, { passive: true });
             });
         });
     }
@@ -369,17 +371,17 @@ window.app = {
         sliders.boot();
 
         window.onresize = e => {
-            if(window.innerWidth <= 768) 
+            if (window.innerWidth <= 768)
                 _navbar.query('.mobile').style.height = `${window.innerHeight}px`;
         };
         window.onresize();
 
         // Network events
-        if(!'onLine' in navigator) navigator.onLine = true;
+        if (!'onLine' in navigator) navigator.onLine = true;
         let updateOnlineStatus = e => navigator.onLine ?
-            document.body.classList.remove('offline'):
+            document.body.classList.remove('offline') :
             document.body.classList.add('offline');
-        window.addEventListener('online',  updateOnlineStatus);
+        window.addEventListener('online', updateOnlineStatus);
         window.addEventListener('offline', updateOnlineStatus);
         updateOnlineStatus();
     },
@@ -391,7 +393,7 @@ window.app = {
     init: e => {
         // Load initial page scripts
         let script = document.getElementById('onLoad');
-        if(script) eval(script.innerHTML);
+        if (script) eval(script.innerHTML);
 
         // AJAX Links controller
         router.initLinks();
@@ -407,6 +409,15 @@ window.app = {
 
         // Isotope
         isotope.init();
+
+        // Selectable
+        queryAll(".selectable").forEach(e => e.onclick = () => {
+            const selection = window.getSelection();
+            const range = document.createRange();
+            range.selectNodeContents(e.query('p'));
+            selection.removeAllRanges();
+            selection.addRange(range);
+        });
 
         // Ajax forms
         queryAll('form.ajax').forEach(form => {
@@ -431,9 +442,9 @@ window.app = {
                     loading.start();
                     fetch(form.action, options).then(response => {
                         response.json().then(result => {
-                            if(result.errors) {
+                            if (result.errors) {
                                 form.classList.add('error');
-                                for(let error in result.errors)
+                                for (let error in result.errors)
                                     resultsDom.innerHTML += result.errors[error] + "<br />";
                             } else {
                                 resultsDom.innerHTML = result.message;
@@ -441,7 +452,7 @@ window.app = {
                             }
                         });
                     }).catch(e => {
-                        
+
                     }).finally(e => {
                         loading.end();
                     });
@@ -459,7 +470,7 @@ window.app = {
 
     onModalitiesClick: e => {
         let index = e.parentElement.index();
-        let form =  query('.modalities form');
+        let form = query('.modalities form');
         form.query('select > option:nth-child(' + (index + 1) + ')').selected = true;
         form.submit();
     },
@@ -505,7 +516,7 @@ window.app = {
                     let box = template.content.cloneNode(true);
                     let date = new Date(elem.created_at);
 
-                    if(elem.images)
+                    if (elem.images)
                         box.query('.image img').src = elem.thumb;
                     box.query('.name').innerText = elem.name;
                     box.query('.location').innerText = elem.county + ", " + elem.district;
@@ -519,7 +530,7 @@ window.app = {
                     isotope.appendChild(box);
                 });
 
-                if(!data.length) {
+                if (!data.length) {
                     isotope.query('.results-empty').show();
                 }
 
@@ -584,7 +595,7 @@ window.modal = {
         let className = select.children[select.selectedIndex].value;
 
         _forms.queryAll('.form').forEach(e => e.hide());
-        
+
         let form = _forms.query(`.form.${className}`);
         form.show();
 
@@ -600,7 +611,7 @@ window.modal = {
         let selects = queryAll('.address-selects > select');
         let destination = form.query('.address-selects');
 
-        if(destination) {
+        if (destination) {
             selects.forEach(e => destination.appendChild(e));
         }
     },
@@ -638,7 +649,7 @@ window.modal = {
             fetch(form.action, options).then(response => {
                 response.json().then(result => {
 
-                    if(result.success) {
+                    if (result.success) {
                         _forms.classList.add("success");
                         _forms.query('.success > p').innerHTML = result.message;
                         form.reset();
@@ -648,19 +659,19 @@ window.modal = {
                         errorsDiv.show();
                         errorsDiv.innerHTML = "Error";
 
-                        if(result.errors) {
+                        if (result.errors) {
                             let errorsList = "";
                             for (var error in result.errors) {
                                 errorsList += "<p>" + result.errors[error][0] + "</p>";
 
                                 let input = form.query(`input[name="${error.replace(/\.\d/, '[]')}"]`);
-                                if(input) input.classList.add('error');
+                                if (input) input.classList.add('error');
                             }
 
                             errorsDiv.innerHTML = errorsList;
                         } else {
                             // Unknown error
-                            if(result.message)
+                            if (result.message)
                                 errorsDiv.innerHTML = result.message;
                         }
                     }

@@ -14,6 +14,12 @@ return [
     'prestashop_categories' => env('PRESTASHOP_CATEGORIES'),
     'rapid_api_secret' => env('RAPID_API_SECRET'),
 
+    'donate' => [
+        'paypal' => env('DONATE_PAYPAL'),
+        'mbway' => env('DONATE_MBWAY'),
+        'iban' => env('DONATE_IBAN'),
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Application Name

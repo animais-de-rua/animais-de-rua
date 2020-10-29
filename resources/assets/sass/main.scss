@@ -1,8 +1,9 @@
 $grey: #717171;
 
-html, body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    // font-family: 'Open Sans', 'Arial', sans-serif;
+html,
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     font-weight: 400;
     margin: 0;
     position: relative;
@@ -11,18 +12,21 @@ html, body {
 
 body {
     min-height: 100vh;
-    background-color: #F7F7F7;
+    background-color: #f7f7f7;
 }
 
 h1 {
     font-weight: 700;
 }
 
-h2, h3 {
+h2,
+h3 {
     font-weight: 600;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
     letter-spacing: 0;
 }
 
@@ -34,17 +38,19 @@ hr {
 
 ::selection {
     background: $color;
-    color: #FFF;
+    color: #fff;
 }
 
 .hide {
     display: none;
 }
 
-input, textarea, select {
+input,
+textarea,
+select {
     background-color: transparent;
     height: 3.8rem;
-    padding: .6rem 1.0rem;
+    padding: 0.6rem 1rem;
     resize: none;
 
     &:focus {
@@ -52,7 +58,9 @@ input, textarea, select {
     }
 }
 
-label, picture, picture > img {
+label,
+picture,
+picture > img {
     display: block;
 }
 
@@ -61,18 +69,22 @@ label, picture, picture > img {
 }
 
 #content {
-    opacity: 1.0;
-    transition: opacity .2s;
+    opacity: 1;
+    transition: opacity 0.2s;
     margin-top: 28px;
 
     &.anim {
-        animation: fadeIn .18s forwards;
+        animation: fadeIn 0.18s forwards;
     }
 
     @at-root {
         @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
         }
     }
 
@@ -90,43 +102,58 @@ label, picture, picture > img {
     height: 2px;
     z-index: 10;
 
-    &.start { animation: loadingStart .6s forwards; }
-    &.end { animation: loadingEnd .2s; }
+    &.start {
+        animation: loadingStart 0.6s forwards;
+    }
+    &.end {
+        animation: loadingEnd 0.2s;
+    }
 
     @at-root {
         @keyframes loadingStart {
-            0% { width: 0; }
-            100% { width: 35vw; }
+            0% {
+                width: 0;
+            }
+            100% {
+                width: 35vw;
+            }
         }
 
         @keyframes loadingEnd {
-            0% { width: 35vw; }
-            100% { width: 100vw; }
+            0% {
+                width: 35vw;
+            }
+            100% {
+                width: 100vw;
+            }
         }
     }
 }
 
-button.btn, input.btn {
+button.btn,
+input.btn {
     background-color: $color;
     border: 2px solid $color;
-    color: #FFF;
+    color: #fff;
     font-size: 1.35rem;
-    transition: background-color .2s, color .2s;
+    transition: background-color 0.2s, color 0.2s;
     line-height: 2rem;
 
-    &:hover, &:focus {
-        background-color: #FFF;
+    &:hover,
+    &:focus {
+        background-color: #fff;
         color: $color;
     }
 
     &.inverse {
-        background-color: #FFF;
-        border: 2px solid #FFF;
-        color: #E03322;
+        background-color: #fff;
+        border: 2px solid #fff;
+        color: #e03322;
 
-        &:hover, &:focus {
+        &:hover,
+        &:focus {
             background-color: transparent;
-            color: #FFF;
+            color: #fff;
         }
     }
 
@@ -134,10 +161,11 @@ button.btn, input.btn {
         background-color: #000;
         border-color: #000;
 
-        &:hover, &:focus {
+        &:hover,
+        &:focus {
             background-color: #333;
             border-color: #333;
-            color: #FFF;
+            color: #fff;
         }
     }
 }
@@ -145,9 +173,10 @@ button.btn, input.btn {
 input {
     outline: none;
 
-    &[type='radio'], &[type='checkbox'] {
+    &[type="radio"],
+    &[type="checkbox"] {
         appearance: none;
-        background-color: #FAFAFA;
+        background-color: #fafafa;
         padding: 7px;
         border-radius: 7px;
         display: inline-block;
@@ -156,8 +185,9 @@ input {
         height: 14px;
         margin: -2px 2px;
     }
-    &[type='radio']:checked:after, &[type='checkbox']:checked:after {
-        content: ' ';
+    &[type="radio"]:checked:after,
+    &[type="checkbox"]:checked:after {
+        content: " ";
         width: 8px;
         height: 8px;
         border-radius: 50px;
@@ -171,7 +201,7 @@ input {
 
 a {
     cursor: pointer;
-    transition: color .2s;
+    transition: color 0.2s;
     position: relative;
 
     &:hover {
@@ -182,7 +212,7 @@ a {
         padding-bottom: 4px;
 
         &::after {
-            content: '';
+            content: "";
             position: absolute;
             bottom: 0;
             left: 0;
@@ -190,7 +220,7 @@ a {
             height: 1px;
             background-color: black;
 
-            transition: transform .2s ease-in-out;
+            transition: transform 0.2s ease-in-out;
             transform: translateY(0);
         }
 
@@ -203,14 +233,14 @@ a {
         }
 
         &.light {
-            color: #FFF;
+            color: #fff;
 
             &::after {
-                background-color: #CCC;
+                background-color: #ccc;
             }
 
             &:hover {
-                color: #FFF;
+                color: #fff;
             }
         }
     }
@@ -242,7 +272,7 @@ a {
         position: relative;
 
         &:after {
-            content: '';
+            content: "";
 
             border-style: solid;
             border-width: 5px 0 5px 7px;
@@ -252,7 +282,7 @@ a {
             bottom: 6px;
             margin-left: 10px;
             transform: rotate(0);
-            transition: transform .2s;
+            transition: transform 0.2s;
         }
 
         &:hover {
@@ -263,7 +293,7 @@ a {
     .slider {
         overflow: hidden;
         max-height: 0px;
-        transition: max-height .4s;
+        transition: max-height 0.4s;
 
         div {
             color: $grey;
@@ -271,7 +301,7 @@ a {
             line-height: 2.4rem;
             margin-bottom: 32px;
 
-            transition: transform .4s;
+            transition: transform 0.4s;
             transform: translateY(-100%);
         }
     }
@@ -304,7 +334,7 @@ a {
         font-size: 1.4rem;
 
         &:before {
-            content: '\2014';
+            content: "\2014";
             position: absolute;
             margin-left: -46px;
         }
@@ -315,7 +345,7 @@ a {
 // Navbar
 
 #navbar {
-    background-color: #FFF;
+    background-color: #fff;
     height: 130px;
 
     .container {
@@ -351,7 +381,7 @@ a {
             height: 5px;
             background-color: $color;
             margin: 6px 0;
-            transition: .25s;
+            transition: 0.25s;
             border-radius: 5px;
             pointer-events: none;
         }
@@ -371,7 +401,6 @@ a {
     .list {
         text-transform: uppercase;
         list-style-type: none;
-        display: flex;
         line-height: 38px;
 
         display: flex;
@@ -385,7 +414,7 @@ a {
             color: black;
             margin: 0;
             font-weight: 600;
-            letter-spacing: .06rem;
+            letter-spacing: 0.06rem;
             white-space: nowrap;
         }
 
@@ -396,7 +425,7 @@ a {
 
     .cards {
         display: flex;
-        color: #FFF;
+        color: #fff;
         text-align: center;
 
         > .card:last-child {
@@ -411,7 +440,7 @@ a {
         padding: 35px 4px;
         margin-right: 10px;
         cursor: pointer;
-        transition: height .2s, padding .2s;
+        transition: height 0.2s, padding 0.2s;
         position: relative;
 
         text-transform: uppercase;
@@ -425,21 +454,21 @@ a {
             display: flex;
             justify-content: center;
             align-items: center;
-            color: #FFF;
+            color: #fff;
         }
 
         .icon {
             width: 42px;
             height: 42px;
-            transition: transform .2s;
+            transition: transform 0.2s;
             margin: auto;
         }
 
         .menu-panel {
             width: 360px;
             height: 0;
-            background-color: #E53625;
-            transition: height .3s, padding .3s;
+            background-color: #e53625;
+            transition: height 0.3s, padding 0.3s;
             overflow: hidden;
             z-index: 10;
             margin: 30px 0 0 calc(82px - 360px - 4px);
@@ -453,7 +482,8 @@ a {
             }
         }
 
-        &:hover, &.active {
+        &:hover,
+        &.active {
             height: 160px;
             padding-top: 48px;
 
@@ -471,9 +501,9 @@ a {
         left: -100vw;
         will-change: left;
         z-index: 1;
-        background-color: #F7F7F7;
+        background-color: #f7f7f7;
         overflow: hidden;
-        transition: transform .3s, left .3s, height .15s;
+        transition: transform 0.3s, left 0.3s, height 0.15s;
         transform: translate(var(--x, "0px"));
 
         .list {
@@ -481,7 +511,6 @@ a {
             margin-top: 6rem;
 
             li {
-                margin: 0;
                 font-size: 2rem;
                 font-weight: 700;
                 margin: 1rem 0 0 4rem;
@@ -497,7 +526,6 @@ a {
         }
 
         .languages {
-            margin: 0;
             grid-column-start: 1;
             grid-column-end: 3;
             margin: 1.6rem 0 2rem 4rem;
@@ -512,7 +540,6 @@ a {
         }
 
         .card {
-            display: inline;
             width: 50vw;
             height: 100px;
             margin: 0;
@@ -532,7 +559,7 @@ a {
         }
 
         .card:hover {
-            height: 100px!important;
+            height: 100px !important;
             padding-top: 26px;
         }
 
@@ -546,7 +573,7 @@ a {
             background-color: $color;
             display: flex;
             align-items: center;
-            transition: transform .3s, top .3s;
+            transition: transform 0.3s, top 0.3s;
         }
 
         @at-root {
@@ -563,11 +590,11 @@ a {
     .menu-panel {
         width: 50%;
         margin-left: 25%;
-        color: #FFF;
+        color: #fff;
         padding: 0 30px;
 
         h1 {
-            font-size: 3.0rem;
+            font-size: 3rem;
         }
 
         p {
@@ -586,7 +613,7 @@ a {
         }
 
         a {
-            color: #FFF;
+            color: #fff;
             text-transform: uppercase;
             font-weight: 600;
             text-decoration: underline;
@@ -616,13 +643,13 @@ a {
 
     &.card-view {
         .menu div {
-            background-color: #FFF;
+            background-color: #fff;
         }
         .mobile .mobile-card-view {
             top: 0;
         }
         .mobile {
-            transform: initial!important;
+            transform: initial !important;
         }
     }
 }
@@ -632,21 +659,22 @@ a {
 
 footer {
     background-color: #000;
-    color: #FFF;
+    color: #fff;
     padding: 64px 0 80px;
     font-weight: 800;
 
-    h2, label {
+    h2,
+    label {
         font-weight: 700;
         font-size: 1.8rem;
-        letter-spacing: .01rem;
+        letter-spacing: 0.01rem;
     }
     a.color-link {
-        color: #FFF;
-        transition: .1s color;
+        color: #fff;
+        transition: 0.1s color;
 
         &:hover {
-            color: #CCC;
+            color: #ccc;
         }
     }
 
@@ -657,14 +685,14 @@ footer {
     .stats {
         h1 {
             font-size: 5.4rem;
-            letter-spacing: .01rem;
+            letter-spacing: 0.01rem;
             margin-bottom: 0px;
         }
     }
 
     .newsletter {
         label {
-            margin-bottom: .8rem;
+            margin-bottom: 0.8rem;
         }
         input {
             margin-bottom: 0;
@@ -694,7 +722,7 @@ footer {
 
     .solidarity {
         h4 {
-            margin-bottom: .5rem;
+            margin-bottom: 0.5rem;
         }
         a {
             font-weight: 600;
@@ -718,43 +746,44 @@ footer {
 
     form {
         input {
-            &[type='email'] {
+            &[type="email"] {
                 width: 250px;
                 height: 30px;
                 background: transparent;
-                border: 1px solid #FFF;
+                border: 1px solid #fff;
                 padding: 0 10px;
                 display: inline-block;
                 margin-right: 12px;
-                color: #FFF;
+                color: #fff;
                 font-size: 1.4rem;
                 border-radius: 0;
-                transition: .2s margin;
+                transition: 0.2s margin;
             }
-            &[type='email']:focus {
-                border: 1px solid #FFF;
+            &[type="email"]:focus {
+                border: 1px solid #fff;
                 margin-right: 0px;
             }
         }
 
         button {
-            background: #FFF;
+            background: #fff;
             height: 30px;
             width: 50px;
             vertical-align: top;
             border-radius: 0;
-            border: 1px solid #FFF;
+            border: 1px solid #fff;
             color: #000;
             text-align: center;
-            transition: .2s background;
+            transition: 0.2s background;
             margin-left: -5px;
             font-size: 18px;
             padding: 0px;
             line-height: 0px;
 
-            &:hover, &:focus {
-                background: #EEE;
-                border: 1px solid #FFF;
+            &:hover,
+            &:focus {
+                background: #eee;
+                border: 1px solid #fff;
             }
         }
     }
@@ -767,14 +796,13 @@ footer {
     width: 100%;
     background-color: #333333;
     padding-top: 10px;
-    color: #FFF;
+    color: #fff;
 
     button {
         margin-left: 10px;
         color: #333;
     }
 }
-
 
 // ----------
 // Flex Slider
@@ -787,7 +815,7 @@ footer {
         white-space: nowrap;
         margin-bottom: 0;
         font-size: 0;
-        transition: transform .4s, height .2s;
+        transition: transform 0.4s, height 0.2s;
         transform: translateX(calc(var(--x, 0px) - var(--page, 0) * 100%));
     }
 
@@ -807,12 +835,12 @@ footer {
         margin: 6px 0;
 
         li {
-            background-color: #FFF;
+            background-color: #fff;
             width: 10px;
             height: 10px;
             border-radius: 5px;
             border: 1px solid $color;
-            transition: background .3s;
+            transition: background 0.3s;
             margin: 0 3px;
             cursor: pointer;
 
@@ -823,7 +851,7 @@ footer {
     }
 
     @at-root {
-        @supports (-ms-ime-align:auto) {
+        @supports (-ms-ime-align: auto) {
             .flex-slider ul {
                 transition: none;
             }
@@ -835,7 +863,7 @@ footer {
     display: flex;
     flex-wrap: wrap;
 
-    &> a {
+    & > a {
         height: 100%;
         padding: 20px 12px;
     }
@@ -845,15 +873,16 @@ footer {
         margin: 8px;
         overflow: auto;
         flex: 0 0 calc(25% - 16px);
-        background-color: #FFF;
-        box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
-        border-bottom: 1px solid #FFF;
-        transition: box-shadow .4s, border .4s;
+        background-color: #fff;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        border-bottom: 1px solid #fff;
+        transition: box-shadow 0.4s, border 0.4s;
         flex-direction: column;
         display: none;
 
-        &:hover,&:focus {
-            box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
+        &:hover,
+        &:focus {
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
             border-bottom: 1px solid #000;
         }
 
@@ -878,7 +907,7 @@ footer {
         font-size: 1.4rem;
 
         .icon {
-            transition: margin .2s;
+            transition: margin 0.2s;
             font-size: 1rem;
         }
 
@@ -893,7 +922,7 @@ footer {
 }
 
 .white-box {
-    background-color: #FFF;
+    background-color: #fff;
     padding: 40px 80px;
 }
 
@@ -903,7 +932,7 @@ footer {
 .header {
     picture {
         height: 468px;
-        background: #FFF url(/img/logo/logo.svg) no-repeat center;
+        background: #fff url(/img/logo/logo.svg) no-repeat center;
         background-size: 200px;
 
         img {
@@ -920,7 +949,7 @@ footer {
         text-transform: uppercase;
         font-size: 1.3rem;
         font-weight: 700;
-        letter-spacing: .06rem;
+        letter-spacing: 0.06rem;
     }
     p {
         font-size: 2.2rem;
@@ -936,7 +965,7 @@ footer {
 
 .how-to-help {
     text-align: center;
-    
+
     h2 {
         font-weight: 700;
         font-size: 4.5rem;
@@ -958,7 +987,7 @@ footer {
 
     .box {
         position: relative;
-        transition: background .4s, border .4s, box-shadow .4s;
+        transition: background 0.4s, border 0.4s, box-shadow 0.4s;
         padding-top: 20px;
         max-width: calc(25% - 10px);
         flex: 0 0 25%;
@@ -966,9 +995,9 @@ footer {
         margin: 10px 5px;
 
         &:hover {
-            background-color: #FFF;
+            background-color: #fff;
             border-bottom: 1px solid black;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 
             .icon {
                 opacity: 1;
@@ -983,7 +1012,7 @@ footer {
         font-size: 1rem;
         margin-bottom: 10px;
         color: #777;
-        transition: opacity .4s;
+        transition: opacity 0.4s;
     }
 }
 
@@ -1003,7 +1032,7 @@ footer {
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
-        background-color: #FFF;
+        background-color: #fff;
         width: 68%;
         margin: 0 16%;
         padding: 56px 16px 24px;
@@ -1030,7 +1059,7 @@ footer {
     }
 
     .icon {
-        transition: margin .2s;
+        transition: margin 0.2s;
         margin-left: 8px;
         font-size: 1.2rem;
     }
@@ -1048,7 +1077,7 @@ footer {
         font-weight: 700;
         font-size: 1.5rem;
         margin: 0;
-        letter-spacing: .15rem;
+        letter-spacing: 0.15rem;
     }
 
     h1 {
@@ -1088,12 +1117,12 @@ footer {
 
     .card {
         min-height: 475px;
-        background-color: #FFF;
+        background-color: #fff;
         margin: 16px;
-        transition: box-shadow .2s, border .2s;
+        transition: box-shadow 0.2s, border 0.2s;
         cursor: pointer;
         position: relative;
-        border-bottom: 1px solid #FFF;
+        border-bottom: 1px solid #fff;
         display: flex;
         flex-direction: column;
         width: 33%;
@@ -1108,7 +1137,7 @@ footer {
         }
 
         &:hover {
-            box-shadow: 0 2px 5px rgba(0, 0, 0, .1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             border-bottom: 1px solid #000;
 
             .necessity {
@@ -1127,7 +1156,7 @@ footer {
         .image {
             width: 100%;
             height: 190px;
-            background: #F7F7F7 url(/img/logo/logo.svg) no-repeat center;
+            background: #f7f7f7 url(/img/logo/logo.svg) no-repeat center;
             background-size: 35%;
             border: 0;
 
@@ -1152,7 +1181,7 @@ footer {
                 text-align: center;
                 text-transform: uppercase;
                 font-size: 1.2rem;
-                transition: margin .16s;
+                transition: margin 0.16s;
 
                 &:first-child {
                     margin: 0 20% 10px 0;
@@ -1168,10 +1197,10 @@ footer {
             .line {
                 width: 130px;
                 height: 1px;
-                background-color: #CCC;
+                background-color: #ccc;
                 transform: rotate(-24deg);
                 margin: auto;
-                transition: width .16s;
+                transition: width 0.16s;
             }
         }
     }
@@ -1236,20 +1265,20 @@ footer {
 
         a {
             color: $color;
-            background-color: #FFF;
+            background-color: #fff;
             padding: 15px;
             position: relative;
             margin: 0 4px;
 
             &:after {
-                content: ' ';
+                content: " ";
                 height: 4px;
                 position: absolute;
                 background: $color;
                 bottom: 0;
                 left: 0;
                 width: 0;
-                transition: width .6s;
+                transition: width 0.6s;
             }
 
             &:hover:after {
@@ -1280,7 +1309,7 @@ footer {
 
 .advantage {
     .label-title {
-        text-align: center;   
+        text-align: center;
     }
 
     h2 {
@@ -1305,7 +1334,8 @@ footer {
     h2 {
         font-weight: 700;
     }
-    a,.text {
+    a,
+    .text {
         font-size: 1.4rem;
         color: $grey;
     }
@@ -1313,7 +1343,8 @@ footer {
         text-transform: uppercase;
         font-weight: 600;
     }
-    .column > div, .column img {
+    .column > div,
+    .column img {
         margin-bottom: 24px;
     }
 }
@@ -1336,9 +1367,9 @@ footer {
         width: 60%;
         margin: auto;
         padding: 14px 28px;
-        background-color: #FFF;
+        background-color: #fff;
         box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-        border-bottom: 1px solid #FFF;
+        border-bottom: 1px solid #fff;
         transition: box-shadow 0.4s, border 0.4s;
         margin-top: 20px;
 
@@ -1354,7 +1385,7 @@ footer {
         font-size: 2rem;
         margin-bottom: 20px;
     }
-    &>p {
+    & > p {
         text-align: center;
         font-size: 1.4rem;
         margin-bottom: 4px;
@@ -1409,13 +1440,13 @@ footer {
     .box {
         position: relative;
         overflow: hidden;
-        background-color: #FFF;
+        background-color: #fff;
         margin-bottom: 20px;
         padding: 32px 20px 50px;
         height: 90%;
         font-size: 1.5rem;
         cursor: pointer;
-        transition: box-shadow .2s;
+        transition: box-shadow 0.2s;
 
         .slider {
             position: absolute;
@@ -1424,13 +1455,13 @@ footer {
             height: 48px;
             width: 100%;
             background-color: #000;
-            color: #FFF;
+            color: #fff;
             line-height: 48px;
             padding: 0 20px;
             text-align: right;
             text-transform: uppercase;
             font-weight: 700;
-            transition: bottom .2s;
+            transition: bottom 0.2s;
 
             .icon {
                 font-size: 1.2rem;
@@ -1444,14 +1475,14 @@ footer {
             font-weight: 700;
             margin: 0;
             line-height: 48px;
-            transition: color .2s;
+            transition: color 0.2s;
         }
 
         &:hover {
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 
             .price {
-                color: #FFF;
+                color: #fff;
             }
             .slider {
                 bottom: 0;
@@ -1462,7 +1493,7 @@ footer {
 
 // Partners
 .sponsors {
-    background-color: #FFF;
+    background-color: #fff;
     padding: 80px 0 20px;
 
     h1 {
@@ -1530,7 +1561,8 @@ footer {
             font-weight: 600;
         }
     }
-    .empty, .status {
+    .empty,
+    .status {
         width: 100%;
         text-align: center;
         font-size: 1.6rem;
@@ -1540,7 +1572,7 @@ footer {
     .image {
         text-align: center;
         height: 180px;
-        background: #F7F7F7 url(/img/logo/logo.svg) no-repeat center;
+        background: #f7f7f7 url(/img/logo/logo.svg) no-repeat center;
         background-size: 100px;
 
         img {
@@ -1554,10 +1586,10 @@ footer {
             display: none;
         }
     }
-    .contact {
-        // min-height: 160px;
-    }
-    .benefit p, .address, span {
+
+    .benefit p,
+    .address,
+    span {
         font-size: 1.2rem;
     }
     h1 {
@@ -1609,7 +1641,7 @@ footer {
             padding: 16px;
 
             .image {
-                background-color: #FFF;
+                background-color: #fff;
                 background: none;
 
                 & a {
@@ -1644,7 +1676,7 @@ footer {
 }
 
 .detail {
-    margin-top: 80px!important;
+    margin-top: 80px !important;
 
     h1 {
         margin-bottom: 6px;
@@ -1734,7 +1766,7 @@ footer {
         width: 80%;
         margin: 0 10%;
         padding: 30px;
-        background-color: #FFF;
+        background-color: #fff;
         font-size: 1.4rem;
 
         h1 {
@@ -1753,12 +1785,12 @@ footer {
     width: 100%;
     height: 100vh;
     background-color: #000;
-    color: #FFF;
+    color: #fff;
     position: fixed;
     top: 0;
     transition: transform 0.6s cubic-bezier(0.8, -0.4, 0.4, 1);
     transform: translateY(-100%);
-    display: block!important;
+    display: block !important;
 
     &.open {
         transform: translateY(0);
@@ -1799,11 +1831,14 @@ footer {
         margin-bottom: 0;
     }
 
-    .form, .submit {
+    .form,
+    .submit {
         margin-top: 10px;
     }
 
-    select, input:not([type="checkbox"]):not([type="radio"]), textarea {
+    select,
+    input:not([type="checkbox"]):not([type="radio"]),
+    textarea {
         border: 1px solid white;
         padding: 2px 16px;
         font-weight: bold;
@@ -1812,18 +1847,20 @@ footer {
         margin-bottom: 10px;
         font-size: 1.5rem;
 
-        &.empty, &::placeholder {
-            color: #777!important;
+        &.empty,
+        &::placeholder {
+            color: #777 !important;
         }
     }
 
     input[type="file"] {
-        padding: 6px 4px!important;
-        margin-bottom: 10px!important;
+        padding: 6px 4px !important;
+        margin-bottom: 10px !important;
     }
 
-    input, textarea {
-        color: #FFF;
+    input,
+    textarea {
+        color: #fff;
     }
 
     input.error {
@@ -1831,16 +1868,16 @@ footer {
     }
 
     .last-child {
-        margin-bottom: 0!important;
+        margin-bottom: 0 !important;
     }
 
     select {
-        background-color: #FFF;
+        background-color: #fff;
         padding: 2px 12px;
 
         &.dark {
             background-color: #000;
-            color: #FFF;
+            color: #fff;
         }
     }
 
@@ -1851,14 +1888,14 @@ footer {
     input[type="submit"] {
         border-radius: 0;
         padding: 0 80px;
-        background-color: #FFF;
+        background-color: #fff;
         color: #000;
-        transition: background-color .1s, color .1s;
+        transition: background-color 0.1s, color 0.1s;
 
         &:hover {
             background-color: #000;
-            color: #FFF;
-            border: 1px solid #FFF;
+            color: #fff;
+            border: 1px solid #fff;
         }
     }
 
@@ -1898,11 +1935,11 @@ footer {
             div {
                 margin-bottom: 2px;
             }
-
         }
     }
 
-    div.sending h1, .success {
+    div.sending h1,
+    .success {
         display: none;
     }
 
@@ -1944,7 +1981,7 @@ footer {
     .scrollable {
         overflow-y: auto;
         max-height: calc(100vh - 236px);
-        transition: opacity .5s;
+        transition: opacity 0.5s;
     }
 
     .godfather h1 {
@@ -1967,7 +2004,7 @@ footer {
             label {
                 margin-right: 12px;
             }
-        }   
+        }
     }
 
     .notes {
@@ -1978,15 +2015,15 @@ footer {
     }
 
     .apply {
-        input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]), select {
+        input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]),
+        select {
             height: 36px;
         }
     }
 }
 
-
 body {
-    transition: margin-top .2s;
+    transition: margin-top 0.2s;
 
     &.offline {
         margin-top: 36px;
@@ -1996,6 +2033,7 @@ body {
         }
     }
 }
+
 .network {
     background-color: #3e3e3e;
     text-align: center;
@@ -2008,7 +2046,75 @@ body {
     z-index: 1;
     max-height: 0px;
     overflow: hidden;
-    transition: max-height .2s;
+    transition: max-height 0.2s;
+}
+
+// Donation
+#donation {
+    display: flex;
+    flex-direction: row;
+    min-height: calc(100vh - 130px);
+    margin-top: -28px;
+
+    & > div {
+        flex: 1;
+        width: 50%;
+    }
+
+    .list {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        flex-direction: column;
+
+        h1 {
+            margin-bottom: 0;
+        }
+
+        ul {
+            list-style: none;
+            margin-bottom: 10rem;
+
+            li {
+                border: 1px solid rgba(0, 0, 0, 0.1);
+                background-color: #fff;
+                box-shadow: 0 1px 2px #0001;
+                border-radius: 8px;
+                padding: 1rem 2rem;
+                margin-bottom: 2rem;
+                transition: box-shadow 0.3s;
+                cursor: pointer;
+
+                &:hover {
+                    box-shadow: 0 1px 3px #0003;
+                }
+
+                img {
+                    height: 36px;
+                    margin: 1rem 0;
+                }
+
+                p {
+                    margin-bottom: 1rem;
+                    font-weight: bold;
+                }
+
+                &.paypal img {
+                    height: 30px;
+                }
+
+                &.selectable p {
+                    user-select: all;
+                }
+            }
+        }
+    }
+
+    .image {
+        background-size: cover;
+        background-position: center;
+    }
 }
 
 // ----------
@@ -2026,7 +2132,7 @@ body {
         .how-to-help .box {
             max-width: calc(50% - 10px);
             flex: 0 0 50%;
-            background-color: #FFF;
+            background-color: #fff;
             border-bottom: 1px solid black;
 
             .icon {
@@ -2060,7 +2166,8 @@ body {
         min-height: calc(100vh - 130px);
     }
 
-    #navbar .menu, #navbar .mobile {
+    #navbar .menu,
+    #navbar .mobile {
         display: none;
     }
 }
@@ -2084,10 +2191,11 @@ body {
         height: 68px;
 
         .left {
-            margin-top: 18px!important;
+            margin-top: 18px !important;
         }
 
-        .list, .cards {
+        .list,
+        .cards {
             display: none;
         }
 
@@ -2104,7 +2212,7 @@ body {
 
     footer {
         .logo {
-            display: none!important;
+            display: none !important;
         }
         .contact {
             margin-top: 20px;
@@ -2148,7 +2256,7 @@ body {
             flex-direction: column-reverse;
 
             div {
-                width: 100%!important;
+                width: 100% !important;
                 text-align: center;
                 margin: 0;
             }
@@ -2175,24 +2283,18 @@ body {
             margin: 12px 0;
             flex-direction: row;
 
-            .image {
-                // width: 60%;
-
-                + div {
-                    // width: 40%;
-                }
-            }
-
             h1 {
                 font-size: 2.5rem;
                 margin: 0 0 32px;
             }
         }
     }
+
     .white-box {
         padding: 25px 16px;
         margin-top: 30px;
     }
+
     .where .headquarters {
         flex-direction: column;
 
@@ -2200,12 +2302,15 @@ body {
             margin: 4px 0;
         }
     }
+
     .advantage .white-box {
         height: initial;
     }
+
     .help .column img {
         margin-bottom: 0px;
     }
+
     .modalities .box {
         height: initial;
     }
@@ -2216,7 +2321,7 @@ body {
 
     #forms {
         .last-child {
-            margin-bottom: 10px!important;
+            margin-bottom: 10px !important;
         }
         .scrollable > div {
             max-width: 100%;
@@ -2227,6 +2332,25 @@ body {
 
     .card-login .box {
         width: 100%;
+    }
+
+    #donation {
+        flex-direction: column;
+        min-height: calc(100vh - 68px);
+
+        & > div {
+            width: 100%;
+        }
+
+        .image {
+            flex: 3;
+        }
+
+        .list {
+            ul {
+                margin-bottom: 0;
+            }
+        }
     }
 }
 

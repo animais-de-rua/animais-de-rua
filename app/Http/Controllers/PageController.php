@@ -31,7 +31,7 @@ class PageController extends Controller
 
         // Page specific data
         if (method_exists($this, $slug)) {
-            $this->data = array_merge($this->data, call_user_func(array($this, $slug)));
+            $this->data = array_merge($this->data, call_user_func([$this, $slug]));
         }
 
         return view('pages.' . $this->data['page']->template, $this->data);

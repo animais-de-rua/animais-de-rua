@@ -108,6 +108,17 @@ class PagesSeeder extends Seeder
                 'created_at' => $date,
                 'updated_at' => $date,
             ],
+            [
+                'title' => json_encode([
+                    'pt' => 'Donativo',
+                    'en' => 'Donation',
+                ]),
+                'template' => 'donation',
+                'name' => 'Donativo',
+                'slug' => 'donation',
+                'created_at' => $date,
+                'updated_at' => $date,
+            ],
         ]);
 
         // Apply backup

@@ -14,6 +14,11 @@
 // Home
 Route::get('/', 'PageController@index', 'home');
 
+// Donation
+Route::get('doar', function () {
+    return Redirect::to('/donation', 301);
+});
+
 // Old routes
 Route::get('{lang}/{subs?}', function () {
     return Redirect::to('/', 301);
