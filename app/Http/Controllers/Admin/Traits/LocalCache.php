@@ -51,12 +51,15 @@ trait LocalCache
     public static function headquarters_territories_acting()
     {
         return Cache::rememberForever('headquarters_territories_acting', function () {
+            $activeHeadquarters = Headquarter::active()->pluck('id');
+
             $territoriesRaw = DB::table('headquarters_territories')
                 ->join('territories', function ($query) {
                     $query->on('territories.id', 'LIKE', DB::raw('CONCAT(headquarters_territories.territory_id, "%")'))
                         ->orOn('territories.id', '=', DB::raw('LEFT(headquarters_territories.territory_id, 4)'))
                         ->orOn('territories.id', '=', DB::raw('LEFT(headquarters_territories.territory_id, 2)'));
                 })
+                ->whereIn('headquarter_id', $activeHeadquarters)
                 ->select(['id', 'name', 'parent_id', 'headquarter_id'])
                 ->groupBy('id')
                 ->orderByRaw('LENGTH(id), id')
