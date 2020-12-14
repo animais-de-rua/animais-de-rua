@@ -21,12 +21,14 @@ class WooCommerceController extends Controller
         $products = [];
         foreach ($result as $product) {
             $img = $product['images'][0]['src'] ?? null;
+            $img = preg_replace('/(.+)\.(\w+)$/', '${1}-300x300.${2}', $img);
+            $img = str_replace('-scaled', '', $img);
 
             $products[] = (object) [
                 'id' => (int) $product['id'],
                 'name' => (string) $product['name'],
                 'price' => (float) $product['price'],
-                'image' => preg_replace('/(.+)\.(\w+)$/', '${1}-300x300.${2}', $img),
+                'image' => $img,
                 'description' => (string) $product['short_description'],
                 'url' => $product['permalink'],
             ];
