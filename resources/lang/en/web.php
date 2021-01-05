@@ -36,6 +36,7 @@ return [
             '2' => '10',
             '3' => '15',
         ],
+        'button' => 'I want to help',
     ],
 
     'risk' => [

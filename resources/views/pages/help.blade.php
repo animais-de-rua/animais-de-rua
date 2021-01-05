@@ -17,7 +17,7 @@
                 </div>
             </div>
             <div class="column column-50">
-                @component('components.picture', ['image' => 'help'])
+                @component('components.picture', ['image' => 'help', 'width' => 595, 'height' => 468])
                 @endcomponent
             </div>
         </div>
@@ -35,7 +35,7 @@
                     <div class="text">{!! $page['friend_text'] !!}</div>
                     <a href="/friends" class="link lined">{{ $page['friend_link'] }}</a>
                 </div>
-                @component('components.picture', ['image' => 'help02', 'lazy' => true])
+                @component('components.picture', ['image' => 'help02', 'lazy' => true, 'width' => 595])
                 @endcomponent
                 <div class="white-box">
                     <h2>{{ $page['call_title'] }}</h2>
@@ -47,7 +47,7 @@
                 </div>
             </div>
             <div class="column column-50">
-                @component('components.picture', ['image' => 'help01'])
+                @component('components.picture', ['image' => 'help01', 'width' => 595])
                 @endcomponent
                 <div class="white-box">
                     <h2>{{ $page['adopt_title'] }}</h2>
@@ -62,13 +62,9 @@
                 <div class="white-box">
                     <h2>{{ $page['donate_title'] }}</h2>
                     <div class="text dash-list">{!! $page['donate_text'] !!}</div>
-                    <form name="_xclick" action="https://www.paypal.com/yt/cgi-bin/webscr" method="post" target="_blank">
-                        <input type="hidden" name="cmd" value="_xclick">
-                        <input type="hidden" name="business" value="{{ Config::get("app.paypal") }}">
-                        <input type="hidden" name="item_name" value="{{ __("Donate") }}">
-                        <input type="hidden" name="currency_code" value="EUR">
-                        <button class="btn" type="submit" src="" border="0" name="submit" alt="Make payments with PayPal - it's fast, free and secure!">{{ $page['donate_link'] }}</button>
-                    </form>
+                    <a href="/donation">
+                        <button class="btn" style="width: 180px">{{ __('Donate') }}</button>
+                    </a>
                 </div>
             </div>
         </div>

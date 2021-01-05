@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div class="column column-50">
-                @component('components.picture', ['image' => 'ced'])
+                @component('components.picture', ['image' => 'ced', 'width' => 595, 'height' => 468])
                 @endcomponent
             </div>
         </div>
@@ -32,7 +32,7 @@
                 <h1 class="label-title">{{ $page['what_title'] }}</h1>
                 <p>{!! $page['what_text'] !!}</p>
                 <hr />
-                <h3>{!! $page['info_title'] !!}</h3>
+                <h2>{!! $page['info_title'] !!}</h2>
                 <ul class="arrow-links">
                 @if($page['info_links'])
                     @foreach(json_decode($page['info_links']) as $link)
@@ -69,11 +69,11 @@
     <div class="container">
         <div class="row row-wrap">
             <div class="column column-50">
-                @component('components.picture', ['image' => 'ced02', 'lazy' => true])
+                @component('components.picture', ['image' => 'ced02', 'lazy' => true, 'width' => 595])
                 @endcomponent
             </div>
             <div class="column column-50">
-                @component('components.picture', ['image' => 'ced01', 'lazy' => true])
+                @component('components.picture', ['image' => 'ced01', 'lazy' => true, 'width' => 595])
                 @endcomponent
             </div>
         </div>

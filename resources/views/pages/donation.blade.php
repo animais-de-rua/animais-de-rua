@@ -12,26 +12,33 @@
 
         <ul>
             <li class="selectable">
-                <img src="/img/svg/mbway.svg">
-                <p>{{ Config::get('app.donate.mbway') }}</p>
+                <div>
+                    <img src="/img/svg/mbway.svg" title="mbway" height="36" />
+                    <p>{{ Config::get('app.donate.mbway') }}</p>
+                </div>
             </li>
-            <a href="https://{{ Config::get('app.donate.paypal') }}" target="_blank">
-                <li class="paypal">
-                    <img src="/img/svg/paypal.svg">
+            <li class="paypal">
+                <a href="https://{{ Config::get('app.donate.paypal') }}" target="_blank" rel="noopener">
+                    <img src="/img/svg/paypal.svg" title="paypal" height="36" />
                     <p>{{ Config::get('app.donate.paypal') }}</p>
-                </li>
-            </a>
+                </a>
+            </li>
             <li class="selectable">
-                <img src="/img/svg/bank.svg">
-                <p>{{ Config::get('app.donate.iban') }}</p>
+                <div>
+                    <img src="/img/svg/bank.svg" title="bank" height="36" />
+                    <p>{{ Config::get('app.donate.iban') }}</p>
+                </div>
             </li>
         </ul>
     </div>
 
+    {{--
     @php
     $files = glob("img/error/*.jpg");
+    $img = $files[array_rand($files)];
     @endphp
-    <div class="image" style="background-image: url('/{{ $files[array_rand($files)] }}');"></div>
+    --}}
+    <div class="image" style="background-image: url('/img/error/photo-1518843025960-d60217f226f5.jpg');"></div>
 </div>
 
 @endsection

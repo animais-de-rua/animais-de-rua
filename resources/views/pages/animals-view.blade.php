@@ -5,9 +5,9 @@ $locale = Session::get('locale', 'pt');
 @endphp
 
 @section('facebook')
-    <meta property="og:title" content="{{ config('app.name') }}: {{ $animal['name'] }}"/>
-    <meta property="og:description" content="{{ strip_tags($animal['history'][$locale] ?? '') }}"/>
-    <meta property="og:image" content="{{ config('app.url') . $animal['images'][0] }}"/>
+    <meta property="og:title" content="{{ config('app.name') }}: {{ $animal['name'] }}" />
+    <meta property="og:description" content="{{ strip_tags($animal['history'][$locale] ?? '') }}" />
+    <meta property="og:image" content="{{ config('app.url') . $animal['images'][0] }}" />
 @endsection
 
 @section('content')
@@ -38,7 +38,7 @@ $locale = Session::get('locale', 'pt');
                     <ul class="touchable">
                         @foreach($animal['images'] as $image)
                         <li>
-                            <img src="/{{ $image }}" alt="{{ $animal['name'] }}" loading="lazy"/>
+                            <img src="/{{ $image }}" alt="{{ $animal['name'] }}" loading="lazy" width="472" />
                         </li>
                         @endforeach
                     </ul>
@@ -76,16 +76,18 @@ $locale = Session::get('locale', 'pt');
                 <div class="card">
                     <a class="link" href="/animals/adoption/{{ $animal['id'] }}">
                         <div class="image">
-                            <div style="background-image:url('/{{ $animal['images'][0] }}')"></div>
+                            <img src="/{{ $animal['images'][0] }}" width="100%" height="100%" />
                         </div>
-                        <h1>{{ $animal['name'] }}</h1>
-                        @php
-                        $limit = 100;
-                        $history = preg_replace("/<p[^>]*?>/", "", $animal['history']);
-                        if (strlen($history) > $limit)
-                            $history = substr($history, 0, $limit) . '...';
-                        @endphp
-                        <p>{!! $history !!}</p>
+                        <div class="content">
+                            <h1>{{ $animal['name'] }}</h1>
+                            @php
+                            $limit = 140;
+                            $history = strip_tags($animal['history'], '<br>');
+                            if (strlen($history) > $limit)
+                                $history = substr($history, 0, $limit) . '...';
+                            @endphp
+                            <p>{!! $history !!}</p>
+                        </div>
                     </a>
                 </div>
                 @endforeach

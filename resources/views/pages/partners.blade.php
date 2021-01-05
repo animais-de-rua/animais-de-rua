@@ -17,7 +17,7 @@
                 </div>
             </div>
             <div class="column column-50">
-                @component('components.picture', ['image' => 'partners'])
+                @component('components.picture', ['image' => 'partners', 'width' => 595, 'height' => 468])
                 @endcomponent
             </div>
         </div>
@@ -28,8 +28,8 @@
             <h1 class="title">{{ $page['partners_title'] }}</h1>
             <div class="grid">
                 @foreach($sponsors as $sponsor)
-                <a href="{{ $sponsor->url }}" target="_blank" onclick="app.track('ViewContent', {'sponsor': '{{ $sponsor->name }}'})">
-                    <img src="{{ url('uploads/' . $sponsor->image) }}" alt="{{ $sponsor->name }}" loading="lazy"/>
+                <a href="{{ $sponsor->url }}" target="_blank" onclick="app.track('ViewContent', {'sponsor': '{{ $sponsor->name }}'})" rel="noopener">
+                    <img src="{{ url('uploads/' . $sponsor->image) }}" alt="{{ $sponsor->name }}" loading="lazy" />
                 </a>
                 @endforeach
             </div>

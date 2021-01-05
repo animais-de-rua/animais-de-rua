@@ -32,7 +32,7 @@ use App\Helpers\EnumHelper;
 @endsection
 
 @section('style')
-<link rel="stylesheet" href="{{ mix('css/admin/reports.css') }}">
+<link rel="stylesheet" href="{{ mix('css/admin/reports.css') }}" />
 @endsection
 
 @section('content')

@@ -1,12 +1,12 @@
-const VERSION = '0.0.31';
+const VERSION = '0.0.35';
 const CACHE = 'adr';
 
 let cacheAssets = [
 	// Dynamic Assets
 	'/sw.js?id=' + VERSION,
-	'/js/app.js?id=f26cc5ef5cdde6b2b3f0',
-	'/css/app.css?id=74fa53af749f6341885d',
-	'/fonts/icomoon.woff2?58c2d240bb8f452ceba24cac9e697d8e',
+	'/js/app.js?id=90b1e999dc403544a414',
+	'/css/app.css?id=552d9f7100d607d843ea',
+	'/fonts/icomoon.woff2?3f18b6535991cd09292b06b870eb6400',
 
 	// Other Assets	
 	'/manifest.json',
@@ -19,7 +19,10 @@ let cacheAssets = [
 	'/img/friend.webp',
 	'/img/help.webp',
 	'/img/home.webp',
-	'/img/partners.webp'
+	'/img/partners.webp',
+	'/img/svg/mbway.svg',
+	'/img/svg/paypal.svg',
+	'/img/svg/bank.svg',
 ];
 
 let cachePages = [
@@ -32,6 +35,7 @@ let cachePages = [
 	'/partners?ajax',
 	'/friends?ajax',
 	'/privacy-policy?ajax',
+	'/donation?ajax',
 ];
 
 self.oninstall = e => {

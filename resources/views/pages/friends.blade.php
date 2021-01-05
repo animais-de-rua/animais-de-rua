@@ -25,7 +25,7 @@
                 </div>
             </div>
             <div class="column column-50">
-                @component('components.picture', ['image' => 'friend'])
+                @component('components.picture', ['image' => 'friend', 'width' => 595, 'height' => 468])
                 @endcomponent
             </div>
         </div>
@@ -146,7 +146,7 @@
                 @if($partner->url)
                 <a target="_blank" href="{{ $partner->url }}">
                 @endif
-                <img src="/uploads/{{ $partner->image }}" alt="{{ $partner->name }}" loading="lazy"/>
+                <img src="/uploads/{{ $partner->image }}" alt="{{ $partner->name }}" loading="lazy" height="100" />
                 @if($partner->url)
                 </a>
                 @endif

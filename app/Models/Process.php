@@ -262,6 +262,7 @@ class Process extends Model
         $data = parent::toArray();
 
         $data['detail'] = $this->detail;
+        $data['thumb'] = $this->images ? thumb_image($this->images[0]) : null;
 
         return $data;
     }

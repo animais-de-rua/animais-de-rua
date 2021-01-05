@@ -1301,7 +1301,7 @@ footer {
 
 // CED
 .whatisit {
-    h3 {
+    h2 {
         font-weight: 700;
         font-size: 1.8rem;
     }
@@ -1856,6 +1856,7 @@ footer {
     input[type="file"] {
         padding: 6px 4px !important;
         margin-bottom: 10px !important;
+        overflow: hidden;
     }
 
     input,
@@ -2081,7 +2082,6 @@ body {
                 background-color: #fff;
                 box-shadow: 0 1px 2px #0001;
                 border-radius: 8px;
-                padding: 1rem 2rem;
                 margin-bottom: 2rem;
                 transition: box-shadow 0.3s;
                 cursor: pointer;
@@ -2106,6 +2106,14 @@ body {
 
                 &.selectable p {
                     user-select: all;
+                }
+
+                &>a {
+                    display: block;
+                }
+
+                &>div, &>a {
+                    padding: 1rem 2rem;
                 }
             }
         }

@@ -202,12 +202,12 @@
                                 <div>
                                     <span style="font-size:1.2rem;color:#fff;font-weight:bold;">{{ __("Select at least 3 pictures.") }}</span>
                                     <div class="row row-wrap">
-                                        <div class="column column-50"><input type="file" class="last-child" required name="images[0]" placeholder="{{ __("Photos") }}"/></div>
-                                        <div class="column column-50"><input type="file" class="last-child" required name="images[1]" placeholder="{{ __("Photos") }}"/></div>
+                                        <div class="column column-50"><input type="file" class="last-child" required name="images[0]" placeholder="{{ __("Photos") }}" /></div>
+                                        <div class="column column-50"><input type="file" class="last-child" required name="images[1]" placeholder="{{ __("Photos") }}" /></div>
                                     </div>
                                     <div class="row row-wrap">
-                                        <div class="column column-50"><input type="file" class="last-child" required name="images[2]" placeholder="{{ __("Photos") }}"/></div>
-                                        <div class="column column-50"><input type="file" class="last-child" name="images[3]" placeholder="{{ __("Photos") }}"/></div>
+                                        <div class="column column-50"><input type="file" class="last-child" required name="images[2]" placeholder="{{ __("Photos") }}" /></div>
+                                        <div class="column column-50"><input type="file" class="last-child" name="images[3]" placeholder="{{ __("Photos") }}" /></div>
                                     </div>
                                 </div>
                             </div>

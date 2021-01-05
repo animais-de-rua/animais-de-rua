@@ -17,7 +17,7 @@
                 </div>
             </div>
             <div class="column column-50">
-                @component('components.picture', ['image' => 'animals'])
+                @component('components.picture', ['image' => 'animals', 'width' => 595, 'height' => 468])
                 @endcomponent
             </div>
         </div>
@@ -33,26 +33,29 @@
         </div>
 
         <div class="selects">
-            <select class="toggle adoption" onchange="app.searchAnimals()">
+            <select class="toggle adoption" id="adoption" onchange="app.searchAnimals()">
                 <option value="0" selected>{{ __("All Districts") }}</option>
                 @foreach($districts['adoption'] as $adotion)
                 <option value="{{ $adotion->id }}">{{ $adotion->name }}</option>
                 @endforeach
             </select>
+            <label for="adoption" class="hide">{{ __("Filter by districts") }}</label>
 
-            <select class="toggle godfather hide" onchange="app.searchAnimals()">
+            <select class="toggle godfather hide" id="godfather" onchange="app.searchAnimals()">
                 <option value="0" selected>{{ __("All Districts") }}</option>
                 @foreach($districts['godfather'] as $godfather)
                 <option value="{{ $godfather->id }}">{{ $godfather->name }}</option>
                 @endforeach
             </select>
+            <label for="godfather" class="hide">{{ __("Filter by districts") }}</label>
 
-            <select class="specie" onchange="app.searchAnimals()">
+            <select class="specie" id="specie" onchange="app.searchAnimals()">
                 <option value="0" selected>{{ __("All Species") }}</option>
                 @foreach($species as $id => $name)
                 <option value="{{ $id }}">{{ $name }}</option>
                 @endforeach
             </select>
+            <label for="specie" class="hide">{{ __("Filter by specie") }}</label>
         </div>
 
         <p class="status results-empty hide">{{ __("No results") }}...</p>
@@ -61,7 +64,7 @@
         <template id="animal-box-template">
             <div class="box active" onclick="" option="" animal="0">
                 <a class="link" href="">
-                    <div class="image"><img src="" alt="{{ __("Animals") }}" loading="lazy"/></div>
+                    <div class="image"><img src="" alt="{{ __("Animals") }}" loading="lazy" width="266" height="235" /></div>
                     <div class="content">
                         <h1 class="name"></h1>
                         <div class="location"></div>

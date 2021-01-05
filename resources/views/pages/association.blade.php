@@ -17,7 +17,7 @@
                 </div>
             </div>
             <div class="column column-50">
-                @component('components.picture', ['image' => 'association'])
+                @component('components.picture', ['image' => 'association', 'width' => 595, 'height' => 468])
                 @endcomponent
             </div>
         </div>
@@ -40,11 +40,11 @@
     <div class="container">
         <div class="row row-wrap">
             <div class="column column-50">
-                @component('components.picture', ['image' => 'association01', 'lazy' => true])
+                @component('components.picture', ['image' => 'association01', 'lazy' => true, 'width' => 595, 'height' => 448])
                 @endcomponent
             </div>
             <div class="column column-50">
-                @component('components.picture', ['image' => 'association02', 'lazy' => true])
+                @component('components.picture', ['image' => 'association02', 'lazy' => true, 'width' => 595, 'height' => 448])
                 @endcomponent
             </div>
         </div>

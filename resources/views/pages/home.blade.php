@@ -17,9 +17,9 @@
             </div>
             <div class="column column-50">
                 <picture>
-                    <source srcset="/img/home.webp" type="image/webp"/>
-                    <source srcset="/img/home.jpg" type="image/jpeg"/>
-                    <img src="/img/home.jpg" alt="Home"/>
+                    <source srcset="/img/home.webp" type="image/webp" />
+                    <source srcset="/img/home.jpg" type="image/jpeg" />
+                    <img src="/img/home.jpg" alt="Home" width="595" height="468" />
                 </picture>
             </div>
         </div>
@@ -35,7 +35,7 @@
                 <li>
                     <div class="slide">
                         <div>
-                            <img src="/uploads/{{ $campaign->image }}" alt="{{ $campaign->name }}" loading="lazy"/>
+                            <img src="/uploads/{{ $campaign->image }}" alt="{{ $campaign->name }}" loading="lazy" width="585" height="440" />
                         </div>
                         <div>
                             <blockquote>{{ __("campaigns") }}</blockquote>
@@ -72,7 +72,7 @@
                         <div class="card" onclick="app.track('ViewContent', {'product': '{{ $product->name }}'})">
                             <a href="{{ $product->url }}">
                                 <div class="image">
-                                    <img src="{{ $product->image }}" alt="{{ $product->name }}" loading="lazy" />
+                                    <img src="{{ $product->image }}" alt="{{ $product->name }}" loading="lazy" width="366" height="190" />
                                 </div>
                                 <div>
                                     <h1>{{ $product->name }}</h1>
