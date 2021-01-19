@@ -45,7 +45,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name', 'email', 'password',
-        'phone', 'friend_card_modality', 'status', 'notes',
+        'phone', 'friend_card_modality', 'friend_card_number', 'friend_card_expiry', 'status', 'notes',
     ];
 
     /**
@@ -124,5 +124,28 @@ class User extends Authenticatable
             ->select('model_id')
             ->whereIn('role_id', $roles_id)
             ->pluck('model_id');
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | ACCESORS
+    |--------------------------------------------------------------------------
+    */
+
+    public function getFriendCardExpirationDateAttribute()
+    {
+        $expiry = $this->friend_card_expiry;
+        $year = date('y');
+        $month = date('m');
+
+        if ($expiry && $expiry <= $month) {
+            $year++;
+        }
+
+        if (!$expiry) {
+            $expiry = $month;
+        }
+
+        return [str_pad($expiry, 2, '0', STR_PAD_LEFT), str_pad($year, 2, '0', STR_PAD_LEFT)];
     }
 }

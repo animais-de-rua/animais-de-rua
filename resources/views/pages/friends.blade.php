@@ -106,6 +106,20 @@
                 @endif
                 <a href="{{ url('/logout') }}"><button class="btn">{{ trans('backpack::base.logout') }}</button></a>
             </div>
+
+            <div class="card">
+                <div>
+                    <img class="bg" src="{{ url("/img/logo/logo-white.png") }}" />
+                    <div class="top">
+                        <div class="title">{{ ucfirst(__('friend')) }} Animais de Rua</div>
+                        <div class="number code">#{{ backpack_user()->friend_card_number }}</div>
+                    </div>
+                    <div class="bottom">
+                        <div class="owner code">{{ backpack_user()->name }}</div>
+                        <div class="expiry-date code">{{ join(' / ', backpack_user()->friendCardExpirationDate) }}</div>
+                    </div>
+                </div>
+            </div>
         @else
             <p>{{ __('web.friend_card_login.messages.3') }}</p>
 

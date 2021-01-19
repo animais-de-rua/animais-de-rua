@@ -43,12 +43,11 @@
 @else
     <meta property="og:title" content="{{ config('app.name') }}" />
     <meta property="og:description" content="{{ __('description') }}" />
-    <meta property="og:image" content="{{ config('app.url') }}/img/logo/facebook.png" />
+    <meta property="og:image" content="{{ config('app.url') }}img/logo/facebook.png" />
 @endif
 
     <link rel="preload" href="{{ mix('js/app.js') }}" as="script" />
     <link rel="preload" href="{{ mix('css/app.css') }}" as="style" />
-    <link rel="preload" href="{{ '/img/logo/logo.svg' }}" as="image" />
     <link rel="preload" href="{{ "/fonts/icomoon.woff2?3f18b6535991cd09292b06b870eb6400" }}" as="font" type="font/woff2" crossorigin="anonymous" />
 
     <link rel="preconnect" href="https://www.google-analytics.com" />

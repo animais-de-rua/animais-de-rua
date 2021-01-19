@@ -137,10 +137,40 @@ class UserCrudController extends CrudController
         ])->afterField('headquarters');
 
         $this->crud->addField([
+            'label' => ucfirst(__('friend card number')),
+            'name' => 'friend_card_number',
+            'type' => 'number',
+            'attributes' => [
+                'min' => '1',
+            ],
+        ])->afterField('friend_card_modality_id');
+
+        $this->crud->addField([
+            'label' => ucfirst(__('friend card expiry month')),
+            'name' => 'friend_card_expiry',
+            'type' => 'select_from_array',
+            'options' => [
+                '' => '-',
+                1 => __('January'),
+                2 => __('February'),
+                3 => __('March'),
+                4 => __('April'),
+                5 => __('May'),
+                6 => __('June'),
+                7 => __('July'),
+                8 => __('August'),
+                9 => __('September'),
+                10 => __('October'),
+                11 => __('November'),
+                12 => __('December'),
+            ],
+        ])->afterField('friend_card_number');
+
+        $this->crud->addField([
             'label' => __('Notes'),
             'type' => 'textarea',
             'name' => 'notes',
-        ])->afterField('friend_card_modality_id');
+        ])->afterField('friend_card_expiry');
 
         $this->crud->addColumn([
             'label' => ucfirst(__('headquarter')),

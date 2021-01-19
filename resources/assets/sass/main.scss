@@ -1423,6 +1423,67 @@ footer {
             color: #777;
         }
     }
+
+    .card {
+        perspective: 1000px;
+
+        & > div {
+            width: 425px;
+            height: 270px;
+            max-width: 100%;
+            max-height: 60vw;
+            padding: 30px;
+            color: #fff;
+            border-radius: 15px;
+            background: linear-gradient(-20deg, #611c15, #E03322);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            margin: 20px auto;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, .6);
+            overflow: hidden;
+            transform: rotate3d(1, -1, 0, 10deg);
+            transform-origin: 50%;
+            transition: transform .2s, box-shadow .2s;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.4);
+            
+            &:hover {
+                transform: rotate3d(1, -1, 0, 5deg) translateZ(20px);
+                box-shadow: 4px 6px 7px rgba(0,0,0,0.4);
+            }
+        }
+        
+        .code {
+          font-family: monospace, sans-serif;
+        }
+      
+        img.bg {
+          width: 50%;
+          position: absolute;
+          right: -14%;
+          top: -10%;
+        }
+        
+        .top {
+          font-size: 2rem;
+          font-weight: 600;
+        }
+        
+        .number {
+          font-size: 2.8rem;
+          margin-top: .2rem;
+        }
+      
+        .owner {
+          text-align: center;
+          font-size: 2.2rem;
+        }
+      
+        .expiry-date {
+          text-align: center;
+          font-size: 1.8rem;
+        }
+    }
 }
 
 .modalities {
@@ -2338,8 +2399,13 @@ body {
         }
     }
 
-    .card-login .box {
-        width: 100%;
+    .card-login {
+        .box {
+            width: 100%;
+        }
+        .card {
+            transform: scale(0.7);
+        }
     }
 
     #donation {
