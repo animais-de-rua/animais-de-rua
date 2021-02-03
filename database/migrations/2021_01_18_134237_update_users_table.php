@@ -16,6 +16,7 @@ class UpdateUsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->integer('friend_card_number')->after('friend_card_modality_id')->nullable()->unsigned();
             $table->integer('friend_card_expiry')->after('friend_card_number')->nullable()->unsigned();
+            $table->text('address')->after('phone')->nullable();
         });
     }
 
@@ -29,6 +30,7 @@ class UpdateUsersTable extends Migration
         Schema::table('users', function ($table) {
             $table->dropColumn('friend_card_number');
             $table->dropColumn('friend_card_expiry');
+            $table->dropColumn('address');
         });
     }
 }

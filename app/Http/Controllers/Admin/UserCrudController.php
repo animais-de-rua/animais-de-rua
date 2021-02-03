@@ -111,12 +111,18 @@ class UserCrudController extends CrudController
         ])->afterField('email');
 
         $this->crud->addField([
+            'label' => __('Address'),
+            'type' => 'textarea',
+            'name' => 'address',
+        ])->afterField('phone');
+
+        $this->crud->addField([
             'name' => 'status',
             'label' => __('Status'),
             'type' => 'select_from_array',
             'options' => EnumHelper::translate('user.status'),
             'allows_null' => false,
-        ])->afterField('phone');
+        ])->afterField('address');
 
         $this->crud->addField([
             'label' => ucfirst(__('headquarter')),
