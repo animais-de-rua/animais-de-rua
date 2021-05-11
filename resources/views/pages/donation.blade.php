@@ -20,7 +20,7 @@
             <li class="paypal">
                 <a href="https://{{ Config::get('app.donate.paypal') }}" target="_blank" rel="noopener">
                     <img src="/img/svg/paypal.svg" title="paypal" height="36" />
-                    <p>{{ Config::get('app.donate.paypal') }}</p>
+                    <p>{{ explode("/?", Config::get('app.donate.paypal'))[0] }}</p>
                 </a>
             </li>
             <li class="selectable">
