@@ -101,7 +101,7 @@ trait LocalCache
     public static function products()
     {
         return Cache::rememberForever('products', function () {
-            return app('App\Http\Controllers\WooCommerceController')->getProducts();
+            return request()->secure() ? app('App\Http\Controllers\WooCommerceController')->getProducts() : [];
         });
     }
 
