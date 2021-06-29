@@ -194,7 +194,7 @@ class AdoptionCrudController extends CrudController
         ]);
 
         // ------ CRUD COLUMNS
-        $this->crud->addColumns(['id', 'name', 'process_id', 'fat_id', 'age', 'gender', 'sterilized', 'vaccinated', 'processed', 'adoption_date', 'status', 'user_id']);
+        $this->crud->addColumns(['id', 'name', 'process_id', 'fat_id', 'age', 'gender', 'sterilized', 'vaccinated', 'processed', 'adoption_date', 'status', 'adopter_id', 'user_id']);
 
         $this->crud->setColumnDetails('id', [
             'label' => 'ID',

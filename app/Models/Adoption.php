@@ -76,7 +76,6 @@ class Adoption extends Model
     | ACCESORS
     |--------------------------------------------------------------------------
     */
-
     public function getNameLinkAttribute()
     {
         return $this->getLink($this, true, '');
@@ -85,6 +84,11 @@ class Adoption extends Model
     public function getProcessLinkAttribute()
     {
         return $this->getLink($this->process, true, '');
+    }
+
+    public function getAdopterLinkAttribute()
+    {
+        return $this->getLink($this->adopter, true, 'edit');
     }
 
     public function getHeadquarterAttribute()
