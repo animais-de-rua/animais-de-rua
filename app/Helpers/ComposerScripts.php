@@ -16,7 +16,7 @@ class ComposerScripts
     {
         switch (DIRECTORY_SEPARATOR) {
             case '/': // unix
-                exec('ln -s "public\vendor\adminlte" "vendor\almasaeed2010\adminlte"');
+                exec('ln -s ../../vendor/almasaeed2010/adminlte public/vendor');
                 break;
             case '\\': // windows
                 exec('mklink /J "public\vendor\adminlte" "vendor\almasaeed2010\adminlte"');
