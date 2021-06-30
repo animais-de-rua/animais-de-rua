@@ -11,5 +11,4 @@ COPY . /app
 WORKDIR /app
 
 RUN composer install --ignore-platform-reqs
-RUN composer run-script post-install-cmd
 RUN npm install && npm run prod
