@@ -12,7 +12,10 @@ This is the open source project of the website and intranet of Animais de Rua, a
 It's a work in progress for the website [Animais de Rua](https://animaisderua.org/).
 It includes a backoffice for the organization and for the main website.
 
-
+## How to run the project
+- Clone this repo and `cd` into it
+- Install docker on your machine
+- `docker-compose up`
 ## Contributing
 
 Thank you for considering contributing to the this platform! Feel free to open issues and pull requests!
