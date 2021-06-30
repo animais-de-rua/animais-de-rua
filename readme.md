@@ -15,6 +15,8 @@ It includes a backoffice for the organization and for the main website.
 ## How to run the project
 - Clone this repo and `cd` into it
 - Install docker on your machine
+- Create a `.env` file on the root of the project base it on a copy of the `.env.example` file
+- Make sure to set env var to `DB_HOST=db`
 - `docker-compose up`
 ## Contributing
 
