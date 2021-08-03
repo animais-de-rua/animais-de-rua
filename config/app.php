@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Application Vars
@@ -19,6 +18,8 @@ return [
         'mbway' => env('DONATE_MBWAY'),
         'iban' => env('DONATE_IBAN'),
     ],
+
+    'vat' => [23, 22, 18, 13, 12, 9, 6, 5, 4],
 
     /*
     |--------------------------------------------------------------------------
@@ -138,7 +139,6 @@ return [
     */
 
     'providers' => [
-
         /*
          * Laravel Framework Service Providers...
          */
@@ -180,7 +180,6 @@ return [
         Spatie\CookieConsent\CookieConsentServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Pixelpeter\Woocommerce\WoocommerceServiceProvider::class,
-
     ],
 
     /*
@@ -195,7 +194,6 @@ return [
     */
 
     'aliases' => [
-
         'App' => Illuminate\Support\Facades\App::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
         'Auth' => Illuminate\Support\Facades\Auth::class,
@@ -231,7 +229,5 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Woocommerce' => Pixelpeter\Woocommerce\Facades\Woocommerce::class,
-
     ],
-
 ];

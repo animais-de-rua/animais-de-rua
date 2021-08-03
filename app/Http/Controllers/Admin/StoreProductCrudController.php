@@ -7,9 +7,9 @@ use App\Http\Requests\StoreProductRequest as UpdateRequest;
 use App\Models\StoreProduct;
 
 /**
- * Class StoreProductsCrudController
- * @package App\Http\Controllers\Admin
- * @property-read CrudPanel $crud
+ * Class StoreProductsCrudController.
+ *
+ * @property CrudPanel $crud
  */
 class StoreProductCrudController extends CrudController
 {
@@ -21,7 +21,7 @@ class StoreProductCrudController extends CrudController
         |--------------------------------------------------------------------------
         */
         $this->crud->setModel('App\Models\StoreProduct');
-        $this->crud->setRoute(config('backpack.base.route_prefix') . '/store/products');
+        $this->crud->setRoute(config('backpack.base.route_prefix').'/store/products');
         $this->crud->setEntityNameStrings(__('product'), __('products'));
 
         /*
@@ -37,7 +37,17 @@ class StoreProductCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'label' => __('Price') . ' (' . __('with :vat% VAT', ['vat' => \Config::get('settings.vat')]) . ')',
+            'label' => __('VAT'),
+            'name' => 'vat',
+            'type' => 'select_from_array',
+            'suffix' => '%',
+            'options' => collect(config('app.vat'))->mapWithKeys(function ($vat) {
+                return [$vat => "$vat%"];
+            }),
+        ]);
+
+        $this->crud->addField([
+            'label' => __('Price').' ('.__('with VAT').')',
             'name' => 'price',
             'type' => 'number',
             'suffix' => '€',
@@ -47,7 +57,7 @@ class StoreProductCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'label' => __('Price') . ' (' . __('no VAT') . ')',
+            'label' => __('Price').' ('.__('no VAT').')',
             'name' => 'price_no_vat',
             'type' => 'number_vat',
             'base' => 'price',
@@ -158,7 +168,7 @@ class StoreProductCrudController extends CrudController
         $storeProduct = StoreProduct::select(['notes'])->find($id);
 
         return "<div style='margin:5px 8px'>
-                <p style='white-space: pre-wrap;'><i>" . __('Notes') . "</i>: $storeProduct->notes</p>
+                <p style='white-space: pre-wrap;'><i>".__('Notes')."</i>: $storeProduct->notes</p>
             </div>";
     }
 

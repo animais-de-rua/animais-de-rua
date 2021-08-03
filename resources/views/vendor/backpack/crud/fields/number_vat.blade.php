@@ -25,11 +25,11 @@
 @if ($crud->checkIfFieldIsFirstOfItsType($field))
     @push('crud_fields_scripts')
     <script>
-        let vat = 1 + .01 * {{ \Config::get('settings.vat') }};
+        let vatInput = document.querySelector('select[name="vat"]');
         let finalInput = document.querySelector('[name="{{ $field['name'] }}"]');
         let baseInput = document.querySelector('[name="{{ $field['base'] }}"]');
 
-        baseInput.oninput = e => finalInput.value = (baseInput.value / vat).toFixed(2);
+        vatInput.oninput = baseInput.oninput = e => finalInput.value = (baseInput.value / (1 + .01 * parseInt(vatInput.value))).toFixed(2);
     </script>
     @endpush
 @endif
