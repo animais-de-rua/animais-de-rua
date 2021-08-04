@@ -23,6 +23,8 @@
     "shipped": "shipped",
     "paypal": "PayPal",
     "bank_transfer": "bank transfer",
+    "credit_card": "credit card",
+    "mbway": "MBWay",
     "approved_option_1": "Aproved option 1",
     "approved_option_2": "Aproved option 2",
 

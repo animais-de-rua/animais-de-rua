@@ -143,6 +143,8 @@ return [
         'payment' => [
             'bank_transfer' => 'bank_transfer',
             'paypal' => 'paypal',
+            'mbway' => 'mbway',
+            'credit_card' => 'credit_card',
         ],
         'voucher' => [
             'used' => 'used',
