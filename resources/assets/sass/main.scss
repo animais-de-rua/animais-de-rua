@@ -60,7 +60,7 @@ select {
 
 label,
 picture,
-picture > img {
+picture>img {
     display: block;
 }
 
@@ -82,6 +82,7 @@ picture > img {
             0% {
                 opacity: 0;
             }
+
             100% {
                 opacity: 1;
             }
@@ -105,6 +106,7 @@ picture > img {
     &.start {
         animation: loadingStart 0.6s forwards;
     }
+
     &.end {
         animation: loadingEnd 0.2s;
     }
@@ -114,6 +116,7 @@ picture > img {
             0% {
                 width: 0;
             }
+
             100% {
                 width: 35vw;
             }
@@ -123,6 +126,7 @@ picture > img {
             0% {
                 width: 35vw;
             }
+
             100% {
                 width: 100vw;
             }
@@ -185,6 +189,7 @@ input {
         height: 14px;
         margin: -2px 2px;
     }
+
     &[type="radio"]:checked:after,
     &[type="checkbox"]:checked:after {
         content: " ";
@@ -386,13 +391,16 @@ a {
             pointer-events: none;
         }
     }
+
     .menu.active {
         div:nth-of-type(1) {
             transform: rotate(-45deg) translate(-9px, 7px);
         }
+
         div:nth-of-type(2) {
             opacity: 0;
         }
+
         div:nth-of-type(3) {
             transform: rotate(45deg) translate(-8px, -7px);
         }
@@ -428,7 +436,7 @@ a {
         color: #fff;
         text-align: center;
 
-        > .card:last-child {
+        >.card:last-child {
             margin-right: 0px;
         }
     }
@@ -645,9 +653,11 @@ a {
         .menu div {
             background-color: #fff;
         }
+
         .mobile .mobile-card-view {
             top: 0;
         }
+
         .mobile {
             transform: initial !important;
         }
@@ -669,6 +679,7 @@ footer {
         font-size: 1.8rem;
         letter-spacing: 0.01rem;
     }
+
     a.color-link {
         color: #fff;
         transition: 0.1s color;
@@ -694,9 +705,11 @@ footer {
         label {
             margin-bottom: 0.8rem;
         }
+
         input {
             margin-bottom: 0;
         }
+
         .result {
             margin: 0;
             font-weight: normal;
@@ -714,6 +727,7 @@ footer {
         h4 {
             margin-bottom: 1.4rem;
         }
+
         .icon {
             font-size: 22px;
             margin: 0 10px 0 0;
@@ -724,10 +738,12 @@ footer {
         h4 {
             margin-bottom: 0.5rem;
         }
+
         a {
             font-weight: 600;
             font-size: 1.8rem;
         }
+
         p {
             margin-top: 2px;
             font-weight: 400;
@@ -739,6 +755,7 @@ footer {
         a {
             font-weight: 700;
         }
+
         p {
             margin-bottom: 12px;
         }
@@ -759,6 +776,7 @@ footer {
                 border-radius: 0;
                 transition: 0.2s margin;
             }
+
             &[type="email"]:focus {
                 border: 1px solid #fff;
                 margin-right: 0px;
@@ -863,7 +881,7 @@ footer {
     display: flex;
     flex-wrap: wrap;
 
-    & > a {
+    &>a {
         height: 100%;
         padding: 20px 12px;
     }
@@ -951,11 +969,13 @@ footer {
         font-weight: 700;
         letter-spacing: 0.06rem;
     }
+
     p {
         font-size: 2.2rem;
         font-weight: 700;
         line-height: 3rem;
     }
+
     a {
         font-size: 1.2rem;
         font-weight: 600;
@@ -1004,6 +1024,7 @@ footer {
             }
         }
     }
+
     .icon {
         opacity: 0;
         position: absolute;
@@ -1040,6 +1061,7 @@ footer {
 
         &:hover {
             color: #000;
+
             .icon {
                 margin-left: 16px;
             }
@@ -1101,12 +1123,12 @@ footer {
 }
 
 .three-slider {
-    > h1 {
+    >h1 {
         text-align: center;
         margin-bottom: 8px;
     }
 
-    > p {
+    >p {
         text-align: center;
         margin-bottom: 32px;
     }
@@ -1144,9 +1166,11 @@ footer {
                 p:first-child {
                     margin: 0 22% 10px 0;
                 }
+
                 p:last-child {
                     margin: 10px 0 0 22%;
                 }
+
                 .line {
                     width: 180px;
                 }
@@ -1187,6 +1211,7 @@ footer {
                     margin: 0 20% 10px 0;
                     color: $color;
                 }
+
                 &:last-child {
                     margin: 10px 0 0 20%;
                     font-weight: 700;
@@ -1211,11 +1236,13 @@ footer {
         .image div {
             background-size: contain;
         }
+
         h1 {
             font-size: 2.4rem;
             min-height: 95px;
         }
     }
+
     .price {
         text-align: center;
         font-size: 2rem;
@@ -1245,6 +1272,7 @@ footer {
     h1 {
         font-size: 2.2rem;
     }
+
     p {
         color: $grey;
         font-size: 1.4rem;
@@ -1254,7 +1282,7 @@ footer {
 .where {
     text-align: center;
 
-    > div {
+    >div {
         color: $grey;
         font-size: 1.4rem;
     }
@@ -1334,16 +1362,19 @@ footer {
     h2 {
         font-weight: 700;
     }
+
     a,
     .text {
         font-size: 1.4rem;
         color: $grey;
     }
+
     a {
         text-transform: uppercase;
         font-weight: 600;
     }
-    .column > div,
+
+    .column>div,
     .column img {
         margin-bottom: 24px;
     }
@@ -1385,16 +1416,19 @@ footer {
         font-size: 2rem;
         margin-bottom: 20px;
     }
-    & > p {
+
+    &>p {
         text-align: center;
         font-size: 1.4rem;
         margin-bottom: 4px;
     }
+
     label {
         margin-top: 10px;
         font-size: 1.3rem;
         font-weight: 700;
     }
+
     input:not(.btn) {
         font-size: 1.3rem;
         border: 1px solid #bbb;
@@ -1403,6 +1437,7 @@ footer {
         width: 100%;
         margin: 5px 0;
     }
+
     input {
         margin: 0 6px 0 0;
 
@@ -1412,9 +1447,11 @@ footer {
             min-width: 160px;
         }
     }
+
     a {
         font-size: 1.4rem;
     }
+
     .password-reset {
         text-align: right;
         margin: 0;
@@ -1427,7 +1464,7 @@ footer {
     .card {
         perspective: 1000px;
 
-        & > div {
+        &>div {
             width: 425px;
             height: 270px;
             max-width: 100%;
@@ -1445,41 +1482,41 @@ footer {
             transform: rotate3d(1, -1, 0, 10deg);
             transform-origin: 50%;
             transition: transform .2s, box-shadow .2s;
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.4);
-            
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+
             &:hover {
                 transform: rotate3d(1, -1, 0, 5deg) translateZ(20px);
-                box-shadow: 4px 6px 7px rgba(0,0,0,0.4);
+                box-shadow: 4px 6px 7px rgba(0, 0, 0, 0.4);
             }
         }
-        
+
         .code {
-          font-family: monospace, sans-serif;
+            font-family: monospace, sans-serif;
         }
-      
+
         img.bg {
-          width: 42%;
-          position: absolute;
-          right: 0%;
-          top: 0%;
+            width: 42%;
+            position: absolute;
+            right: 0%;
+            top: 0%;
         }
-        
+
         .top {
-          font-size: 2rem;
-          font-weight: 600;
+            font-size: 2rem;
+            font-weight: 600;
         }
-        
+
         .number {
-          font-size: 2.8rem;
-          margin-top: .2rem;
+            font-size: 2.8rem;
+            margin-top: .2rem;
         }
-      
+
         .owner {
-          font-size: 2.2rem;
+            font-size: 2.2rem;
         }
-      
+
         .expiry-date {
-          font-size: 1.8rem;
+            font-size: 1.8rem;
         }
     }
 }
@@ -1543,6 +1580,7 @@ footer {
             .price {
                 color: #fff;
             }
+
             .slider {
                 bottom: 0;
             }
@@ -1620,6 +1658,7 @@ footer {
             font-weight: 600;
         }
     }
+
     .empty,
     .status {
         width: 100%;
@@ -1651,18 +1690,22 @@ footer {
     span {
         font-size: 1.2rem;
     }
+
     h1 {
         font-size: 1.8rem;
         margin: 8px 0 0;
     }
+
     p {
         font-size: 1.4rem;
         margin: 0;
     }
+
     span {
         font-style: italic;
         color: $grey;
     }
+
     hr {
         margin: 5px 0;
         border-width: 1px 0 0 0;
@@ -1685,6 +1728,7 @@ footer {
                 pointer-events: none;
                 color: #000;
             }
+
             &:not(.active) {
                 border-bottom: 0;
             }
@@ -1728,6 +1772,7 @@ footer {
                 margin-left: 5px 0 0 5px;
             }
         }
+
         .image img {
             object-fit: contain;
         }
@@ -1740,6 +1785,7 @@ footer {
     h1 {
         margin-bottom: 6px;
     }
+
     h2 {
         font-size: 2.2rem;
     }
@@ -1817,9 +1863,11 @@ footer {
         margin-top: 80px;
         font-size: 3.4rem;
     }
+
     h3 {
         font-size: 2rem;
     }
+
     .doc {
         text-align: left;
         width: 80%;
@@ -1968,6 +2016,7 @@ footer {
             margin: 4px 0;
             border-radius: 2px;
         }
+
         input[type="checkbox"]:checked:after {
             border-radius: 2px;
             background-color: #000;
@@ -1992,6 +2041,7 @@ footer {
             h1 {
                 margin-bottom: 4px;
             }
+
             div {
                 margin-bottom: 2px;
             }
@@ -2007,6 +2057,7 @@ footer {
         div.sending h1 {
             display: block;
         }
+
         .content {
             opacity: 0.3;
             pointer-events: none;
@@ -2021,6 +2072,7 @@ footer {
         .success {
             display: block;
         }
+
         .content {
             display: none;
         }
@@ -2061,6 +2113,7 @@ footer {
             [type="checkbox"] {
                 margin-right: 8px;
             }
+
             label {
                 margin-right: 12px;
             }
@@ -2075,6 +2128,7 @@ footer {
     }
 
     .apply {
+
         input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]),
         select {
             height: 36px;
@@ -2116,7 +2170,7 @@ body {
     min-height: calc(100vh - 130px);
     margin-top: -28px;
 
-    & > div {
+    &>div {
         flex: 1;
         width: 50%;
     }
@@ -2171,7 +2225,8 @@ body {
                     display: block;
                 }
 
-                &>div, &>a {
+                &>div,
+                &>a {
                     padding: 1rem 2rem;
                 }
             }
@@ -2189,6 +2244,7 @@ body {
 
 // Wide screens
 @media (max-width: 1092px) {
+
     // Fix for top menu
     #navbar .left {
         display: inline;
@@ -2244,13 +2300,14 @@ body {
     #content {
         min-height: calc(100vh - 68px);
     }
+
     .row.row-wrap .column[class*=" column-"] {
         margin-left: 0;
         max-width: 100%;
         flex: 0 0 100%;
     }
 
-    .column > picture > img {
+    .column>picture>img {
         width: 100%;
     }
 
@@ -2281,6 +2338,7 @@ body {
         .logo {
             display: none !important;
         }
+
         .contact {
             margin-top: 20px;
         }
@@ -2309,6 +2367,7 @@ body {
         img {
             height: 280px;
         }
+
         .box {
             margin: 32px 2%;
             width: 96%;
@@ -2319,6 +2378,7 @@ body {
         li {
             width: 100%;
         }
+
         .slide {
             flex-direction: column-reverse;
 
@@ -2390,7 +2450,8 @@ body {
         .last-child {
             margin-bottom: 10px !important;
         }
-        .scrollable > div {
+
+        .scrollable>div {
             max-width: 100%;
             flex: 100%;
             margin: 0;
@@ -2401,6 +2462,7 @@ body {
         .box {
             width: 100%;
         }
+
         .card {
             transform: scale(0.7);
         }
@@ -2410,7 +2472,7 @@ body {
         flex-direction: column;
         min-height: calc(100vh - 68px);
 
-        & > div {
+        &>div {
             width: 100%;
         }
 
@@ -2435,7 +2497,7 @@ body {
             .image {
                 width: 100%;
 
-                + div {
+                +div {
                     width: 100%;
                     min-height: 160px;
                 }
@@ -2446,6 +2508,7 @@ body {
             }
         }
     }
+
     .isotope .box {
         margin: 8px 0;
         flex: 0 0 calc(100%);

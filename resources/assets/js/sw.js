@@ -57,18 +57,18 @@ self.onfetch = e => {
 		return;
 
 	// Avoid admin and store areas
-	if(e.request.url.match(/\/admin|\/api|\/form|\/lang|\/store|\/loja|\/vendor|\/pdf/))
+	if (e.request.url.match(/\/admin|\/api|\/form|\/lang|\/store|\/loja|\/vendor|\/pdf/))
 		return;
 
 	// Avoid external requests
-	if(!e.request.url.match(/https?:\/\/animaisderua.org/))
+	if (!e.request.url.match(/https?:\/\/animaisderua.org/))
 		return;
 
 	// If it's a page access, retreive blank
 	if (e.request.destination == 'document') {
 
 		// Update cache if language was changed
-		if(e.request.url.match(/\/lang\/[a-z]{2}$/)) {
+		if (e.request.url.match(/\/lang\/[a-z]{2}$/)) {
 			caches.open(CACHE).then(function (cache) {
 				cachePages.forEach(page => cache.delete(page));
 				cache.addAll(cachePages);
@@ -76,7 +76,7 @@ self.onfetch = e => {
 		}
 
 		// Online
-		if(navigator.onLine) {
+		if (navigator.onLine) {
 			e.respondWith(fetch(e.request));
 
 			// Update blank cache
@@ -92,17 +92,17 @@ self.onfetch = e => {
 		// Offline
 		else {
 			return e.respondWith(
-				caches.match('/blank', {ignoreSearch: true}).then(response => response)
+				caches.match('/blank', { ignoreSearch: true }).then(response => response)
 			);
 		}
 	}
-	
+
 	// Update css and js cache
-	if(e.request.url.match(/\.(css|js|webp)/)) {
+	if (e.request.url.match(/\.(css|js|webp)/)) {
 		caches.open(CACHE).then(cache => {
-			cache.match(e.request, {ignoreSearch: false}).then(response => {
-				if(!response) {
-					cache.delete(e.request.url, {ignoreSearch: true});
+			cache.match(e.request, { ignoreSearch: false }).then(response => {
+				if (!response) {
+					cache.delete(e.request.url, { ignoreSearch: true });
 					fetch(e.request).then(response => cache.put(e.request, response.clone()));
 				}
 			});
@@ -111,7 +111,7 @@ self.onfetch = e => {
 
 	// Allways try to respond with cache
 	e.respondWith(
-		caches.match(e.request, {ignoreSearch: false}).then(response => {
+		caches.match(e.request, { ignoreSearch: false }).then(response => {
 			return response || fetch(e.request);
 		})
 	);

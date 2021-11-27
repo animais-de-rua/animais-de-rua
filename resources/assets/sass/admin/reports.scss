@@ -22,7 +22,7 @@
     .filters {
         line-height: 40px;
 
-        & > * {
+        &>* {
             white-space: nowrap;
         }
     }
@@ -43,7 +43,7 @@
         }
 
         td {
-            padding: 4px 8px!important;
+            padding: 4px 8px !important;
         }
 
         .close {
@@ -86,7 +86,7 @@
             }
         }
 
-        & > .box {
+        &>.box {
             overflow-x: hidden;
             overflow-y: scroll;
         }
@@ -97,7 +97,7 @@
             display: grid;
         }
 
-        & > .col-md-12 {
+        &>.col-md-12 {
             width: 440px;
         }
     }
@@ -117,15 +117,15 @@
         }
 
         &:not(.active) {
-            border-bottom: none!important;
+            border-bottom: none !important;
         }
 
-        & + .box-body {
+        &+.box-body {
             display: none;
         }
 
         &.active {
-            & + .box-body {
+            &+.box-body {
                 display: block;
             }
 

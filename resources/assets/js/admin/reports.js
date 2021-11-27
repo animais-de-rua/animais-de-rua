@@ -5,11 +5,11 @@ document.addEventListener("DOMContentLoaded", e => {
         let form = report.querySelector('form');
 
         // Common fetch
-        let fetchData = async function(action) {
+        let fetchData = async function (action) {
             return fetch(action, {
                 method: "POST",
                 credentials: 'same-origin',
-                headers: {'X-Requested-With': 'XMLHttpRequest'},
+                headers: { 'X-Requested-With': 'XMLHttpRequest' },
                 body: new FormData(form)
             });
         }
@@ -22,9 +22,9 @@ document.addEventListener("DOMContentLoaded", e => {
                 document.querySelectorAll(`select[parent-toggler=${name}]`).forEach(child => child.setAttribute('disabled', 'disabled'));
 
                 // Enable select 
-                if(select.value) {
+                if (select.value) {
                     let input = document.querySelector(`select[parent-toggler=${name}][name=${select.value}]`);
-                    if(input) {
+                    if (input) {
                         input.removeAttribute('disabled');
                     }
                 }
@@ -63,30 +63,30 @@ document.addEventListener("DOMContentLoaded", e => {
             e.preventDefault();
 
             fetchData(form.action.replace('export', 'preview'))
-            .then(response => response.json())
-            .then(data => {
-                let report = form.closest('.report');
-                let table = report.querySelector('table');
+                .then(response => response.json())
+                .then(data => {
+                    let report = form.closest('.report');
+                    let table = report.querySelector('table');
 
-                report.classList.add('active');
-                table.innerHTML = '';
+                    report.classList.add('active');
+                    table.innerHTML = '';
 
-                if(data && data.length) {
-                    // Table content
-                    data.forEach((row, trIndex) => {
-                        if(trIndex) {
-                            let tr = table.insertRow(trIndex - 1);
-                            row.forEach((column, columnIndex) => tr.insertCell(columnIndex).innerHTML = column);
-                            tr.insertCell(0).innerHTML = trIndex;
-                        }
-                    });
+                    if (data && data.length) {
+                        // Table content
+                        data.forEach((row, trIndex) => {
+                            if (trIndex) {
+                                let tr = table.insertRow(trIndex - 1);
+                                row.forEach((column, columnIndex) => tr.insertCell(columnIndex).innerHTML = column);
+                                tr.insertCell(0).innerHTML = trIndex;
+                            }
+                        });
 
-                    // Table Header
-                    let header = table.createTHead().insertRow(0);
-                    data[0].forEach((column, i) => header.insertCell(i).innerHTML = column);
-                    header.insertCell(0).innerHTML = "#";
-                }
-            });
+                        // Table Header
+                        let header = table.createTHead().insertRow(0);
+                        data[0].forEach((column, i) => header.insertCell(i).innerHTML = column);
+                        header.insertCell(0).innerHTML = "#";
+                    }
+                });
         }
 
         // Close btn
