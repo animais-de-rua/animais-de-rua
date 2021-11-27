@@ -1435,7 +1435,7 @@ footer {
             padding: 30px;
             color: #fff;
             border-radius: 15px;
-            background: linear-gradient(-20deg, #611c15, #E03322);
+            background: linear-gradient(-20deg, #af6e33, #f89d4c);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -1458,10 +1458,10 @@ footer {
         }
       
         img.bg {
-          width: 50%;
+          width: 42%;
           position: absolute;
-          right: -14%;
-          top: -10%;
+          right: 0%;
+          top: 0%;
         }
         
         .top {
@@ -1475,12 +1475,10 @@ footer {
         }
       
         .owner {
-          text-align: center;
           font-size: 2.2rem;
         }
       
         .expiry-date {
-          text-align: center;
           font-size: 1.8rem;
         }
     }
