@@ -43,7 +43,7 @@ class FriendCardModalityCrudController extends CrudController
 
         $this->crud->addField([
             'label' => __('Description'),
-            'type' => 'wysiwyg',
+            'type' => 'textarea',
             'name' => 'description',
         ]);
 
