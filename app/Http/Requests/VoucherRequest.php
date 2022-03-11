@@ -29,11 +29,12 @@ class VoucherRequest extends FormRequest
         return [
             'reference' => 'required|max:255',
             'voucher' => 'nullable|max:255',
-            'value' => 'nullable',
+            'value' => 'required_without:percent|numeric|min:0',
+            'percent' => 'required_without:value|numeric|min:0|max:100',
             'client_name' => 'nullable|max:255',
             'client_email' => 'nullable|max:255',
             'expiration' => 'nullable',
-            'status' => 'in:' . EnumHelper::keys('store.voucher', ','),
+            'status' => 'in:'.EnumHelper::keys('store.voucher', ','),
         ];
     }
 

@@ -23,7 +23,7 @@ class VoucherCrudController extends CrudController
         |--------------------------------------------------------------------------
         */
         $this->crud->setModel('App\Models\Voucher');
-        $this->crud->setRoute(config('backpack.base.route_prefix') . '/store/voucher');
+        $this->crud->setRoute(config('backpack.base.route_prefix').'/store/voucher');
         $this->crud->setEntityNameStrings(__('voucher'), __('vouchers'));
 
         /*
@@ -34,7 +34,7 @@ class VoucherCrudController extends CrudController
 
         // ----------
         // Columns
-        $this->crud->setColumns(['reference', 'voucher', 'value', 'client_name', 'client_email', 'expiration', 'status']);
+        $this->crud->setColumns(['reference', 'voucher', 'valueText', 'percentText', 'client_name', 'client_email', 'expiration', 'status']);
 
         $this->crud->addColumn([
             'label' => __('Reference'),
@@ -50,12 +50,14 @@ class VoucherCrudController extends CrudController
 
         $this->crud->addColumn([
             'label' => __('Value'),
-            'name' => 'value',
-            'type' => 'number',
-            'suffix' => '€',
-            'attributes' => [
-                'step' => '0.01',
-            ],
+            'name' => 'valueText',
+            'type' => 'text',
+        ]);
+
+        $this->crud->addColumn([
+            'label' => __('Percent'),
+            'name' => 'percentText',
+            'type' => 'text',
         ]);
 
         $this->crud->addColumn([
@@ -84,7 +86,7 @@ class VoucherCrudController extends CrudController
 
         // ----------
         // Fields
-        $this->crud->addFields(['reference', 'voucher', 'value', 'client_name', 'client_email', 'expiration', 'status']);
+        $this->crud->addFields(['reference', 'voucher', 'value', 'percent', 'client_name', 'client_email', 'expiration', 'status']);
 
         $this->crud->addField([
             'label' => __('Reference'),
@@ -101,6 +103,12 @@ class VoucherCrudController extends CrudController
         $this->crud->addField([
             'label' => __('Value'),
             'name' => 'value',
+            'type' => 'number',
+        ]);
+
+        $this->crud->addField([
+            'label' => __('Percent'),
+            'name' => 'percent',
             'type' => 'number',
         ]);
 
@@ -157,6 +165,25 @@ class VoucherCrudController extends CrudController
 
                 if (is_numeric($range->to)) {
                     $this->crud->addClause('where', 'value', '<=', $range->to);
+                }
+            });
+
+        $this->crud->addFilter([
+            'name' => 'percent',
+            'type' => 'range',
+            'label' => __('Percent'),
+            'label_from' => __('Min value'),
+            'label_to' => __('Max value'),
+        ],
+            true,
+            function ($value) {
+                $range = json_decode($value);
+                if (is_numeric($range->from)) {
+                    $this->crud->addClause('where', 'percent', '>=', $range->from);
+                }
+
+                if (is_numeric($range->to)) {
+                    $this->crud->addClause('where', 'percent', '<=', $range->to);
                 }
             });
 

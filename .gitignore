@@ -29,3 +29,4 @@ yarn-error.log
 /public/sw.js
 /public/css/admin/*.css
 /public/js/admin/*.js
+/.push.settings.jsonc
