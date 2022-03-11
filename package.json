@@ -15,7 +15,7 @@
         "milligram": "^1.4.1",
         "normalize.css": "^8.0.1",
         "postcss": "^8.2.4",
-        "resolve-url-loader": "^4.0.0",
+        "resolve-url-loader": "^5.0.0",
         "sass": "^1.32.6",
         "sass-loader": "^12.1.0",
         "vue-template-compiler": "^2.6.12"
