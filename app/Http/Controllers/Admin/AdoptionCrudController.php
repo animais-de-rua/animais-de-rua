@@ -37,7 +37,7 @@ class AdoptionCrudController extends CrudController
         */
 
         // ------ CRUD FIELDS
-        $this->crud->addFields(['process_id', 'fat_id', 'name', 'name_after', 'age', 'gender', 'sterilized', 'vaccinated', 'processed', 'individual', 'docile', 'abandoned', 'foal', 'images', 'history', 'adopter_id', 'adoption_date', 'status']);
+        $this->crud->addFields(['process_id', 'fat_id', 'name', 'name_after', 'age', 'gender', 'microchip', 'sterilized', 'vaccinated', 'processed', 'individual', 'docile', 'abandoned', 'foal', 'images', 'history', 'adopter_id', 'adoption_date', 'status']);
 
         $this->crud->addField([
             'label' => ucfirst(__('process')),
@@ -103,6 +103,12 @@ class AdoptionCrudController extends CrudController
             'label' => ucfirst(__('gender')),
             'name' => 'gender',
             'type' => 'enum',
+        ]);
+
+        $this->crud->addField([
+            'label' => ucfirst(__('microchip')),
+            'name' => 'microchip',
+            'type' => 'text',
         ]);
 
         $this->crud->addField([
@@ -194,7 +200,7 @@ class AdoptionCrudController extends CrudController
         ]);
 
         // ------ CRUD COLUMNS
-        $this->crud->addColumns(['id', 'name', 'process_id', 'fat_id', 'age', 'gender', 'sterilized', 'vaccinated', 'processed', 'adoption_date', 'status', 'adopter_id', 'user_id']);
+        $this->crud->addColumns(['id', 'name', 'process_id', 'fat_id', 'age', 'gender', 'microchip', 'sterilized', 'vaccinated', 'processed', 'adoption_date', 'status', 'adopter_id', 'user_id']);
 
         $this->crud->setColumnDetails('id', [
             'label' => 'ID',
@@ -266,6 +272,11 @@ class AdoptionCrudController extends CrudController
         $this->crud->setColumnDetails('gender', [
             'type' => 'trans',
             'label' => ucfirst(__('gender')),
+        ]);
+
+        $this->crud->setColumnDetails('microchip', [
+            'type' => 'trans',
+            'label' => ucfirst(__('microchip')),
         ]);
 
         $this->crud->setColumnDetails('sterilized', [
