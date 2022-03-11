@@ -710,7 +710,16 @@ class ProcessCrudController extends CrudController
             $request->merge(['status' => 'approving']);
         }
 
-        return parent::storeCrud($request);
+        $save = parent::storeCrud($request);
+
+        // Force translations in all languages
+        $entry = $this->crud->entry;
+        foreach (config('backpack.crud.locales') as $key => $value) {
+            $entry->setTranslation('history', $key, $entry->history);
+        }
+        $entry->save();
+
+        return $save;
     }
 
     public function update(UpdateRequest $request)
