@@ -9,8 +9,10 @@
         "prod": "npm run production",
         "production": "mix --production"
     },
+    "dependencies": {
+        "cantil": "^1.1.2"
+    },
     "devDependencies": {
-        "cantil": "^1.1.2",
         "cross-env": "^7.0.3",
         "eslint": "^8.11.0",
         "eslint-config-airbnb-base": "^15.0.0",

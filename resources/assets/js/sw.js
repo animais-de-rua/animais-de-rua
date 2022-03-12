@@ -1,10 +1,10 @@
-const VERSION = '0.0.37';
+const VERSION = '0.0.38';
 const CACHE = 'adr';
 
 const cacheAssets = [
   // Dynamic Assets
   `/sw.js?id=${VERSION}`,
-  '/js/app.js?id=f86838b784e2076335be9d341199326b',
+  '/js/app.js?id=92859769b7ae06f76d57d618365b5a80',
   '/css/app.css?id=42c0e5c46cc8e3952522348bc9f48a74',
   '/fonts/icomoon.woff2?3f18b6535991cd09292b06b870eb6400',
 

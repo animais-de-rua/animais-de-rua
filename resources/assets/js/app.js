@@ -32,7 +32,7 @@ window.router = {
   },
 
   initLinks: () => {
-    function processResponse(response, urlPath, updateRoute = true) {
+    function processResponse(response, urlPath) {
       // Closes mobile menu
       navbar.close();
 
@@ -43,11 +43,8 @@ window.router = {
         }
 
         loading.end();
-        // contentDom.classList.add('anim');
 
-        if (updateRoute) {
-          router.push(html, urlPath.replace('?ajax', ''));
-        }
+        router.push(html, urlPath.replace('?ajax', ''));
 
         const elem = query('[page-title]');
         document.title = elem ? elem.getAttribute('page-title') : window.Laravel.title;
@@ -58,7 +55,8 @@ window.router = {
     queryAll('a.link').forEach(link => {
       link.classList.remove('link');
       link.addEventListener('click', e => {
-        const urlPath = `${e.target.closest('a').href}?ajax`;
+        const urlPathClean = e.target.closest('a').href;
+        const urlPath = `${urlPathClean}?ajax`;
 
         // Pixel track
         app.track('PageView', {
@@ -76,7 +74,7 @@ window.router = {
           fetch(`${urlPath}_updated`, fetchOptions)
             .then(responseUpdated => {
               // Update view
-              processResponse(responseUpdated.clone(), urlPath, false);
+              processResponse(responseUpdated.clone(), urlPathClean);
 
               // Update cache
               if (caches) {
@@ -86,7 +84,7 @@ window.router = {
               }
             })
             .catch(() => {
-              window.location = urlPath.replace('?ajax', '');
+              window.location = urlPathClean;
             });
         }
 
@@ -95,7 +93,7 @@ window.router = {
           caches.open('adr').then(cache => {
             cache.match(urlPath).then(response => {
               if (response) {
-                processResponse(response, urlPath);
+                processResponse(response, urlPathClean);
               }
             });
           });

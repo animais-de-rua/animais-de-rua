@@ -5,9 +5,9 @@ $locale = Session::get('locale', 'pt');
 @endphp
 
 @section('facebook')
-    <meta property="og:title" content="{{ config('app.name') }}: {{ $animal['name'] }}" />
+    <meta property="og:title" content="{{ config('app.name') }}: {{ $animal['name'] ?? '' }}" />
     <meta property="og:description" content="{{ strip_tags($animal['history'][$locale] ?? '') }}" />
-    <meta property="og:image" content="{{ config('app.url') . $animal['images'][0] }}" />
+    <meta property="og:image" content="{{ config('app.url') . ($animal['images'][0] ?? '') }}" />
 @endsection
 
 @section('content')
@@ -20,7 +20,7 @@ $locale = Session::get('locale', 'pt');
                 @php
                     $date = strtotime($animal['created_at']);
                 @endphp
-                <p class="date"><span>{{ __("Beginning of the process") }}</span><br/>{{ __(date("F", $date)) }}, {{ date("Y", $date) }}</p>
+                <p class="date"><span>{{ __("Beginning of the process") }}</span><br />{{ __(date("F", $date)) }}, {{ date("Y", $date) }}</p>
                 <div>
                     @if($animal['history'] && gettype($animal['history']) == 'array')
                     {!! $animal['history'][$locale] ?? '' !!}
@@ -76,7 +76,7 @@ $locale = Session::get('locale', 'pt');
                 <div class="card">
                     <a class="link" href="/animals/adoption/{{ $animal['id'] }}">
                         <div class="image">
-                            <img src="/{{ $animal['images'][0] }}" width="100%" height="100%" />
+                            <img src="/{{ $animal['images'][0] ?? '' }}" width="100%" height="100%" />
                         </div>
                         <div class="content">
                             <h1>{{ $animal['name'] }}</h1>
