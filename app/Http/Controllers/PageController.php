@@ -116,8 +116,8 @@ class PageController extends Controller
         switch ($option) {
             case 'godfather':
                 $animal = Process::select(['processes.name', 'history', 'specie', 'images', 'created_at', 'district.name as district', 'district.id as district_id', 'county.name as county'])
-                    ->join('territories as district', 'district.id', '=', DB::raw('LEFT(territory_id, 2)'))
-                    ->join('territories as county', 'county.id', '=', DB::raw('LEFT(territory_id, 4)'))
+                    ->join('territories as district', 'district.id', '=', DB::raw('LEFT(fats.territory_id, 2)'))
+                    ->join('territories as county', 'county.id', '=', DB::raw('LEFT(fats.territory_id, 4)'))
                     ->where('processes.id', $id)
                     ->firstOrFail()->toArray();
 
@@ -125,19 +125,21 @@ class PageController extends Controller
                 break;
             default:
             case 'adoption':
-                $animal = Adoption::select(['adoptions.name', 'adoptions.history', 'specie', 'adoptions.images', 'adoptions.created_at', 'district.id as district_id', 'district.name as district', 'county.name as county'])
+                $animal = Adoption::select(['adoptions.name', 'adoptions.history', 'processes.specie', 'adoptions.images', 'adoptions.created_at', 'district.id as district_id', 'district.name as district', 'county.name as county'])
                     ->join('processes', 'processes.id', '=', 'adoptions.process_id')
-                    ->join('territories as district', 'district.id', '=', DB::raw('LEFT(territory_id, 2)'))
-                    ->join('territories as county', 'county.id', '=', DB::raw('LEFT(territory_id, 4)'))
+                    ->join('fats', 'fats.id', '=', 'adoptions.fat_id')
+                    ->join('territories as district', 'district.id', '=', DB::raw('LEFT(fats.territory_id, 2)'))
+                    ->join('territories as county', 'county.id', '=', DB::raw('LEFT(fats.territory_id, 4)'))
                     ->where('adoptions.id', $id)
                     ->firstOrFail()->toArray();
 
                 $district = $animal['district_id'];
 
-                $other = Adoption::select(['adoptions.id', 'adoptions.name', 'adoptions.history', 'specie', 'adoptions.images', 'adoptions.created_at'])
+                $other = Adoption::select(['adoptions.id', 'adoptions.name', 'adoptions.history', 'processes.specie', 'adoptions.images', 'adoptions.created_at'])
                     ->join('processes', 'processes.id', '=', 'adoptions.process_id')
+                    ->join('fats', 'fats.id', '=', 'adoptions.fat_id')
                     ->where('adoptions.id', '<>', $id)
-                    ->where(DB::raw('LEFT(territory_id, 2)'), $district)
+                    ->where(DB::raw('LEFT(fats.territory_id, 2)'), $district)
                     ->where('adoptions.status', 'open')
                     ->orderBy('created_at', 'desc')
                     ->limit(3)
@@ -187,17 +189,18 @@ class PageController extends Controller
     // API
     public function getAnimalsAdoption($territory = 0, $specie = 0)
     {
-        $data = Adoption::select(['adoptions.id', 'adoptions.name', 'specie', 'adoptions.images', 'adoptions.created_at', 'district.name as district', 'county.name as county'])
+        $data = Adoption::select(['adoptions.id', 'adoptions.name', 'processes.specie', 'adoptions.images', 'adoptions.created_at', 'district.name as district', 'county.name as county'])
             ->join('processes', 'processes.id', '=', 'adoptions.process_id')
-            ->join('territories as district', 'district.id', '=', DB::raw('LEFT(territory_id, 2)'))
-            ->join('territories as county', 'county.id', '=', DB::raw('LEFT(territory_id, 4)'))
+            ->join('fats', 'fats.id', '=', 'adoptions.fat_id')
+            ->join('territories as district', 'district.id', '=', DB::raw('LEFT(fats.territory_id, 2)'))
+            ->join('territories as county', 'county.id', '=', DB::raw('LEFT(fats.territory_id, 4)'))
             ->where('adoptions.status', 'open')
             ->orderBy('created_at', 'desc')
             ->limit(20);
 
         // Specie
         if ($specie) {
-            $data = $data->where('specie', $specie);
+            $data = $data->where('processes.specie', $specie);
         }
 
         // Territory
