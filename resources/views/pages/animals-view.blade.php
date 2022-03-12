@@ -38,7 +38,7 @@ $locale = Session::get('locale', 'pt');
                     <ul class="touchable">
                         @foreach($animal['images'] as $image)
                         <li>
-                            <img src="/{{ $image }}" alt="{{ $animal['name'] }}" loading="lazy" width="472" />
+                            <img src="/{{ $image }}" alt="{{ $animal['name'] }}" width="472" />
                         </li>
                         @endforeach
                     </ul>
