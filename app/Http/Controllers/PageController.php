@@ -116,8 +116,8 @@ class PageController extends Controller
         switch ($option) {
             case 'godfather':
                 $animal = Process::select(['processes.name', 'history', 'specie', 'images', 'created_at', 'district.name as district', 'district.id as district_id', 'county.name as county'])
-                    ->join('territories as district', 'district.id', '=', DB::raw('LEFT(fats.territory_id, 2)'))
-                    ->join('territories as county', 'county.id', '=', DB::raw('LEFT(fats.territory_id, 4)'))
+                    ->join('territories as district', 'district.id', '=', DB::raw('LEFT(territory_id, 2)'))
+                    ->join('territories as county', 'county.id', '=', DB::raw('LEFT(territory_id, 4)'))
                     ->where('processes.id', $id)
                     ->firstOrFail()->toArray();
 
