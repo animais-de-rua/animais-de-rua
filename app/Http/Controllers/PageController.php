@@ -206,7 +206,7 @@ class PageController extends Controller
         // Territory
         if ($territory > 0) {
             $territory = str_pad($territory, 2, 0, STR_PAD_LEFT);
-            $data = $data->where('territory_id', 'like', $territory . '%');
+            $data = $data->where('fats.territory_id', 'like', $territory . '%');
         }
 
         return response()->json($data->get());
