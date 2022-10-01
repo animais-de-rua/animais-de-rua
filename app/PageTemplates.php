@@ -154,17 +154,19 @@ trait PageTemplates
         // --------------------
         $this->header('Relatório de actividades');
 
-        $this->addField([
-            'name' => 'report_year',
-            'label' => 'Ano',
-            'type' => 'text',
-        ]);
+        for ($i = 0; $i < 5; $i++) {
+            $this->addField([
+                'name' => "report_year_$i",
+                'label' => '— ' . ($i + 1) . ' —<br />Ano',
+                'type' => 'number',
+            ]);
 
-        $this->addField([
-            'name' => 'report_link',
-            'label' => 'Link',
-            'type' => 'browse',
-        ]);
+            $this->addField([
+                'name' => "report_link_$i",
+                'label' => 'Link',
+                'type' => 'browse',
+            ]);
+        }
 
         // --------------------
         $this->header('Actuação');

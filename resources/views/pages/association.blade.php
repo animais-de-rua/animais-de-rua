@@ -31,7 +31,9 @@
                 <hr />
                 <h2>{{ __("web.association.report") }}</h2>
                 <ul class="arrow-links">
-                    <li><a href="{{ $page['report_link'] }}" onclick="app.track('ViewContent', {'path': 'association/report'})" target="_blank" >{{ __("web.association.report_year", ['year' => $page['report_year']]) }} <span class="icon icon-arrow"></span></a></li>
+                    @for($i = 0; $i < 5; $i++)
+                    <li><a href="{{ $page["report_link_$i"] }}" onclick="app.track('ViewContent', {'path': 'association/report', 'year': {{ $page["report_year_$i"] }}})" target="_blank" >{{ __("web.association.report_year", ['year' => $page["report_year_$i"]]) }} <span class="icon icon-arrow"></span></a></li>
+                    @endfor
                 </ul>
             </div>
         </div>
