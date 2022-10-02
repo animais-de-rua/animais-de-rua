@@ -35,6 +35,16 @@
                     <li><a href="{{ $page["report_link_$i"] }}" onclick="app.track('ViewContent', {'path': 'association/report', 'year': {{ $page["report_year_$i"] }}})" target="_blank" >{{ __("web.association.report_year", ['year' => $page["report_year_$i"]]) }} <span class="icon icon-arrow"></span></a></li>
                     @endfor
                 </ul>
+                <hr />
+                <h2>{{ __("web.association.statutes") }}</h2>
+                <ul class="arrow-links">
+                    <li><a href="{{ $page["statutes_link"] }}" onclick="app.track('ViewContent', {'path': 'association/statutes', 'year': {{ $page["statutes_year"] }}})" target="_blank" >{{ __("web.association.statutes_year", ['year' => $page["statutes_year"]]) }} <span class="icon icon-arrow"></span></a></li>
+                </ul>
+                <hr />
+                <h2>{{ __("web.association.entities") }}</h2>
+                <ul class="arrow-links">
+                    <li><a href="{{ $page["entities_link"] }}" onclick="app.track('ViewContent', {'path': 'association/entities', 'year': {{ $page["entities_year"] }}})" target="_blank" >{{ __("web.association.entities_year", ['year' => $page["entities_year"]]) }} <span class="icon icon-arrow"></span></a></li>
+                </ul>
             </div>
         </div>
     </div>

@@ -169,6 +169,36 @@ trait PageTemplates
         }
 
         // --------------------
+        $this->header('Estatutos');
+
+        $this->addField([
+            'name' => 'statutes_year',
+            'label' => 'Ano',
+            'type' => 'number',
+        ]);
+
+        $this->addField([
+            'name' => 'statutes_link',
+            'label' => 'Link',
+            'type' => 'browse',
+        ]);
+
+        // --------------------
+        $this->header('Orgãos Sociais');
+
+        $this->addField([
+            'name' => 'entities_year',
+            'label' => 'Ano',
+            'type' => 'number',
+        ]);
+
+        $this->addField([
+            'name' => 'entities_link',
+            'label' => 'Link',
+            'type' => 'browse',
+        ]);
+
+        // --------------------
         $this->header('Actuação');
 
         $this->addField([

@@ -47,6 +47,10 @@ return [
     'association' => [
         'report' => 'Relatório de actividades',
         'report_year' => 'Relatório de actividades de :year',
+        'statutes' => 'Estatutos',
+        'statutes_year' => 'Estatutos de :year',
+        'entities' => 'Orgãos Sociais',
+        'entities_year' => 'Orgãos Sociais de :year',
     ],
 
     'ced' => [
