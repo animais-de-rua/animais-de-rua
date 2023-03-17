@@ -211,6 +211,7 @@ class StoreOrderCrudController extends CrudController
         $this->crud->addColumn([
             'name' => 'address',
             'label' => __('Address'),
+            'limit' => 192,
             'visibleInTable' => false,
         ]);
 
