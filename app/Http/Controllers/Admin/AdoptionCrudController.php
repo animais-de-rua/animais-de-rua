@@ -524,6 +524,8 @@ class AdoptionCrudController extends CrudController
         // add asterisk for fields that are required in AdoptionRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
+
+        $this->crud->enableExportButtons();
     }
 
     public function show($id)
