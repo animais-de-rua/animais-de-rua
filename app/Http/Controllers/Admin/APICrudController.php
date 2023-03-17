@@ -221,7 +221,14 @@ class APICrudController extends CrudController
     */
     public function headquarterSearch()
     {
-        return $this->entitySearch(Headquarter::class, ['name']);
+        $search_term = $this->getSearchParam();
+        $results = Headquarter::select();
+
+        if ($search_term) {
+            $results = Headquarter::where('name', 'LIKE', "%$search_term%");
+        }
+
+        return $results->get();
     }
 
     public function headquarterFilter()
