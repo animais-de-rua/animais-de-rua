@@ -67,6 +67,12 @@ class FriendCardModalityCrudController extends CrudController
             'type' => 'enum',
         ]);
 
+        $this->crud->addField([
+            'label' => ucfirst(__('active')),
+            'name' => 'visible',
+            'type' => 'checkbox',
+        ]);
+
         // ------ CRUD COLUMNS
         $this->crud->addColumns(['name', 'amount', 'type']);
 
@@ -94,6 +100,12 @@ class FriendCardModalityCrudController extends CrudController
             'name' => 'paypal_code',
             'label' => __('Paypal code'),
             'visibleInTable' => false,
+        ]);
+
+        $this->crud->addColumn([
+            'label' => ucfirst(__('active')),
+            'name' => 'visible',
+            'type' => 'check',
         ]);
 
         // ------ CRUD ACCESS

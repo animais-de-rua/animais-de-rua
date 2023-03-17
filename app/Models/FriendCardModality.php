@@ -20,7 +20,7 @@ class FriendCardModality extends Model
     protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['name', 'description', 'paypal_code', 'amount', 'type'];
+    protected $fillable = ['name', 'description', 'paypal_code', 'amount', 'type', 'visible'];
     // protected $hidden = [];
     // protected $dates = [];
     protected $translatable = ['name', 'description'];
