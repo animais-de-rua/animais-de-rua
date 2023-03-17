@@ -181,7 +181,7 @@ class ProcessCrudController extends CrudController
         $this->crud->addField($this->tableStats());
 
         // ------ CRUD COLUMNS
-        $this->crud->addColumns(['id', 'name', 'headquarter_id', 'created_at', 'specie', 'animal_count', 'status', 'urgent', 'total_donations', 'total_expenses', 'balance', 'total_operations', 'user_id', 'territory_id', 'phone', 'contact', 'address', 'notes', 'history', 'applicant', 'email']);
+        $this->crud->addColumns(['id', 'name', 'headquarter_id', 'created_at', 'specie', 'animal_count', 'total_affected_animals', 'status', 'urgent', 'total_donations', 'total_expenses', 'balance', 'total_operations', 'user_id', 'territory_id', 'phone', 'contact', 'address', 'notes', 'history', 'applicant', 'email']);
 
         $this->crud->setColumnDetails('id', [
             'label' => 'ID',
@@ -245,6 +245,13 @@ class ProcessCrudController extends CrudController
             'label' => __('Animals') . ' M/F | ?',
             'type' => 'model_function',
             'function_name' => 'getAnimalsValue',
+        ]);
+
+        $this->crud->setColumnDetails('total_affected_animals', [
+            'name' => 'total_affected_animals',
+            'label' => __('Affected'),
+            'type' => 'model_function',
+            'function_name' => 'getTotalAffectedAnimalsValue',
         ]);
 
         $this->crud->setColumnDetails('total_donations', [
@@ -870,6 +877,14 @@ class ProcessCrudController extends CrudController
                 'operations' => [
                     'label' => __('Total Operations'),
                     'value' => 'getTotalOperationsStats',
+                ],
+                'total_animals' => [
+                    'label' => __('Animals'),
+                    'value' => 'getTotalAnimals',
+                ],
+                'affected_animals' => [
+                    'label' => __('Total Affected Animals'),
+                    'value' => 'getTotalAffectedAnimalsNew',
                 ],
                 'donated' => [
                     'label' => __('Total Donated'),

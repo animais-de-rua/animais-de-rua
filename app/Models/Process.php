@@ -133,6 +133,11 @@ class Process extends Model
         return "{$this->id} - {$this->name} ({$headquarter}{$this->date})";
     }
 
+    public function getIdNameAttribute()
+    {
+        return "{$this->id} — {$this->name}";
+    }
+
     public function getAmountAttribute()
     {
         return $this->amount_males + $this->amount_females + $this->amount_other;
@@ -143,6 +148,13 @@ class Process extends Model
         $donations = data_get_first($this, 'donations', 'total_donations', 0);
 
         return $donations != 0 ? $donations . '€' : '-';
+    }
+
+    public function getTotalAffectedAnimalsValue()
+    {
+        $total = data_get_first($this, 'treatments', 'total_affected_animals', 0);
+
+        return $total.' / '.$this->getAnimalsCountValue();
     }
 
     public function getTotalExpensesValue()
@@ -191,6 +203,11 @@ class Process extends Model
         return $result;
     }
 
+    public function getAnimalsCountValue()
+    {
+        return $this->amount_males + $this->amount_females + $this->amount_other;
+    }
+
     // Stats
     public function getTotalDonatedStats()
     {
@@ -212,6 +229,11 @@ class Process extends Model
     public function getTotalOperationsStats()
     {
         return $this->treatments->reduce(function ($carry, $item) {return $carry + $item->affected_animals;});
+    }
+
+    public function getTotalAnimals()
+    {
+        return $this->amount;
     }
 
     public function getTotalAffectedAnimalsNew()

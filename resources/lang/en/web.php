@@ -75,7 +75,7 @@ return [
             'title' => 'Interests',
             '1' => 'Capturas e outro trabalho de terreno',
             '2' => 'Eventos',
-            '3' => 'FAT',
+            '3' => 'Temporary Host Family',
             '4' => 'Gestão de redes sociais',
             '5' => 'Loja Solidária',
             '6' => 'Cartão Amigo',

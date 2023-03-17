@@ -75,7 +75,7 @@ return [
             'title' => 'Áreas de interesse',
             '1' => 'Capturas e outro trabalho de terreno',
             '2' => 'Eventos',
-            '3' => 'FAT',
+            '3' => 'Família de Acolhimento Temporário',
             '4' => 'Gestão de redes sociais',
             '5' => 'Loja Solidária',
             '6' => 'Cartão Amigo',

@@ -90,7 +90,7 @@ class Treatment extends Model
 
     public function getProcessLinkAttribute()
     {
-        return $this->getLink($this->appointment ? $this->appointment->process : null, true, '');
+        return $this->getLink($this->appointment ? $this->appointment->process : null, true, '', 'id_name');
     }
 
     public function getVetLinkAttribute()
