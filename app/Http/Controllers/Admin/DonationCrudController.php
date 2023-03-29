@@ -91,13 +91,10 @@ class DonationCrudController extends CrudController
         $this->crud->addField([
             'label' => ucfirst(__('headquarter')),
             'name' => 'headquarter_id',
-            'type' => 'select2_from_ajax',
+            'type' => 'select2',
             'entity' => 'headquarter',
             'attribute' => 'name',
-            'model' => '\App\Models\Headquarter',
-            'data_source' => url('admin/headquarter/ajax/search'),
-            'placeholder' => __('Select a headquarter'),
-            'minimum_input_length' => 2,
+            'model' => 'App\Models\Headquarter',
             'default' => \Request::get('headquarter') ?: false,
             'attributes' => [
                 'donation_type_select' => 'headquarter',
