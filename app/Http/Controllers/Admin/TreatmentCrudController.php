@@ -329,9 +329,7 @@ class TreatmentCrudController extends CrudController
                 $values = array_map(function ($field) {return $field . '%';}, $values);
 
                 $this->crud->addClause('whereHas', 'appointment', function ($query) use ($where, $values) {
-                    $query->whereHas('process', function ($query) use ($where, $values) {
-                        $query->whereRaw($where, $values);
-                    });
+                    $query->whereIn('appointments.process_id', Process::select('id')->whereRaw($where, $values));
                 });
             });
 

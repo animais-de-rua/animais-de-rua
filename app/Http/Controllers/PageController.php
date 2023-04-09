@@ -18,6 +18,8 @@ class PageController extends Controller
 {
     use LocalCache;
 
+    private $data = [];
+
     public function index($slug = 'home')
     {
         // \Debugbar::disable();
@@ -251,10 +253,14 @@ class PageController extends Controller
         }
 
         // Subscribe
-        Newsletter::subscribe($request->email);
+        Newsletter::subscribe($request->email, [
+            'FNAME' => strtok($request->email, '@'),
+        ]);
 
         // Check if success
-        if (!Newsletter::lastActionSucceeded()) {
+        if (! Newsletter::lastActionSucceeded()) {
+            \Log::info(Newsletter::getApi()->getLastError());
+
             $validator->errors()->add('email', __('Something went wrong, please try again later.'));
             throw new ValidationException($validator);
         }
