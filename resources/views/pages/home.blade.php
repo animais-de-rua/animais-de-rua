@@ -25,31 +25,6 @@
         </div>
     </div>
 
-    <div style="max-width: 1210px; margin: auto;">
-        <img src="/img/ffe-banner.png" />
-
-        <div style="margin: 2rem 0;text-align: center;font-weight: 500;">
-            <p>Hoje é um grande dia para a causa animal!</p>
-            <p>Lançamos a Iniciativa dos Cidadão Europeus
-                <a href="https://www.instagram.com/explore/tags/furfreeeurope/" class="lined">#FurFreeEurope</a>,
-                pedindo à Europa
-                que:
-            </p>
-            <p>
-                🦊🚫 Proíba as fábricas de peles<br />
-                🛍🚫 Proíba os produtos de fábricas de peles no mercado europeu
-            </p>
-            <p>
-                Esta é a nossa oportunidade de fazer história e acabar com as perigosas, antiéticas e insustentáveis
-                fábricas de peles.<br />
-                ✍➡ Assina aqui para que possamos atingir este objetivo juntos!
-            </p>
-            <p>Mais informações em <a href="https://furfreeeurope.eu" class="lined">furfreeeurope.eu</a></p>
-        </div>
-
-        <script src="https://sign.furfreeeurope.eu/d/fur_free_europe/animais_de_rua-1"></script>
-    </div>
-
     @component('components.urgent-help', ['page' => $page, 'processes' => $processes])
     @endcomponent
 
