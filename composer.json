@@ -30,7 +30,7 @@
         "backpack/settings": "^2.0",
         "barryvdh/laravel-debugbar": "^3.1",
         "barryvdh/laravel-elfinder": "^0.4",
-        "dompdf/dompdf": "^0.8.3",
+        "dompdf/dompdf": "^2.0.3",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^6.0",
         "laravel/helpers": "^1.5",
