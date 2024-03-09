@@ -99,6 +99,17 @@ class PagesSeeder extends Seeder
             ],
             [
                 'title' => json_encode([
+                    'pt' => 'Petsitting',
+                    'en' => 'Petsitting',
+                ]),
+                'template' => 'petsitting',
+                'name' => 'Petsitting',
+                'slug' => 'petsitting',
+                'created_at' => $date,
+                'updated_at' => $date,
+            ],
+            [
+                'title' => json_encode([
                     'pt' => 'Política de privacidade',
                     'en' => 'Privacy policy',
                 ]),

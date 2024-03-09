@@ -14,6 +14,7 @@
                 <li><a class="link" href="/animals">{{ __("Animals") }}</a></li>
                 <li><a class="link" href="/help">{{ __("Help") }}</a></li>
                 <li><a class="link" href="/partners">{{ __("Partners") }}</a></li>
+                <li><a class="link" href="/petsitting">{{ __("Petsitting") }}</a></li>
             </ul>
         </div>
 
