@@ -25,15 +25,120 @@
 
     <div class="content">
         <div class="volunteers">
-            VOLUNTEERS
+            <h3 class="heading">Conheça a nossa equipa de Petsitting!</h3>
+            <div class="cards">
+                <div class="card">
+                    <div class="profile">
+                        <img src="/img/animals.jpg" alt="profile-image" class="profile-image">
+                        <div class="info">
+                            <div class="person">
+                                <span class="name">José Ribeiro</span>
+                                <div class="sub">
+                                    <span class="role">Voluntário</span>
+                                    <span class="city">Paredes de Coura</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="description">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi atque beatae, delectus dicta eius et eum fugiat neque nihil omnis pariatur possimus quaerat quibusdam quis repellendus sed sit, suscipit totam.
+                    </p>
+                </div>
+                <div class="card">
+                    <div class="profile">
+                        <img src="/img/association.jpg" alt="profile-image" class="profile-image">
+                        <div class="info">
+                            <div class="person">
+                                <span class="name">Isabel Maia</span>
+                                <div class="sub">
+                                    <span class="role">Voluntário</span>
+                                    <span class="city">Cascais</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="description">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi atque beatae, delectus dicta eius et eum fugiat neque nihil omnis pariatur possimus quaerat quibusdam quis repellendus sed sit, suscipit totam.
+                    </p>
+                </div>
+                <div class="card">
+                    <div class="profile">
+                        <img src="/img/association01.jpg" alt="profile-image" class="profile-image">
+                        <div class="info">
+                            <div class="person">
+                                <span class="name">Anna Pinheiro</span>
+                                <div class="sub">
+                                    <span class="role">Voluntário</span>
+                                    <span class="city">Lisboa</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="description">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi atque beatae, delectus dicta eius et eum fugiat neque nihil omnis pariatur possimus quaerat quibusdam quis repellendus sed sit, suscipit totam.
+                    </p>
+                </div>
+                <div class="card">
+                    <div class="profile">
+                        <img src="/img/association02.jpg" alt="profile-image" class="profile-image">
+                        <div class="info">
+                            <div class="person">
+                                <span class="name">Filipe Lourenço</span>
+                                <div class="sub">
+                                    <span class="role">Voluntário</span>
+                                    <span class="city">Lisboa</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="description">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi atque beatae, delectus dicta eius et eum fugiat neque nihil omnis pariatur possimus quaerat quibusdam quis repellendus sed sit, suscipit totam.
+                    </p>
+                </div>
+                <div class="card">
+                    <div class="profile">
+                        <img src="/img/ced01.jpg" alt="profile-image" class="profile-image">
+                        <div class="info">
+                            <div class="person">
+                                <span class="name">Tatiana Lopes</span>
+                                <div class="sub">
+                                    <span class="role">Voluntário</span>
+                                    <span class="city">Paredes de Coura</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="description">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi atque beatae, delectus dicta eius et eum fugiat neque nihil omnis pariatur possimus quaerat quibusdam quis repellendus sed sit, suscipit totam.
+                    </p>
+                </div>
+                <div class="card">
+                    <div class="profile">
+                        <img src="/img/friend.jpg" alt="profile-image" class="profile-image">
+                        <div class="info">
+                            <div class="person">
+                                <span class="name">Neuza Pires</span>
+                                <div class="sub">
+                                    <span class="role">Voluntário</span>
+                                    <span class="city">Porto</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="description">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi atque beatae, delectus dicta eius et eum fugiat neque nihil omnis pariatur possimus quaerat quibusdam quis repellendus sed sit, suscipit totam.
+                    </p>
+                </div>
+            </div>
+            <h4>E muitos mais!</h4>
         </div>
         <div class="form-container">
             <div class="inner-container">
+                <div class="title">
+                    <h3>Submeta o seu pedido</h3>
+                </div>
                 <form action="/form/petsitting" onsubmit="">
                     @csrf
-                    <div class="title">
-                        <h3>Submeta o seu pedido</h3>
-                    </div>
                     <div class="body">
                         <div class="dates">
                             <div class="date-container">
@@ -155,17 +260,10 @@
                                 </li>
                             </ul>
                         </div>
-                        <button type="submit" class="submit">
-                            {{ __("Send") }}
-                        </button>
-                        {{--<div class="">
-                            <div>
-                                <input type="checkbox" name="newsletter" value="newsletter" id="newsletter1" />
-                                <label for="newsletter1">{{ __("web.forms.newsletter") }}</label>
-                            </div>
-                            <input type="submit" value="{{ __("Send") }}" class="submit" />
-                        </div>--}}
                     </div>
+                    <button type="submit" class="submit">
+                        {{ __("Send") }}
+                    </button>
                 </form>
             </div>
         </div>

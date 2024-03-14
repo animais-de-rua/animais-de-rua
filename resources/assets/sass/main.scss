@@ -1654,13 +1654,90 @@ footer {
     .content {
         display: flex;
         justify-content: center;
-        align-items: center;
 
         .volunteers {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
             width: 100%;
+            padding: 4em;
+
+            .heading {
+                margin-bottom: 8rem;
+            }
+
+            .cards {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: repeat(3, 1fr);
+                gap: 2em;
+                margin-bottom: 8rem;
+
+                .card {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 2rem;
+                    border: 3px solid black;
+                    border-radius: 4rem;
+                    padding: 2rem;
+
+                    .profile {
+                        display: flex;
+                        align-items: center;
+                        gap: 2rem;
+                        min-width: 100px;
+
+                        .profile-image {
+                            width: 100px;
+                            height: 100px;
+                            border: 3px solid black;
+                            border-radius: 9999px;
+                        }
+
+                        .city {
+                            text-align: center;
+                        }
+
+                        .name {
+                            font-size: 2rem;
+                            font-weight: 700;
+                            text-align: center;
+                        }
+                    }
+
+                    .info {
+                        width: 100%;
+
+                        .person {
+                            .name {
+                                font-size: 3rem;
+                                font-weight: 700;
+                            }
+
+                            .sub {
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: center;
+                                margin-top: 0.5rem;
+
+                                .role {
+                                    text-align: center;
+                                    font-size: 1.5rem;
+                                }
+
+                                .city {
+                                    text-align: center;
+                                    font-size: 1.5rem;
+                                }
+                            }
+                        }
+                    }
+
+                    .description {
+                        margin-bottom: 0;
+                    }
+                }
+            }
         }
 
         .form-container {
@@ -1669,25 +1746,35 @@ footer {
             justify-content: center;
             align-items: center;
             width: 100%;
-            padding-bottom: 2.5rem;
-            padding-top: 2rem;
+            height: 100%;
+            padding: 2.5rem;
 
             .inner-container {
                 display: flex;
                 flex-direction: column;
-                width: 85%;
+                justify-content: center;
+                height: 100%;
                 background-color: white;
-                padding: 3rem;
+                padding: 4rem;
+
+                .title {
+                    display: flex;
+                    justify-content: center;
+                    margin-bottom: 3rem;
+                }
 
                 form {
+                    display: flex;
+                    flex-direction: column;
+                    flex-grow: 1;
                     margin-bottom: 0;
 
-                    .title {
-                        display: flex;
-                        justify-content: center;
-                    }
-
                     .body {
+                        display: flex;
+                        flex-direction: column;
+                        flex-grow: 1;
+                        gap: 1.5em;
+
                         .dates {
                             display: flex;
                             gap: 8em;
@@ -1895,13 +1982,12 @@ footer {
                                 }
                             }
                         }
-
-                        .submit {
-                            width: 100%;
-                            margin-bottom: 0;
-                        }
                     }
 
+                    .submit {
+                        width: 100%;
+                        margin-bottom: 0;
+                    }
                 }
             }
         }
