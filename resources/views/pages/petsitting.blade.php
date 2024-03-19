@@ -28,109 +28,105 @@
             <h3 class="heading">Conheça a nossa equipa de Petsitting!</h3>
             <div class="cards">
                 <div class="card">
-                    <div class="profile">
-                        <img src="/img/animals.jpg" alt="profile-image" class="profile-image">
-                        <div class="info">
-                            <div class="person">
-                                <span class="name">José Ribeiro</span>
-                                <div class="sub">
-                                    <span class="role">Voluntário</span>
-                                    <span class="city">Paredes de Coura</span>
-                                </div>
-                            </div>
+                    <div class="card-image">
+                        <img src="img/animals.jpg" alt="profile-image">
+                        <div class="mask"></div>
+                        <div class="person">
+                            <span class="name">José Ribeiro</span>
+                            <span class="role">Voluntário</span>
                         </div>
                     </div>
-                    <p class="description">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi atque beatae, delectus dicta eius et eum fugiat neque nihil omnis pariatur possimus quaerat quibusdam quis repellendus sed sit, suscipit totam.
-                    </p>
+                    <div class="card-body">
+                        <span class="city">Paredes de Coura</span>
+                        <p class="description">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi atque beatae, delectus dicta eius et eum fugiat neque nihil omnis pariatur possimus quaerat quibusdam quis repellendus sed sit, suscipit totam.
+                        </p>
+                    </div>
                 </div>
                 <div class="card">
-                    <div class="profile">
-                        <img src="/img/association.jpg" alt="profile-image" class="profile-image">
-                        <div class="info">
-                            <div class="person">
-                                <span class="name">Isabel Maia</span>
-                                <div class="sub">
-                                    <span class="role">Voluntário</span>
-                                    <span class="city">Cascais</span>
-                                </div>
-                            </div>
+                    <div class="card-image">
+                        <img src="/img/association.jpg" alt="profile-image">
+                        <div class="mask"></div>
+                        <div class="person">
+                            <span class="name">Isabel Maia</span>
+                            <span class="role">Voluntário</span>
                         </div>
                     </div>
-                    <p class="description">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi atque beatae, delectus dicta eius et eum fugiat neque nihil omnis pariatur possimus quaerat quibusdam quis repellendus sed sit, suscipit totam.
-                    </p>
+                    <div class="card-body">
+                        <span class="city">Cascais</span>
+                        <p class="description">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi atque beatae, delectus dicta eius et eum fugiat neque nihil omnis pariatur possimus quaerat quibusdam quis repellendus sed sit, suscipit totam.
+                        </p>
+                    </div>
                 </div>
                 <div class="card">
-                    <div class="profile">
-                        <img src="/img/association01.jpg" alt="profile-image" class="profile-image">
-                        <div class="info">
-                            <div class="person">
-                                <span class="name">Anna Pinheiro</span>
-                                <div class="sub">
-                                    <span class="role">Voluntário</span>
-                                    <span class="city">Lisboa</span>
-                                </div>
-                            </div>
+                    <div class="card-image">
+                        <img src="/img/association01.jpg" alt="profile-image">
+                        <div class="mask"></div>
+                        <div class="person">
+                            <span class="name">Anna Pinheiro</span>
+                            <span class="role">Voluntário</span>
+
                         </div>
                     </div>
-                    <p class="description">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi atque beatae, delectus dicta eius et eum fugiat neque nihil omnis pariatur possimus quaerat quibusdam quis repellendus sed sit, suscipit totam.
-                    </p>
+                    <div class="card-body">
+                        <span class="city">Lisboa</span>
+                        <p class="description">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi atque beatae, delectus dicta eius et eum fugiat neque nihil omnis pariatur possimus quaerat quibusdam quis repellendus sed sit, suscipit totam.
+                        </p>
+                    </div>
                 </div>
                 <div class="card">
-                    <div class="profile">
-                        <img src="/img/association02.jpg" alt="profile-image" class="profile-image">
-                        <div class="info">
-                            <div class="person">
-                                <span class="name">Filipe Lourenço</span>
-                                <div class="sub">
-                                    <span class="role">Voluntário</span>
-                                    <span class="city">Lisboa</span>
-                                </div>
-                            </div>
+                    <div class="card-image">
+                        <img src="/img/association02.jpg" alt="profile-image">
+                        <div class="mask"></div>
+                        <div class="person">
+                            <span class="name">Filipe Lourenço</span>
+                            <span class="role">Voluntário</span>
                         </div>
                     </div>
-                    <p class="description">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi atque beatae, delectus dicta eius et eum fugiat neque nihil omnis pariatur possimus quaerat quibusdam quis repellendus sed sit, suscipit totam.
-                    </p>
+                    <div class="card-body">
+                        <span class="city">Lisboa</span>
+                        <p class="description">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi atque beatae, delectus dicta eius et eum fugiat neque nihil omnis pariatur possimus quaerat quibusdam quis repellendus sed sit, suscipit totam.
+                        </p>
+                    </div>
                 </div>
                 <div class="card">
-                    <div class="profile">
-                        <img src="/img/ced01.jpg" alt="profile-image" class="profile-image">
-                        <div class="info">
-                            <div class="person">
-                                <span class="name">Tatiana Lopes</span>
-                                <div class="sub">
-                                    <span class="role">Voluntário</span>
-                                    <span class="city">Paredes de Coura</span>
-                                </div>
-                            </div>
+                    <div class="card-image">
+                        <img src="/img/ced01.jpg" alt="profile-image">
+                        <div class="mask"></div>
+                        <div class="person">
+                            <span class="name">Tatiana Lopes</span>
+                            <span class="role">Voluntário</span>
+
                         </div>
                     </div>
-                    <p class="description">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi atque beatae, delectus dicta eius et eum fugiat neque nihil omnis pariatur possimus quaerat quibusdam quis repellendus sed sit, suscipit totam.
-                    </p>
+                    <div class="card-body">
+                        <span class="city">Paredes de Coura</span>
+                        <p class="description">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi atque beatae, delectus dicta eius et eum fugiat neque nihil omnis pariatur possimus quaerat quibusdam quis repellendus sed sit, suscipit totam.
+                        </p>
+                    </div>
                 </div>
                 <div class="card">
-                    <div class="profile">
-                        <img src="/img/friend.jpg" alt="profile-image" class="profile-image">
-                        <div class="info">
-                            <div class="person">
-                                <span class="name">Neuza Pires</span>
-                                <div class="sub">
-                                    <span class="role">Voluntário</span>
-                                    <span class="city">Porto</span>
-                                </div>
-                            </div>
+                    <div class="card-image">
+                        <img src="/img/friend.jpg" alt="profile-image">
+                        <div class="mask"></div>
+                        <div class="person">
+                            <span class="name">Neuza Pires</span>
+                            <span class="role">Voluntário</span>
+
                         </div>
                     </div>
-                    <p class="description">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi atque beatae, delectus dicta eius et eum fugiat neque nihil omnis pariatur possimus quaerat quibusdam quis repellendus sed sit, suscipit totam.
-                    </p>
+                    <div class="card-body">
+                        <span class="city">Porto</span>
+                        <p class="description">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi atque beatae, delectus dicta eius et eum fugiat neque nihil omnis pariatur possimus quaerat quibusdam quis repellendus sed sit, suscipit totam.
+                        </p>
+                    </div>
                 </div>
             </div>
-            <h4>E muitos mais!</h4>
         </div>
         <div class="form-container">
             <div class="inner-container">
