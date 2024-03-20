@@ -268,6 +268,260 @@
                         </div>
                     </form>
 
+                    {{-- FORM Petsitting --}}
+                    <form action="/form/petsitting" onsubmit="return modal.submit(this)">
+                        @csrf
+                        <div class="form petsitting hide">
+                            <div class="row">
+                                <div class="column column-50">
+                                    <label for="initial-date">Data de início</label>
+                                    <input
+                                            id="initial-date"
+                                            type="date"
+                                            value=""
+                                            min="<?= date('Y-m-d'); ?>"
+                                            onchange="handleDateChange(event)"
+                                    />
+                                </div>
+                                <div class="column column-50">
+                                    <label for="final-date">Data de fim</label>
+                                    <input
+                                            id="final-date"
+                                            type="date"
+                                            value=""
+                                            disabled
+                                    />
+                                </div>
+                            </div>
+                            <div>
+                                <label for="address">Morada</label>
+                                <input type="text" id="address" placeholder="Indique a sua morada" maxlength="35" />
+                            </div>
+                            <div class="row">
+                                <div class="column column-50">
+                                    <span>Animal</span>
+                                    <div class="row checkbox-container">
+                                        <div class="column checkbox option">
+                                            <input type="checkbox" id="dog">
+                                            <label for="dog">Cão</label>
+                                        </div>
+                                        <div class="column checkbox option">
+                                            <input type="checkbox" id="cat">
+                                            <label for="cat">Gato</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="column column-50">
+                                    <label for="number-of-animals">Nº de animais</label>
+                                    <input type="number" id="number-of-animals" placeholder="0" max="2" />
+                                </div>
+                            </div>
+                            <div>
+                                <label for="temper">Temperamento do animal</label>
+                                <textarea
+                                        id="temper"
+                                        rows="5"
+                                        cols="86"
+                                        placeholder="Descreva como é o comportamento do seu animal"
+                                ></textarea>
+                            </div>
+                            <div class="row">
+                                <div class="column">
+                                    <span>Visitas diárias</span>
+                                    <div class="radio-chips">
+                                        <label>
+                                            <input type="radio" name="visit-number" value="1" />
+                                            <span>1</span>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="visit-number" value="2" />
+                                            <span>2</span>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="visit-number" value="3" />
+                                            <span>3</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="column">
+                                    <span>Passear</span>
+                                    <div class="flex-row">
+                                        <div class="radio-container">
+                                            <input type="radio" id="walk-yes" name="walk-options" value=true>
+                                            <label for="walk-yes">Sim</label>
+                                        </div>
+                                        <div class="radio-container">
+                                            <input type="radio" id="walk-no" name="walk-options" value=false checked>
+                                            <label for="walk-no">Não</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row hide">
+                                <div class="column">
+                                    <span>Passeios diários</span>
+                                    <div class="radio-chips">
+                                        <label>
+                                            <input type="radio" name="walk-number" value="1" />
+                                            <span>1</span>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="walk-number" value="2" />
+                                            <span>2</span>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="walk-number" value="3" />
+                                            <span>3</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="other-services">
+                                <div>
+                                    <label for="food">Alimentação</label>
+                                    <div class="flex-row">
+                                        <div class="radio-container">
+                                            <input type="radio" id="food-yes" name="food-options" value=true>
+                                            <label for="food-yes">Sim</label>
+                                        </div>
+                                        <div class="radio-container">
+                                            <input type="radio" id="food-no" name="food-options" value=false checked>
+                                            <label for="food-no">Não</label>
+                                        </div>
+                                    </div>
+                                    <textarea
+                                        id="food"
+                                        rows="5"
+                                        cols="86"
+                                        placeholder="Alguma alimentação especial a ter em conta?"
+                                        class="hide"
+                                    ></textarea>
+                                </div>
+                                <div>
+                                    <label for="medication">Medicação</label>
+                                    <div class="flex-row">
+                                        <div class="radio-container">
+                                            <input type="radio" id="meds-yes" name="meds-options" value=true>
+                                            <label for="meds-yes">Sim</label>
+                                        </div>
+                                        <div class="radio-container">
+                                            <input type="radio" id="meds-no" name="meds-options" value=false checked>
+                                            <label for="meds-no">Não</label>
+                                        </div>
+                                    </div>
+                                    <textarea
+                                        id="medication"
+                                        rows="5"
+                                        cols="86"
+                                        placeholder="Alguma medicação que o seu animal precise de tomar?"
+                                        class="hide"
+                                    ></textarea>
+                                </div>
+                                <div>
+                                    <label for="hygiene">Cuidados de higiene</label>
+                                    <div class="flex-row">
+                                        <div class="radio-container">
+                                            <input type="radio" id="hygiene-yes" name="hygiene-options" value=true>
+                                            <label for="hygiene-yes">Sim</label>
+                                        </div>
+                                        <div class="radio-container">
+                                            <input type="radio" id="hygiene-no" name="hygiene-options" value=false checked>
+                                            <label for="hygiene-no">Não</label>
+                                        </div>
+                                    </div>
+                                    <textarea
+                                        id="hygiene"
+                                        rows="5"
+                                        cols="86"
+                                        placeholder="Que cuidados de higiene o seu animal necessita?"
+                                        class="hide"
+                                    ></textarea>
+                                </div>
+                                <div>
+                                    <label for="play">Brincar</label>
+                                    <div class="flex-row">
+                                        <div class="radio-container">
+                                            <input type="radio" id="play-yes" name="play-options" value=true>
+                                            <label for="play-yes">Sim</label>
+                                        </div>
+                                        <div class="radio-container">
+                                            <input type="radio" id="play-no" name="play-options" value=false checked>
+                                            <label for="play-no">Não</label>
+                                        </div>
+                                    </div>
+                                    <textarea
+                                        id="play"
+                                        rows="5"
+                                        cols="86"
+                                        placeholder="Brincadeiras para o entretermos!"
+                                        class="hide"
+                                    ></textarea>
+                                </div>
+                                <div>
+                                    <label for="plants">Regar as plantas</label>
+                                    <div class="flex-row">
+                                        <div class="radio-container">
+                                            <input type="radio" id="plants-yes" name="plants-options" value=true>
+                                            <label for="plants-yes">Sim</label>
+                                        </div>
+                                        <div class="radio-container">
+                                            <input type="radio" id="plants-no" name="plants-options" value=false checked>
+                                            <label for="plants-no">Não</label>
+                                        </div>
+                                    </div>
+                                    <textarea
+                                            id="plants"
+                                            rows="5"
+                                            cols="86"
+                                            placeholder="Deseja que reguemos as plantas?"
+                                            class="hide"
+                                    ></textarea>
+                                </div>
+                                <div>
+                                    <label for="others">Outros detalhes</label>
+                                    <textarea
+                                        id="others"
+                                        rows="5"
+                                        cols="86"
+                                        placeholder="Outros detalhes que ache necessário indicar"
+                                    ></textarea>
+                                </div>
+                            </div>
+                            <div>
+                                <span class="prices-title">Preços</span>
+                                <div class="prices">
+                                    <div class="price-column">
+                                        <div class="price">
+                                            <span class="type">Visita gato</span>
+                                            <span>12,50€</span>
+                                        </div>
+                                        <div class="price">
+                                            <span class="type">Visita cão</span>
+                                            <span>15,50€</span>
+                                        </div>
+                                    </div>
+                                    <div class="price-column">
+                                        <div class="price optional">
+                                            <span class="type">Com 1 passeio</span>
+                                            <span>+15,50€</span>
+                                        </div>
+                                        <div class="price optional">
+                                            <span class="type">Com 2 passeios</span>
+                                            <span>+20€</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="submit-container">
+                                <button type="submit" class="submit">
+                                    Enviar pedido
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
                 </div>
             </div>
         </div>

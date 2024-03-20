@@ -641,6 +641,20 @@ window.modal = {
     e.classList.remove('empty');
   },
 
+  openPetsittingForm: e => {
+    formsDom.query('.header').hide();
+    formsDom.queryAll('.form').forEach(e => e.hide());
+    formsDom.query('.form.petsitting').show();
+    formsDom.classList.add('open');
+
+    // Pixel track
+    app.track('ViewContent', {
+      modal: 'petsitting',
+    });
+
+    return false;
+  },
+
   submit: form => {
     loading.start();
     formsDom.classList.add('sending');

@@ -1655,13 +1655,15 @@ footer {
         display: flex;
         flex-direction: column;
         justify-content: center;
+        background-color: white;
 
         .volunteers {
             display: flex;
             flex-direction: column;
             align-items: center;
             width: 100%;
-            padding-top: 2rem;
+            padding-top: 6rem;
+            margin-bottom: 4rem;
 
             .heading {
                 margin-bottom: 8rem;
@@ -1672,19 +1674,26 @@ footer {
                 justify-content: center;
                 flex-wrap: wrap;
                 gap: 2em;
-                margin-bottom: 8rem;
 
                 .card {
                     display: flex;
                     flex-direction: column;
                     gap: 1.25rem;
-                    max-width: 28rem;
+                    min-width: 25%;
+                    max-width: 24rem;
+                    min-height: 24rem;
 
                     .card-image {
                         overflow: hidden;
                         position: relative;
                         border: 3px solid black;
                         border-radius: 4rem;
+                        height: 100%;
+
+                        img {
+                            width: 100%;
+                            height: 100%;
+                        }
 
                         .mask {
                             position: absolute;
@@ -1793,254 +1802,35 @@ footer {
             }
         }
 
-        .form-container {
+        .form-open {
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            width: 100%;
-            height: 100%;
-            padding: 2.5rem;
+            height: 24rem;
 
-            .inner-container {
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                height: 100%;
-                background-color: white;
-                padding: 4rem;
+            .form-button {
+                height: 5.5rem;
+                width: 38rem;
+                margin-bottom: 0;
+                background-color: #E03322;
+                color: white;
+                font-size: 2rem;
+                border: none;
+                border-radius: 1rem;
+                box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+                transition-duration: 200ms;
+                transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+                animation: button-pop 0.25s ease-out;
+                transition-property: color, background-color, border-color, opacity, box-shadow, transform;
 
-                .title {
-                    display: flex;
-                    justify-content: center;
-                    margin-bottom: 3rem;
+                &:active:hover,
+                &:active:focus {
+                    animation: button-pop 0s ease-out;
+                    transform: scale(0.97);
                 }
 
-                form {
-                    display: flex;
-                    flex-direction: column;
-                    flex-grow: 1;
-                    margin-bottom: 0;
-
-                    .body {
-                        display: flex;
-                        flex-direction: column;
-                        flex-grow: 1;
-                        gap: 1.5em;
-
-                        .dates {
-                            display: flex;
-                            gap: 8em;
-
-                            .date-container {
-                                width: 50%;
-
-                                input {
-                                    width: 100%;
-                                }
-                            }
-                        }
-
-                        .address {
-                            input {
-                                width: 100%;
-                            }
-                        }
-
-                        .animal {
-                            display: flex;
-                            gap: 8em;
-
-                            .animal-container {
-                                width: 50%;
-
-                                span {
-                                    display: inline-block;
-                                    margin-bottom: 1rem;
-                                }
-
-                                .options {
-                                    display: flex;
-
-                                    .option {
-                                        display: flex;
-                                        align-items: center;
-                                        width: 100%;
-                                        gap: 0.5em;
-
-                                        input {
-                                            appearance: auto;
-
-                                            &:checked:after {
-                                                display: none;
-                                            }
-                                        }
-                                    }
-                                }
-
-                                #number-of-animals {
-                                    width: 100%;
-                                }
-                            }
-                        }
-
-                        .daily-work {
-
-                            .visits {
-                                margin-bottom: 1.5rem;
-
-                                .options {
-                                    display: flex;
-
-                                    label {
-                                        position: relative;
-                                        display: flex;
-                                        justify-content: center;
-                                        width: 100%;
-                                        border: 1px solid black;
-
-                                        span {
-                                            z-index: 10;
-                                        }
-
-                                        input:checked + span {
-                                            color: white;
-                                        }
-
-                                        input {
-                                            position: absolute;
-                                            width: 100%;
-                                            height: 100%;
-                                            padding: 0;
-                                            border-radius: 0;
-                                            margin: 0;
-                                            background-color: transparent;
-
-                                            &:checked:after {
-                                                display: none;
-                                            }
-                                        }
-
-                                        input:checked {
-                                            background-color: black;
-                                        }
-                                    }
-                                }
-
-                            }
-
-                            .walk {
-                                display: flex;
-                                margin-bottom: 1.5rem;
-
-                                .options {
-                                    display: flex;
-                                    justify-content: space-around;
-                                    width: 100%;
-
-                                    .radio-container {
-                                        display: flex;
-                                        align-items: center;
-                                        gap: 0.5rem;
-
-                                        input {
-                                            appearance: auto;
-
-                                            &:checked:after {
-                                                display: none;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-
-                            .daily-walks {
-                                display: none;
-                                margin-bottom: 1.5rem;
-
-                                .options {
-                                    display: flex;
-
-                                    label {
-                                        position: relative;
-                                        display: flex;
-                                        justify-content: center;
-                                        width: 100%;
-                                        border: 1px solid black;
-
-                                        span {
-                                            z-index: 10;
-                                        }
-
-                                        input:checked + span {
-                                            color: white;
-                                        }
-
-                                        input {
-                                            position: absolute;
-                                            width: 100%;
-                                            height: 100%;
-                                            padding: 0;
-                                            border-radius: 0;
-                                            margin: 0;
-                                            background-color: transparent;
-
-                                            &:checked:after {
-                                                display: none;
-                                            }
-                                        }
-
-                                        input:checked {
-                                            background-color: black;
-                                        }
-                                    }
-                                }
-                            }
-
-                            .walk:has(#yes:checked) + .daily-walks {
-                                display: block;
-                            }
-                        }
-
-                        .details {
-                            .details-area {
-                                textarea {
-                                    width: 100%;
-                                    min-height: 8rem;
-                                    max-height: 16rem;
-                                    resize: vertical;
-                                }
-                            }
-                        }
-
-                        .prices {
-                            display: flex;
-                            flex-direction: column;
-                            gap: 0.5em;
-                            color: #606f7b;
-                            font-size: 1.25rem; /* 20px */
-                            line-height: 1.75rem; /* 28px */
-
-                            .options {
-                                display: flex;
-                                flex-direction: column;
-                                list-style: none;
-
-                                li {
-                                    margin-bottom: 0;
-                                }
-
-                                .walks {
-                                    margin-top: 0;
-                                }
-                            }
-                        }
-                    }
-
-                    .submit {
-                        width: 100%;
-                        margin-bottom: 0;
-                    }
+                &:hover {
+                    background-color: #b33122;
                 }
             }
         }
@@ -2505,6 +2295,131 @@ footer {
         margin-bottom: 16px;
     }
 
+    .petsitting {
+        input:not([type="checkbox"]):not([type="radio"]),
+        .radio-chips {
+            margin-top: 0.5rem;
+        }
+
+        textarea {
+            min-height: 8rem;
+            max-height: 16rem;
+            resize: vertical;
+            margin-top: 0.5rem;
+        }
+
+        .checkbox-container {
+            align-items: center;
+            height: 42px;
+
+            .option {
+                display: flex;
+            }
+        }
+
+        .radio-chips {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 10px;
+
+            label {
+                position: relative;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                border: 1px solid black;
+
+                span {
+                    z-index: 10;
+                    color: black;
+                }
+
+                input:checked + span {
+                    color: white;
+                }
+
+                input {
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    border: 1px solid white;
+                    border-radius: 0;
+
+                    &:checked:after {
+                        display: none;
+                    }
+                }
+
+                input:checked {
+                    background-color: #e53625;
+                }
+            }
+        }
+
+        .flex-row {
+            display: flex;
+            gap: 16rem;
+            width: 100%;
+            margin-bottom: 10px;
+
+            .radio-container {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+        }
+
+        .row:has(#walk-yes:checked) + .row {
+            display: flex;
+        }
+
+        .other-services {
+            .flex-row:has(#food-yes:checked) + textarea,
+            .flex-row:has(#meds-yes:checked) + textarea,
+            .flex-row:has(#hygiene-yes:checked) + textarea,
+            .flex-row:has(#play-yes:checked) + textarea,
+            .flex-row:has(#plants-yes:checked) + textarea {
+                display: inline-block;
+            }
+        }
+
+        .prices {
+            display: flex;
+            gap: 6rem;
+            font-size: 1.4rem;
+            margin-top: 0.5rem;
+
+            .price-column {
+                width: 50%;
+
+                .price {
+                    display: flex;
+
+                    .type {
+                        flex-grow: 1;
+                    }
+                }
+
+                .divider {
+                    margin-bottom: 1rem;
+                }
+            }
+        }
+
+        .submit-container {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            margin-top: 4rem;
+
+            .submit {
+                width: 24rem;
+                border: 1px solid white;
+            }
+        }
+    }
+
     .value {
         h2 {
             margin: 10px 0;
@@ -2920,5 +2835,17 @@ body {
 
     .network {
         font-size: 1.1rem;
+    }
+}
+
+@keyframes button-pop {
+    0% {
+        transform: scale(0.98);
+    }
+    40% {
+        transform: scale(1.02);
+    }
+    100% {
+        transform: scale(1);
     }
 }
