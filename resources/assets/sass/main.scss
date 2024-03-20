@@ -1679,7 +1679,6 @@ footer {
                     display: flex;
                     flex-direction: column;
                     gap: 1.25rem;
-                    min-width: 25%;
                     max-width: 24rem;
                     min-height: 24rem;
 
@@ -2296,9 +2295,22 @@ footer {
     }
 
     .petsitting {
+        input:not([type="text"]){
+            cursor: pointer;
+        }
+
         input:not([type="checkbox"]):not([type="radio"]),
         .radio-chips {
             margin-top: 0.5rem;
+        }
+
+        input[type="date"]:disabled {
+            color: revert;
+            cursor: not-allowed;
+        }
+
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(1);
         }
 
         textarea {
@@ -2378,8 +2390,7 @@ footer {
             .flex-row:has(#food-yes:checked) + textarea,
             .flex-row:has(#meds-yes:checked) + textarea,
             .flex-row:has(#hygiene-yes:checked) + textarea,
-            .flex-row:has(#play-yes:checked) + textarea,
-            .flex-row:has(#plants-yes:checked) + textarea {
+            .flex-row:has(#play-yes:checked) + textarea {
                 display: inline-block;
             }
         }

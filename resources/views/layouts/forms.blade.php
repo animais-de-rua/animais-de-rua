@@ -471,13 +471,6 @@
                                             <label for="plants-no">Não</label>
                                         </div>
                                     </div>
-                                    <textarea
-                                            id="plants"
-                                            rows="5"
-                                            cols="86"
-                                            placeholder="Deseja que reguemos as plantas?"
-                                            class="hide"
-                                    ></textarea>
                                 </div>
                                 <div>
                                     <label for="others">Outros detalhes</label>
@@ -527,3 +520,18 @@
         </div>
     </div>
 </div>
+
+<script>
+  function handleDateChange(event) {
+    const finalDateDatePicker = document.getElementById('final-date');
+
+    if (event.target.value) {
+      const finalDate = new Date(event.target.value);
+      finalDate.setDate(finalDate.getDate() + 7);
+
+      finalDateDatePicker.min = event.target.value;
+      finalDateDatePicker.max = finalDate.toISOString().split('T')[0]
+      finalDateDatePicker.disabled = false;
+    }
+  }
+</script>

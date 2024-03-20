@@ -136,18 +136,3 @@
     </div>
 </div>
 @endsection
-
-<script>
-    function handleDateChange(event) {
-      const finalDateDatePicker = document.getElementById('final-date');
-
-      if (event.target.value) {
-        const finalDate = new Date(event.target.value);
-        finalDate.setDate(finalDate.getDate() + 7);
-
-        finalDateDatePicker.min = event.target.value;
-        finalDateDatePicker.max = finalDate.toISOString().split('T')[0]
-        finalDateDatePicker.disabled = false;
-      }
-    }
-</script>
