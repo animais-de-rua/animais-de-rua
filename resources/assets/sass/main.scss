@@ -1663,6 +1663,7 @@ footer {
             align-items: center;
             width: 100%;
             padding-top: 6rem;
+            padding-inline: 1rem;
             margin-bottom: 4rem;
 
             .heading {
@@ -1687,7 +1688,7 @@ footer {
                         position: relative;
                         border: 3px solid black;
                         border-radius: 4rem;
-                        height: 100%;
+                        height: 20rem;
 
                         img {
                             width: 100%;

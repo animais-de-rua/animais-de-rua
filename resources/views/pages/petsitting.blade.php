@@ -27,105 +27,30 @@
         <div class="volunteers">
             <h3 class="heading">Conheça a nossa equipa de Petsitting!</h3>
             <div class="cards">
-                <div class="card">
-                    <div class="card-image">
-                        <img src="img/animals.jpg" alt="profile-image">
-                        <div class="mask"></div>
-                        <div class="person">
-                            <span class="name">José Ribeiro</span>
-                            <span class="role">Voluntário</span>
+                @foreach($volunteers as $volunteer)
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="{{ $volunteer->petsitting_image }}" alt="profile-image">
+                            <div class="mask"></div>
+                            <div class="person">
+                                <span class="name">{{ $volunteer->name }}</span>
+                                <span class="role">
+                                    Petsitting {{ $volunteer->petsitting_role === 'both' ? __('dog') . ' ' . __('and') . ' ' . __('cat') : __($volunteer->petsitting_role) }}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <span class="city">
+                                @foreach ($volunteer->headquarters as $headquarter)
+                                    {{ $headquarter->name }}{{ $loop->last ? '' : ', ' }}
+                                @endforeach
+                            </span>
+                            <p class="description">
+                                {{ $volunteer->petsitting_description }}
+                            </p>
                         </div>
                     </div>
-                    <div class="card-body">
-                        <span class="city">Paredes de Coura</span>
-                        <p class="description">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi atque beatae, delectus dicta eius et eum fugiat neque nihil omnis pariatur possimus quaerat quibusdam quis repellendus sed sit, suscipit totam.
-                        </p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-image">
-                        <img src="/img/association.jpg" alt="profile-image">
-                        <div class="mask"></div>
-                        <div class="person">
-                            <span class="name">Isabel Maia</span>
-                            <span class="role">Voluntário</span>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <span class="city">Cascais</span>
-                        <p class="description">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi atque beatae, delectus dicta eius et eum fugiat neque nihil omnis pariatur possimus quaerat quibusdam quis repellendus sed sit, suscipit totam.
-                        </p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-image">
-                        <img src="/img/association01.jpg" alt="profile-image">
-                        <div class="mask"></div>
-                        <div class="person">
-                            <span class="name">Anna Pinheiro</span>
-                            <span class="role">Voluntário</span>
-
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <span class="city">Lisboa</span>
-                        <p class="description">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi atque beatae, delectus dicta eius et eum fugiat neque nihil omnis pariatur possimus quaerat quibusdam quis repellendus sed sit, suscipit totam.
-                        </p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-image">
-                        <img src="/img/association02.jpg" alt="profile-image">
-                        <div class="mask"></div>
-                        <div class="person">
-                            <span class="name">Filipe Lourenço</span>
-                            <span class="role">Voluntário</span>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <span class="city">Lisboa</span>
-                        <p class="description">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi atque beatae, delectus dicta eius et eum fugiat neque nihil omnis pariatur possimus quaerat quibusdam quis repellendus sed sit, suscipit totam.
-                        </p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-image">
-                        <img src="/img/ced01.jpg" alt="profile-image">
-                        <div class="mask"></div>
-                        <div class="person">
-                            <span class="name">Tatiana Lopes</span>
-                            <span class="role">Voluntário</span>
-
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <span class="city">Paredes de Coura</span>
-                        <p class="description">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi atque beatae, delectus dicta eius et eum fugiat neque nihil omnis pariatur possimus quaerat quibusdam quis repellendus sed sit, suscipit totam.
-                        </p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-image">
-                        <img src="/img/friend.jpg" alt="profile-image">
-                        <div class="mask"></div>
-                        <div class="person">
-                            <span class="name">Neuza Pires</span>
-                            <span class="role">Voluntário</span>
-
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <span class="city">Porto</span>
-                        <p class="description">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi atque beatae, delectus dicta eius et eum fugiat neque nihil omnis pariatur possimus quaerat quibusdam quis repellendus sed sit, suscipit totam.
-                        </p>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
         <div class="form-open">

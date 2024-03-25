@@ -7,6 +7,7 @@ use App\Models\Appointment;
 use App\Models\Donation;
 use App\Models\Fat;
 use App\Models\Godfather;
+use App\Models\Headquarter;
 use App\Models\Process;
 use App\Models\Protocol;
 use App\Models\ProtocolRequest;
@@ -33,7 +34,7 @@ class FakeSeeder extends Seeder
     public function run()
     {
         // Truncate tables
-        DB::table('users')->where('id', '>', 1)->delete();
+        DB::table('users')->where('id', '>', 2)->delete();
         DB::table('processes')->truncate();
         DB::table('godfathers')->truncate();
         DB::table('donations')->truncate();
@@ -54,10 +55,11 @@ class FakeSeeder extends Seeder
         DB::table('vouchers')->truncate();
 
         $permissions = EnumHelper::keys('user.permissions');
+        $headquarters_count = Headquarter::count();
 
         // Users
         $this->log('Users');
-        factory(User::class, 24)->create()->each(function ($user) use ($permissions) {
+        factory(User::class, 24)->create()->each(function ($user) use ($permissions, $headquarters_count) {
             // 66% change to be a volunteer
             if (rand(0, 2)) {
                 $user->roles()->save(Role::where('id', 2)->first());
@@ -76,6 +78,11 @@ class FakeSeeder extends Seeder
             if (!rand(0, 2)) {
                 $user->roles()->save(Role::where('id', 3)->first());
             }
+
+            // Randomly assign headquarters
+            $randomCount = rand(1, $headquarters_count);
+            $headquarters = Headquarter::inRandomOrder()->take($randomCount)->get();
+            $user->headquarters()->syncWithoutDetaching($headquarters);
         });
 
         // Processes
