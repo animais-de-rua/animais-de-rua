@@ -35,7 +35,7 @@
                             <div class="person">
                                 <span class="name">{{ $volunteer->name }}</span>
                                 <span class="role">
-                                    Petsitting {{ $volunteer->petsitting_role === 'both' ? __('dog') . ' ' . __('and') . ' ' . __('cat') : __($volunteer->petsitting_role) }}
+                                    Petsitting {{ $volunteer->petsitting_role === 'Both' ? __('dog') . ' ' . __('and') . ' ' . __('cat') : __($volunteer->petsitting_role) }}
                                 </span>
                             </div>
                         </div>

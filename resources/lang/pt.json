@@ -191,6 +191,9 @@
     "friend card modality": "modalidade do cartão amigo",
     "friend card number": "número do cartão amigo",
     "friend card expiry month": "mês de validade do cartão amigo",
+    "petsitting role": "cargo de petsitting",
+    "petsitting description": "descrição de petsitting",
+    "petsitting image": "imagem de petsitting",
     "protocol": "protocolo",
     "request": "solicitação",
     "partner": "parceiro",
@@ -312,6 +315,7 @@
     
     "dog": "Cão",
     "cat": "Gato",
+    "both": "Ambos",
     "other": "Outro",
     "undefined": "Indefinido",
     "male": "macho",

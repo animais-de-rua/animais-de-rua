@@ -8,6 +8,7 @@ use App\Http\Requests\UserStoreRequest as StoreRequest;
 use App\Http\Requests\UserUpdateRequest as UpdateRequest;
 use App\User;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
+use Cache;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -103,7 +104,7 @@ class UserCrudController extends CrudController
             ],
         ]);
 
-        // Fields
+        // Custom Fields
         $this->crud->addField([
             'label' => __('Phone'),
             'name' => 'phone',
@@ -173,11 +174,31 @@ class UserCrudController extends CrudController
         ])->afterField('friend_card_number');
 
         $this->crud->addField([
+            'label' => ucfirst(__('petsitting role')),
+            'name' => 'petsitting_role',
+            'type' => 'select_from_array',
+            'options' => ['' => '-'] + EnumHelper::translate('user.petsitting.roles'),
+        ])->afterField('friend_card_expiry');
+        
+        $this->crud->addField([
+            'label' => ucfirst(__('petsitting description')),
+            'name' => 'petsitting_description',
+            'type' => 'textarea',
+        ])->afterField('petsitting_role');
+
+        $this->crud->addField([
+            'label' => ucfirst(__('petsitting image')),
+            'name' => 'petsitting_image',
+            'type' => 'image',
+        ])->afterField('petsitting_description');
+
+        $this->crud->addField([
             'label' => __('Notes'),
             'type' => 'textarea',
             'name' => 'notes',
-        ])->afterField('friend_card_expiry');
+        ])->afterField('petsitting_image');
 
+        // Custom Columns
         $this->crud->addColumn([
             'label' => ucfirst(__('headquarter')),
             'name' => 'headquarter',
@@ -195,6 +216,13 @@ class UserCrudController extends CrudController
             'attribute' => 'value',
             'model' => "App\Models\FriendCardModality",
         ])->afterColumn('headquarter');
+
+        $this->crud->addColumn([
+            'label' => 'Petsitting',
+            'name' => 'petsitting_role',
+            'type' => 'model_function',
+            'function_name' => 'getPetsittingRoleTranslation',
+        ])->afterColumn('friend_card_modality');
 
         $this->crud->addColumn([
             'label' => __('Status'),
@@ -280,6 +308,20 @@ class UserCrudController extends CrudController
             function ($values) {
                 $this->crud->addClause('whereIn', 'friend_card_modality_id', json_decode($values));
             });
+
+        $this->crud->addFilter([
+            'name' => 'petsitting_role',
+            'type' => 'select2_multiple',
+            'label' => 'Petsitting',
+            'placeholder' => __('Select a Petsitting role'),
+        ],
+            EnumHelper::translate('user.petsitting.roles'),
+            function ($values) {
+                $roleList = EnumHelper::get('user.petsitting.roles');
+                $selectedRoles = array_intersect_key($roleList, array_flip(json_decode($values)));
+                $this->crud->addClause('whereIn', 'petsitting_role', array_values($selectedRoles));
+            }
+        );
 
         // ------ DATATABLE EXPORT BUTTONS
         $this->crud->enableExportButtons();
@@ -371,6 +413,8 @@ class UserCrudController extends CrudController
 
     protected function handleInputs(Request $request)
     {
+        Cache::forget('volunteers');
+
         // Remove fields not present on the user.
         $request->request->remove('password_confirmation');
         $request->request->remove('roles_show');

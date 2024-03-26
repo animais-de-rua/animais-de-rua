@@ -32,7 +32,7 @@ $factory->define(User::class, function (Faker $faker) {
         'name' => $faker->firstName . ' ' . $faker->lastName,
         'email' => $faker->unique()->safeEmail,
         'phone' => $faker->phoneNumber,
-        'petsitting_role' => $faker->randomElement(EnumHelper::get('user.petsitting.roles')),
+        'petsitting_role' => ucfirst($faker->randomElement(EnumHelper::get('user.petsitting.roles'))),
         'petsitting_description' => $faker->text(),
         'petsitting_image' => $faker->randomElement($fake_images),
         'status' => $faker->randomElement(array_keys(EnumHelper::get('user.status'))),

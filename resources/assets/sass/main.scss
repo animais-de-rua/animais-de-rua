@@ -1663,7 +1663,7 @@ footer {
             align-items: center;
             width: 100%;
             padding-top: 6rem;
-            padding-inline: 1rem;
+            padding-inline: 2rem;
             margin-bottom: 4rem;
 
             .heading {
@@ -1688,11 +1688,13 @@ footer {
                         position: relative;
                         border: 3px solid black;
                         border-radius: 4rem;
+                        width: 24rem;
                         height: 20rem;
 
                         img {
                             width: 100%;
                             height: 100%;
+                            object-fit: cover;
                         }
 
                         .mask {

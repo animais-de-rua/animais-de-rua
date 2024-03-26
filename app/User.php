@@ -70,6 +70,11 @@ class User extends Authenticatable
         $this->notify(new ResetPasswordNotification($token));
     }
 
+    public function getPetsittingRoleTranslation()
+    {
+        return '<span>'.__(strtolower($this->petsitting_role)).'</span>';
+    }
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONS
