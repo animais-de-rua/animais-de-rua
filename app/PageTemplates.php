@@ -641,6 +641,25 @@ trait PageTemplates
 
     }
 
+    private function petsitting()
+    {
+        // --------------------
+        $this->header('Petsitting');
+
+        $this->addField([
+            'name' => 'petsitting_title',
+            'label' => '',
+            'type' => 'text',
+        ]);
+
+        $this->addField([
+            'name' => 'petsitting_text',
+            'label' => '',
+            'type' => 'wysiwyg',
+        ]);
+
+    }
+
     private function friends()
     {
         // --------------------

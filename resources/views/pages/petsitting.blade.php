@@ -11,13 +11,13 @@
             <div class="column column-50">
                 <div class="flex-vertical-align">
                     <div class="info-text">
-                        <h1 class="label-title">{{ $page['partners_title'] }}</h1>
-                        <p>{!! $page['partners_text'] !!}</p>
+                        <h1 class="label-title">{{ $page['petsitting_title'] }}</h1>
+                        <p>{!! $page['petsitting_text'] !!}</p>
                     </div>
                 </div>
             </div>
             <div class="column column-50">
-                @component('components.picture', ['image' => 'partners', 'width' => 595, 'height' => 468])
+                @component('components.picture', ['image' => 'petsitting', 'width' => 595, 'height' => 468])
                 @endcomponent
             </div>
         </div>
