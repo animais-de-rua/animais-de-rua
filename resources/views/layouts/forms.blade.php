@@ -274,71 +274,127 @@
                         <div class="form petsitting hide">
                             <div class="row">
                                 <div class="column column-50">
-                                    <label for="initial-date">Data de início</label>
+                                    <label for="first-name" class="form-title">{{ __("First name") }}</label>
                                     <input
-                                            id="initial-date"
-                                            type="date"
-                                            value=""
-                                            min="<?= date('Y-m-d'); ?>"
-                                            onchange="handleDateChange(event)"
+                                        id="first-name"
+                                        name="first_name"
+                                        type="text"
+                                        maxlength="35"
+                                        required
                                     />
                                 </div>
                                 <div class="column column-50">
-                                    <label for="final-date">Data de fim</label>
+                                    <label for="last-name" class="form-title">{{ __("Last name") }}</label>
                                     <input
-                                            id="final-date"
-                                            type="date"
-                                            value=""
-                                            disabled
+                                        id="last-name"
+                                        name="last_name"
+                                        type="text"
+                                        maxlength="35"
+                                        required
                                     />
                                 </div>
                             </div>
                             <div>
-                                <label for="address">Morada</label>
-                                <input type="text" id="address" placeholder="Indique a sua morada" maxlength="35" />
+                                <label for="address" class="form-title">{{ __("Address") }}</label>
+                                <input type="text" id="address" name="address" maxlength="35" required />
                             </div>
                             <div class="row">
                                 <div class="column column-50">
-                                    <span>Animal</span>
-                                    <div class="row checkbox-container">
-                                        <div class="column checkbox option">
-                                            <input type="checkbox" id="dog">
-                                            <label for="dog">Cão</label>
+                                    <label for="initial-date" class="form-title">{{ __("Initial date") }}</label>
+                                    <input
+                                        id="initial-date"
+                                        name="initial_date"
+                                        type="date"
+                                        min="<?= date('Y-m-d'); ?>"
+                                        required
+                                    />
+                                </div>
+                                <div class="column column-50">
+                                    <label for="final-date" class="form-title">{{ __("Final date") }}</label>
+                                    <input
+                                        type="text"
+                                        id="final-date"
+                                        placeholder="Preenche a data de início primeiro"
+                                        required
+                                        disabled
+                                    />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="column column-50">
+                                    <span class="form-title">{{ __("Animals") }}</span>
+                                    <div class="checkbox-container row">
+                                        <div class="checkbox option">
+                                            <input type="checkbox" id="dog" name="animals[]" value="Cão">
+                                            <label for="dog">{{ ucfirst(__("dog")) }}</label>
                                         </div>
-                                        <div class="column checkbox option">
-                                            <input type="checkbox" id="cat">
-                                            <label for="cat">Gato</label>
+                                        <div class="checkbox option">
+                                            <input type="checkbox" id="cat" name="animals[]" value="Gato">
+                                            <label for="cat">{{ ucfirst(__("cat")) }}</label>
+                                        </div>
+                                        <div class="checkbox option">
+                                            <input
+                                                type="checkbox"
+                                                id="others"
+                                                name="animals[]"
+                                                value="Outros"
+                                            >
+                                            <label for="others">{{ ucfirst(__("others")) }}</label>
+                                        </div>
+                                        <div class="otherAnimals">
+                                            <input
+                                                type="text"
+                                                name="other_animals"
+                                                id="otherAnimals"
+                                                placeholder="{{ __("Which ones?") }}"
+                                                required
+                                                disabled
+                                            >
                                         </div>
                                     </div>
                                 </div>
-                                <div class="column column-50">
-                                    <label for="number-of-animals">Nº de animais</label>
-                                    <input type="number" id="number-of-animals" placeholder="0" max="2" />
-                                </div>
-                            </div>
-                            <div>
-                                <label for="temper">Temperamento do animal</label>
-                                <textarea
-                                        id="temper"
-                                        rows="5"
-                                        cols="86"
-                                        placeholder="Descreva como é o comportamento do seu animal"
-                                ></textarea>
                             </div>
                             <div class="row">
                                 <div class="column">
-                                    <span>Visitas diárias</span>
+                                    <label for="number-of-animals" class="form-title">{{ __("Number of Animals") }}</label>
+                                    <div class="flex-column">
+                                        <input
+                                            type="number"
+                                            id="number-of-animals"
+                                            name="number_of_animals"
+                                            max="2"
+                                            required
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="column">
+                                    <label for="temper" class="form-title">{{ __("Animal temper") }}</label>
+                                    <span class="note">{{ __("For example: friendly, suspicious, etc.") }}</span>
+                                    <textarea
+                                        id="temper"
+                                        name="animal_temper"
+                                        rows="5"
+                                        cols="86"
+                                        required
+                                    ></textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="column">
+                                    <span class="form-title">{{ __("Daily visits") }}</span>
                                     <div class="radio-chips">
                                         <label>
-                                            <input type="radio" name="visit-number" value="1" />
+                                            <input type="radio" name="visit_number" value=1 />
                                             <span>1</span>
                                         </label>
                                         <label>
-                                            <input type="radio" name="visit-number" value="2" />
+                                            <input type="radio" name="visit_number" value=2 />
                                             <span>2</span>
                                         </label>
                                         <label>
-                                            <input type="radio" name="visit-number" value="3" />
+                                            <input type="radio" name="visit_number" value=3 />
                                             <span>3</span>
                                         </label>
                                     </div>
@@ -346,170 +402,106 @@
                             </div>
                             <div class="row">
                                 <div class="column">
-                                    <span>Passear</span>
+                                    <label class="form-title">{{ __("Dog walks") }}</label>
+                                    <span class="note">{{ __("If applicable") }}</span>
                                     <div class="flex-row">
                                         <div class="radio-container">
-                                            <input type="radio" id="walk-yes" name="walk-options" value=true>
-                                            <label for="walk-yes">Sim</label>
+                                            <input type="radio" id="walk-yes" name="has_walk" value=yes>
+                                            <label for="walk-yes">{{ ucfirst(__("yes")) }}</label>
                                         </div>
                                         <div class="radio-container">
-                                            <input type="radio" id="walk-no" name="walk-options" value=false checked>
-                                            <label for="walk-no">Não</label>
+                                            <input type="radio" id="walk-no" name="has_walk" value=no checked>
+                                            <label for="walk-no">{{ ucfirst(__("no")) }}</label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row hide">
                                 <div class="column">
-                                    <span>Passeios diários</span>
+                                    <span class="form-title">{{ __("Daily walks") }}</span>
                                     <div class="radio-chips">
                                         <label>
-                                            <input type="radio" name="walk-number" value="1" />
+                                            <input type="radio" name="walk_number" value=1 />
                                             <span>1</span>
                                         </label>
                                         <label>
-                                            <input type="radio" name="walk-number" value="2" />
+                                            <input type="radio" name="walk_number" value=2 />
                                             <span>2</span>
                                         </label>
                                         <label>
-                                            <input type="radio" name="walk-number" value="3" />
+                                            <input type="radio" name="walk_number" value=3 />
                                             <span>3</span>
                                         </label>
                                     </div>
                                 </div>
                             </div>
                             <div class="other-services">
-                                <div>
-                                    <label for="food">Alimentação</label>
-                                    <div class="flex-row">
-                                        <div class="radio-container">
-                                            <input type="radio" id="food-yes" name="food-options" value=true>
-                                            <label for="food-yes">Sim</label>
-                                        </div>
-                                        <div class="radio-container">
-                                            <input type="radio" id="food-no" name="food-options" value=false checked>
-                                            <label for="food-no">Não</label>
-                                        </div>
+                                <span class="form-title">{{ __("Other services") }} ({{ __("Optional") }})</span>
+                                <div class="row checkbox-container-grid">
+                                    <div class="column checkbox option">
+                                        <input type="checkbox" id="food" name="services[]" value="Alimentação">
+                                        <label for="food">{{ __("Food") }}</label>
                                     </div>
-                                    <textarea
-                                        id="food"
-                                        rows="5"
-                                        cols="86"
-                                        placeholder="Alguma alimentação especial a ter em conta?"
-                                        class="hide"
-                                    ></textarea>
-                                </div>
-                                <div>
-                                    <label for="medication">Medicação</label>
-                                    <div class="flex-row">
-                                        <div class="radio-container">
-                                            <input type="radio" id="meds-yes" name="meds-options" value=true>
-                                            <label for="meds-yes">Sim</label>
-                                        </div>
-                                        <div class="radio-container">
-                                            <input type="radio" id="meds-no" name="meds-options" value=false checked>
-                                            <label for="meds-no">Não</label>
-                                        </div>
+                                    <div class="column checkbox option">
+                                        <input type="checkbox" id="medication" name="services[]" value="Dar medicação">
+                                        <label for="medication">{{ __("Medication") }}</label>
                                     </div>
-                                    <textarea
-                                        id="medication"
-                                        rows="5"
-                                        cols="86"
-                                        placeholder="Alguma medicação que o seu animal precise de tomar?"
-                                        class="hide"
-                                    ></textarea>
-                                </div>
-                                <div>
-                                    <label for="hygiene">Cuidados de higiene</label>
-                                    <div class="flex-row">
-                                        <div class="radio-container">
-                                            <input type="radio" id="hygiene-yes" name="hygiene-options" value=true>
-                                            <label for="hygiene-yes">Sim</label>
-                                        </div>
-                                        <div class="radio-container">
-                                            <input type="radio" id="hygiene-no" name="hygiene-options" value=false checked>
-                                            <label for="hygiene-no">Não</label>
-                                        </div>
+                                    <div class="column checkbox option">
+                                        <input type="checkbox" id="hygiene" name="services[]" value="Cuidados de higiene">
+                                        <label for="hygiene">{{ __("Hygiene care") }}</label>
                                     </div>
-                                    <textarea
-                                        id="hygiene"
-                                        rows="5"
-                                        cols="86"
-                                        placeholder="Que cuidados de higiene o seu animal necessita?"
-                                        class="hide"
-                                    ></textarea>
-                                </div>
-                                <div>
-                                    <label for="play">Brincar</label>
-                                    <div class="flex-row">
-                                        <div class="radio-container">
-                                            <input type="radio" id="play-yes" name="play-options" value=true>
-                                            <label for="play-yes">Sim</label>
-                                        </div>
-                                        <div class="radio-container">
-                                            <input type="radio" id="play-no" name="play-options" value=false checked>
-                                            <label for="play-no">Não</label>
-                                        </div>
+                                    <div class="column checkbox option">
+                                        <input type="checkbox" id="play" name="services[]" value="Brincar">
+                                        <label for="play">{{ __("Play") }}</label>
                                     </div>
-                                    <textarea
-                                        id="play"
-                                        rows="5"
-                                        cols="86"
-                                        placeholder="Brincadeiras para o entretermos!"
-                                        class="hide"
-                                    ></textarea>
-                                </div>
-                                <div>
-                                    <label for="plants">Regar as plantas</label>
-                                    <div class="flex-row">
-                                        <div class="radio-container">
-                                            <input type="radio" id="plants-yes" name="plants-options" value=true>
-                                            <label for="plants-yes">Sim</label>
-                                        </div>
-                                        <div class="radio-container">
-                                            <input type="radio" id="plants-no" name="plants-options" value=false checked>
-                                            <label for="plants-no">Não</label>
-                                        </div>
+                                    <div class="column checkbox option">
+                                        <input type="checkbox" id="plants" name="services[]" value="Regar as plantas">
+                                        <label for="plants">{{ __("Watering plants") }}</label>
                                     </div>
                                 </div>
-                                <div>
-                                    <label for="others">Outros detalhes</label>
+                            </div>
+                            <div class="row">
+                                <div class="column">
+                                    <label for="notes" class="form-title">{{ __("Notes") }} ({{ __("Optional") }})</label>
+                                    <span class="note">{{ __("For example: food, medication to give, how to take care of hygiene, etc.") }}</span>
                                     <textarea
-                                        id="others"
+                                        id="notes"
+                                        name="notes"
                                         rows="5"
                                         cols="86"
-                                        placeholder="Outros detalhes que ache necessário indicar"
                                     ></textarea>
                                 </div>
                             </div>
-                            <div>
-                                <span class="prices-title">Preços</span>
+                            <div class="prices-container">
+                                <span class="prices-title">{{ __("Prices") }}</span>
                                 <div class="prices">
-                                    <div class="price-column">
-                                        <div class="price">
-                                            <span class="type">Visita gato</span>
-                                            <span>12,50€</span>
+                                    <ul>
+                                        <li>{{ __("Cat visit - 12,50€/day (up to 2 cats). 3€ extra per extra animal") }}</li>
+                                        <li>{{ __("Dog visit - 15,50€/day with 1 walk (up to 2 dogs). 5€ per extra animal") }}</li>
+                                        <li>{{ __("Dog visit - 25,50€/day with 2 walks (up to 2 dogs). 5€ per extra animal") }}</li>
+                                        <li>{{ __("Dog visit - 35,50€/day with 3 walks (up to 2 dogs). 5€ per extra animal") }}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top: 3rem">
+                                <div class="column">
+                                    <label class="form-title">{{ __("Do we have permission to publish photos of your pet during the petsitting service on Animais de Rua's communication channels to promote the service?") }}</label>
+                                    <div class="flex-row">
+                                        <div class="radio-container">
+                                            <input type="radio" id="consent-yes" name="has_consent" value=yes>
+                                            <label for="consent-yes">{{ ucfirst(__("yes")) }}</label>
                                         </div>
-                                        <div class="price">
-                                            <span class="type">Visita cão</span>
-                                            <span>15,50€</span>
-                                        </div>
-                                    </div>
-                                    <div class="price-column">
-                                        <div class="price optional">
-                                            <span class="type">Com 1 passeio</span>
-                                            <span>+15,50€</span>
-                                        </div>
-                                        <div class="price optional">
-                                            <span class="type">Com 2 passeios</span>
-                                            <span>+20€</span>
+                                        <div class="radio-container">
+                                            <input type="radio" id="consent-no" name="has_consent" value=no checked>
+                                            <label for="consent-no">{{ ucfirst(__("no")) }}</label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <div class="petsitting-error"></div>
                             <div class="submit-container">
                                 <button type="submit" class="submit">
-                                    Enviar pedido
+                                    {{ __("Send request") }}
                                 </button>
                             </div>
                         </div>
@@ -522,16 +514,41 @@
 </div>
 
 <script>
-  function handleDateChange(event) {
-    const finalDateDatePicker = document.getElementById('final-date');
+    // Disable final date picker if initial date is not selected
+    const initialDatePicker = document.getElementById('initial-date');
+    const finalDatePicker = document.getElementById('final-date');
 
-    if (event.target.value) {
-      const finalDate = new Date(event.target.value);
-      finalDate.setDate(finalDate.getDate() + 7);
+    // Disable "other animals" input if checkbox is not selected
+    const othersCheckbox = document.getElementById('others');
+    const otherAnimalsInput = document.getElementById('otherAnimals');
 
-      finalDateDatePicker.min = event.target.value;
-      finalDateDatePicker.max = finalDate.toISOString().split('T')[0]
-      finalDateDatePicker.disabled = false;
+    initialDatePicker.addEventListener('change', handleDateChange);
+    othersCheckbox.addEventListener('change', handleOtherAnimalsChange);
+
+    function handleDateChange(event) {
+        if (initialDatePicker.value) {
+            initialDatePicker.style.color = 'white';
+
+            finalDatePicker.type = 'date';
+            finalDatePicker.name = 'final_date';
+            finalDatePicker.style.color = 'white';
+            finalDatePicker.min = initialDatePicker.value;
+            finalDatePicker.disabled = false;
+        } else {
+            initialDatePicker.style.color = '#a0a0a0';
+
+            finalDatePicker.type = 'text';
+            finalDatePicker.value = ''; 
+            finalDatePicker.disabled = true;
+        }
     }
-  }
+
+    function handleOtherAnimalsChange(event) {
+        if (event.target.checked) {
+            otherAnimalsInput.disabled = false;
+        } else {
+            otherAnimalsInput.disabled = true;
+            otherAnimalsInput.value = '';
+        }
+    }
 </script>

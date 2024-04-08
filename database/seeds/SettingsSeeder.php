@@ -63,6 +63,18 @@ class SettingsSeeder extends Seeder
                 'active' => 1,
             ],
             [
+                'key' => 'form_petsitting',
+                'name' => 'Formulário de Petsitting',
+                'description' => 'Endereço relativo ao formulário de petsitting.',
+                'value' => 'petsitting@animaisderua.org',
+                'field' => json_encode([
+                    'name' => 'value',
+                    'label' => 'Email',
+                    'type' => 'email',
+                ]),
+                'active' => 1,
+            ],
+            [
                 'key' => 'base_counter',
                 'name' => 'Contador Base',
                 'description' => 'Número base para o contador de intervenções.',

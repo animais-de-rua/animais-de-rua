@@ -177,7 +177,12 @@ class UserCrudController extends CrudController
             'label' => ucfirst(__('petsitting role')),
             'name' => 'petsitting_role',
             'type' => 'select_from_array',
-            'options' => ['' => '-'] + EnumHelper::translate('user.petsitting.roles'),
+            'options' => [
+                null => '-',
+                'Dog' => __('dog'),
+                'Cat' => __('cat'),
+                'Both' => __('both'),
+            ],
         ])->afterField('friend_card_expiry');
         
         $this->crud->addField([

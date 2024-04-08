@@ -25,7 +25,7 @@
 
     <div class="content">
         <div class="volunteers">
-            <h3 class="heading">Conheça a nossa equipa de Petsitting!</h3>
+            <h3 class="heading">{{ __("Get to know our Petsitting team!") }}</h3>
             <div class="cards">
                 @foreach($volunteers as $volunteer)
                     <div class="card">
@@ -35,7 +35,7 @@
                             <div class="person">
                                 <span class="name">{{ $volunteer->name }}</span>
                                 <span class="role">
-                                    Petsitting {{ $volunteer->petsitting_role === 'Both' ? __('dog') . ' ' . __('and') . ' ' . __('cat') : __($volunteer->petsitting_role) }}
+                                    Petsitting {{ $volunteer->petsitting_role === 'Both' ? __('dog') . ' ' . __('and') . ' ' . __('cat') : __(strtolower($volunteer->petsitting_role)) }}
                                 </span>
                             </div>
                         </div>
@@ -55,7 +55,7 @@
         </div>
         <div class="form-open">
             <button onclick="return modal.openPetsittingForm('petsitting')" class="form-button">
-                Submeta o seu pedido
+                {{ __("Submit your request") }}
             </button>
         </div>
     </div>

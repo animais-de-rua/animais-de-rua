@@ -49,6 +49,7 @@ class FakeSeeder extends Seeder
         DB::table('store_products')->truncate();
         DB::table('store_orders')->truncate();
         DB::table('store_orders_products')->truncate();
+        DB::table('store_petsitting_requests')->truncate();
         DB::table('store_stock')->truncate();
         DB::table('store_transactions')->truncate();
         DB::table('suppliers')->truncate();
