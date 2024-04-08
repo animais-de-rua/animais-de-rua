@@ -483,7 +483,7 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="row" style="margin-top: 3rem">
+                            <div class="row" style="margin-top: 2rem">
                                 <div class="column">
                                     <label class="form-title">{{ __("Do we have permission to publish photos of your pet during the petsitting service on Animais de Rua's communication channels to promote the service?") }}</label>
                                     <div class="flex-row">
