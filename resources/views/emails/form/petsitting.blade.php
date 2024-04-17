@@ -1,11 +1,15 @@
 @component('mail::message')
 # Novo pedido de petsitting
 
-## {{ $request->first_name }} {{ $request->last_name }}
+<strong>Nome:</strong> {{ $request->first_name }} {{ $request->last_name }}<br />
+<strong>Morada:</strong> {{ $request->address }}<br />
+<strong>Município:</strong> {{ $request->city }}<br />
+<strong>Freguesia:</strong> {{ $request->town }}<br />
+
+<br />
 
 <strong>Data de início:</strong> {{ \Carbon\Carbon::parse($request->initial_date)->format('d/m/Y') }}<br />
 <strong>Data de fim:</strong> {{ \Carbon\Carbon::parse($request->final_date)->format('d/m/Y') }}<br />
-<strong>Morada:</strong> {{ $request->address }}<br />
 <strong>Animal:</strong>@if(count($request->animals) > 1) {{ implode(', ', $request->animals) }} @else {{ $request->animals[0] }} @endif<br />
 @if ($request->other_animals)
   <strong>Outros animais:</strong> {{ $request->other_animals }}<br />

@@ -250,9 +250,11 @@ class FormController extends Controller
         $validator = Validator::make($request->all(), [
             'first_name' => 'required|max:35',
             'last_name' => 'required|max:35',
+            'address' => 'required|max:255',
+            'city' => 'required|max:35',
+            'town' => 'required|max:35',
             'initial_date' => 'required|date',
             'final_date' => 'required|date|after_or_equal:initialDate',
-            'address' => 'required|max:255',
             'animals' => 'required|array|min:1',
             'other_animals' => Rule::requiredIf(function () use ($request) {
                 if ($request->filled('animals')) {

@@ -272,6 +272,7 @@
                     <form action="/form/petsitting" onsubmit="return modal.submit(this)">
                         @csrf
                         <div class="form petsitting hide">
+                            <h1 class="section-title">{{ __("Personal Information") }}</h1>
                             <div class="row">
                                 <div class="column column-50">
                                     <label for="first-name" class="form-title">{{ __("First name") }}</label>
@@ -294,10 +295,23 @@
                                     />
                                 </div>
                             </div>
-                            <div>
-                                <label for="address" class="form-title">{{ __("Address") }}</label>
-                                <input type="text" id="address" name="address" maxlength="35" required />
+                            <div class="row" style="margin-bottom: 0.875rem">
+                                <div class="column">
+                                    <label for="address" class="form-title">{{ __("Address") }}</label>
+                                    <input type="text" id="address" name="address" maxlength="54" required />
+                                    <div class="row">
+                                        <div class="column column-50">
+                                            <label for="city" class="form-title">{{ __("City") }}</label>
+                                            <input type="text" id="city" name="city" maxlength="35" required />
+                                        </div>
+                                        <div class="column column-50">
+                                            <label for="town" class="form-title">{{ __("Town") }}</label>
+                                            <input type="text" id="town" name="town" maxlength="35" required />
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                            <h1 class="section-title">{{ __("Form") }}</h1>
                             <div class="row">
                                 <div class="column column-50">
                                     <label for="initial-date" class="form-title">{{ __("Initial date") }}</label>
@@ -498,9 +512,9 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div style="margin-top: 1rem">
+                            <div style="margin-top: 1rem; font-size: 1.4rem">
                                 <p>{{ __("By purchasing this service you are helping Animais de Rua to help more animals. If you need a receipt for this donation, please enter your VAT number in the field") }} <strong>{{ __("Notes") }}.</strong></p>
-                                <p>{{ __("The service includes sending daily photos and videos of your pet!") }}</p>
+                                <p style="margin-bottom: 0">{{ __("The service includes sending daily photos and videos of your pet!") }}</p>
                             </div>
                             <div class="petsitting-error"></div>
                             <div class="submit-container">
