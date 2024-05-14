@@ -46,13 +46,13 @@ For example, if you have SQLite installed:
 To compile and watch changes in frontend
 
 ```shell
-   npm run watch
+npm run watch
 ```
 
 To build and serve the backend (in a different session or tab)
 
 ```shell
-   php artisan serve
+php artisan serve
 ```
 
 You should now be able to access the website in http://localhost:8000/

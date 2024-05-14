@@ -171,10 +171,10 @@ class PageController extends Controller
 
     private function petsitting()
     {
-        $volunteers = LocalCache::volunteers();
+        $petsitters = LocalCache::petsitters();
 
         return [
-            'volunteers' => $volunteers,
+            'petsitters' => $petsitters,
         ];
     }
 

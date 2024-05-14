@@ -219,9 +219,9 @@ trait LocalCache
         });
     }
 
-    public static function volunteers()
+    public static function petsitters()
     {
-        return Cache::rememberForever('volunteers', function () {
+        return Cache::rememberForever('petsitters', function () {
             return User::with(['headquarters:id,name'])
                 ->select([
                     'users.id',
@@ -236,6 +236,7 @@ trait LocalCache
                         ->from('user_has_roles')
                         ->where('role_id', 2);
                 })
+                ->whereNotNull('users.petsitting_role')
                 ->orderBy('users.name', 'asc')
                 ->get();
         });

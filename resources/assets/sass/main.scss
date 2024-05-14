@@ -1657,7 +1657,7 @@ footer {
         justify-content: center;
         background-color: white;
 
-        .volunteers {
+        .petsitters {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -1682,13 +1682,15 @@ footer {
                     gap: 1.25rem;
                     max-width: 24rem;
                     min-height: 24rem;
+                    background-color: #ffffff;
+                    padding: 1rem;
+                    border-radius: .4rem;
+                    box-shadow: 1px 1px 4px #0002;
 
                     .card-image {
                         overflow: hidden;
                         position: relative;
-                        border: 3px solid black;
-                        border-radius: 4rem;
-                        width: 24rem;
+                        border-radius: .4rem;
                         height: 20rem;
 
                         img {
@@ -1717,6 +1719,7 @@ footer {
                             padding-right: 2rem;
                             padding-bottom: 1rem;
                             color: white;
+                            text-shadow: 1px 1px 2px #0005;
 
                             .name {
                                 font-size: 2.25rem;

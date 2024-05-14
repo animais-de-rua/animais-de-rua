@@ -24,29 +24,29 @@
     </div>
 
     <div class="content">
-        <div class="volunteers">
+        <div class="petsitters">
             <h3 class="heading">{{ __("Get to know our Petsitting team!") }}</h3>
             <div class="cards">
-                @foreach($volunteers as $volunteer)
+                @foreach($petsitters as $petsitter)
                     <div class="card">
                         <div class="card-image">
-                            <img src="{{ $volunteer->petsitting_image }}" alt="profile-image">
+                            <img src="{{ $petsitter->petsitting_image }}" alt="profile-image">
                             <div class="mask"></div>
                             <div class="person">
-                                <span class="name">{{ $volunteer->name }}</span>
+                                <span class="name">{{ $petsitter->name }}</span>
                                 <span class="role">
-                                    Petsitting {{ $volunteer->petsitting_role === 'Both' ? __('dog') . ' ' . __('and') . ' ' . __('cat') : __(strtolower($volunteer->petsitting_role)) }}
+                                    Petsitting {{ $petsitter->petsitting_role === 'Both' ? __('dog') . ' ' . __('and') . ' ' . __('cat') : __(strtolower($petsitter->petsitting_role)) }}
                                 </span>
                             </div>
                         </div>
                         <div class="card-body">
                             <span class="city">
-                                @foreach ($volunteer->headquarters as $headquarter)
+                                @foreach ($petsitter->headquarters as $headquarter)
                                     {{ $headquarter->name }}{{ $loop->last ? '' : ', ' }}
                                 @endforeach
                             </span>
                             <p class="description">
-                                {{ $volunteer->petsitting_description }}
+                                {{ $petsitter->petsitting_description }}
                             </p>
                         </div>
                     </div>

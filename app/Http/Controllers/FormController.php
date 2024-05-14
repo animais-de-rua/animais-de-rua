@@ -280,7 +280,7 @@ class FormController extends Controller
 
         // Send Mail with last stored request id
         $lastEmailId = StorePetsittingRequests::all()->last()->id ?? 0;
-        $result = Mail::to(Config::get('settings.form_petsitting'))->send(new PetsittingForm($request, $lastEmailId + 1));
+        Mail::to(Config::get('settings.form_petsitting'))->send(new PetsittingForm($request, $lastEmailId + 1));
 
         // Store form request
         $storePetsittingRequests = new StorePetsittingRequests();

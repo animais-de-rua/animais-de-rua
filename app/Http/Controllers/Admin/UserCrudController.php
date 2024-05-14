@@ -418,7 +418,7 @@ class UserCrudController extends CrudController
 
     protected function handleInputs(Request $request)
     {
-        Cache::forget('volunteers');
+        Cache::forget('petsitters');
 
         // Remove fields not present on the user.
         $request->request->remove('password_confirmation');

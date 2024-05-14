@@ -641,7 +641,7 @@ window.modal = {
     e.classList.remove('empty');
   },
 
-  openPetsittingForm: e => {
+  openPetsittingForm: () => {
     formsDom.query('.header').hide();
     formsDom.queryAll('.form').forEach(e => e.hide());
     formsDom.query('.form.petsitting').show();
@@ -692,7 +692,7 @@ window.modal = {
                 if (input && isPetsittingForm) {
                   if (input.type !== 'checkbox' && input.type !== 'radio') {
                     input.classList.add('error');
-                    
+
                     let errorMessage = input.nextElementSibling;
                     if (!errorMessage) {
                       errorMessage = document.createElement('span');
