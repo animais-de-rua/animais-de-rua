@@ -117,6 +117,13 @@ return [
             17 => 'store vouchers',
             16 => 'reports',
         ],
+        'petsitting' => [
+            'roles' => [
+                1 => 'dog',
+                2 => 'cat',
+                3 => 'both',
+            ],
+        ],
     ],
 
     'forms' => [

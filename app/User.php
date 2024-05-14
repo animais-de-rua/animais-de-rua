@@ -44,8 +44,10 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
-        'phone', 'friend_card_modality', 'friend_card_number', 'friend_card_expiry', 'status', 'notes', 'address',
+        'name', 'email', 'password', 'phone',
+        'friend_card_modality', 'friend_card_number', 'friend_card_expiry',
+        'petsitting_role', 'petsitting_description', 'petsitting_image',
+        'status', 'notes', 'address',
     ];
 
     /**
@@ -66,6 +68,11 @@ class User extends Authenticatable
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPasswordNotification($token));
+    }
+
+    public function getPetsittingRoleTranslation()
+    {
+        return '<span>'.__(strtolower($this->petsitting_role)).'</span>';
     }
 
     /*

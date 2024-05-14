@@ -13,6 +13,7 @@ use App\Models\Process;
 use App\Models\Sponsor;
 use App\Models\Territory;
 use App\Models\Treatment;
+use App\User;
 use Cache;
 use DB;
 
@@ -218,4 +219,26 @@ trait LocalCache
         });
     }
 
+    public static function petsitters()
+    {
+        return Cache::rememberForever('petsitters', function () {
+            return User::with(['headquarters:id,name'])
+                ->select([
+                    'users.id',
+                    'users.name',
+                    'users.petsitting_role', 
+                    'users.petsitting_description', 
+                    'users.petsitting_image',
+                ])
+                ->where('users.status', 1)
+                ->whereIn('users.id', function ($query) {
+                    $query->select('model_id')
+                        ->from('user_has_roles')
+                        ->where('role_id', 2);
+                })
+                ->whereNotNull('users.petsitting_role')
+                ->orderBy('users.name', 'asc')
+                ->get();
+        });
+    }
 }

@@ -6,11 +6,14 @@ use App\Helpers\EnumHelper;
 use App\Mail\ApplyForm;
 use App\Mail\ContactForm;
 use App\Mail\GodfatherForm;
+use App\Mail\PetsittingForm;
 use App\Mail\TrainingForm;
 use App\Mail\VolunteerForm;
 use App\Models\Headquarter;
 use App\Models\Process;
+use App\Models\StorePetsittingRequests;
 use Config;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Image;
 use Mail;
@@ -27,6 +30,7 @@ class FormController extends Controller
             'contacto' => 'contact',
             'candidatura' => 'apply',
             'formacao' => 'training',
+            'petsitting' => 'petsitting',
         ];
 
         if (array_key_exists($slug, $lang_map)) {
@@ -236,6 +240,56 @@ class FormController extends Controller
         return response()->json([
             'success' => true,
             'message' => __('Your message has been successfully sent.') . '<br />' . __('We will contact you as soon as possible to follow up on your request.'),
+        ]);
+    }
+
+    public function form_submit_petsitting()
+    {
+        $request = request();
+
+        $validator = Validator::make($request->all(), [
+            'first_name' => 'required|max:35',
+            'last_name' => 'required|max:35',
+            'address' => 'required|max:255',
+            'city' => 'required|max:35',
+            'town' => 'required|max:35',
+            'initial_date' => 'required|date',
+            'final_date' => 'required|date|after_or_equal:initialDate',
+            'animals' => 'required|array|min:1',
+            'other_animals' => Rule::requiredIf(function () use ($request) {
+                if ($request->filled('animals')) {
+                    return in_array('Outros', $request->input('animals'));
+                }
+            }),
+            'number_of_animals' => 'required|numeric|min:1|max:2',
+            'animal_temper' => 'required|max:255',
+            'visit_number' => 'required|numeric',
+            'walk_number' => 'required_if:has_walk,yes|numeric',
+            'services' => 'nullable',
+            'notes' => 'nullable|max:255',
+            'has_consent' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => __('Some fields are required. Please check the form and try again.'),
+                'errors' => $validator->errors(),
+            ]);
+        }
+
+        // Send Mail with last stored request id
+        $lastEmailId = StorePetsittingRequests::all()->last()->id ?? 0;
+        Mail::to(Config::get('settings.form_petsitting'))->send(new PetsittingForm($request, $lastEmailId + 1));
+
+        // Store form request
+        $storePetsittingRequests = new StorePetsittingRequests();
+        $storePetsittingRequests->name = $request->first_name . ' ' . $request->last_name;
+        $storePetsittingRequests->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => __('Your form has been successfully submitted.'),
         ]);
     }
 

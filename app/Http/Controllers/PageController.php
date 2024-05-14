@@ -169,6 +169,15 @@ class PageController extends Controller
         ];
     }
 
+    private function petsitting()
+    {
+        $petsitters = LocalCache::petsitters();
+
+        return [
+            'petsitters' => $petsitters,
+        ];
+    }
+
     private function friends()
     {
         $modalities = LocalCache::friend_card_modalities();

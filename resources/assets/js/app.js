@@ -641,6 +641,20 @@ window.modal = {
     e.classList.remove('empty');
   },
 
+  openPetsittingForm: () => {
+    formsDom.query('.header').hide();
+    formsDom.queryAll('.form').forEach(e => e.hide());
+    formsDom.query('.form.petsitting').show();
+    formsDom.classList.add('open');
+
+    // Pixel track
+    app.track('ViewContent', {
+      modal: 'petsitting',
+    });
+
+    return false;
+  },
+
   submit: form => {
     loading.start();
     formsDom.classList.add('sending');
@@ -663,7 +677,8 @@ window.modal = {
             formsDom.query('.success > p').innerHTML = result.message;
             form.reset();
           } else {
-            const errorsDiv = formsDom.query('.errors');
+            const isPetsittingForm = new URL(form.action).pathname === '/form/petsitting';
+            const errorsDiv = formsDom.query(isPetsittingForm ? '.petsitting-error' : '.errors');
 
             errorsDiv.show();
             errorsDiv.innerHTML = 'Error';
@@ -673,11 +688,48 @@ window.modal = {
               Object.entries(result.errors).forEach(([key, value]) => {
                 errorsList += `<p>${value}</p>`;
 
-                const input = form.query(`input[name="${key.replace(/\.\d/, '[]')}"]`);
-                if (input) input.classList.add('error');
+                const input = form.query(`input[name="${key.replace(/\.\d/, '[]')}"]`) ?? form.query(`input[name="${key}[]"]`);
+                if (input && isPetsittingForm) {
+                  if (input.type !== 'checkbox' && input.type !== 'radio') {
+                    input.classList.add('error');
+
+                    let errorMessage = input.nextElementSibling;
+                    if (!errorMessage) {
+                      errorMessage = document.createElement('span');
+                      errorMessage.classList.add('error-message');
+                      errorMessage.innerHTML = value;
+                      input.insertAdjacentElement('afterend', errorMessage);
+                    } else {
+                      errorMessage.innerHTML = value;
+                    }
+                  } else {
+                    const container = input.closest('.column > div');
+
+                    if (container) {
+                      container.classList.add('error');
+
+                      let errorMessage = container.nextElementSibling;
+                      if (!errorMessage) {
+                        errorMessage = document.createElement('span');
+                        errorMessage.classList.add('error-message');
+                        errorMessage.innerHTML = value;
+                        container.insertAdjacentElement('afterend', errorMessage);
+                      } else {
+                        errorMessage.innerHTML = value;
+                      }
+                    }
+                  }
+                } else if (input) {
+                  input.classList.add('error');
+                }
               });
 
-              errorsDiv.innerHTML = errorsList;
+              if (isPetsittingForm) {
+                errorsDiv.classList.add('active');
+                errorsDiv.innerHTML = result.message;
+              } else {
+                errorsDiv.innerHTML = errorsList;
+              }
             } else if (result.message) {
               // Unknown error
               errorsDiv.innerHTML = result.message;

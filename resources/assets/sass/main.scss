@@ -414,7 +414,7 @@ a {
         display: flex;
         justify-content: space-between;
         width: 100%;
-        max-width: 450px;
+        max-width: 500px;
         min-width: 380px;
 
         li {
@@ -1649,6 +1649,201 @@ footer {
     }
 }
 
+// Petsitting
+#petsitting {
+    .content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background-color: white;
+
+        .petsitters {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            padding-top: 6rem;
+            padding-inline: 2rem;
+            margin-bottom: 4rem;
+
+            .heading {
+                margin-bottom: 8rem;
+            }
+
+            .cards {
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 2em;
+
+                .card {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1.25rem;
+                    max-width: 24rem;
+                    min-height: 24rem;
+                    background-color: #ffffff;
+                    padding: 1rem;
+                    border-radius: .4rem;
+                    box-shadow: 1px 1px 4px #0002;
+
+                    .card-image {
+                        overflow: hidden;
+                        position: relative;
+                        border-radius: .4rem;
+                        height: 20rem;
+
+                        img {
+                            width: 100%;
+                            height: 100%;
+                            object-fit: cover;
+                        }
+
+                        .mask {
+                            position: absolute;
+                            left: 0;
+                            bottom: 0;
+                            width: 100%;
+                            height: 100%;
+                            background-image: linear-gradient(to bottom, rgba(0,0,0,0) 60%, rgba(0,0,0,0.2));
+                        }
+
+                        .person {
+                            display: flex;
+                            flex-direction: column;
+                            position: absolute;
+                            left: 0;
+                            bottom: 0;
+                            width: 100%;
+                            padding-left: 2rem;
+                            padding-right: 2rem;
+                            padding-bottom: 1rem;
+                            color: white;
+                            text-shadow: 1px 1px 2px #0005;
+
+                            .name {
+                                font-size: 2.25rem;
+                                font-weight: bold;
+                                line-height: 1.25;
+                            }
+
+                            .role {
+                                font-size: 1.5rem;
+                            }
+                        }
+                    }
+
+                    .card-body {
+                        padding-left: 1rem;
+                        padding-right: 1rem;
+
+                        .city {
+                            display: inline-block;
+                            margin-bottom: 0.5rem;
+                            font-weight: bold;
+                        }
+
+                        .description {
+                            font-size: 1.25rem;
+                        }
+                    }
+
+                    .profile {
+                        display: flex;
+                        align-items: center;
+                        gap: 2rem;
+                        min-width: 100px;
+
+                        .profile-image {
+                            width: 100px;
+                            height: 100px;
+                            border: 3px solid black;
+                            border-radius: 9999px;
+                        }
+
+                        .city {
+                            text-align: center;
+                        }
+
+                        .name {
+                            font-size: 2rem;
+                            font-weight: 700;
+                            text-align: center;
+                        }
+                    }
+
+                    .info {
+                        width: 100%;
+
+                        .person {
+                            .name {
+                                font-size: 3rem;
+                                font-weight: 700;
+                            }
+
+                            .sub {
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: center;
+                                margin-top: 0.5rem;
+
+                                .role {
+                                    text-align: center;
+                                    font-size: 1.5rem;
+                                }
+
+                                .city {
+                                    text-align: center;
+                                    font-size: 1.5rem;
+                                }
+                            }
+                        }
+                    }
+
+                    .description {
+                        margin-bottom: 0;
+                    }
+                }
+            }
+        }
+
+        .form-open {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 24rem;
+            padding-inline: 2rem;
+
+            .form-button {
+                height: 5.5rem;
+                width: 38rem;
+                margin-bottom: 0;
+                background-color: #E03322;
+                color: white;
+                font-size: 2rem;
+                border: none;
+                border-radius: 1rem;
+                box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+                transition-duration: 200ms;
+                transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+                animation: button-pop 0.25s ease-out;
+                transition-property: color, background-color, border-color, opacity, box-shadow, transform;
+
+                &:active:hover,
+                &:active:focus {
+                    animation: button-pop 0s ease-out;
+                    transform: scale(0.97);
+                }
+
+                &:hover {
+                    background-color: #b33122;
+                }
+            }
+        }
+    }
+
+}
+
 // Animals / Friends
 .isotope {
     .selects {
@@ -2106,6 +2301,245 @@ footer {
         margin-bottom: 16px;
     }
 
+    .petsitting {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+
+        input:not([type="text"]){
+            cursor: pointer;
+        }
+
+        input:not([type="checkbox"]):not([type="radio"]),
+        .radio-chips {
+            margin-top: 0.5rem;
+        }
+
+        input[type="date"] {
+            color: #a0a0a0;
+            font-weight: normal;
+
+            &:focus {
+                color: white;
+            }
+
+            &:disabled {
+                border-color: initial;
+                color: revert;
+                cursor: not-allowed;
+            }
+        }
+
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+        }
+
+        input[type="text"] {
+            font-weight: normal;
+
+            &::placeholder {
+                color: #a0a0a0 !important;
+            }
+
+            &:disabled {
+                border-color: #777;
+                cursor: not-allowed;
+
+                &::placeholder {
+                    color: light-dark(rgb(84, 84, 84), rgb(170, 170, 170)) !important;
+                }
+            }
+        }
+
+        textarea {
+            min-height: 8rem;
+            max-height: 16rem;
+            resize: vertical;
+            margin-top: 0.5rem;
+            font-weight: normal;
+        }
+
+        input.error,
+        textarea.error,
+        div.error {
+            outline: solid #950000 1px;
+            outline-offset: 3px;
+
+            &+.error-message {
+                color: red;
+            }
+
+            &:focus,
+            &:has(input:checked) {
+                outline: none;
+
+                &+.error-message {
+                    display: none;
+                }
+            }
+        }
+
+        .section-title {
+            font-size: 3.5rem;
+        }
+
+        .form-title {
+            font-weight: bold;
+        }
+
+        .note {
+            font-style: italic;
+            font-size: small;
+            font-weight: normal;
+        }
+
+        .otherAnimals {
+            margin-top: 0.5rem;
+            padding-right: 0.2rem;
+        }
+
+        .checkbox-container {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+            margin-left: 0.2rem;
+
+            .option {
+                display: flex;
+                align-items: center;
+            }
+        }
+
+        .checkbox-container-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.2rem;
+            margin-top: 4px;
+            margin-bottom: 10px;
+
+            .option {
+                display: flex;
+                align-items: center;
+                padding-inline: 1.2rem;
+            }
+        }
+
+        #number-of-animals {
+            width: 10rem;
+        }
+
+        .radio-chips {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 10px;
+
+            label {
+                position: relative;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                border: 1px solid black;
+
+                span {
+                    z-index: 10;
+                    color: black;
+                }
+
+                input:checked + span {
+                    color: white;
+                }
+
+                input {
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    border: 1px solid white;
+                    border-radius: 0;
+
+                    &:checked:after {
+                        display: none;
+                    }
+                }
+
+                input:checked {
+                    background-color: #e53625;
+                }
+            }
+        }
+
+        .flex-row {
+            display: flex;
+            gap: 16rem;
+            width: 100%;
+            margin-top: 5px;
+            margin-bottom: 10px;
+
+            .radio-container {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+        }
+
+        .flex-column {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .row:has(#walk-yes:checked) + .row {
+            display: flex;
+        }
+
+        .prices-container {
+            .prices-title {
+                text-decoration: underline;
+                text-decoration-color: #e53625;
+                text-underline-offset: 0.5rem;
+            }
+
+            .prices {
+                display: flex;
+                gap: 6rem;
+                font-size: 1.4rem;
+                margin-top: 0.5rem;
+
+                ul {
+                    margin-top: 5px;
+                    margin-bottom: 0;
+                }
+            }
+        }
+
+        .petsitting-error {
+            display: flex;
+            align-items: center;
+            height: 4rem;
+            padding: 1rem;
+            margin-top: 10px;
+            font-size: 1.3rem;
+            border-radius: 2px;
+
+            &.active {
+                background-color: #612424;
+                border: 1px solid #733232;
+            }
+        }
+
+        .submit-container {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+
+            .submit {
+                width: 24rem;
+                border: 1px solid white;
+            }
+        }
+    }
+
     .value {
         h2 {
             margin: 10px 0;
@@ -2461,6 +2895,22 @@ body {
             flex: 100%;
             margin: 0;
         }
+
+        .petsitting {
+            input.error,
+            textarea.error,
+            div.error {
+                outline: none;
+            }
+
+            .row .column.column-50 {
+                max-width: 100%;
+            }
+
+            .checkbox-container-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
     }
 
     .card-login {
@@ -2521,5 +2971,17 @@ body {
 
     .network {
         font-size: 1.1rem;
+    }
+}
+
+@keyframes button-pop {
+    0% {
+        transform: scale(0.98);
+    }
+    40% {
+        transform: scale(1.02);
+    }
+    100% {
+        transform: scale(1);
     }
 }

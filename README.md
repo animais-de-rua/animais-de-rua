@@ -15,8 +15,8 @@ It includes a backoffice for the organization and for the main website.
 
 ## Contributing
 
-Thank you for considering contributing to the this platform! Feel free to open issues and pull requests!
-
+Thank you for considering contributing to this platform!
+Feel free to open issues and pull requests and check out our [Contributors Guide](./CONTRIBUTING.md) for help getting started.
 
 ## Security Vulnerabilities
 
