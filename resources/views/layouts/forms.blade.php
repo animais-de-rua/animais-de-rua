@@ -295,6 +295,16 @@
                                     />
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="column column-50">
+                                    <label for="first-name" class="form-title">{{ __("Email") }}</label>
+                                    <input type="email" required name="email" placeholder="{{ __("Email") }}" />
+                                </div>
+                                <div class="column column-50">
+                                    <label for="last-name" class="form-title">{{ __("Phone") }}</label>
+                                    <input type="tel" pattern="[0-9\s]{9,16}" title="{{ __('Valid phone number') }}" required name="phone" placeholder="{{ __("Phone") }}" />
+                                </div>
+                            </div>
                             <div class="row" style="margin-bottom: 0.875rem">
                                 <div class="column">
                                     <label for="address" class="form-title">{{ __("Address") }}</label>

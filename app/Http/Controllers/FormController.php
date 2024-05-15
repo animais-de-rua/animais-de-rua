@@ -250,6 +250,8 @@ class FormController extends Controller
         $validator = Validator::make($request->all(), [
             'first_name' => 'required|max:35',
             'last_name' => 'required|max:35',
+            'email' => 'required|email',
+            'phone' => 'required|min:9|max:16',
             'address' => 'required|max:255',
             'city' => 'required|max:35',
             'town' => 'required|max:35',

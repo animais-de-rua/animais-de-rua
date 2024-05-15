@@ -2,6 +2,8 @@
 # Novo pedido de petsitting
 
 <strong>Nome:</strong> {{ $request->first_name }} {{ $request->last_name }}<br />
+<strong>Email:</strong> {{ $request->email }}<br />
+<strong>Telefone:</strong> {{ $request->phone }}<br />
 <strong>Morada:</strong> {{ $request->address }}<br />
 <strong>Município:</strong> {{ $request->city }}<br />
 <strong>Freguesia:</strong> {{ $request->town }}<br />
