@@ -34,6 +34,7 @@ class PetsittingForm extends Mailable
     {
         return $this->markdown('emails.form.petsitting')
             ->subject('Pedido de Petsitting #' . $this->lastEmailId . ' - ' . $this->request->first_name . ' ' . $this->request->last_name)
+            ->replyTo($this->request->email, $this->request->name)
             ->with([
                 'request' => $this->request,
             ]);
