@@ -155,4 +155,47 @@ class User extends Authenticatable
 
         return [str_pad($expiry, 2, '0', STR_PAD_LEFT), str_pad($year, 2, '0', STR_PAD_LEFT)];
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | MUTATORS
+    |--------------------------------------------------------------------------
+    */
+
+    public function setPetsittingImageAttribute($value)
+    {
+        $attribute_name = 'petsitting_image';
+        $disk = 'uploads';
+        $destination_path = 'petsitters';
+
+        $request = \Request::instance();
+
+        // if a new file is uploaded, delete the file from the disk
+        if ($request->hasFile($attribute_name) &&
+            $this->{$attribute_name} &&
+            $this->{$attribute_name} != null) {
+            \Storage::disk($disk)->delete($this->{$attribute_name});
+            $this->attributes[$attribute_name] = null;
+        }
+
+        // if the file input is empty, delete the file from the disk
+        if (is_null($value) && $this->{$attribute_name} != null) {
+            \Storage::disk($disk)->delete($this->{$attribute_name});
+            $this->attributes[$attribute_name] = null;
+        }
+
+        // if a new file is uploaded, store it on disk and its filename in the database
+        if ($request->hasFile($attribute_name) && $request->file($attribute_name)->isValid()) {
+            $file = $request->file($attribute_name);
+            $filename = md5($file->getClientOriginalName().random_int(1, 9999).time()).'.'.$file->getClientOriginalExtension();
+
+            \Image::make($file->getRealPath())
+                ->orientate()
+                ->resize(300, 300)
+                ->save(public_path($disk).'/'.$destination_path.'/'.$filename);
+
+            $this->attributes[$attribute_name] = $disk.'/'.$destination_path.'/'.$filename;
+        }
+    }
+
 }

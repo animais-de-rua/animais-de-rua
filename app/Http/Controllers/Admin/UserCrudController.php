@@ -194,7 +194,8 @@ class UserCrudController extends CrudController
         $this->crud->addField([
             'label' => ucfirst(__('petsitting image')),
             'name' => 'petsitting_image',
-            'type' => 'image',
+            'type' => 'upload',
+            'upload' => true,
         ])->afterField('petsitting_description');
 
         $this->crud->addField([
@@ -430,6 +431,12 @@ class UserCrudController extends CrudController
             $request->request->set('password', Hash::make($request->input('password')));
         } else {
             $request->request->remove('password');
+        }
+
+        if ($request->hasFile('petsitting_image')) {
+            $request->validate([
+                'petsitting_image' => 'image|max:2048',
+            ]);
         }
     }
 }
