@@ -164,9 +164,9 @@ class User extends Authenticatable
 
     public function setPetsittingImageAttribute($value)
     {
-        $attribute_name = "petsitting_image";
-        $disk = "uploads";
-        $destination_path = "petsitters";
+        $attribute_name = 'petsitting_image';
+        $disk = 'uploads';
+        $destination_path = 'petsitters';
 
         $request = \Request::instance();
 
@@ -190,7 +190,7 @@ class User extends Authenticatable
             $filename = md5($file->getClientOriginalName().random_int(1, 9999).time()).'.'.$file->getClientOriginalExtension();
 
             \Image::make($file->getRealPath())
-                ->orientate()       
+                ->orientate()
                 ->resize(300, 300)
                 ->save(public_path($disk).'/'.$destination_path.'/'.$filename);
 
