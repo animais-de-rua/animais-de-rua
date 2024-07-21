@@ -35,7 +35,7 @@
                             <div class="person">
                                 <span class="name">{{ $petsitter->name }}</span>
                                 <span class="role">
-                                    Petsitting {{ $petsitter->petsitting_role === 'Both' ? __('dog') . ' ' . __('and') . ' ' . __('cat') : __(strtolower($petsitter->petsitting_role)) }}
+                                    Petsitting {{ $petsitter->petsitting_role === 'Both' ? __('dog') . ' ' . __('and') . ' ' . __('cat') : ucfirst(__(strtolower($petsitter->petsitting_role))) }}
                                 </span>
                             </div>
                         </div>

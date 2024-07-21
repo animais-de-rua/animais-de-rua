@@ -182,6 +182,7 @@ class UserCrudController extends CrudController
                 'Dog' => __('dog'),
                 'Cat' => __('cat'),
                 'Both' => __('both'),
+                'Others' => __('others'),
             ],
         ])->afterField('friend_card_expiry');
         

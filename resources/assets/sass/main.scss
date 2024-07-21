@@ -2504,11 +2504,15 @@ footer {
                 display: flex;
                 gap: 6rem;
                 font-size: 1.4rem;
-                margin-top: 0.5rem;
+                margin-top: 1rem;
 
                 ul {
                     margin-top: 5px;
                     margin-bottom: 0;
+                }
+
+                .visit-price {
+                    font-weight: 700;
                 }
             }
         }
