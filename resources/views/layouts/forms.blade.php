@@ -514,16 +514,28 @@
                             <div class="prices-container" style="margin-top: 1rem">
                                 <span class="prices-title">{{ __("Prices") }}</span>
                                 <div class="prices">
-                                    <ul>
-                                        <li>{{ __("Cat visit - 12,50€/day (up to 2 cats). 3€ extra per extra animal") }}</li>
-                                        <li>{{ __("Dog visit - 15,50€/day with 1 walk (up to 2 dogs). 5€ per extra animal") }}</li>
-                                        <li>{{ __("Dog visit - 25,50€/day with 2 walks (up to 2 dogs). 5€ per extra animal") }}</li>
-                                        <li>{{ __("Dog visit - 35,50€/day with 3 walks (up to 2 dogs). 5€ per extra animal") }}</li>
-                                    </ul>
+                                    <div class="row">
+                                        <div class="column column-50">
+                                            <span class="visit-price">{{ __("Dog visit") }} {{ __("(up to 2 dogs)") }}</span>
+                                            <ul>
+                                                <li>{{ __("15,50€/day with 1 walk. 5€ per extra animal") }}</li>
+                                                <li>{{ __("25,50€/day with 2 walks. 5€ per extra animal") }}</li>
+                                                <li>{{ __("35,50€/day with 3 walks. 5€ per extra animal") }}</li>
+                                            </ul>
+                                        </div>
+                                        <div class="column column-50">
+                                            <span class="visit-price">{{ __("Cat visit") }} {{ __("(up to 2 cats)") }}</span>
+                                            <ul>
+                                                <li>{{ __("12,50€/day. 3€ extra per extra animal") }}</li>
+                                                <li>{{ __("20€/day with 2 visits. 3€ per extra animal") }}</li>
+                                                <li>{{ __("30€/day with 3 visits. 3€ per extra animal") }}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div style="margin-top: 1rem; font-size: 1.4rem">
-                                <p>{{ __("By purchasing this service you are helping Animais de Rua to help more animals. If you need a receipt for this donation, please enter your VAT number in the field") }} <strong>{{ __("Notes") }}.</strong></p>
+                                <p>{{ __("By purchasing this service you are helping Animais de Rua to reach more animals. If you need a receipt for this donation, please enter your VAT number in the field") }} <strong>{{ __("Notes") }}.</strong></p>
                                 <p style="margin-bottom: 0">{{ __("The service includes sending daily photos and videos of your pet!") }}</p>
                             </div>
                             <div class="petsitting-error"></div>
