@@ -301,7 +301,7 @@ class ProcessCrudController extends CrudController
             'label' => __('Notes'),
             'visibleInTable' => false,
             'visibleInModal' => false,
-            'visibleInExport' => false,
+            'visibleInExport' => true,
             'visibleInShow' => true,
         ]);
 
