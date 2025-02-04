@@ -41,7 +41,6 @@
         "pixelpeter/laravel5-woocommerce-api-client": "3.0",
         "prestashop/prestashop-webservice-lib": "dev-master",
         "spatie/laravel-cookie-consent": "^2.4",
-        "spatie/laravel-newsletter": "^4.2",
         "spatie/laravel-translatable": "^4.1"
     },
     "require-dev": {
