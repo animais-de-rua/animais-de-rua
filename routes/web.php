@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\NewsletterController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -56,36 +58,36 @@ Route::group(['prefix' => config('backpack.base.route_prefix'), 'middleware' => 
     Route::post('/symlink/run', 'UserCrudController@symlink_run')->name('symlink_run');
 
     // CRUD
-    CRUD::resource('user', 'UserCrudController');
-    CRUD::resource('adoption', 'AdoptionCrudController');
-    CRUD::resource('adopter', 'AdopterCrudController');
-    CRUD::resource('animal', 'AnimalCrudController');
-    CRUD::resource('appointment', 'AppointmentCrudController');
-    CRUD::resource('campaign', 'CampaignCrudController');
-    CRUD::resource('donation', 'DonationCrudController');
-    CRUD::resource('godfather', 'GodfatherCrudController');
-    CRUD::resource('headquarter', 'HeadquarterCrudController');
-    CRUD::resource('process', 'ProcessCrudController');
-    CRUD::resource('territory', 'TerritoryCrudController');
-    CRUD::resource('vet', 'VetCrudController');
-    CRUD::resource('treatment', 'TreatmentCrudController');
-    CRUD::resource('treatmenttype', 'TreatmentTypeCrudController');
-    CRUD::resource('friend-card-modality', 'FriendCardModalityCrudController');
-    CRUD::resource('partner', 'PartnerCrudController');
-    CRUD::resource('partner-category', 'PartnerCategoryCrudController');
-    CRUD::resource('protocol', 'ProtocolCrudController');
-    CRUD::resource('protocol-request', 'ProtocolRequestCrudController');
-    CRUD::resource('sponsor', 'SponsorCrudController');
-    CRUD::resource('fat', 'FatCrudController');
+    Route::crud('user', 'UserCrudController');
+    Route::crud('adoption', 'AdoptionCrudController');
+    Route::crud('adopter', 'AdopterCrudController');
+    // Route::crud('animal', 'AnimalCrudController');
+    Route::crud('appointment', 'AppointmentCrudController');
+    Route::crud('campaign', 'CampaignCrudController');
+    Route::crud('donation', 'DonationCrudController');
+    Route::crud('godfather', 'GodfatherCrudController');
+    Route::crud('headquarter', 'HeadquarterCrudController');
+    Route::crud('process', 'ProcessCrudController');
+    Route::crud('territory', 'TerritoryCrudController');
+    Route::crud('vet', 'VetCrudController');
+    Route::crud('treatment', 'TreatmentCrudController');
+    Route::crud('treatmenttype', 'TreatmentTypeCrudController');
+    Route::crud('friend-card-modality', 'FriendCardModalityCrudController');
+    Route::crud('partner', 'PartnerCrudController');
+    Route::crud('partner-category', 'PartnerCategoryCrudController');
+    Route::crud('protocol', 'ProtocolCrudController');
+    Route::crud('protocol-request', 'ProtocolRequestCrudController');
+    Route::crud('sponsor', 'SponsorCrudController');
+    Route::crud('fat', 'FatCrudController');
 
     // Store
-    CRUD::resource('store/products', 'StoreProductCrudController');
-    CRUD::resource('store/orders', 'StoreOrderCrudController');
-    CRUD::resource('store/shipments', 'StoreShipmentCrudController');
-    CRUD::resource('store/user/stock', 'StoreStockCrudController');
-    CRUD::resource('store/user/transaction', 'StoreTransactionCrudController');
-    CRUD::resource('store/supplier', 'SupplierCrudController');
-    CRUD::resource('store/voucher', 'VoucherCrudController');
+    Route::crud('store/products', 'StoreProductCrudController');
+    Route::crud('store/orders', 'StoreOrderCrudController');
+    // Route::crud('store/shipments', 'StoreShipmentCrudController');
+    Route::crud('store/user/stock', 'StoreStockCrudController');
+    Route::crud('store/user/transaction', 'StoreTransactionCrudController');
+    Route::crud('store/supplier', 'SupplierCrudController');
+    Route::crud('store/voucher', 'VoucherCrudController');
 
     // API
     Route::get('{entity}/ajax/{action}/{arg1?}/{arg2?}', 'APICrudController@ajax');
@@ -144,3 +146,8 @@ Route::get('blank', 'PageController@blank');
 
 Route::get('{page}/{subs?}', ['uses' => 'PageController@index'])
     ->where(['page' => '^((?!admin).)*$', 'subs' => '.*']);
+
+// Newsletter
+Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe']);
+Route::post('/newsletter/unsubscribe', [NewsletterController::class, 'unsubscribe']);
+Route::get('/newsletter/check', [NewsletterController::class, 'checkSubscription']);
