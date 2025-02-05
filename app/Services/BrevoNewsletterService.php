@@ -10,8 +10,8 @@ use GuzzleHttp\Client;
 
 class BrevoNewsletterService
 {
-    protected $apiInstance;
-    protected $listId;
+    protected ContactsApi $apiInstance;
+    protected int $listId;
 
     public function __construct()
     {
@@ -20,32 +20,34 @@ class BrevoNewsletterService
         $this->listId = (int) config('services.brevo.list_id');
     }
 
-    public function subscribe($email)
+    /**
+     * @throws ApiException
+     */
+    public function subscribe($email, $firstName)
     {
         $contact = new CreateContact();
+        $attributes = new class {
+            public string $FIRSTNAME;
+        };
+
+        $attributes->FIRSTNAME = $firstName;
+
         $contact->setEmail($email);
         $contact->setListIds([$this->listId]);
+        $contact->setAttributes($attributes);
 
-        try {
-            $this->apiInstance->createContact($contact);
-            return ['message' => 'Subscribed successfully!'];
-        } catch (ApiException $e) {
-            return $e->getResponseBody();
-        }
+        $this->apiInstance->createContact($contact);
     }
 
-    public function unsubscribe($email)
-    {
-        return $this->apiInstance->removeContactFromList($this->listId, $email);
-    }
-
-    public function isSubscribed($email)
+    public function isSubscribed($email): bool
     {
         try {
             $response = $this->apiInstance->getContactInfo($email);
-            return $response !== null;
-        } catch (\Exception $e) {
-            return false;
+            return $response !== null &&
+                $response->getListIds() !== null &&
+                in_array($this->listId, $response->getListIds());
+        } catch (ApiException $e) {
+            throw $e->getResponseBody();
         }
     }
 }

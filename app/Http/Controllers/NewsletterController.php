@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Brevo\Client\ApiException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Services\BrevoNewsletterService;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class NewsletterController extends Controller
 {
@@ -14,26 +19,37 @@ class NewsletterController extends Controller
         $this->newsletter = $newsletter;
     }
 
-    public function subscribe(Request $request)
+    /**
+     * @throws ValidationException
+     */
+    public function subscribe(Request $request): JsonResponse
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'email' => 'required|email',
         ]);
 
-        $response = $this->newsletter->subscribe(
-            $request->email,
-        );
+        $validator->validate();
 
-        return response()->json($response);
-    }
+        if ($this->newsletter->isSubscribed($request->email)) {
+            $validator->errors()->add('email', __('Your email is already subscribed.'));
+            throw new ValidationException($validator);
+        }
 
-    public function unsubscribe(Request $request)
-    {
-        // TODO: Implement unsubscribe method
-    }
+        try {
+            $this->newsletter->subscribe(
+                $request->email,
+                strtok($request->email, '@'),
+            );
+        } catch (ApiException $e) {
+            Log::info($e->getResponseBody());
 
-    public function checkSubscription(Request $request)
-    {
-        // TODO: Implement checkSubscription method
+            $validator->errors()->add('email', __('Something went wrong, please try again later.'));
+            throw new ValidationException($validator);
+        }
+
+        return response()->json([
+            'errors' => false,
+            'message' => __('Thank you for subscribing to our newsletter.'),
+        ]);
     }
 }
