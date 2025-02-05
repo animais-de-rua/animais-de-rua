@@ -18,34 +18,22 @@ class NewsletterController extends Controller
     {
         $request->validate([
             'email' => 'required|email',
-            'first_name' => 'nullable|string',
-            'last_name' => 'nullable|string',
         ]);
 
-        $this->newsletter->subscribe(
+        $response = $this->newsletter->subscribe(
             $request->email,
-            $request->first_name,
-            $request->last_name
         );
 
-        return response()->json(['message' => 'Subscribed successfully!']);
+        return response()->json($response);
     }
 
     public function unsubscribe(Request $request)
     {
-        $request->validate(['email' => 'required|email']);
-
-        $this->newsletter->unsubscribe($request->email);
-
-        return response()->json(['message' => 'Unsubscribed successfully!']);
+        // TODO: Implement unsubscribe method
     }
 
     public function checkSubscription(Request $request)
     {
-        $request->validate(['email' => 'required|email']);
-
-        $subscribed = $this->newsletter->isSubscribed($request->email);
-
-        return response()->json(['subscribed' => $subscribed]);
+        // TODO: Implement checkSubscription method
     }
 }

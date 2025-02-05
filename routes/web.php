@@ -149,5 +149,5 @@ Route::get('{page}/{subs?}', ['uses' => 'PageController@index'])
 
 // Newsletter
 Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe']);
-Route::post('/newsletter/unsubscribe', [NewsletterController::class, 'unsubscribe']);
-Route::get('/newsletter/check', [NewsletterController::class, 'checkSubscription']);
+// Route::post('/newsletter/unsubscribe', [NewsletterController::class, 'unsubscribe']);
+// Route::get('/newsletter/check', [NewsletterController::class, 'checkSubscription']);

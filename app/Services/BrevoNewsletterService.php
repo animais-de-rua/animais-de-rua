@@ -5,6 +5,7 @@ namespace App\Services;
 use Brevo\Client\Api\ContactsApi;
 use Brevo\Client\ApiException;
 use Brevo\Client\Configuration;
+use Brevo\Client\Model\CreateContact;
 use GuzzleHttp\Client;
 
 class BrevoNewsletterService
@@ -16,22 +17,18 @@ class BrevoNewsletterService
     {
         $config = Configuration::getDefaultConfiguration()->setApiKey('api-key', config('services.brevo.api_key'));
         $this->apiInstance = new ContactsApi(new Client(), $config);
-        $this->listId = config('services.brevo.list_id');
+        $this->listId = (int) config('services.brevo.list_id');
     }
 
-    public function subscribe($email, $firstName = null, $lastName = null)
+    public function subscribe($email)
     {
-        $contact = [
-            'email' => $email,
-            'listIds' => [$this->listId],
-            'attributes' => [
-                'FIRSTNAME' => $firstName,
-                'LASTNAME' => $lastName
-            ]
-        ];
+        $contact = new CreateContact();
+        $contact->setEmail($email);
+        $contact->setListIds([$this->listId]);
 
         try {
-            return $this->apiInstance->createContact($contact);
+            $this->apiInstance->createContact($contact);
+            return ['message' => 'Subscribed successfully!'];
         } catch (ApiException $e) {
             return $e->getResponseBody();
         }
