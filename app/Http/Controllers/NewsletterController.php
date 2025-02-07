@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Brevo\Client\ApiException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Services\BrevoNewsletterService;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
@@ -31,25 +29,19 @@ class NewsletterController extends Controller
         $validator->validate();
 
         if ($this->newsletter->isSubscribed($request->email)) {
-            $validator->errors()->add('email', __('Your email is already subscribed.'));
-            throw new ValidationException($validator);
+            throw ValidationException::withMessages([
+                'email' => __('Your email is already subscribed.'),
+            ]);
         }
 
-        try {
-            $this->newsletter->subscribe(
-                $request->email,
-                strtok($request->email, '@'),
-            );
-        } catch (ApiException $e) {
-            Log::info($e->getResponseBody());
-
-            $validator->errors()->add('email', __('Something went wrong, please try again later.'));
-            throw new ValidationException($validator);
-        }
+        $this->newsletter->subscribe(
+            $request->email,
+            strtok($request->email, '@'),
+        );
 
         return response()->json([
             'errors' => false,
-            'message' => __('Thank you for subscribing to our newsletter.'),
+            'message' => __('Thank you for subscribing to our newsletter!'),
         ]);
     }
 }

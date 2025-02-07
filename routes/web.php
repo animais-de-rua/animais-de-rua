@@ -138,7 +138,6 @@ Route::any('lang/{locale}', function ($locale) {
 // Forms
 Route::get('form/{slug}', 'FormController@form_view')->where('slug', '[a-z]{2,12}')->name('form');
 Route::post('form/{slug}', 'FormController@form_submit')->where('slug', 'volunteer|contact|apply|training|godfather|petsitting');
-// Route::post('newsletter', 'PageController@subscribeNewsletter');
 
 // Pages
 Route::get('animals/{option}/{id}', 'PageController@animalsView');
