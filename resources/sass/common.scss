@@ -1,0 +1,13 @@
+// Cookie
+.cookie-consent > div {
+  background-color: var(--colorA);
+
+  button {
+    letter-spacing: 0.4px;
+
+    &:hover,
+    &:active {
+      opacity: 0.95;
+    }
+  }
+}

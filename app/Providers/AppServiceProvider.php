@@ -7,38 +7,31 @@ use Illuminate\Support\ServiceProvider;
 class AppServiceProvider extends ServiceProvider
 {
     /**
-     * Bootstrap any application services.
-     *
-     * @return void
+     * @var array<string, string>
      */
-    public function boot()
-    {
-        // Set up Faker default languages
-        $this->app->singleton(\Faker\Generator::class, function () {
-            return \Faker\Factory::create('pt_PT');
-        });
-
-        \Blade::directive('svg', function ($arguments) {
-            list($path, $class, $style) = array_pad(explode(',', trim($arguments . ',,', '() ')), 2, '');
-            $path = trim($path, "' ");
-            $class = trim($class, "' ");
-            $style = trim($style, "' ");
-
-            $svg = new \DOMDocument();
-            $svg->load(public_path($path));
-            $svg->documentElement->setAttribute('class', $class);
-            $svg->documentElement->setAttribute('style', $style);
-            return $svg->saveXML($svg->documentElement);
-        });
-    }
+    public $bindings = [
+        \Backpack\CRUD\app\Http\Controllers\Auth\LoginController::class => \App\Http\Controllers\Auth\LoginController::class,
+        \Backpack\CRUD\app\Http\Controllers\Auth\RegisterController::class => \App\Http\Controllers\Auth\RegisterController::class,
+        \Backpack\CRUD\app\Http\Controllers\Auth\ResetPasswordController::class => \App\Http\Controllers\Auth\ResetPasswordController::class,
+        \Backpack\CRUD\app\Http\Controllers\Auth\ForgotPasswordController::class => \App\Http\Controllers\Auth\ForgotPasswordController::class,
+    ];
 
     /**
      * Register any application services.
-     *
-     * @return void
      */
-    public function register()
+    #[\Override]
+    public function register(): void
     {
         //
+    }
+
+    /**
+     * Bootstrap any application services.
+     */
+    public function boot(): void
+    {
+        \GemaDigital\Macros\RequestMacros::register();
+        \GemaDigital\Macros\BuilderMacros::register();
+        \GemaDigital\Macros\DBMacros::register();
     }
 }

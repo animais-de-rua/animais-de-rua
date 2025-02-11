@@ -1,58 +1,47 @@
-@extends('backpack::layout')
+@extends(backpack_view('blank'))
 
 @section('after_scripts')
-    <!-- jQuery and jQuery UI (REQUIRED) -->
-    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
-    <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script> -->
-    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 
-    <!-- elFinder CSS (REQUIRED) -->
-    <link rel="stylesheet" type="text/css" href="<?= asset($dir.'/css/elfinder.min.css') ?>">
-    <!-- <link rel="stylesheet" type="text/css" href="<?= asset($dir.'/css/theme.css') ?>"> -->
-    <link rel="stylesheet" type="text/css" href="<?= asset('vendor/backpack/elfinder/elfinder.backpack.theme.css') ?>">
+        @include('vendor.elfinder.common_scripts')
+        @include('vendor.elfinder.common_styles')
 
-    <!-- elFinder JS (REQUIRED) -->
-    <script src="<?= asset($dir.'/js/elfinder.min.js') ?>"></script>
-
-    <?php if ($locale) { ?>
-    <!-- elFinder translation (OPTIONAL) -->
-    <script src="<?= asset($dir."/js/i18n/elfinder.$locale.js") ?>"></script>
-    <?php } ?>
-
-    <!-- elFinder initialization (REQUIRED) -->
-    <script type="text/javascript" charset="utf-8">
-        // Documentation for client options:
-        // https://github.com/Studio-42/elFinder/wiki/Client-configuration-options
-        $().ready(function() {
-            $('#elfinder').elfinder({
-                // set your elFinder options here
-                <?php if ($locale) { ?>
-                    lang: '<?= $locale ?>', // locale
-                <?php } ?>
-                customData: {
-                    _token: '<?= csrf_token() ?>'
-                },
-                url : '<?= route("elfinder.connector") ?>'  // connector URL
+        <!-- elFinder initialization (REQUIRED) -->
+        <script type="text/javascript" charset="utf-8">
+            // Documentation for client options:
+            // https://github.com/Studio-42/elFinder/wiki/Client-configuration-options
+            $(document).ready(function() {
+                $('#elfinder').elfinder({
+                    // set your elFinder options here
+                    @if($locale)
+                        lang: '{{ $locale }}', // locale
+                    @endif
+                    customData: { 
+                        _token: '{{ csrf_token() }}'
+                    },
+                    url : '{{ route("elfinder.connector") }}',  // connector URL
+                    soundPath: '{{ Basset::getUrl(base_path("vendor/studio-42/elfinder/sounds")) }}',
+                    cssAutoLoad : false,
+                });
             });
-        });
-    </script>
+        </script>
 @endsection
 
+@php
+  $breadcrumbs = [
+    trans('backpack::crud.admin') => url(config('backpack.base.route_prefix'), 'dashboard'),
+    trans('backpack::crud.file_manager') => false,
+  ];
+@endphp
+
 @section('header')
-    <section class="content-header">
-      <h1>
-        {{ trans('backpack::crud.file_manager') }}
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="{{ url(config('backpack.base.route_prefix')) }}">Admin</a></li>
-        <li class="active">{{ trans('backpack::crud.file_manager') }}</li>
-      </ol>
+    <section class="container-fluid" bp-section="page-header">
+      <h1 bp-section="page-heading">{{ trans('backpack::crud.file_manager') }}</h1>
     </section>
 @endsection
 
 @section('content')
 
-    <!-- Element where elFinder will be created (REQUIRED) -->
-    <div id="elfinder"></div>
+        <!-- Element where elFinder will be created (REQUIRED) -->
+        <div id="elfinder"></div>
 
 @endsection

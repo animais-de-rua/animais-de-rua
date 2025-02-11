@@ -1,0 +1,293 @@
+{
+    "_type": "export",
+    "__export_format": 4,
+    "__export_date": "2021-10-25T12:49:30.550Z",
+    "__export_source": "insomnia.desktop.app:v2021.5.3",
+    "resources": [
+        {
+            "_id": "req_24e2e592deda403f891cc266b6186152",
+            "parentId": "fld_e2c037363712462cb64e84144f3cc7a3",
+            "modified": 1635165637173,
+            "created": 1635164584511,
+            "url": "{{URL}}{{API}}logout",
+            "name": "Logout",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": ""
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "id": "pair_9e2e6a37e2764bfa96fda4fdae6ea761",
+                    "name": "Accept",
+                    "value": "application/json",
+                    "description": ""
+                },
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_a4f3566cdb2c4746923d54bbb796fb96"
+                }
+            ],
+            "authentication": {
+                "type": "bearer",
+                "token": "{{token}}"
+            },
+            "metaSortKey": -1635163259536,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "fld_e2c037363712462cb64e84144f3cc7a3",
+            "parentId": "wrk_6eab89d9c8eb4bd8b65d64ef9a02d98c",
+            "modified": 1635165270805,
+            "created": 1635164429835,
+            "name": "Auth",
+            "description": "",
+            "environment": {},
+            "environmentPropertyOrder": null,
+            "metaSortKey": -1635164429935,
+            "_type": "request_group"
+        },
+        {
+            "_id": "wrk_6eab89d9c8eb4bd8b65d64ef9a02d98c",
+            "parentId": null,
+            "modified": 1635162082699,
+            "created": 1635162082699,
+            "name": "Laravel Boilerplate",
+            "description": "",
+            "scope": "collection",
+            "_type": "workspace"
+        },
+        {
+            "_id": "req_e8aa5be3042549cf99804906fdc2c503",
+            "parentId": "fld_e2c037363712462cb64e84144f3cc7a3",
+            "modified": 1635166115674,
+            "created": 1635164689641,
+            "url": "{{URL}}{{API}}login",
+            "name": "Login",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n\t\"email\": \"promatik@gmail.com\",\n\t\"password\": \"password\"\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "id": "pair_9e2e6a37e2764bfa96fda4fdae6ea761",
+                    "name": "Accept",
+                    "value": "application/json",
+                    "description": ""
+                },
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_a4f3566cdb2c4746923d54bbb796fb96"
+                }
+            ],
+            "authentication": {
+                "type": "bearer",
+                "token": ""
+            },
+            "metaSortKey": -1635162674386.5,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_3dc7053fb93043db9e72ca680e7feef0",
+            "parentId": "fld_e2c037363712462cb64e84144f3cc7a3",
+            "modified": 1635165880870,
+            "created": 1635165698953,
+            "url": "{{URL}}{{API}}register",
+            "name": "Register",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n\t\"name\": \"António Almeida\",\n\t\"email\": \"promatik@gmail.com\",\n\t\"password\": \"password\",\n\t\"password_confirmation\": \"password\"\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "id": "pair_9e2e6a37e2764bfa96fda4fdae6ea761",
+                    "name": "Accept",
+                    "value": "application/json",
+                    "description": ""
+                },
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_a4f3566cdb2c4746923d54bbb796fb96"
+                }
+            ],
+            "authentication": {
+                "type": "bearer",
+                "token": ""
+            },
+            "metaSortKey": -1633734323065.75,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_26a8e2929e0b4ba3a460aef8d99fb11c",
+            "parentId": "wrk_6eab89d9c8eb4bd8b65d64ef9a02d98c",
+            "modified": 1635165923760,
+            "created": 1635163062935,
+            "url": "{{URL}}{{API}}user",
+            "name": "Get User",
+            "description": "",
+            "method": "GET",
+            "body": {
+                "mimeType": "application/json",
+                "text": ""
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "id": "pair_99dccbd58bb94c29b019a0b5708ea8a9",
+                    "name": "Accept",
+                    "value": "application/json",
+                    "description": ""
+                },
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_3e233c476af54e71b43ff3aa2e94f571"
+                },
+                {
+                    "id": "pair_27f85a6057874f5e9bd9094379fc7246",
+                    "name": "token",
+                    "value": "3|NTkTPCv5WAW5yG7WV6hjZhGLNSDPkImbg0njciAY",
+                    "description": ""
+                }
+            ],
+            "authentication": {
+                "type": "bearer",
+                "token": "{{token}}"
+            },
+            "metaSortKey": -1635164429885,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "env_35f806a4b02b3a1386c154c32493bbaebac02ea9",
+            "parentId": "wrk_6eab89d9c8eb4bd8b65d64ef9a02d98c",
+            "modified": 1635162920782,
+            "created": 1635162082716,
+            "name": "Base Environment",
+            "data": {
+                "url": "http://127.0.0.1:8000/"
+            },
+            "dataPropertyOrder": {
+                "&": [
+                    "url"
+                ]
+            },
+            "color": null,
+            "isPrivate": false,
+            "metaSortKey": 1635162082716,
+            "_type": "environment"
+        },
+        {
+            "_id": "jar_35f806a4b02b3a1386c154c32493bbaebac02ea9",
+            "parentId": "wrk_6eab89d9c8eb4bd8b65d64ef9a02d98c",
+            "modified": 1635165277853,
+            "created": 1635162082720,
+            "name": "Default Jar",
+            "cookies": [
+                {
+                    "key": "XSRF-TOKEN",
+                    "value": "eyJpdiI6Inhib1l6TXdBZ24zeGxLTmJMcWpNSWc9PSIsInZhbHVlIjoiTVVEb1lLTEtqUGkrcXVVOTdESWFqVmh4OVRJSU1PeGZzMnJJNHFlMkxBUzJ4SXk3Tk1TcWRKNDI5S3d3YVJSQkpTdUhzV2J2ME95L0d5OWVVcHF3RXlFSmRvb2NNY3RKZ2h0RmhCc2FYK2lJOTZwOHI2bUQvRnF0ZTExTndKSDEiLCJtYWMiOiIzZGVjY2JkYWVlYmFlMDAzOGEzMzhlYjcyMmFmZTA2MTE5YzgwMmEwMGNjMjUzZDIzZDRlNTIwMGI4ZjZmYTU5IiwidGFnIjoiIn0%3D",
+                    "expires": "2021-10-25T14:34:37.000Z",
+                    "maxAge": 7200,
+                    "domain": "127.0.0.1",
+                    "path": "/",
+                    "extensions": [
+                        "samesite=lax"
+                    ],
+                    "hostOnly": true,
+                    "creation": "2021-10-25T11:41:56.746Z",
+                    "lastAccessed": "2021-10-25T12:34:37.852Z",
+                    "id": "7323934388166915"
+                },
+                {
+                    "key": "laravel_session",
+                    "value": "eyJpdiI6Ikw1dzFUTDk2NHVvdHk1V0c1T2o1R0E9PSIsInZhbHVlIjoiU2VxK0p1UG9sUXlwTjcwZ01uRzQvQkZuT1RkTEFkbDF3b3VQQk9KaEN1cUhxeWJuaFRFZmNaaERIT2JBN1dXb3B6aWluYUpKVWdPYjZsaWdDcnBzOWFaNmFzRzdWSHBwNGpFMG92Vk4zK3RqeUEzVy9Bb2QxWGt3bjErcTh2MkgiLCJtYWMiOiI2ZDc5MTFmNzkwMDMxZDFjZmU1OTU0MTQwNjViMjM2N2U1Njk5ZGRhMzk3MDE4MDIyNzJjNTYxNzc2MDgyZTJjIiwidGFnIjoiIn0%3D",
+                    "expires": "2021-10-25T14:34:37.000Z",
+                    "maxAge": 7200,
+                    "domain": "127.0.0.1",
+                    "path": "/",
+                    "httpOnly": true,
+                    "extensions": [
+                        "samesite=lax"
+                    ],
+                    "hostOnly": true,
+                    "creation": "2021-10-25T11:41:56.747Z",
+                    "lastAccessed": "2021-10-25T12:34:37.853Z",
+                    "id": "9098820270800054"
+                }
+            ],
+            "_type": "cookie_jar"
+        },
+        {
+            "_id": "spc_b4865badb2534e2eb58de0b812db89e0",
+            "parentId": "wrk_6eab89d9c8eb4bd8b65d64ef9a02d98c",
+            "modified": 1635162082705,
+            "created": 1635162082705,
+            "fileName": "Laravel Boilerplate",
+            "contents": "",
+            "contentType": "yaml",
+            "_type": "api_spec"
+        },
+        {
+            "_id": "env_3dac8b540c824aa4acdb19c0a07e0a4d",
+            "parentId": "env_35f806a4b02b3a1386c154c32493bbaebac02ea9",
+            "modified": 1635165915169,
+            "created": 1635162940131,
+            "name": "Environment",
+            "data": {
+                "URL": "http://127.0.0.1:8000/",
+                "API": "api/",
+                "token": ""
+            },
+            "dataPropertyOrder": {
+                "&": [
+                    "URL",
+                    "API",
+                    "token"
+                ]
+            },
+            "color": null,
+            "isPrivate": false,
+            "metaSortKey": 1635162940131,
+            "_type": "environment"
+        }
+    ]
+}

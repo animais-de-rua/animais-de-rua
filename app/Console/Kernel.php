@@ -10,7 +10,7 @@ class Kernel extends ConsoleKernel
     /**
      * The Artisan commands provided by your application.
      *
-     * @var array
+     * @var array<string>
      */
     protected $commands = [
         //
@@ -19,13 +19,13 @@ class Kernel extends ConsoleKernel
     /**
      * Define the application's command schedule.
      *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
+    #[\Override]
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('backup:clean')->daily()->at('04:00');
-        $schedule->command('backup:run')->daily()->at('05:00');
+        // $schedule->command('backup:clean')->daily()->at('04:00');
+        // $schedule->command('backup:run')->daily()->at('05:00');
     }
 
     /**
@@ -33,9 +33,10 @@ class Kernel extends ConsoleKernel
      *
      * @return void
      */
+    #[\Override]
     protected function commands()
     {
-        $this->load(__DIR__ . '/Commands');
+        $this->load(__DIR__.'/Commands');
 
         require base_path('routes/console.php');
     }

@@ -4,53 +4,11 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Look & feel customizations
-    |--------------------------------------------------------------------------
-    |
-    | Make it yours.
-    |
-    */
-
-    // Project name. Shown in the breadcrumbs and a few other places.
-    'project_name' => 'Animais de Rua',
-
-    // Menu logos
-    'logo_lg' => '<b>Animais</b> de Rua',
-    'logo_mini' => '<b>AR</b>',
-
-    // Developer or company name. Shown in footer.
-    'developer_name' => 'Animais de Rua',
-
-    // Developer website. Link in footer.
-    'developer_link' => 'https://animaisderua.org',
-
-    // Show powered by Laravel Backpack in the footer?
-    'show_powered_by' => false,
-
-    // The AdminLTE skin. Affects menu color and primary/secondary colors used throughout the application.
-    'skin' => 'skin-red',
-    // Options: skin-black, skin-blue, skin-purple, skin-red, skin-yellow, skin-green, skin-blue-light, skin-black-light, skin-purple-light, skin-green-light, skin-red-light, skin-yellow-light
-
-    // Date & Datetime Format Syntax: https://github.com/jenssegers/date#usage
-    // (same as Carbon)
-    'default_date_format' => 'D MMMM YYYY',
-    'default_datetime_format' => 'D MMMM YYYY, HH:mm',
-
-    // Content of the HTML meta robots tag to prevent indexing and link following
-    'meta_robots_content' => 'noindex, nofollow',
-
-    // Overlays - CSS files that change the look and feel of the admin panel
-    'overlays' => [
-        // 'vendor/backpack/overlays/backpack.bold.css',
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
     | Registration Open
     |--------------------------------------------------------------------------
     |
     | Choose whether new users/admins are allowed to register.
-    | This will show up the Register button in the menu and allow access to the
+    | This will show the Register button on the login page and allow access to the
     | Register functions in AuthController.
     |
     | By default the registration is open only on localhost.
@@ -68,8 +26,22 @@ return [
     // You can make sure all your URLs use this prefix by using the backpack_url() helper instead of url()
     'route_prefix' => 'admin',
 
+    // The web middleware (group) used in all base & CRUD routes
+    // If you've modified your "web" middleware group (ex: removed sessions), you can use a different
+    // route group, that has all the the middleware listed below in the comments.
+    'web_middleware' => 'web',
+    // Or you can comment the above, and uncomment the complete list below.
+    // 'web_middleware' => [
+    //     \App\Http\Middleware\EncryptCookies::class,
+    //     \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+    //     \Illuminate\Session\Middleware\StartSession::class,
+    //     \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+    //     \App\Http\Middleware\VerifyCsrfToken::class,
+    // ],
+
     // Set this to false if you would like to use your own AuthController and PasswordController
     // (you then need to setup your auth routes manually in your routes.php file)
+    // Warning: if you disable this, the password recovery routes (below) will be disabled too!
     'setup_auth_routes' => true,
 
     // Set this to false if you would like to skip adding the dashboard routes
@@ -80,6 +52,36 @@ return [
     // (you then need to manually define the routes in your web.php)
     'setup_my_account_routes' => true,
 
+    // Set this to false if you would like to skip adding the password recovery routes
+    // (you then need to manually define the routes in your web.php)
+    'setup_password_recovery_routes' => true,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Security
+    |--------------------------------------------------------------------------
+    */
+
+    // Backpack will prevent visitors from requesting password recovery too many times
+    // for a certain email, to make sure they cannot be spammed that way.
+    // How many seconds should a visitor wait, after they've requested a
+    // password reset, before they can try again for the same email?
+    'password_recovery_throttle_notifications' => 600, // time in seconds
+
+    // How much time should the token sent to the user email be considered valid?
+    // After this time expires, user needs to request a new reset token.
+    'password_recovery_token_expiration' => 60, // time in minutes
+
+    // Backpack will prevent an IP from trying to reset the password too many times,
+    // so that a malicious actor cannot try too many emails, too see if they have
+    // accounts or to increase the AWS/SendGrid/etc bill.
+    //
+    // How many times in any given time period should the user be allowed to
+    // attempt a password reset? Take into account that user might wrongly
+    // type an email at first, so at least allow one more try.
+    // Defaults to 3,10 - 3 times in 10 minutes.
+    'password_recovery_throttle_access' => '3,10',
+
     /*
     |--------------------------------------------------------------------------
     | Authentication
@@ -87,13 +89,18 @@ return [
     */
 
     // Fully qualified namespace of the User model
-    'user_model_fqn' => \Backpack\Base\app\Models\BackpackUser::class,
+    'user_model_fqn' => config('auth.providers.users.model'),
+    // 'user_model_fqn' => App\User::class, // works on Laravel <= 7
+    // 'user_model_fqn' => App\Models\User::class, // works on Laravel >= 8
 
     // The classes for the middleware to check if the visitor is an admin
-    // Can be a single class or an array of clases
+    // Can be a single class or an array of classes
     'middleware_class' => [
-        \Backpack\Base\app\Http\Middleware\CheckIfAdmin::class,
-        \App\Http\Middleware\AdminPanelAccess::class,
+        App\Http\Middleware\CheckIfAdmin::class,
+        \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+        \Backpack\CRUD\app\Http\Middleware\AuthenticateSession::class,
+        \Backpack\LanguageSwitcher\Http\Middleware\LanguageSwitcherMiddleware::class,
+        // \Backpack\CRUD\app\Http\Middleware\UseBackpackAuthGuardInsteadOfDefaultAuthGuard::class,
     ],
 
     // Alias for that middleware
@@ -106,6 +113,10 @@ return [
     'authentication_column' => 'email',
     'authentication_column_name' => 'Email',
 
+    // Backpack assumes that your "database email column" for operations like Login and Register is called "email".
+    // If your database email column have a different name, you can configure it here. Eg: `user_mail`
+    'email_column' => 'email',
+
     // The guard that protects the Backpack admin panel.
     // If null, the config.auth.defaults.guard value will be used.
     'guard' => 'backpack',
@@ -115,11 +126,15 @@ return [
     'passwords' => 'backpack',
 
     // What kind of avatar will you like to show to the user?
-    // Default: gravatar (automatically use the gravatar for his email)
+    // Default: gravatar (automatically use the gravatar for their email)
     // Other options:
-    // - placehold (generic image with his first letter)
+    // - null (generic image with their first letter)
     // - example_method_name (specify the method on the User model that returns the URL)
     'avatar_type' => 'gravatar',
+
+    // Gravatar fallback options are 'identicon', 'monsterid', 'wavatar', 'retro', 'robohash', 'blank'
+    // 'blank' will keep the generic image with the user first letter
+    'gravatar_fallback' => 'blank',
 
     /*
     |--------------------------------------------------------------------------
@@ -136,17 +151,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | License Code
+    | Backpack Token Username
     |--------------------------------------------------------------------------
     |
-    | If you, your employer or your client make money by using Backpack, you need
-    | to purchase a license. A license code will be provided after purchase,
-    | which you can put here or in your ENV file in staging & production.
+    | If you have access to closed-source Backpack add-ons, please provide
+    | your token username here, if you're getting yellow alerts on your
+    | admin panel's pages. Normally this is not needed, it is
+    | preferred to add this as an environment variable
+    | (most likely in your .env file).
     |
     | More info and payment form on:
     | https://www.backpackforlaravel.com
     |
     */
 
-    'license_code' => env('BACKPACK_LICENSE', false),
+    'token_username' => env('BACKPACK_TOKEN_USERNAME', false),
 ];

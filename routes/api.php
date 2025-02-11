@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\UserController;
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -11,24 +15,15 @@
 |
 */
 
-Route::group(['middleware' => ['api']], function () {
+// Public
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register']);
 
-    Route::get('/token', 'APIController@getToken');
+// Protected
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    // Logout
+    Route::post('/logout', [AuthController::class, 'logout']);
 
-    Route::get('/stats', 'APIController@getStats');
-
-    Route::get('/headquarters', 'APIController@getHeadquarters');
-
-    Route::get('/campaigns', 'APIController@getCampaigns');
-
-    Route::get('/products', 'APIController@getProducts');
-
-    Route::get('/sponsors', 'APIController@getSponsors');
-
-    Route::get('/partners', 'APIController@getPartners');
-
-    Route::get('/friend-card', 'APIController@getFriendCard');
-
-    Route::get('/help', 'APIController@getHelp');
-
+    // Get User
+    Route::get('/user', [UserController::class, 'getUser']);
 });

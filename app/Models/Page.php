@@ -2,48 +2,28 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\ModelTraits\SpatieTranslatable\HasTranslations;
+use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
+use Backpack\PageManager\app\Models\Page as OriginalPage;
 
-class Page extends \Backpack\PageManager\app\Models\Page
+class Page extends OriginalPage
 {
     use HasTranslations;
 
-    /*
-    |--------------------------------------------------------------------------
-    | GLOBAL VARIABLES
-    |--------------------------------------------------------------------------
-    */
+    /** @var array<string> */
+    protected $translatable = [
+        'title',
+        'extras_translatable',
+    ];
 
-    protected $translatable = ['title', 'extras_translatable'];
-    protected $fakeColumns = ['extras', 'extras_translatable'];
+    /** @var array<string> */
+    protected $fakeColumns = [
+        'extras',
+        'extras_translatable',
+    ];
 
-    /*
-    |--------------------------------------------------------------------------
-    | FUNCTIONS
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | RELATIONS
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | SCOPES
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | ACCESORS
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | MUTATORS
-    |--------------------------------------------------------------------------
-    */
+    #[\Override]
+    protected static function booted()
+    {
+        // static::updated(fn() => Cache::forget('data'));
+    }
 }

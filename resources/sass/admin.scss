@@ -1,0 +1,73 @@
+// // Common rules
+@use "common.scss" as *;
+
+:root {
+  --tblr-primary: var(--colorB);
+  --tblr-primary-rgb: var(--colorBrgb);
+  --tblr-link-color: var(--colorB);
+  --tblr-link-color-rgb: var(--colorBrgb);
+  --tblr-link-hover-color: var(--colorB);
+  --tblr-link-hover-color-rgb: var(--colorBrgb);
+  --tblr-navbar-bg: var(--colorA);
+}
+
+body {
+  font-size: 85%;
+}
+header.navbar {
+  background: linear-gradient(90deg, var(--colorA) 10%, var(--colorB) 100%);
+
+  @at-root .theme-light .navbar-overlap:after {
+    background: linear-gradient(180deg, var(--colorA) 50%, var(--colorB) 160%);
+  }
+
+  & > div {
+    color: #fff;
+    --tblr-muted-rgb: 162, 158, 168;
+    --tblr-secondary-rgb: 162, 158, 168;
+  }
+}
+aside + div header > div {
+  margin: 0.3rem;
+}
+.app-footer {
+  display: none;
+}
+.navbar {
+  background-color: var(--colorA);
+
+  .nav-separator {
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 0.7rem;
+    letter-spacing: 1.2px;
+    opacity: 0.5;
+  }
+}
+.navbar-brand,
+.nav-brand {
+  img {
+    filter: brightness(0) invert(1) opacity(0.9);
+  }
+}
+
+.form-quote {
+  border-left: 1px solid #e7e8ea;
+  margin-left: 2rem;
+  max-width: calc(100% - 4rem);
+  margin-bottom: 0;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+label.separator {
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  font-weight: 500;
+  font-size: 0.85rem;
+}
+
+.menu-disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}

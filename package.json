@@ -10,18 +10,16 @@
         "production": "mix --production"
     },
     "dependencies": {
-        "cantil": "^1.1.2"
+        "@picocss/pico": "^2.0.6",
+        "boring-avatars-svg": "^1.0.4",
+        "cantil": "^1.1.4"
     },
     "devDependencies": {
-        "cross-env": "^7.0.3",
-        "eslint": "^9.6.0",
-        "laravel-mix": "^6.0.11",
-        "milligram": "^1.4.1",
-        "normalize.css": "^8.0.1",
-        "postcss": "^8.2.4",
+        "eslint": "^9.3.0",
+        "laravel-mix": "^6.0.49",
         "resolve-url-loader": "^5.0.0",
-        "sass": "^1.32.6",
-        "sass-loader": "^14.2.1",
-        "vue-template-compiler": "^2.6.12"
+        "sass": "^1.43.3",
+        "sass-loader": "^16.0.4",
+        "sass-resources-loader": "^2.1.1"
     }
 }

@@ -1,28 +1,65 @@
-<p align="center"><img src="https://animaisderua.org/img/logo/logo-text.svg" width="460"></p>
+# GemaDigital Laravel Boilerplate
 
-<p align="center">
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+<a href="https://packagist.org/packages/gemadigital/framework" title="Latest Version on Packagist"><img src="https://img.shields.io/packagist/v/gemadigital/framework.svg?style=flat-square"></a>
+<a href="https://packagist.org/packages/gemadigital/framework" title="Total Downloads"><img src="https://img.shields.io/packagist/dt/gemadigital/framework.svg?style=flat-square"></a>
+<a href="https://github.com/the-whole-fruit/manifesto"><img src="https://img.shields.io/badge/writing%20standard-the%20whole%20fruit-brightgreen" title="We believe writing good code is not only about writing good code. It’s also about the words around it. We aims to deliver both: code and words."></a>
 
+GemaDigital Laravel Boilerplate
 
-## About
+## Setup
 
-This project uses the Laravel framework. 
-This is the open source project of the website and intranet of Animais de Rua, an association who cares for the abandoned animals.
-It's a work in progress for the website [Animais de Rua](https://animaisderua.org/).
-It includes a backoffice for the organization and for the main website.
+1) Install dependencies and copy the .env
+```bash
+composer install
+npm install
+```
 
+2) Copy the .env file, generate a key and the assets
+```bash
+php -r "copy('.env.example', '.env');"
+php artisan key:generate
+npm run prod
+```
 
-## Contributing
+3) Create a database and fill the .env file with those details
+```bash
+# .env
+DB_DATABASE=laravel
+DB_USERNAME=user
+DB_PASSWORD=password
+```
 
-Thank you for considering contributing to this platform!
-Feel free to open issues and pull requests and check out our [Contributors Guide](./CONTRIBUTING.md) for help getting started.
+4) Run the migrations and create the admin user
+```bash
+php artisan migrate
+php artisan db:seed
+```
 
-## Security Vulnerabilities
+5) Serve the project
+```bash
+php artisan serve
+```
 
-If you discover a security vulnerability within this platform, please send an e-mail to António Almeida [promatik@gmail.com](mailto:promatik@gmail.com). All security vulnerabilities will be promptly addressed.
+---
 
+## Usefull commands
+
+- Packages a ready for production zip
+```bash
+php artisan boilerplate:package
+```
+
+- Create a new boilerplate project
+```bash
+php artisan boilerplate:duplicate
+```
+
+## Credits
+
+- [António Almeida][link-author]
 
 ## License
 
-This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Please see the [license file](license.md) for more information.
+
+[link-author]: https://github.com/promatik

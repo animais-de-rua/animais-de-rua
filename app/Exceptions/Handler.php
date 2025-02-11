@@ -3,14 +3,16 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Response;
+use Throwable;
 
 class Handler extends ExceptionHandler
 {
     /**
      * A list of the exception types that are not reported.
-     *
-     * @var array
      */
     protected $dontReport = [
         //
@@ -18,8 +20,6 @@ class Handler extends ExceptionHandler
 
     /**
      * A list of the inputs that are never flashed for validation exceptions.
-     *
-     * @var array
      */
     protected $dontFlash = [
         'password',
@@ -29,12 +29,10 @@ class Handler extends ExceptionHandler
     /**
      * Report or log an exception.
      *
-     * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
-     *
      * @param  \Exception  $exception
-     * @return void
      */
-    public function report(Exception $exception)
+    #[\Override]
+    public function report(Throwable $exception): void
     {
         parent::report($exception);
     }
@@ -44,10 +42,34 @@ class Handler extends ExceptionHandler
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Exception  $exception
-     * @return \Illuminate\Http\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function render($request, Exception $exception)
+    #[\Override]
+    public function render($request, Throwable $exception)
     {
+        if ($request->expectsJson()) {
+            $name = preg_replace('/(?:\w+\\\\)+(\w+)$/', '$1', $exception::class);
+            $file = preg_replace('/\\\/', '/', str_replace(base_path(), '', $exception->getFile()));
+            $message = htmlspecialchars($exception->getMessage());
+            $errors = method_exists($exception, 'errors') ? $exception->errors() : ['exception' => $message];
+
+            // error code
+            $code = match (true) {
+                $exception instanceof AuthorizationException => 403,
+                $exception instanceof AuthenticationException => 401,
+                default => array_key_exists($exception->getCode(), Response::$statusTexts) ? $exception->getCode() : 400,
+            };
+
+            return json_response(null, -1, $code, $errors, [
+                $name => [
+                    'message' => $message,
+                    'file' => $file,
+                    'line' => $exception->getLine(),
+                    'code' => $exception->getCode(),
+                ],
+            ]);
+        }
+
         return parent::render($request, $exception);
     }
 }

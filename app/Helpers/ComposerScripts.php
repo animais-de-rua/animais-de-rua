@@ -2,25 +2,25 @@
 
 namespace App\Helpers;
 
-use Composer\Script\Event;
+use GemaDigital\Helpers\Composer\ComposerScripts as DefaultComposerScripts;
 
-class ComposerScripts
+class ComposerScripts extends DefaultComposerScripts
 {
     /**
-     * Handle the post-install Composer event.
-     *
-     * @param  \Composer\Script\Event  $event
-     * @return void
+     * Post install Unix
      */
-    public static function postInstall()
+    #[\Override]
+    public static function postInstallUnix(): void
     {
-        switch (DIRECTORY_SEPARATOR) {
-            case '/': // unix
-                exec('ln -s ../../vendor/almasaeed2010/adminlte public/vendor');
-                break;
-            case '\\': // windows
-                exec('mklink /J "public\vendor\adminlte" "vendor\almasaeed2010\adminlte"');
-                break;
-        }
+        //
+    }
+
+    /**
+     * Post install Windows
+     */
+    #[\Override]
+    public static function postInstallWindows(): void
+    {
+        //
     }
 }

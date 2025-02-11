@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Upload dir
@@ -10,7 +9,9 @@ return [
     | The dir where to store the images (relative from public).
     |
     */
-    'dir' => ['uploads'],
+    'dir' => [
+        'uploads',
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -27,6 +28,11 @@ return [
     */
     'disks' => [
         // 'uploads',
+        // 's3' => [
+        //     'alias' => 'Storage',
+        //     'accessControl' => 'App\Http\Middleware\ElfinderAccess::checkAccess',
+        //     'visibility' => 'public',
+        // ],
     ],
 
     /*
@@ -39,8 +45,8 @@ return [
     */
 
     'route' => [
-        'prefix'     => config('backpack.base.route_prefix', 'admin').'/elfinder',
-        'middleware' => ['web', config('backpack.base.middleware_key', 'admin')], //Set to null to disable middleware filter
+        'prefix' => config('backpack.base.route_prefix', 'admin').'/elfinder',
+        'middleware' => ['web', config('backpack.base.middleware_key', 'admin')], // Set to null to disable middleware filter
     ],
 
     /*
@@ -77,5 +83,4 @@ return [
     */
 
     'options' => [],
-
 ];

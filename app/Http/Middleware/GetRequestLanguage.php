@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 
@@ -10,18 +11,20 @@ class GetRequestLanguage
 {
     /**
      * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next): mixed
     {
         if (Session::has('locale')) {
             App::setLocale(Session::get('locale'));
         } else {
+            /** @var string */
+            $requestLang = $request->server('HTTP_ACCEPT_LANGUAGE');
             $availableLangs = array_keys(config('backpack.crud.locales'));
-            $userLangs = preg_split('/,|;/', $request->server('HTTP_ACCEPT_LANGUAGE'));
+
+            $userLangs = preg_split('/,|;/', $requestLang);
+            if (! $userLangs) {
+                return null;
+            }
 
             foreach ($userLangs as $lang) {
                 if (in_array($lang, $availableLangs)) {
