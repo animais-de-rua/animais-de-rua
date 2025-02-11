@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+docker run --rm -ti \
+    --network "${NETWORK:-animais-de-rua}" \
+    --user "$(id -u)" \
+    --volume ~/.config/composer:/tmp/composer \
+    --volume "$(pwd)":/var/www/html \
+    --env XDG_CONFIG_HOME=/tmp/xdg \
+    --env XDEBUG_MODE="${XDEBUG_MODE:-debug}" \
+    -w /var/www/html \
+    php:8.3.16-fpm \
+    php -d memory_limit=-1 "$@"

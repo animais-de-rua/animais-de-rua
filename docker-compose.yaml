@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  animais-de-rua.api:
+    image: php:8.3.16-fpm
+    expose:
+      - 9000
+    volumes:
+        - .:/var/www/html
+    restart: unless-stopped
+    networks:
+      - animais-de-rua
+
+networks:
+  animais-de-rua:
+    name: animais-de-rua
