@@ -6,6 +6,7 @@
 laravel: "^6.0"
 php: "^7.3"
 nodejs: ">=20.11.0"
+mysql: "^5.7"
 ```
 
 ### Install
@@ -17,26 +18,22 @@ nodejs: ">=20.11.0"
 
 ### Setup
 
-You will need to have a local database already setup to run this project.
-For example, if you have SQLite installed:
+You will need to have a local database already setup to run this project. For MySQL:
 
-1. Create database file
-   ``` bash
-   # UNIX
-   touch database/database.sqlite
-   # Windows
-   # :wq to exit
-   vim database/database.sqlite
+1. Copy and rename the `.env.example` file to `.env`
+   ```bash
+   cp .env.example .env
    ```
-2. Update your `.env` file, removing every entry starting with "DB" except for:
-   ```
-   DB_CONNECTION=sqlite
+2. Create `animaisderua` database
+   ```bash
+   mysql -u root -p
+   CREATE DATABASE animaisderua;
    ```
 3. Run database migrations
    ```bash
    php artisan migrate
    ```
-4. Seed the database
+3. Seed the database
    ```bash
    php artisan db:seed
    ```

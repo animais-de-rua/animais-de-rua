@@ -12,7 +12,7 @@
 
         <div class="row row-wrap">
             <div class="column column-67 newsletter">
-                <form action="/newsletter" method="post" class="ajax">
+                <form action="/newsletter/subscribe" method="post" class="ajax">
                     @csrf
                     <label for="email">{{ __('web.subscribe') }}</label>
                     <input type="email" name="email" id="email" placeholder="{{ __('Your Email Address') }}" value="" required/>

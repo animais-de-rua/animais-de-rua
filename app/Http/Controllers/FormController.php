@@ -12,12 +12,12 @@ use App\Mail\VolunteerForm;
 use App\Models\Headquarter;
 use App\Models\Process;
 use App\Models\StorePetsittingRequests;
+use App\Services\BrevoNewsletterService;
 use Config;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Image;
 use Mail;
-use Newsletter;
 use Storage;
 use Validator;
 
@@ -298,7 +298,8 @@ class FormController extends Controller
     private function subscribe_newsletter()
     {
         if (request()->input('newsletter')) {
-            Newsletter::subscribe(request()->input('email'));
+            $newsletterService = new BrevoNewsletterService();
+            $newsletterService->subscribe(request()->input('email'));
         }
     }
 }

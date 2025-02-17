@@ -57,7 +57,7 @@
                 <div class="white-box">
                     <h2>{{ $page['store_title'] }}</h2>
                     <div class="text">{!! $page['store_text'] !!}</div>
-                    <a href="/store" class="lined">{{ $page['store_link'] }}</a>
+                    <a href="https://shop.animaisderua.org/" class="lined">{{ $page['store_link'] }}</a>
                 </div>
                 <div class="white-box">
                     <h2>{{ $page['donate_title'] }}</h2>
