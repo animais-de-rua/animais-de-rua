@@ -11,6 +11,23 @@ services:
     networks:
       - animais-de-rua
 
+  animais-de-rua.db:
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: animaisderua
+    command: --log-output=TABLE --general-log=1 --general-log-file=/var/lib/mysql/general.log
+    restart: unless-stopped
+    networks:
+      - animais-de-rua
+
 networks:
   animais-de-rua:
     name: animais-de-rua
+
+volumes:
+  db_data:
