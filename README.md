@@ -22,11 +22,21 @@ npm run prod
 ```
 
 3) Create a database and fill the .env file with those details
-```bash
+```code
 # .env
-DB_DATABASE=laravel
+DB_DATABASE=animaisderua
 DB_USERNAME=user
 DB_PASSWORD=password
+```
+
+If you are using docker, the database is already created and the credentials are:
+```code
+# .env
+DB_HOST=animais-de-rua.db
+DB_PORT=3306
+DB_DATABASE=animaisderua
+DB_USERNAME="root"
+DB_PASSWORD="root"
 ```
 
 4) Run the migrations and create the admin user
@@ -41,7 +51,54 @@ php artisan serve
 ```
 
 ---
+# Running with docker
 
+## Build the docker image
+
+1) Build PHP image with MySQL
+```bash
+sudo docker build -t php:8.3.16-fpm-dev -f .docker/php/Dockerfile .
+```
+2) Initiate the containers
+```bash
+docker compose up -d
+```
+
+3) Enable external access to the database
+```bash
+docker exec -it animais-de-rua-upgrade-animais-de-rua.db-1 mysql -u root -p
+```
+Users password is `root`
+Then execute the command:
+```sql
+ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'root';
+FLUSH PRIVILEGES;
+```
+Then exit the container with `exit`
+
+If the container name doesn't match run:
+```bash
+docker ps | grep db
+```
+
+## Using the binaries on the .bin for local development
+### Make sure you have `direnv` installed
+
+`direnv` is a tool that automatically loads environment variables when you enter a directory. Follow the instructions below to install `direnv` on different systems.
+
+[Install `direnv`](https://direnv.net/docs/installation.html)
+
+Then run the following command to allow the `.envrc` file to be loaded automatically when you enter the project directory.
+
+```bash
+direnv allow
+```
+
+Then you can follow the setup steps as normal.
+
+
+
+---
 ## Usefull commands
 
 - Packages a ready for production zip

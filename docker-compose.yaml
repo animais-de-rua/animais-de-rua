@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   animais-de-rua.api:
-    image: php:8.3.16-fpm
+    image: php:8.3.16-fpm-dev
     expose:
       - 9000
     volumes:
@@ -22,6 +22,43 @@ services:
       MYSQL_DATABASE: animaisderua
     command: --log-output=TABLE --general-log=1 --general-log-file=/var/lib/mysql/general.log
     restart: unless-stopped
+    networks:
+      - animais-de-rua
+
+  animais-de-rua.server:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.animais-de-rua.entrypoints=http"
+      - "traefik.http.routers.animais-de-rua.rule=Host(`animais-de-rua.development`)"
+      - "traefik.http.routers.animais-de-rua_secure.entrypoints=https"
+      - "traefik.http.routers.animais-de-rua_secure.rule=Host(`animais-de-rua.development`)"
+      - "traefik.http.routers.animais-de-rua_secure.tls=true"
+    image: nginx:1.21.6-alpine
+    expose:
+      - 80
+      - 443
+    volumes:
+      - ./.docker/server/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./.docker/server/conf.d:/etc/nginx/conf.d:ro
+      - ./.docker/server/certificates:/etc/nginx/certificates:ro
+      - .:/var/www/html:delegated
+    restart: unless-stopped
+    networks:
+      - animais-de-rua
+
+  animais-de-rua.traefik:
+    image: traefik:v2.10
+    command:
+      - "--api.insecure=true"  # Enable Traefik's dashboard
+      - "--providers.docker=true"  # Enable Docker provider
+      - "--entrypoints.http.address=:80"  # HTTP entry point
+      - "--entrypoints.https.address=:443"  # HTTPS entry point
+    ports:
+      - "80:80"      # HTTP port
+      - "443:443"    # HTTPS port
+      - "8080:8080"  # Dashboard port (accessible at http://localhost:8080)
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"  # Allow Traefik to listen to Docker events
     networks:
       - animais-de-rua
 

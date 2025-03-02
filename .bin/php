@@ -7,5 +7,5 @@ docker run --rm -ti \
     --env XDG_CONFIG_HOME=/tmp/xdg \
     --env XDEBUG_MODE="${XDEBUG_MODE:-debug}" \
     -w /var/www/html \
-    php:8.3.16-fpm \
+    php:8.3.16-fpm-dev \
     php -d memory_limit=-1 "$@"
