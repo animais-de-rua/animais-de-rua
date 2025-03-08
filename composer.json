@@ -22,6 +22,7 @@
     "require-dev": {
         "backpack/generators": "^4.0",
         "barryvdh/laravel-debugbar": "^3.2",
+        "friendsofphp/php-cs-fixer": "^3.71",
         "larastan/larastan": "^3.0",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.0",
