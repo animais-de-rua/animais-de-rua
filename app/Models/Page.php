@@ -3,9 +3,8 @@
 namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
-use Backpack\PageManager\app\Models\Page as OriginalPage;
 
-class Page extends OriginalPage
+class Page extends Model
 {
     use HasTranslations;
 

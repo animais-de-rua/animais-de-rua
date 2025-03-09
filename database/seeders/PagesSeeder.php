@@ -1,10 +1,10 @@
 <?php
-
 namespace Database\Seeders;
 
-use Backpack\PageManager\app\Models\Page;
+use App\Models\Page;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class PagesSeeder extends Seeder
 {
@@ -17,77 +17,142 @@ class PagesSeeder extends Seeder
     {
         $date = Carbon::now();
 
-        Page::truncate();
+        $backups = Page::get();
 
-        Page::insert([
+        DB::table('pages')->truncate();
+
+        DB::table('pages')->insert([
             [
                 'title' => json_encode([
-                    'pt' => 'Home',
-                    'en' => 'Home',
+                    'pt' => 'Animais de Rua',
+                    'en' => 'Animais de Rua',
                 ]),
                 'template' => 'home',
                 'name' => 'Home',
                 'slug' => 'home',
-                'extras' => null,
-                'extras_translatable' => json_encode([
-                    'pt' => ['header' => 'Home'],
-                    'en' => ['header' => 'Home'],
-                ]),
+                'extras' => '',
                 'created_at' => $date,
                 'updated_at' => $date,
             ],
-
             [
                 'title' => json_encode([
-                    'pt' => 'Contactos',
-                    'en' => 'Contacts',
+                    'pt' => 'Animais',
+                    'en' => 'Animals',
                 ]),
-                'template' => 'contacts',
-                'name' => 'Contacts',
-                'slug' => 'contacts',
-                'extras' => null,
-                'extras_translatable' => json_encode([
-                    'pt' => ['header' => 'Contactos'],
-                    'en' => ['header' => 'Contacts'],
-                ]),
+                'template' => 'animals',
+                'name' => 'Animais',
+                'extras' => '',
+                'slug' => 'animals',
                 'created_at' => $date,
                 'updated_at' => $date,
             ],
-
+            [
+                'title' => json_encode([
+                    'pt' => 'Associação',
+                    'en' => 'Association',
+                ]),
+                'template' => 'association',
+                'name' => 'Associação',
+                'extras' => '',
+                'slug' => 'association',
+                'created_at' => $date,
+                'updated_at' => $date,
+            ],
+            [
+                'title' => json_encode([
+                    'pt' => 'CED',
+                    'en' => 'CED',
+                ]),
+                'template' => 'ced',
+                'name' => 'CED',
+                'extras' => '',
+                'slug' => 'ced',
+                'created_at' => $date,
+                'updated_at' => $date,
+            ],
+            [
+                'title' => json_encode([
+                    'pt' => 'Amigos',
+                    'en' => 'Friends',
+                ]),
+                'template' => 'friends',
+                'name' => 'Amigos',
+                'extras' => '',
+                'slug' => 'friends',
+                'created_at' => $date,
+                'updated_at' => $date,
+            ],
+            [
+                'title' => json_encode([
+                    'pt' => 'Ajuda',
+                    'en' => 'Help',
+                ]),
+                'template' => 'help',
+                'name' => 'Ajuda',
+                'extras' => '',
+                'slug' => 'help',
+                'created_at' => $date,
+                'updated_at' => $date,
+            ],
+            [
+                'title' => json_encode([
+                    'pt' => 'Parceiros',
+                    'en' => 'Partners',
+                ]),
+                'template' => 'partners',
+                'name' => 'Parceiros',
+                'extras' => '',
+                'slug' => 'partners',
+                'created_at' => $date,
+                'updated_at' => $date,
+            ],
+            [
+                'title' => json_encode([
+                    'pt' => 'Petsitting',
+                    'en' => 'Petsitting',
+                ]),
+                'template' => 'petsitting',
+                'name' => 'Petsitting',
+                'extras' => '',
+                'slug' => 'petsitting',
+                'created_at' => $date,
+                'updated_at' => $date,
+            ],
             [
                 'title' => json_encode([
                     'pt' => 'Política de privacidade',
                     'en' => 'Privacy policy',
                 ]),
-                'template' => 'privacy',
+                'template' => 'privacypolicy',
                 'name' => 'Política de privacidade',
+                'extras' => '',
                 'slug' => 'privacy-policy',
-                'extras' => null,
-                'extras_translatable' => json_encode([
-                    'pt' => ['header' => 'Política de privacidade'],
-                    'en' => ['header' => 'Privacy Policy'],
-                ]),
                 'created_at' => $date,
                 'updated_at' => $date,
             ],
-
             [
                 'title' => json_encode([
-                    'pt' => 'Termos e Condições',
-                    'en' => 'Terms and conditions',
+                    'pt' => 'Donativo',
+                    'en' => 'Donation',
                 ]),
-                'template' => 'terms',
-                'name' => 'Termos e Condições',
-                'slug' => 'terms-and-condicions',
-                'extras' => null,
-                'extras_translatable' => json_encode([
-                    'pt' => ['header' => 'Termos e Condições'],
-                    'en' => ['header' => 'Terms and Conditions'],
-                ]),
+                'template' => 'donation',
+                'name' => 'Donativo',
+                'extras' => '',
+                'slug' => 'donation',
                 'created_at' => $date,
                 'updated_at' => $date,
             ],
-
         ]);
+
+        // Apply backup
+        foreach ($backups as $backup) {
+            $page = Page::find($backup->id);
+
+            if ($page) {
+                $page->extras = $backup->extras;
+                $page->extras_translatable = json_decode($backup->extras_translatable);
+                $page->save();
+            }
+        }
     }
 }
