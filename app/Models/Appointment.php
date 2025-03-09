@@ -2,12 +2,16 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\CrudTrait;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Carbon\Carbon;
+use Database\Factories\AppointmentFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Appointment extends Model
 {
     use CrudTrait;
+    /** @use HasFactory<AppointmentFactory> */
+    use HasFactory;
 
     /*
     |--------------------------------------------------------------------------

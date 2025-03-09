@@ -2,19 +2,19 @@
 
 namespace Database\Factories;
 
-use App\Models\ProtocolRequest;
 use App\Models\User;
+use App\Models\Vet;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends Factory<User>
  */
-class ProtocolRequestFactory extends Factory
+class VetFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      */
-    protected $model = ProtocolRequest::class;
+    protected $model = Vet::class;
 
     /**
      * Define the model's default state.
@@ -22,8 +22,8 @@ class ProtocolRequestFactory extends Factory
     public function definition()
     {
         return [
-            'council' => $this->faker->city(),
-            'name' => $this->faker->name,
+            'name' => $this->faker->name(),
+            'status' => $this->faker->randomElement(['active', 'inactive']),
         ];
     }
 }

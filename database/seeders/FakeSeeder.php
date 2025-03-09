@@ -111,11 +111,11 @@ class FakeSeeder extends Seeder
 
         // Vets
         $this->log('Vets');
-        factory(Vet::class, 50)->create();
+        Vet::factory(50)->create();
 
         // Appointments
         $this->log('Appointments');
-        factory(Appointment::class, 100)->create();
+        Appointment::factory(100)->create();
 
         // Treatments
         $this->log('Treatments');

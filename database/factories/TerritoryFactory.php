@@ -28,18 +28,4 @@ class TerritoryFactory extends Factory
             'level' => $this->faker->randomElement(['1', '2', '3']),
         ];
     }
-
-    /**
-     * Indicate that the model's email address should be unverified.
-     *
-     * @return Factory<User>
-     */
-    public function unverified(): Factory
-    {
-        return $this->state(function (array $attributes) {
-            return [
-                'email_verified_at' => null,
-            ];
-        });
-    }
 }

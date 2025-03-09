@@ -2,11 +2,15 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\CrudTrait;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Database\Factories\VetFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Vet extends Model
 {
     use CrudTrait;
+    /** @use HasFactory<VetFactory> */
+    use HasFactory;
 
     /*
     |--------------------------------------------------------------------------

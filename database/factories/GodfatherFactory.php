@@ -6,7 +6,6 @@ use App\Models\Godfather;
 use App\Models\Territory;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 /**
  * @extends Factory<User>
@@ -32,19 +31,5 @@ class GodfatherFactory extends Factory
             'territory_id' => Territory::factory(),
             'user_id' => User::factory(),
         ];
-    }
-
-    /**
-     * Indicate that the model's email address should be unverified.
-     *
-     * @return Factory<User>
-     */
-    public function unverified(): Factory
-    {
-        return $this->state(function (array $attributes) {
-            return [
-                'email_verified_at' => null,
-            ];
-        });
     }
 }

@@ -2,13 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Models\Donation;
-use App\Models\Process;
 use App\Models\Protocol;
-use App\Models\Territory;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 /**
  * @extends Factory<User>
