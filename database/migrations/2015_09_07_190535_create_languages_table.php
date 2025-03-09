@@ -2,9 +2,8 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 
-class CreateHeadquartersTable extends Migration
+class CreateLanguagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +12,15 @@ class CreateHeadquartersTable extends Migration
      */
     public function up()
     {
-        Schema::create('headquarters', function (Blueprint $table) {
+        Schema::create('languages', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 255);
-            $table->string('address', 255)->nullable();
-            $table->string('phone', 255)->nullable();
-            $table->string('mail', 255)->nullable();
-            $table->text('description')->nullable();
+            $table->string('name', 100);
+            $table->string('flag', 100)->nullable();
+            $table->string('abbr', 3);
             $table->tinyInteger('active')->unsigned()->default('1');
+            $table->tinyInteger('default')->unsigned()->default('0');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -32,6 +31,6 @@ class CreateHeadquartersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('headquarters');
+        Schema::drop('languages');
     }
 }

@@ -8,6 +8,8 @@ class UpdateStoreProductsTable extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
     public function up()
     {
@@ -18,6 +20,8 @@ class UpdateStoreProductsTable extends Migration
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
     public function down()
     {

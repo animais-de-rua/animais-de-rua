@@ -8,6 +8,8 @@ class CreateCampaignsTable extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
     public function up()
     {
@@ -27,6 +29,8 @@ class CreateCampaignsTable extends Migration
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
     public function down()
     {

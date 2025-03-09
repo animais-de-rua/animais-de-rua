@@ -8,11 +8,13 @@ class UpdateVouchersTable extends Migration
 {
     public function __construct()
     {
-        DB::connection()->getDoctrineSchemaManager()->getDatabasePlatform()->registerDoctrineTypeMapping('enum', 'string');
+        \DB::connection()->getDoctrineSchemaManager()->getDatabasePlatform()->registerDoctrineTypeMapping('enum', 'string');
     }
 
     /**
      * Run the migrations.
+     *
+     * @return void
      */
     public function up()
     {
@@ -24,6 +26,8 @@ class UpdateVouchersTable extends Migration
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
     public function down()
     {

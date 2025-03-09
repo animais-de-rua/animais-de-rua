@@ -8,6 +8,8 @@ class CreateAdoptersTable extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
     public function up()
     {
@@ -39,6 +41,8 @@ class CreateAdoptersTable extends Migration
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
     public function down()
     {

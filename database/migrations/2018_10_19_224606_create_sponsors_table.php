@@ -8,6 +8,8 @@ class CreateSponsorsTable extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
     public function up()
     {
@@ -26,6 +28,8 @@ class CreateSponsorsTable extends Migration
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
     public function down()
     {

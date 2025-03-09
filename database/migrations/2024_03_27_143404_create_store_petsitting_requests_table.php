@@ -8,6 +8,8 @@ class CreateStorePetsittingRequestsTable extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
     public function up()
     {
@@ -20,6 +22,8 @@ class CreateStorePetsittingRequestsTable extends Migration
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
     public function down()
     {

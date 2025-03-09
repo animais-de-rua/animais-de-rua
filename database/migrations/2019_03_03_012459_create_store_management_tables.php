@@ -9,6 +9,8 @@ class CreateStoreManagementTables extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
     public function up()
     {
@@ -70,6 +72,8 @@ class CreateStoreManagementTables extends Migration
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
     public function down()
     {
