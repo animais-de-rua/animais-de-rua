@@ -8,7 +8,7 @@ class UpdateVouchersTable extends Migration
 {
     public function __construct()
     {
-        \DB::connection()->getDoctrineSchemaManager()->getDatabasePlatform()->registerDoctrineTypeMapping('enum', 'string');
+        //\DB::connection()->getDoctrineConnection()->createSchemaManager()->getDatabasePlatform()->registerDoctrineTypeMapping('enum', 'string');
     }
 
     /**
