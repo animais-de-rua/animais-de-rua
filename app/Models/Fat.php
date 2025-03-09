@@ -2,11 +2,15 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\CrudTrait;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Database\Factories\FatFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Fat extends Model
 {
     use CrudTrait;
+    /** @use HasFactory<FatFactory> */
+    use HasFactory;
 
     /*
     |--------------------------------------------------------------------------

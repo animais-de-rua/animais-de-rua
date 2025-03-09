@@ -119,23 +119,23 @@ class FakeSeeder extends Seeder
 
         // Treatments
         $this->log('Treatments');
-        factory(Treatment::class, 120)->create();
+        Treatment::factory(120)->create();
 
         // Fats
         $this->log('Fats');
-        factory(Fat::class, 50)->create();
+        Fat::factory(50)->create();
 
         // Adopters
         $this->log('Adopters');
-        factory(Adopter::class, 50)->create();
+        Adopter::factory(50)->create();
 
         // Adoptions
         $this->log('Adoptions');
-        factory(Adoption::class, 100)->create();
+        Adoption::factory(100)->create();
 
         // Store
         $this->log('Store Products');
-        factory(StoreProduct::class, 8)->create();
+        StoreProduct::factory(8)->create();
 
         $this->log('Store Orders');
         factory(StoreOrder::class, 80)->create()->each(function ($order) {

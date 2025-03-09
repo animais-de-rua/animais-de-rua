@@ -2,19 +2,19 @@
 
 namespace Database\Factories;
 
-use App\Models\Fat;
+use App\Models\Adopter;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends Factory<User>
  */
-class FatFactory extends Factory
+class AdopterFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      */
-    protected $model = Fat::class;
+    protected $model = Adopter::class;
 
     /**
      * Define the model's default state.
@@ -23,6 +23,9 @@ class FatFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
+            'address' => $this->faker->address(),
+            'zip_code' => $this->faker->postcode(),
+            'id_card' => $this->faker->creditCardNumber(),
         ];
     }
 }

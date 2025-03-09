@@ -2,11 +2,16 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\CrudTrait;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Database\Factories\AdopterFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Adopter extends Model
 {
     use CrudTrait;
+    /** @use HasFactory<AdopterFactory> */
+    use HasFactory;
+
 
     /*
     |--------------------------------------------------------------------------

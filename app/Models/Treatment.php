@@ -2,11 +2,15 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\CrudTrait;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Database\Factories\TreatmentFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Treatment extends Model
 {
     use CrudTrait;
+    /** @use HasFactory<TreatmentFactory> */
+    use HasFactory;
 
     /*
     |--------------------------------------------------------------------------
