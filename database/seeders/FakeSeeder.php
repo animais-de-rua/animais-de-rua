@@ -1,8 +1,29 @@
 <?php
-
 namespace Database\Seeders;
 
+use App\Enums\PermissionsEnum;
+use App\Helpers\EnumHelper;
+use App\Models\Adopter;
+use App\Models\Adoption;
+use App\Models\Appointment;
+use App\Models\Donation;
+use App\Models\Fat;
+use App\Models\Godfather;
+use App\Models\Headquarter;
+use App\Models\Process;
+use App\Models\Protocol;
+use App\Models\ProtocolRequest;
+use App\Models\StoreOrder;
+use App\Models\StoreProduct;
+use App\Models\StoreStock;
+use App\Models\StoreTransaction;
+use App\Models\Supplier;
+use App\Models\Treatment;
 use App\Models\User;
+use App\Models\Vet;
+use App\Models\Voucher;
+use Backpack\PermissionManager\app\Models\Permission;
+use Backpack\PermissionManager\app\Models\Role;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -15,22 +36,133 @@ class FakeSeeder extends Seeder
      */
     public function run()
     {
-        // Delete not admin users
-        User::doesnthave('roles')->delete();
+        // Truncate tables
+        DB::table('users')->where('id', '>', 2)->delete();
+        DB::table('processes')->truncate();
+        DB::table('godfathers')->truncate();
+        DB::table('donations')->truncate();
+        DB::table('vets')->truncate();
+        DB::table('treatments')->truncate();
+        DB::table('appointments')->truncate();
+        DB::table('fats')->truncate();
+        DB::table('adopters')->truncate();
+        DB::table('adoptions')->truncate();
+        DB::table('protocols_requests')->truncate();
+        DB::table('protocols')->truncate();
+        DB::table('store_products')->truncate();
+        DB::table('store_orders')->truncate();
+        DB::table('store_orders_products')->truncate();
+        DB::table('store_petsitting_requests')->truncate();
+        DB::table('store_stock')->truncate();
+        DB::table('store_transactions')->truncate();
+        DB::table('suppliers')->truncate();
+        DB::table('vouchers')->truncate();
 
-        // Set Auto increment
-        $total = User::count();
-        DB::statement('ALTER TABLE users AUTO_INCREMENT = '.($total + 1));
+        $permissions = PermissionsEnum::values();
+        $headquarters_count = Headquarter::count();
 
         // Users
         $this->log('Users');
-        User::factory()->count(30 - $total)->create();
+        User::factory(24)->create()->each(function ($user) use ($permissions, $headquarters_count) {
+            // 66% change to be a volunteer
+            if (rand(0, 2)) {
+                $user->roles()->save(Role::where('id', 2)->first());
+
+                // Permission
+                shuffle($permissions);
+
+                $user->permissions()->save(Permission::where('id', 1)->first());
+                if (rand(0, 1)) {
+                    // 50% change to have extra permissions
+                    $user->permissions()->save(Permission::where('id', 2)->first());
+                }
+            }
+
+            // 33% change to be a FAT
+            if (!rand(0, 2)) {
+                $user->roles()->save(Role::where('id', 3)->first());
+            }
+
+            // Randomly assign headquarters
+            $randomCount = rand(1, $headquarters_count);
+            $headquarters = Headquarter::inRandomOrder()->take($randomCount)->get();
+            $user->headquarters()->syncWithoutDetaching($headquarters);
+        });
+
+        // Processes
+        $this->log('Processes');
+        Process::factory(50)->create();
+
+        // Godfathers
+        $this->log('Godfathers');
+        Godfather::factory(50)->create()->each(function ($godfather) {
+            // One donation per godfather
+            $godfather->donations()->save(Donation::factory()->make());
+        });
+
+        // Protocols
+        $this->log('Protocols');
+        Protocol::factory(6)->create();
+        ProtocolRequest::factory(80)->create();
+
+        // Donations
+        $this->log('Donations');
+        Donation::factory(30)->create();
+
+        // Vets
+        $this->log('Vets');
+        factory(Vet::class, 50)->create();
+
+        // Appointments
+        $this->log('Appointments');
+        factory(Appointment::class, 100)->create();
+
+        // Treatments
+        $this->log('Treatments');
+        factory(Treatment::class, 120)->create();
+
+        // Fats
+        $this->log('Fats');
+        factory(Fat::class, 50)->create();
+
+        // Adopters
+        $this->log('Adopters');
+        factory(Adopter::class, 50)->create();
+
+        // Adoptions
+        $this->log('Adoptions');
+        factory(Adoption::class, 100)->create();
+
+        // Store
+        $this->log('Store Products');
+        factory(StoreProduct::class, 8)->create();
+
+        $this->log('Store Orders');
+        factory(StoreOrder::class, 80)->create()->each(function ($order) {
+            $products = StoreProduct::inRandomOrder()->get();
+            for ($i = 0; $i < rand(1, 5); $i++) {
+                $order->products()->attach([$products[$i]->id => ['quantity' => rand(1, 3)]]);
+            }
+        });
+
+        // Store Stock
+        $this->log('Store Stock');
+        factory(StoreStock::class, 50)->create();
+
+        // Store Transactions
+        $this->log('Store Transactions');
+        factory(StoreTransaction::class, 30)->create();
+
+        // Supliers
+        $this->log('Suppliers');
+        factory(Supplier::class, 30)->create();
+
+        // Vouchers
+        $this->log('Vouchers');
+        factory(Voucher::class, 30)->create();
     }
 
-    /**
-     * Log to console
-     */
-    public function log(string $entity): void
+    public function log($entity)
     {
         echo "Seeding: Fake $entity\n";
     }
