@@ -2,11 +2,15 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\CrudTrait;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Database\Factories\VoucherFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Voucher extends Model
 {
     use CrudTrait;
+    /** @use HasFactory<VoucherFactory> */
+    use HasFactory;
 
     /*
     |--------------------------------------------------------------------------

@@ -2,11 +2,15 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\CrudTrait;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Database\Factories\SupplierFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Supplier extends Model
 {
     use CrudTrait;
+    /** @use HasFactory<SupplierFactory> */
+    use HasFactory;
 
     /*
     |--------------------------------------------------------------------------

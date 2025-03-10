@@ -2,29 +2,25 @@
 
 namespace Database\Factories;
 
-use App\Models\StoreProduct;
-use App\Models\User;
+use App\Models\StoreOrder;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<User>
+ * @extends Factory<StoreOrder>
  */
-class StoreProductFactory extends Factory
+class StoreOrderFactory extends Factory
 {
-    /**
-     * The name of the factory's corresponding model.
-     */
-    protected $model = StoreProduct::class;
+    protected $model = StoreOrder::class;
 
-    /**
-     * Define the model's default state.
-     */
-    public function definition()
+    public function definition(): array
     {
         return [
-            'name' => $this->faker->name(),
-            'price' => $this->faker->randomNumber(5),
-            'price_no_vat' => $this->faker->randomNumber(5),
+            'reference' => $this->faker->word,
+            'cart' => $this->faker->text,
+            'recipient' => $this->faker->text,
+            'address' => $this->faker->text,
+            'expense' => $this->faker->randomNumber(5),
+            'payment' => $this->faker->randomElement(['bank_transfer', 'paypal', 'credit_card', 'mbway']),
         ];
     }
 }

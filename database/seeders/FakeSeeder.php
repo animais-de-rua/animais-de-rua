@@ -1,8 +1,8 @@
 <?php
+
 namespace Database\Seeders;
 
 use App\Enums\PermissionsEnum;
-use App\Helpers\EnumHelper;
 use App\Models\Adopter;
 use App\Models\Adoption;
 use App\Models\Appointment;
@@ -31,10 +31,8 @@ class FakeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         // Truncate tables
         DB::table('users')->where('id', '>', 2)->delete();
@@ -138,32 +136,32 @@ class FakeSeeder extends Seeder
         StoreProduct::factory(8)->create();
 
         $this->log('Store Orders');
-        factory(StoreOrder::class, 80)->create()->each(function ($order) {
+        StoreOrder::factory(80)->create()->each(function ($order) {
             $products = StoreProduct::inRandomOrder()->get();
-            for ($i = 0; $i < rand(1, 5); $i++) {
+            for ($i = 0; $i < rand(1, 5); ++$i) {
                 $order->products()->attach([$products[$i]->id => ['quantity' => rand(1, 3)]]);
             }
         });
 
         // Store Stock
         $this->log('Store Stock');
-        factory(StoreStock::class, 50)->create();
+        StoreStock::factory(50)->create();
 
         // Store Transactions
         $this->log('Store Transactions');
-        factory(StoreTransaction::class, 30)->create();
+        StoreTransaction::factory(30)->create();
 
         // Supliers
         $this->log('Suppliers');
-        factory(Supplier::class, 30)->create();
+        Supplier::factory(30)->create();
 
         // Vouchers
         $this->log('Vouchers');
-        factory(Voucher::class, 30)->create();
+        Voucher::factory(30)->create();
     }
 
-    public function log($entity)
+    public function log($entity): void
     {
-        echo "Seeding: Fake $entity\n";
+        echo "Seeding: Fake {$entity}\n";
     }
 }

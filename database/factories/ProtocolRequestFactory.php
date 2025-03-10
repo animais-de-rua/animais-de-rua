@@ -3,23 +3,16 @@
 namespace Database\Factories;
 
 use App\Models\ProtocolRequest;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<User>
+ * @extends Factory<ProtocolRequest>
  */
 class ProtocolRequestFactory extends Factory
 {
-    /**
-     * The name of the factory's corresponding model.
-     */
     protected $model = ProtocolRequest::class;
 
-    /**
-     * Define the model's default state.
-     */
-    public function definition()
+    public function definition(): array
     {
         return [
             'council' => $this->faker->city(),

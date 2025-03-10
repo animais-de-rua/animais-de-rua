@@ -3,23 +3,16 @@
 namespace Database\Factories;
 
 use App\Models\Fat;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<User>
+ * @extends Factory<Fat>
  */
 class FatFactory extends Factory
 {
-    /**
-     * The name of the factory's corresponding model.
-     */
     protected $model = Fat::class;
 
-    /**
-     * Define the model's default state.
-     */
-    public function definition()
+    public function definition(): array
     {
         return [
             'name' => $this->faker->name(),

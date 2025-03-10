@@ -2,11 +2,15 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\CrudTrait;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Database\Factories\StoreTransactionFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class StoreTransaction extends Model
 {
     use CrudTrait;
+    /** @use HasFactory<StoreTransactionFactory> */
+    use HasFactory;
 
     /*
     |--------------------------------------------------------------------------
