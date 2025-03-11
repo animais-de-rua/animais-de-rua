@@ -5,7 +5,23 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Database\Factories\AdoptionFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property Process process
+ * @property User user
+ * @property Fat fat
+ * @property Adopter adopter
+ * @property string status
+ * @property int id
+ * @property string $gender
+ * @property bool $sterilized
+ * @property bool $vaccinated
+ * @property string $name
+ * @property array $age
+ * @property string $detail
+ * @property array $images
+ */
 class Adoption extends Model
 {
     use CrudTrait;
@@ -34,7 +50,7 @@ class Adoption extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function addAdopter()
+    public function addAdopter(): string
     {
         $disabled = $this->status != 'open';
 
@@ -50,24 +66,36 @@ class Adoption extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function process()
+    /**
+     * @return BelongsTo<Process>
+     */
+    public function process(): BelongsTo
     {
-        return $this->belongsTo('App\Models\Process', 'process_id');
+        return $this->belongsTo(Process::class, 'process_id');
     }
 
-    public function user()
+    /**
+     * @return BelongsTo<User>
+     */
+    public function user(): BelongsTo
     {
-        return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function fat()
+    /**
+     * @return BelongsTo<Fat>
+     */
+    public function fat(): BelongsTo
     {
-        return $this->belongsTo('App\Models\Fat', 'fat_id');
+        return $this->belongsTo(Fat::class, 'fat_id');
     }
 
-    public function adopter()
+    /**
+     * @return BelongsTo<Adopter>
+     */
+    public function adopter(): BelongsTo
     {
-        return $this->belongsTo('App\Models\Adopter', 'adopter_id');
+        return $this->belongsTo(Adopter::class, 'adopter_id');
     }
 
     /*
@@ -78,7 +106,7 @@ class Adoption extends Model
 
     /*
     |--------------------------------------------------------------------------
-    | ACCESORS
+    | ACCESSORS
     |--------------------------------------------------------------------------
     */
     public function getNameLinkAttribute()
@@ -96,7 +124,7 @@ class Adoption extends Model
         return $this->getLink($this->adopter, true, 'edit');
     }
 
-    public function getHeadquarterAttribute()
+    public function getHeadquarterAttribute(): string
     {
         return $this->process->headquarter->name;
     }
@@ -111,26 +139,26 @@ class Adoption extends Model
         return $this->getLink($this->fat, is('admin'));
     }
 
-    public function getGenderValueAttribute()
+    public function getGenderValueAttribute(): string
     {
         return ucfirst(__($this->gender));
     }
 
-    public function getSterilizedValueAttribute()
+    public function getSterilizedValueAttribute(): string
     {
         return ucfirst(__($this->sterilized ? 'yes' : 'no'));
     }
 
-    public function getVaccinatedValueAttribute()
+    public function getVaccinatedValueAttribute(): string
     {
         return ucfirst(__($this->vaccinated ? 'yes' : 'no'));
     }
 
-    public function getDetailAttribute()
+    public function getDetailAttribute(): string
     {
         $process = $this->process ? ' ('.$this->process->name.')' : '';
 
-        return "{$this->id} - {$this->name}{$process}";
+        return "$this->id - $this->name$process";
     }
 
     /*
@@ -139,17 +167,17 @@ class Adoption extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function setAgeAttribute($value)
+    public function setAgeAttribute($value): void
     {
         $this->attributes['age'] = $value[0] * 12 + $value[1];
     }
 
-    public function getAgeAttribute($value)
+    public function getAgeAttribute($value): array
     {
         return [floor($value / 12), $value % 12];
     }
 
-    public function getAgeValueAttribute()
+    public function getAgeValueAttribute(): string
     {
         [$y, $m] = $this->age;
 
@@ -165,7 +193,7 @@ class Adoption extends Model
         return implode(' '.__('and').' ', $result);
     }
 
-    public function toArray()
+    public function toArray(): array
     {
         $data = parent::toArray();
 

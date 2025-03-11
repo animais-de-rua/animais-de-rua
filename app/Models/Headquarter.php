@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 
+/**
+ * @property string $name
+ */
 class Headquarter extends Model
 {
     use CrudTrait;

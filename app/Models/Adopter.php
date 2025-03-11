@@ -5,6 +5,8 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Database\Factories\AdopterFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Adopter extends Model
 {
@@ -39,19 +41,28 @@ class Adopter extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function adoption()
+    /**
+     * @return HasOne<Adoption>
+     */
+    public function adoption(): HasOne
     {
-        return $this->hasOne('App\Models\Adoption', 'adopter_id');
+        return $this->hasOne(Adoption::class, 'adopter_id');
     }
 
-    public function territory()
+    /**
+     * @return BelongsTo<Territory>
+     */
+    public function territory(): BelongsTo
     {
-        return $this->belongsTo('App\Models\Territory', 'territory_id');
+        return $this->belongsTo(Territory::class, 'territory_id');
     }
 
-    public function user()
+    /**
+     * @return BelongsTo<User>
+     */
+    public function user(): BelongsTo
     {
-        return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     /*
@@ -62,11 +73,11 @@ class Adopter extends Model
 
     /*
     |--------------------------------------------------------------------------
-    | ACCESORS
+    | ACCESSORS
     |--------------------------------------------------------------------------
     */
 
-    public function getAdoptionLinkAttribute()
+    /*public function getAdoptionLinkAttribute()
     {
         return $this->getLink($this->adoption);
     }
@@ -74,7 +85,7 @@ class Adopter extends Model
     public function getUserLinkAttribute()
     {
         return $this->getLink($this->user, is('admin'));
-    }
+    }+/
 
     /*
     |--------------------------------------------------------------------------

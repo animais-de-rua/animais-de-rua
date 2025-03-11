@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\CrudTrait;
-use Backpack\CRUD\ModelTraits\SpatieTranslatable\HasTranslations;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Spatie\Translatable\HasTranslations;
 
 class Campaign extends Model
 {
@@ -25,7 +25,7 @@ class Campaign extends Model
 
     // protected $hidden = [];
     // protected $dates = [];
-    protected $translatable = ['name', 'introduction', 'description'];
+    protected array $translatable = ['name', 'introduction', 'description'];
 
     /*
     |--------------------------------------------------------------------------

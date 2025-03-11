@@ -6,6 +6,8 @@ use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Carbon\Carbon;
 use Database\Factories\AppointmentFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Appointment extends Model
 {
@@ -34,19 +36,13 @@ class Appointment extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function addTreatment()
+    public function addTreatment(): string
     {
-        switch ($this->status) {
-            case 'approved_option_1':
-                $date = $this->date_1;
-                break;
-            case 'approved_option_2':
-                $date = $this->date_2;
-                break;
-            default:
-                $date = null;
-                break;
-        }
+        $date = match ($this->status) {
+            'approved_option_1' => $this->date_1,
+            'approved_option_2' => $this->date_2,
+            default => null,
+        };
 
         $future = $date && Carbon::parse($date) > Carbon::today();
 
@@ -71,7 +67,7 @@ class Appointment extends Model
         </a>';
     }
 
-    public function approveAppointment()
+    public function approveAppointment(): string
     {
         $disabled = $this->status != 'approving';
         $btn_color = $disabled ? 'btn-default' : 'btn-primary';
@@ -97,29 +93,44 @@ class Appointment extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function process()
+    /**
+     * @return BelongsTo<Process>
+     */
+    public function process(): BelongsTo
     {
-        return $this->belongsTo('App\Models\Process', 'process_id');
+        return $this->belongsTo(Process::class, 'process_id');
     }
 
-    public function user()
+    /**
+     * @return BelongsTo<User>
+     */
+    public function user(): BelongsTo
     {
-        return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function vet1()
+    /**
+     * @return BelongsTo<Vet>
+     */
+    public function vet1(): BelongsTo
     {
-        return $this->belongsTo('App\Models\Vet', 'vet_id_1');
+        return $this->belongsTo(Vet::class, 'vet_id_1');
     }
 
-    public function vet2()
+    /**
+     * @return BelongsTo<Vet>
+     */
+    public function vet2(): BelongsTo
     {
-        return $this->belongsTo('App\Models\Vet', 'vet_id_2');
+        return $this->belongsTo(Vet::class, 'vet_id_2');
     }
 
-    public function treatments()
+    /**
+     * @return HasMany<Treatment>
+     */
+    public function treatments(): HasMany
     {
-        return $this->hasMany('App\Models\Treatment', 'appointment_id');
+        return $this->hasMany(Treatment::class, 'appointment_id');
     }
 
     /*
@@ -189,20 +200,20 @@ class Appointment extends Model
 
     public function getApprovedDate()
     {
-        switch ($this->status) {
-            case 'approved_option_1':return $this->date_1;
-            case 'approved_option_2':return $this->date_2;
-            default:return null;
-        }
+        return match ($this->status) {
+            'approved_option_1' => $this->date_1,
+            'approved_option_2' => $this->date_2,
+            default => null,
+        };
     }
 
     public function getApprovedVet()
     {
-        switch ($this->status) {
-            case 'approved_option_1':return $this->vet1;
-            case 'approved_option_2':return $this->vet2;
-            default:return null;
-        }
+        return match ($this->status) {
+            'approved_option_1' => $this->vet1,
+            'approved_option_2' => $this->vet2,
+            default => null,
+        };
     }
 
     public function getApprovedVetID()
@@ -216,7 +227,7 @@ class Appointment extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function toArray()
+    public function toArray(): array
     {
         $data = parent::toArray();
 
@@ -230,7 +241,7 @@ class Appointment extends Model
     | BOOT
     |--------------------------------------------------------------------------
     */
-    public static function boot()
+    public static function boot(): void
     {
         parent::boot();
         static::deleting(function ($appointment) {

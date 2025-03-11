@@ -7,6 +7,10 @@ use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
 use Database\Factories\ProcessFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+/**
+ * @property Headquarter $headquarter
+ * @property string $name
+ */
 class Process extends Model
 {
     use CrudTrait;
