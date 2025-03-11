@@ -19,6 +19,7 @@ class Fat extends Model
     */
 
     protected $table = 'fats';
+
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];

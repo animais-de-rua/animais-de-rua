@@ -19,6 +19,7 @@ class StoreProduct extends Model
     */
 
     protected $table = 'store_products';
+
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];

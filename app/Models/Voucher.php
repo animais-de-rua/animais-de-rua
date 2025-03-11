@@ -20,6 +20,7 @@ class Voucher extends Model
 
     protected $table = 'vouchers';
     protected $primaryKey = 'id';
+
     // public $timestamps = false;
     // protected $guarded = ['id'];
     protected $fillable = ['reference', 'voucher', 'value', 'percent', 'client_name', 'client_email', 'expiration', 'status'];

@@ -21,9 +21,11 @@ class Territory extends Model
     protected $table = 'territories';
     protected $primaryKey = 'id';
     public $timestamps = false;
+
     // protected $guarded = ['id'];
     protected $fillable = [];
     protected $hidden = ['pivot'];
+
     // protected $dates = [];
     protected $casts = [
         'id' => 'string',
@@ -85,7 +87,7 @@ class Territory extends Model
 
     public function getFullnameAttribute()
     {
-        return $this->name . ($this->parent()->exists() ? ', ' . $this->parent()->first()->fullname : '');
+        return $this->name.($this->parent()->exists() ? ', '.$this->parent()->first()->fullname : '');
     }
 
     /*

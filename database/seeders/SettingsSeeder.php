@@ -1,4 +1,5 @@
 <?php
+
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
@@ -105,8 +106,9 @@ class SettingsSeeder extends Seeder
         foreach ($settings as $index => $setting) {
             $result = DB::table('settings')->insert($setting);
 
-            if (!$result) {
+            if (! $result) {
                 $this->command->info("Insert failed at record $index.");
+
                 return;
             }
         }

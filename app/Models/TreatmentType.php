@@ -18,9 +18,11 @@ class TreatmentType extends Model
 
     protected $table = 'treatment_types';
     protected $primaryKey = 'id';
+
     // public $timestamps = false;
     // protected $guarded = ['id'];
     protected $fillable = ['name', 'operation_time'];
+
     // protected $hidden = [];
     // protected $dates = [];
     protected $translatable = ['name'];
@@ -58,7 +60,7 @@ class TreatmentType extends Model
     {
         $expenses = $this->total_expenses ?: data_get_first($this, 'treatments', 'total_expenses', 0);
 
-        return $expenses != 0 ? $expenses . '€' : '-';
+        return $expenses != 0 ? $expenses.'€' : '-';
     }
 
     public function getTotalOperationsValue()
@@ -72,7 +74,7 @@ class TreatmentType extends Model
     {
         $average = $this->average ?: data_get_first($this, 'treatments', 'average', 0);
 
-        return $average > 0 ? number_format($average, 2) . '€' : '-';
+        return $average > 0 ? number_format($average, 2).'€' : '-';
     }
 
     /*

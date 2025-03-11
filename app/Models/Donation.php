@@ -20,6 +20,7 @@ class Donation extends Model
 
     protected $table = 'donations';
     protected $primaryKey = 'id';
+
     // public $timestamps = false;
     // protected $guarded = ['id'];
     protected $fillable = ['process_id', 'type', 'godfather_id', 'headquarter_id', 'protocol_id', 'value', 'status', 'date', 'user_id', 'notes'];
@@ -92,7 +93,7 @@ class Donation extends Model
 
     public function getProtocolLinkAttribute()
     {
-        if (!$this->protocol || !$this->protocol->headquarter) {
+        if (! $this->protocol || ! $this->protocol->headquarter) {
             return '-';
         }
 
@@ -103,7 +104,7 @@ class Donation extends Model
 
     public function getFullValueAttribute()
     {
-        return $this->value . '€';
+        return $this->value.'€';
     }
 
     public function getUserLinkAttribute()

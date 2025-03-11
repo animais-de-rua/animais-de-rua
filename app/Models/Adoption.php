@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Database\Factories\AdoptionFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -21,6 +20,7 @@ class Adoption extends Model
 
     protected $table = 'adoptions';
     protected $primaryKey = 'id';
+
     // public $timestamps = false;
     // protected $guarded = ['id'];
     protected $fillable = ['process_id', 'user_id', 'fat_id', 'name', 'name_after', 'age', 'gender', 'microchip', 'sterilized', 'vaccinated', 'processed', 'individual', 'docile', 'abandoned', 'history', 'images', 'status', 'adoption_date', 'foal'];
@@ -39,8 +39,8 @@ class Adoption extends Model
         $disabled = $this->status != 'open';
 
         return '
-        <a class="btn btn-xs btn-' . ($disabled ? 'default' : 'primary') . ' ' . ($disabled ? 'disabled' : '') . '" href="/admin/adoption/' . $this->id . '/edit" title="' . __('Add adopter') . '">
-        <i class="fa fa-plus"></i> ' . ucfirst(__('adopter')) . '
+        <a class="btn btn-xs btn-'.($disabled ? 'default' : 'primary').' '.($disabled ? 'disabled' : '').'" href="/admin/adoption/'.$this->id.'/edit" title="'.__('Add adopter').'">
+        <i class="fa fa-plus"></i> '.ucfirst(__('adopter')).'
         </a>';
     }
 
@@ -128,7 +128,8 @@ class Adoption extends Model
 
     public function getDetailAttribute()
     {
-        $process = $this->process ? ' (' . $this->process->name . ')' : '';
+        $process = $this->process ? ' ('.$this->process->name.')' : '';
+
         return "{$this->id} - {$this->name}{$process}";
     }
 
@@ -150,18 +151,18 @@ class Adoption extends Model
 
     public function getAgeValueAttribute()
     {
-        list($y, $m) = $this->age;
+        [$y, $m] = $this->age;
 
         $result = [];
         if ($y > 0) {
-            $result[] = "$y " . ($y > 1 ? __('years') : __('year'));
+            $result[] = "$y ".($y > 1 ? __('years') : __('year'));
         }
 
         if ($m > 0) {
-            $result[] = "$m " . ($m > 1 ? __('months') : __('month'));
+            $result[] = "$m ".($m > 1 ? __('months') : __('month'));
         }
 
-        return join(' ' . __('and') . ' ', $result);
+        return implode(' '.__('and').' ', $result);
     }
 
     public function toArray()

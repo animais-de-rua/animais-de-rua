@@ -18,9 +18,11 @@ class Campaign extends Model
 
     protected $table = 'campaigns';
     protected $primaryKey = 'id';
+
     // public $timestamps = false;
     // protected $guarded = ['id'];
     protected $fillable = ['name', 'introduction', 'description', 'image'];
+
     // protected $hidden = [];
     // protected $dates = [];
     protected $translatable = ['name', 'introduction', 'description'];

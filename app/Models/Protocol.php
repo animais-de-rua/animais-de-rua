@@ -20,6 +20,7 @@ class Protocol extends Model
 
     protected $table = 'protocols';
     protected $primaryKey = 'id';
+
     // public $timestamps = false;
     // protected $guarded = ['id'];
     protected $fillable = ['name', 'email', 'phone', 'territory_id', 'user_id'];

@@ -12,7 +12,6 @@ class Adopter extends Model
     /** @use HasFactory<AdopterFactory> */
     use HasFactory;
 
-
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES
@@ -21,6 +20,7 @@ class Adopter extends Model
 
     protected $table = 'adopters';
     protected $primaryKey = 'id';
+
     // public $timestamps = false;
     // protected $guarded = ['id'];
     protected $fillable = ['name', 'email', 'phone', 'address', 'zip_code', 'adoption_date', 'id_card', 'territory_id', 'user_id'];

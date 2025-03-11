@@ -20,6 +20,7 @@ class StoreTransaction extends Model
 
     protected $table = 'store_transactions';
     protected $primaryKey = 'id';
+
     // public $timestamps = false;
     // protected $guarded = ['id'];
     protected $fillable = ['description', 'user_id', 'amount', 'invoice', 'notes'];

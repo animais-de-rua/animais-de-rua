@@ -18,9 +18,11 @@ class Partner extends Model
 
     protected $table = 'partners';
     protected $primaryKey = 'id';
+
     // public $timestamps = false;
     // protected $guarded = ['id'];
     protected $fillable = ['name', 'description', 'email', 'phone1', 'phone1_info', 'phone2', 'phone2_info', 'url', 'facebook', 'instagram', 'address', 'address_info', 'latlong', 'benefit', 'notes', 'promo_code', 'status', 'user_id', 'image'];
+
     // protected $hidden = [];
     // protected $dates = [];
     protected $translatable = ['benefit'];
@@ -71,12 +73,12 @@ class Partner extends Model
 
     public function getCategoryListAttribute()
     {
-        return join(', ', $this->categories()->pluck('name')->toArray());
+        return implode(', ', $this->categories()->pluck('name')->toArray());
     }
 
     public function getTerritoryListAttribute()
     {
-        return join(', ', $this->territories()->pluck('name')->toArray());
+        return implode(', ', $this->territories()->pluck('name')->toArray());
     }
 
     /*

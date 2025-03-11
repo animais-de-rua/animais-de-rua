@@ -16,6 +16,7 @@ class Sponsor extends Model
 
     protected $table = 'sponsors';
     protected $primaryKey = 'id';
+
     // public $timestamps = false;
     // protected $guarded = ['id'];
     protected $fillable = ['name', 'url', 'image'];
@@ -54,7 +55,7 @@ class Sponsor extends Model
 
     public function setImageAttribute($value)
     {
-        $filename = $this->attributes['name'] . time();
+        $filename = $this->attributes['name'].time();
         $this->saveImage($this, $value, 'sponsors/', $filename, 144, 90);
     }
 }

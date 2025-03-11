@@ -20,6 +20,7 @@ class Vet extends Model
 
     protected $table = 'vets';
     protected $primaryKey = 'id';
+
     // public $timestamps = false;
     // protected $guarded = ['id'];
     protected $fillable = ['name', 'email', 'phone', 'url', 'address', 'latlong', 'headquarter_id', 'status'];
@@ -63,24 +64,31 @@ class Vet extends Model
     public function getTotalExpensesValue()
     {
         $expenses = data_get_first($this, 'treatments', 'total_expenses', 0);
-        return $expenses != 0 ? $expenses . '€' : '-';
+
+        return $expenses != 0 ? $expenses.'€' : '-';
     }
 
     public function getTotalOperationsValue()
     {
         $operations = data_get_first($this, 'treatments', 'total_operations', 0);
+
         return $operations;
     }
 
     public function getTotalExpensesStats()
     {
-        $expenses = $this->treatments->reduce(function ($carry, $item) {return $carry + $item->expense;});
-        return $expenses != 0 ? $expenses . '€' : '-';
+        $expenses = $this->treatments->reduce(function ($carry, $item) {
+            return $carry + $item->expense;
+        });
+
+        return $expenses != 0 ? $expenses.'€' : '-';
     }
 
     public function getTotalOperationsStats()
     {
-        return $this->treatments->reduce(function ($carry, $item) {return $carry + $item->affected_animals;});
+        return $this->treatments->reduce(function ($carry, $item) {
+            return $carry + $item->affected_animals;
+        });
     }
 
     /*

@@ -20,6 +20,7 @@ class Godfather extends Model
 
     protected $table = 'godfathers';
     protected $primaryKey = 'id';
+
     // public $timestamps = false;
     // protected $guarded = ['id'];
     protected $fillable = ['name', 'email', 'phone', 'notes', 'territory_id', 'user_id'];
@@ -73,7 +74,8 @@ class Godfather extends Model
     public function getTotalDonatedValue()
     {
         $donations = data_get_first($this, 'donations', 'total', 0);
-        return $donations != 0 ? $donations . '€' : '-';
+
+        return $donations != 0 ? $donations.'€' : '-';
     }
 
     public function getDetailAttribute()
@@ -83,8 +85,11 @@ class Godfather extends Model
 
     public function getTotalDonatedStats()
     {
-        $donations = $this->donations->reduce(function ($carry, $item) {return $carry + $item->value;});
-        return $donations != 0 ? $donations . '€' : '-';
+        $donations = $this->donations->reduce(function ($carry, $item) {
+            return $carry + $item->value;
+        });
+
+        return $donations != 0 ? $donations.'€' : '-';
     }
 
     public function getTotalDonationsStats()

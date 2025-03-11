@@ -20,6 +20,7 @@ class Treatment extends Model
 
     protected $table = 'treatments';
     protected $primaryKey = 'id';
+
     // public $timestamps = false;
     // protected $guarded = ['id'];
     protected $fillable = ['appointment_id', 'treatment_type_id', 'vet_id', 'affected_animals', 'affected_animals_new', 'user_id', 'expense', 'date', 'status', 'notes'];
@@ -34,12 +35,12 @@ class Treatment extends Model
 
     public function customUpdateButton()
     {
-        $disabled = !is('admin', 'treatments') || (is('volunteer', 'treatments') && $this->status == 'approved');
+        $disabled = ! is('admin', 'treatments') || (is('volunteer', 'treatments') && $this->status == 'approved');
         if (is('admin')) {
             $disabled = false;
         }
 
-        return '<a href=' . url("admin/treatment/{$this->id}/edit") . " class='btn btn-xs btn-default " . ($disabled ? 'disabled' : '') . "'><i class='fa fa-edit'></i> " . __('backpack::crud.edit') . '</a>';
+        return '<a href='.url("admin/treatment/{$this->id}/edit")." class='btn btn-xs btn-default ".($disabled ? 'disabled' : '')."'><i class='fa fa-edit'></i> ".__('backpack::crud.edit').'</a>';
     }
 
     public function approveTreatment()
@@ -48,8 +49,8 @@ class Treatment extends Model
         $btn_color = $disabled ? 'btn-default' : 'btn-primary';
 
         return '
-      <button type="button" ' . ($disabled ? 'disabled' : '') . ' class="btn btn-xs ' . $btn_color . ' dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="return approveTreatment(this, ' . $this->id . ')">
-        <i class="fa fa-check"></i> ' . __('approve') . '
+      <button type="button" '.($disabled ? 'disabled' : '').' class="btn btn-xs '.$btn_color.' dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="return approveTreatment(this, '.$this->id.')">
+        <i class="fa fa-check"></i> '.__('approve').'
       </button>';
 
     }
@@ -109,7 +110,7 @@ class Treatment extends Model
 
     public function getFullExpenseAttribute()
     {
-        return $this->expense . '€';
+        return $this->expense.'€';
     }
 
     public function getTreatmentTypeNameAttribute()
@@ -124,7 +125,7 @@ class Treatment extends Model
 
     public function getStatusWithClassAttribute()
     {
-        return "<span class='status'>" . __($this->status) . '</span>';
+        return "<span class='status'>".__($this->status).'</span>';
     }
 
     public function getAffectedAnimalsNew($appointment_id)

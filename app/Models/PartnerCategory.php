@@ -18,10 +18,12 @@ class PartnerCategory extends Model
 
     protected $table = 'partner_category_list';
     protected $primaryKey = 'id';
+
     // public $timestamps = false;
     // protected $guarded = ['id'];
     protected $fillable = ['name', 'description'];
     protected $hidden = ['pivot'];
+
     // protected $dates = [];
     protected $translatable = ['name', 'description'];
 

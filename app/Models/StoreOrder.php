@@ -19,6 +19,7 @@ class StoreOrder extends Model
     */
 
     protected $table = 'store_orders';
+
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
@@ -37,8 +38,8 @@ class StoreOrder extends Model
         $disabled = $this->status == 'shipped';
 
         return '
-        <a class="btn btn-xs btn-' . ($disabled ? 'default' : 'primary') . ' ' . ($disabled ? 'disabled' : '') . '" href="/admin/store/orders/' . $this->id . '/edit" title="' . __('Add shipment') . '">
-        <i class="fa fa-plus"></i> ' . ucfirst(__('shipment')) . '
+        <a class="btn btn-xs btn-'.($disabled ? 'default' : 'primary').' '.($disabled ? 'disabled' : '').'" href="/admin/store/orders/'.$this->id.'/edit" title="'.__('Add shipment').'">
+        <i class="fa fa-plus"></i> '.ucfirst(__('shipment')).'
         </a>';
     }
 
@@ -46,7 +47,7 @@ class StoreOrder extends Model
     {
         return '
         <a class="openall btn btn-primary ladda-button" data-style="zoom-in">
-            <span class="ladda-label"><i class="fa fa-plus-square-o"></i> ' . ucfirst(__('Open All')) . '</span>
+            <span class="ladda-label"><i class="fa fa-plus-square-o"></i> '.ucfirst(__('Open All')).'</span>
         </a>';
     }
 
@@ -104,7 +105,7 @@ class StoreOrder extends Model
 
     public function getNameAttribute()
     {
-        return join(' - ', [$this->reference, $this->recipient]);
+        return implode(' - ', [$this->reference, $this->recipient]);
     }
 
     /*

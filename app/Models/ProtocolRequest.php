@@ -20,6 +20,7 @@ class ProtocolRequest extends Model
 
     protected $table = 'protocols_requests';
     protected $primaryKey = 'id';
+
     // public $timestamps = false;
     // protected $guarded = ['id'];
     protected $fillable = ['council', 'name', 'email', 'phone', 'address', 'description', 'territory_id', 'user_id', 'protocol_id'];
