@@ -51,12 +51,12 @@ class Voucher extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function getValueTextAttribute()
+    public function getValueTextAttribute(): string
     {
         return $this->value ? "{$this->value}€" : '-';
     }
 
-    public function getPercentTextAttribute()
+    public function getPercentTextAttribute(): string
     {
         return $this->percent ? "{$this->percent}%" : '-';
     }

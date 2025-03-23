@@ -5,6 +5,8 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Database\Factories\VetFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Vet extends Model
 {
@@ -39,14 +41,20 @@ class Vet extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function headquarters()
+    /**
+     * @return BelongsToMany<Headquarter, Vet>
+     * */
+    public function headquarters(): BelongsToMany
     {
-        return $this->belongsToMany('App\Models\Headquarter', 'vets_headquarters', 'vet_id', 'headquarter_id');
+        return $this->belongsToMany(Headquarter::class, 'vets_headquarters', 'vet_id', 'headquarter_id');
     }
 
-    public function treatments()
+    /**
+     * @return HasMany<Treatment, Vet>
+     * */
+    public function treatments(): HasMany
     {
-        return $this->hasMany('App\Models\Treatment', 'vet_id');
+        return $this->hasMany(Treatment::class, 'vet_id');
     }
 
     /*
@@ -57,25 +65,23 @@ class Vet extends Model
 
     /*
     |--------------------------------------------------------------------------
-    | ACCESORS
+    | ACCESSORS
     |--------------------------------------------------------------------------
     */
 
-    public function getTotalExpensesValue()
+    public function getTotalExpensesValue(): string
     {
         $expenses = data_get_first($this, 'treatments', 'total_expenses', 0);
 
         return $expenses != 0 ? $expenses.'€' : '-';
     }
 
-    public function getTotalOperationsValue()
+    public function getTotalOperationsValue(): int
     {
-        $operations = data_get_first($this, 'treatments', 'total_operations', 0);
-
-        return $operations;
+        return data_get_first($this, 'treatments', 'total_operations', 0);
     }
 
-    public function getTotalExpensesStats()
+    public function getTotalExpensesStats(): string
     {
         $expenses = $this->treatments->reduce(function ($carry, $item) {
             return $carry + $item->expense;
@@ -84,7 +90,7 @@ class Vet extends Model
         return $expenses != 0 ? $expenses.'€' : '-';
     }
 
-    public function getTotalOperationsStats()
+    public function getTotalOperationsStats(): int
     {
         return $this->treatments->reduce(function ($carry, $item) {
             return $carry + $item->affected_animals;

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use DOMDocument;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
@@ -49,16 +50,16 @@ class AppServiceProvider extends ServiceProvider
                 return '';  // Return an empty string if the file doesn't exist
             }
 
-            $svg = new \DOMDocument;
+            $svg = new DOMDocument;
             $svg->load($svgPath);
             $svgElement = $svg->documentElement;
 
             // Add the class and style attributes if they are provided
-            if ($class) {
+            if ($class && $svgElement) {
                 $svgElement->setAttribute('class', $class);
             }
 
-            if ($style) {
+            if ($style && $svgElement) {
                 $svgElement->setAttribute('style', $style);
             }
 
