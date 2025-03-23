@@ -3,23 +3,53 @@
 namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
+use Backpack\PageManager\app\Models\Page as OriginalPage;
 
-class Page extends Model
+class Page extends OriginalPage
 {
     use HasTranslations;
 
-    /** @var array<string> */
-    protected $translatable = [
-        'title',
-        'extras_translatable',
-    ];
+    /*
+    |--------------------------------------------------------------------------
+    | GLOBAL VARIABLES
+    |--------------------------------------------------------------------------
+    */
 
     /** @var array<string> */
-    protected $fakeColumns = [
-        'extras',
-        'extras_translatable',
-    ];
+    protected array $translatable = ['title', 'extras_translatable'];
 
+    /** @var array<string> */
+    protected $fakeColumns = ['extras', 'extras_translatable'];
+
+    /*
+    |--------------------------------------------------------------------------
+    | FUNCTIONS
+    |--------------------------------------------------------------------------
+    */
+
+    /*
+    |--------------------------------------------------------------------------
+    | RELATIONS
+    |--------------------------------------------------------------------------
+    */
+
+    /*
+    |--------------------------------------------------------------------------
+    | SCOPES
+    |--------------------------------------------------------------------------
+    */
+
+    /*
+    |--------------------------------------------------------------------------
+    | ACCESSORS
+    |--------------------------------------------------------------------------
+    */
+
+    /*
+    |--------------------------------------------------------------------------
+    | MUTATORS
+    |--------------------------------------------------------------------------
+    */
     #[\Override]
     protected static function booted()
     {

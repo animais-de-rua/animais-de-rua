@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\CrudTrait;
-use Backpack\CRUD\ModelTraits\SpatieTranslatable\HasTranslations;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\Translatable\HasTranslations;
 
 class FriendCardModality extends Model
 {
@@ -25,7 +26,7 @@ class FriendCardModality extends Model
 
     // protected $hidden = [];
     // protected $dates = [];
-    protected $translatable = ['name', 'description'];
+    protected array $translatable = ['name', 'description'];
     /*
     |--------------------------------------------------------------------------
     | FUNCTIONS
@@ -38,9 +39,9 @@ class FriendCardModality extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function user()
+    public function user(): HasMany
     {
-        return $this->hasMany('App\User', 'friend_card_modality_id');
+        return $this->hasMany(User::class, 'friend_card_modality_id');
     }
 
     /*
@@ -51,18 +52,18 @@ class FriendCardModality extends Model
 
     /*
     |--------------------------------------------------------------------------
-    | ACCESORS
+    | ACCESSORS
     |--------------------------------------------------------------------------
     */
 
-    public function getFullnameAttribute()
+    public function getFullnameAttribute(): string
     {
         $type = ucfirst(__($this->type));
 
         return "{$this->name} — {$this->amount}€ {$type}";
     }
 
-    public function getValueAttribute()
+    public function getValueAttribute(): string
     {
         $type = ucfirst(__($this->type));
 

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PageController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 // Welcome
-Route::get('/', fn () => view('welcome'));
+Route::get('/', [PageController::class, 'index'])->name('home');
 
 // Pages
 Route::get('{page}/{subs?}', [PageController::class, 'index'])->middleware('web')

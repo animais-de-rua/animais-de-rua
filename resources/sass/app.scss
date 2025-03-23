@@ -1,10 +1,14 @@
-// Common rules
-@use "common.scss" as *;
-
-// Pico CSS
-@use "@picocss/pico" as *;
-
 // Fonts
-@import url("https://fonts.googleapis.com/css?family=Lato");
+// @import url("https://fonts.googleapis.com/css?family=Open+Sans");
+
+// Icomoon
+@import "icomoon/style.css";
+
+// Normalize
+@import "~normalize.css/normalize.css";
+
+// Milligram
+@import "_milligram.scss";
 
 // Main Code
+@import "main.scss";

@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\CrudTrait;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
 
 class Sponsor extends Model
 {
@@ -43,7 +43,7 @@ class Sponsor extends Model
 
     /*
     |--------------------------------------------------------------------------
-    | ACCESORS
+    | ACCESSORS
     |--------------------------------------------------------------------------
     */
 
@@ -53,7 +53,7 @@ class Sponsor extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function setImageAttribute($value)
+    public function setImageAttribute($value): void
     {
         $filename = $this->attributes['name'].time();
         $this->saveImage($this, $value, 'sponsors/', $filename, 144, 90);

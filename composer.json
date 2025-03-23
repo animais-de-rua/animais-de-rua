@@ -10,14 +10,18 @@
     "require": {
         "php": "^8.3|^8.4",
         "archtechx/enums": "^1.0",
+        "backpack/pagemanager": "^3.3",
         "backpack/theme-tabler": "^1.0",
+        "blade-ui-kit/blade-icons": "^1.8",
         "fakerphp/faker": "^1.14",
         "gemadigital/framework": "^13.1",
         "laravel/framework": "^11.1",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^4.0",
-        "livewire/livewire": "^3.4"
+        "livewire/livewire": "^3.4",
+        "spatie/laravel-cookie-consent": "^3.3",
+        "spatie/laravel-newsletter": "^5.2"
     },
     "require-dev": {
         "backpack/generators": "^4.0",

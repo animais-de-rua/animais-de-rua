@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -33,5 +34,36 @@ class AppServiceProvider extends ServiceProvider
         \GemaDigital\Macros\RequestMacros::register();
         \GemaDigital\Macros\BuilderMacros::register();
         \GemaDigital\Macros\DBMacros::register();
+
+        Blade::directive('svg', function ($arguments) {
+            // Parse the passed arguments: path, class, style
+            [$path, $class, $style] = array_pad(explode(',', trim($arguments.',,', '() ')), 2, '');
+            $path = trim($path, "' ");
+            $class = trim($class, "' ");
+            $style = trim($style, "' ");
+
+            // Load the SVG file
+            $svgPath = public_path($path);
+
+            if (! file_exists($svgPath)) {
+                return '';  // Return an empty string if the file doesn't exist
+            }
+
+            $svg = new \DOMDocument;
+            $svg->load($svgPath);
+            $svgElement = $svg->documentElement;
+
+            // Add the class and style attributes if they are provided
+            if ($class) {
+                $svgElement->setAttribute('class', $class);
+            }
+
+            if ($style) {
+                $svgElement->setAttribute('style', $style);
+            }
+
+            // Return the modified SVG XML
+            return $svg->saveXML($svgElement);
+        });
     }
 }

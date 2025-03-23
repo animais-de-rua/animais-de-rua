@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\CrudTrait;
-use Backpack\CRUD\ModelTraits\SpatieTranslatable\HasTranslations;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Spatie\Translatable\HasTranslations;
 
 class Partner extends Model
 {
@@ -25,7 +27,7 @@ class Partner extends Model
 
     // protected $hidden = [];
     // protected $dates = [];
-    protected $translatable = ['benefit'];
+    protected array $translatable = ['benefit'];
 
     /*
     |--------------------------------------------------------------------------
@@ -39,19 +41,19 @@ class Partner extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function territories()
+    public function territories(): BelongsToMany
     {
-        return $this->belongsToMany('App\Models\Territory', 'partners_territories', 'partner_id', 'territory_id');
+        return $this->belongsToMany(Territory::class, 'partners_territories', 'partner_id', 'territory_id');
     }
 
-    public function categories()
+    public function categories(): BelongsToMany
     {
-        return $this->belongsToMany('App\Models\PartnerCategory', 'partners_categories', 'partner_id', 'partner_category_list_id');
+        return $this->belongsToMany(PartnerCategory::class, 'partners_categories', 'partner_id', 'partner_category_list_id');
     }
 
-    public function user()
+    public function user(): BelongsTo
     {
-        return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     /*
@@ -62,7 +64,7 @@ class Partner extends Model
 
     /*
     |--------------------------------------------------------------------------
-    | ACCESORS
+    | ACCESSORS
     |--------------------------------------------------------------------------
     */
 
@@ -71,12 +73,12 @@ class Partner extends Model
         return $this->getLink($this->user, is('admin'));
     }
 
-    public function getCategoryListAttribute()
+    public function getCategoryListAttribute(): string
     {
         return implode(', ', $this->categories()->pluck('name')->toArray());
     }
 
-    public function getTerritoryListAttribute()
+    public function getTerritoryListAttribute(): string
     {
         return implode(', ', $this->territories()->pluck('name')->toArray());
     }
@@ -87,7 +89,7 @@ class Partner extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function setImageAttribute($value)
+    public function setImageAttribute($value): void
     {
         $filename = $this->attributes['name'];
         $this->saveImage($this, $value, 'partners/', $filename, 192, 82);

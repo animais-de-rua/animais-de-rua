@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\CrudTrait;
-use Backpack\CRUD\ModelTraits\SpatieTranslatable\HasTranslations;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Spatie\Translatable\HasTranslations;
 
 class PartnerCategory extends Model
 {
@@ -25,7 +26,7 @@ class PartnerCategory extends Model
     protected $hidden = ['pivot'];
 
     // protected $dates = [];
-    protected $translatable = ['name', 'description'];
+    protected array $translatable = ['name', 'description'];
 
     /*
     |--------------------------------------------------------------------------
@@ -39,9 +40,9 @@ class PartnerCategory extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function partners()
+    public function partners(): HasManyThrough
     {
-        return $this->hasManyThrough('App\Models\Partner', 'partners_categories', 'partner_category_list_id');
+        return $this->hasManyThrough(Partner::class, 'partners_categories', 'partner_category_list_id');
     }
 
     /*
@@ -52,7 +53,7 @@ class PartnerCategory extends Model
 
     /*
     |--------------------------------------------------------------------------
-    | ACCESORS
+    | ACCESSORS
     |--------------------------------------------------------------------------
     */
 

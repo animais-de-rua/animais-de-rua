@@ -1,0 +1,72 @@
+@font-face {
+  font-family: 'icomoon';
+  src:
+    url('fonts/icomoon.woff2?v3lrka') format('woff2'),
+    url('fonts/icomoon.woff?v3lrka') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-headquarter:before {
+  content: "\e905";
+}
+.icon-protocol:before {
+  content: "\e900";
+}
+.icon-vet:before {
+  content: "\e901";
+}
+.icon-animal:before {
+  content: "\e902";
+}
+.icon-treatment:before {
+  content: "\e903";
+}
+.icon-process:before {
+  content: "\e90e";
+}
+.icon-graph:before {
+  content: "\e904";
+}
+.icon-donation:before {
+  content: "\e906";
+}
+.icon-feather:before {
+  content: "\e907";
+}
+.icon-adoption:before {
+  content: "\e908";
+}
+.icon-treatment-type:before {
+  content: "\e909";
+}
+.icon-godfather:before {
+  content: "\e90b";
+}
+.icon-category:before {
+  content: "\e920";
+}
+.icon-partner:before {
+  content: "\e939";
+}
+.icon-card:before {
+  content: "\e93f";
+}
+.icon-territory:before {
+  content: "\e947";
+}
+.icon-appointment:before {
+  content: "\e94e";
+}

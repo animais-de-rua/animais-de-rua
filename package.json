@@ -12,14 +12,25 @@
     "dependencies": {
         "@picocss/pico": "^2.0.6",
         "boring-avatars-svg": "^1.0.4",
-        "cantil": "^1.1.4"
+        "cantil": "^1.1.4",
+        "milligram": "^1.4.1"
     },
     "devDependencies": {
         "eslint": "^9.3.0",
         "laravel-mix": "^6.0.49",
         "resolve-url-loader": "^5.0.0",
-        "sass": "^1.43.3",
-        "sass-loader": "^16.0.4",
+        "sass": "^1.85.1",
+        "sass-loader": "^16.0.5",
         "sass-resources-loader": "^2.1.1"
-    }
+    },
+    "name": "app",
+    "version": "1.0.0",
+    "description": "<a href=\"https://packagist.org/packages/gemadigital/framework\" title=\"Latest Version on Packagist\"><img src=\"https://img.shields.io/packagist/v/gemadigital/framework.svg?style=flat-square\"></a> <a href=\"https://packagist.org/packages/gemadigital/framework\" title=\"Total Downloads\"><img src=\"https://img.shields.io/packagist/dt/gemadigital/framework.svg?style=flat-square\"></a> <a href=\"https://github.com/the-whole-fruit/manifesto\"><img src=\"https://img.shields.io/badge/writing%20standard-the%20whole%20fruit-brightgreen\" title=\"We believe writing good code is not only about writing good code. It’s also about the words around it. We aims to deliver both: code and words.\"></a>",
+    "main": "webpack.mix.js",
+    "directories": {
+        "test": "tests"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC"
 }
