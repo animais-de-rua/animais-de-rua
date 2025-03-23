@@ -6,6 +6,9 @@ use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Database\Factories\StoreProductFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+/**
+ * @property int $id
+ */
 class StoreProduct extends Model
 {
     use CrudTrait;

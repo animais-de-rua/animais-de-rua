@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\CrudTrait;
-use Backpack\CRUD\ModelTraits\SpatieTranslatable\HasTranslations;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\Translatable\HasTranslations;
 
 class TreatmentType extends Model
 {
@@ -25,7 +26,7 @@ class TreatmentType extends Model
 
     // protected $hidden = [];
     // protected $dates = [];
-    protected $translatable = ['name'];
+    protected array $translatable = ['name'];
 
     /*
     |--------------------------------------------------------------------------
@@ -39,9 +40,9 @@ class TreatmentType extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function treatments()
+    public function treatments(): HasMany
     {
-        return $this->hasMany('App\Models\Treatment', 'treatment_type_id');
+        return $this->hasMany(Treatment::class, 'treatment_type_id');
     }
 
     /*
@@ -52,25 +53,25 @@ class TreatmentType extends Model
 
     /*
     |--------------------------------------------------------------------------
-    | ACCESORS
+    | ACCESSORS
     |--------------------------------------------------------------------------
     */
 
-    public function getTotalExpensesValue()
+    public function getTotalExpensesValue(): string
     {
         $expenses = $this->total_expenses ?: data_get_first($this, 'treatments', 'total_expenses', 0);
 
         return $expenses != 0 ? $expenses.'€' : '-';
     }
 
-    public function getTotalOperationsValue()
+    public function getTotalOperationsValue(): string
     {
         $operations = $this->total_operations ?: data_get_first($this, 'treatments', 'total_operations', 0);
 
         return $operations != 0 ? $operations : '-';
     }
 
-    public function getOperationsAverageValue()
+    public function getOperationsAverageValue(): string
     {
         $average = $this->average ?: data_get_first($this, 'treatments', 'average', 0);
 
@@ -83,7 +84,7 @@ class TreatmentType extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function setOperationTimeAttribute($value)
+    public function setOperationTimeAttribute($value): void
     {
         $parts = explode(':', $value);
         if (count($parts) >= 2) {
@@ -92,7 +93,7 @@ class TreatmentType extends Model
 
     }
 
-    public function getOperationTimeAttribute($value)
+    public function getOperationTimeAttribute($value): string
     {
         return sprintf('%02d:%02d', floor($value / 60), $value % 60);
     }

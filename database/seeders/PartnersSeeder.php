@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Partner;
+use App\Models\PartnerCategory;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -10,15 +12,13 @@ class PartnersSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
-        DB::table('partners_categories')->truncate();
+        PartnerCategory::query()->truncate();
         DB::table('partners_territories')->truncate();
         DB::table('partner_category_list')->truncate();
-        DB::table('partners')->truncate();
+        Partner::query()->truncate();
 
         $date = Carbon::now();
 
@@ -282,8 +282,7 @@ class PartnersSeeder extends Seeder
                 'image' => 'partners/joanaribeiro.jpg',
                 'email' => 'designer@joanaribeirojoalharia.pt',
                 'phone1' => '+351 917 763 665',
-                'address' => 'Stand - NorteShopping - 1.º Piso',
-                'address' => 'Em frente à H&M',
+                'address' => 'Stand - NorteShopping - 1.º Piso, Em frente à H&M',
                 'url' => 'http://www.joanaribeirojoalharia.pt/',
                 'benefit' => '5% (em compras no stand)',
             ],

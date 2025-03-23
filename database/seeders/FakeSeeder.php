@@ -64,21 +64,32 @@ class FakeSeeder extends Seeder
         User::factory(24)->create()->each(function ($user) use ($permissions, $headquarters_count) {
             // 66% change to be a volunteer
             if (rand(0, 2)) {
-                $user->roles()->save(Role::query()->where('id', 2)->first());
+                $role = Role::query()->where('id', 2)->first();
+                if ($role) {
+                    $user->roles()->save($role);
+                }
 
                 // Permission
                 shuffle($permissions);
 
-                $user->permissions()->save(Permission::query()->where('id', 1)->first());
-                if (rand(0, 1)) {
+                $permission1 = Permission::query()->where('id', 1)->first();
+                if ($permission1) {
+                    $user->permissions()->save($permission1);
+                }if (rand(0, 1)) {
                     // 50% change to have extra permissions
-                    $user->permissions()->save(Permission::query()->where('id', 2)->first());
+                    $permission2 = Permission::query()->where('id', 2)->first();
+                    if ($permission2) {
+                        $user->permissions()->save($permission2);
+                    }
                 }
             }
 
             // 33% change to be a FAT
             if (! rand(0, 2)) {
-                $user->roles()->save(Role::query()->where('id', 3)->first());
+                $role = Role::query()->where('id', 3)->first();
+                if ($role) {
+                    $user->roles()->save($role);
+                }
             }
 
             // Randomly assign headquarters
@@ -137,7 +148,8 @@ class FakeSeeder extends Seeder
 
         $this->log('Store Orders');
         StoreOrder::factory(80)->create()->each(function ($order) {
-            $products = StoreProduct::query()->inRandomOrder()->get();
+            /** @var array<StoreProduct> $products */
+            $products = StoreProduct::query()->inRandomOrder()->get()->all();
             for ($i = 0; $i < rand(1, 5); $i++) {
                 $order->products()->attach([$products[$i]->id => ['quantity' => rand(1, 3)]]);
             }
@@ -151,7 +163,7 @@ class FakeSeeder extends Seeder
         $this->log('Store Transactions');
         StoreTransaction::factory(30)->create();
 
-        // Supliers
+        // Suppliers
         $this->log('Suppliers');
         Supplier::factory(30)->create();
 
@@ -160,7 +172,7 @@ class FakeSeeder extends Seeder
         Voucher::factory(30)->create();
     }
 
-    public function log($entity): void
+    public function log(string $entity): void
     {
         echo "Seeding: Fake $entity\n";
     }

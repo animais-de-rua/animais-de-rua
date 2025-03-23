@@ -1,6 +1,6 @@
 <?php
 
-use App\Helpers\EnumHelper;
+use App\Enums\Appointment\StatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -9,10 +9,8 @@ class CreateAppointmentsTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('appointments', function (Blueprint $table) {
             $table->increments('id');
@@ -31,7 +29,7 @@ class CreateAppointmentsTable extends Migration
             $table->text('notes_contact')->nullable();
             $table->text('notes_godfather')->nullable();
             $table->text('notes_info')->nullable();
-            $table->enum('status', EnumHelper::values('appointment.status'))->default('approving');
+            $table->enum('status', StatusEnum::values())->default(StatusEnum::APPROVING->value);
 
             $table->index(['user_id']);
             $table->foreign('user_id')
@@ -63,10 +61,8 @@ class CreateAppointmentsTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('appointments');
     }

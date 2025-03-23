@@ -1,6 +1,7 @@
 <?php
 
-use App\Helpers\EnumHelper;
+use App\Enums\Process\StatusEnum;
+use App\Enums\Veterinary\SpeciesEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -9,10 +10,8 @@ class CreateProcessesTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('processes', function (Blueprint $table) {
             $table->increments('id');
@@ -25,11 +24,11 @@ class CreateProcessesTable extends Migration
             $table->string('territory_id', 6)->nullable();
             $table->integer('headquarter_id')->unsigned()->nullable();
             $table->integer('user_id')->unsigned()->nullable();
-            $table->enum('specie', EnumHelper::values('process.specie'))->default('dog');
+            $table->enum('specie', SpeciesEnum::values())->default(SpeciesEnum::DOG->value);
             $table->integer('amount_males')->unsigned()->default(0);
             $table->integer('amount_females')->unsigned()->default(0);
             $table->integer('amount_other')->unsigned()->default(0);
-            $table->enum('status', EnumHelper::values('process.status'))->default('approving');
+            $table->enum('status', StatusEnum::values())->default(StatusEnum::APPROVING->value);
             $table->boolean('urgent')->default(0);
             $table->text('history')->nullable();
             $table->text('notes')->nullable();
@@ -61,10 +60,8 @@ class CreateProcessesTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('processes');
     }

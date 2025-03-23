@@ -1,6 +1,6 @@
 <?php
 
-use App\Helpers\EnumHelper;
+use App\Enums\Treatment\StatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -9,10 +9,8 @@ class CreateTreatmentsTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('treatment_types', function (Blueprint $table) {
             $table->increments('id');
@@ -30,7 +28,7 @@ class CreateTreatmentsTable extends Migration
             $table->integer('affected_animals')->unsigned()->default(1);
             $table->integer('affected_animals_new')->unsigned()->default(0);
             $table->decimal('expense', 8, 2)->nullable()->unsigned()->default(0);
-            $table->enum('status', EnumHelper::values('treatment.status'))->default('approving');
+            $table->enum('status', StatusEnum::values())->default(StatusEnum::APPROVING);
             $table->date('date');
             $table->text('notes')->nullable();
             $table->timestamps();
@@ -63,10 +61,8 @@ class CreateTreatmentsTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('treatments');
         Schema::dropIfExists('treatment_types');

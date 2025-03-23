@@ -1,6 +1,6 @@
 <?php
 
-use App\Helpers\EnumHelper;
+use App\Enums\General\FriendCardModalitiesEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,7 +20,7 @@ class CreateFriendCardTable extends Migration
             $table->text('description');
             $table->string('paypal_code', 255);
             $table->integer('amount')->unsigned()->default(0);
-            $table->enum('type', EnumHelper::values('general.friend_card_modalities'));
+            $table->enum('type', FriendCardModalitiesEnum::values());
             $table->timestamps();
         });
 

@@ -1,6 +1,6 @@
 <?php
 
-use App\Helpers\EnumHelper;
+use App\Enums\Store\VouchersEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -9,10 +9,8 @@ class CreateVouchersTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('vouchers', function (Blueprint $table) {
             $table->increments('id');
@@ -22,7 +20,7 @@ class CreateVouchersTable extends Migration
             $table->string('client_name', 255)->nullable();
             $table->string('client_email', 255)->nullable();
             $table->date('expiration')->nullable();
-            $table->enum('status', EnumHelper::values('store.voucher'))->default('unused');
+            $table->enum('status', VouchersEnum::values())->default(VouchersEnum::UNUSED->value);
 
             $table->timestamps();
         });
@@ -30,10 +28,8 @@ class CreateVouchersTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('vouchers');
     }

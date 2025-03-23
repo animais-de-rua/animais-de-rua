@@ -1,6 +1,7 @@
 <?php
 
-use App\Helpers\EnumHelper;
+use App\Enums\Store\OrdersEnum;
+use App\Enums\Store\PaymentsEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -33,11 +34,11 @@ class CreateStoreManagementTables extends Migration
             $table->integer('user_id')->nullable()->unsigned();
             $table->date('shipment_date')->nullable();
             $table->decimal('expense', 8, 2)->unsigned()->default(0);
-            $table->enum('payment', EnumHelper::values('store.payment'))->default('bank_transfer');
+            $table->enum('payment', PaymentsEnum::values())->default(PaymentsEnum::BANK_TRANSFER->value);
             $table->text('receipt')->nullable();
             $table->text('invoice')->nullable();
             $table->text('notes')->nullable();
-            $table->enum('status', EnumHelper::values('store.order'))->default('waiting');
+            $table->enum('status', OrdersEnum::values())->default(OrdersEnum::WAITING);
             $table->timestamps();
 
             $table->index(['user_id']);
@@ -72,10 +73,8 @@ class CreateStoreManagementTables extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('store_orders_products');
         Schema::dropIfExists('store_orders');

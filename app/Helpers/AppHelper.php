@@ -1,21 +1,24 @@
 <?php
 
+use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Session;
+
 if (! function_exists('api')) {
-    function api()
+    function api(): Application
     {
         return app('App\Http\Controllers\Admin\APICrudController');
     }
 }
 
 if (! function_exists('collect_only')) {
-    function collect_only($model, $attributes)
+    function collect_only($model, $attributes): array
     {
         return collect($model->toArray())->only($attributes)->all();
     }
 }
 
 if (! function_exists('data_get_first')) {
-    function data_get_first($target, $key, $attribute, $default = 0)
+    function data_get_first($target, $key, $attribute, $default = 0): mixed
     {
         $value = data_get($target, $key);
 
@@ -24,14 +27,14 @@ if (! function_exists('data_get_first')) {
 }
 
 if (! function_exists('hasRole')) {
-    function hasRole($role)
+    function hasRole($role): bool
     {
         return backpack_user() && backpack_user()->hasRole($role);
     }
 }
 
 if (! function_exists('hasPermission')) {
-    function hasPermission($permissions)
+    function hasPermission($permissions): bool
     {
         if (backpack_user()) {
             if (! is_array($permissions)) {
@@ -50,21 +53,21 @@ if (! function_exists('hasPermission')) {
 }
 
 if (! function_exists('admin')) {
-    function admin()
+    function admin(): bool
     {
         return backpack_user() && backpack_user()->hasRole('admin');
     }
 }
 
 if (! function_exists('volunteer')) {
-    function volunteer()
+    function volunteer(): bool
     {
         return backpack_user() && backpack_user()->hasRole('volunteer');
     }
 }
 
 if (! function_exists('restrictTo')) {
-    function restrictTo($roles, $permissions = null)
+    function restrictTo($roles, $permissions = null): ?bool
     {
         $session_role = Session::get('role', null);
         $session_permissions = Session::get('permissions', null);

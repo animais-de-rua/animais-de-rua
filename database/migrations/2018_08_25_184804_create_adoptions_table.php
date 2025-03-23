@@ -1,6 +1,7 @@
 <?php
 
-use App\Helpers\EnumHelper;
+use App\Enums\Adoption\StatusEnum;
+use App\Enums\Animal\GendersEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -9,10 +10,8 @@ class CreateAdoptionsTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('adoptions', function (Blueprint $table) {
             $table->increments('id');
@@ -24,7 +23,7 @@ class CreateAdoptionsTable extends Migration
             $table->string('name', 255);
             $table->string('name_after', 255)->nullable();
             $table->integer('age')->unsigned()->default(0);
-            $table->enum('gender', EnumHelper::values('animal.gender'))->nullable();
+            $table->enum('gender', GendersEnum::values())->nullable();
             $table->boolean('sterilized')->default(0);
             $table->boolean('vaccinated')->default(0);
             $table->boolean('processed')->default(0);
@@ -37,7 +36,7 @@ class CreateAdoptionsTable extends Migration
             $table->text('history')->nullable();
             $table->date('adoption_date');
             $table->integer('adopter_id')->unsigned()->nullable();
-            $table->enum('status', EnumHelper::values('adoption.status'))->default('open');
+            $table->enum('status', StatusEnum::values())->default(StatusEnum::OPEN->value);
             $table->timestamps();
 
             $table->index(['process_id']);
@@ -68,10 +67,8 @@ class CreateAdoptionsTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('adoptions');
     }

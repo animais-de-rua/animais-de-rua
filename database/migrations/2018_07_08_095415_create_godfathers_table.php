@@ -1,6 +1,6 @@
 <?php
 
-use App\Helpers\EnumHelper;
+use App\Enums\Donation\TypesEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -9,10 +9,8 @@ class CreateGodfathersTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('godfathers', function (Blueprint $table) {
             $table->increments('id');
@@ -44,7 +42,7 @@ class CreateGodfathersTable extends Migration
             $table->integer('process_id')->nullable()->unsigned();
             $table->integer('user_id')->nullable()->unsigned();
 
-            $table->enum('type', EnumHelper::values('donation.type'));
+            $table->enum('type', TypesEnum::values());
             $table->integer('godfather_id')->nullable()->unsigned();
             $table->integer('headquarter_id')->nullable()->unsigned();
             $table->integer('protocol_id')->nullable()->unsigned();
@@ -91,10 +89,8 @@ class CreateGodfathersTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('donations');
         Schema::dropIfExists('godfathers');
