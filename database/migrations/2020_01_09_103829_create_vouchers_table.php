@@ -13,16 +13,17 @@ class CreateVouchersTable extends Migration
     public function up(): void
     {
         Schema::create('vouchers', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('reference', 255);
             $table->string('voucher', 255)->nullable();
-            $table->decimal('value', 8, 2)->nullable()->unsigned()->default(0);
+            $table->decimal('value', 8, 2)->nullable()->unsigned()->default(null);
+            $table->tinyInteger('percent')->unsigned()->nullable();
             $table->string('client_name', 255)->nullable();
             $table->string('client_email', 255)->nullable();
             $table->date('expiration')->nullable();
             $table->enum('status', VouchersEnum::values())->default(VouchersEnum::UNUSED->value);
-
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

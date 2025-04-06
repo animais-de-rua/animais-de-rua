@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
+use Backpack\Settings\app\Models\Setting;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class SettingsSeeder extends Seeder
 {
@@ -14,13 +14,13 @@ class SettingsSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('settings')->truncate();
+        Setting::truncate();
 
-        $settings = [
+        Setting::insert([
             [
                 'key' => 'form_contact',
-                'name' => 'FormulÃ¡rio de Contacto',
-                'description' => 'EndereÃ§o relativo ao formulÃ¡rio de contacto.',
+                'name' => 'Formulário de Contacto',
+                'description' => 'Endereço relativo ao formulário de contacto.',
                 'value' => 'geral@animaisderua.org',
                 'field' => json_encode([
                     'name' => 'value',
@@ -31,8 +31,8 @@ class SettingsSeeder extends Seeder
             ],
             [
                 'key' => 'form_volunteer',
-                'name' => 'FormulÃ¡rio de Voluntariado',
-                'description' => 'EndereÃ§o relativo ao formulÃ¡rio de voluntariado.',
+                'name' => 'Formulário de Voluntariado',
+                'description' => 'Endereço relativo ao formulário de voluntariado.',
                 'value' => 'voluntarios@animaisderua.org',
                 'field' => json_encode([
                     'name' => 'value',
@@ -43,8 +43,8 @@ class SettingsSeeder extends Seeder
             ],
             [
                 'key' => 'form_training',
-                'name' => 'FormulÃ¡rio de FormaÃ§Ã£o',
-                'description' => 'EndereÃ§o relativo ao formulÃ¡rio de formaÃ§Ã£o.',
+                'name' => 'Formulário de Formação',
+                'description' => 'Endereço relativo ao formulário de formação.',
                 'value' => 'formacaoCED@animaisderua.org',
                 'field' => json_encode([
                     'name' => 'value',
@@ -55,8 +55,8 @@ class SettingsSeeder extends Seeder
             ],
             [
                 'key' => 'form_godfather',
-                'name' => 'FormulÃ¡rio de Apadrinhamento',
-                'description' => 'EndereÃ§o relativo ao formulÃ¡rio de apadrinhamento.',
+                'name' => 'Formulário de Apadrinhamento',
+                'description' => 'Endereço relativo ao formulário de apadrinhamento.',
                 'value' => 'geral@animaisderua.org',
                 'field' => json_encode([
                     'name' => 'value',
@@ -67,8 +67,8 @@ class SettingsSeeder extends Seeder
             ],
             [
                 'key' => 'form_petsitting',
-                'name' => 'FormulÃ¡rio de Petsitting',
-                'description' => 'EndereÃ§o relativo ao formulÃ¡rio de petsitting.',
+                'name' => 'Formulário de Petsitting',
+                'description' => 'Endereço relativo ao formulário de petsitting.',
                 'value' => 'petsitting@animaisderua.org',
                 'field' => json_encode([
                     'name' => 'value',
@@ -80,7 +80,7 @@ class SettingsSeeder extends Seeder
             [
                 'key' => 'base_counter',
                 'name' => 'Contador Base',
-                'description' => 'NÃºmero base para o contador de intervenÃ§Ãµes.',
+                'description' => 'Número base para o contador de intervenções.',
                 'value' => '26000',
                 'field' => json_encode([
                     'name' => 'value',
@@ -101,16 +101,6 @@ class SettingsSeeder extends Seeder
                 ]),
                 'active' => 1,
             ],
-        ];
-
-        foreach ($settings as $index => $setting) {
-            $result = DB::table('settings')->insert($setting);
-
-            if (! $result) {
-                $this->command->info("Insert failed at record $index.");
-
-                return;
-            }
-        }
+        ]);
     }
 }

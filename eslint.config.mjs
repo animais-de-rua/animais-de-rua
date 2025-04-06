@@ -1,4 +1,5 @@
 import js from '@eslint/js';
+import { browser, node } from 'globals';
 
 export default [
   js.configs.recommended,
@@ -7,6 +8,12 @@ export default [
       'src/**/*',
       'eslint.config.mjs',
     ],
+    languageOptions: {
+      'globals': {
+        ...browser,
+        ...node,
+      },
+    },
     rules: {
       'comma-dangle': [
         'error',

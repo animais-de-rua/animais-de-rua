@@ -11,9 +11,15 @@ use Illuminate\Support\Str;
  */
 class UserFactory extends Factory
 {
+    /**
+     * The name of the factory's corresponding model.
+     */
     protected $model = User::class;
 
-    public function definition(): array
+    /**
+     * Define the model's default state.
+     */
+    public function definition()
     {
         return [
             'name' => $this->faker->name(),

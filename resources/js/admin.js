@@ -1,17 +1,19 @@
-import { onDomReady } from 'cantil';
+import { onDomReady, queryAll } from 'cantil';
 import BoringAvatar from 'boring-avatars-svg';
 
-window.app = {
+const app = {
   init: () => {
     // boring avatars
-    queryAll('.boring-avatars')
-      .forEach(e => e.innerHTML = BoringAvatar({
+    for (const e of queryAll('.boring-avatars')) {
+      e.innerHTML = BoringAvatar({
         variant: e.dataset.variant ?? 'beam',
         colors: e.dataset.colors.split(','),
         size: e.dataset.size ?? 35,
         name: e.dataset.name,
-      }));
+      });
+    }
   },
 };
 
+window.app = app;
 onDomReady().then(app.init);

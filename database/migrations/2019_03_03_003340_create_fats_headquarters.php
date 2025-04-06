@@ -14,20 +14,8 @@ class CreateFatsHeadquarters extends Migration
     public function up()
     {
         Schema::create('fats_headquarters', function (Blueprint $table) {
-            $table->integer('fat_id')->unsigned();
-            $table->integer('headquarter_id')->unsigned();
-
-            $table->index(['fat_id']);
-            $table->foreign('fat_id')
-                ->references('id')
-                ->on('fats')
-                ->onDelete('cascade');
-
-            $table->index(['headquarter_id']);
-            $table->foreign('headquarter_id')
-                ->references('id')
-                ->on('headquarters')
-                ->onDelete('cascade');
+            $table->foreignId('fat_id')->constrained();
+            $table->foreignId('headquarter_id')->constrained();
 
             $table->primary(['fat_id', 'headquarter_id']);
         });

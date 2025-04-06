@@ -14,16 +14,17 @@ class CreateAdoptionsTable extends Migration
     public function up(): void
     {
         Schema::create('adoptions', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('process_id')->nullable()->unsigned();
-            $table->integer('user_id')->nullable()->unsigned();
-            $table->integer('fat_id')->nullable()->unsigned();
+            $table->id();
+            $table->foreignId('process_id')->nullable()->constrained();
+            $table->foreignId('user_id')->nullable()->constrained();
+            $table->foreignId('fat_id')->nullable()->constrained();
 
             // Animal
             $table->string('name', 255);
             $table->string('name_after', 255)->nullable();
             $table->integer('age')->unsigned()->default(0);
             $table->enum('gender', GendersEnum::values())->nullable();
+            $table->string('microchip')->nullable();
             $table->boolean('sterilized')->default(0);
             $table->boolean('vaccinated')->default(0);
             $table->boolean('processed')->default(0);
@@ -35,33 +36,10 @@ class CreateAdoptionsTable extends Migration
             $table->text('features')->nullable();
             $table->text('history')->nullable();
             $table->date('adoption_date');
-            $table->integer('adopter_id')->unsigned()->nullable();
+            $table->foreignId('adopter_id')->nullable()->constrained();
             $table->enum('status', StatusEnum::values())->default(StatusEnum::OPEN->value);
             $table->timestamps();
-
-            $table->index(['process_id']);
-            $table->foreign('process_id')
-                ->references('id')
-                ->on('processes')
-                ->onDelete('set null');
-
-            $table->index(['user_id']);
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('set null');
-
-            $table->index(['fat_id']);
-            $table->foreign('fat_id')
-                ->references('id')
-                ->on('fats')
-                ->onDelete('set null');
-
-            $table->index(['adopter_id']);
-            $table->foreign('adopter_id')
-                ->references('id')
-                ->on('adopters')
-                ->onDelete('set null');
+            $table->softDeletes();
         });
     }
 

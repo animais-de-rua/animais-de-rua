@@ -13,10 +13,10 @@ return [
     |
     */
 
-    'password' => 'Passwords devem ter pelo menos seis caracteres e corresponder ao pedido.',
-    'reset' => 'A tua password foi redefinida!',
-    'sent' => 'Foi enviado por email um link para redefinir a password!',
-    'token' => 'O token para redefenir a password não é válido.',
-    'user' => 'Não foi encontrado nenhum utilizador com esse endereço de email.',
+    'reset' => 'A palavra-passe foi redefinida!',
+    'sent' => 'O lembrete para a palavra-passe foi enviado!',
+    'throttled' => 'Por favor aguarde, antes de tentar novamente.',
+    'token' => 'Este código de recuperação da palavra-passe é inválido.',
+    'user' => 'Não existe nenhum utilizador com o e-mail indicado.',
 
 ];

@@ -14,16 +14,15 @@ class CreateProcessesTable extends Migration
     public function up(): void
     {
         Schema::create('processes', function (Blueprint $table) {
-            $table->increments('id');
-
+            $table->id();
             $table->string('name', 255);
             $table->string('contact', 255)->nullable();
             $table->string('phone')->nullable();
             $table->string('email', 127)->nullable();
             $table->string('address', 255)->nullable();
-            $table->string('territory_id', 6)->nullable();
-            $table->integer('headquarter_id')->unsigned()->nullable();
-            $table->integer('user_id')->unsigned()->nullable();
+            $table->foreignTerritoryId('territory_id')->nullable();
+            $table->foreignId('headquarter_id')->nullable()->constrained();
+            $table->foreignId('user_id')->nullable()->constrained();
             $table->enum('specie', SpeciesEnum::values())->default(SpeciesEnum::DOG->value);
             $table->integer('amount_males')->unsigned()->default(0);
             $table->integer('amount_females')->unsigned()->default(0);
@@ -35,26 +34,8 @@ class CreateProcessesTable extends Migration
             $table->text('latlong')->nullable();
             $table->text('images')->nullable();
             $table->boolean('contacted')->default(0);
-
-            $table->index(['headquarter_id']);
-            $table->foreign('headquarter_id')
-                ->references('id')
-                ->on('headquarters')
-                ->onDelete('set null');
-
-            $table->index(['territory_id']);
-            $table->foreign('territory_id')
-                ->references('id')
-                ->on('territories')
-                ->onDelete('set null');
-
-            $table->index(['user_id']);
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('set null');
-
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

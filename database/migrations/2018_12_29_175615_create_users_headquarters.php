@@ -14,20 +14,8 @@ class CreateUsersHeadquarters extends Migration
     public function up()
     {
         Schema::create('users_headquarters', function (Blueprint $table) {
-            $table->integer('user_id')->unsigned();
-            $table->integer('headquarter_id')->unsigned();
-
-            $table->index(['user_id']);
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
-
-            $table->index(['headquarter_id']);
-            $table->foreign('headquarter_id')
-                ->references('id')
-                ->on('headquarters')
-                ->onDelete('cascade');
+            $table->foreignId('user_id')->constrained();
+            $table->foreignId('headquarter_id')->constrained();
 
             $table->primary(['user_id', 'headquarter_id']);
         });

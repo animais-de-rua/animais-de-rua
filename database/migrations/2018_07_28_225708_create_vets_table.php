@@ -13,7 +13,7 @@ class CreateVetsTable extends Migration
     public function up(): void
     {
         Schema::create('vets', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('name', 255);
             $table->string('email', 127)->nullable()->unique();
             $table->string('phone', 255)->nullable();
@@ -22,6 +22,7 @@ class CreateVetsTable extends Migration
             $table->string('latlong', 255)->nullable();
             $table->enum('status', StatusEnum::values())->default(StatusEnum::ACTIVE->value);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

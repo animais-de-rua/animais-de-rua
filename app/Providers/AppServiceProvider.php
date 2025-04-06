@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use DOMDocument;
-use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -36,7 +35,7 @@ class AppServiceProvider extends ServiceProvider
         \GemaDigital\Macros\BuilderMacros::register();
         \GemaDigital\Macros\DBMacros::register();
 
-        Blade::directive('svg', function ($arguments) {
+        \Illuminate\Support\Facades\Blade::directive('svg', function ($arguments) {
             // Parse the passed arguments: path, class, style
             [$path, $class, $style] = array_pad(explode(',', trim($arguments.',,', '() ')), 2, '');
             $path = trim($path, "' ");
@@ -65,6 +64,17 @@ class AppServiceProvider extends ServiceProvider
 
             // Return the modified SVG XML
             return $svg->saveXML($svgElement);
+        });
+
+        \Illuminate\Database\Schema\Blueprint::macro('foreignTerritoryId', function (string $column): \Illuminate\Database\Schema\ColumnDefinition {
+            $columnDefinition = $this->string($column, 6);
+
+            $this->foreign($column)
+                ->references('id')
+                ->on('territories')
+                ->onDelete('cascade');
+
+            return $columnDefinition;
         });
     }
 }

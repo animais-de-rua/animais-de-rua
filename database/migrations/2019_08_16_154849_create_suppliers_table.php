@@ -13,26 +13,15 @@ class CreateSuppliersTable extends Migration
     public function up(): void
     {
         Schema::create('suppliers', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('reference', 255);
-            $table->integer('store_order_id')->nullable()->unsigned();
-            $table->integer('store_product_id')->nullable()->unsigned();
+            $table->foreignId('store_order_id')->nullable()->constrained();
+            $table->foreignId('store_product_id')->nullable()->constrained();
             $table->text('invoice')->nullable();
             $table->text('notes')->nullable();
             $table->enum('status', SuppliersEnum::values())->default(SuppliersEnum::WAITING_PAYMENT->value);
             $table->timestamps();
-
-            $table->index(['store_product_id']);
-            $table->foreign('store_product_id')
-                ->references('id')
-                ->on('store_products')
-                ->onDelete('set null');
-
-            $table->index(['store_order_id']);
-            $table->foreign('store_order_id')
-                ->references('id')
-                ->on('store_orders')
-                ->onDelete('set null');
+            $table->softDeletes();
         });
     }
 

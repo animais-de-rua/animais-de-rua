@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Schema;
 class DatabaseSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Seed the application's database.
      *
      * @return void
      */
@@ -29,8 +29,17 @@ class DatabaseSeeder extends Seeder
             CampaignsSeeder::class,
             SponsorsSeeder::class,
             SettingsSeeder::class,
-            FakeSeeder::class,
         ]);
+
+        // Faker seeder
+        if ($this->command->confirm('Run the fake seeder?')) {
+            $this->call(FakeSeeder::class);
+        }
+
+        // User seeder
+        if ($this->command->confirm('Run the user seeder?')) {
+            $this->call(UsersSeeder::class);
+        }
 
         Schema::enableForeignKeyConstraints();
     }

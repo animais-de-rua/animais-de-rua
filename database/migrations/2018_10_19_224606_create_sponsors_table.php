@@ -14,7 +14,7 @@ class CreateSponsorsTable extends Migration
     public function up()
     {
         Schema::create('sponsors', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->text('name');
             $table->text('url');
             $table->string('image', 255)->nullable();
@@ -23,6 +23,7 @@ class CreateSponsorsTable extends Migration
             $table->integer('rgt')->unsigned()->nullable();
             $table->integer('depth')->unsigned()->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -16,22 +16,24 @@ class CreateStoreManagementTables extends Migration
     public function up()
     {
         Schema::create('store_products', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('name', 255);
+            $table->tinyInteger('vat')->unsigned()->nullable();
             $table->decimal('price', 8, 2)->unsigned()->default(0);
             $table->decimal('price_no_vat', 8, 2)->unsigned()->default(0);
             $table->decimal('expense', 8, 2)->nullable()->unsigned()->default(0);
             $table->text('notes')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('store_orders', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('reference', 255);
             $table->text('cart');
             $table->text('recipient');
             $table->text('address');
-            $table->integer('user_id')->nullable()->unsigned();
+            $table->foreignId('user_id')->nullable()->constrained();
             $table->date('shipment_date')->nullable();
             $table->decimal('expense', 8, 2)->unsigned()->default(0);
             $table->enum('payment', PaymentsEnum::values())->default(PaymentsEnum::BANK_TRANSFER->value);
@@ -40,32 +42,15 @@ class CreateStoreManagementTables extends Migration
             $table->text('notes')->nullable();
             $table->enum('status', OrdersEnum::values())->default(OrdersEnum::WAITING);
             $table->timestamps();
-
-            $table->index(['user_id']);
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('set null');
+            $table->softDeletes();
         });
 
         Schema::create('store_orders_products', function (Blueprint $table) {
-            $table->integer('store_product_id')->nullable()->unsigned();
-            $table->integer('store_order_id')->nullable()->unsigned();
+            $table->foreignId('store_product_id')->nullable()->constrained();
+            $table->foreignId('store_order_id')->nullable()->constrained();
             $table->integer('quantity')->default(1)->unsigned();
             $table->decimal('discount', 8, 2)->unsigned()->default(0);
             $table->decimal('discount_no_vat', 8, 2)->unsigned()->default(0);
-
-            $table->index(['store_product_id']);
-            $table->foreign('store_product_id')
-                ->references('id')
-                ->on('store_products')
-                ->onDelete('set null');
-
-            $table->index(['store_order_id']);
-            $table->foreign('store_order_id')
-                ->references('id')
-                ->on('store_orders')
-                ->onDelete('set null');
 
             $table->unique(['store_product_id', 'store_order_id']);
         });

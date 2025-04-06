@@ -14,8 +14,8 @@
         "backpack/theme-tabler": "^1.0",
         "blade-ui-kit/blade-icons": "^1.8",
         "fakerphp/faker": "^1.14",
-        "gemadigital/framework": "^13.1",
-        "laravel/framework": "^11.1",
+        "gemadigital/framework": "^14.0",
+        "laravel/framework": "^12.0",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^4.0",
@@ -30,8 +30,8 @@
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.0",
         "mockery/mockery": "^1.0",
-        "nunomaduro/collision": "^8.0",
-        "phpunit/phpunit": "^11.1",
+        "nunomaduro/collision": "^8.8",
+        "phpunit/phpunit": "^12.0",
         "rector/rector": "^2.0",
         "spatie/laravel-ignition": "^2.0"
     },
@@ -112,6 +112,7 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "allow-plugins": {
+            "composer/installers": true,
             "composer/package-versions-deprecated": true
         }
     },

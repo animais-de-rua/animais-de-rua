@@ -15,23 +15,22 @@ class CreateFriendCardTable extends Migration
     public function up()
     {
         Schema::create('friend_card_modalities', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->text('name');
             $table->text('description');
             $table->string('paypal_code', 255);
             $table->integer('amount')->unsigned()->default(0);
             $table->enum('type', FriendCardModalitiesEnum::values());
+            $table->tinyInteger('visible')->default(1);
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('friend_card_modality_id')->after('phone')->unsigned()->nullable();
-
-            $table->index(['friend_card_modality_id']);
-            $table->foreign('friend_card_modality_id')
-                ->references('id')
-                ->on('friend_card_modalities')
-                ->onDelete('set null');
+            $table->foreignId('friend_card_modality_id')->after('email')->nullable()->constrained();
+            $table->integer('friend_card_number')->nullable()->unsigned();
+            $table->integer('friend_card_expiry')->nullable()->unsigned();
+            $table->text('address')->nullable();
         });
     }
 
@@ -43,10 +42,11 @@ class CreateFriendCardTable extends Migration
     public function down()
     {
         Schema::table('users', function ($table) {
-            $table->dropForeign('users_friend_card_modality_id_foreign');
-            $table->dropIndex('users_friend_card_modality_id_index');
-
+            $table->dropForeign(['friend_card_modality_id']);
             $table->dropColumn('friend_card_modality_id');
+            $table->dropColumn('friend_card_number');
+            $table->dropColumn('friend_card_expiry');
+            $table->dropColumn('address');
         });
 
         Schema::dropIfExists('friend_card_modalities');

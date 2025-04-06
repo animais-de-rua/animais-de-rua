@@ -13,12 +13,12 @@ class CreateAppointmentsTable extends Migration
     public function up(): void
     {
         Schema::create('appointments', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('process_id')->nullable()->unsigned();
-            $table->integer('user_id')->nullable()->unsigned();
-            $table->integer('vet_id_1')->nullable()->unsigned();
+            $table->id();
+            $table->foreignId('process_id')->nullable()->constrained();
+            $table->foreignId('user_id')->nullable()->constrained();
+            $table->foreignId('vet_id_1')->nullable()->constrained();
             $table->date('date_1')->nullable();
-            $table->integer('vet_id_2')->nullable()->unsigned();
+            $table->foreignId('vet_id_2')->nullable()->constrained();
             $table->date('date_2')->nullable();
             $table->integer('amount_males')->unsigned()->default(0);
             $table->integer('amount_females')->unsigned()->default(0);
@@ -30,32 +30,8 @@ class CreateAppointmentsTable extends Migration
             $table->text('notes_godfather')->nullable();
             $table->text('notes_info')->nullable();
             $table->enum('status', StatusEnum::values())->default(StatusEnum::APPROVING->value);
-
-            $table->index(['user_id']);
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('set null');
-
-            $table->index(['process_id']);
-            $table->foreign('process_id')
-                ->references('id')
-                ->on('processes')
-                ->onDelete('set null');
-
-            $table->index(['vet_id_1']);
-            $table->foreign('vet_id_1')
-                ->references('id')
-                ->on('vets')
-                ->onDelete('set null');
-
-            $table->index(['vet_id_2']);
-            $table->foreign('vet_id_2')
-                ->references('id')
-                ->on('vets')
-                ->onDelete('set null');
-
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

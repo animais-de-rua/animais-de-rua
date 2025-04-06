@@ -14,7 +14,7 @@ class AddPetsittingToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->enum('petsitting_role', ['Dog', 'Cat', 'Both'])->nullable()->after('friend_card_expiry');
+            $table->enum('petsitting_role', ['Dog', 'Cat', 'Both', 'Others'])->nullable()->after('friend_card_expiry');
             $table->string('petsitting_description')->nullable()->after('petsitting_role');
             $table->mediumText('petsitting_image')->nullable()->after('petsitting_description');
         });

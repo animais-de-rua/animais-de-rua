@@ -14,40 +14,24 @@ class CreateStoreStockAndTransactionsTables extends Migration
     public function up()
     {
         Schema::create('store_stock', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('user_id')->nullable()->unsigned();
-            $table->integer('store_product_id')->nullable()->unsigned();
+            $table->id();
+            $table->foreignId('user_id')->nullable()->constrained();
+            $table->foreignId('store_product_id')->nullable()->constrained();
             $table->integer('quantity');
             $table->text('notes')->nullable();
             $table->timestamps();
-
-            $table->index(['user_id']);
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('set null');
-
-            $table->index(['store_product_id']);
-            $table->foreign('store_product_id')
-                ->references('id')
-                ->on('store_products')
-                ->onDelete('set null');
+            $table->softDeletes();
         });
 
         Schema::create('store_transactions', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->text('description')->nullable();
-            $table->integer('user_id')->nullable()->unsigned();
+            $table->foreignId('user_id')->nullable()->constrained();
             $table->decimal('amount', 8, 2)->default(0);
             $table->text('invoice')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();
-
-            $table->index(['user_id']);
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('set null');
+            $table->softDeletes();
         });
     }
 
