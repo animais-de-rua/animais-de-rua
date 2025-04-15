@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\ProtocolRequest;
+use App\Models\Territory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,6 +18,7 @@ class ProtocolRequestFactory extends Factory
         return [
             'council' => $this->faker->city(),
             'name' => $this->faker->name,
+            'territory_id' => Territory::randomOrNew(),
         ];
     }
 }

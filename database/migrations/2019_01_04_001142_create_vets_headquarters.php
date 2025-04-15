@@ -14,8 +14,8 @@ class CreateVetsHeadquarters extends Migration
     public function up()
     {
         Schema::create('vets_headquarters', function (Blueprint $table) {
-            $table->foreignId('vet_id')->constrained();
-            $table->foreignId('headquarter_id')->constrained();
+            $table->foreignId('vet_id')->constrained()->onDelete('cascade');
+            $table->foreignId('headquarter_id')->constrained()->onDelete('cascade');
 
             $table->primary(['vet_id', 'headquarter_id']);
         });

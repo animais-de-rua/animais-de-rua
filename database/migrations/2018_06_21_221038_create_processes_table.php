@@ -21,8 +21,8 @@ class CreateProcessesTable extends Migration
             $table->string('email', 127)->nullable();
             $table->string('address', 255)->nullable();
             $table->foreignTerritoryId('territory_id')->nullable();
-            $table->foreignId('headquarter_id')->nullable()->constrained();
-            $table->foreignId('user_id')->nullable()->constrained();
+            $table->foreignId('headquarter_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
             $table->enum('specie', SpeciesEnum::values())->default(SpeciesEnum::DOG->value);
             $table->integer('amount_males')->unsigned()->default(0);
             $table->integer('amount_females')->unsigned()->default(0);

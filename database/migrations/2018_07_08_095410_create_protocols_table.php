@@ -19,8 +19,8 @@ class CreateProtocolsTable extends Migration
             $table->string('email', 127)->nullable()->unique();
             $table->string('phone', 255)->nullable();
             $table->foreignTerritoryId('territory_id');
-            $table->foreignId('headquarter_id')->nullable()->constrained();
-            $table->foreignId('user_id')->nullable()->constrained();
+            $table->foreignId('headquarter_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
             $table->timestamps();
 
         });
@@ -34,9 +34,9 @@ class CreateProtocolsTable extends Migration
             $table->text('address')->nullable();
             $table->text('description')->nullable();
             $table->foreignTerritoryId('territory_id');
-            $table->foreignId('process_id')->nullable()->constrained();
-            $table->foreignId('protocol_id')->nullable()->constrained();
-            $table->foreignId('user_id')->nullable()->constrained();
+            $table->foreignId('process_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('protocol_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

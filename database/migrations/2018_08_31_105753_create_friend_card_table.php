@@ -27,10 +27,10 @@ class CreateFriendCardTable extends Migration
         });
 
         Schema::table('users', function (Blueprint $table) {
-            $table->foreignId('friend_card_modality_id')->after('email')->nullable()->constrained();
-            $table->integer('friend_card_number')->nullable()->unsigned();
-            $table->integer('friend_card_expiry')->nullable()->unsigned();
-            $table->text('address')->nullable();
+            $table->foreignId('friend_card_modality_id')->after('email')->nullable()->constrained()->onDelete('cascade');
+            $table->integer('friend_card_number')->after('friend_card_modality_id')->nullable()->unsigned();
+            $table->integer('friend_card_expiry')->after('friend_card_number')->nullable()->unsigned();
+            $table->text('address')->after('friend_card_expiry')->nullable();
         });
     }
 

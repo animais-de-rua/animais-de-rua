@@ -22,8 +22,8 @@ class GodfatherFactory extends Factory
             'email' => $this->faker->unique()->safeEmail(),
             'phone' => $this->faker->phoneNumber(),
             'notes' => $this->faker->sentence(),
-            'territory_id' => Territory::factory(),
-            'user_id' => User::factory(),
+            'territory_id' => Territory::randomOrNew(),
+            'user_id' => User::randomOrNew(),
         ];
     }
 }

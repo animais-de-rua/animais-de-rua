@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use App\Models\Headquarter;
+use App\Models\Traits\RandomModelTrait;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -18,6 +21,7 @@ class User extends Authenticatable
     use HasFactory;
     use HasRoles;
     use Notifiable;
+    use RandomModelTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -43,8 +47,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function headquarters()
+    /**
+     * Headquarters the user belongs to.
+     * 
+     * @return BelongsToMany<Headquarter, $this>
+     */
+    public function headquarters(): BelongsToMany
     {
-        return $this->belongsToMany('App\Models\Headquarter', 'users_headquarters', 'user_id', 'headquarter_id');
+        return $this->belongsToMany(Headquarter::class, 'users_headquarters');
     }
 }

@@ -22,10 +22,10 @@ class CreateTreatmentsTable extends Migration
 
         Schema::create('treatments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('appointment_id')->nullable()->constrained();
-            $table->foreignId('treatment_type_id')->nullable()->constrained();
-            $table->foreignId('vet_id')->nullable()->constrained();
-            $table->foreignId('user_id')->nullable()->constrained();
+            $table->foreignId('appointment_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('treatment_type_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('vet_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
             $table->integer('affected_animals')->unsigned()->default(1);
             $table->integer('affected_animals_new')->unsigned()->default(0);
             $table->decimal('expense', 8, 2)->nullable()->unsigned()->default(0);

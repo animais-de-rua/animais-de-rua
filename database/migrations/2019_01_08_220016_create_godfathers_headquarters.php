@@ -14,8 +14,8 @@ class CreateGodfathersHeadquarters extends Migration
     public function up()
     {
         Schema::create('godfathers_headquarters', function (Blueprint $table) {
-            $table->foreignId('godfather_id')->constrained();
-            $table->foreignId('headquarter_id')->constrained();
+            $table->foreignId('godfather_id')->constrained()->onDelete('cascade');
+            $table->foreignId('headquarter_id')->constrained()->onDelete('cascade');
 
             $table->primary(['godfather_id', 'headquarter_id']);
         });

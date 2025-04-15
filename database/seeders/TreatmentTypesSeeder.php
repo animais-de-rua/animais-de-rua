@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\TreatmentType;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class TreatmentTypesSeeder extends Seeder
 {
@@ -14,9 +14,9 @@ class TreatmentTypesSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('treatment_types')->truncate();
+        TreatmentType::truncate();
 
-        DB::table('treatment_types')->insert([
+        TreatmentType::insert([
             ['name' => json_encode([
                 'pt' => 'Alimentação',
                 'en' => 'Feeding',

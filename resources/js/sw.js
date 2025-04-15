@@ -66,7 +66,9 @@ self.onfetch = e => {
     // Update cache if language was changed
     if (e.request.url.match(/\/lang\/[a-z]{2}$/)) {
       caches.open(CACHE).then(cache => {
-        cachePages.forEach(page => cache.delete(page));
+        for (const page of cachePages) {
+          cache.delete(page);
+        }
         cache.addAll(cachePages);
       });
     }

@@ -102,10 +102,10 @@ window.router = {
     });
 
     // Stop propagation links
-    queryAll('.stopPropagation').forEach(elem => {
+    for (const elem of queryAll('.stopPropagation')) {
       elem.classList.remove('stopPropagation');
       elem.addEventListener('click', e => e.stopPropagation());
-    });
+    }
   },
 };
 

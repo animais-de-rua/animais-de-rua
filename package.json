@@ -10,16 +10,16 @@
         "production": "mix --production"
     },
     "dependencies": {
-        "@picocss/pico": "^2.0.6",
+        "@picocss/pico": "^2.1.1",
         "boring-avatars-svg": "^1.0.4",
         "cantil": "^1.1.4",
         "milligram": "^1.4.1"
     },
     "devDependencies": {
-        "eslint": "^9.3.0",
+        "eslint": "^9.24.0",
         "laravel-mix": "^6.0.49",
         "resolve-url-loader": "^5.0.0",
-        "sass": "^1.85.1",
+        "sass": "^1.86.3",
         "sass-loader": "^16.0.5",
         "sass-resources-loader": "^2.1.1"
     },

@@ -20,7 +20,6 @@ class DatabaseSeeder extends Seeder
             TerritoriesSeeder::class,
             LanguagesSeeder::class,
             RolesAndPermissionsSeeder::class,
-            UsersSeeder::class,
             HeadquartersSeeder::class,
             TreatmentTypesSeeder::class,
             FriendCardModalitiesSeeder::class,
@@ -31,14 +30,14 @@ class DatabaseSeeder extends Seeder
             SettingsSeeder::class,
         ]);
 
-        // Faker seeder
-        if ($this->command->confirm('Run the fake seeder?')) {
-            $this->call(FakeSeeder::class);
-        }
-
         // User seeder
         if ($this->command->confirm('Run the user seeder?')) {
             $this->call(UsersSeeder::class);
+        }
+
+        // Faker seeder
+        if ($this->command->confirm('Run the fake seeder?')) {
+            $this->call(FakeSeeder::class);
         }
 
         Schema::enableForeignKeyConstraints();

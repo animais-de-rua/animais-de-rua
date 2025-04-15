@@ -16,7 +16,7 @@ class DonationFactory extends Factory
     public function definition(): array
     {
         return [
-            'process_id' => Process::factory(),
+            'process_id' => Process::randomOrNew(),
             'type' => $this->faker->randomElement(['private', 'headquarter', 'protocol']),
         ];
     }

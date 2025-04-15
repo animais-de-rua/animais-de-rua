@@ -15,8 +15,8 @@ class CreateSuppliersTable extends Migration
         Schema::create('suppliers', function (Blueprint $table) {
             $table->id();
             $table->string('reference', 255);
-            $table->foreignId('store_order_id')->nullable()->constrained();
-            $table->foreignId('store_product_id')->nullable()->constrained();
+            $table->foreignId('store_order_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('store_product_id')->nullable()->constrained()->onDelete('cascade');
             $table->text('invoice')->nullable();
             $table->text('notes')->nullable();
             $table->enum('status', SuppliersEnum::values())->default(SuppliersEnum::WAITING_PAYMENT->value);

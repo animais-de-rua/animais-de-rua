@@ -15,9 +15,9 @@ class CreateAdoptionsTable extends Migration
     {
         Schema::create('adoptions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('process_id')->nullable()->constrained();
-            $table->foreignId('user_id')->nullable()->constrained();
-            $table->foreignId('fat_id')->nullable()->constrained();
+            $table->foreignId('process_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('fat_id')->nullable()->constrained()->onDelete('cascade');
 
             // Animal
             $table->string('name', 255);
@@ -36,7 +36,7 @@ class CreateAdoptionsTable extends Migration
             $table->text('features')->nullable();
             $table->text('history')->nullable();
             $table->date('adoption_date');
-            $table->foreignId('adopter_id')->nullable()->constrained();
+            $table->foreignId('adopter_id')->nullable()->constrained()->onDelete('cascade');
             $table->enum('status', StatusEnum::values())->default(StatusEnum::OPEN->value);
             $table->timestamps();
             $table->softDeletes();

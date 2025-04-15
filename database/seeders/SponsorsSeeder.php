@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Sponsor;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class SponsorsSeeder extends Seeder
 {
@@ -14,9 +14,9 @@ class SponsorsSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('sponsors')->truncate();
+        Sponsor::truncate();
 
-        DB::table('sponsors')->insert([
+        Sponsor::insert([
             [
                 'name' => 'Hostel HUB',
                 'url' => 'https://www.hostelshub.com/',

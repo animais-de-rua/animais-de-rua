@@ -11,7 +11,6 @@ use Rector\CodeQuality\Rector\If_\SimplifyIfReturnBoolRector;
 use Rector\CodeQuality\Rector\Switch_\SingularSwitchToIfRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\Switch_\RemoveDuplicatedCaseInSwitchRector;
-use Rector\Php54\Rector\Array_\LongArrayToShortArrayRector;
 use Rector\Php81\Rector\Array_\FirstClassCallableRector;
 use Rector\Strict\Rector\Empty_\DisallowedEmptyRuleFixerRector;
 use Rector\TypeDeclaration\Rector\ClassMethod\AddVoidReturnTypeWhereNoReturnRector;
@@ -28,12 +27,11 @@ return RectorConfig::configure()
     ->withPreparedSets(
         deadCode: true,
         codeQuality: true,
-        privatization: true
+        privatization: true,
     )
     ->withPhpSets()
     ->withRules([
         AddVoidReturnTypeWhereNoReturnRector::class,
-        LongArrayToShortArrayRector::class,
     ])
     ->withSkip([
         CompactToVariablesRector::class,

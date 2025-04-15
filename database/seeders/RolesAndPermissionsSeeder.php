@@ -21,7 +21,7 @@ class RolesAndPermissionsSeeder extends Seeder
     {
         Role::truncate();
         Permission::truncate();
-        DB::table('role_has_permissions')->truncate();
+        DB::table(config('permission.table_names.role_has_permissions'))->truncate();
 
         $date = Carbon::now();
 
@@ -30,7 +30,6 @@ class RolesAndPermissionsSeeder extends Seeder
             Role::firstOrCreate([
                 'name' => $role,
             ], [
-                'guard_name' => 'backpack',
                 'created_at' => $date,
                 'updated_at' => $date,
             ]);
@@ -41,7 +40,6 @@ class RolesAndPermissionsSeeder extends Seeder
             Permission::firstOrCreate([
                 'name' => $permission,
             ], [
-                'guard_name' => 'backpack',
                 'created_at' => $date,
                 'updated_at' => $date,
             ]);

@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\Page;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class PagesSeeder extends Seeder
 {
@@ -17,12 +16,11 @@ class PagesSeeder extends Seeder
     public function run()
     {
         $date = Carbon::now();
-
         $backups = Page::get();
 
-        DB::table('pages')->truncate();
+        Page::truncate();
 
-        DB::table('pages')->insert([
+        Page::insert([
             [
                 'title' => json_encode([
                     'pt' => 'Animais de Rua',
@@ -151,7 +149,7 @@ class PagesSeeder extends Seeder
 
             if ($page) {
                 $page->extras = $backup->extras;
-                $page->extras_translatable = json_decode($backup->extras_translatable);
+                $page->extras_translatable = json_decode($backup->extras_translatable ?? '');
                 $page->save();
             }
         }

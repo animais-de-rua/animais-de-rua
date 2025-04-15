@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Headquarter;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -15,7 +16,7 @@ class HeadquartersSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('headquarters')->truncate();
+        Headquarter::truncate();
         DB::table('headquarters_territories')->truncate();
 
         $i = 0;
@@ -52,8 +53,13 @@ class HeadquartersSeeder extends Seeder
 
         // Headquarters
         foreach ($headquarters as $headquarter => $territories) {
-            DB::table('headquarters')->insert(['created_at' => $date, 'updated_at' => $date, 'name' => $headquarter]);
             $i++;
+
+            Headquarter::insert([
+                'created_at' => $date, 
+                'updated_at' => $date, 
+                'name' => $headquarter,
+            ]);
 
             // Headquarter Territories
             foreach ($territories as $territory) {

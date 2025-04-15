@@ -32,7 +32,7 @@ class CreatePartnersTable extends Migration
             $table->string('image', 255)->nullable();
             $table->text('promo_code')->nullable();
             $table->boolean('status')->default(1);
-            $table->foreignId('user_id')->nullable()->constrained();
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
             $table->timestamps();
         });
 
@@ -44,14 +44,14 @@ class CreatePartnersTable extends Migration
         });
 
         Schema::create('partners_categories', function (Blueprint $table) {
-            $table->foreignId('partner_id')->constrained();
+            $table->foreignId('partner_id')->constrained()->onDelete('cascade');
             $table->foreignId('partner_category_list_id')->constrained('partner_category_list');
 
             $table->primary(['partner_id', 'partner_category_list_id']);
         });
 
         Schema::create('partners_territories', function (Blueprint $table) {
-            $table->foreignId('partner_id')->constrained();
+            $table->foreignId('partner_id')->constrained()->onDelete('cascade');
             $table->foreignTerritoryId('territory_id');
 
             $table->primary(['partner_id', 'territory_id']);

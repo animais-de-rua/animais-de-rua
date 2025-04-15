@@ -33,7 +33,7 @@ class CreateStoreManagementTables extends Migration
             $table->text('cart');
             $table->text('recipient');
             $table->text('address');
-            $table->foreignId('user_id')->nullable()->constrained();
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
             $table->date('shipment_date')->nullable();
             $table->decimal('expense', 8, 2)->unsigned()->default(0);
             $table->enum('payment', PaymentsEnum::values())->default(PaymentsEnum::BANK_TRANSFER->value);
@@ -46,8 +46,8 @@ class CreateStoreManagementTables extends Migration
         });
 
         Schema::create('store_orders_products', function (Blueprint $table) {
-            $table->foreignId('store_product_id')->nullable()->constrained();
-            $table->foreignId('store_order_id')->nullable()->constrained();
+            $table->foreignId('store_product_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('store_order_id')->nullable()->constrained()->onDelete('cascade');
             $table->integer('quantity')->default(1)->unsigned();
             $table->decimal('discount', 8, 2)->unsigned()->default(0);
             $table->decimal('discount_no_vat', 8, 2)->unsigned()->default(0);

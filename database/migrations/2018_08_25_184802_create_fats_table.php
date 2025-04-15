@@ -19,7 +19,7 @@ class CreateFatsTable extends Migration
             $table->string('email', 127)->nullable();
             $table->string('phone', 255)->nullable();
             $table->foreignTerritoryId('territory_id')->nullable();
-            $table->foreignId('user_id')->nullable()->constrained();
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
             $table->text('notes')->nullable();
             $table->timestamps();
             $table->softDeletes();

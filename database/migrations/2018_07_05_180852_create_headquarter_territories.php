@@ -14,14 +14,14 @@ class CreateHeadquarterTerritories extends Migration
     public function up()
     {
         Schema::create('headquarters_territories', function (Blueprint $table) {
-            $table->foreignId('headquarter_id')->constrained();
+            $table->foreignId('headquarter_id')->constrained()->onDelete('cascade');
             $table->foreignTerritoryId('territory_id');
 
             $table->primary(['headquarter_id', 'territory_id']);
         });
 
         Schema::create('headquarters_territories_range', function (Blueprint $table) {
-            $table->foreignId('headquarter_id')->constrained();
+            $table->foreignId('headquarter_id')->constrained()->onDelete('cascade');
             $table->foreignTerritoryId('territory_id');
 
             $table->primary(['headquarter_id', 'territory_id'], 'headquarters_territories_range_primary');

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Campaign;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -14,9 +15,9 @@ class CampaignsSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('campaigns')->truncate();
+        Campaign::truncate();
 
-        DB::table('campaigns')->insert([
+        Campaign::insert([
             [
                 'name' => json_encode([
                     'pt' => 'Projecto Educativo',

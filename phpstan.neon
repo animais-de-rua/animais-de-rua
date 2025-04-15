@@ -14,9 +14,4 @@ parameters:
     excludePaths:
         - resources/views/vendor/elfinder
 
-        # Delete in case of not using Backpack Pages and Settings 
-        - app\Models\Page.php
-        - database\seeders\PagesSeeder.php
-        - database\seeders\SettingsSeeder.php
-
     level: 8

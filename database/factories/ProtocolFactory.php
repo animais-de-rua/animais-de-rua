@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Protocol;
+use App\Models\Territory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,6 +18,7 @@ class ProtocolFactory extends Factory
         return [
             'name' => $this->faker->name,
             'email' => $this->faker->unique()->safeEmail,
+            'territory_id' => Territory::randomOrNew(),
         ];
     }
 }

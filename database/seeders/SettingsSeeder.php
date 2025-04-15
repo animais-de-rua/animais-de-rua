@@ -19,8 +19,8 @@ class SettingsSeeder extends Seeder
         Setting::insert([
             [
                 'key' => 'form_contact',
-                'name' => 'Formulário de Contacto',
-                'description' => 'Endereço relativo ao formulário de contacto.',
+                'name' => 'Formulï¿½rio de Contacto',
+                'description' => 'Endereï¿½o relativo ao formulï¿½rio de contacto.',
                 'value' => 'geral@animaisderua.org',
                 'field' => json_encode([
                     'name' => 'value',
@@ -31,8 +31,8 @@ class SettingsSeeder extends Seeder
             ],
             [
                 'key' => 'form_volunteer',
-                'name' => 'Formulário de Voluntariado',
-                'description' => 'Endereço relativo ao formulário de voluntariado.',
+                'name' => 'Formulï¿½rio de Voluntariado',
+                'description' => 'Endereï¿½o relativo ao formulï¿½rio de voluntariado.',
                 'value' => 'voluntarios@animaisderua.org',
                 'field' => json_encode([
                     'name' => 'value',
@@ -43,8 +43,8 @@ class SettingsSeeder extends Seeder
             ],
             [
                 'key' => 'form_training',
-                'name' => 'Formulário de Formação',
-                'description' => 'Endereço relativo ao formulário de formação.',
+                'name' => 'Formulï¿½rio de Formaï¿½ï¿½o',
+                'description' => 'Endereï¿½o relativo ao formulï¿½rio de formaï¿½ï¿½o.',
                 'value' => 'formacaoCED@animaisderua.org',
                 'field' => json_encode([
                     'name' => 'value',
@@ -55,8 +55,8 @@ class SettingsSeeder extends Seeder
             ],
             [
                 'key' => 'form_godfather',
-                'name' => 'Formulário de Apadrinhamento',
-                'description' => 'Endereço relativo ao formulário de apadrinhamento.',
+                'name' => 'Formulï¿½rio de Apadrinhamento',
+                'description' => 'Endereï¿½o relativo ao formulï¿½rio de apadrinhamento.',
                 'value' => 'geral@animaisderua.org',
                 'field' => json_encode([
                     'name' => 'value',
@@ -67,8 +67,8 @@ class SettingsSeeder extends Seeder
             ],
             [
                 'key' => 'form_petsitting',
-                'name' => 'Formulário de Petsitting',
-                'description' => 'Endereço relativo ao formulário de petsitting.',
+                'name' => 'Formulï¿½rio de Petsitting',
+                'description' => 'Endereï¿½o relativo ao formulï¿½rio de petsitting.',
                 'value' => 'petsitting@animaisderua.org',
                 'field' => json_encode([
                     'name' => 'value',
@@ -80,7 +80,7 @@ class SettingsSeeder extends Seeder
             [
                 'key' => 'base_counter',
                 'name' => 'Contador Base',
-                'description' => 'Número base para o contador de intervenções.',
+                'description' => 'Nï¿½mero base para o contador de intervenï¿½ï¿½es.',
                 'value' => '26000',
                 'field' => json_encode([
                     'name' => 'value',

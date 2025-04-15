@@ -6,7 +6,6 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
 
 class UsersSeeder extends Seeder
 {
@@ -17,11 +16,9 @@ class UsersSeeder extends Seeder
      */
     public function run()
     {
-        Schema::disableForeignKeyConstraints();
-        DB::table('model_has_roles')->truncate();
-        DB::table('model_has_permissions')->truncate();
+        DB::table(config('permission.table_names.model_has_roles'))->truncate();
+        DB::table(config('permission.table_names.model_has_permissions'))->truncate();
         User::truncate();
-        Schema::enableForeignKeyConstraints();
 
         $i = -1;
         while ($this->command->confirm('Add '.($i++ ? 'an' : 'another').' admin user?')) {
@@ -29,7 +26,7 @@ class UsersSeeder extends Seeder
             $mail = $this->command->ask("{$name}'s email");
             $pass = $this->command->secret("{$name}'s password");
 
-            User::insert([
+            $user = User::insert([
                 'name' => $name,
                 'email' => $mail,
                 'password' => bcrypt($pass),
@@ -38,10 +35,10 @@ class UsersSeeder extends Seeder
             ]);
 
             // Admin Role
-            DB::table('model_has_roles')->insert([
+            DB::table('user_has_roles')->insert([
                 'role_id' => 1,
                 'model_type' => User::class,
-                'model_id' => DB::getPdo()->lastInsertId(),
+                config('permission.column_names.model_morph_key') => DB::getPdo()->lastInsertId(),
             ]);
         }
     }

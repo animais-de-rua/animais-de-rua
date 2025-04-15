@@ -22,7 +22,7 @@ class CreateAdoptersTable extends Migration
             $table->string('zip_code', 255);
             $table->string('id_card', 255);
             $table->foreignTerritoryId('territory_id')->nullable();
-            $table->foreignId('user_id')->nullable()->constrained();
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

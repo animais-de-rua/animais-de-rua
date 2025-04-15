@@ -14,8 +14,8 @@ class CreateFatsHeadquarters extends Migration
     public function up()
     {
         Schema::create('fats_headquarters', function (Blueprint $table) {
-            $table->foreignId('fat_id')->constrained();
-            $table->foreignId('headquarter_id')->constrained();
+            $table->foreignId('fat_id')->constrained()->onDelete('cascade');
+            $table->foreignId('headquarter_id')->constrained()->onDelete('cascade');
 
             $table->primary(['fat_id', 'headquarter_id']);
         });

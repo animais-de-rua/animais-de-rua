@@ -14,11 +14,11 @@ class CreateAppointmentsTable extends Migration
     {
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('process_id')->nullable()->constrained();
-            $table->foreignId('user_id')->nullable()->constrained();
-            $table->foreignId('vet_id_1')->nullable()->constrained();
+            $table->foreignId('process_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('vet_id_1')->nullable()->constrained()->onDelete('cascade');
             $table->date('date_1')->nullable();
-            $table->foreignId('vet_id_2')->nullable()->constrained();
+            $table->foreignId('vet_id_2')->nullable()->constrained()->onDelete('cascade');
             $table->date('date_2')->nullable();
             $table->integer('amount_males')->unsigned()->default(0);
             $table->integer('amount_females')->unsigned()->default(0);

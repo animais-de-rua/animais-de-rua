@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\FriendCardModality;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class FriendCardModalitiesSeeder extends Seeder
 {
@@ -20,9 +20,9 @@ class FriendCardModalitiesSeeder extends Seeder
     {
         $date = Carbon::now();
 
-        DB::table('friend_card_modalities')->truncate();
+        FriendCardModality::truncate();
 
-        DB::table('friend_card_modalities')->insert([
+        FriendCardModality::insert([
             [
                 'name' => json_encode([
                     'pt' => 'Modalidade básica',

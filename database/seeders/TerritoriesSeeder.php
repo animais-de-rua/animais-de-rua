@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Territory;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class TerritoriesSeeder extends Seeder
 {
@@ -14,11 +14,11 @@ class TerritoriesSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('territories')->truncate();
+        Territory::truncate();
 
         // ----------
         // Distritos
-        DB::table('territories')->insert([
+        Territory::insert([
             ['id' => '01', 'level' => 1, 'name' => 'Aveiro'],
             ['id' => '02', 'level' => 1, 'name' => 'Beja'],
             ['id' => '03', 'level' => 1, 'name' => 'Braga'],
@@ -52,7 +52,7 @@ class TerritoriesSeeder extends Seeder
 
         // ----------
         // Concelhos
-        DB::table('territories')->insert([
+        Territory::insert([
             ['id' => '0101', 'parent_id' => '01', 'level' => 2, 'name' => 'Águeda'],
             ['id' => '0102', 'parent_id' => '01', 'level' => 2, 'name' => 'Albergaria-a-Velha'],
             ['id' => '0103', 'parent_id' => '01', 'level' => 2, 'name' => 'Anadia'],
@@ -365,7 +365,7 @@ class TerritoriesSeeder extends Seeder
 
         // ----------
         // Freguesias
-        DB::table('territories')->insert([
+        Territory::insert([
             ['id' => '010103', 'parent_id' => '0101', 'level' => 3, 'name' => 'Aguada de Cima'],
             ['id' => '010109', 'parent_id' => '0101', 'level' => 3, 'name' => 'Fermentelos'],
             ['id' => '010112', 'parent_id' => '0101', 'level' => 3, 'name' => 'Macinhata do Vouga'],
@@ -868,7 +868,7 @@ class TerritoriesSeeder extends Seeder
             ['id' => '031210', 'parent_id' => '0312', 'level' => 3, 'name' => 'Castelões'],
         ]);
 
-        DB::table('territories')->insert([
+        Territory::insert([
             ['id' => '031212', 'parent_id' => '0312', 'level' => 3, 'name' => 'Cruz'],
             ['id' => '031213', 'parent_id' => '0312', 'level' => 3, 'name' => 'Delães'],
             ['id' => '031215', 'parent_id' => '0312', 'level' => 3, 'name' => 'Fradelos'],
@@ -1371,7 +1371,7 @@ class TerritoriesSeeder extends Seeder
             ['id' => '061003', 'parent_id' => '0610', 'level' => 3, 'name' => 'Carapinheira'],
         ]);
 
-        DB::table('territories')->insert([
+        Territory::insert([
             ['id' => '061005', 'parent_id' => '0610', 'level' => 3, 'name' => 'Liceia'],
             ['id' => '061006', 'parent_id' => '0610', 'level' => 3, 'name' => 'Meãs do Campo'],
             ['id' => '061008', 'parent_id' => '0610', 'level' => 3, 'name' => 'Pereira'],
@@ -1874,7 +1874,7 @@ class TerritoriesSeeder extends Seeder
             ['id' => '100907', 'parent_id' => '1009', 'level' => 3, 'name' => 'Caranguejeira'],
         ]);
 
-        DB::table('territories')->insert([
+        Territory::insert([
             ['id' => '100909', 'parent_id' => '1009', 'level' => 3, 'name' => 'Coimbrão'],
             ['id' => '100913', 'parent_id' => '1009', 'level' => 3, 'name' => 'Maceira'],
             ['id' => '100915', 'parent_id' => '1009', 'level' => 3, 'name' => 'Milagres'],
@@ -2377,7 +2377,7 @@ class TerritoriesSeeder extends Seeder
             ['id' => '131806', 'parent_id' => '1318', 'level' => 3, 'name' => 'Covelas'],
         ]);
 
-        DB::table('territories')->insert([
+        Territory::insert([
             ['id' => '131808', 'parent_id' => '1318', 'level' => 3, 'name' => 'Muro'],
             ['id' => '131809', 'parent_id' => '1318', 'level' => 3, 'name' => 'Alvarelhos e Guidões'],
             ['id' => '131810', 'parent_id' => '1318', 'level' => 3, 'name' => 'Bougado (São Martinho e Santiago)'],
@@ -2880,7 +2880,7 @@ class TerritoriesSeeder extends Seeder
             ['id' => '170636', 'parent_id' => '1706', 'level' => 3, 'name' => 'Cambeses do Rio, Donões e Mourilhe'],
         ]);
 
-        DB::table('territories')->insert([
+        Territory::insert([
             ['id' => '170637', 'parent_id' => '1706', 'level' => 3, 'name' => 'Meixedo e Padornelos'],
             ['id' => '170638', 'parent_id' => '1706', 'level' => 3, 'name' => 'Montalegre e Padroso'],
             ['id' => '170639', 'parent_id' => '1706', 'level' => 3, 'name' => 'Paradela, Contim e Fiães'],
@@ -3383,7 +3383,7 @@ class TerritoriesSeeder extends Seeder
             ['id' => '420601', 'parent_id' => '4206', 'level' => 3, 'name' => 'Água de Alto'],
         ]);
 
-        DB::table('territories')->insert([
+        Territory::insert([
             ['id' => '420602', 'parent_id' => '4206', 'level' => 3, 'name' => 'Ponta Garça'],
             ['id' => '420603', 'parent_id' => '4206', 'level' => 3, 'name' => 'Ribeira das Tainhas'],
             ['id' => '420604', 'parent_id' => '4206', 'level' => 3, 'name' => 'Vila Franca do Campo (São Miguel)'],

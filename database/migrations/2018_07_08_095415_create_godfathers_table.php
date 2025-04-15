@@ -20,18 +20,18 @@ class CreateGodfathersTable extends Migration
             $table->string('phone', 255)->nullable();
             $table->text('notes')->nullable();
             $table->foreignTerritoryId('territory_id')->nullable();
-            $table->foreignId('user_id')->nullable()->constrained();
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });
 
         Schema::create('donations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('process_id')->nullable()->constrained();
-            $table->foreignId('user_id')->nullable()->constrained();
-            $table->foreignId('godfather_id')->nullable()->constrained();
-            $table->foreignId('headquarter_id')->nullable()->constrained();
-            $table->foreignId('protocol_id')->nullable()->constrained();
+            $table->foreignId('process_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('godfather_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('headquarter_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('protocol_id')->nullable()->constrained()->onDelete('cascade');
             $table->enum('type', TypesEnum::values());
             $table->decimal('value', 8, 2)->nullable()->unsigned()->default(0);
             $table->date('date')->nullable();

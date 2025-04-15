@@ -15,8 +15,8 @@ class CreateStoreStockAndTransactionsTables extends Migration
     {
         Schema::create('store_stock', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable()->constrained();
-            $table->foreignId('store_product_id')->nullable()->constrained();
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('store_product_id')->nullable()->constrained()->onDelete('cascade');
             $table->integer('quantity');
             $table->text('notes')->nullable();
             $table->timestamps();
@@ -26,7 +26,7 @@ class CreateStoreStockAndTransactionsTables extends Migration
         Schema::create('store_transactions', function (Blueprint $table) {
             $table->id();
             $table->text('description')->nullable();
-            $table->foreignId('user_id')->nullable()->constrained();
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
             $table->decimal('amount', 8, 2)->default(0);
             $table->text('invoice')->nullable();
             $table->text('notes')->nullable();

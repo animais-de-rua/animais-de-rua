@@ -21,7 +21,7 @@ class ProcessFactory extends Factory
             'phone' => $this->faker->phoneNumber(),
             'email' => $this->faker->unique()->safeEmail(),
             'address' => $this->faker->address(),
-            'territory_id' => Territory::factory(),
+            'territory_id' => Territory::randomOrNew(),
         ];
     }
 }

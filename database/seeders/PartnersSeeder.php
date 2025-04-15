@@ -15,10 +15,10 @@ class PartnersSeeder extends Seeder
      */
     public function run(): void
     {
-        PartnerCategory::query()->truncate();
+        DB::table('partners_categories')->truncate();
         DB::table('partners_territories')->truncate();
-        DB::table('partner_category_list')->truncate();
-        Partner::query()->truncate();
+        PartnerCategory::truncate();
+        Partner::truncate();
 
         $date = Carbon::now();
 
@@ -1049,7 +1049,7 @@ class PartnersSeeder extends Seeder
         ];
 
         foreach ($categories as $category) {
-            DB::table('partner_category_list')->insert([
+            PartnerCategory::insert([
                 'name' => json_encode(['pt' => $category[0]]),
                 'description' => json_encode(['pt' => $category[1]]),
                 'created_at' => $date,
@@ -1058,7 +1058,7 @@ class PartnersSeeder extends Seeder
         }
 
         foreach ($partners as $partner) {
-            DB::table('partners')->insert([
+            Partner::insert([
                 array_merge($partner, [
                     'benefit' => json_encode(['pt' => $partner['benefit']]),
                     'created_at' => $date,
