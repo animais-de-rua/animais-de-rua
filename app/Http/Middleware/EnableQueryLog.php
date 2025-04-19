@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class EnableQueryLog
 {

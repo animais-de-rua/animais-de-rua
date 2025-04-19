@@ -80,7 +80,9 @@ return [
     |
     */
 
-    'locale' => 'pt',
+    'locale' => env('APP_LOCAL', 'en'),
+
+    'locales' => array_keys(config('backpack.crud.locales', [])),
 
     /*
     |--------------------------------------------------------------------------
@@ -228,7 +230,11 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+    ],
 
+    'format' => [
+        'date' => 'Y-m-d',
+        'time' => 'H:i:s',
     ],
 
 ];
