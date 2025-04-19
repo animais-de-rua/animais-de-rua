@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\User;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Database\Factories\StoreTransactionFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class StoreTransaction extends Model
 {
@@ -12,49 +14,21 @@ class StoreTransaction extends Model
     /** @use HasFactory<StoreTransactionFactory> */
     use HasFactory;
 
-    /*
-    |--------------------------------------------------------------------------
-    | GLOBAL VARIABLES
-    |--------------------------------------------------------------------------
-    */
+    protected $fillable = [
+        'description',
+        'user_id',
+        'amount',
+        'invoice',
+        'notes',
+    ];
 
-    protected $table = 'store_transactions';
-    protected $primaryKey = 'id';
-
-    // public $timestamps = false;
-    // protected $guarded = ['id'];
-    protected $fillable = ['description', 'user_id', 'amount', 'invoice', 'notes'];
-    // protected $hidden = [];
-    // protected $dates = [];
-
-    /*
-    |--------------------------------------------------------------------------
-    | FUNCTIONS
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | RELATIONS
-    |--------------------------------------------------------------------------
-    */
-
-    public function user()
+    /**
+     * @return BelongsTo<User, $this>
+     */
+    public function user(): BelongsTo
     {
-        return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | SCOPES
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | ACCESORS
-    |--------------------------------------------------------------------------
-    */
 
     public function getUserLinkAttribute()
     {
@@ -74,10 +48,4 @@ class StoreTransaction extends Model
             return "<span style='color:#0A0'>{$value}€</span>";
         }
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | MUTATORS
-    |--------------------------------------------------------------------------
-    */
 }

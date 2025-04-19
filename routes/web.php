@@ -19,8 +19,10 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 // Welcome
-Route::get('/', [PageController::class, 'index'])->name('home');
+Route::get('/', [PageController::class, 'index'])
+    ->name('home');
 
 // Pages
-Route::get('{page}/{subs?}', [PageController::class, 'index'])->middleware('web')
+Route::get('{page}/{subs?}', [PageController::class, 'index'])
+    ->middleware('web')
     ->where(['page' => '^((?!admin).)|[^/]*$', 'subs' => '.*']);

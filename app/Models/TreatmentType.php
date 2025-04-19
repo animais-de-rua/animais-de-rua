@@ -11,52 +11,23 @@ class TreatmentType extends Model
     use CrudTrait;
     use HasTranslations;
 
-    /*
-    |--------------------------------------------------------------------------
-    | GLOBAL VARIABLES
-    |--------------------------------------------------------------------------
-    */
+    protected $fillable = [
+        'name',
+        'operation_time',
+    ];
+    protected $translatable = [
+        'name',
+    ];
 
-    protected $table = 'treatment_types';
-    protected $primaryKey = 'id';
-
-    // public $timestamps = false;
-    // protected $guarded = ['id'];
-    protected $fillable = ['name', 'operation_time'];
-
-    // protected $hidden = [];
-    // protected $dates = [];
-    protected array $translatable = ['name'];
-
-    /*
-    |--------------------------------------------------------------------------
-    | FUNCTIONS
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | RELATIONS
-    |--------------------------------------------------------------------------
-    */
-
+    /**
+     * @return HasMany<Treatment, $this>
+     */
     public function treatments(): HasMany
     {
         return $this->hasMany(Treatment::class, 'treatment_type_id');
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | SCOPES
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | ACCESSORS
-    |--------------------------------------------------------------------------
-    */
-
+    // @deprecated
     public function getTotalExpensesValue(): string
     {
         $expenses = $this->total_expenses ?: data_get_first($this, 'treatments', 'total_expenses', 0);
@@ -64,6 +35,7 @@ class TreatmentType extends Model
         return $expenses != 0 ? $expenses.'€' : '-';
     }
 
+    // @deprecated
     public function getTotalOperationsValue(): string
     {
         $operations = $this->total_operations ?: data_get_first($this, 'treatments', 'total_operations', 0);
@@ -71,6 +43,7 @@ class TreatmentType extends Model
         return $operations != 0 ? $operations : '-';
     }
 
+    // @deprecated
     public function getOperationsAverageValue(): string
     {
         $average = $this->average ?: data_get_first($this, 'treatments', 'average', 0);
@@ -78,21 +51,16 @@ class TreatmentType extends Model
         return $average > 0 ? number_format($average, 2).'€' : '-';
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | MUTATORS
-    |--------------------------------------------------------------------------
-    */
-
+    // @deprecated
     public function setOperationTimeAttribute($value): void
     {
         $parts = explode(':', $value);
         if (count($parts) >= 2) {
-            $this->attributes['operation_time'] = $parts[0] * 60 + $parts[1];
+            $this->attributes['operation_time'] = ((int) $parts[0]) * 60 + ((int) $parts[1]);
         }
-
     }
 
+    // @deprecated
     public function getOperationTimeAttribute($value): string
     {
         return sprintf('%02d:%02d', floor($value / 60), $value % 60);

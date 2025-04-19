@@ -15,26 +15,24 @@ class Appointment extends Model
     /** @use HasFactory<AppointmentFactory> */
     use HasFactory;
 
-    /*
-    |--------------------------------------------------------------------------
-    | GLOBAL VARIABLES
-    |--------------------------------------------------------------------------
-    */
-
-    protected $table = 'appointments';
-    protected $primaryKey = 'id';
-
-    // public $timestamps = false;
-    // protected $guarded = ['id'];
-    protected $fillable = ['process_id', 'user_id', 'vet_id_1', 'date_1', 'vet_id_2', 'date_2', 'amount_males', 'amount_females', 'amount_other', 'notes', 'notes_deliver', 'notes_collect', 'notes_contact', 'notes_godfather', 'notes_info', 'status'];
-    // protected $hidden = [];
-    // protected $dates = [];
-
-    /*
-    |--------------------------------------------------------------------------
-    | FUNCTIONS
-    |--------------------------------------------------------------------------
-    */
+    protected $fillable = [
+        'process_id',
+        'user_id',
+        'vet_id_1',
+        'date_1',
+        'vet_id_2',
+        'date_2',
+        'amount_males',
+        'amount_females',
+        'amount_other',
+        'notes',
+        'notes_deliver',
+        'notes_collect',
+        'notes_contact',
+        'notes_godfather',
+        'notes_info',
+        'status',
+    ];
 
     public function addTreatment(): string
     {
@@ -87,14 +85,8 @@ class Appointment extends Model
 
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | RELATIONS
-    |--------------------------------------------------------------------------
-    */
-
     /**
-     * @return BelongsTo<Process>
+     * @return BelongsTo<Process, $this>
      */
     public function process(): BelongsTo
     {
@@ -102,7 +94,7 @@ class Appointment extends Model
     }
 
     /**
-     * @return BelongsTo<User>
+     * @return BelongsTo<User, $this>
      */
     public function user(): BelongsTo
     {
@@ -110,7 +102,7 @@ class Appointment extends Model
     }
 
     /**
-     * @return BelongsTo<Vet>
+     * @return BelongsTo<Vet, $this>
      */
     public function vet1(): BelongsTo
     {
@@ -118,7 +110,7 @@ class Appointment extends Model
     }
 
     /**
-     * @return BelongsTo<Vet>
+     * @return BelongsTo<Vet, $this>
      */
     public function vet2(): BelongsTo
     {
@@ -126,50 +118,44 @@ class Appointment extends Model
     }
 
     /**
-     * @return HasMany<Treatment>
+     * @return HasMany<Treatment, $this>
      */
     public function treatments(): HasMany
     {
         return $this->hasMany(Treatment::class, 'appointment_id');
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | SCOPES
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | ACCESORS
-    |--------------------------------------------------------------------------
-    */
-
+    // @deprecated
     public function getProcessLinkAttribute()
     {
         return $this->getLink($this->process, true, '');
     }
 
+    // @deprecated
     public function getUserLinkAttribute()
     {
         return $this->getLink($this->user, is('admin'));
     }
 
+    // @deprecated
     public function getVet1LinkAttribute()
     {
         return $this->getLink($this->vet1, is('admin', 'vet'));
     }
 
+    // @deprecated
     public function getVet2LinkAttribute()
     {
         return $this->getLink($this->vet2, is('admin', 'vet'));
     }
 
+    // @deprecated
     public function getStatusWithClassAttribute()
     {
         return "<span class='status'>".__($this->status).'</span>';
     }
 
+    // @deprecated
     public function getAnimalsValue()
     {
         $result = '';
@@ -188,16 +174,19 @@ class Appointment extends Model
         return $result;
     }
 
+    // @deprecated
     public function getTreatmentsCountValue()
     {
         return data_get_first($this, 'treatments', 'treatments_count', 0);
     }
 
+    // @deprecated
     public function getDetailAttribute()
     {
         return "{$this->id} - ".($this->process ? "{$this->process->name} ({$this->process->id}) - " : '').($this->user ? $this->user->name : '')." ({$this->date_1} / {$this->date_2})";
     }
 
+    // @deprecated
     public function getApprovedDate()
     {
         return match ($this->status) {
@@ -207,6 +196,7 @@ class Appointment extends Model
         };
     }
 
+    // @deprecated
     public function getApprovedVet()
     {
         return match ($this->status) {
@@ -216,17 +206,13 @@ class Appointment extends Model
         };
     }
 
+    // @deprecated
     public function getApprovedVetID()
     {
         return $this->getApprovedVet() ? $this->getApprovedVet()->id : null;
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | MUTATORS
-    |--------------------------------------------------------------------------
-    */
-
+    // @deprecated
     public function toArray(): array
     {
         $data = parent::toArray();
@@ -236,11 +222,6 @@ class Appointment extends Model
         return $data;
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | BOOT
-    |--------------------------------------------------------------------------
-    */
     public static function boot(): void
     {
         parent::boot();

@@ -14,35 +14,20 @@ class Adopter extends Model
     /** @use HasFactory<AdopterFactory> */
     use HasFactory;
 
-    /*
-    |--------------------------------------------------------------------------
-    | GLOBAL VARIABLES
-    |--------------------------------------------------------------------------
-    */
-
-    protected $table = 'adopters';
-    protected $primaryKey = 'id';
-
-    // public $timestamps = false;
-    // protected $guarded = ['id'];
-    protected $fillable = ['name', 'email', 'phone', 'address', 'zip_code', 'adoption_date', 'id_card', 'territory_id', 'user_id'];
-    // protected $hidden = [];
-    // protected $dates = [];
-
-    /*
-    |--------------------------------------------------------------------------
-    | FUNCTIONS
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | RELATIONS
-    |--------------------------------------------------------------------------
-    */
+    protected $fillable = [
+        'name',
+        'email',
+        'phone',
+        'address',
+        'zip_code',
+        'adoption_date',
+        'id_card',
+        'territory_id',
+        'user_id',
+    ];
 
     /**
-     * @return HasOne<Adoption>
+     * @return HasOne<Adoption, $this>
      */
     public function adoption(): HasOne
     {
@@ -50,7 +35,7 @@ class Adopter extends Model
     }
 
     /**
-     * @return BelongsTo<Territory>
+     * @return BelongsTo<Territory, $this>
      */
     public function territory(): BelongsTo
     {
@@ -58,38 +43,22 @@ class Adopter extends Model
     }
 
     /**
-     * @return BelongsTo<User>
+     * @return BelongsTo<User, $this>
      */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | SCOPES
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | ACCESSORS
-    |--------------------------------------------------------------------------
-    */
-
-    /*public function getAdoptionLinkAttribute()
+    // @deprecated
+    public function getAdoptionLinkAttribute()
     {
         return $this->getLink($this->adoption);
     }
 
+    // @deprecated
     public function getUserLinkAttribute()
     {
         return $this->getLink($this->user, is('admin'));
-    }+/
-
-    /*
-    |--------------------------------------------------------------------------
-    | MUTATORS
-    |--------------------------------------------------------------------------
-    */
+    }
 }

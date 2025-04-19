@@ -5,59 +5,31 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Database\Factories\StoreProductFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-/**
- * @property int $id
- */
 class StoreProduct extends Model
 {
     use CrudTrait;
     /** @use HasFactory<StoreProductFactory> */
     use HasFactory;
 
-    /*
-    |--------------------------------------------------------------------------
-    | GLOBAL VARIABLES
-    |--------------------------------------------------------------------------
-    */
+    protected $fillable = [
+        'name',
+        'price',
+        'price_no_vat',
+        'expense',
+        'notes',
+        'vat',
+    ];
 
-    protected $table = 'store_products';
-
-    // protected $primaryKey = 'id';
-    // public $timestamps = false;
-    // protected $guarded = ['id'];
-    protected $fillable = ['name', 'price', 'price_no_vat', 'expense', 'notes', 'vat'];
-    // protected $hidden = [];
-    // protected $dates = [];
-
-    /*
-    |--------------------------------------------------------------------------
-    | FUNCTIONS
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | RELATIONS
-    |--------------------------------------------------------------------------
-    */
-
-    public function orders()
+    /**
+     * @return BelongsToMany<StoreOrder, $this>
+     */
+    public function orders(): BelongsToMany
     {
-        return $this->belongsToMany('App\Models\StoreOrder', 'store_orders_products', 'store_product_id', 'store_order_id')->withPivot('quantity');
+        return $this->belongsToMany(StoreOrder::class, 'store_orders_products', 'store_product_id', 'store_order_id')
+            ->withPivot('quantity');
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | SCOPES
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | ACCESORS
-    |--------------------------------------------------------------------------
-    */
 
     public function getTotalSellsValue()
     {
@@ -80,10 +52,4 @@ class StoreProduct extends Model
 
         return number_format($sells * ($this->price_no_vat - $this->expense) - $shipment_expense, 2);
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | MUTATORS
-    |--------------------------------------------------------------------------
-    */
 }

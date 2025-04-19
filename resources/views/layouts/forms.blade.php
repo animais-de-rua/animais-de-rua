@@ -126,8 +126,8 @@
                                 <div class="address-selects"></div>
                                 <select required name="theme" class="dark last-child empty" onchange="modal.checkEmptySelect(this)">
                                     <option value="" disabled selected>{{ ucfirst(__("Themes of interest")) }}</option>
-                                    @foreach(\App\Helpers\EnumHelper::get('forms.themes') as $key => $value)
-                                    <option value="{{ $key }}">{{ ucfirst(__($value)) }}</option>
+                                    @foreach(['adoption', 'sterilization'] as $value)
+                                    <option value="{{ $value }}">{{ ucfirst(__($value)) }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -166,7 +166,7 @@
                                     <div class="column column-50">
                                         <select class="dark empty" required name="specie" onchange="modal.checkEmptySelect(this)">
                                             <option value="" disabled selected>{{ __("Specie") }}</option>
-                                            @foreach(\App\Helpers\EnumHelper::get('process.specie') as $key => $value)
+                                            @foreach(\App\Enums\Animal\SpeciesEnum::values() as $key => $value)
                                             <option value="{{ $key }}">{{ ucfirst(__($value)) }}</option>
                                             @endforeach
                                             <option value="other">{{ ucfirst(__('other')) }}</option>

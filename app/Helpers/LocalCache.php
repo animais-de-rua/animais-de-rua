@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use App\Http\Controllers\WooCommerceController;
 use App\Models\Adoption;
 use App\Models\Campaign;
 use App\Models\FriendCardModality;
@@ -14,13 +15,14 @@ use App\Models\Sponsor;
 use App\Models\Territory;
 use App\Models\Treatment;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class LocalCache
 {
-    public static function page($slug, $locale)
+    public static function page($slug, $locale): array
     {
         return Cache::rememberForever("page_{$slug}_{$locale}", function () use ($slug) {
             $page = Page::findBySlug($slug);
@@ -36,21 +38,21 @@ class LocalCache
         });
     }
 
-    public static function treated()
+    public static function treated(): int
     {
         return Cache::rememberForever('treatments_affected_animals_new', function () {
             return Treatment::selectRaw('SUM(affected_animals_new) as total')->where('status', 'approved')->first()->total;
         });
     }
 
-    public static function adopted()
+    public static function adopted(): int
     {
         return Cache::rememberForever('adoptions_count', function () {
             return Adoption::selectRaw('COUNT(processed) as total')->where('processed', 0)->first()->total;
         });
     }
 
-    public static function headquarters_territories_acting()
+    public static function headquarters_territories_acting(): array
     {
         return Cache::rememberForever('headquarters_territories_acting', function () {
             $activeHeadquarters = Headquarter::active()->pluck('id');
@@ -81,7 +83,7 @@ class LocalCache
         });
     }
 
-    public static function territories_form_all()
+    public static function territories_form_all(): array
     {
         return Cache::rememberForever('territories_form_all', function () {
             return [
@@ -91,7 +93,7 @@ class LocalCache
         });
     }
 
-    public static function campaigns()
+    public static function campaigns(): Collection
     {
         return Cache::rememberForever('campaigns', function () {
             return Campaign::select(['name', 'introduction', 'description', 'image'])
@@ -100,21 +102,21 @@ class LocalCache
         });
     }
 
-    public static function products()
+    public static function products(): array
     {
         return Cache::rememberForever('products', function () {
-            return request()->secure() ? app('App\Http\Controllers\WooCommerceController')->getProducts() : [];
+            return request()->secure() ? app(WooCommerceController::class)->getProducts() : [];
         });
     }
 
-    public static function headquarters()
+    public static function headquarters(): Collection
     {
         return Cache::rememberForever('headquarters', function () {
             return Headquarter::select(['id', 'name', 'address', 'phone', 'mail'])->where('active', 1)->get();
         });
     }
 
-    public static function processes_districts_godfather()
+    public static function processes_districts_godfather(): Collection
     {
         return Cache::rememberForever('processes_districts_godfather', function () {
             return Process::query()
@@ -127,7 +129,7 @@ class LocalCache
         });
     }
 
-    public static function adoptions_districts_adoption()
+    public static function adoptions_districts_adoption(): Collection
     {
         return Cache::rememberForever('adoptions_districts_adoption', function () {
             return Adoption::query()
@@ -141,7 +143,7 @@ class LocalCache
         });
     }
 
-    public static function sponsors()
+    public static function sponsors(): Collection
     {
         return Cache::rememberForever('sponsors', function () {
             return Sponsor::query()
@@ -151,7 +153,7 @@ class LocalCache
         });
     }
 
-    public static function friend_card_modalities()
+    public static function friend_card_modalities(): Collection
     {
         return Cache::rememberForever('friend_card_modalities', function () {
             return FriendCardModality::select(['name', 'description', 'paypal_code', 'amount', 'type', 'visible'])
@@ -161,7 +163,7 @@ class LocalCache
         });
     }
 
-    public static function partners()
+    public static function partners(): Collection
     {
         return Cache::rememberForever('partners', function () {
             $partners = Partner::select(['id', 'name', 'image', 'benefit', 'email', 'url', 'facebook', 'instagram', 'phone1', 'phone1_info', 'phone2', 'phone2_info', 'address', 'address_info', 'promo_code'])
@@ -185,7 +187,7 @@ class LocalCache
         });
     }
 
-    public static function partners_categories()
+    public static function partners_categories(): Collection
     {
         return Cache::rememberForever('partners_categories', function () {
             return PartnerCategory::query()
@@ -199,7 +201,7 @@ class LocalCache
         });
     }
 
-    public static function partners_territories()
+    public static function partners_territories(): Collection
     {
         return Cache::rememberForever('partners_territories', function () {
             return Territory::query()
@@ -213,7 +215,7 @@ class LocalCache
         });
     }
 
-    public static function processes_urgent()
+    public static function processes_urgent(): Collection
     {
         return Cache::rememberForever('processes_urgent', function () {
             return Process::query()
@@ -226,7 +228,7 @@ class LocalCache
         });
     }
 
-    public static function petsitters()
+    public static function petsitters(): Collection
     {
         return Cache::rememberForever('petsitters', function () {
             return User::with(['headquarters:id,name'])

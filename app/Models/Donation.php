@@ -5,6 +5,7 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Database\Factories\DonationFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Donation extends Model
 {
@@ -12,69 +13,58 @@ class Donation extends Model
     /** @use HasFactory<DonationFactory> */
     use HasFactory;
 
-    /*
-    |--------------------------------------------------------------------------
-    | GLOBAL VARIABLES
-    |--------------------------------------------------------------------------
-    */
+    protected $fillable = [
+        'process_id',
+        'type',
+        'godfather_id',
+        'headquarter_id',
+        'protocol_id',
+        'value',
+        'status',
+        'date',
+        'user_id',
+        'notes',
+    ];
 
-    protected $table = 'donations';
-    protected $primaryKey = 'id';
-
-    // public $timestamps = false;
-    // protected $guarded = ['id'];
-    protected $fillable = ['process_id', 'type', 'godfather_id', 'headquarter_id', 'protocol_id', 'value', 'status', 'date', 'user_id', 'notes'];
-    // protected $hidden = [];
-    // protected $dates = [];
-
-    /*
-    |--------------------------------------------------------------------------
-    | FUNCTIONS
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | RELATIONS
-    |--------------------------------------------------------------------------
-    */
-
-    public function process()
+    /**
+     * @return BelongsTo<Process, $this>
+     */
+    public function process(): BelongsTo
     {
-        return $this->belongsTo('App\Models\Process', 'process_id');
+        return $this->belongsTo(Process::class, 'process_id');
     }
 
-    public function godfather()
+    /**
+     * @return BelongsTo<Godfather, $this>
+     */
+    public function godfather(): BelongsTo
     {
-        return $this->belongsTo('App\Models\Godfather', 'godfather_id');
+        return $this->belongsTo(Godfather::class, 'godfather_id');
     }
 
-    public function headquarter()
+    /**
+     * @return BelongsTo<Headquarter, $this>
+     */
+    public function headquarter(): BelongsTo
     {
-        return $this->belongsTo('App\Models\Headquarter', 'headquarter_id');
+        return $this->belongsTo(Headquarter::class, 'headquarter_id');
     }
 
-    public function protocol()
+    /**
+     * @return BelongsTo<Protocol, $this>
+     */
+    public function protocol(): BelongsTo
     {
-        return $this->belongsTo('App\Models\Protocol', 'protocol_id');
+        return $this->belongsTo(Protocol::class, 'protocol_id');
     }
 
-    public function user()
+    /**
+     * @return BelongsTo<User, $this>
+     */
+    public function user(): BelongsTo
     {
-        return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | SCOPES
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | ACCESORS
-    |--------------------------------------------------------------------------
-    */
 
     public function getProcessLinkAttribute()
     {
@@ -111,10 +101,4 @@ class Donation extends Model
     {
         return $this->getLink($this->user);
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | MUTATORS
-    |--------------------------------------------------------------------------
-    */
 }

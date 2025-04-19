@@ -2,35 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\EnumHelper;
-use App\Helpers\LocalCache;
+use App\Enums\Animal\SpeciesEnum;
+use App\Http\Controllers\Admin\Traits\LocalCache;
 use App\Models\Adoption;
+use App\Models\Page;
 use App\Models\Process;
-use GemaDigital\Http\Controllers\Traits\PageTrait;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
-use Illuminate\Foundation\Application;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Routing\Redirector;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Validator;
+use DB;
+use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
-use Spatie\Newsletter\Facades\Newsletter;
+use Illuminate\View\View;
+use Newsletter;
+use Validator;
 
-class PageController
+class PageController extends Controller
 {
-    use PageTrait;
+    use LocalCache;
 
-    protected mixed $data;
+    private $data = [];
 
-    public function index($slug = 'home'): Factory|Application|View
+    public function index($slug = 'home'): View
     {
-        $locale = Session::get('locale');
+        // \Debugbar::disable();
+
+        $locale = \Session::get('locale');
 
         $this->data = LocalCache::page($slug, $locale);
 
@@ -45,7 +39,7 @@ class PageController
         return view('pages.'.$this->data['page']->template, $this->data);
     }
 
-    public function blank(): Factory|Application|View
+    public function blank(): View
     {
         return view('pages.blank', $this->common());
     }
@@ -54,13 +48,15 @@ class PageController
     {
         $data = [];
 
-        if (! Request::ajax()) {
+        if (\Request::ajax()) {
+            $data = [];
+        } else {
             $treated = LocalCache::treated();
             $adopted = LocalCache::adopted();
             $form_acting_territories = LocalCache::headquarters_territories_acting();
             $form_all_territories = LocalCache::territories_form_all();
 
-            $base_counter = Config::get('settings.base_counter', 0);
+            $base_counter = \Config::get('settings.base_counter', 0);
 
             $data = [
                 'total_interventions' => $base_counter + $treated + $adopted,
@@ -105,7 +101,7 @@ class PageController
         $districts_adoption = LocalCache::adoptions_districts_adoption();
         $processes_urgent = LocalCache::processes_urgent();
 
-        $species = EnumHelper::translate('process.specie');
+        $species = SpeciesEnum::transValues();
 
         return [
             'processes' => $processes_urgent,
@@ -117,7 +113,7 @@ class PageController
         ];
     }
 
-    public function animalsView($option, $id): Factory|Application|View
+    public function animalsView($option, $id): View
     {
         switch ($option) {
             case 'godfather':
@@ -202,9 +198,9 @@ class PageController
     }
 
     // API
-    public function getAnimalsAdoption($territory = 0, $specie = 0): JsonResponse
+    public function getAnimalsAdoption($territory = 0, $specie = 0): \Illuminate\Http\JsonResponse
     {
-        $data = Adoption::query()->select(['adoptions.id', 'adoptions.name', 'processes.specie', 'adoptions.images', 'adoptions.created_at', 'district.name as district', 'county.name as county'])
+        $data = Adoption::select(['adoptions.id', 'adoptions.name', 'processes.specie', 'adoptions.images', 'adoptions.created_at', 'district.name as district', 'county.name as county'])
             ->join('processes', 'processes.id', '=', 'adoptions.process_id')
             ->join('fats', 'fats.id', '=', 'adoptions.fat_id')
             ->join('territories as district', 'district.id', '=', DB::raw('LEFT(fats.territory_id, 2)'))
@@ -227,9 +223,9 @@ class PageController
         return response()->json($data->get());
     }
 
-    public function getAnimalsGodfather($territory = 0, $specie = 0): JsonResponse
+    public function getAnimalsGodfather($territory = 0, $specie = 0): \Illuminate\Http\JsonResponse
     {
-        $data = Process::query()->select(['processes.id', 'processes.name', 'specie', 'images', 'created_at', 'district.name as district', 'county.name as county'])
+        $data = Process::select(['processes.id', 'processes.name', 'specie', 'images', 'created_at', 'district.name as district', 'county.name as county'])
             ->join('territories as district', 'district.id', '=', DB::raw('LEFT(territory_id, 2)'))
             ->join('territories as county', 'county.id', '=', DB::raw('LEFT(territory_id, 4)'))
             ->where('status', 'waiting_godfather')
@@ -251,7 +247,7 @@ class PageController
         return response()->json($data->get());
     }
 
-    public function subscribeNewsletter(Request $request): JsonResponse
+    public function subscribeNewsletter(Request $request): \Illuminate\Http\JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
@@ -272,7 +268,7 @@ class PageController
 
         // Check if success
         if (! Newsletter::lastActionSucceeded()) {
-            Log::info(Newsletter::getApi()->getLastError());
+            \Log::info(Newsletter::getApi()->getLastError());
 
             $validator->errors()->add('email', __('Something went wrong, please try again later.'));
             throw new ValidationException($validator);
@@ -284,16 +280,16 @@ class PageController
         ]);
     }
 
-    public function login(): Application|Redirector|RedirectResponse
+    public function login(): \Illuminate\Http\RedirectResponse
     {
-        $result = Auth::guard(backpack_guard_name())->attempt(request()->only('email', 'password'));
+        $result = \Auth::guard(backpack_guard_name())->attempt(request()->only('email', 'password'));
 
         return redirect('/friends')->with('login', $result);
     }
 
-    public function logout(): Application|Redirector|RedirectResponse
+    public function logout(): \Illuminate\Http\RedirectResponse
     {
-        Auth::guard(backpack_guard_name())->logout();
+        \Auth::guard(backpack_guard_name())->logout();
 
         return redirect('/friends')->with('logout', true);
     }

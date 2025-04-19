@@ -7,49 +7,68 @@ use Database\Factories\AdoptionFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-/**
- * @property Process process
- * @property User user
- * @property Fat fat
- * @property Adopter adopter
- * @property string status
- * @property int id
- * @property string $gender
- * @property bool $sterilized
- * @property bool $vaccinated
- * @property string $name
- * @property array $age
- * @property string $detail
- * @property array $images
- */
 class Adoption extends Model
 {
     use CrudTrait;
     /** @use HasFactory<AdoptionFactory */
     use HasFactory;
 
-    /*
-    |--------------------------------------------------------------------------
-    | GLOBAL VARIABLES
-    |--------------------------------------------------------------------------
-    */
+    protected $fillable = [
+        'name',
+        'name_after',
+        'age',
+        'gender',
+        'microchip',
+        'sterilized',
+        'vaccinated',
+        'processed',
+        'individual',
+        'docile',
+        'abandoned',
+        'history',
+        'images',
+        'status',
+        'adoption_date',
+        'foal',
+    ];
+    protected $casts = [
+        'images' => 'array',
+        'age' => 'array',
+    ];
 
-    protected $table = 'adoptions';
-    protected $primaryKey = 'id';
+    /**
+     * @return BelongsTo<Process, $this>
+     */
+    public function process(): BelongsTo
+    {
+        return $this->belongsTo(Process::class, 'process_id');
+    }
 
-    // public $timestamps = false;
-    // protected $guarded = ['id'];
-    protected $fillable = ['process_id', 'user_id', 'fat_id', 'name', 'name_after', 'age', 'gender', 'microchip', 'sterilized', 'vaccinated', 'processed', 'individual', 'docile', 'abandoned', 'history', 'images', 'status', 'adoption_date', 'foal'];
-    protected $casts = ['images' => 'array', 'age' => 'array'];
-    // protected $hidden = [];
-    // protected $dates = [];
+    /**
+     * @return BelongsTo<User, $this>
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 
-    /*
-    |--------------------------------------------------------------------------
-    | FUNCTIONS
-    |--------------------------------------------------------------------------
-    */
+    /**
+     * @return BelongsTo<Fat, $this>
+     */
+    public function fat(): BelongsTo
+    {
+        return $this->belongsTo(Fat::class, 'fat_id');
+    }
 
+    /**
+     * @return BelongsTo<Adopter, $this>
+     */
+    public function adopter(): BelongsTo
+    {
+        return $this->belongsTo(Adopter::class, 'adopter_id');
+    }
+
+    // @deprecated
     public function addAdopter(): string
     {
         $disabled = $this->status != 'open';
@@ -60,100 +79,61 @@ class Adoption extends Model
         </a>';
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | RELATIONS
-    |--------------------------------------------------------------------------
-    */
-
-    /**
-     * @return BelongsTo<Process>
-     */
-    public function process(): BelongsTo
-    {
-        return $this->belongsTo(Process::class, 'process_id');
-    }
-
-    /**
-     * @return BelongsTo<User>
-     */
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'user_id');
-    }
-
-    /**
-     * @return BelongsTo<Fat>
-     */
-    public function fat(): BelongsTo
-    {
-        return $this->belongsTo(Fat::class, 'fat_id');
-    }
-
-    /**
-     * @return BelongsTo<Adopter>
-     */
-    public function adopter(): BelongsTo
-    {
-        return $this->belongsTo(Adopter::class, 'adopter_id');
-    }
-
-    /*
-    |--------------------------------------------------------------------------
-    | SCOPES
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | ACCESSORS
-    |--------------------------------------------------------------------------
-    */
+    // @deprecated
     public function getNameLinkAttribute()
     {
         return $this->getLink($this, true, '');
     }
 
+    // @deprecated
     public function getProcessLinkAttribute()
     {
         return $this->getLink($this->process, true, '');
     }
 
+    // @deprecated
     public function getAdopterLinkAttribute()
     {
         return $this->getLink($this->adopter, true, 'edit');
     }
 
+    // @deprecated
     public function getHeadquarterAttribute(): string
     {
         return $this->process->headquarter->name;
     }
 
+    // @deprecated
     public function getUserLinkAttribute()
     {
         return $this->getLink($this->user, is('admin'));
     }
 
+    // @deprecated
     public function getFatLinkAttribute()
     {
         return $this->getLink($this->fat, is('admin'));
     }
 
+    // @deprecated
     public function getGenderValueAttribute(): string
     {
         return ucfirst(__($this->gender));
     }
 
+    // @deprecated
     public function getSterilizedValueAttribute(): string
     {
         return ucfirst(__($this->sterilized ? 'yes' : 'no'));
     }
 
+    // @deprecated
     public function getVaccinatedValueAttribute(): string
     {
         return ucfirst(__($this->vaccinated ? 'yes' : 'no'));
     }
 
+    // @deprecated
     public function getDetailAttribute(): string
     {
         $process = $this->process ? ' ('.$this->process->name.')' : '';
@@ -161,22 +141,19 @@ class Adoption extends Model
         return "$this->id - $this->name$process";
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | MUTATORS
-    |--------------------------------------------------------------------------
-    */
-
+    // @deprecated
     public function setAgeAttribute($value): void
     {
         $this->attributes['age'] = $value[0] * 12 + $value[1];
     }
 
+    // @deprecated
     public function getAgeAttribute($value): array
     {
         return [floor($value / 12), $value % 12];
     }
 
+    // @deprecated
     public function getAgeValueAttribute(): string
     {
         [$y, $m] = $this->age;
@@ -193,6 +170,7 @@ class Adoption extends Model
         return implode(' '.__('and').' ', $result);
     }
 
+    // @deprecated
     public function toArray(): array
     {
         $data = parent::toArray();

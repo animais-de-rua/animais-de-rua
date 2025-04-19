@@ -11,55 +11,23 @@ class PartnerCategory extends Model
     use CrudTrait;
     use HasTranslations;
 
-    /*
-    |--------------------------------------------------------------------------
-    | GLOBAL VARIABLES
-    |--------------------------------------------------------------------------
-    */
+    protected $fillable = [
+        'name',
+        'description',
+    ];
+    protected $hidden = [
+        'pivot',
+    ];
+    protected $translatable = [
+        'name',
+        'description',
+    ];
 
-    protected $table = 'partner_category_list';
-    protected $primaryKey = 'id';
-
-    // public $timestamps = false;
-    // protected $guarded = ['id'];
-    protected $fillable = ['name', 'description'];
-    protected $hidden = ['pivot'];
-
-    // protected $dates = [];
-    protected array $translatable = ['name', 'description'];
-
-    /*
-    |--------------------------------------------------------------------------
-    | FUNCTIONS
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | RELATIONS
-    |--------------------------------------------------------------------------
-    */
-
+    /**
+     * @return HasManyThrough<Partner, $this>
+     */
     public function partners(): HasManyThrough
     {
         return $this->hasManyThrough(Partner::class, 'partners_categories', 'partner_category_list_id');
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | SCOPES
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | ACCESSORS
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | MUTATORS
-    |--------------------------------------------------------------------------
-    */
 }

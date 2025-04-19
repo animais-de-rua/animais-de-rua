@@ -14,35 +14,18 @@ class Vet extends Model
     /** @use HasFactory<VetFactory> */
     use HasFactory;
 
-    /*
-    |--------------------------------------------------------------------------
-    | GLOBAL VARIABLES
-    |--------------------------------------------------------------------------
-    */
-
-    protected $table = 'vets';
-    protected $primaryKey = 'id';
-
-    // public $timestamps = false;
-    // protected $guarded = ['id'];
-    protected $fillable = ['name', 'email', 'phone', 'url', 'address', 'latlong', 'headquarter_id', 'status'];
-    // protected $hidden = [];
-    // protected $dates = [];
-
-    /*
-    |--------------------------------------------------------------------------
-    | FUNCTIONS
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | RELATIONS
-    |--------------------------------------------------------------------------
-    */
+    protected $fillable = [
+        'name',
+        'email',
+        'phone',
+        'url',
+        'address',
+        'latlong',
+        'status',
+    ];
 
     /**
-     * @return BelongsToMany<Headquarter, Vet>
+     * @return BelongsToMany<Headquarter, $this>
      * */
     public function headquarters(): BelongsToMany
     {
@@ -50,24 +33,12 @@ class Vet extends Model
     }
 
     /**
-     * @return HasMany<Treatment, Vet>
+     * @return HasMany<Treatment, $this>
      * */
     public function treatments(): HasMany
     {
         return $this->hasMany(Treatment::class, 'vet_id');
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | SCOPES
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | ACCESSORS
-    |--------------------------------------------------------------------------
-    */
 
     public function getTotalExpensesValue(): string
     {
@@ -90,16 +61,10 @@ class Vet extends Model
         return $expenses != 0 ? $expenses.'€' : '-';
     }
 
-    public function getTotalOperationsStats(): int
+    public function getTotalOperationsStats(): float|int
     {
         return $this->treatments->reduce(function ($carry, $item) {
             return $carry + $item->affected_animals;
         });
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | MUTATORS
-    |--------------------------------------------------------------------------
-    */
 }

@@ -2,15 +2,15 @@
 
 namespace App\Models;
 
+use App\User;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
 use Database\Factories\ProcessFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
-/**
- * @property Headquarter $headquarter
- * @property string $name
- */
 class Process extends Model
 {
     use CrudTrait;
@@ -18,29 +18,31 @@ class Process extends Model
     use HasFactory;
     use HasTranslations;
 
-    /*
-    |--------------------------------------------------------------------------
-    | GLOBAL VARIABLES
-    |--------------------------------------------------------------------------
-    */
-
-    protected $table = 'processes';
-    protected $primaryKey = 'id';
-
-    // public $timestamps = false;
-    // protected $guarded = ['id'];
-    protected $fillable = ['name', 'contact', 'phone', 'email', 'address', 'territory_id', 'headquarter_id', 'specie', 'amount_males', 'amount_females', 'amount_other', 'status', 'urgent', 'history', 'notes', 'latlong', 'images', 'user_id'];
-    protected $casts = ['images' => 'array'];
-
-    // protected $hidden = [];
-    // protected $dates = [];
-    protected $translatable = ['history'];
-
-    /*
-    |--------------------------------------------------------------------------
-    | FUNCTIONS
-    |--------------------------------------------------------------------------
-    */
+    protected $fillable = [
+        'contact',
+        'phone',
+        'email',
+        'address',
+        'territory_id',
+        'headquarter_id',
+        'specie',
+        'amount_males',
+        'amount_females',
+        'amount_other',
+        'status',
+        'urgent',
+        'history',
+        'notes',
+        'latlong',
+        'images',
+        'user_id',
+    ];
+    protected $casts = [
+        'images' => 'array',
+    ];
+    protected $translatable = [
+        'history',
+    ];
 
     public function addAppointment()
     {
@@ -63,58 +65,61 @@ class Process extends Model
         </a>';
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | RELATIONS
-    |--------------------------------------------------------------------------
-    */
-
-    public function headquarter()
+    /**
+     * @return BelongsTo<Headquarter, $this>
+     */
+    public function headquarter(): BelongsTo
     {
-        return $this->belongsTo('App\Models\Headquarter', 'headquarter_id');
+        return $this->belongsTo(Headquarter::class, 'headquarter_id');
     }
 
-    public function territory()
+    /**
+     * @return BelongsTo<Territory, $this>
+     */
+    public function territory(): BelongsTo
     {
-        return $this->belongsTo('App\Models\Territory', 'territory_id');
+        return $this->belongsTo(Territory::class, 'territory_id');
     }
 
-    public function donations()
+    /**
+     * @return HasMany<Donation, $this>
+     */
+    public function donations(): HasMany
     {
-        return $this->hasMany('App\Models\Donation', 'process_id');
+        return $this->hasMany(Donation::class, 'process_id');
     }
 
-    public function appointments()
+    /**
+     * @return HasMany<Appointment, $this>
+     */
+    public function appointments(): HasMany
     {
-        return $this->hasMany('App\Models\Appointment', 'process_id');
+        return $this->hasMany(Appointment::class, 'process_id');
     }
 
-    public function adoptions()
+    /**
+     * @return HasMany<Adoption, $this>
+     */
+    public function adoptions(): HasMany
     {
-        return $this->hasMany('App\Models\Adoption', 'process_id');
+        return $this->hasMany(Adoption::class, 'process_id');
     }
 
-    public function user()
+    /**
+     * @return BelongsTo<User, $this>
+     */
+    public function user(): BelongsTo
     {
-        return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function treatments()
+    /**
+     * @return HasManyThrough<Treatment, Appointment>
+     */
+    public function treatments(): HasManyThrough
     {
-        return $this->hasManyThrough('App\Models\Treatment', 'App\Models\Appointment', 'process_id', 'appointment_id');
+        return $this->hasManyThrough(Treatment::class, Appointment::class, 'process_id', 'appointment_id');
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | SCOPES
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | ACCESORS
-    |--------------------------------------------------------------------------
-    */
 
     public function getLinkAttribute()
     {
@@ -293,12 +298,6 @@ class Process extends Model
             return "<span style='color:#A00'>{$value}€</span>";
         }
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | MUTATORS
-    |--------------------------------------------------------------------------
-    */
 
     public function toArray()
     {

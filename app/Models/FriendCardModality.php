@@ -11,50 +11,26 @@ class FriendCardModality extends Model
     use CrudTrait;
     use HasTranslations;
 
-    /*
-    |--------------------------------------------------------------------------
-    | GLOBAL VARIABLES
-    |--------------------------------------------------------------------------
-    */
+    protected $fillable = [
+        'name',
+        'description',
+        'paypal_code',
+        'amount',
+        'type',
+        'visible',
+    ];
+    protected $translatable = [
+        'name',
+        'description',
+    ];
 
-    protected $table = 'friend_card_modalities';
-    protected $primaryKey = 'id';
-
-    // public $timestamps = false;
-    // protected $guarded = ['id'];
-    protected $fillable = ['name', 'description', 'paypal_code', 'amount', 'type', 'visible'];
-
-    // protected $hidden = [];
-    // protected $dates = [];
-    protected array $translatable = ['name', 'description'];
-    /*
-    |--------------------------------------------------------------------------
-    | FUNCTIONS
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | RELATIONS
-    |--------------------------------------------------------------------------
-    */
-
+    /**
+     * @return HasMany<User, $this>
+     */
     public function user(): HasMany
     {
         return $this->hasMany(User::class, 'friend_card_modality_id');
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | SCOPES
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | ACCESSORS
-    |--------------------------------------------------------------------------
-    */
 
     public function getFullnameAttribute(): string
     {
@@ -69,10 +45,4 @@ class FriendCardModality extends Model
 
         return "{$this->amount}€ {$type}";
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | MUTATORS
-    |--------------------------------------------------------------------------
-    */
 }

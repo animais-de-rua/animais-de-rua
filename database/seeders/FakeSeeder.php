@@ -108,7 +108,7 @@ class FakeSeeder extends Seeder
 
         // Godfathers
         $this->log('Godfathers');
-        Godfather::factory()->count(50)->create()->each(function (Godfather $godfather):void {
+        Godfather::factory()->count(50)->create()->each(function (Godfather $godfather): void {
             // One donation per godfather
             $godfather->donations()->save(Donation::factory()->make());
         });
@@ -156,7 +156,8 @@ class FakeSeeder extends Seeder
             for ($i = 0; $i < rand(1, 5); $i++) {
                 try {
                     $order->products()->attach([$products[$i]?->id => ['quantity' => rand(1, 3)]]);
-                } catch (Exception $e) { }
+                } catch (Exception $e) {
+                }
             }
         });
 

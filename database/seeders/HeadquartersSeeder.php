@@ -56,8 +56,8 @@ class HeadquartersSeeder extends Seeder
             $i++;
 
             Headquarter::insert([
-                'created_at' => $date, 
-                'updated_at' => $date, 
+                'created_at' => $date,
+                'updated_at' => $date,
                 'name' => $headquarter,
             ]);
 

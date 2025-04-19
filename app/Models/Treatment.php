@@ -5,6 +5,7 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Database\Factories\TreatmentFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Treatment extends Model
 {
@@ -12,26 +13,18 @@ class Treatment extends Model
     /** @use HasFactory<TreatmentFactory> */
     use HasFactory;
 
-    /*
-    |--------------------------------------------------------------------------
-    | GLOBAL VARIABLES
-    |--------------------------------------------------------------------------
-    */
-
-    protected $table = 'treatments';
-    protected $primaryKey = 'id';
-
-    // public $timestamps = false;
-    // protected $guarded = ['id'];
-    protected $fillable = ['appointment_id', 'treatment_type_id', 'vet_id', 'affected_animals', 'affected_animals_new', 'user_id', 'expense', 'date', 'status', 'notes'];
-    // protected $hidden = [];
-    // protected $dates = [];
-
-    /*
-    |--------------------------------------------------------------------------
-    | FUNCTIONS
-    |--------------------------------------------------------------------------
-    */
+    protected $fillable = [
+        'appointment_id',
+        'treatment_type_id',
+        'vet_id',
+        'affected_animals',
+        'affected_animals_new',
+        'user_id',
+        'expense',
+        'date',
+        'status',
+        'notes',
+    ];
 
     public function customUpdateButton()
     {
@@ -55,43 +48,37 @@ class Treatment extends Model
 
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | RELATIONS
-    |--------------------------------------------------------------------------
-    */
-
-    public function appointment()
+    /**
+     * @return BelongsTo<Appointment, $this>
+     */
+    public function appointment(): BelongsTo
     {
-        return $this->belongsTo('App\Models\Appointment', 'appointment_id');
+        return $this->belongsTo(Appointment::class, 'appointment_id');
     }
 
-    public function vet()
+    /**
+     * @return BelongsTo<Vet, $this>
+     */
+    public function vet(): BelongsTo
     {
-        return $this->belongsTo('App\Models\Vet', 'vet_id');
+        return $this->belongsTo(Vet::class, 'vet_id');
     }
 
-    public function user()
+    /**
+     * @return BelongsTo<User, $this>
+     */
+    public function user(): BelongsTo
     {
-        return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function treatment_type()
+    /**
+     * @return BelongsTo<TreatmentType, $this>
+     */
+    public function treatment_type(): BelongsTo
     {
-        return $this->belongsTo('App\Models\TreatmentType', 'treatment_type_id');
+        return $this->belongsTo(TreatmentType::class, 'treatment_type_id');
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | SCOPES
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | ACCESORS
-    |--------------------------------------------------------------------------
-    */
 
     public function getProcessLinkAttribute()
     {
@@ -132,10 +119,4 @@ class Treatment extends Model
     {
         return Treatment::selectRaw('SUM(affected_animals_new) as total')->where('appointment_id', $appointment_id)->first()->total;
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | MUTATORS
-    |--------------------------------------------------------------------------
-    */
 }

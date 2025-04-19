@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Headquarter;
 use App\Models\Traits\RandomModelTrait;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Database\Factories\UserFactory;
@@ -49,7 +48,7 @@ class User extends Authenticatable
 
     /**
      * Headquarters the user belongs to.
-     * 
+     *
      * @return BelongsToMany<Headquarter, $this>
      */
     public function headquarters(): BelongsToMany

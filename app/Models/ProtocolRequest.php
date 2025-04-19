@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\User;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Database\Factories\ProtocolRequestFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ProtocolRequest extends Model
 {
@@ -12,64 +14,49 @@ class ProtocolRequest extends Model
     /** @use HasFactory<ProtocolRequestFactory> */
     use HasFactory;
 
-    /*
-    |--------------------------------------------------------------------------
-    | GLOBAL VARIABLES
-    |--------------------------------------------------------------------------
-    */
+    protected $fillable = [
+        'council',
+        'name',
+        'email',
+        'phone',
+        'address',
+        'description',
+        'territory_id',
+        'user_id',
+        'protocol_id',
+    ];
 
-    protected $table = 'protocols_requests';
-    protected $primaryKey = 'id';
-
-    // public $timestamps = false;
-    // protected $guarded = ['id'];
-    protected $fillable = ['council', 'name', 'email', 'phone', 'address', 'description', 'territory_id', 'user_id', 'protocol_id'];
-    // protected $hidden = [];
-    // protected $dates = [];
-
-    /*
-    |--------------------------------------------------------------------------
-    | FUNCTIONS
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | RELATIONS
-    |--------------------------------------------------------------------------
-    */
-
-    public function territory()
+    /**
+     * @return BelongsTo<Territory, $this>
+     */
+    public function territory(): BelongsTo
     {
-        return $this->belongsTo('App\Models\Territory', 'territory_id');
+        return $this->belongsTo(Territory::class, 'territory_id');
     }
 
-    public function process()
+    /**
+     * @return BelongsTo<Process, $this>
+     */
+    public function process(): BelongsTo
     {
-        return $this->belongsTo('App\Models\Process', 'process_id');
+        return $this->belongsTo(Process::class, 'process_id');
     }
 
-    public function user()
+    /**
+     * @return BelongsTo<User, $this>
+     */
+    public function user(): BelongsTo
     {
-        return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function protocol()
+    /**
+     * @return BelongsTo<Protocol, $this>
+     */
+    public function protocol(): BelongsTo
     {
-        return $this->belongsTo('App\Models\Protocol', 'protocol_id');
+        return $this->belongsTo(Protocol::class, 'protocol_id');
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | SCOPES
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | ACCESORS
-    |--------------------------------------------------------------------------
-    */
 
     public function getUserLinkAttribute()
     {
@@ -85,10 +72,4 @@ class ProtocolRequest extends Model
     {
         return $this->getLink($this->protocol, is('admin', 'protocols'));
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | MUTATORS
-    |--------------------------------------------------------------------------
-    */
 }

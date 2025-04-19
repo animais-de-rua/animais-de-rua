@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use App\User;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Database\Factories\StoreOrderFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class StoreOrder extends Model
 {
@@ -12,26 +15,20 @@ class StoreOrder extends Model
     /** @use HasFactory<StoreOrderFactory> */
     use HasFactory;
 
-    /*
-    |--------------------------------------------------------------------------
-    | GLOBAL VARIABLES
-    |--------------------------------------------------------------------------
-    */
-
-    protected $table = 'store_orders';
-
-    // protected $primaryKey = 'id';
-    // public $timestamps = false;
-    // protected $guarded = ['id'];
-    protected $fillable = ['reference', 'cart', 'recipient', 'address', 'user_id', 'shipment_date', 'expense', 'payment', 'receipt', 'notes', 'invoice', 'status'];
-    // protected $hidden = [];
-    // protected $dates = [];
-
-    /*
-    |--------------------------------------------------------------------------
-    | FUNCTIONS
-    |--------------------------------------------------------------------------
-    */
+    protected $fillable = [
+        'reference',
+        'cart',
+        'recipient',
+        'address',
+        'user_id',
+        'shipment_date',
+        'expense',
+        'payment',
+        'receipt',
+        'notes',
+        'invoice',
+        'status',
+    ];
 
     public function addShipment()
     {
@@ -51,33 +48,22 @@ class StoreOrder extends Model
         </a>';
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | RELATIONS
-    |--------------------------------------------------------------------------
-    */
-
-    public function user()
+    /**
+     * @return BelongsTo<User, $this>
+     */
+    public function user(): BelongsTo
     {
-        return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function products()
+    /**
+     * @return BelongsToMany<StoreProduct, $this>
+     */
+    public function products(): BelongsToMany
     {
-        return $this->belongsToMany('App\Models\StoreProduct', 'store_orders_products', 'store_order_id', 'store_product_id')->withPivot(['quantity', 'discount', 'discount_no_vat']);
+        return $this->belongsToMany(StoreProduct::class, 'store_orders_products', 'store_order_id', 'store_product_id')
+            ->withPivot(['quantity', 'discount', 'discount_no_vat']);
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | SCOPES
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | ACCESORS
-    |--------------------------------------------------------------------------
-    */
 
     public function getShippedAttribute()
     {
@@ -107,12 +93,6 @@ class StoreOrder extends Model
     {
         return implode(' - ', [$this->reference, $this->recipient]);
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | MUTATORS
-    |--------------------------------------------------------------------------
-    */
 
     public function toArray()
     {

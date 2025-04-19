@@ -10,53 +10,19 @@ class Campaign extends Model
     use CrudTrait;
     use HasTranslations;
 
-    /*
-    |--------------------------------------------------------------------------
-    | GLOBAL VARIABLES
-    |--------------------------------------------------------------------------
-    */
+    protected $fillable = [
+        'name',
+        'introduction',
+        'description',
+        'image',
+    ];
+    protected $translatable = [
+        'name',
+        'introduction',
+        'description',
+    ];
 
-    protected $table = 'campaigns';
-    protected $primaryKey = 'id';
-
-    // public $timestamps = false;
-    // protected $guarded = ['id'];
-    protected $fillable = ['name', 'introduction', 'description', 'image'];
-
-    // protected $hidden = [];
-    // protected $dates = [];
-    protected array $translatable = ['name', 'introduction', 'description'];
-
-    /*
-    |--------------------------------------------------------------------------
-    | FUNCTIONS
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | RELATIONS
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | SCOPES
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | ACCESORS
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | MUTATORS
-    |--------------------------------------------------------------------------
-    */
-
+    // @deprecated
     public function setImageAttribute($value)
     {
         $filename = json_decode($this->attributes['name'])->pt;

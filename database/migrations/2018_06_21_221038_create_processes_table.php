@@ -1,7 +1,7 @@
 <?php
 
+use App\Enums\Animal\SpeciesEnum;
 use App\Enums\Process\StatusEnum;
-use App\Enums\Veterinary\SpeciesEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
