@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Helpers\HandleDropzoneUploadHelper;
 use App\Http\Controllers\Admin\Traits\Permissions;
 use Illuminate\Http\Request;
 
 class CrudController extends \Backpack\CRUD\app\Http\Controllers\CrudController
 {
-    use HandleDropzoneUploadHelper;
     use Permissions;
 
     public function wantsJSON()

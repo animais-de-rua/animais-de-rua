@@ -172,7 +172,7 @@ class ProtocolCrudController extends CrudController
     public function store(StoreRequest $request)
     {
         // Add user to the partner
-        $request->merge(['user_id' => backpack_user()->id]);
+        $request->merge(['user_id' => user()->id]);
 
         return parent::storeCrud($request);
     }

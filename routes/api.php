@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\APIController;
+use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,6 +16,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' => ['api']], function () {
+
+    // Website apis
+    Route::any('token', fn () => ['token' => csrf_token()])->name('token');
+    Route::get('animals/adoption/{district}/{specie}', [PageController::class, 'getAnimalsAdoption']);
+    Route::get('animals/godfather/{district}/{specie}', [PageController::class, 'getAnimalsGodfather']);
+
+    // Public API
     Route::get('/token', [APIController::class, 'getToken']);
     Route::get('/stats', [APIController::class, 'getStats']);
     Route::get('/headquarters', [APIController::class, 'getHeadquarters']);

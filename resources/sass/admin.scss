@@ -1,6 +1,9 @@
 // // Common rules
 @use "common.scss" as *;
 
+// Icomoon
+@import "icomoon/style-admin.css";
+
 :root {
   --tblr-primary: var(--colorB);
   --tblr-primary-rgb: var(--colorBrgb);

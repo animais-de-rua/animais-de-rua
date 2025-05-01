@@ -196,7 +196,7 @@ class StoreStockCrudController extends CrudController
         if (! is(['admin'], ['store stock'])) {
             $this->crud->denyAccess(['create', 'update', 'delete']);
 
-            $this->crud->addClause('where', 'user_id', backpack_user()->id);
+            $this->crud->addClause('where', 'user_id', user()->id);
         }
 
         // add asterisk for fields that are required in StoreTransactionRequest

@@ -1,15 +1,13 @@
 @font-face {
-  font-family: 'icomoon';
-  src:
-    url('fonts/icomoon.woff2?v3lrka') format('woff2'),
-    url('fonts/icomoon.woff?v3lrka') format('woff');
+  font-family: "icomoon";
+  src: url("fonts/icomoon-admin.woff2?v3lrka") format("woff2");
   font-weight: normal;
   font-style: normal;
 }
 
-[class^="icon-"], [class*=" icon-"] {
-  font-family: 'icomoon' !important;
-  speak: none;
+[class^="icon-"],
+[class*=" icon-"] {
+  font-family: "icomoon" !important;
   font-style: normal;
   font-weight: normal;
   font-variant: normal;

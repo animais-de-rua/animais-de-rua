@@ -5,14 +5,18 @@ namespace App\Http\Controllers;
 use App\Enums\Animal\SpeciesEnum;
 use App\Http\Controllers\Admin\Traits\LocalCache;
 use App\Models\Adoption;
-use App\Models\Page;
 use App\Models\Process;
-use DB;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
-use Newsletter;
-use Validator;
+use Spatie\Newsletter\Facades\Newsletter;
 
 class PageController extends Controller
 {
@@ -24,7 +28,7 @@ class PageController extends Controller
     {
         // \Debugbar::disable();
 
-        $locale = \Session::get('locale');
+        $locale = Session::get('locale');
 
         $this->data = LocalCache::page($slug, $locale);
 
@@ -48,7 +52,7 @@ class PageController extends Controller
     {
         $data = [];
 
-        if (\Request::ajax()) {
+        if (request()->ajax() || request()->wantsJson()) {
             $data = [];
         } else {
             $treated = LocalCache::treated();
@@ -56,7 +60,7 @@ class PageController extends Controller
             $form_acting_territories = LocalCache::headquarters_territories_acting();
             $form_all_territories = LocalCache::territories_form_all();
 
-            $base_counter = \Config::get('settings.base_counter', 0);
+            $base_counter = config('settings.base_counter', 0);
 
             $data = [
                 'total_interventions' => $base_counter + $treated + $adopted,
@@ -187,7 +191,7 @@ class PageController extends Controller
 
         return [
             'subscribed' => isset($_GET['success']),
-            'hasAccess' => backpack_user() && (is(['admin', 'volunteer']) || backpack_user()->friend_card_modality()->first()),
+            'hasAccess' => user() && (is(['admin', 'volunteer']) || user()->friend_card_modality()->first()),
             'modalities' => $modalities,
             'partners' => [
                 'list' => $partners,
@@ -198,9 +202,10 @@ class PageController extends Controller
     }
 
     // API
-    public function getAnimalsAdoption($territory = 0, $specie = 0): \Illuminate\Http\JsonResponse
+    public function getAnimalsAdoption(int $territory = 0, SpeciesEnum $specie = null): JsonResponse
     {
-        $data = Adoption::select(['adoptions.id', 'adoptions.name', 'processes.specie', 'adoptions.images', 'adoptions.created_at', 'district.name as district', 'county.name as county'])
+        $query = Adoption::query()
+            ->select(['adoptions.id', 'adoptions.name', 'processes.specie', 'adoptions.images', 'adoptions.created_at', 'district.name as district', 'county.name as county'])
             ->join('processes', 'processes.id', '=', 'adoptions.process_id')
             ->join('fats', 'fats.id', '=', 'adoptions.fat_id')
             ->join('territories as district', 'district.id', '=', DB::raw('LEFT(fats.territory_id, 2)'))
@@ -211,21 +216,22 @@ class PageController extends Controller
 
         // Specie
         if ($specie) {
-            $data = $data->where('processes.specie', $specie);
+            $query->where('processes.specie', $specie->value);
         }
 
         // Territory
         if ($territory > 0) {
             $territory = str_pad($territory, 2, 0, STR_PAD_LEFT);
-            $data = $data->where('fats.territory_id', 'like', $territory.'%');
+            $query->where('fats.territory_id', 'like', $territory.'%');
         }
 
-        return response()->json($data->get());
+        return response()->json($query->get());
     }
 
-    public function getAnimalsGodfather($territory = 0, $specie = 0): \Illuminate\Http\JsonResponse
+    public function getAnimalsGodfather($territory = 0, $specie = 0): JsonResponse
     {
-        $data = Process::select(['processes.id', 'processes.name', 'specie', 'images', 'created_at', 'district.name as district', 'county.name as county'])
+        $data = Process::query()
+            ->select(['processes.id', 'processes.name', 'specie', 'images', 'created_at', 'district.name as district', 'county.name as county'])
             ->join('territories as district', 'district.id', '=', DB::raw('LEFT(territory_id, 2)'))
             ->join('territories as county', 'county.id', '=', DB::raw('LEFT(territory_id, 4)'))
             ->where('status', 'waiting_godfather')
@@ -247,7 +253,7 @@ class PageController extends Controller
         return response()->json($data->get());
     }
 
-    public function subscribeNewsletter(Request $request): \Illuminate\Http\JsonResponse
+    public function subscribeNewsletter(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
@@ -268,7 +274,7 @@ class PageController extends Controller
 
         // Check if success
         if (! Newsletter::lastActionSucceeded()) {
-            \Log::info(Newsletter::getApi()->getLastError());
+            Log::info(Newsletter::getApi()->getLastError());
 
             $validator->errors()->add('email', __('Something went wrong, please try again later.'));
             throw new ValidationException($validator);
@@ -280,16 +286,16 @@ class PageController extends Controller
         ]);
     }
 
-    public function login(): \Illuminate\Http\RedirectResponse
+    public function login(): RedirectResponse
     {
-        $result = \Auth::guard(backpack_guard_name())->attempt(request()->only('email', 'password'));
+        $result = Auth::guard(backpack_guard_name())->attempt(request()->only('email', 'password'));
 
         return redirect('/friends')->with('login', $result);
     }
 
-    public function logout(): \Illuminate\Http\RedirectResponse
+    public function logout(): RedirectResponse
     {
-        \Auth::guard(backpack_guard_name())->logout();
+        Auth::guard(backpack_guard_name())->logout();
 
         return redirect('/friends')->with('logout', true);
     }

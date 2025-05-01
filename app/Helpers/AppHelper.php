@@ -1,21 +1,6 @@
 <?php
 
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Session;
-
-if (! function_exists('api')) {
-    function api(): Application
-    {
-        return app('App\Http\Controllers\Admin\APICrudController');
-    }
-}
-
-if (! function_exists('collect_only')) {
-    function collect_only($model, $attributes): array
-    {
-        return collect($model->toArray())->only($attributes)->all();
-    }
-}
 
 if (! function_exists('data_get_first')) {
     function data_get_first($target, $key, $attribute, $default = 0): mixed
@@ -26,94 +11,15 @@ if (! function_exists('data_get_first')) {
     }
 }
 
-if (! function_exists('hasRole')) {
-    function hasRole($role): bool
-    {
-        return backpack_user() && backpack_user()->hasRole($role);
-    }
-}
-
-if (! function_exists('hasPermission')) {
-    function hasPermission($permissions): bool
-    {
-        if (backpack_user()) {
-            if (! is_array($permissions)) {
-                $permissions = [$permissions];
-            }
-
-            foreach ($permissions as $permission) {
-                if (backpack_user()->checkPermissionTo($permission, backpack_guard_name())) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-}
-
-if (! function_exists('admin')) {
-    function admin(): bool
-    {
-        return backpack_user() && backpack_user()->hasRole('admin');
-    }
-}
-
-if (! function_exists('volunteer')) {
-    function volunteer(): bool
-    {
-        return backpack_user() && backpack_user()->hasRole('volunteer');
-    }
-}
-
-if (! function_exists('restrictTo')) {
-    function restrictTo($roles, $permissions = null): ?bool
-    {
-        $session_role = Session::get('role', null);
-        $session_permissions = Session::get('permissions', null);
-
-        // Default
-        if (! $session_role && ! $session_permissions) {
-            return ($roles && hasRole($roles)) || ($permissions && hasPermission($permissions));
-        }
-
-        // View as
-        if (is_string($roles)) {
-            $roles = [$roles];
-        }
-
-        if (is_string($permissions)) {
-            $permissions = [$permissions];
-        }
-
-        // View as Role only
-        if ($session_role && (! $session_permissions || ! $permissions)) {
-            return in_array($session_role, $roles);
-        }
-
-        // View as Role and Permissions
-        elseif ($session_role && $session_permissions && $permissions) {
-            return in_array($session_role, $roles) || count(array_intersect($session_permissions, array_values($permissions)));
-        }
-    }
-}
-
 if (! function_exists('restrictToHeadquarters')) {
-    function restrictToHeadquarters()
+    function restrictToHeadquarters(): bool
     {
-        return is('admin') ? null : (Session::get('headquarters', null) ?: backpack_user()->headquarters->pluck('id')->toArray() ?: null);
-    }
-}
-
-if (! function_exists('is')) {
-    function is($roles, $permissions = null)
-    {
-        return restrictTo($roles, $permissions);
+        return is('admin') ? null : (Session::get('headquarters', null) ?: user()->headquarters->pluck('id')->toArray() ?: null);
     }
 }
 
 if (! function_exists('thumb_image')) {
-    function thumb_image($path)
+    function thumb_image(string $path): string
     {
         if (($pos = strrpos($path, '/')) !== false) {
             $path = substr_replace($path, '/thumb/', $pos, 1);

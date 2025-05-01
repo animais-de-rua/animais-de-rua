@@ -80,9 +80,9 @@ return [
     |
     */
 
-    'locale' => env('APP_LOCAL', 'en'),
+    'locale' => env('APP_LOCAL', 'pt'),
 
-    'locales' => array_keys(config('backpack.crud.locales', [])),
+    'locales' => array_keys((include 'backpack/crud.php')['locales'] ?? []),
 
     /*
     |--------------------------------------------------------------------------

@@ -122,7 +122,7 @@ class APICrudController extends CrudController
         }
 
         if (! is('admin')) {
-            $results = $results->where('user_id', backpack_user()->id);
+            $results = $results->where('user_id', user()->id);
         }
 
         return $results->orderBy('id', 'DESC')->paginate(10);

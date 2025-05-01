@@ -457,7 +457,7 @@ class AppointmentCrudController extends CrudController
         if (! is('admin', ['appointments', 'accountancy'])) {
             $this->crud->denyAccess(['update']);
 
-            $this->crud->addClause('where', 'user_id', backpack_user()->id);
+            $this->crud->addClause('where', 'user_id', user()->id);
         }
 
         if (! is('admin', 'appointments')) {
@@ -472,7 +472,7 @@ class AppointmentCrudController extends CrudController
             })->get();
         } else {
             // Headquarter filter
-            $headquarter_id = admin() ? \Session::get('headquarter', null) : backpack_user()->headquarter_id;
+            $headquarter_id = admin() ? \Session::get('headquarter', null) : user()->headquarter_id;
             if ($headquarter_id) {
                 $this->crud->query->whereHas('process', function ($query) use ($headquarter_id) {
                     $query->where('headquarter_id', $headquarter_id);
@@ -541,7 +541,7 @@ class AppointmentCrudController extends CrudController
 
         // Common volunteers can only destroy their own appointments
         // if (!is('admin', ['appointments', 'accountancy'])) {
-        //     if ($appointment->user_id != backpack_user()->id) {
+        //     if ($appointment->user_id != user()->id) {
         //         return false;
         //     }
         // }
@@ -552,7 +552,7 @@ class AppointmentCrudController extends CrudController
     public function store(StoreRequest $request)
     {
         // Add user
-        $request->merge(['user_id' => backpack_user()->id]);
+        $request->merge(['user_id' => user()->id]);
 
         return parent::storeCrud($request);
     }

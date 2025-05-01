@@ -709,7 +709,7 @@ class ProcessCrudController extends CrudController
     public function store(StoreRequest $request)
     {
         // Add user
-        $request->merge(['user_id' => backpack_user()->id]);
+        $request->merge(['user_id' => user()->id]);
 
         if (! $request->headquarter_id) {
             $request->merge(['headquarter_id' => restrictToHeadquarters()[0]]);

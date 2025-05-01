@@ -21,6 +21,11 @@ return [
     'view_namespace' => 'backpack.theme-tabler::',
     'view_namespace_fallback' => 'backpack.theme-tabler::',
 
+    // Options for the theme
+    'options' => [
+        'showPasswordVisibilityToggler' => true,
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Look & feel customizations
@@ -46,7 +51,7 @@ return [
     // ----
 
     // Project name - shown in the window title
-    'project_name' => 'Gema Digital Admin Panel',
+    'project_name' => 'Animais de Rua',
 
     // Content of the HTML meta robots tag to prevent indexing and link following
     'meta_robots_content' => 'noindex, nofollow',
@@ -73,10 +78,10 @@ return [
     // ------
 
     // Developer or company name. Shown in footer.
-    'developer_name' => 'Gema Digital',
+    'developer_name' => 'António Almeida',
 
     // Developer website. Link in footer. Type false if you want to hide it.
-    'developer_link' => 'http://gemadigital.com',
+    'developer_link' => 'http://promatik.pt',
 
     // Show powered by Laravel Backpack in the footer? true/false
     'show_powered_by' => false,

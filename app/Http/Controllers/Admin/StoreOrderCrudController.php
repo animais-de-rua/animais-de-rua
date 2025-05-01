@@ -307,7 +307,7 @@ class StoreOrderCrudController extends CrudController
             $this->crud->denyAccess(['create']);
 
             // Filter by user
-            $this->crud->addClause('where', 'user_id', backpack_user()->id);
+            $this->crud->addClause('where', 'user_id', user()->id);
         }
 
         // Add Shipment button

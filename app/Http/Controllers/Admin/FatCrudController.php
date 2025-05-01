@@ -207,13 +207,13 @@ class FatCrudController extends CrudController
         // Add user
         $headquarters = restrictToHeadquarters();
         $request->merge([
-            'user_id' => backpack_user()->id,
+            'user_id' => user()->id,
             'headquarter_id' => $headquarters && count($headquarters) ? $headquarters[0] : null,
         ]);
 
         // Add user
         $request->merge([
-            'user_id' => backpack_user()->id,
+            'user_id' => user()->id,
         ]);
 
         $store = parent::storeCrud($request);

@@ -96,9 +96,9 @@
 
         <h1>{{ __('web.friend_card_login.title') }}</h1>
 
-        @if(backpack_user())
+        @if(user())
             <div class="box">
-                <span>{!! __('web.friend_card_login.welcome', ['name' => '<strong>'.backpack_user()->name.'</strong>']) !!}</span>
+                <span>{!! __('web.friend_card_login.welcome', ['name' => '<strong>'.user()->name.'</strong>']) !!}</span>
                 @if($hasAccess)
                 <p>{{ __('web.friend_card_login.messages.1') }}</p>
                 @else
@@ -112,11 +112,11 @@
                     <img class="bg" src="{{ url("/img/logo/logo-white.png") }}" />
                     <div class="top">
                         <div class="title">{{ ucfirst(__('friend')) }} Animais de Rua</div>
-                        <div class="number code">#{{ backpack_user()->friend_card_number }}</div>
+                        <div class="number code">#{{ user()->friend_card_number }}</div>
                     </div>
                     <div class="bottom">
-                        <div class="owner code">{{ backpack_user()->name }}</div>
-                        <div class="expiry-date code">{{ join(' / ', backpack_user()->friendCardExpirationDate) }}</div>
+                        <div class="owner code">{{ user()->name }}</div>
+                        <div class="expiry-date code">{{ join(' / ', user()->friendCardExpirationDate) }}</div>
                     </div>
                 </div>
             </div>

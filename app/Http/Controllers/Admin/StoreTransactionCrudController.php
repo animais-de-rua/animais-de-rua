@@ -180,7 +180,7 @@ class StoreTransactionCrudController extends CrudController
         if (! is(['admin'], ['store transaction'])) {
             $this->crud->denyAccess(['update', 'delete']);
 
-            $this->crud->addClause('where', 'user_id', backpack_user()->id);
+            $this->crud->addClause('where', 'user_id', user()->id);
         }
 
         if (! is('admin')) {
@@ -195,7 +195,7 @@ class StoreTransactionCrudController extends CrudController
     public function store(StoreRequest $request)
     {
         if (! is(['admin'])) {
-            $request->merge(['user_id' => backpack_user()->id]);
+            $request->merge(['user_id' => user()->id]);
         }
 
         return parent::storeCrud($request);

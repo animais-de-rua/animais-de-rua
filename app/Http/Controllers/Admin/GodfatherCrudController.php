@@ -257,7 +257,7 @@ class GodfatherCrudController extends CrudController
     {
         // Add user
         $request->merge([
-            'user_id' => backpack_user()->id,
+            'user_id' => user()->id,
         ]);
 
         $store = parent::storeCrud($request);

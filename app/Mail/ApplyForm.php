@@ -11,26 +11,20 @@ class ApplyForm extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $process;
-
     /**
      * Create a new message instance.
-     *
-     * @return void
      */
-    public function __construct(Process $process)
-    {
-        $this->process = $process;
-    }
+    public function __construct(
+        public Process $process,
+    ) {}
 
     /**
      * Build the message.
-     *
-     * @return $this
      */
-    public function build()
+    public function build(): self
     {
-        return $this->markdown('emails.form.apply')
+        return $this
+            ->markdown('emails.form.apply')
             ->subject(config('app.name').' - Candidatura de Esterilização')
             ->with([
                 'process' => $this->process,

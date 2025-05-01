@@ -48,7 +48,7 @@ class Appointment extends Model
         $disabled = true;
 
         // Enable in case of own appointment or treatments or appointments permission
-        if (is('admin', ['treatments', 'appointments']) || $this->user_id == backpack_user()->id) {
+        if (is('admin', ['treatments', 'appointments']) || $this->user_id == user()->id) {
             $disabled = false;
         }
 

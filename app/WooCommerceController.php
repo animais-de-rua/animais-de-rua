@@ -2,38 +2,45 @@
 
 namespace App\Http\Controllers;
 
-use Config;
-use Woocommerce;
+use Automattic\WooCommerce\Client as WooCommerce;
 
 class WooCommerceController extends Controller
 {
-    public function getProducts()
+    /**
+     * @return array<object>
+     */
+    public function getProducts(): array
     {
-        $tags = Config::get('woocommerce.tags');
-        $limit = Config::get('woocommerce.limit', 6);
+        $wooCommerce = new WooCommerce(
+            url: config('woocommerce.store_url'),
+            consumer_key: config('woocommerce.consumer_key'),
+            consumer_secret: config('woocommerce.consumer_secret'),
+            options: [
+                'version' => 'wc/v3',
+            ],
+        );
 
-        $result = Woocommerce::get('products', [
+        $result = $wooCommerce->get('products', [
             'status' => 'publish',
-            'tag' => $tags,
-            'per_page' => $limit,
+            'tag' => config('woocommerce.tags'),
+            'per_page' => config('woocommerce.limit', 6),
         ]);
 
-        $products = [];
-        foreach ($result as $product) {
-            $img = $product['images'][0]['src'] ?? null;
-            $img = preg_replace('/(.+)\.(\w+)$/', '${1}-300x300.${2}', $img);
-            $img = str_replace('-scaled', '', $img);
+        return collect($result)
+            ->map(function (array $product): object {
+                $img = $product['images'][0]['src'] ?? null;
+                $img = preg_replace('/(.+)\.(\w+)$/', '${1}-300x300.${2}', $img);
+                $img = str_replace('-scaled', '', $img);
 
-            $products[] = (object) [
-                'id' => (int) $product['id'],
-                'name' => (string) $product['name'],
-                'price' => (float) $product['price'],
-                'image' => $img,
-                'description' => (string) $product['short_description'],
-                'url' => $product['permalink'],
-            ];
-        }
-
-        return $products;
+                return (object) [
+                    'id' => (int) $product['id'],
+                    'name' => (string) $product['name'],
+                    'price' => (float) $product['price'],
+                    'image' => $img,
+                    'description' => (string) $product['short_description'],
+                    'url' => $product['permalink'],
+                ];
+            })
+            ->toArray();
     }
 }

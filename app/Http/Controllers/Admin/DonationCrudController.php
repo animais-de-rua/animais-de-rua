@@ -377,7 +377,7 @@ class DonationCrudController extends CrudController
     public function store(StoreRequest $request)
     {
         // Add user
-        $request->merge(['user_id' => backpack_user()->id]);
+        $request->merge(['user_id' => user()->id]);
 
         $redirect = parent::storeCrud($request);
 

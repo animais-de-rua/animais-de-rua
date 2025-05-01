@@ -13,7 +13,7 @@ trait Permissions
 
     public function removeDefaultActions()
     {
-        if (! backpack_user()->hasRole('admin')) {
+        if (! user()->hasRole('admin')) {
             $this->crud->removeButton('update');
             $this->crud->removeButton('delete');
 
