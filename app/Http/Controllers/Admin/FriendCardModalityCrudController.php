@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Admin\Traits\Permissions;
 use App\Http\Requests\FriendCardModalityRequest as StoreRequest;
 use App\Http\Requests\FriendCardModalityRequest as UpdateRequest;
-use App\Models\FriendCardModality;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * Class FriendCardModalityCrudController
- * @package App\Http\Controllers\Admin
+ *
  * @property-read CrudPanel $crud
  */
 class FriendCardModalityCrudController extends CrudController
@@ -24,7 +24,7 @@ class FriendCardModalityCrudController extends CrudController
         |--------------------------------------------------------------------------
         */
         $this->crud->setModel('App\Models\FriendCardModality');
-        $this->crud->setRoute(config('backpack.base.route_prefix') . '/friend-card-modality');
+        $this->crud->setRoute(config('backpack.base.route_prefix').'/friend-card-modality');
         $this->crud->setEntityNameStrings(__('friend card modality'), __('friend card modalities'));
 
         /*
@@ -109,7 +109,7 @@ class FriendCardModalityCrudController extends CrudController
         ]);
 
         // ------ CRUD ACCESS
-        if (!is('admin')) {
+        if (! is('admin')) {
             $this->crud->denyAccess(['list', 'create', 'update', 'delete']);
         }
 
@@ -130,8 +130,8 @@ class FriendCardModalityCrudController extends CrudController
         return parent::updateCrud($request);
     }
 
-    public function sync()
+    public function sync(string $operation): void
     {
-        \Cache::forget('friend_card_modalities');
+        Cache::forget('friend_card_modalities');
     }
 }

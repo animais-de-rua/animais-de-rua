@@ -9,10 +9,11 @@ use App\Http\Requests\DonationRequest as UpdateRequest;
 use App\Models\Donation;
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Request;
 
 /**
  * Class DonationCrudController
- * @package App\Http\Controllers\Admin
+ *
  * @property-read CrudPanel $crud
  */
 class DonationCrudController extends CrudController
@@ -27,7 +28,7 @@ class DonationCrudController extends CrudController
         |--------------------------------------------------------------------------
         */
         $this->crud->setModel('App\Models\Donation');
-        $this->crud->setRoute(config('backpack.base.route_prefix') . '/donation');
+        $this->crud->setRoute(config('backpack.base.route_prefix').'/donation');
         $this->crud->setEntityNameStrings(__('donation'), __('donations'));
 
         /*
@@ -58,7 +59,7 @@ class DonationCrudController extends CrudController
             'data_source' => url('admin/process/ajax/search'),
             'placeholder' => __('Select a process'),
             'minimum_input_length' => 2,
-            'default' => \Request::get('process') ?: false,
+            'default' => Request::get('process') ?: false,
         ]);
 
         $this->crud->addField([
@@ -82,7 +83,7 @@ class DonationCrudController extends CrudController
             'data_source' => url('admin/godfather/ajax/search'),
             'placeholder' => __('Select a godfather'),
             'minimum_input_length' => 2,
-            'default' => \Request::get('godfather') ?: false,
+            'default' => Request::get('godfather') ?: false,
             'attributes' => [
                 'donation_type_select' => 'private',
             ],
@@ -95,7 +96,7 @@ class DonationCrudController extends CrudController
             'entity' => 'headquarter',
             'attribute' => 'name',
             'model' => 'App\Models\Headquarter',
-            'default' => \Request::get('headquarter') ?: false,
+            'default' => Request::get('headquarter') ?: false,
             'attributes' => [
                 'donation_type_select' => 'headquarter',
             ],
@@ -111,7 +112,7 @@ class DonationCrudController extends CrudController
             'data_source' => url('admin/protocol/ajax/search'),
             'placeholder' => __('Select a protocol'),
             'minimum_input_length' => 2,
-            'default' => \Request::get('protocol') ?: false,
+            'default' => Request::get('protocol') ?: false,
             'attributes' => [
                 'donation_type_select' => 'protocol',
             ],
@@ -265,7 +266,7 @@ class DonationCrudController extends CrudController
         $this->crud->addFilter([
             'name' => 'headquarter_type',
             'type' => 'select2_ajax',
-            'label' => ucfirst(__('headquarter')) . ' (' . __('Type') . ')',
+            'label' => ucfirst(__('headquarter')).' ('.__('Type').')',
             'placeholder' => __('Select a headquarter'),
         ],
             url('admin/headquarter/ajax/filter'),
@@ -276,7 +277,7 @@ class DonationCrudController extends CrudController
         $this->crud->addFilter([
             'name' => 'headquarter',
             'type' => 'select2_ajax',
-            'label' => ucfirst(__('headquarter')) . ' (' . ucfirst(__('process')) . ')',
+            'label' => ucfirst(__('headquarter')).' ('.ucfirst(__('process')).')',
             'placeholder' => __('Select a headquarter'),
         ],
             url('admin/headquarter/ajax/filter'),
@@ -333,7 +334,7 @@ class DonationCrudController extends CrudController
             'label' => ucfirst(__('volunteer')),
             'placeholder' => __('Select a volunteer'),
         ],
-            url('admin/user/ajax/filter/' . User::ROLE_VOLUNTEER),
+            url('admin/user/ajax/filter/'.User::ROLE_VOLUNTEER),
             function ($value) {
                 $this->crud->addClause('where', 'user_id', $value);
             });
@@ -342,11 +343,11 @@ class DonationCrudController extends CrudController
         $this->crud->enableDetailsRow();
         $this->crud->allowAccess('details_row');
 
-        if (!is('admin', 'accountancy')) {
+        if (! is('admin', 'accountancy')) {
             $this->crud->denyAccess(['list', 'create']);
         }
 
-        if (!is('admin')) {
+        if (! is('admin')) {
             $this->crud->denyAccess(['delete', 'update']);
 
             $this->crud->addClause('whereHas', 'process', function ($query) {
@@ -370,14 +371,14 @@ class DonationCrudController extends CrudController
         $donation = Donation::select(['notes'])->find($id);
 
         return "<div style='margin:5px 8px'>
-                <p style='white-space: pre-wrap;'><i>" . __('Notes') . "</i>: $donation->notes</p>
+                <p style='white-space: pre-wrap;'><i>".__('Notes')."</i>: $donation->notes</p>
             </div>";
     }
 
     public function store(StoreRequest $request)
     {
         // Add user
-        $request->merge(['user_id' => backpack_user()->id]);
+        $request->merge(['user_id' => user()->id]);
 
         $redirect = parent::storeCrud($request);
 

@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Admin\Traits\Permissions;
 use App\Http\Requests\SponsorRequest as StoreRequest;
 use App\Http\Requests\SponsorRequest as UpdateRequest;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * Class SponsorCrudController
- * @package App\Http\Controllers\Admin
+ *
  * @property-read CrudPanel $crud
  */
 class SponsorCrudController extends CrudController
@@ -23,7 +24,7 @@ class SponsorCrudController extends CrudController
         |--------------------------------------------------------------------------
         */
         $this->crud->setModel('App\Models\Sponsor');
-        $this->crud->setRoute(config('backpack.base.route_prefix') . '/sponsor');
+        $this->crud->setRoute(config('backpack.base.route_prefix').'/sponsor');
         $this->crud->setEntityNameStrings(__('sponsor'), __('sponsors'));
 
         /*
@@ -78,7 +79,7 @@ class SponsorCrudController extends CrudController
         ]);
 
         // ------ CRUD ACCESS
-        if (!is('admin')) {
+        if (! is('admin')) {
             $this->crud->denyAccess(['list', 'create', 'update', 'delete']);
         }
 
@@ -100,8 +101,8 @@ class SponsorCrudController extends CrudController
         return parent::updateCrud($request);
     }
 
-    public function sync()
+    public function sync(string $operation): void
     {
-        \Cache::forget('sponsors');
+        Cache::forget('sponsors');
     }
 }

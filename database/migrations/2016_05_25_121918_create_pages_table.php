@@ -14,14 +14,14 @@ class CreatePagesTable extends Migration
     {
         // TODO: use JSON data type for 'extras' instead of string
         Schema::create('pages', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('template');
             $table->string('name');
             $table->string('title');
-            $table->string('slug');
+            $table->string('slug', 127)->unique()->nullable();
             $table->text('content')->nullable();
-            $table->text('extras')->nullable();
-            $table->text('extras_translatable')->nullable();
+            $table->longText('extras')->nullable();
+            $table->longText('extras_translatable')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -34,6 +34,6 @@ class CreatePagesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('pages');
+        Schema::dropIfExists('pages');
     }
 }

@@ -10,10 +10,11 @@ use App\Models\Partner;
 use App\Models\Territory;
 use DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * Class PartnerCrudController
- * @package App\Http\Controllers\Admin
+ *
  * @property-read CrudPanel $crud
  */
 class PartnerCrudController extends CrudController
@@ -28,7 +29,7 @@ class PartnerCrudController extends CrudController
         |--------------------------------------------------------------------------
         */
         $this->crud->setModel('App\Models\Partner');
-        $this->crud->setRoute(config('backpack.base.route_prefix') . '/partner');
+        $this->crud->setRoute(config('backpack.base.route_prefix').'/partner');
         $this->crud->setEntityNameStrings(__('partner'), __('partners'));
 
         /*
@@ -106,19 +107,19 @@ class PartnerCrudController extends CrudController
 
         $this->crud->addColumn([
             'name' => 'phone1_info',
-            'label' => __('Phone') . ' (' . __('Infos') . ')',
+            'label' => __('Phone').' ('.__('Infos').')',
             'visibleInTable' => false,
         ]);
 
         $this->crud->addColumn([
             'name' => 'phone2',
-            'label' => __('Phone') . ' 2',
+            'label' => __('Phone').' 2',
             'visibleInTable' => false,
         ]);
 
         $this->crud->addColumn([
             'name' => 'phone2_info',
-            'label' => __('Phone') . ' 2 (' . __('Infos') . ')',
+            'label' => __('Phone').' 2 ('.__('Infos').')',
             'visibleInTable' => false,
         ]);
 
@@ -142,7 +143,7 @@ class PartnerCrudController extends CrudController
 
         $this->crud->addColumn([
             'name' => 'address_info',
-            'label' => __('Address') . ' (' . __('Infos') . ')',
+            'label' => __('Address').' ('.__('Infos').')',
             'visibleInTable' => false,
         ]);
 
@@ -181,7 +182,7 @@ class PartnerCrudController extends CrudController
             'type' => 'select2_multiple_data_source',
             'name' => 'territories',
             'attribute' => 'name',
-            'model' => api()->territorySearch(Territory::DISTRITO, new Request()),
+            'model' => api()->territorySearch(Territory::DISTRITO, new Request),
             'pivot' => true,
         ]);
 
@@ -198,19 +199,19 @@ class PartnerCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'label' => __('Phone') . ' info',
+            'label' => __('Phone').' info',
             'name' => 'phone1_info',
             'type' => 'text',
         ]);
 
         $this->crud->addField([
-            'label' => __('Phone') . ' 2',
+            'label' => __('Phone').' 2',
             'name' => 'phone2',
             'type' => 'text',
         ]);
 
         $this->crud->addField([
-            'label' => __('Phone') . ' 2 info',
+            'label' => __('Phone').' 2 info',
             'name' => 'phone2_info',
             'type' => 'text',
         ]);
@@ -331,11 +332,11 @@ class PartnerCrudController extends CrudController
             });
 
         // ------ CRUD ACCESS
-        if (!is(['admin', 'friend card'])) {
+        if (! is(['admin', 'friend card'])) {
             $this->crud->denyAccess(['list', 'create', 'update']);
         }
 
-        if (!is('admin')) {
+        if (! is('admin')) {
             $this->crud->denyAccess(['delete']);
         }
 
@@ -353,7 +354,7 @@ class PartnerCrudController extends CrudController
     public function store(StoreRequest $request)
     {
         // Add user to the partner
-        $request->merge(['user_id' => backpack_user()->id]);
+        $request->merge(['user_id' => user()->id]);
 
         return parent::storeCrud($request);
     }
@@ -363,9 +364,9 @@ class PartnerCrudController extends CrudController
         return parent::updateCrud($request);
     }
 
-    public function sync()
+    public function sync(string $operation): void
     {
-        \Cache::forget('partners');
-        \Cache::forget('partners_territories');
+        Cache::forget('partners');
+        Cache::forget('partners_territories');
     }
 }

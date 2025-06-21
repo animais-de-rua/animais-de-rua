@@ -4,7 +4,7 @@
         <div class="left">
             <div class="logo">
                 <a class="link" href="/" aria-label="{{ __("Home") }}">
-                    @svg('img/logo/logo-text.svg', '', 'max-width: 230px; max-height: 36px;')
+                    @svg('img/logo/logo-text.svg', '', ['style' => 'max-width: 230px; max-height: 36px;'])
                 </a>
             </div>
 

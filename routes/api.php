@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\APIController;
+use App\Http\Controllers\PageController;
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -13,22 +17,19 @@
 
 Route::group(['middleware' => ['api']], function () {
 
-    Route::get('/token', 'APIController@getToken');
+    // Website apis
+    Route::any('token', fn () => ['token' => csrf_token()])->name('token');
+    Route::get('animals/adoption/{district}/{specie}', [PageController::class, 'getAnimalsAdoption']);
+    Route::get('animals/godfather/{district}/{specie}', [PageController::class, 'getAnimalsGodfather']);
 
-    Route::get('/stats', 'APIController@getStats');
-
-    Route::get('/headquarters', 'APIController@getHeadquarters');
-
-    Route::get('/campaigns', 'APIController@getCampaigns');
-
-    Route::get('/products', 'APIController@getProducts');
-
-    Route::get('/sponsors', 'APIController@getSponsors');
-
-    Route::get('/partners', 'APIController@getPartners');
-
-    Route::get('/friend-card', 'APIController@getFriendCard');
-
-    Route::get('/help', 'APIController@getHelp');
-
+    // Public API
+    Route::get('/token', [APIController::class, 'getToken']);
+    Route::get('/stats', [APIController::class, 'getStats']);
+    Route::get('/headquarters', [APIController::class, 'getHeadquarters']);
+    Route::get('/campaigns', [APIController::class, 'getCampaigns']);
+    Route::get('/products', [APIController::class, 'getProducts']);
+    Route::get('/sponsors', [APIController::class, 'getSponsors']);
+    Route::get('/partners', [APIController::class, 'getPartners']);
+    Route::get('/friend-card', [APIController::class, 'getFriendCard']);
+    Route::get('/help', [APIController::class, 'getHelp']);
 });

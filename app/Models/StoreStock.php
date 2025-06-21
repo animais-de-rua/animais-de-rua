@@ -2,59 +2,41 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\CrudTrait;
+use App\User;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Database\Factories\StoreStockFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class StoreStock extends Model
 {
     use CrudTrait;
+    /** @use HasFactory<StoreStockFactory> */
+    use HasFactory;
 
-    /*
-    |--------------------------------------------------------------------------
-    | GLOBAL VARIABLES
-    |--------------------------------------------------------------------------
-    */
+    protected $fillable = [
+        'user_id',
+        'store_product_id',
+        'quantity',
+        'type',
+        'notes',
+    ];
 
-    protected $table = 'store_stock';
-    protected $primaryKey = 'id';
-    // public $timestamps = false;
-    // protected $guarded = ['id'];
-    protected $fillable = ['user_id', 'store_product_id', 'quantity', 'type', 'notes'];
-    // protected $hidden = [];
-    // protected $dates = [];
-
-    /*
-    |--------------------------------------------------------------------------
-    | FUNCTIONS
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | RELATIONS
-    |--------------------------------------------------------------------------
-    */
-
-    public function user()
+    /**
+     * @return BelongsTo<User, $this>
+     */
+    public function user(): BelongsTo
     {
-        return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function product()
+    /**
+     * @return BelongsTo<StoreProduct, $this>
+     */
+    public function product(): BelongsTo
     {
-        return $this->belongsTo('App\Models\StoreProduct', 'store_product_id');
+        return $this->belongsTo(StoreProduct::class, 'store_product_id');
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | SCOPES
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | ACCESORS
-    |--------------------------------------------------------------------------
-    */
 
     public function getUserLinkAttribute()
     {
@@ -79,10 +61,4 @@ class StoreStock extends Model
             return "<span style='color:#0A0'>{$value}</span>";
         }
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | MUTATORS
-    |--------------------------------------------------------------------------
-    */
 }

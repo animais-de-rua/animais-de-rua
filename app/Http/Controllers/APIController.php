@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Admin\Traits\LocalCache;
-use Config;
+use App\Helpers\LocalCache;
+use Illuminate\Support\Facades\Config;
 
 class APIController extends Controller
 {
-
-    public function getToken()
+    public function getToken(): array
     {
         return [
             'token' => csrf_token(),
         ];
     }
 
-    public function getStats()
+    public function getStats(): array
     {
         $treated = LocalCache::treated();
         $adopted = LocalCache::adopted();
@@ -30,7 +29,7 @@ class APIController extends Controller
         ];
     }
 
-    public function getHeadquarters()
+    public function getHeadquarters(): array
     {
         $headquarters = LocalCache::headquarters();
         $headquarters_territories_acting = LocalCache::headquarters_territories_acting();
@@ -41,12 +40,12 @@ class APIController extends Controller
         ];
     }
 
-    public function getCampaigns()
+    public function getCampaigns(): array
     {
         $campaigns = LocalCache::campaigns()->toArray();
 
         foreach ($campaigns as &$campaign) {
-            $campaign['image'] = url('uploads/' . $campaign['image']);
+            $campaign['image'] = url('uploads/'.$campaign['image']);
         }
 
         return [
@@ -54,7 +53,7 @@ class APIController extends Controller
         ];
     }
 
-    public function getProducts()
+    public function getProducts(): array
     {
         $products = LocalCache::products();
 
@@ -63,12 +62,12 @@ class APIController extends Controller
         ];
     }
 
-    public function getSponsors()
+    public function getSponsors(): array
     {
         $sponsors = LocalCache::sponsors()->toArray();
 
         foreach ($sponsors as &$sponsor) {
-            $sponsor['image'] = url('uploads/' . $sponsor['image']);
+            $sponsor['image'] = url('uploads/'.$sponsor['image']);
         }
 
         return [
@@ -76,7 +75,7 @@ class APIController extends Controller
         ];
     }
 
-    public function getPartners()
+    public function getPartners(): array
     {
         $partners = LocalCache::partners();
         $partners_categories = LocalCache::partners_categories();
@@ -89,7 +88,7 @@ class APIController extends Controller
         ];
     }
 
-    public function getFriendCard()
+    public function getFriendCard(): array
     {
         $friend_card_modalities = LocalCache::friend_card_modalities();
 
@@ -98,7 +97,7 @@ class APIController extends Controller
         ];
     }
 
-    public function getHelp()
+    public function getHelp(): array
     {
         $processes_urgent = LocalCache::processes_urgent();
 

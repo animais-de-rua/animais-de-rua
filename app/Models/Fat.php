@@ -2,69 +2,59 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\CrudTrait;
+use App\User;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Database\Factories\FatFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Fat extends Model
 {
     use CrudTrait;
+    /** @use HasFactory<FatFactory> */
+    use HasFactory;
 
-    /*
-    |--------------------------------------------------------------------------
-    | GLOBAL VARIABLES
-    |--------------------------------------------------------------------------
-    */
+    protected $fillable = [
+        'name',
+        'email',
+        'phone',
+        'territory_id',
+        'user_id',
+    ];
 
-    protected $table = 'fats';
-    // protected $primaryKey = 'id';
-    // public $timestamps = false;
-    // protected $guarded = ['id'];
-    protected $fillable = ['name', 'email', 'phone', 'territory_id', 'user_id'];
-    // protected $hidden = [];
-    // protected $dates = [];
-
-    /*
-    |--------------------------------------------------------------------------
-    | FUNCTIONS
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | RELATIONS
-    |--------------------------------------------------------------------------
-    */
-
-    public function adoptions()
+    /**
+     * @return HasMany<Adoption, $this>
+     */
+    public function adoptions(): HasMany
     {
-        return $this->hasMany('App\Models\Adoption', 'fat_id');
+        return $this->hasMany(Adoption::class, 'fat_id');
     }
 
-    public function territory()
+    /**
+     * @return BelongsTo<Territory, $this>
+     */
+    public function territory(): BelongsTo
     {
-        return $this->belongsTo('App\Models\Territory', 'territory_id');
+        return $this->belongsTo(Territory::class, 'territory_id');
     }
 
-    public function headquarters()
+    /**
+     * @return BelongsToMany<Headquarter, $this>
+     */
+    public function headquarters(): BelongsToMany
     {
-        return $this->belongsToMany('App\Models\Headquarter', 'fats_headquarters', 'fat_id', 'headquarter_id');
+        return $this->belongsToMany(Headquarter::class, 'fats_headquarters', 'fat_id', 'headquarter_id');
     }
 
-    public function user()
+    /**
+     * @return BelongsTo<User, $this>
+     */
+    public function user(): BelongsTo
     {
-        return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | SCOPES
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | ACCESORS
-    |--------------------------------------------------------------------------
-    */
 
     public function getDetailAttribute()
     {
@@ -75,12 +65,6 @@ class Fat extends Model
     {
         return $this->getLink($this->user, is('admin'));
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | MUTATORS
-    |--------------------------------------------------------------------------
-    */
 
     public function toArray()
     {

@@ -1,0 +1,17 @@
+includes:
+    - ./vendor/larastan/larastan/extension.neon
+
+parameters:
+
+    paths:
+        - app/
+        - config/
+        - database/
+        - lang/
+        - resources/
+        - routes/
+        - tests/
+    excludePaths:
+        - resources/views/vendor/elfinder
+
+    level: 8

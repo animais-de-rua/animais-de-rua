@@ -14,12 +14,12 @@ class UserUpdateRequest extends UserUpdateCrudRequest
     public function rules()
     {
         $rules = [
-            'email' => 'nullable|unique:users,email,' . $this->get('id'),
+            'email' => 'nullable|unique:users,email,'.$this->get('id'),
             'name' => 'nullable',
             'password' => 'nullable|confirmed',
         ];
 
-        if (!is('admin')) {
+        if (! is('admin')) {
             $rules = array_merge($rules, [
                 'friend_card_modality_id' => 'required',
             ]);

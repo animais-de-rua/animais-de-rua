@@ -6,13 +6,14 @@ use App\Helpers\EnumHelper;
 use App\Http\Controllers\Admin\Traits\Permissions;
 use App\Http\Requests\AdoptionRequest as StoreRequest;
 use App\Http\Requests\AdoptionRequest as UpdateRequest;
-use App\Models\Adoption;
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Request;
 
 /**
  * Class AdoptionCrudController
- * @package App\Http\Controllers\Admin
+ *
  * @property-read CrudPanel $crud
  */
 class AdoptionCrudController extends CrudController
@@ -27,7 +28,7 @@ class AdoptionCrudController extends CrudController
         |--------------------------------------------------------------------------
         */
         $this->crud->setModel('App\Models\Adoption');
-        $this->crud->setRoute(config('backpack.base.route_prefix') . '/adoption');
+        $this->crud->setRoute(config('backpack.base.route_prefix').'/adoption');
         $this->crud->setEntityNameStrings(__('adoption'), __('adoptions'));
 
         /*
@@ -49,7 +50,7 @@ class AdoptionCrudController extends CrudController
             'data_source' => url('admin/process/ajax/search'),
             'placeholder' => __('Select a process'),
             'minimum_input_length' => 2,
-            'default' => \Request::get('process') ?: false,
+            'default' => Request::get('process') ?: false,
         ]);
 
         if (is('admin')) {
@@ -79,7 +80,7 @@ class AdoptionCrudController extends CrudController
             'data_source' => url('admin/fat/ajax/search/'),
             'placeholder' => __('Select a fat'),
             'minimum_input_length' => 2,
-            'default' => \Request::get('fat') ?: false,
+            'default' => Request::get('fat') ?: false,
         ]);
 
         $this->crud->addField([
@@ -124,7 +125,7 @@ class AdoptionCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'label' => ucfirst(__('processed')) . '<br /><i>Activar se o animal já tiver sido tratado na AdR.</i>',
+            'label' => ucfirst(__('processed')).'<br /><i>Activar se o animal já tiver sido tratado na AdR.</i>',
             'name' => 'processed',
             'type' => 'checkbox',
         ]);
@@ -366,8 +367,10 @@ class AdoptionCrudController extends CrudController
             $this->wantsJSON() ? null : api()->rangeTerritoryList(),
             function ($values) {
                 $values = json_decode($values);
-                $where = join(' OR ', array_fill(0, count($values), 'territory_id LIKE ?'));
-                $values = array_map(function ($field) {return $field . '%';}, $values);
+                $where = implode(' OR ', array_fill(0, count($values), 'territory_id LIKE ?'));
+                $values = array_map(function ($field) {
+                    return $field.'%';
+                }, $values);
 
                 $this->crud->addClause('whereHas', 'process', function ($query) use ($where, $values) {
                     $query->whereRaw($where, $values);
@@ -380,7 +383,7 @@ class AdoptionCrudController extends CrudController
             'label' => __('FAT'),
             'placeholder' => __('Select a FAT'),
         ],
-            url('admin/user/ajax/filter/' . User::ROLE_VOLUNTEER),
+            url('admin/user/ajax/filter/'.User::ROLE_VOLUNTEER),
             function ($value) {
                 $this->crud->addClause('where', 'user_id', $value);
             });
@@ -391,7 +394,7 @@ class AdoptionCrudController extends CrudController
             'label' => ucfirst(__('volunteer')),
             'placeholder' => __('Select a volunteer'),
         ],
-            url('admin/user/ajax/filter/' . User::ROLE_VOLUNTEER),
+            url('admin/user/ajax/filter/'.User::ROLE_VOLUNTEER),
             function ($value) {
                 $this->crud->addClause('where', 'user_id', $value);
             });
@@ -494,15 +497,15 @@ class AdoptionCrudController extends CrudController
         $this->crud->allowAccess('show');
         $this->crud->removeButton('show');
 
-        if (!is(['admin', 'volunteer'])) {
+        if (! is(['admin', 'volunteer'])) {
             $this->crud->denyAccess(['list', 'show']);
         }
 
-        if (!is('admin', 'adoptions')) {
+        if (! is('admin', 'adoptions')) {
             $this->crud->denyAccess(['create', 'update']);
         }
 
-        if (!is('admin')) {
+        if (! is('admin')) {
             $this->crud->addClause('whereHas', 'process', function ($query) {
                 $headquarters = restrictToHeadquarters();
                 $query->whereIn('headquarter_id', $headquarters ?: []);
@@ -572,7 +575,7 @@ class AdoptionCrudController extends CrudController
     public function store(StoreRequest $request)
     {
         // Add user
-        $request->merge(['user_id' => backpack_user()->id]);
+        $request->merge(['user_id' => user()->id]);
 
         return parent::storeCrud($request);
     }
@@ -582,9 +585,9 @@ class AdoptionCrudController extends CrudController
         return parent::updateCrud($request);
     }
 
-    public function sync()
+    public function sync(string $operation): void
     {
-        \Cache::forget('adoptions_count');
-        \Cache::forget('adoptions_districts_adoption');
+        Cache::forget('adoptions_count');
+        Cache::forget('adoptions_districts_adoption');
     }
 }

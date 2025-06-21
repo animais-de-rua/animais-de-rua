@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use App\Helpers\EnumHelper;
-use App\Http\Requests\Request;
 use Illuminate\Foundation\Http\FormRequest;
 
 class SupplierRequest extends FormRequest
@@ -31,7 +30,7 @@ class SupplierRequest extends FormRequest
             'store_order_id' => 'required|exists:store_orders,id',
             'store_product_id' => 'required|exists:store_products,id',
             'notes' => 'nullable',
-            'status' => 'in:' . EnumHelper::keys('store.supplier', ','),
+            'status' => 'in:'.EnumHelper::keys('store.supplier', ','),
         ];
     }
 

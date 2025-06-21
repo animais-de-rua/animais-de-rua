@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\StoreProductRequest as StoreRequest;
 use App\Http\Requests\StoreProductRequest as UpdateRequest;
 use App\Models\StoreProduct;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class StoreProductsCrudController.
@@ -137,7 +138,7 @@ class StoreProductCrudController extends CrudController
             $query->selectRaw('store_product_id, SUM(quantity) as sells, SUM(expenses.expense_by_product * store_orders_products.quantity) as shipment_expense')
                 ->join(
                     // This query shares the shipment expense by each product for each order
-                    \DB::raw('(SELECT store_orders.id, store_orders.expense / SUM(quantity) as expense_by_product
+                    DB::raw('(SELECT store_orders.id, store_orders.expense / SUM(quantity) as expense_by_product
                         FROM store_orders, store_orders_products
                         WHERE store_orders_products.store_order_id = store_orders.id AND store_orders.expense > 0
                         GROUP BY store_orders.id) expenses'),
@@ -146,11 +147,11 @@ class StoreProductCrudController extends CrudController
         }]);
 
         // ------ CRUD ACCESS
-        if (!is(['admin', 'store'])) {
+        if (! is(['admin', 'store'])) {
             $this->crud->denyAccess(['list']);
         }
 
-        if (!is('admin')) {
+        if (! is('admin')) {
             $this->crud->denyAccess(['show', 'create', 'update', 'delete']);
         }
 

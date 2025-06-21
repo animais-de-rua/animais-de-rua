@@ -22,7 +22,7 @@ class AdoptedAnimalsExport extends Export implements FromCollection, WithHeading
             'county' => 'nullable|exists:territories,id',
             'parish' => 'nullable|exists:territories,id',
             'protocol' => 'nullable|exists:territories,id',
-            'status' => 'nullable|in:' . EnumHelper::keys('adoption.status', ','),
+            'status' => 'nullable|in:'.EnumHelper::keys('adoption.status', ','),
             'sterilized' => 'nullable|in:on',
             'vaccinated' => 'nullable|in:on',
             'processed' => 'nullable|in:on',
@@ -111,7 +111,7 @@ class AdoptedAnimalsExport extends Export implements FromCollection, WithHeading
         }
 
         // Merge conditions
-        $conditions = join(' AND ', $conditions);
+        $conditions = implode(' AND ', $conditions);
 
         $query = "SELECT p.specie, COUNT(*) total
             FROM `adoptions` a, `processes` p, `territories` t, `headquarters` h

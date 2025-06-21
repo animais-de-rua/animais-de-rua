@@ -2,40 +2,38 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\CrudTrait;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Database\Factories\TreatmentFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Treatment extends Model
 {
     use CrudTrait;
+    /** @use HasFactory<TreatmentFactory> */
+    use HasFactory;
 
-    /*
-    |--------------------------------------------------------------------------
-    | GLOBAL VARIABLES
-    |--------------------------------------------------------------------------
-    */
-
-    protected $table = 'treatments';
-    protected $primaryKey = 'id';
-    // public $timestamps = false;
-    // protected $guarded = ['id'];
-    protected $fillable = ['appointment_id', 'treatment_type_id', 'vet_id', 'affected_animals', 'affected_animals_new', 'user_id', 'expense', 'date', 'status', 'notes'];
-    // protected $hidden = [];
-    // protected $dates = [];
-
-    /*
-    |--------------------------------------------------------------------------
-    | FUNCTIONS
-    |--------------------------------------------------------------------------
-    */
+    protected $fillable = [
+        'appointment_id',
+        'treatment_type_id',
+        'vet_id',
+        'affected_animals',
+        'affected_animals_new',
+        'user_id',
+        'expense',
+        'date',
+        'status',
+        'notes',
+    ];
 
     public function customUpdateButton()
     {
-        $disabled = !is('admin', 'treatments') || (is('volunteer', 'treatments') && $this->status == 'approved');
+        $disabled = ! is('admin', 'treatments') || (is('volunteer', 'treatments') && $this->status == 'approved');
         if (is('admin')) {
             $disabled = false;
         }
 
-        return '<a href=' . url("admin/treatment/{$this->id}/edit") . " class='btn btn-xs btn-default " . ($disabled ? 'disabled' : '') . "'><i class='fa fa-edit'></i> " . __('backpack::crud.edit') . '</a>';
+        return '<a href='.url("admin/treatment/{$this->id}/edit")." class='btn btn-xs btn-default ".($disabled ? 'disabled' : '')."'><i class='fa fa-edit'></i> ".__('backpack::crud.edit').'</a>';
     }
 
     public function approveTreatment()
@@ -44,49 +42,43 @@ class Treatment extends Model
         $btn_color = $disabled ? 'btn-default' : 'btn-primary';
 
         return '
-      <button type="button" ' . ($disabled ? 'disabled' : '') . ' class="btn btn-xs ' . $btn_color . ' dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="return approveTreatment(this, ' . $this->id . ')">
-        <i class="fa fa-check"></i> ' . __('approve') . '
+      <button type="button" '.($disabled ? 'disabled' : '').' class="btn btn-xs '.$btn_color.' dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="return approveTreatment(this, '.$this->id.')">
+        <i class="fa fa-check"></i> '.__('approve').'
       </button>';
 
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | RELATIONS
-    |--------------------------------------------------------------------------
-    */
-
-    public function appointment()
+    /**
+     * @return BelongsTo<Appointment, $this>
+     */
+    public function appointment(): BelongsTo
     {
-        return $this->belongsTo('App\Models\Appointment', 'appointment_id');
+        return $this->belongsTo(Appointment::class, 'appointment_id');
     }
 
-    public function vet()
+    /**
+     * @return BelongsTo<Vet, $this>
+     */
+    public function vet(): BelongsTo
     {
-        return $this->belongsTo('App\Models\Vet', 'vet_id');
+        return $this->belongsTo(Vet::class, 'vet_id');
     }
 
-    public function user()
+    /**
+     * @return BelongsTo<User, $this>
+     */
+    public function user(): BelongsTo
     {
-        return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function treatment_type()
+    /**
+     * @return BelongsTo<TreatmentType, $this>
+     */
+    public function treatment_type(): BelongsTo
     {
-        return $this->belongsTo('App\Models\TreatmentType', 'treatment_type_id');
+        return $this->belongsTo(TreatmentType::class, 'treatment_type_id');
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | SCOPES
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | ACCESORS
-    |--------------------------------------------------------------------------
-    */
 
     public function getProcessLinkAttribute()
     {
@@ -105,7 +97,7 @@ class Treatment extends Model
 
     public function getFullExpenseAttribute()
     {
-        return $this->expense . '€';
+        return $this->expense.'€';
     }
 
     public function getTreatmentTypeNameAttribute()
@@ -120,17 +112,11 @@ class Treatment extends Model
 
     public function getStatusWithClassAttribute()
     {
-        return "<span class='status'>" . __($this->status) . '</span>';
+        return "<span class='status'>".__($this->status).'</span>';
     }
 
     public function getAffectedAnimalsNew($appointment_id)
     {
         return Treatment::selectRaw('SUM(affected_animals_new) as total')->where('appointment_id', $appointment_id)->first()->total;
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | MUTATORS
-    |--------------------------------------------------------------------------
-    */
 }

@@ -59,7 +59,7 @@ class AbandonedAnimalsExport extends Export implements FromCollection, WithHeadi
         }
 
         // Merge conditions
-        $conditions = join(' AND ', $conditions);
+        $conditions = implode(' AND ', $conditions);
 
         $query = "SELECT specie, SUM(amount_males + amount_females + amount_other) as total
             FROM `processes` p

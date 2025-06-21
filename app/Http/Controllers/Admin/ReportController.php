@@ -14,7 +14,7 @@ class ReportController extends CrudController
 
     public function report()
     {
-        if (!restrictTo('admin', 'reports')) {
+        if (! restrictTo('admin', 'reports')) {
             abort(401);
         }
 
@@ -23,7 +23,7 @@ class ReportController extends CrudController
 
     public function action($action, $type)
     {
-        $class = 'App\\Exports\\' . ucfirst(Str::camel($action)) . 'Export';
+        $class = 'App\\Exports\\'.ucfirst(Str::camel($action)).'Export';
         $model = new $class;
 
         switch ($type) {

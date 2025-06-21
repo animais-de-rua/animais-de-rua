@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+docker run --rm -ti \
+    --network "${NETWORK:-animais-de-rua}" \
+    --volume "$(pwd)":/app \
+    --workdir /app \
+    node:20 \
+    npm "$@"

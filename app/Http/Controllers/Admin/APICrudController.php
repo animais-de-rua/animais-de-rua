@@ -22,7 +22,6 @@ use App\Models\Vet;
 use App\User as UserBase;
 use Backpack\Base\app\Models\BackpackUser as User;
 use DB;
-use Illuminate\Http\Request;
 
 class APICrudController extends CrudController
 {
@@ -31,7 +30,8 @@ class APICrudController extends CrudController
     public function ajax()
     {
         $args = func_get_args();
-        return call_user_func_array([$this, $args[0] . $args[1]], array_slice($args, 2));
+
+        return call_user_func_array([$this, $args[0].$args[1]], array_slice($args, 2));
     }
 
     /*
@@ -42,7 +42,8 @@ class APICrudController extends CrudController
     public function getSearchParam()
     {
         $request = request();
-        return $request ? ($request->has('q') || $request->has('term') ? $request->input('q') . $request->input('term') : false) : false;
+
+        return $request ? ($request->has('q') || $request->has('term') ? $request->input('q').$request->input('term') : false) : false;
     }
 
     public function entitySearch($entity, $searchFields = null, $where = null, $whereIn = null)
@@ -120,8 +121,8 @@ class APICrudController extends CrudController
             });
         }
 
-        if (!is('admin')) {
-            $results = $results->where('user_id', backpack_user()->id);
+        if (! is('admin')) {
+            $results = $results->where('user_id', user()->id);
         }
 
         return $results->orderBy('id', 'DESC')->paginate(10);
@@ -163,7 +164,7 @@ class APICrudController extends CrudController
             });
         }
 
-        if (!is('admin')) {
+        if (! is('admin')) {
             $results->whereHas('headquarters', function ($query) {
                 $headquarters = restrictToHeadquarters();
                 $query->whereIn('headquarter_id', $headquarters ?: []);
@@ -199,7 +200,7 @@ class APICrudController extends CrudController
             });
         }
 
-        if (!is('admin')) {
+        if (! is('admin')) {
             $results->whereHas('headquarters', function ($query) {
                 $headquarters = restrictToHeadquarters();
                 $query->whereIn('headquarter_id', $headquarters ?: []);
@@ -395,7 +396,7 @@ class APICrudController extends CrudController
         }
 
         // Other users than admin and store are limited to their headquarters
-        if (!is(['admin', 'store'])) {
+        if (! is(['admin', 'store'])) {
             $users->whereHas('headquarters', function ($query) {
                 $headquarters = restrictToHeadquarters();
                 $query->whereIn('headquarter_id', $headquarters ?: []);
@@ -438,7 +439,7 @@ class APICrudController extends CrudController
             });
         }
 
-        if (!is('admin')) {
+        if (! is('admin')) {
             $results->whereHas('headquarters', function ($query) {
                 $headquarters = restrictToHeadquarters();
                 $query->whereIn('headquarter_id', $headquarters ?: []);
@@ -475,8 +476,8 @@ class APICrudController extends CrudController
         $search_term = $this->getSearchParam();
         $data = [];
 
-        if (isset(self::$territoryCache[$level . $search_term])) {
-            return self::$territoryCache[$level . $search_term];
+        if (isset(self::$territoryCache[$level.$search_term])) {
+            return self::$territoryCache[$level.$search_term];
         }
 
         if ($level & Territory::DISTRITO) {
@@ -532,7 +533,7 @@ class APICrudController extends CrudController
 
         $data = Territory::hydrate($data);
 
-        self::$territoryCache[$level . $search_term] = $data;
+        self::$territoryCache[$level.$search_term] = $data;
 
         return $data;
     }
@@ -594,7 +595,7 @@ class APICrudController extends CrudController
         });
 
         $headquarters = restrictToHeadquarters();
-        if (!is('admin') && $headquarters) {
+        if (! is('admin') && $headquarters) {
             $territories->whereIn('headquarter_id', $headquarters);
         }
 
@@ -631,7 +632,7 @@ class APICrudController extends CrudController
         $headquarters = restrictToHeadquarters();
 
         $territories = DB::table('headquarters_territories_range')
-            ->join('territories as a', function ($query) use ($search_term, $level) {
+            ->join('territories as a', function ($query) use ($search_term) {
                 $query->on('a.id', 'LIKE', DB::raw('CONCAT(headquarters_territories_range.territory_id, "%")'))
                     ->orOn('a.id', '=', DB::raw('LEFT(headquarters_territories_range.territory_id, 2)'))
                     ->orOn('a.id', '=', DB::raw('LEFT(headquarters_territories_range.territory_id, 4)'));
@@ -660,7 +661,7 @@ class APICrudController extends CrudController
             }
         });
 
-        if (!is('admin') && $headquarters) {
+        if (! is('admin') && $headquarters) {
             $territories->whereIn('headquarter_id', $headquarters);
         }
 
@@ -688,7 +689,8 @@ class APICrudController extends CrudController
     public function approveAppointment()
     {
         $appointment = Appointment::find(request()->input('id'));
-        $appointment->status = 'approved_option_' . request()->input('option');
+        $appointment->status = 'approved_option_'.request()->input('option');
+
         return ['result' => $appointment->save()];
     }
 
@@ -696,14 +698,16 @@ class APICrudController extends CrudController
     {
         $treatment = Treatment::find(request()->input('id'));
         $treatment->status = 'approved';
+
         return ['result' => $treatment->save()];
     }
 
     public function toggleProcessContacted()
     {
         $process = Process::find(request()->input('id'));
-        $process->contacted = !$process->contacted;
+        $process->contacted = ! $process->contacted;
         $status = $process->save();
+
         return ['result' => $status ? $process->contacted : null];
     }
 }

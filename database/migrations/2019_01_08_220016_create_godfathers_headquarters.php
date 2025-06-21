@@ -14,20 +14,8 @@ class CreateGodfathersHeadquarters extends Migration
     public function up()
     {
         Schema::create('godfathers_headquarters', function (Blueprint $table) {
-            $table->integer('godfather_id')->unsigned();
-            $table->integer('headquarter_id')->unsigned();
-
-            $table->index(['godfather_id']);
-            $table->foreign('godfather_id')
-                ->references('id')
-                ->on('godfathers')
-                ->onDelete('cascade');
-
-            $table->index(['headquarter_id']);
-            $table->foreign('headquarter_id')
-                ->references('id')
-                ->on('headquarters')
-                ->onDelete('cascade');
+            $table->foreignId('godfather_id')->constrained()->onDelete('cascade');
+            $table->foreignId('headquarter_id')->constrained()->onDelete('cascade');
 
             $table->primary(['godfather_id', 'headquarter_id']);
         });

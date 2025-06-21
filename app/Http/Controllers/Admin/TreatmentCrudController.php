@@ -11,10 +11,12 @@ use App\Models\Process;
 use App\Models\Treatment;
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Request;
 
 /**
  * Class TreatmentCrudController
- * @package App\Http\Controllers\Admin
+ *
  * @property-read CrudPanel $crud
  */
 class TreatmentCrudController extends CrudController
@@ -29,7 +31,7 @@ class TreatmentCrudController extends CrudController
         |--------------------------------------------------------------------------
         */
         $this->crud->setModel('App\Models\Treatment');
-        $this->crud->setRoute(config('backpack.base.route_prefix') . '/treatment');
+        $this->crud->setRoute(config('backpack.base.route_prefix').'/treatment');
         $this->crud->setEntityNameStrings(__('treatment'), __('treatments'));
 
         /*
@@ -103,7 +105,7 @@ class TreatmentCrudController extends CrudController
         ]);
 
         $this->crud->setColumnDetails('affected_animals_new', [
-            'label' => __('Animals') . ' (' . __('new') . ')',
+            'label' => __('Animals').' ('.__('new').')',
             'type' => 'number',
         ]);
 
@@ -124,9 +126,9 @@ class TreatmentCrudController extends CrudController
         ]);
 
         // ------ CRUD FIELDS
-        $appointment_id = \Request::get('appointment') ?: false;
+        $appointment_id = Request::get('appointment') ?: false;
         $treatment_id = $this->getEntryID();
-        $attributes = !$appointment_id && !$treatment_id ? ['disabled' => 'disabled'] : [];
+        $attributes = ! $appointment_id && ! $treatment_id ? ['disabled' => 'disabled'] : [];
         $vet_id = false;
         $date = false;
 
@@ -188,7 +190,7 @@ class TreatmentCrudController extends CrudController
             'placeholder' => __('Select a vet'),
             'minimum_input_length' => 2,
             'default' => $vet_id,
-            'readonly' => !!$vet_id,
+            'readonly' => (bool) $vet_id,
             'attributes' => $attributes,
         ]);
 
@@ -197,7 +199,7 @@ class TreatmentCrudController extends CrudController
             'name' => 'date',
             'type' => 'date',
             'default' => $date ?: (isset($appointment) ? $appointment->date_1 : Carbon::today()->toDateString()),
-            'attributes' => (($date || isset($appointment)) && !is('admin')) ? ['readonly' => 'readonly'] : $attributes,
+            'attributes' => (($date || isset($appointment)) && ! is('admin')) ? ['readonly' => 'readonly'] : $attributes,
         ]);
 
         $this->separator();
@@ -228,8 +230,8 @@ class TreatmentCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'label' => __('New affected Animals') . '<br />' .
-            '<i>Assinalar apenas os animais que nunca tenham sido intervencionados.</i>' .
+            'label' => __('New affected Animals').'<br />'.
+            '<i>Assinalar apenas os animais que nunca tenham sido intervencionados.</i>'.
             (isset($process) || $treatment_id ? "<br /><i>O processo tem <b style='font-style:initial'>$total_animals</b> animais dos quais <b style='font-style:initial'>$total_affected_animals_new</b> já foram intervencionados.</i>" : ''),
             'name' => 'affected_animals_new',
             'type' => 'number',
@@ -325,8 +327,10 @@ class TreatmentCrudController extends CrudController
             $this->wantsJSON() ? null : api()->rangeTerritoryList(),
             function ($values) {
                 $values = json_decode($values);
-                $where = join(' OR ', array_fill(0, count($values), 'territory_id LIKE ?'));
-                $values = array_map(function ($field) {return $field . '%';}, $values);
+                $where = implode(' OR ', array_fill(0, count($values), 'territory_id LIKE ?'));
+                $values = array_map(function ($field) {
+                    return $field.'%';
+                }, $values);
 
                 $this->crud->addClause('whereHas', 'appointment', function ($query) use ($where, $values) {
                     $query->whereIn('appointments.process_id', Process::select('id')->whereRaw($where, $values));
@@ -361,7 +365,7 @@ class TreatmentCrudController extends CrudController
             'label' => ucfirst(__('volunteer')),
             'placeholder' => __('Select a volunteer'),
         ],
-            url('admin/user/ajax/filter/' . User::ROLE_VOLUNTEER),
+            url('admin/user/ajax/filter/'.User::ROLE_VOLUNTEER),
             function ($value) {
                 $this->crud->addClause('where', 'user_id', $value);
             });
@@ -369,7 +373,7 @@ class TreatmentCrudController extends CrudController
         $this->crud->addFilter([
             'name' => 'expense',
             'type' => 'range',
-            'label' => __('Expense') . ' €',
+            'label' => __('Expense').' €',
             'label_from' => __('Min value'),
             'label_to' => __('Max value'),
         ],
@@ -438,17 +442,17 @@ class TreatmentCrudController extends CrudController
         $this->crud->addButtonFromModelFunction('line', 'approve_treatment', 'approveTreatment', 'beginning');
 
         // ------ CRUD ACCESS
-        if (!is(['admin', 'volunteer'])) {
+        if (! is(['admin', 'volunteer'])) {
             $this->crud->denyAccess(['list', 'create']);
         }
 
-        if (!is('admin')) {
-            if (!is('admin', 'treatments') || (is('volunteer', 'treatments') && $treatment_id && $treatment->status == 'approved')) {
+        if (! is('admin')) {
+            if (! is('admin', 'treatments') || (is('volunteer', 'treatments') && $treatment_id && $treatment->status == 'approved')) {
                 $this->crud->denyAccess(['update']);
             }
         }
 
-        if (!is('admin')) {
+        if (! is('admin')) {
             $this->crud->addClause('whereHas', 'appointment', function ($query) {
                 $query->whereHas('process', function ($query) {
                     $headquarters = restrictToHeadquarters();
@@ -457,7 +461,7 @@ class TreatmentCrudController extends CrudController
             })->get();
         }
 
-        if (!is('admin', 'treatments')) {
+        if (! is('admin', 'treatments')) {
             $this->crud->denyAccess(['delete']);
 
             $this->crud->removeButton('approve_appointment', 'line');
@@ -481,7 +485,7 @@ class TreatmentCrudController extends CrudController
         $treatment = Treatment::select(['notes'])->find($id);
 
         return "<div style='margin:5px 8px'>
-                <p style='white-space: pre-wrap;'><i>" . __('Notes') . "</i>: $treatment->notes</p>
+                <p style='white-space: pre-wrap;'><i>".__('Notes')."</i>: $treatment->notes</p>
             </div>";
     }
 
@@ -490,7 +494,7 @@ class TreatmentCrudController extends CrudController
         $treatment = Treatment::find($id);
 
         // Avoid destroy if it is approved
-        if (!is('admin') && $treatment->status == 'approved') {
+        if (! is('admin') && $treatment->status == 'approved') {
             return false;
         }
 
@@ -500,7 +504,7 @@ class TreatmentCrudController extends CrudController
     public function store(StoreRequest $request)
     {
         // Add user
-        $request->merge(['user_id' => backpack_user()->id]);
+        $request->merge(['user_id' => user()->id]);
 
         $redirect = parent::storeCrud($request);
 
@@ -510,7 +514,7 @@ class TreatmentCrudController extends CrudController
         }
 
         // Force Date and Vet
-        $appointment = Appointment::find(\Request::get('appointment_id'));
+        $appointment = Appointment::find(Request::get('appointment_id'));
         $request->merge([
             'date' => $appointment->getApprovedDate(),
             'vet_id' => $appointment->getApprovedVetID(),
@@ -524,8 +528,8 @@ class TreatmentCrudController extends CrudController
         return parent::updateCrud($request);
     }
 
-    public function sync()
+    public function sync(string $operation): void
     {
-        \Cache::forget('treatments_affected_animals_new');
+        Cache::forget('treatments_affected_animals_new');
     }
 }

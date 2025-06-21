@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\ProtocolRequestRequest as StoreRequest;
 use App\Http\Requests\ProtocolRequestRequest as UpdateRequest;
 use App\User;
+use Illuminate\Support\Facades\Request;
 
 /**
  * Class ProtocolRequestCrudController
- * @package App\Http\Controllers\Admin
+ *
  * @property-read CrudPanel $crud
  */
 class ProtocolRequestCrudController extends CrudController
@@ -21,7 +22,7 @@ class ProtocolRequestCrudController extends CrudController
         |--------------------------------------------------------------------------
         */
         $this->crud->setModel('App\Models\ProtocolRequest');
-        $this->crud->setRoute(config('backpack.base.route_prefix') . '/protocol-request');
+        $this->crud->setRoute(config('backpack.base.route_prefix').'/protocol-request');
         $this->crud->setEntityNameStrings(__('request'), __('requests'));
 
         /*
@@ -37,7 +38,7 @@ class ProtocolRequestCrudController extends CrudController
         ]);
 
         $this->crud->setColumnDetails('council', [
-            'label' => 'ID ' . ucfirst(__('request')),
+            'label' => 'ID '.ucfirst(__('request')),
         ]);
 
         $this->crud->setColumnDetails('name', [
@@ -104,7 +105,7 @@ class ProtocolRequestCrudController extends CrudController
         $this->crud->addFields(['protocol_id', 'process_id', 'council', 'name', 'email', 'phone', 'address', 'territory_id', 'description']);
 
         $this->crud->addField([
-            'label' => 'ID ' . ucfirst(__('request')),
+            'label' => 'ID '.ucfirst(__('request')),
             'name' => 'council',
         ]);
 
@@ -154,7 +155,7 @@ class ProtocolRequestCrudController extends CrudController
             'data_source' => url('admin/protocol/ajax/search'),
             'placeholder' => __('Select a protocol'),
             'minimum_input_length' => 2,
-            'default' => \Request::get('protocol') ?: false,
+            'default' => Request::get('protocol') ?: false,
         ]);
 
         $this->crud->addField([
@@ -167,7 +168,7 @@ class ProtocolRequestCrudController extends CrudController
             'data_source' => url('admin/process/ajax/search'),
             'placeholder' => __('Select a process'),
             'minimum_input_length' => 2,
-            'default' => \Request::get('process') ?: false,
+            'default' => Request::get('process') ?: false,
         ]);
 
         if (is('admin')) {
@@ -197,8 +198,10 @@ class ProtocolRequestCrudController extends CrudController
             $this->wantsJSON() ? null : api()->territoryList(),
             function ($values) {
                 $values = json_decode($values);
-                $where = join(' OR ', array_fill(0, count($values), 'territory_id LIKE ?'));
-                $values = array_map(function ($field) {return $field . '%';}, $values);
+                $where = implode(' OR ', array_fill(0, count($values), 'territory_id LIKE ?'));
+                $values = array_map(function ($field) {
+                    return $field.'%';
+                }, $values);
 
                 $this->crud->query->whereRaw($where, $values);
             });
@@ -231,17 +234,17 @@ class ProtocolRequestCrudController extends CrudController
             'label' => ucfirst(__('volunteer')),
             'placeholder' => __('Select a volunteer'),
         ],
-            url('admin/user/ajax/filter/' . User::ROLE_VOLUNTEER),
+            url('admin/user/ajax/filter/'.User::ROLE_VOLUNTEER),
             function ($value) {
                 $this->crud->addClause('where', 'user_id', $value);
             });
 
         // ------ CRUD ACCESS
-        if (!is('admin', 'protocols')) {
+        if (! is('admin', 'protocols')) {
             $this->crud->denyAccess(['list', 'create', 'update']);
         }
 
-        if (!is('admin')) {
+        if (! is('admin')) {
             $this->crud->denyAccess(['delete']);
 
             $this->crud->query->join('protocols', 'protocols_requests.protocol_id', '=', 'protocols.id');
@@ -267,7 +270,7 @@ class ProtocolRequestCrudController extends CrudController
     public function store(StoreRequest $request)
     {
         // Add user to the partner
-        $request->merge(['user_id' => backpack_user()->id]);
+        $request->merge(['user_id' => user()->id]);
 
         return parent::storeCrud($request);
     }

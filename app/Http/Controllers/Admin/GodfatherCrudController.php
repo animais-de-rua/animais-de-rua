@@ -10,7 +10,7 @@ use App\User;
 
 /**
  * Class GodfatherCrudController
- * @package App\Http\Controllers\Admin
+ *
  * @property-read CrudPanel $crud
  */
 class GodfatherCrudController extends CrudController
@@ -25,7 +25,7 @@ class GodfatherCrudController extends CrudController
         |--------------------------------------------------------------------------
         */
         $this->crud->setModel('App\Models\Godfather');
-        $this->crud->setRoute(config('backpack.base.route_prefix') . '/godfather');
+        $this->crud->setRoute(config('backpack.base.route_prefix').'/godfather');
         $this->crud->setEntityNameStrings(__('godfather'), __('godfathers'));
 
         /*
@@ -194,7 +194,7 @@ class GodfatherCrudController extends CrudController
                 'label' => ucfirst(__('volunteer')),
                 'placeholder' => __('Select a volunteer'),
             ],
-                url('admin/user/ajax/filter/' . User::ROLE_VOLUNTEER),
+                url('admin/user/ajax/filter/'.User::ROLE_VOLUNTEER),
                 function ($value) {
                     $this->crud->addClause('where', 'user_id', $value);
                 });
@@ -218,11 +218,11 @@ class GodfatherCrudController extends CrudController
         $this->crud->allowAccess('details_row');
 
         // ------ CRUD ACCESS
-        if (!is('admin', 'accountancy')) {
+        if (! is('admin', 'accountancy')) {
             $this->crud->denyAccess(['list', 'create', 'update']);
         }
 
-        if (!is('admin')) {
+        if (! is('admin')) {
             $this->crud->denyAccess(['delete']);
 
             $this->crud->addClause('whereHas', 'headquarters', function ($query) {
@@ -249,7 +249,7 @@ class GodfatherCrudController extends CrudController
         $godfather = Godfather::select(['notes'])->find($id);
 
         return "<div style='margin:5px 8px'>
-                <p style='white-space: pre-wrap;'><i>" . __('Notes') . "</i>: $godfather->notes</p>
+                <p style='white-space: pre-wrap;'><i>".__('Notes')."</i>: $godfather->notes</p>
             </div>";
     }
 
@@ -257,14 +257,14 @@ class GodfatherCrudController extends CrudController
     {
         // Add user
         $request->merge([
-            'user_id' => backpack_user()->id,
+            'user_id' => user()->id,
         ]);
 
         $store = parent::storeCrud($request);
 
         // Add headquarters
         $headquarters = restrictToHeadquarters();
-        if (!$request->headquarters && $headquarters) {
+        if (! $request->headquarters && $headquarters) {
             $godfather = $this->crud->entry;
             $godfather->headquarters()->attach($headquarters);
         }

@@ -69,7 +69,7 @@ class AffectedAnimalsTotalExport extends Export implements FromCollection, WithH
         }
 
         // Merge conditions
-        $conditions = join(' AND ', $conditions);
+        $conditions = implode(' AND ', $conditions);
 
         $query = "SELECT SUM(t.affected_animals_new) as total
             FROM `treatments` t, `appointments` a, `processes` p, `territories` tr, `headquarters` h, `vets` v

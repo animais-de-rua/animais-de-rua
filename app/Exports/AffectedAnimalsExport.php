@@ -41,7 +41,7 @@ class AffectedAnimalsExport extends Export implements FromCollection, WithHeadin
         $conditions = [
             't.appointment_id = a.id',
             'a.process_id = p.id',
-            'treatment_type_id IN (' . join(', ', array_merge($male_ids, $female_ids)) . ')',
+            'treatment_type_id IN ('.implode(', ', array_merge($male_ids, $female_ids)).')',
             'p.territory_id = tr.id',
             'p.headquarter_id = h.id',
             't.vet_id = v.id',
@@ -73,7 +73,7 @@ class AffectedAnimalsExport extends Export implements FromCollection, WithHeadin
         }
 
         // Merge conditions
-        $conditions = join(' AND ', $conditions);
+        $conditions = implode(' AND ', $conditions);
 
         $query = "SELECT treatment_type_id as id, p.specie, SUM(t.affected_animals) as total
             FROM `treatments` t, `appointments` a, `processes` p, `territories` tr, `headquarters` h, `vets` v

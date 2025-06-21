@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Admin\Traits\Permissions;
 use App\Http\Requests\CampaignRequest as StoreRequest;
 use App\Http\Requests\CampaignRequest as UpdateRequest;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * Class CampaignCrudController
- * @package App\Http\Controllers\Admin
+ *
  * @property-read CrudPanel $crud
  */
 class CampaignCrudController extends CrudController
@@ -23,7 +24,7 @@ class CampaignCrudController extends CrudController
         |--------------------------------------------------------------------------
         */
         $this->crud->setModel('App\Models\Campaign');
-        $this->crud->setRoute(config('backpack.base.route_prefix') . '/campaign');
+        $this->crud->setRoute(config('backpack.base.route_prefix').'/campaign');
         $this->crud->setEntityNameStrings(__('campaign'), __('campaigns'));
 
         /*
@@ -89,11 +90,11 @@ class CampaignCrudController extends CrudController
         ]);
 
         // ------ CRUD ACCESS
-        if (!is('admin', 'website')) {
+        if (! is('admin', 'website')) {
             $this->crud->denyAccess(['list', 'create', 'update']);
         }
 
-        if (!is('admin')) {
+        if (! is('admin')) {
             $this->crud->denyAccess(['delete']);
         }
 
@@ -117,8 +118,8 @@ class CampaignCrudController extends CrudController
         return parent::updateCrud($request);
     }
 
-    public function sync()
+    public function sync(string $operation): void
     {
-        \Cache::forget('campaigns');
+        Cache::forget('campaigns');
     }
 }

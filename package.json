@@ -1,27 +1,30 @@
 {
-    "private": true,
-    "scripts": {
-        "dev": "npm run development",
-        "development": "mix",
-        "watch": "mix watch",
-        "watch-poll": "mix watch -- --watch-options-poll=1000",
-        "hot": "mix watch --hot",
-        "prod": "npm run production",
-        "production": "mix --production"
-    },
-    "dependencies": {
-        "cantil": "^1.1.2"
-    },
-    "devDependencies": {
-        "cross-env": "^7.0.3",
-        "eslint": "^9.6.0",
-        "laravel-mix": "^6.0.11",
-        "milligram": "^1.4.1",
-        "normalize.css": "^8.0.1",
-        "postcss": "^8.2.4",
-        "resolve-url-loader": "^5.0.0",
-        "sass": "^1.32.6",
-        "sass-loader": "^14.2.1",
-        "vue-template-compiler": "^2.6.12"
-    }
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"build": "vite build",
+		"dev": "vite"
+	},
+	"dependencies": {
+		"@picocss/pico": "^2.1.1",
+		"@tailwindcss/vite": "^4.0.7",
+		"autoprefixer": "^10.4.20",
+		"boring-avatars-svg": "^1.0.4",
+		"cantil": "^1.1.6",
+		"concurrently": "^9.0.1",
+		"eslint": "^9.25.0",
+		"laravel-vite-plugin": "^1.0",
+		"normalize.css": "^8.0.1",
+		"sass-loader": "^16.0.5",
+		"tailwindcss": "^4.0.7",
+		"vite": "^6.0"
+	},
+	"optionalDependencies": {
+		"@rollup/rollup-linux-x64-gnu": "^4.9.5",
+		"@tailwindcss/oxide-linux-x64-gnu": "^4.0.1",
+		"lightningcss-linux-x64-gnu": "^1.29.1"
+	},
+	"devDependencies": {
+		"sass": "^1.87.0"
+	}
 }

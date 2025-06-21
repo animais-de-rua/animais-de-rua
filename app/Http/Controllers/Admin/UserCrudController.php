@@ -185,7 +185,7 @@ class UserCrudController extends CrudController
                 'Others' => __('others'),
             ],
         ])->afterField('friend_card_expiry');
-        
+
         $this->crud->addField([
             'label' => ucfirst(__('petsitting description')),
             'name' => 'petsitting_description',
@@ -337,11 +337,11 @@ class UserCrudController extends CrudController
         $this->crud->allowAccess('details_row');
 
         // ------ CRUD ACCESS
-        if (!is(['admin', 'friend card'])) {
+        if (! is(['admin', 'friend card'])) {
             $this->crud->denyAccess(['list', 'create', 'update']);
         }
 
-        if (!is('admin')) {
+        if (! is('admin')) {
             $this->crud->denyAccess(['delete']);
 
             $this->crud->removeField('roles_and_permissions');
@@ -376,7 +376,7 @@ class UserCrudController extends CrudController
         $user = User::select(['notes'])->find($id);
 
         return "<div style='margin:5px 8px'>
-                <p style='white-space: pre-wrap;'><i>" . __('Notes') . "</i> : $user->notes</p>
+                <p style='white-space: pre-wrap;'><i>".__('Notes')."</i> : $user->notes</p>
             </div>";
     }
 
@@ -400,7 +400,7 @@ class UserCrudController extends CrudController
     public function symlink_run(Request $request)
     {
         if (admin()) {
-            echo symlink(base_path() . $request->input('target'), base_path() . $request->input('link')) ? 'Success' : 'Error';
+            echo symlink(base_path().$request->input('target'), base_path().$request->input('link')) ? 'Success' : 'Error';
         }
     }
 

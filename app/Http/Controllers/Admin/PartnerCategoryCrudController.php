@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Admin\Traits\Permissions;
 use App\Http\Requests\PartnerCategoryRequest as StoreRequest;
 use App\Http\Requests\PartnerCategoryRequest as UpdateRequest;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * Class PartnerCategoryCrudController
- * @package App\Http\Controllers\Admin
+ *
  * @property-read CrudPanel $crud
  */
 class PartnerCategoryCrudController extends CrudController
@@ -23,7 +24,7 @@ class PartnerCategoryCrudController extends CrudController
         |--------------------------------------------------------------------------
         */
         $this->crud->setModel('App\Models\PartnerCategory');
-        $this->crud->setRoute(config('backpack.base.route_prefix') . '/partner-category');
+        $this->crud->setRoute(config('backpack.base.route_prefix').'/partner-category');
         $this->crud->setEntityNameStrings(__('partner category'), __('partner categories'));
 
         /*
@@ -57,11 +58,11 @@ class PartnerCategoryCrudController extends CrudController
         ]);
 
         // ------ CRUD ACCESS
-        if (!is(['admin', 'friend card'])) {
+        if (! is(['admin', 'friend card'])) {
             $this->crud->denyAccess(['list', 'create', 'update']);
         }
 
-        if (!is('admin')) {
+        if (! is('admin')) {
             $this->crud->denyAccess(['delete']);
         }
 
@@ -85,8 +86,8 @@ class PartnerCategoryCrudController extends CrudController
         return parent::updateCrud($request);
     }
 
-    public function sync()
+    public function sync(string $operation): void
     {
-        \Cache::forget('partners_categories');
+        Cache::forget('partners_categories');
     }
 }

@@ -9,7 +9,7 @@ use App\User;
 
 /**
  * Class AdopterCrudController
- * @package App\Http\Controllers\Admin
+ *
  * @property-read CrudPanel $crud
  */
 class AdopterCrudController extends CrudController
@@ -24,7 +24,7 @@ class AdopterCrudController extends CrudController
         |--------------------------------------------------------------------------
         */
         $this->crud->setModel('App\Models\Adopter');
-        $this->crud->setRoute(config('backpack.base.route_prefix') . '/adopter');
+        $this->crud->setRoute(config('backpack.base.route_prefix').'/adopter');
         $this->crud->setEntityNameStrings(__('adopter'), __('adopters'));
 
         /*
@@ -160,8 +160,10 @@ class AdopterCrudController extends CrudController
             $this->wantsJSON() ? null : api()->territoryList(),
             function ($values) {
                 $values = json_decode($values);
-                $where = join(' OR ', array_fill(0, count($values), 'territory_id LIKE ?'));
-                $values = array_map(function ($field) {return $field . '%';}, $values);
+                $where = implode(' OR ', array_fill(0, count($values), 'territory_id LIKE ?'));
+                $values = array_map(function ($field) {
+                    return $field.'%';
+                }, $values);
 
                 $this->crud->query->whereRaw($where, $values);
             });
@@ -172,21 +174,21 @@ class AdopterCrudController extends CrudController
             'label' => ucfirst(__('volunteer')),
             'placeholder' => __('Select a volunteer'),
         ],
-            url('admin/user/ajax/filter/' . User::ROLE_VOLUNTEER),
+            url('admin/user/ajax/filter/'.User::ROLE_VOLUNTEER),
             function ($value) {
                 $this->crud->addClause('where', 'user_id', $value);
             });
 
         // ------ CRUD ACCESS
-        if (!is(['admin', 'volunteer'])) {
+        if (! is(['admin', 'volunteer'])) {
             $this->crud->denyAccess(['list']);
         }
 
-        if (!is('admin', 'adoptions')) {
+        if (! is('admin', 'adoptions')) {
             $this->crud->denyAccess(['create', 'update']);
         }
 
-        if (!is('admin')) {
+        if (! is('admin')) {
             $this->crud->denyAccess(['delete']);
         }
 
@@ -203,7 +205,7 @@ class AdopterCrudController extends CrudController
     public function store(StoreRequest $request)
     {
         // Add user
-        $request->merge(['user_id' => backpack_user()->id]);
+        $request->merge(['user_id' => user()->id]);
 
         return parent::storeCrud($request);
     }

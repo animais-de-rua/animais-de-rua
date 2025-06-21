@@ -2,68 +2,41 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\CrudTrait;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Headquarter extends Model
 {
     use CrudTrait;
 
-    /*
-    |--------------------------------------------------------------------------
-    | GLOBAL VARIABLES
-    |--------------------------------------------------------------------------
-    */
+    protected $fillable = [
+        'name',
+        'address',
+        'phone',
+        'mail',
+        'description',
+        'active',
+    ];
 
-    protected $table = 'headquarters';
-    protected $primaryKey = 'id';
-    // public $timestamps = false;
-    // protected $guarded = ['id'];
-    protected $fillable = ['name', 'address', 'phone', 'mail', 'description', 'active'];
-    // protected $hidden = [];
-    // protected $dates = [];
-
-    /*
-    |--------------------------------------------------------------------------
-    | FUNCTIONS
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | RELATIONS
-    |--------------------------------------------------------------------------
-    */
-
-    public function territories()
+    /**
+     * @return BelongsToMany<Territory, $this>
+     */
+    public function territories(): BelongsToMany
     {
-        return $this->belongsToMany('App\Models\Territory', 'headquarters_territories', 'headquarter_id', 'territory_id');
+        return $this->belongsToMany(Territory::class, 'headquarters_territories', 'headquarter_id', 'territory_id');
     }
 
-    public function territories_range()
+    /**
+     * @return BelongsToMany<Territory, $this>
+     */
+    public function territories_range(): BelongsToMany
     {
-        return $this->belongsToMany('App\Models\Territory', 'headquarters_territories_range', 'headquarter_id', 'territory_id');
+        return $this->belongsToMany(Territory::class, 'headquarters_territories_range', 'headquarter_id', 'territory_id');
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | SCOPES
-    |--------------------------------------------------------------------------
-    */
-
-    public function scopeActive($query)
+    public function scopeActive(Builder $query): Builder
     {
         return $query->where('active', 1);
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | ACCESORS
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | MUTATORS
-    |--------------------------------------------------------------------------
-    */
 }

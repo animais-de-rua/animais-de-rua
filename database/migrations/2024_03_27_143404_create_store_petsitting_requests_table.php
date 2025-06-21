@@ -14,7 +14,7 @@ class CreateStorePetsittingRequestsTable extends Migration
     public function up()
     {
         Schema::create('store_petsitting_requests', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->string('name');
             $table->timestamps();
         });

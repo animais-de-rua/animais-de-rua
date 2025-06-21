@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use App\Helpers\EnumHelper;
-use App\Http\Requests\Request;
 use App\Models\StoreOrder;
 use App\Models\StoreProduct;
 use App\Models\StoreStock;
@@ -38,7 +37,7 @@ class StoreOrderRequest extends FormRequest
             'user_id' => 'required_without:id|exists:users,id',
             'shipment_date' => 'nullable|date',
             'expense' => 'nullable|numeric|min:0|max:1000000',
-            'status' => 'in:' . EnumHelper::keys('store.order', ','),
+            'status' => 'in:'.EnumHelper::keys('store.order', ','),
         ];
     }
 
@@ -75,8 +74,8 @@ class StoreOrderRequest extends FormRequest
             $user_id = $this->input('user_id') ?: ($order ? $order->user_id : null);
             $user_name = null;
 
-            if (!$user_id) {
-                return $validator->errors()->add('id', "Neither order id ($id) nor user id (" . $this->input('user_id') . ') are valid.');
+            if (! $user_id) {
+                return $validator->errors()->add('id', "Neither order id ($id) nor user id (".$this->input('user_id').') are valid.');
             }
 
             // Validate user has all the products
@@ -123,11 +122,11 @@ class StoreOrderRequest extends FormRequest
 
             // Invoice required when status == shipped
             if ($this->input('status') == 'shipped') {
-                if (!strlen($this->input('invoice'))) {
+                if (! strlen($this->input('invoice'))) {
                     $validator->errors()->add('invoice', __('Invoice is required when the order is shipped.'));
                 }
 
-                if (!$this->input('shipment_date')) {
+                if (! $this->input('shipment_date')) {
                     $validator->errors()->add('shipment_date', __('Shipment Date is required when the order is shipped.'));
                 }
             }

@@ -15,7 +15,7 @@ class TreatmentTypeExport extends Export implements FromCollection, WithHeadings
     {
         // Validate data
         $validatedData = request()->validate([
-            'status' => 'nullable|in:' . EnumHelper::keys('treatment.status', ','),
+            'status' => 'nullable|in:'.EnumHelper::keys('treatment.status', ','),
             'start' => 'nullable|date',
             'end' => 'nullable|date',
             'headquarter' => 'nullable|exists:headquarters,id',
@@ -24,7 +24,7 @@ class TreatmentTypeExport extends Export implements FromCollection, WithHeadings
             'parish' => 'nullable|exists:territories,id',
             'protocol' => 'nullable|exists:territories,id',
             'vet' => 'nullable|exists:vets,id',
-            'order.column' => 'required|in:' . join(',', array_keys(self::order())),
+            'order.column' => 'required|in:'.implode(',', array_keys(self::order())),
             'order.direction' => 'required|in:ASC,DESC',
         ]);
 
@@ -79,7 +79,7 @@ class TreatmentTypeExport extends Export implements FromCollection, WithHeadings
         }
 
         // Merge conditions
-        $conditions = join(' AND ', $conditions);
+        $conditions = implode(' AND ', $conditions);
 
         // Query
         $query = "SELECT tt.name, SUM(t.expense) expense, SUM(t.affected_animals) affected_animals, SUM(t.affected_animals_new) affected_animals_new

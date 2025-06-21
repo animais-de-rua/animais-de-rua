@@ -2,7 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\EnumHelper;
+use App\Enums\FormsEnum;
+use App\Enums\Process\StatusEnum as ProcessStatusEnum;
+use App\Http\Requests\Form\FormSubmitApplyRequest;
+use App\Http\Requests\Form\FormSubmitContactRequest;
+use App\Http\Requests\Form\FormSubmitGodfatherRequest;
+use App\Http\Requests\Form\FormSubmitPetsittingRequest;
+use App\Http\Requests\Form\FormSubmitTrainingRequest;
+use App\Http\Requests\Form\FormSubmitVolunteerRequest;
 use App\Mail\ApplyForm;
 use App\Mail\ContactForm;
 use App\Mail\GodfatherForm;
@@ -12,126 +19,70 @@ use App\Mail\VolunteerForm;
 use App\Models\Headquarter;
 use App\Models\Process;
 use App\Models\StorePetsittingRequests;
-use Config;
-use Illuminate\Validation\Rule;
-use Illuminate\Validation\ValidationException;
-use Image;
-use Mail;
-use Newsletter;
-use Storage;
-use Validator;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Image;
+use Spatie\Newsletter\Facades\Newsletter;
 
 class FormController extends Controller
 {
-    public function form_view($slug)
+    public function formView(string $slug): RedirectResponse
     {
-        $lang_map = [
+        Session::put('form', match ($slug) {
             'voluntariado' => 'volunteer',
             'contacto' => 'contact',
             'candidatura' => 'apply',
             'formacao' => 'training',
             'petsitting' => 'petsitting',
-        ];
-
-        if (array_key_exists($slug, $lang_map)) {
-            $slug = $lang_map[$slug];
-        }
-
-        \Session::put('form', $slug);
+            default => null,
+        });
 
         return redirect('/');
     }
 
-    public function form_submit($slug)
+    public function formSubmit(Request $request, string $slug): JsonResponse
     {
-        if (method_exists($this, "form_submit_$slug")) {
-            return call_user_func(array($this, "form_submit_$slug"));
-        }
+        $this->subscribeNewsletter($request);
+
+        return match (FormsEnum::from($slug)) {
+            FormsEnum::VOLUNTEER => $this->formSubmitVolunteer($request),
+            FormsEnum::CONTACT => $this->formSubmitContact($request),
+            FormsEnum::APPLY => $this->formSubmitApply($request),
+            FormsEnum::TRAINING => $this->formSubmitTraining($request),
+            FormsEnum::GODFATHER => $this->formSubmitGodfather($request),
+            FormsEnum::PETSITTING => $this->formSubmitPetsitting($request),
+        };
     }
 
-    public function form_submit_volunteer()
+    public function formSubmitVolunteer(FormSubmitVolunteerRequest $request): JsonResponse
     {
-        $validatedData = request()->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'phone' => 'required|min:9|max:16',
-            'age' => 'required|numeric',
-            'job' => 'required',
-            'district' => 'required',
-            'county' => 'required',
-            'schedule' => 'required',
-            'interest' => 'required',
-            'observations' => 'required',
-        ]);
-
-        $this->subscribe_newsletter();
-
         // Mail to AdR
-        $result = Mail::to(Config::get('settings.form_volunteer'))->send(new VolunteerForm(request()));
+        Mail::to(Config::get('settings.form_volunteer'))->send(new VolunteerForm($request));
 
         return response()->json([
             'success' => true,
-            'message' => __('Your message has been successfully sent.') . '<br />' . __('We will contact you as soon as possible to follow up on your request.'),
+            'message' => __('Your message has been successfully sent.').'<br />'.__('We will contact you as soon as possible to follow up on your request.'),
         ]);
     }
 
-    public function form_submit_contact()
+    public function formSubmitContact(FormSubmitContactRequest $request): JsonResponse
     {
-        $validatedData = request()->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'phone' => 'required|min:9|max:16',
-            'district' => 'required',
-            'county' => 'required',
-            'subject' => 'required',
-            'observations' => 'required',
-        ]);
-
-        $this->subscribe_newsletter();
-
         // Mail to AdR
-        $result = Mail::to(Config::get('settings.form_contact'))->send(new ContactForm(request()));
+        Mail::to(Config::get('settings.form_contact'))->send(new ContactForm($request));
 
         return response()->json([
             'success' => true,
-            'message' => __('Your message has been successfully sent.') . '<br />' . __('We will contact you as soon as possible to follow up on your request.'),
+            'message' => __('Your message has been successfully sent.').'<br />'.__('We will contact you as soon as possible to follow up on your request.'),
         ]);
     }
 
-    public function form_submit_apply()
+    public function formSubmitApply(FormSubmitApplyRequest $request): JsonResponse
     {
-        $request = request();
-
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'email' => 'required|email',
-            'phone' => 'required|min:9|max:16',
-            'process' => 'required',
-            'address' => 'required',
-            'postalcode' => 'required',
-            'animals' => 'required|numeric',
-            'specie' => 'required|in:' . EnumHelper::keys('process.specie', ',') . ',other',
-            'parish' => 'required|exists:territories,id',
-            'images.*' => 'required|mimes:jpeg,jpg,png|max:5000',
-            'observations' => 'required|min:3',
-        ]);
-
-        $validator->validate();
-
-        // Check for 3 minimum images
-        if (count($request->file('images')) < 3) {
-            $validator->errors()->add('images', __('You must upload at least 3 images.'));
-            throw new ValidationException($validator);
-        }
-
-        // Check for colab
-        if (!$request->input('colab')) {
-            $validator->errors()->add('colab', __('You must select at least one option on how you may collaborate.'));
-            throw new ValidationException($validator);
-        }
-
-        $this->subscribe_newsletter();
-
         // Get Headquarter
         $headquarter = Headquarter::whereHas('territories', function ($query) use ($request) {
             $query->where('territory_id', $request->parish)
@@ -147,17 +98,21 @@ class FormController extends Controller
                     $image = Image::make($file);
 
                     // Filename
-                    $filename = preg_replace('/\\.[^.\\s]{3,4}$/', '', $file->getClientOriginalName()) . '_' . time() . '.jpg';
+                    $filename = preg_replace('/\\.[^.\\s]{3,4}$/', '', $file->getClientOriginalName()).'_'.time().'.jpg';
 
                     // Save Image
                     Storage::disk('uploads')->put("process/$filename", $image
-                            ->resize(800, 600, function ($c) {$c->aspectRatio();})
-                            ->stream('jpg', 82));
+                        ->resize(800, 600, function ($c) {
+                            $c->aspectRatio();
+                        })
+                        ->stream('jpg', 82));
 
                     // Save Thumb
                     Storage::disk('uploads')->put("process/thumb/$filename", $image
-                            ->resize(340, 255, function ($c) {$c->aspectRatio();})
-                            ->stream('jpg', 82));
+                        ->resize(340, 255, function ($c) {
+                            $c->aspectRatio();
+                        })
+                        ->stream('jpg', 82));
 
                     $images_value[] = "uploads/process/$filename";
                 }
@@ -168,12 +123,12 @@ class FormController extends Controller
         $notes = 'O candidato oferece-se para:<br />';
         if (is_array($request->colab)) {
             foreach ($request->colab as $colab) {
-                $notes .= '- ' . __("web.forms.$colab") . '<br />';
+                $notes .= '- '.__("web.forms.$colab").'<br />';
             }
         }
 
         // Process
-        $process = new Process();
+        $process = new Process;
         $process->fill($request->all());
 
         $process->name = $request->process;
@@ -183,110 +138,54 @@ class FormController extends Controller
         $process->history = $request->observations;
         $process->images = $images_value;
         $process->notes = $notes;
-        $process->address = $request->address . ', ' . $request->postalcode;
+        $process->address = $request->address.', '.$request->postalcode;
 
-        $process->status = 'approving';
+        $process->status = ProcessStatusEnum::APPROVING;
         $process->urgent = 0;
         $process->headquarter_id = $headquarter->id;
         $process->save();
 
         // Mail to client
-        $result = Mail::to($request->email)->send(new ApplyForm($process));
+        Mail::to($request->email)->send(new ApplyForm($process));
 
         return response()->json([
             'success' => true,
-            'message' => __('Your message has been successfully sent.') . '<br />' . __('We will contact you as soon as possible to follow up on your request.'),
+            'message' => __('Your message has been successfully sent.').'<br />'.__('We will contact you as soon as possible to follow up on your request.'),
         ]);
     }
 
-    public function form_submit_training()
+    public function formSubmitTraining(FormSubmitTrainingRequest $request): JsonResponse
     {
-        $validatedData = request()->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'phone' => 'required|min:9|max:16',
-            'district' => 'required',
-            'county' => 'required',
-            'theme' => 'required',
-            'observations' => 'required',
-        ]);
-
-        $this->subscribe_newsletter();
-
         // Mail to AdR
-        $result = Mail::to(Config::get('settings.form_training'))->send(new TrainingForm(request()));
+        Mail::to(Config::get('settings.form_training'))->send(new TrainingForm($request));
 
         return response()->json([
             'success' => true,
-            'message' => __('Your message has been successfully sent.') . '<br />' . __('We will contact you as soon as possible to follow up on your request.'),
+            'message' => __('Your message has been successfully sent.').'<br />'.__('We will contact you as soon as possible to follow up on your request.'),
         ]);
     }
 
-    public function form_submit_godfather()
+    public function formSubmitGodfather(FormSubmitGodfatherRequest $request): JsonResponse
     {
-        $validatedData = request()->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'phone' => 'required|min:9|max:16',
-            'other' => 'nullable|numeric',
-            'observations' => 'required',
-        ]);
-
-        $this->subscribe_newsletter();
-
         // Mail to AdR
-        $result = Mail::to(Config::get('settings.form_godfather'))->send(new GodfatherForm(request()));
+        Mail::to(config('settings.form_godfather'))
+            ->send(new GodfatherForm($request));
 
         return response()->json([
             'success' => true,
-            'message' => __('Your message has been successfully sent.') . '<br />' . __('We will contact you as soon as possible to follow up on your request.'),
+            'message' => __('Your message has been successfully sent.').'<br />'.__('We will contact you as soon as possible to follow up on your request.'),
         ]);
     }
 
-    public function form_submit_petsitting()
+    public function formSubmitPetsitting(FormSubmitPetsittingRequest $request): JsonResponse
     {
-        $request = request();
-
-        $validator = Validator::make($request->all(), [
-            'first_name' => 'required|max:35',
-            'last_name' => 'required|max:35',
-            'email' => 'required|email',
-            'phone' => 'required|min:9|max:16',
-            'address' => 'required|max:255',
-            'city' => 'required|max:35',
-            'town' => 'required|max:35',
-            'initial_date' => 'required|date',
-            'final_date' => 'required|date|after_or_equal:initialDate',
-            'animals' => 'required|array|min:1',
-            'other_animals' => Rule::requiredIf(function () use ($request) {
-                if ($request->filled('animals')) {
-                    return in_array('Outros', $request->input('animals'));
-                }
-            }),
-            'number_of_animals' => 'required|numeric|min:1|max:2',
-            'animal_temper' => 'required|max:255',
-            'visit_number' => 'required|numeric',
-            'walk_number' => 'required_if:has_walk,yes|numeric',
-            'services' => 'nullable',
-            'notes' => 'nullable|max:255',
-            'has_consent' => 'required',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'message' => __('Some fields are required. Please check the form and try again.'),
-                'errors' => $validator->errors(),
-            ]);
-        }
-
         // Send Mail with last stored request id
         $lastEmailId = StorePetsittingRequests::all()->last()->id ?? 0;
         Mail::to(Config::get('settings.form_petsitting'))->send(new PetsittingForm($request, $lastEmailId + 1));
 
         // Store form request
-        $storePetsittingRequests = new StorePetsittingRequests();
-        $storePetsittingRequests->name = $request->first_name . ' ' . $request->last_name;
+        $storePetsittingRequests = new StorePetsittingRequests;
+        $storePetsittingRequests->name = $request->first_name.' '.$request->last_name;
         $storePetsittingRequests->save();
 
         return response()->json([
@@ -295,10 +194,10 @@ class FormController extends Controller
         ]);
     }
 
-    private function subscribe_newsletter()
+    private function subscribeNewsletter(Request $request): void
     {
-        if (request()->input('newsletter')) {
-            Newsletter::subscribe(request()->input('email'));
+        if ($request->input('newsletter')) {
+            Newsletter::subscribe($request->input('email'));
         }
     }
 }

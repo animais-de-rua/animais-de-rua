@@ -9,7 +9,7 @@ use DB;
 
 /**
  * Class StoreTransactionCrudController
- * @package App\Http\Controllers\Admin
+ *
  * @property-read CrudPanel $crud
  */
 class StoreTransactionCrudController extends CrudController
@@ -22,7 +22,7 @@ class StoreTransactionCrudController extends CrudController
         |--------------------------------------------------------------------------
         */
         $this->crud->setModel('App\Models\StoreTransaction');
-        $this->crud->setRoute(config('backpack.base.route_prefix') . '/store/user/transaction');
+        $this->crud->setRoute(config('backpack.base.route_prefix').'/store/user/transaction');
         $this->crud->setEntityNameStrings(__('transaction'), __('transactions'));
 
         /*
@@ -85,7 +85,7 @@ class StoreTransactionCrudController extends CrudController
             'model' => '\App\User',
             'placeholder' => '',
             'minimum_input_length' => 2,
-            'data_source' => url('admin/user/ajax/search/' . User::ROLE_STORE),
+            'data_source' => url('admin/user/ajax/search/'.User::ROLE_STORE),
         ]);
 
         $this->crud->addField([
@@ -122,7 +122,7 @@ class StoreTransactionCrudController extends CrudController
                 'label' => ucfirst(__('volunteer')),
                 'placeholder' => __('Select a volunteer'),
             ],
-                url('admin/user/ajax/filter/' . User::ROLE_STORE),
+                url('admin/user/ajax/filter/'.User::ROLE_STORE),
                 function ($value) {
                     $this->crud->addClause('where', 'user_id', $value);
                 });
@@ -173,17 +173,17 @@ class StoreTransactionCrudController extends CrudController
         $this->crud->addClause('orderBy', 'store_transactions.id', 'DESC');
 
         // Permissions
-        if (!is(['admin', 'store'], 'store transaction')) {
+        if (! is(['admin', 'store'], 'store transaction')) {
             $this->crud->denyAccess(['create']);
         }
 
-        if (!is(['admin'], ['store transaction'])) {
+        if (! is(['admin'], ['store transaction'])) {
             $this->crud->denyAccess(['update', 'delete']);
 
-            $this->crud->addClause('where', 'user_id', backpack_user()->id);
+            $this->crud->addClause('where', 'user_id', user()->id);
         }
 
-        if (!is('admin')) {
+        if (! is('admin')) {
             $this->crud->removeField('user_id');
         }
 
@@ -194,8 +194,8 @@ class StoreTransactionCrudController extends CrudController
 
     public function store(StoreRequest $request)
     {
-        if (!is(['admin'])) {
-            $request->merge(['user_id' => backpack_user()->id]);
+        if (! is(['admin'])) {
+            $request->merge(['user_id' => user()->id]);
         }
 
         return parent::storeCrud($request);

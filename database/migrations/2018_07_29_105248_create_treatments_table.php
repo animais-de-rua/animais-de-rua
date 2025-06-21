@@ -1,6 +1,6 @@
 <?php
 
-use App\Helpers\EnumHelper;
+use App\Enums\Treatment\StatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -9,64 +9,38 @@ class CreateTreatmentsTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('treatment_types', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->text('name');
             $table->integer('operation_time')->nullable()->unsigned()->default(60);
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('treatments', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('appointment_id')->nullable()->unsigned();
-            $table->integer('treatment_type_id')->nullable()->unsigned();
-            $table->integer('vet_id')->nullable()->unsigned();
-            $table->integer('user_id')->nullable()->unsigned();
+            $table->id();
+            $table->foreignId('appointment_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('treatment_type_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('vet_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
             $table->integer('affected_animals')->unsigned()->default(1);
             $table->integer('affected_animals_new')->unsigned()->default(0);
             $table->decimal('expense', 8, 2)->nullable()->unsigned()->default(0);
-            $table->enum('status', EnumHelper::values('treatment.status'))->default('approving');
+            $table->enum('status', StatusEnum::values())->default(StatusEnum::APPROVING);
             $table->date('date');
             $table->text('notes')->nullable();
             $table->timestamps();
-
-            $table->index(['appointment_id']);
-            $table->foreign('appointment_id')
-                ->references('id')
-                ->on('appointments')
-                ->onDelete('set null');
-
-            $table->index(['treatment_type_id']);
-            $table->foreign('treatment_type_id')
-                ->references('id')
-                ->on('treatment_types')
-                ->onDelete('set null');
-
-            $table->index(['vet_id']);
-            $table->foreign('vet_id')
-                ->references('id')
-                ->on('vets')
-                ->onDelete('set null');
-
-            $table->index(['user_id']);
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('set null');
+            $table->softDeletes();
         });
     }
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('treatments');
         Schema::dropIfExists('treatment_types');

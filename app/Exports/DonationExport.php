@@ -8,7 +8,6 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class DonationExport extends Export implements FromCollection, WithHeadings
 {
-
     /**
      * @return \Illuminate\Support\Collection
      */
@@ -16,13 +15,13 @@ class DonationExport extends Export implements FromCollection, WithHeadings
     {
         // Validate data
         $validatedData = request()->validate([
-            'type' => 'nullable|in:' . EnumHelper::keys('donation.type', ','),
+            'type' => 'nullable|in:'.EnumHelper::keys('donation.type', ','),
             'start' => 'nullable|date',
             'end' => 'nullable|date',
             'headquarter' => 'nullable|exists:headquarters,id',
             'protocol' => 'nullable|exists:protocols,id',
-            'group' => 'nullable|in:' . join(',', array_keys(self::group())),
-            'order.column' => 'required|in:' . join(',', array_keys(self::order())),
+            'group' => 'nullable|in:'.implode(',', array_keys(self::group())),
+            'order.column' => 'required|in:'.implode(',', array_keys(self::order())),
             'order.direction' => 'required|in:ASC,DESC',
         ]);
 
@@ -43,11 +42,11 @@ class DonationExport extends Export implements FromCollection, WithHeadings
         ];
 
         $selects = [];
-        if (!$filtered_by_process) {
-            array_push($selects, !$type || $type == 'headquarter' ? 'headquarters.name as headquarter_name' : '');
-            array_push($selects, !$type || $type == 'private' ? 'godfathers.name as godfather_name' : '');
-            array_push($selects, !$type || $type == 'protocol' ? 'protocols.name as protocol_name' : '');
-            $selects = join(', ', array_filter($selects)) . ',';
+        if (! $filtered_by_process) {
+            array_push($selects, ! $type || $type == 'headquarter' ? 'headquarters.name as headquarter_name' : '');
+            array_push($selects, ! $type || $type == 'private' ? 'godfathers.name as godfather_name' : '');
+            array_push($selects, ! $type || $type == 'protocol' ? 'protocols.name as protocol_name' : '');
+            $selects = implode(', ', array_filter($selects)).',';
         } else {
             $selects = '';
         }
@@ -73,7 +72,7 @@ class DonationExport extends Export implements FromCollection, WithHeadings
         }
 
         // Merge conditions
-        $conditions = join(' AND ', $conditions);
+        $conditions = implode(' AND ', $conditions);
 
         // Group by
         $value = 'value';

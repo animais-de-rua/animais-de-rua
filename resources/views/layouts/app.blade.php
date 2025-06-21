@@ -46,8 +46,8 @@
     <meta property="og:image" content="{{ config('app.url') }}img/logo/facebook.png" />
 @endif
 
-    <link rel="preload" href="{{ mix('js/app.js') }}" as="script" />
-    <link rel="preload" href="{{ mix('css/app.css') }}" as="style" />
+    <link rel="preload" href="{{ Vite::asset('resources/js/app.js') }}" as="script" />
+    <link rel="preload" href="{{ Vite::asset('resources/css/app.css') }}" as="style" />
     <link rel="preload" href="{{ "/fonts/icomoon.woff2?3f18b6535991cd09292b06b870eb6400" }}" as="font" type="font/woff2" crossorigin="anonymous" />
 
     <link rel="preconnect" href="https://www.google-analytics.com" />
@@ -56,7 +56,7 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
-    <link href="{{ mix('css/app.css') }}" rel="stylesheet" />
+    @vite('resources/css/app.css')
 
     @yield('style')
 </head>
@@ -74,21 +74,37 @@
 
     @include('layouts.forms')
 
-    @include('cookieConsent::index')
+    @include('cookie-consent::index')
 
     <script>
-        window.Laravel = {token: '{{ csrf_token() }}', title: '{{ config('app.name') }}'};
-        window.translations = {month: [
-            '{{ __('January') }}', '{{ __('February') }}', '{{ __('March') }}', '{{ __('April') }}',
-            '{{ __('May') }}', '{{ __('June') }}', '{{ __('July') }}', '{{ __('August') }}',
-            '{{ __('September') }}', '{{ __('October') }}', '{{ __('November') }}', '{{ __('December') }}']};
+        window.Laravel = {{ Js::from([
+            'token' => csrf_token(),
+            'title' => config('app.name'),
+        ]) }};
+        window.translations = {{ Js::from([
+            'month' => [
+                'January',
+                'February',
+                'March',
+                'April',
+                'May',
+                'June',
+                'July',
+                'August',
+                'September',
+                'October',
+                'November',
+                'December',
+            ],
+        ]) }};
     </script>
-    <script src="{{ mix('js/app.js') }}"></script>
+    <script src="{{ Vite::asset('resources/js/app.js') }}"></script>
     @yield('script')
 
+    {{-- Google Tag Manager Code --}}
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-118312120-1" max-age=604800></script>
     <script>
-        window.dataLayer = window.dataLayer || [];
+        window.dataLayer ||= [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'UA-118312120-1');

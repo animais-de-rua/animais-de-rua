@@ -2,95 +2,66 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\CrudTrait;
-use Backpack\CRUD\ModelTraits\SpatieTranslatable\HasTranslations;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\Translatable\HasTranslations;
 
 class TreatmentType extends Model
 {
     use CrudTrait;
     use HasTranslations;
 
-    /*
-    |--------------------------------------------------------------------------
-    | GLOBAL VARIABLES
-    |--------------------------------------------------------------------------
-    */
+    protected $fillable = [
+        'name',
+        'operation_time',
+    ];
+    protected $translatable = [
+        'name',
+    ];
 
-    protected $table = 'treatment_types';
-    protected $primaryKey = 'id';
-    // public $timestamps = false;
-    // protected $guarded = ['id'];
-    protected $fillable = ['name', 'operation_time'];
-    // protected $hidden = [];
-    // protected $dates = [];
-    protected $translatable = ['name'];
-
-    /*
-    |--------------------------------------------------------------------------
-    | FUNCTIONS
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | RELATIONS
-    |--------------------------------------------------------------------------
-    */
-
-    public function treatments()
+    /**
+     * @return HasMany<Treatment, $this>
+     */
+    public function treatments(): HasMany
     {
-        return $this->hasMany('App\Models\Treatment', 'treatment_type_id');
+        return $this->hasMany(Treatment::class, 'treatment_type_id');
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | SCOPES
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | ACCESORS
-    |--------------------------------------------------------------------------
-    */
-
-    public function getTotalExpensesValue()
+    // @deprecated
+    public function getTotalExpensesValue(): string
     {
         $expenses = $this->total_expenses ?: data_get_first($this, 'treatments', 'total_expenses', 0);
 
-        return $expenses != 0 ? $expenses . '€' : '-';
+        return $expenses != 0 ? $expenses.'€' : '-';
     }
 
-    public function getTotalOperationsValue()
+    // @deprecated
+    public function getTotalOperationsValue(): string
     {
         $operations = $this->total_operations ?: data_get_first($this, 'treatments', 'total_operations', 0);
 
         return $operations != 0 ? $operations : '-';
     }
 
-    public function getOperationsAverageValue()
+    // @deprecated
+    public function getOperationsAverageValue(): string
     {
         $average = $this->average ?: data_get_first($this, 'treatments', 'average', 0);
 
-        return $average > 0 ? number_format($average, 2) . '€' : '-';
+        return $average > 0 ? number_format($average, 2).'€' : '-';
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | MUTATORS
-    |--------------------------------------------------------------------------
-    */
-
-    public function setOperationTimeAttribute($value)
+    // @deprecated
+    public function setOperationTimeAttribute($value): void
     {
         $parts = explode(':', $value);
         if (count($parts) >= 2) {
-            $this->attributes['operation_time'] = $parts[0] * 60 + $parts[1];
+            $this->attributes['operation_time'] = ((int) $parts[0]) * 60 + ((int) $parts[1]);
         }
-
     }
 
-    public function getOperationTimeAttribute($value)
+    // @deprecated
+    public function getOperationTimeAttribute($value): string
     {
         return sprintf('%02d:%02d', floor($value / 60), $value % 60);
     }

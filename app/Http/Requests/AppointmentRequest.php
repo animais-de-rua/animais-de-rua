@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use App\Helpers\EnumHelper;
-use App\Http\Requests\Request;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AppointmentRequest extends FormRequest
@@ -35,7 +34,7 @@ class AppointmentRequest extends FormRequest
             'amount_males' => 'required|numeric|min:0|max:200',
             'amount_females' => 'required|numeric|min:0|max:200',
             'amount_other' => 'required|numeric|min:0|max:200',
-            'status' => 'in:' . EnumHelper::keys('appointment.status', ','),
+            'status' => 'in:'.EnumHelper::keys('appointment.status', ','),
             'notes' => 'nullable|min:3',
             'notes_deliver' => 'nullable|min:3',
             'notes_collect' => 'nullable|min:3',
@@ -74,13 +73,13 @@ class AppointmentRequest extends FormRequest
         $validator->after(function ($validator) {
 
             // Validate approvement of a valid date and vet
-            if ($this->input('status') == 'approved_option_1' && (!$this->input('vet_id_1') || !$this->input('date_1'))) {
+            if ($this->input('status') == 'approved_option_1' && (! $this->input('vet_id_1') || ! $this->input('date_1'))) {
                 return $validator->errors()->add('status', __('You can not apporve option :option because date :option and vet :option are not set.', [
                     'option' => 1,
                 ]));
             }
 
-            if ($this->input('status') == 'approved_option_2' && (!$this->input('vet_id_2') || !$this->input('date_2'))) {
+            if ($this->input('status') == 'approved_option_2' && (! $this->input('vet_id_2') || ! $this->input('date_2'))) {
                 return $validator->errors()->add('status', __('You can not apporve option :option because date :option and vet :option are not set.', [
                     'option' => 2,
                 ]));

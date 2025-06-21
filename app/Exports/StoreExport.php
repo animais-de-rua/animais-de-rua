@@ -8,7 +8,6 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class StoreExport extends Export implements FromCollection, WithHeadings
 {
-
     /**
      * @return \Illuminate\Support\Collection
      */
@@ -16,12 +15,12 @@ class StoreExport extends Export implements FromCollection, WithHeadings
     {
         // Validate data
         $validatedData = request()->validate([
-            'status' => 'nullable|in:' . EnumHelper::keys('store.order', ','),
+            'status' => 'nullable|in:'.EnumHelper::keys('store.order', ','),
             'start' => 'nullable|date',
             'end' => 'nullable|date',
             'products.*' => 'nullable|exists:store_products,id',
             'volunteer' => 'nullable|exists:users,id',
-            'order.column' => 'required|in:' . join(',', array_keys(self::order())),
+            'order.column' => 'required|in:'.implode(',', array_keys(self::order())),
             'order.direction' => 'required|in:ASC,DESC',
         ]);
 
@@ -53,8 +52,8 @@ class StoreExport extends Export implements FromCollection, WithHeadings
             $conditions[] = "o.created_at <= '$end'";
         }
 
-        if ($products && sizeof(array_filter($products))) {
-            $products = join(',', $products);
+        if ($products && count(array_filter($products))) {
+            $products = implode(',', $products);
             $conditions[] = "p.id IN ($products)";
         }
 
@@ -63,7 +62,7 @@ class StoreExport extends Export implements FromCollection, WithHeadings
         }
 
         // Merge conditions
-        $conditions = join(' AND ', $conditions);
+        $conditions = implode(' AND ', $conditions);
 
         // Query
         $query = "SELECT
@@ -102,12 +101,12 @@ class StoreExport extends Export implements FromCollection, WithHeadings
             'expense' => __('Expense'),
             'invoice' => __('Invoice'),
             'price' => __('Price'),
-            'price_no_vat' => __('Price') . ' (' . __('no VAT') . ')',
+            'price_no_vat' => __('Price').' ('.__('no VAT').')',
             'discount' => __('Discount'),
-            'discount_no_vat' => __('Discount') . ' (' . __('no VAT') . ')',
+            'discount_no_vat' => __('Discount').' ('.__('no VAT').')',
             'expense' => __('Expense'),
             'total' => __('Total'),
-            'total_no_vat' => __('Total') . ' (' . __('no VAT') . ')',
+            'total_no_vat' => __('Total').' ('.__('no VAT').')',
             'quantity' => __('Quantity'),
             'user_id' => __('Volunteer'),
         ];
@@ -122,12 +121,12 @@ class StoreExport extends Export implements FromCollection, WithHeadings
             __('Receipt'),
             __('Invoice'),
             __('Price'),
-            __('Price') . ' (' . __('no VAT') . ')',
+            __('Price').' ('.__('no VAT').')',
             __('Discount'),
-            __('Discount') . ' (' . __('no VAT') . ')',
+            __('Discount').' ('.__('no VAT').')',
             __('Expense'),
             __('Total'),
-            __('Total') . ' (' . __('no VAT') . ')',
+            __('Total').' ('.__('no VAT').')',
             __('Quantity'),
             __('Volunteer'),
             __('Products'),

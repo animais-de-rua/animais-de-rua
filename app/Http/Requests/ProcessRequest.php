@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use App\Helpers\EnumHelper;
-use App\Http\Requests\Request;
 use App\Models\Process;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -38,8 +37,8 @@ class ProcessRequest extends FormRequest
             'amount_males' => 'required|numeric|min:0|max:200',
             'amount_females' => 'required|numeric|min:0|max:200',
             'amount_other' => 'required|numeric|min:0|max:200',
-            'specie' => 'required|in:' . EnumHelper::keys('process.specie', ','),
-            'status' => 'in:' . EnumHelper::keys('process.status', ','),
+            'specie' => 'required|in:'.EnumHelper::keys('process.specie', ','),
+            'status' => 'in:'.EnumHelper::keys('process.status', ','),
             'urgent' => 'nullable|in:0,1',
             'history' => 'required',
             'images' => 'required',
@@ -110,6 +109,7 @@ class ProcessRequest extends FormRequest
             if (is_array($this->input('images'))) {
                 $images = array_filter($this->input('images'), function ($image) {
                     preg_match('/\.(jpe?g|png)$/i', $image, $matches, PREG_OFFSET_CAPTURE);
+
                     return $image && $matches;
                 });
             }

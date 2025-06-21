@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\Request;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreTransactionRequest extends FormRequest
@@ -27,7 +26,7 @@ class StoreTransactionRequest extends FormRequest
     {
         return [
             'description' => 'nullable',
-            'user_id' => (is('admin') ? 'required' : 'nullable') . '|exists:users,id',
+            'user_id' => (is('admin') ? 'required' : 'nullable').'|exists:users,id',
             'amount' => 'required|numeric',
             'notes' => 'nullable',
             'invoice' => 'required_without:user_id',

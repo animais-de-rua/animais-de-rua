@@ -10,7 +10,7 @@ use Backpack\CRUD\CrudPanel;
 
 /**
  * Class SupplierCrudController
- * @package App\Http\Controllers\Admin
+ *
  * @property-read CrudPanel $crud
  */
 class SupplierCrudController extends CrudController
@@ -23,7 +23,7 @@ class SupplierCrudController extends CrudController
         |--------------------------------------------------------------------------
         */
         $this->crud->setModel('App\Models\Supplier');
-        $this->crud->setRoute(config('backpack.base.route_prefix') . '/store/supplier');
+        $this->crud->setRoute(config('backpack.base.route_prefix').'/store/supplier');
         $this->crud->setEntityNameStrings(__('supplier'), __('suppliers'));
 
         /*
@@ -166,11 +166,11 @@ class SupplierCrudController extends CrudController
         $this->crud->enableExportButtons();
 
         // ------ CRUD ACCESS
-        if (!is('admin')) {
+        if (! is('admin')) {
             $this->crud->denyAccess(['delete']);
         }
 
-        if (!is('admin', 'store orders')) {
+        if (! is('admin', 'store orders')) {
             $this->crud->denyAccess(['list', 'create', 'update']);
         }
 
@@ -185,10 +185,10 @@ class SupplierCrudController extends CrudController
         $notes = str_replace('\\n', '<br />', $supplier->notes);
 
         return "<div style='margin:5px 8px'>
-                <b>" . __('Notes') . ":</b>
-                <p style='white-space: pre-wrap;'><i>" . __('Notes') . "</i>: $notes</p>
+                <b>".__('Notes').":</b>
+                <p style='white-space: pre-wrap;'><i>".__('Notes')."</i>: $notes</p>
                 <p>
-                    <b>" . __('Invoice') . ':</b> ' . ($supplier->invoice ? "<code>$supplier->invoice</code>" : '') . '
+                    <b>".__('Invoice').':</b> '.($supplier->invoice ? "<code>$supplier->invoice</code>" : '').'
                 </p>
             </div>';
     }

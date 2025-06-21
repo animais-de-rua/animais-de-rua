@@ -10,7 +10,7 @@ use DB;
 
 /**
  * Class StoreStockCrudController
- * @package App\Http\Controllers\Admin
+ *
  * @property-read CrudPanel $crud
  */
 class StoreStockCrudController extends CrudController
@@ -23,7 +23,7 @@ class StoreStockCrudController extends CrudController
         |--------------------------------------------------------------------------
         */
         $this->crud->setModel('App\Models\StoreStock');
-        $this->crud->setRoute(config('backpack.base.route_prefix') . '/store/user/stock');
+        $this->crud->setRoute(config('backpack.base.route_prefix').'/store/user/stock');
         $this->crud->setEntityNameStrings(__('stock'), __('stock'));
 
         /*
@@ -79,7 +79,7 @@ class StoreStockCrudController extends CrudController
             'model' => '\App\User',
             'placeholder' => '',
             'minimum_input_length' => 2,
-            'data_source' => url('admin/user/ajax/search/' . User::ROLE_STORE),
+            'data_source' => url('admin/user/ajax/search/'.User::ROLE_STORE),
         ]);
 
         $this->crud->addField([
@@ -122,7 +122,7 @@ class StoreStockCrudController extends CrudController
                 'label' => ucfirst(__('volunteer')),
                 'placeholder' => __('Select a volunteer'),
             ],
-                url('admin/user/ajax/filter/' . User::ROLE_STORE),
+                url('admin/user/ajax/filter/'.User::ROLE_STORE),
                 function ($value) {
                     $this->crud->addClause('where', 'user_id', $value);
                 });
@@ -193,10 +193,10 @@ class StoreStockCrudController extends CrudController
         $this->crud->addClause('orderBy', 'store_stock.id', 'DESC');
 
         // Permissions
-        if (!is(['admin'], ['store stock'])) {
+        if (! is(['admin'], ['store stock'])) {
             $this->crud->denyAccess(['create', 'update', 'delete']);
 
-            $this->crud->addClause('where', 'user_id', backpack_user()->id);
+            $this->crud->addClause('where', 'user_id', user()->id);
         }
 
         // add asterisk for fields that are required in StoreTransactionRequest
@@ -209,7 +209,7 @@ class StoreStockCrudController extends CrudController
         $stock = StoreStock::select(['notes'])->find($id);
 
         return "<div style='margin:5px 8px'>
-                <p style='white-space: pre-wrap;'><i>" . __('Notes') . "</i>: $stock->notes</p>
+                <p style='white-space: pre-wrap;'><i>".__('Notes')."</i>: $stock->notes</p>
             </div>";
     }
 

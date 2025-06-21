@@ -10,7 +10,7 @@ use Backpack\CRUD\CrudPanel;
 
 /**
  * Class VoucherCrudController
- * @package App\Http\Controllers\Admin
+ *
  * @property-read CrudPanel $crud
  */
 class VoucherCrudController extends CrudController
@@ -203,11 +203,11 @@ class VoucherCrudController extends CrudController
         $this->crud->enableExportButtons();
 
         // ------ CRUD ACCESS
-        if (!is('admin')) {
+        if (! is('admin')) {
             $this->crud->denyAccess(['delete']);
         }
 
-        if (!is('admin', 'store vouchers')) {
+        if (! is('admin', 'store vouchers')) {
             $this->crud->denyAccess(['list', 'create', 'update']);
         }
 

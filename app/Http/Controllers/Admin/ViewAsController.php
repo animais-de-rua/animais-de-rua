@@ -8,7 +8,7 @@ class ViewAsController extends \App\Http\Controllers\Controller
 {
     public function view_as_role($role)
     {
-        if (!admin()) {
+        if (! admin()) {
             abort(403);
         }
 
@@ -23,7 +23,7 @@ class ViewAsController extends \App\Http\Controllers\Controller
 
     public function view_as_permission($permission, $state)
     {
-        if (!admin()) {
+        if (! admin()) {
             abort(403);
         }
 
@@ -36,7 +36,7 @@ class ViewAsController extends \App\Http\Controllers\Controller
                 unset($permissions[array_search($permission, $permissions)]);
             }
 
-            if (sizeof($permissions)) {
+            if (count($permissions)) {
                 Session::put('permissions', $permissions);
             } else {
                 Session::remove('permissions');
@@ -50,7 +50,7 @@ class ViewAsController extends \App\Http\Controllers\Controller
 
     public function view_as_headquarter($headquarter, $state)
     {
-        if (!admin()) {
+        if (! admin()) {
             abort(403);
         }
 
@@ -63,7 +63,7 @@ class ViewAsController extends \App\Http\Controllers\Controller
                 unset($headquarters[array_search($headquarter, $headquarters)]);
             }
 
-            if (sizeof($headquarters)) {
+            if (count($headquarters)) {
                 Session::put('headquarters', $headquarters);
             } else {
                 Session::remove('headquarters');

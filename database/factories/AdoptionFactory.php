@@ -1,40 +1,32 @@
 <?php
 
-use App\Helpers\EnumHelper;
-use App\Models\Adopter;
+namespace Database\Factories;
+
 use App\Models\Adoption;
-use App\Models\Process;
-use App\User;
-use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-/*
-|--------------------------------------------------------------------------
-| Adoption Model Factory
-|--------------------------------------------------------------------------
-*/
+/**
+ * @extends Factory<Adoption>
+ */
+class AdoptionFactory extends Factory
+{
+    protected $model = Adoption::class;
 
-$factory->define(Adoption::class, function (Faker $faker) {
-    $faker->addProvider(new \App\Providers\FakerServiceProvider($faker));
+    public function definition(): array
+    {
+        return [
+            'name' => $this->faker->name(),
+            'age' => [$this->faker->numberBetween(1, 12), $this->faker->randomDigitNotZero()],
+            'sterilized' => $this->faker->randomElement([1, 0]),
+            'vaccinated' => $this->faker->randomElement([1, 0]),
+            'processed' => $this->faker->randomElement([1, 0]),
+            'individual' => $this->faker->randomElement([1, 0]),
+            'docile' => $this->faker->randomElement([1, 0]),
+            'abandoned' => $this->faker->randomElement([1, 0]),
+            'foal' => $this->faker->randomElement([1, 0]),
+            'adoption_date' => $this->faker->date(),
+            'status' => $this->faker->randomElement(['open', 'pending', 'closed', 'archived']),
 
-    $date = $faker->dateTimeBetween('-2 months', 'now');
-
-    return [
-        'process_id' => $faker->randomElement(Process::all()->pluck('id')->toArray()),
-        'user_id' => $faker->randomElement(User::all()->pluck('id')->toArray()),
-        'fat_id' => $faker->randomElement(User::all()->pluck('id')->toArray()),
-        'name' => $faker->animal,
-        'name_after' => $faker->animal,
-        'age' => [rand(0, 5), rand(0, 12)],
-        'gender' => $faker->randomElement(EnumHelper::get('animal.gender')),
-        'sterilized' => rand(0, 1),
-        'vaccinated' => rand(0, 1),
-        'processed' => rand(0, 1),
-        'features' => $faker->text(80),
-        'history' => $faker->text(80),
-        'adopter_id' => $faker->randomElement(Adopter::all()->pluck('id')->toArray()),
-        'adoption_date' => $date,
-        'status' => $faker->randomElement(EnumHelper::get('adoption.status')),
-        'created_at' => $date,
-        'updated_at' => $date,
-    ];
-});
+        ];
+    }
+}

@@ -2,39 +2,41 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\CrudTrait;
+use App\User;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Database\Factories\StoreOrderFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class StoreOrder extends Model
 {
     use CrudTrait;
+    /** @use HasFactory<StoreOrderFactory> */
+    use HasFactory;
 
-    /*
-    |--------------------------------------------------------------------------
-    | GLOBAL VARIABLES
-    |--------------------------------------------------------------------------
-    */
-
-    protected $table = 'store_orders';
-    // protected $primaryKey = 'id';
-    // public $timestamps = false;
-    // protected $guarded = ['id'];
-    protected $fillable = ['reference', 'cart', 'recipient', 'address', 'user_id', 'shipment_date', 'expense', 'payment', 'receipt', 'notes', 'invoice', 'status'];
-    // protected $hidden = [];
-    // protected $dates = [];
-
-    /*
-    |--------------------------------------------------------------------------
-    | FUNCTIONS
-    |--------------------------------------------------------------------------
-    */
+    protected $fillable = [
+        'reference',
+        'cart',
+        'recipient',
+        'address',
+        'user_id',
+        'shipment_date',
+        'expense',
+        'payment',
+        'receipt',
+        'notes',
+        'invoice',
+        'status',
+    ];
 
     public function addShipment()
     {
         $disabled = $this->status == 'shipped';
 
         return '
-        <a class="btn btn-xs btn-' . ($disabled ? 'default' : 'primary') . ' ' . ($disabled ? 'disabled' : '') . '" href="/admin/store/orders/' . $this->id . '/edit" title="' . __('Add shipment') . '">
-        <i class="fa fa-plus"></i> ' . ucfirst(__('shipment')) . '
+        <a class="btn btn-xs btn-'.($disabled ? 'default' : 'primary').' '.($disabled ? 'disabled' : '').'" href="/admin/store/orders/'.$this->id.'/edit" title="'.__('Add shipment').'">
+        <i class="fa fa-plus"></i> '.ucfirst(__('shipment')).'
         </a>';
     }
 
@@ -42,37 +44,26 @@ class StoreOrder extends Model
     {
         return '
         <a class="openall btn btn-primary ladda-button" data-style="zoom-in">
-            <span class="ladda-label"><i class="fa fa-plus-square-o"></i> ' . ucfirst(__('Open All')) . '</span>
+            <span class="ladda-label"><i class="fa fa-plus-square-o"></i> '.ucfirst(__('Open All')).'</span>
         </a>';
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | RELATIONS
-    |--------------------------------------------------------------------------
-    */
-
-    public function user()
+    /**
+     * @return BelongsTo<User, $this>
+     */
+    public function user(): BelongsTo
     {
-        return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function products()
+    /**
+     * @return BelongsToMany<StoreProduct, $this>
+     */
+    public function products(): BelongsToMany
     {
-        return $this->belongsToMany('App\Models\StoreProduct', 'store_orders_products', 'store_order_id', 'store_product_id')->withPivot(['quantity', 'discount', 'discount_no_vat']);
+        return $this->belongsToMany(StoreProduct::class, 'store_orders_products', 'store_order_id', 'store_product_id')
+            ->withPivot(['quantity', 'discount', 'discount_no_vat']);
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | SCOPES
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | ACCESORS
-    |--------------------------------------------------------------------------
-    */
 
     public function getShippedAttribute()
     {
@@ -100,14 +91,8 @@ class StoreOrder extends Model
 
     public function getNameAttribute()
     {
-        return join(' - ', [$this->reference, $this->recipient]);
+        return implode(' - ', [$this->reference, $this->recipient]);
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | MUTATORS
-    |--------------------------------------------------------------------------
-    */
 
     public function toArray()
     {

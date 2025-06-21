@@ -20,7 +20,7 @@ class Export
 
     public function appendLimit()
     {
-        return $this->limit ? ' LIMIT ' . $this->limit : '';
+        return $this->limit ? ' LIMIT '.$this->limit : '';
     }
 
     public function collectResults($query)

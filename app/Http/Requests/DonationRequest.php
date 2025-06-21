@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use App\Helpers\EnumHelper;
-use App\Http\Requests\Request;
 use Illuminate\Foundation\Http\FormRequest;
 
 class DonationRequest extends FormRequest
@@ -29,7 +28,7 @@ class DonationRequest extends FormRequest
         return [
             'value' => 'required|numeric',
             'process_id' => 'required|exists:processes,id',
-            'type' => 'required|in:' . EnumHelper::keys('donation.type', ','),
+            'type' => 'required|in:'.EnumHelper::keys('donation.type', ','),
             'godfather_id' => 'nullable|exists:godfathers,id',
             'headquarter_id' => 'nullable|exists:headquarters,id',
             'protocol_id' => 'nullable|exists:protocols,id',
@@ -67,7 +66,7 @@ class DonationRequest extends FormRequest
 
             switch ($this->input('type')) {
                 case 'private':
-                    if (!$this->input('godfather_id')) {
+                    if (! $this->input('godfather_id')) {
                         $validator->errors()->add('godfather_id', __('The field :field is required.', [
                             'field' => __('godfather'),
                         ]));
@@ -77,7 +76,7 @@ class DonationRequest extends FormRequest
                     break;
 
                 case 'headquarter':
-                    if (!$this->input('headquarter_id')) {
+                    if (! $this->input('headquarter_id')) {
                         $validator->errors()->add('headquarter_id', __('The field :field is required.', [
                             'field' => __('godfather'),
                         ]));
@@ -87,7 +86,7 @@ class DonationRequest extends FormRequest
                     break;
 
                 case 'protocol':
-                    if (!$this->input('protocol_id')) {
+                    if (! $this->input('protocol_id')) {
                         $validator->errors()->add('protocol_id', __('The field :field is required.', [
                             'field' => __('godfather'),
                         ]));

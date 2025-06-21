@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use App\Helpers\EnumHelper;
-use App\Http\Requests\Request;
 use Illuminate\Foundation\Http\FormRequest;
 
 class VoucherRequest extends FormRequest

@@ -4,7 +4,7 @@ namespace App;
 
 trait PageTemplates
 {
-    private function home()
+    private function home(): void
     {
         // --------------------
         $this->header('Associação');
@@ -119,7 +119,7 @@ trait PageTemplates
         ]);
     }
 
-    private function association()
+    private function association(): void
     {
         // --------------------
         $this->header('Associação');
@@ -157,7 +157,7 @@ trait PageTemplates
         for ($i = 0; $i < 5; $i++) {
             $this->addField([
                 'name' => "report_year_$i",
-                'label' => '— ' . ($i + 1) . ' —<br />Ano',
+                'label' => '— '.($i + 1).' —<br />Ano',
                 'type' => 'number',
             ]);
 
@@ -289,7 +289,7 @@ trait PageTemplates
         ]);
     }
 
-    private function ced()
+    private function ced(): void
     {
         // --------------------
         $this->header('CED');
@@ -451,7 +451,7 @@ trait PageTemplates
         ]);
     }
 
-    private function animals()
+    private function animals(): void
     {
         // --------------------
         $this->header('Animais');
@@ -469,7 +469,7 @@ trait PageTemplates
         ]);
     }
 
-    private function help()
+    private function help(): void
     {
         // --------------------
         $this->header('Como Ajudar?');
@@ -622,7 +622,7 @@ trait PageTemplates
         ]);
     }
 
-    private function partners()
+    private function partners(): void
     {
         // --------------------
         $this->header('Parceiros');
@@ -641,7 +641,7 @@ trait PageTemplates
 
     }
 
-    private function petsitting()
+    private function petsitting(): void
     {
         // --------------------
         $this->header('Petsitting');
@@ -660,7 +660,7 @@ trait PageTemplates
 
     }
 
-    private function friends()
+    private function friends(): void
     {
         // --------------------
         $this->header('Amigos');
@@ -717,7 +717,7 @@ trait PageTemplates
         ]);
     }
 
-    private function privacypolicy()
+    private function privacypolicy(): void
     {
         // --------------------
         $this->header('Política de Privacidade');
@@ -743,7 +743,7 @@ trait PageTemplates
 
     // --------------------
     // Helpers
-    public function addField($field, $translatable = true)
+    public function addField($field, $translatable = true): void
     {
         $this->crud->addField(array_merge($field, [
             'fake' => true,
@@ -751,11 +751,11 @@ trait PageTemplates
         ]));
     }
 
-    private $id = 0;
-    public function header($label)
+    private int $id = 0;
+    public function header($label): void
     {
         $this->crud->addField([
-            'name' => 'content_header_' . $this->id++,
+            'name' => 'content_header_'.$this->id++,
             'type' => 'custom_html',
             'value' => "<br/><hr/><h2 style='margin-bottom:-15px'>$label</h2>",
         ]);

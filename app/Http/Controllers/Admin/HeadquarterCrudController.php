@@ -7,6 +7,7 @@ use App\Http\Requests\HeadquarterRequest as StoreRequest;
 use App\Http\Requests\HeadquarterRequest as UpdateRequest;
 use App\Models\Territory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class HeadquarterCrudController extends CrudController
 {
@@ -21,7 +22,7 @@ class HeadquarterCrudController extends CrudController
         |--------------------------------------------------------------------------
         */
         $this->crud->setModel('App\Models\Headquarter');
-        $this->crud->setRoute(config('backpack.base.route_prefix') . '/headquarter');
+        $this->crud->setRoute(config('backpack.base.route_prefix').'/headquarter');
         $this->crud->setEntityNameStrings(__('headquarter'), __('headquarters'));
 
         /*
@@ -66,7 +67,7 @@ class HeadquarterCrudController extends CrudController
             'type' => 'select2_multiple_data_source',
             'name' => 'territories',
             'attribute' => 'name',
-            'model' => api()->territorySearch(Territory::DISTRITO | Territory::CONCELHO, new Request()),
+            'model' => api()->territorySearch(Territory::DISTRITO | Territory::CONCELHO, new Request),
             'pivot' => true,
         ]);
 
@@ -75,7 +76,7 @@ class HeadquarterCrudController extends CrudController
             'type' => 'select2_multiple_data_source',
             'name' => 'territories_range',
             'attribute' => 'name',
-            'model' => api()->territorySearch(Territory::DISTRITO | Territory::CONCELHO, new Request()),
+            'model' => api()->territorySearch(Territory::DISTRITO | Territory::CONCELHO, new Request),
             'pivot' => true,
         ]);
 
@@ -116,7 +117,7 @@ class HeadquarterCrudController extends CrudController
         ]);
 
         // ------ CRUD ACCESS
-        if (!is('admin')) {
+        if (! is('admin')) {
             $this->crud->denyAccess(['list', 'create', 'update', 'delete']);
         }
 
@@ -142,9 +143,9 @@ class HeadquarterCrudController extends CrudController
         return parent::updateCrud($request);
     }
 
-    public function sync()
+    public function sync(string $operation): void
     {
-        \Cache::forget('headquarters');
-        \Cache::forget('headquarters_territories_acting');
+        Cache::forget('headquarters');
+        Cache::forget('headquarters_territories_acting');
     }
 }

@@ -2,72 +2,47 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\CrudTrait;
-use Backpack\CRUD\ModelTraits\SpatieTranslatable\HasTranslations;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\Translatable\HasTranslations;
 
 class FriendCardModality extends Model
 {
     use CrudTrait;
     use HasTranslations;
 
-    /*
-    |--------------------------------------------------------------------------
-    | GLOBAL VARIABLES
-    |--------------------------------------------------------------------------
-    */
+    protected $fillable = [
+        'name',
+        'description',
+        'paypal_code',
+        'amount',
+        'type',
+        'visible',
+    ];
+    protected $translatable = [
+        'name',
+        'description',
+    ];
 
-    protected $table = 'friend_card_modalities';
-    protected $primaryKey = 'id';
-    // public $timestamps = false;
-    // protected $guarded = ['id'];
-    protected $fillable = ['name', 'description', 'paypal_code', 'amount', 'type', 'visible'];
-    // protected $hidden = [];
-    // protected $dates = [];
-    protected $translatable = ['name', 'description'];
-    /*
-    |--------------------------------------------------------------------------
-    | FUNCTIONS
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | RELATIONS
-    |--------------------------------------------------------------------------
-    */
-
-    public function user()
+    /**
+     * @return HasMany<User, $this>
+     */
+    public function user(): HasMany
     {
-        return $this->hasMany('App\User', 'friend_card_modality_id');
+        return $this->hasMany(User::class, 'friend_card_modality_id');
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | SCOPES
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | ACCESORS
-    |--------------------------------------------------------------------------
-    */
-
-    public function getFullnameAttribute()
+    public function getFullnameAttribute(): string
     {
         $type = ucfirst(__($this->type));
+
         return "{$this->name} — {$this->amount}€ {$type}";
     }
 
-    public function getValueAttribute()
+    public function getValueAttribute(): string
     {
         $type = ucfirst(__($this->type));
+
         return "{$this->amount}€ {$type}";
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | MUTATORS
-    |--------------------------------------------------------------------------
-    */
 }

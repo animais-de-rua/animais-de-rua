@@ -85,7 +85,7 @@ class DashboardController extends CrudController
         $dates = $graphs['treatments_month']->pluck('date');
         for ($i = 1; $i <= 12; $i++) {
             $date = date('Y-m', strtotime("-$i months"));
-            if (!$dates->contains($date)) {
+            if (! $dates->contains($date)) {
                 $graphs['treatments_month']->push((object) ['total' => 0, 'date' => $date]);
             }
         }

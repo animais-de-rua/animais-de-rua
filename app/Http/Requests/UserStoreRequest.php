@@ -19,7 +19,7 @@ class UserStoreRequest extends UserStoreCrudRequest
             'password' => 'required|confirmed',
         ];
 
-        if (!is('admin')) {
+        if (! is('admin')) {
             $rules = array_merge($rules, [
                 'friend_card_modality_id' => 'required',
             ]);

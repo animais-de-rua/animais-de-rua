@@ -14,7 +14,7 @@ class CreateHeadquartersTable extends Migration
     public function up()
     {
         Schema::create('headquarters', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('name', 255);
             $table->string('address', 255)->nullable();
             $table->string('phone', 255)->nullable();
@@ -22,6 +22,7 @@ class CreateHeadquartersTable extends Migration
             $table->text('description')->nullable();
             $table->tinyInteger('active')->unsigned()->default('1');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

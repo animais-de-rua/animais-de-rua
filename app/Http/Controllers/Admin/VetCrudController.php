@@ -9,7 +9,7 @@ use App\Http\Requests\VetRequest as UpdateRequest;
 
 /**
  * Class VetCrudController
- * @package App\Http\Controllers\Admin
+ *
  * @property-read CrudPanel $crud
  */
 class VetCrudController extends CrudController
@@ -24,7 +24,7 @@ class VetCrudController extends CrudController
         |--------------------------------------------------------------------------
         */
         $this->crud->setModel('App\Models\Vet');
-        $this->crud->setRoute(config('backpack.base.route_prefix') . '/vet');
+        $this->crud->setRoute(config('backpack.base.route_prefix').'/vet');
         $this->crud->setEntityNameStrings(__('vet'), __('vets'));
 
         /*
@@ -180,7 +180,7 @@ class VetCrudController extends CrudController
         $this->crud->addFilter([
             'name' => 'total_expenses',
             'type' => 'range',
-            'label' => __('Total Expenses') . ' €',
+            'label' => __('Total Expenses').' €',
             'label_from' => __('Min value'),
             'label_to' => __('Max value'),
         ],
@@ -230,11 +230,11 @@ class VetCrudController extends CrudController
             });
 
         // ------ CRUD ACCESS
-        if (!is('admin', 'vets')) {
+        if (! is('admin', 'vets')) {
             $this->crud->denyAccess(['list', 'create', 'update']);
         }
 
-        if (!is('admin')) {
+        if (! is('admin')) {
             $this->crud->denyAccess(['delete']);
 
             $this->crud->addClause('whereHas', 'headquarters', function ($query) {

@@ -2,29 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\EnumHelper;
-use App\Http\Controllers\Admin\Traits\LocalCache;
-use App\Http\Controllers\Controller;
+use App\Enums\Animal\SpeciesEnum;
+use App\Helpers\LocalCache;
 use App\Models\Adoption;
-use App\Models\Page;
 use App\Models\Process;
-use DB;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
-use Newsletter;
-use Validator;
+use Illuminate\View\View;
+use Spatie\Newsletter\Facades\Newsletter;
 
 class PageController extends Controller
 {
-    use LocalCache;
-
     private $data = [];
 
-    public function index($slug = 'home')
+    public function index($slug = 'home'): View
     {
         // \Debugbar::disable();
 
-        $locale = \Session::get('locale');
+        $locale = Session::get('locale');
 
         $this->data = LocalCache::page($slug, $locale);
 
@@ -36,19 +38,19 @@ class PageController extends Controller
             $this->data = array_merge($this->data, call_user_func([$this, $slug]));
         }
 
-        return view('pages.' . $this->data['page']->template, $this->data);
+        return view('pages.'.$this->data['page']->template, $this->data);
     }
 
-    public function blank()
+    public function blank(): View
     {
         return view('pages.blank', $this->common());
     }
 
-    private function common()
+    private function common(): array
     {
         $data = [];
 
-        if (\Request::ajax()) {
+        if (request()->ajax() || request()->wantsJson()) {
             $data = [];
         } else {
             $treated = LocalCache::treated();
@@ -56,7 +58,7 @@ class PageController extends Controller
             $form_acting_territories = LocalCache::headquarters_territories_acting();
             $form_all_territories = LocalCache::territories_form_all();
 
-            $base_counter = \Config::get('settings.base_counter', 0);
+            $base_counter = config('settings.base_counter', 0);
 
             $data = [
                 'total_interventions' => $base_counter + $treated + $adopted,
@@ -68,7 +70,7 @@ class PageController extends Controller
         return $data;
     }
 
-    private function home()
+    private function home(): array
     {
         $campaigns = LocalCache::campaigns();
         $products = LocalCache::products();
@@ -81,7 +83,7 @@ class PageController extends Controller
         ];
     }
 
-    private function association()
+    private function association(): array
     {
         $headquarters = LocalCache::headquarters();
 
@@ -90,18 +92,18 @@ class PageController extends Controller
         ];
     }
 
-    private function ced()
+    private function ced(): array
     {
         return [];
     }
 
-    private function animals()
+    private function animals(): array
     {
         $districts_godfather = LocalCache::processes_districts_godfather();
         $districts_adoption = LocalCache::adoptions_districts_adoption();
         $processes_urgent = LocalCache::processes_urgent();
 
-        $species = EnumHelper::translate('process.specie');
+        $species = SpeciesEnum::transValues();
 
         return [
             'processes' => $processes_urgent,
@@ -113,7 +115,7 @@ class PageController extends Controller
         ];
     }
 
-    public function animalsView($option, $id)
+    public function animalsView($option, $id): View
     {
         switch ($option) {
             case 'godfather':
@@ -155,12 +157,12 @@ class PageController extends Controller
         return view('pages.animals-view', $data);
     }
 
-    private function help()
+    private function help(): array
     {
         return [];
     }
 
-    private function partners()
+    private function partners(): array
     {
         $sponsors = LocalCache::sponsors();
 
@@ -169,7 +171,7 @@ class PageController extends Controller
         ];
     }
 
-    private function petsitting()
+    private function petsitting(): array
     {
         $petsitters = LocalCache::petsitters();
 
@@ -178,7 +180,7 @@ class PageController extends Controller
         ];
     }
 
-    private function friends()
+    private function friends(): array
     {
         $modalities = LocalCache::friend_card_modalities();
         $partners = LocalCache::partners();
@@ -187,7 +189,7 @@ class PageController extends Controller
 
         return [
             'subscribed' => isset($_GET['success']),
-            'hasAccess' => backpack_user() && (is(['admin', 'volunteer']) || backpack_user()->friend_card_modality()->first()),
+            'hasAccess' => user() && (is(['admin', 'volunteer']) || user()->friend_card_modality()->first()),
             'modalities' => $modalities,
             'partners' => [
                 'list' => $partners,
@@ -198,9 +200,10 @@ class PageController extends Controller
     }
 
     // API
-    public function getAnimalsAdoption($territory = 0, $specie = 0)
+    public function getAnimalsAdoption(int $territory = 0, ?SpeciesEnum $specie = null): JsonResponse
     {
-        $data = Adoption::select(['adoptions.id', 'adoptions.name', 'processes.specie', 'adoptions.images', 'adoptions.created_at', 'district.name as district', 'county.name as county'])
+        $query = Adoption::query()
+            ->select(['adoptions.id', 'adoptions.name', 'processes.specie', 'adoptions.images', 'adoptions.created_at', 'district.name as district', 'county.name as county'])
             ->join('processes', 'processes.id', '=', 'adoptions.process_id')
             ->join('fats', 'fats.id', '=', 'adoptions.fat_id')
             ->join('territories as district', 'district.id', '=', DB::raw('LEFT(fats.territory_id, 2)'))
@@ -211,21 +214,22 @@ class PageController extends Controller
 
         // Specie
         if ($specie) {
-            $data = $data->where('processes.specie', $specie);
+            $query->where('processes.specie', $specie->value);
         }
 
         // Territory
         if ($territory > 0) {
             $territory = str_pad($territory, 2, 0, STR_PAD_LEFT);
-            $data = $data->where('fats.territory_id', 'like', $territory . '%');
+            $query->where('fats.territory_id', 'like', $territory.'%');
         }
 
-        return response()->json($data->get());
+        return response()->json($query->get());
     }
 
-    public function getAnimalsGodfather($territory = 0, $specie = 0)
+    public function getAnimalsGodfather($territory = 0, $specie = 0): JsonResponse
     {
-        $data = Process::select(['processes.id', 'processes.name', 'specie', 'images', 'created_at', 'district.name as district', 'county.name as county'])
+        $data = Process::query()
+            ->select(['processes.id', 'processes.name', 'specie', 'images', 'created_at', 'district.name as district', 'county.name as county'])
             ->join('territories as district', 'district.id', '=', DB::raw('LEFT(territory_id, 2)'))
             ->join('territories as county', 'county.id', '=', DB::raw('LEFT(territory_id, 4)'))
             ->where('status', 'waiting_godfather')
@@ -241,13 +245,13 @@ class PageController extends Controller
         // Territory
         if ($territory > 0) {
             $territory = str_pad($territory, 2, 0, STR_PAD_LEFT);
-            $data = $data->where('territory_id', 'like', $territory . '%');
+            $data = $data->where('territory_id', 'like', $territory.'%');
         }
 
         return response()->json($data->get());
     }
 
-    public function subscribeNewsletter(Request $request)
+    public function subscribeNewsletter(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
@@ -268,7 +272,7 @@ class PageController extends Controller
 
         // Check if success
         if (! Newsletter::lastActionSucceeded()) {
-            \Log::info(Newsletter::getApi()->getLastError());
+            Log::info(Newsletter::getApi()->getLastError());
 
             $validator->errors()->add('email', __('Something went wrong, please try again later.'));
             throw new ValidationException($validator);
@@ -280,15 +284,17 @@ class PageController extends Controller
         ]);
     }
 
-    public function login()
+    public function login(): RedirectResponse
     {
-        $result = \Auth::guard(backpack_guard_name())->attempt(request()->only('email', 'password'));
+        $result = Auth::guard(backpack_guard_name())->attempt(request()->only('email', 'password'));
+
         return redirect('/friends')->with('login', $result);
     }
 
-    public function logout()
+    public function logout(): RedirectResponse
     {
-        \Auth::guard(backpack_guard_name())->logout();
+        Auth::guard(backpack_guard_name())->logout();
+
         return redirect('/friends')->with('logout', true);
     }
 }

@@ -1,0 +1,56 @@
+{
+    // Please install the following extensions:
+    // - open-southeners.laravel-pint | PHP CS Fixer
+    // - sibiraj-s.vscode-scss-formatter | SCSS Formatter
+    // - dbaeumer.vscode-eslint | ESLint
+    // 
+    // Also recommended:
+    // - ryannaddy.laravel-artisan | Laravel Artisan
+    // - amirmarmul.laravel-blade-vscode | Blade highlighter
+    // - felixfbecker.php-intellisense | PHP IntelliSense
+    // - mohsen1.prettify-json | Prettify JSON
+    // - open-southeners.laravel-pint | PHP CS Fixer
+    // 
+    // Don't copy after this
+    // 
+    "editor.formatOnSave": true,
+    "editor.fontLigatures": true,
+    // "editor.fontFamily": "Fira Code",
+    "editor.renderWhitespace": "selection",
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "explicit"
+    },
+    "files.exclude": {
+        ".expo": true,
+        ".vs": true,
+        "*.code-workspace": true,
+        "*.sublime*": true,
+        ".gitattributes": true,
+        "artisan": true,
+        "auth.json": true,
+        "clean-default-entities.diff": true,
+        "server.php": true,
+        "web.config": true,
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features",
+    },
+    "[php]": {
+        "editor.defaultFormatter": "open-southeners.laravel-pint"
+    },
+    "[jsonc]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[html]": {
+        "editor.defaultFormatter": "vscode.html-language-features"
+    },
+    "[scss]": {
+        "editor.defaultFormatter": "sibiraj-s.vscode-scss-formatter"
+    },
+    "blade.format.enable": true,
+    "scss.lint.duplicateProperties": "error",
+    "scss.lint.emptyRules": "error",
+    "scss.lint.idSelector": "warning",
+    "scss.lint.important": "warning",
+    "javascript.updateImportsOnFileMove.enabled": "always",
+}

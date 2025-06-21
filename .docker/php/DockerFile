@@ -1,0 +1,14 @@
+FROM php:8.3.16-fpm
+
+# Install required packages
+RUN apt-get update && apt-get install -y \
+    mariadb-client \
+    libpq-dev \
+    libonig-dev \
+    libzip-dev \
+    zip \
+    unzip \
+    && docker-php-ext-install pdo pdo_mysql
+
+# Clean up
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*

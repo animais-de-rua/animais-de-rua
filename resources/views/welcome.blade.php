@@ -1,93 +1,82 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="light">
 
-        <title>Animais de Rua</title>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <style>
-            html, body {
-                background-color: #222d32;
-                color: #636b6f;
-                font-family: sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
+    <title>{{ Config::get('app.name') }}</title>
 
-            .full-height {
-                height: 100vh;
-            }
+    {{-- Fonts --}}
+    <script src="{{ mix('js/app.js') }}"></script>
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet" type="text/css">
 
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
+    {{-- Styles --}}
+    <style>
+        html,
+        body {
+            color: #a5aaac;
+            font-family: 'Lato', sans-serif;
+            font-size: 80%;
+            height: 100vh;
+        }
 
-            .position-ref {
-                position: relative;
-            }
+        .flex-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
+        .top-right {
+            position: absolute;
+            right: 1rem;
+            top: 2rem;
+        }
 
-            .content {
-                text-align: center;
-            }
+        .links>a {
+            color: #a5aaac;
+            padding: 0.5rem 2rem;
+            font-size: 13px;
+            letter-spacing: .1rem;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: bold;
+            border-radius: 0.2rem;
+        }
 
-            .logo {
-                width: 58px;
-                margin-bottom: 12px;
-                animation: logo 1s 0.4s 1 forwards;
-                overflow: hidden;
-            }
-            .logo img {
-                width: 380px;
-                filter: brightness(0) invert(1) opacity(0.9);
-            }
-            @keyframes logo {
-                from { width: 58px; }
-                to { width: 380px; }
-            }
+        .cookie-consent {
+            position: absolute;
+            padding: 1rem 4rem;
+            box-shadow: 0 0 0.5rem;
+            border-radius: 0.3rem;
+            bottom: 2vh;
+            background-color: #FFF;
+        }
+    </style>
+</head>
 
-            .links > a {
-                color: #FFF;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <!--div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-                        <a href="{{ route('register') }}">Register</a>
-                    @endauth
-                </div-->
-            @endif
+<body class="flex-center full-height">
+    @if (Route::has('login'))
+        <div class="top-right links">
+            @auth('backpack')
+                @if (is('admin'))
+                    <a href="{{ url('/admin') }}">{{ __('Admin') }}</a>
+                @endif
 
-            <div class="content">
-                <div class="logo">
-                    <img src="img/logo/logo-text.svg" />
-                </div>
+                <a href="{{ url('/admin/logout') }}">{{ __('Logout') }}</a>
+            @else
+                <a href="{{ url('/admin/login') }}">{{ __('Login') }}</a>
 
-                <div class="links">
-                    <a href="/admin">Admin</a>
-                </div>
-            </div>
+                @if (Route::has('register'))
+                    <a href="{{ url('/admin/register') }}">{{ __('Register') }}</a>
+                @endif
+            @endauth
         </div>
-    </body>
+    @endif
+
+    <div class="content">
+        <img width="280" src="{{ url('/img/logo/logo-text.png') }}">
+    </div>
+</body>
+
 </html>

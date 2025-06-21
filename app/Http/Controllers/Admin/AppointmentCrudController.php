@@ -9,10 +9,12 @@ use App\Models\Appointment;
 use App\User;
 use Carbon\Carbon;
 use DB;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Session;
 
 /**
  * Class AppointmentCrudController
- * @package App\Http\Controllers\Admin
+ *
  * @property-read CrudPanel $crud
  */
 class AppointmentCrudController extends CrudController
@@ -27,7 +29,7 @@ class AppointmentCrudController extends CrudController
         |--------------------------------------------------------------------------
         */
         $this->crud->setModel('App\Models\Appointment');
-        $this->crud->setRoute(config('backpack.base.route_prefix') . '/appointment');
+        $this->crud->setRoute(config('backpack.base.route_prefix').'/appointment');
         $this->crud->setEntityNameStrings(__('appointment'), __('appointments'));
 
         /*
@@ -49,7 +51,7 @@ class AppointmentCrudController extends CrudController
             'data_source' => url('admin/process/ajax/search'),
             'placeholder' => __('Select a process'),
             'minimum_input_length' => 2,
-            'default' => \Request::get('process') ?: false,
+            'default' => Request::get('process') ?: false,
         ]);
 
         if (is('admin')) {
@@ -70,7 +72,7 @@ class AppointmentCrudController extends CrudController
         }
 
         $this->crud->addField([
-            'label' => ucfirst(__('vet')) . ' 1',
+            'label' => ucfirst(__('vet')).' 1',
             'name' => 'vet_id_1',
             'type' => 'select2_from_ajax',
             'entity' => 'vet1',
@@ -79,18 +81,18 @@ class AppointmentCrudController extends CrudController
             'data_source' => url('admin/vet/ajax/search'),
             'placeholder' => __('Select a vet'),
             'minimum_input_length' => 2,
-            'default' => \Request::get('vet') ?: false,
+            'default' => Request::get('vet') ?: false,
         ]);
 
         $this->crud->addField([
-            'label' => __('Date') . ' 1',
+            'label' => __('Date').' 1',
             'name' => 'date_1',
             'type' => 'date',
             'default' => Carbon::today()->toDateString(),
         ]);
 
         $this->crud->addField([
-            'label' => ucfirst(__('vet')) . ' 2',
+            'label' => ucfirst(__('vet')).' 2',
             'name' => 'vet_id_2',
             'type' => 'select2_from_ajax',
             'entity' => 'vet2',
@@ -99,11 +101,11 @@ class AppointmentCrudController extends CrudController
             'data_source' => url('admin/vet/ajax/search'),
             'placeholder' => __('Select a vet'),
             'minimum_input_length' => 2,
-            'default' => \Request::get('vet') ?: false,
+            'default' => Request::get('vet') ?: false,
         ]);
 
         $this->crud->addField([
-            'label' => __('Date') . ' 2',
+            'label' => __('Date').' 2',
             'name' => 'date_2',
             'type' => 'date',
         ]);
@@ -248,7 +250,7 @@ class AppointmentCrudController extends CrudController
         ]);
 
         $this->crud->setColumnDetails('vet_id_1', [
-            'label' => ucfirst(__('vet')) . ' 1',
+            'label' => ucfirst(__('vet')).' 1',
             'type' => 'model_function',
             'limit' => 120,
             'function_name' => 'getVet1LinkAttribute',
@@ -263,11 +265,11 @@ class AppointmentCrudController extends CrudController
 
         $this->crud->setColumnDetails('date_1', [
             'type' => 'date',
-            'label' => __('Date') . ' 1',
+            'label' => __('Date').' 1',
         ]);
 
         $this->crud->setColumnDetails('vet_id_2', [
-            'label' => ucfirst(__('vet')) . ' 2',
+            'label' => ucfirst(__('vet')).' 2',
             'type' => 'model_function',
             'limit' => 120,
             'function_name' => 'getVet2LinkAttribute',
@@ -282,12 +284,12 @@ class AppointmentCrudController extends CrudController
 
         $this->crud->setColumnDetails('date_2', [
             'type' => 'date',
-            'label' => __('Date') . ' 2',
+            'label' => __('Date').' 2',
         ]);
 
         $this->crud->setColumnDetails('animal_count', [
             'name' => 'animal_count',
-            'label' => __('Animals') . ' M/F | ?',
+            'label' => __('Animals').' M/F | ?',
             'type' => 'model_function',
             'function_name' => 'getAnimalsValue',
         ]);
@@ -376,7 +378,7 @@ class AppointmentCrudController extends CrudController
                 'label' => ucfirst(__('volunteer')),
                 'placeholder' => __('Select a volunteer'),
             ],
-                url('admin/user/ajax/filter/' . User::ROLE_VOLUNTEER),
+                url('admin/user/ajax/filter/'.User::ROLE_VOLUNTEER),
                 function ($value) {
                     $this->crud->addClause('where', 'user_id', $value);
                 });
@@ -450,29 +452,29 @@ class AppointmentCrudController extends CrudController
         $this->crud->addButtonFromModelFunction('line', 'approve_appointment', 'approveAppointment', 'beginning');
 
         // ------ CRUD ACCESS
-        if (!is(['admin', 'volunteer'])) {
+        if (! is(['admin', 'volunteer'])) {
             $this->crud->denyAccess(['list', 'create', 'delete']);
         }
 
-        if (!is('admin', ['appointments', 'accountancy'])) {
+        if (! is('admin', ['appointments', 'accountancy'])) {
             $this->crud->denyAccess(['update']);
 
-            $this->crud->addClause('where', 'user_id', backpack_user()->id);
+            $this->crud->addClause('where', 'user_id', user()->id);
         }
 
-        if (!is('admin', 'appointments')) {
+        if (! is('admin', 'appointments')) {
             $this->crud->removeButton('approve_appointment', 'line');
         }
 
         // ------ ADVANCED QUERIES
-        if (!is('admin')) {
+        if (! is('admin')) {
             $this->crud->addClause('whereHas', 'process', function ($query) {
                 $headquarters = restrictToHeadquarters();
                 $query->whereIn('headquarter_id', $headquarters ?: []);
             })->get();
         } else {
             // Headquarter filter
-            $headquarter_id = admin() ? \Session::get('headquarter', null) : backpack_user()->headquarter_id;
+            $headquarter_id = admin() ? Session::get('headquarter', null) : user()->headquarter_id;
             if ($headquarter_id) {
                 $this->crud->query->whereHas('process', function ($query) use ($headquarter_id) {
                     $query->where('headquarter_id', $headquarter_id);
@@ -541,7 +543,7 @@ class AppointmentCrudController extends CrudController
 
         // Common volunteers can only destroy their own appointments
         // if (!is('admin', ['appointments', 'accountancy'])) {
-        //     if ($appointment->user_id != backpack_user()->id) {
+        //     if ($appointment->user_id != user()->id) {
         //         return false;
         //     }
         // }
@@ -552,7 +554,7 @@ class AppointmentCrudController extends CrudController
     public function store(StoreRequest $request)
     {
         // Add user
-        $request->merge(['user_id' => backpack_user()->id]);
+        $request->merge(['user_id' => user()->id]);
 
         return parent::storeCrud($request);
     }

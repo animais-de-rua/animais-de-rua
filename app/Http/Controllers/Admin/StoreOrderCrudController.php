@@ -10,7 +10,7 @@ use App\User;
 
 /**
  * Class StoreOrdersCrudController
- * @package App\Http\Controllers\Admin
+ *
  * @property-read CrudPanel $crud
  */
 class StoreOrderCrudController extends CrudController
@@ -23,7 +23,7 @@ class StoreOrderCrudController extends CrudController
         |--------------------------------------------------------------------------
         */
         $this->crud->setModel('App\Models\StoreOrder');
-        $this->crud->setRoute(config('backpack.base.route_prefix') . '/store/orders');
+        $this->crud->setRoute(config('backpack.base.route_prefix').'/store/orders');
         $this->crud->setEntityNameStrings(__('order'), __('orders'));
 
         /*
@@ -66,7 +66,7 @@ class StoreOrderCrudController extends CrudController
             'model' => '\App\User',
             'placeholder' => '',
             'minimum_input_length' => 2,
-            'data_source' => url('admin/user/ajax/search/' . User::ROLE_STORE . '/' . User::PERMISSION_STORE_SHIPPMENTS),
+            'data_source' => url('admin/user/ajax/search/'.User::ROLE_STORE.'/'.User::PERMISSION_STORE_SHIPPMENTS),
             'attributes' => $attributeDisabled,
         ]);
 
@@ -75,7 +75,7 @@ class StoreOrderCrudController extends CrudController
             'type' => 'products-table',
             'options' => $this->wantsJSON() ? null : api()->storeProductListFull(),
             'attributes' => $attributeDisabled,
-            'readonly' => !is('admin', 'store orders'),
+            'readonly' => ! is('admin', 'store orders'),
         ]);
 
         $this->crud->addField([
@@ -235,7 +235,7 @@ class StoreOrderCrudController extends CrudController
                 'label' => ucfirst(__('volunteer')),
                 'placeholder' => __('Select a volunteer'),
             ],
-                url('admin/user/ajax/filter/' . User::ROLE_STORE . '/' . User::PERMISSION_STORE_SHIPPMENTS),
+                url('admin/user/ajax/filter/'.User::ROLE_STORE.'/'.User::PERMISSION_STORE_SHIPPMENTS),
                 function ($value) {
                     $this->crud->addClause('where', 'user_id', $value);
                 });
@@ -291,23 +291,23 @@ class StoreOrderCrudController extends CrudController
         }, 'user']);
 
         // ------ CRUD ACCESS
-        if (!is('admin')) {
+        if (! is('admin')) {
             $this->crud->denyAccess(['delete']);
         }
 
-        if (!is(['admin', 'store'])) {
+        if (! is(['admin', 'store'])) {
             $this->crud->denyAccess('list');
         }
 
-        if (!is('admin', ['store orders', 'store shippments'])) {
+        if (! is('admin', ['store orders', 'store shippments'])) {
             $this->crud->denyAccess(['show', 'create', 'update']);
         }
 
-        if (!is('admin', 'store orders')) {
+        if (! is('admin', 'store orders')) {
             $this->crud->denyAccess(['create']);
 
             // Filter by user
-            $this->crud->addClause('where', 'user_id', backpack_user()->id);
+            $this->crud->addClause('where', 'user_id', user()->id);
         }
 
         // Add Shipment button
@@ -356,30 +356,30 @@ class StoreOrderCrudController extends CrudController
         return "<div style='margin:5px 8px'>
                 <table class='order-table' style='margin-bottom: 8px;'>
                 <tr style='border-bottom: 2px solid #ccc'>
-                    <th>" . __('Name') . "</th>
-                    <th class='right'>" . __('Quantity') . "</th>
-                    <th class='right'>" . __('Price') . "</th>
-                    <th class='right'>" . __('Discount') . "</th>
-                    <th class='right'>" . __('Total') . "</th>
+                    <th>".__('Name')."</th>
+                    <th class='right'>".__('Quantity')."</th>
+                    <th class='right'>".__('Price')."</th>
+                    <th class='right'>".__('Discount')."</th>
+                    <th class='right'>".__('Total')."</th>
                 </tr>
                 $products
                 <tr style='border-top: 2px solid #ccc'>
-                    <th>" . __('Total') . "</th>
+                    <th>".__('Total')."</th>
                     <th class='right'>{$totals[0]}</th>
-                    <th class='right'>" . number_format((float) $totals[1], 2, '.', '') . "€</th>
-                    <th class='right'>" . number_format((float) $totals[2], 2, '.', '') . "€</th>
-                    <th class='right'>" . number_format((float) $totals[3], 2, '.', '') . '€</th>
+                    <th class='right'>".number_format((float) $totals[1], 2, '.', '')."€</th>
+                    <th class='right'>".number_format((float) $totals[2], 2, '.', '')."€</th>
+                    <th class='right'>".number_format((float) $totals[3], 2, '.', '').'€</th>
                 </tr>
                 </table>
                 <p>
-                    <b>' . __('Receipt') . ':</b> ' . ($order->receipt ? "<code>$order->receipt</code>" : '') . '<br />
-                    <b>' . __('Invoice') . ':</b> ' . ($order->invoice ? "<code>$order->invoice</code>" : '') . '
+                    <b>'.__('Receipt').':</b> '.($order->receipt ? "<code>$order->receipt</code>" : '').'<br />
+                    <b>'.__('Invoice').':</b> '.($order->invoice ? "<code>$order->invoice</code>" : '').'
                 </p>
                 <p>
-                    <b>' . __('Recipient') . ':</b> ' . ($order->recipient ? "$order->recipient" : '') . '<br />
-                    <b>' . __('Address') . ':</b> ' . ($order->address ? "$order->address" : '') . '
+                    <b>'.__('Recipient').':</b> '.($order->recipient ? "$order->recipient" : '').'<br />
+                    <b>'.__('Address').':</b> '.($order->address ? "$order->address" : '').'
                 </p>
-                <b>' . __('Notes') . ":</b>
+                <b>'.__('Notes').":</b>
                 <p style='white-space: pre-wrap;'>$order->notes</p>
             </div>";
     }
@@ -398,7 +398,7 @@ class StoreOrderCrudController extends CrudController
         $this->inserProductRelation($request->id, $request);
 
         // Clean up request in case the user has not the required permissions
-        if (!is('admin', 'store orders')) {
+        if (! is('admin', 'store orders')) {
             $request = new \Illuminate\Http\Request([
                 'id' => $request->id,
                 'status' => $request->status,
@@ -431,7 +431,7 @@ class StoreOrderCrudController extends CrudController
 
         foreach ($products as $product) {
             // Ignore repeated entries
-            if (isset($product->pivot) && isset($product->pivot->store_product_id) && !in_array($product->pivot->store_product_id, $store_product_ids)) {
+            if (isset($product->pivot) && isset($product->pivot->store_product_id) && ! in_array($product->pivot->store_product_id, $store_product_ids)) {
                 array_push($store_product_ids, $product->pivot->store_product_id);
 
                 // Add to database

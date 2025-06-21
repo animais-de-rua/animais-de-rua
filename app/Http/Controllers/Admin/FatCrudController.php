@@ -10,7 +10,7 @@ use App\User;
 
 /**
  * Class FatCrudController
- * @package App\Http\Controllers\Admin
+ *
  * @property-read CrudPanel $crud
  */
 class FatCrudController extends CrudController
@@ -25,7 +25,7 @@ class FatCrudController extends CrudController
         |--------------------------------------------------------------------------
         */
         $this->crud->setModel('App\Models\Fat');
-        $this->crud->setRoute(config('backpack.base.route_prefix') . '/fat');
+        $this->crud->setRoute(config('backpack.base.route_prefix').'/fat');
         $this->crud->setEntityNameStrings('FAT', 'FAT');
 
         /*
@@ -147,7 +147,7 @@ class FatCrudController extends CrudController
                 'label' => ucfirst(__('volunteer')),
                 'placeholder' => __('Select a volunteer'),
             ],
-                url('admin/user/ajax/filter/' . User::ROLE_VOLUNTEER),
+                url('admin/user/ajax/filter/'.User::ROLE_VOLUNTEER),
                 function ($value) {
                     $this->crud->addClause('where', 'user_id', $value);
                 });
@@ -170,11 +170,11 @@ class FatCrudController extends CrudController
         $this->crud->enableDetailsRow();
         $this->crud->allowAccess('details_row');
 
-        if (!is('admin', 'adoptions')) {
+        if (! is('admin', 'adoptions')) {
             $this->crud->denyAccess(['list', 'create', 'update']);
         }
 
-        if (!is('admin')) {
+        if (! is('admin')) {
             $this->crud->denyAccess(['delete']);
 
             $this->crud->addClause('whereHas', 'headquarters', function ($query) {
@@ -198,7 +198,7 @@ class FatCrudController extends CrudController
         $fat = Fat::select(['notes'])->find($id);
 
         return "<div style='margin:5px 8px'>
-                <p style='white-space: pre-wrap;'><i>" . __('Notes') . "</i>: $fat->notes</p>
+                <p style='white-space: pre-wrap;'><i>".__('Notes')."</i>: $fat->notes</p>
             </div>";
     }
 
@@ -207,20 +207,20 @@ class FatCrudController extends CrudController
         // Add user
         $headquarters = restrictToHeadquarters();
         $request->merge([
-            'user_id' => backpack_user()->id,
+            'user_id' => user()->id,
             'headquarter_id' => $headquarters && count($headquarters) ? $headquarters[0] : null,
         ]);
 
         // Add user
         $request->merge([
-            'user_id' => backpack_user()->id,
+            'user_id' => user()->id,
         ]);
 
         $store = parent::storeCrud($request);
 
         // Add headquarters
         $headquarters = restrictToHeadquarters();
-        if (!$request->headquarters && $headquarters) {
+        if (! $request->headquarters && $headquarters) {
             $fat = $this->crud->entry;
             $fat->headquarters()->attach($headquarters);
         }

@@ -2,43 +2,57 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\CrudTrait;
-use Backpack\CRUD\ModelTraits\SpatieTranslatable\HasTranslations;
+use App\Models\Traits\RandomModelTrait;
+use App\User;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
+use Database\Factories\ProcessFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Process extends Model
 {
     use CrudTrait;
+    /** @use HasFactory<ProcessFactory> */
+    use HasFactory;
     use HasTranslations;
+    use RandomModelTrait;
 
-    /*
-    |--------------------------------------------------------------------------
-    | GLOBAL VARIABLES
-    |--------------------------------------------------------------------------
-    */
-
-    protected $table = 'processes';
-    protected $primaryKey = 'id';
-    // public $timestamps = false;
-    // protected $guarded = ['id'];
-    protected $fillable = ['name', 'contact', 'phone', 'email', 'address', 'territory_id', 'headquarter_id', 'specie', 'amount_males', 'amount_females', 'amount_other', 'status', 'urgent', 'history', 'notes', 'latlong', 'images', 'user_id'];
-    protected $casts = ['images' => 'array'];
-    // protected $hidden = [];
-    // protected $dates = [];
-    protected $translatable = ['history'];
-
-    /*
-    |--------------------------------------------------------------------------
-    | FUNCTIONS
-    |--------------------------------------------------------------------------
-    */
+    protected $fillable = [
+        'contact',
+        'phone',
+        'email',
+        'address',
+        'territory_id',
+        'headquarter_id',
+        'specie',
+        'amount_males',
+        'amount_females',
+        'amount_other',
+        'status',
+        'urgent',
+        'history',
+        'notes',
+        'latlong',
+        'images',
+        'user_id',
+    ];
+    protected $casts = [
+        'images' => 'array',
+    ];
+    protected $translatable = [
+        'history',
+    ];
 
     public function addAppointment()
     {
-        $disabled = !in_array($this->status, ['waiting_godfather', 'waiting_capture', 'open']);
+        $disabled = ! in_array($this->status, ['waiting_godfather', 'waiting_capture', 'open']);
 
         return '
-        <a class="btn btn-xs btn-' . ($disabled ? 'default' : 'primary') . ' ' . ($disabled ? 'disabled' : '') . '" href="/admin/appointment/create?process=' . $this->id . '" title="' . __('Add appointment') . '">
-        <i class="fa fa-plus"></i> ' . ucfirst(__('appointment')) . '
+        <a class="btn btn-xs btn-'.($disabled ? 'default' : 'primary').' '.($disabled ? 'disabled' : '').'" href="/admin/appointment/create?process='.$this->id.'" title="'.__('Add appointment').'">
+        <i class="fa fa-plus"></i> '.ucfirst(__('appointment')).'
         </a>';
     }
 
@@ -46,65 +60,68 @@ class Process extends Model
     {
         return '
         <a href="#"
-            title="' . ($this->contacted ? __('Contacted') : __('Not yet contacted')) . '"
-            class="btn btn-xs btn-' . ($this->contacted ? 'success' : 'default') . '"
-            onclick="return toggleContacted(this, ' . $this->id . ')">
+            title="'.($this->contacted ? __('Contacted') : __('Not yet contacted')).'"
+            class="btn btn-xs btn-'.($this->contacted ? 'success' : 'default').'"
+            onclick="return toggleContacted(this, '.$this->id.')">
         <i class="fa fa-phone"></i>
         </a>';
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | RELATIONS
-    |--------------------------------------------------------------------------
-    */
-
-    public function headquarter()
+    /**
+     * @return BelongsTo<Headquarter, $this>
+     */
+    public function headquarter(): BelongsTo
     {
-        return $this->belongsTo('App\Models\Headquarter', 'headquarter_id');
+        return $this->belongsTo(Headquarter::class, 'headquarter_id');
     }
 
-    public function territory()
+    /**
+     * @return BelongsTo<Territory, $this>
+     */
+    public function territory(): BelongsTo
     {
-        return $this->belongsTo('App\Models\Territory', 'territory_id');
+        return $this->belongsTo(Territory::class, 'territory_id');
     }
 
-    public function donations()
+    /**
+     * @return HasMany<Donation, $this>
+     */
+    public function donations(): HasMany
     {
-        return $this->hasMany('App\Models\Donation', 'process_id');
+        return $this->hasMany(Donation::class, 'process_id');
     }
 
-    public function appointments()
+    /**
+     * @return HasMany<Appointment, $this>
+     */
+    public function appointments(): HasMany
     {
-        return $this->hasMany('App\Models\Appointment', 'process_id');
+        return $this->hasMany(Appointment::class, 'process_id');
     }
 
-    public function adoptions()
+    /**
+     * @return HasMany<Adoption, $this>
+     */
+    public function adoptions(): HasMany
     {
-        return $this->hasMany('App\Models\Adoption', 'process_id');
+        return $this->hasMany(Adoption::class, 'process_id');
     }
 
-    public function user()
+    /**
+     * @return BelongsTo<User, $this>
+     */
+    public function user(): BelongsTo
     {
-        return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function treatments()
+    /**
+     * @return HasManyThrough<Treatment, Appointment>
+     */
+    public function treatments(): HasManyThrough
     {
-        return $this->hasManyThrough('App\Models\Treatment', 'App\Models\Appointment', 'process_id', 'appointment_id');
+        return $this->hasManyThrough(Treatment::class, Appointment::class, 'process_id', 'appointment_id');
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | SCOPES
-    |--------------------------------------------------------------------------
-    */
-
-    /*
-    |--------------------------------------------------------------------------
-    | ACCESORS
-    |--------------------------------------------------------------------------
-    */
 
     public function getLinkAttribute()
     {
@@ -128,7 +145,7 @@ class Process extends Model
 
     public function getDetailAttribute()
     {
-        $headquarter = (isset($this->headquarter) ? $this->headquarter['name'] . ', ' : '');
+        $headquarter = (isset($this->headquarter) ? $this->headquarter['name'].', ' : '');
 
         return "{$this->id} - {$this->name} ({$headquarter}{$this->date})";
     }
@@ -147,7 +164,7 @@ class Process extends Model
     {
         $donations = data_get_first($this, 'donations', 'total_donations', 0);
 
-        return $donations != 0 ? $donations . '€' : '-';
+        return $donations != 0 ? $donations.'€' : '-';
     }
 
     public function getTotalAffectedAnimalsValue()
@@ -161,7 +178,7 @@ class Process extends Model
     {
         $expenses = data_get_first($this, 'treatments', 'total_expenses', 0);
 
-        return $expenses != 0 ? $expenses . '€' : '-';
+        return $expenses != 0 ? $expenses.'€' : '-';
     }
 
     public function getTotalOperationsValue()
@@ -189,12 +206,12 @@ class Process extends Model
     {
         $result = '';
         if ($this->amount_males || $this->amount_females) {
-            $result .= $this->amount_males . ' / ' . $this->amount_females;
+            $result .= $this->amount_males.' / '.$this->amount_females;
             if ($this->amount_other) {
-                $result .= ' | ' . $this->amount_other;
+                $result .= ' | '.$this->amount_other;
             }
 
-        } else if ($this->amount_other) {
+        } elseif ($this->amount_other) {
             $result = $this->amount_other;
         } else {
             $result = '-';
@@ -212,7 +229,8 @@ class Process extends Model
     public function getTotalDonatedStats()
     {
         $donations = $this->getDonated();
-        return $donations != 0 ? $donations . '€' : '-';
+
+        return $donations != 0 ? $donations.'€' : '-';
     }
 
     public function getTotalDonationsStats()
@@ -223,12 +241,15 @@ class Process extends Model
     public function getTotalExpensesStats()
     {
         $expenses = $this->getExpenses();
-        return $expenses != 0 ? $expenses . '€' : '-';
+
+        return $expenses != 0 ? $expenses.'€' : '-';
     }
 
     public function getTotalOperationsStats()
     {
-        return $this->treatments->reduce(function ($carry, $item) {return $carry + $item->affected_animals;});
+        return $this->treatments->reduce(function ($carry, $item) {
+            return $carry + $item->affected_animals;
+        });
     }
 
     public function getTotalAnimals()
@@ -238,23 +259,30 @@ class Process extends Model
 
     public function getTotalAffectedAnimalsNew()
     {
-        return $this->treatments->reduce(function ($carry, $item) {return $carry + $item->affected_animals_new;});
+        return $this->treatments->reduce(function ($carry, $item) {
+            return $carry + $item->affected_animals_new;
+        });
     }
 
     public function getBalanceStats()
     {
         $balance = round($this->getDonated() - $this->getExpenses(), 2);
+
         return $this->colorizeValue($balance);
     }
 
     private function getDonated()
     {
-        return $this->donations->reduce(function ($carry, $item) {return $carry + $item->value;});
+        return $this->donations->reduce(function ($carry, $item) {
+            return $carry + $item->value;
+        });
     }
 
     private function getExpenses()
     {
-        return $this->treatments->reduce(function ($carry, $item) {return $carry + $item->expense;});
+        return $this->treatments->reduce(function ($carry, $item) {
+            return $carry + $item->expense;
+        });
     }
 
     public function getApplicantAttribute()
@@ -264,20 +292,14 @@ class Process extends Model
 
     private function colorizeValue($value)
     {
-        if (!$value) {
+        if (! $value) {
             return '-';
-        } else if ($value > 0) {
+        } elseif ($value > 0) {
             return "<span style='color:#0A0'>+{$value}€</span>";
         } else {
             return "<span style='color:#A00'>{$value}€</span>";
         }
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | MUTATORS
-    |--------------------------------------------------------------------------
-    */
 
     public function toArray()
     {

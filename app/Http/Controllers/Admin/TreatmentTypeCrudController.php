@@ -8,7 +8,7 @@ use App\Http\Requests\TreatmentTypeRequest as UpdateRequest;
 
 /**
  * Class TreatmentTypeCrudController
- * @package App\Http\Controllers\Admin
+ *
  * @property-read CrudPanel $crud
  */
 class TreatmentTypeCrudController extends CrudController
@@ -23,7 +23,7 @@ class TreatmentTypeCrudController extends CrudController
         |--------------------------------------------------------------------------
         */
         $this->crud->setModel('App\Models\TreatmentType');
-        $this->crud->setRoute(config('backpack.base.route_prefix') . '/treatmenttype');
+        $this->crud->setRoute(config('backpack.base.route_prefix').'/treatmenttype');
         $this->crud->setEntityNameStrings(__('treatment type'), __('treatment types'));
 
         /*
@@ -89,7 +89,7 @@ class TreatmentTypeCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'label' => __('Operation Time') . ' (hh:mm)',
+            'label' => __('Operation Time').' (hh:mm)',
             'name' => 'operation_time',
             'type' => 'time',
             'default' => 0,
@@ -150,7 +150,7 @@ class TreatmentTypeCrudController extends CrudController
             });
 
         // ------ CRUD ACCESS
-        if (!is('admin')) {
+        if (! is('admin')) {
             $this->crud->denyAccess(['list', 'create', 'update', 'delete']);
         }
 

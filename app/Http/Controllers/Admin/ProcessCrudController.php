@@ -14,6 +14,7 @@ use App\Models\Territory;
 use App\Models\Treatment;
 use App\User;
 use DB;
+use Illuminate\Support\Facades\Cache;
 
 class ProcessCrudController extends CrudController
 {
@@ -27,7 +28,7 @@ class ProcessCrudController extends CrudController
         |--------------------------------------------------------------------------
         */
         $this->crud->setModel('App\Models\Process');
-        $this->crud->setRoute(config('backpack.base.route_prefix') . '/process');
+        $this->crud->setRoute(config('backpack.base.route_prefix').'/process');
         $this->crud->setEntityNameStrings(__('process'), __('processes'));
 
         /*
@@ -242,7 +243,7 @@ class ProcessCrudController extends CrudController
 
         $this->crud->setColumnDetails('animal_count', [
             'name' => 'animal_count',
-            'label' => __('Animals') . ' M/F | ?',
+            'label' => __('Animals').' M/F | ?',
             'type' => 'model_function',
             'function_name' => 'getAnimalsValue',
         ]);
@@ -380,8 +381,10 @@ class ProcessCrudController extends CrudController
             $this->wantsJSON() ? null : api()->rangeTerritoryList(),
             function ($values) {
                 $values = json_decode($values);
-                $where = join(' OR ', array_fill(0, count($values), 'territory_id LIKE ?'));
-                $values = array_map(function ($field) {return $field . '%';}, $values);
+                $where = implode(' OR ', array_fill(0, count($values), 'territory_id LIKE ?'));
+                $values = array_map(function ($field) {
+                    return $field.'%';
+                }, $values);
 
                 $this->crud->query->whereRaw($where, $values);
             });
@@ -457,7 +460,7 @@ class ProcessCrudController extends CrudController
         $this->crud->addFilter([
             'name' => 'total_donations',
             'type' => 'range',
-            'label' => ucfirst(__('donations')) . ' €',
+            'label' => ucfirst(__('donations')).' €',
             'label_from' => __('Min value'),
             'label_to' => __('Max value'),
         ],
@@ -483,7 +486,7 @@ class ProcessCrudController extends CrudController
         $this->crud->addFilter([
             'name' => 'total_expenses',
             'type' => 'range',
-            'label' => __('Total Expenses') . ' €',
+            'label' => __('Total Expenses').' €',
             'label_from' => __('Min value'),
             'label_to' => __('Max value'),
         ],
@@ -535,7 +538,7 @@ class ProcessCrudController extends CrudController
         $this->crud->addFilter([
             'name' => 'balance',
             'type' => 'range',
-            'label' => __('Balance') . ' €',
+            'label' => __('Balance').' €',
             'label_from' => __('Min value'),
             'label_to' => __('Max value'),
         ],
@@ -569,7 +572,7 @@ class ProcessCrudController extends CrudController
             'label' => ucfirst(__('volunteer')),
             'placeholder' => __('Select a volunteer'),
         ],
-            url('admin/user/ajax/filter/' . User::ROLE_VOLUNTEER),
+            url('admin/user/ajax/filter/'.User::ROLE_VOLUNTEER),
             function ($value) {
                 $this->crud->addClause('where', 'user_id', $value);
             });
@@ -587,15 +590,15 @@ class ProcessCrudController extends CrudController
             });
 
         // ------ CRUD ACCESS
-        if (!is(['admin', 'volunteer'], 'processes')) {
+        if (! is(['admin', 'volunteer'], 'processes')) {
             $this->crud->denyAccess(['list', 'show', 'create']);
         }
 
-        if (!is('admin', 'processes')) {
+        if (! is('admin', 'processes')) {
             $this->crud->denyAccess(['update']);
         }
 
-        if (!is('admin')) {
+        if (! is('admin')) {
             $this->crud->denyAccess(['delete']);
 
             $this->crud->addClause('whereIn', 'headquarter_id', restrictToHeadquarters());
@@ -618,7 +621,7 @@ class ProcessCrudController extends CrudController
         $this->crud->addClause('orderBy', 'processes.id', 'DESC');
 
         // Checks if status filter is in use
-        if (!$this->crud->filters->pluck('currentValue', 'name')['status']) {
+        if (! $this->crud->filters->pluck('currentValue', 'name')['status']) {
             $this->crud->addClause('where', 'processes.status', 'NOT LIKE', 'archived');
         }
 
@@ -698,22 +701,22 @@ class ProcessCrudController extends CrudController
         $process = Process::select(['history', 'notes', 'contact', 'phone', 'email'])->find($id);
 
         return "<div style='margin:5px 8px'>
-                <p style='white-space: pre-wrap;'><i>" . __('Contact') . "</i>: $process->contact, <a href='tel:$process->phone'>$process->phone</a><br /><a href='mailto:$process->email'>$process->email</a></p>
-                <p style='white-space: pre-wrap;'><i>" . __('History') . "</i>: $process->history</p>
-                <p style='white-space: pre-wrap;'><i>" . __('Notes') . "</i>: $process->notes</p>
+                <p style='white-space: pre-wrap;'><i>".__('Contact')."</i>: $process->contact, <a href='tel:$process->phone'>$process->phone</a><br /><a href='mailto:$process->email'>$process->email</a></p>
+                <p style='white-space: pre-wrap;'><i>".__('History')."</i>: $process->history</p>
+                <p style='white-space: pre-wrap;'><i>".__('Notes')."</i>: $process->notes</p>
             </div>";
     }
 
     public function store(StoreRequest $request)
     {
         // Add user
-        $request->merge(['user_id' => backpack_user()->id]);
+        $request->merge(['user_id' => user()->id]);
 
-        if (!$request->headquarter_id) {
+        if (! $request->headquarter_id) {
             $request->merge(['headquarter_id' => restrictToHeadquarters()[0]]);
         }
 
-        if (!$request->status) {
+        if (! $request->status) {
             $request->merge(['status' => 'approving']);
         }
 
@@ -734,10 +737,10 @@ class ProcessCrudController extends CrudController
         return parent::updateCrud($request);
     }
 
-    public function sync()
+    public function sync(string $operation): void
     {
-        \Cache::forget('processes_urgent');
-        \Cache::forget('processes_districts_godfather');
+        Cache::forget('processes_urgent');
+        Cache::forget('processes_districts_godfather');
     }
 
     // Table Helper

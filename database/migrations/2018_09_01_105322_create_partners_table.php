@@ -14,7 +14,7 @@ class CreatePartnersTable extends Migration
     public function up()
     {
         Schema::create('partners', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->text('name');
             $table->string('email', 127)->nullable()->unique();
             $table->text('phone1')->nullable();
@@ -32,57 +32,27 @@ class CreatePartnersTable extends Migration
             $table->string('image', 255)->nullable();
             $table->text('promo_code')->nullable();
             $table->boolean('status')->default(1);
-            $table->integer('user_id')->unsigned()->nullable();
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
             $table->timestamps();
-
-            $table->index(['user_id']);
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('set null');
         });
 
         Schema::create('partner_category_list', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->text('name');
             $table->text('description')->nullable();
             $table->timestamps();
         });
 
         Schema::create('partners_categories', function (Blueprint $table) {
-            $table->integer('partner_id')->unsigned();
-            $table->integer('partner_category_list_id')->unsigned();
-
-            $table->index(['partner_id']);
-            $table->foreign('partner_id')
-                ->references('id')
-                ->on('partners')
-                ->onDelete('cascade');
-
-            $table->index(['partner_category_list_id']);
-            $table->foreign('partner_category_list_id')
-                ->references('id')
-                ->on('partner_category_list')
-                ->onDelete('cascade');
+            $table->foreignId('partner_id')->constrained()->onDelete('cascade');
+            $table->foreignId('partner_category_list_id')->constrained('partner_category_list');
 
             $table->primary(['partner_id', 'partner_category_list_id']);
         });
 
         Schema::create('partners_territories', function (Blueprint $table) {
-            $table->integer('partner_id')->unsigned();
-            $table->string('territory_id', 6);
-
-            $table->index(['partner_id']);
-            $table->foreign('partner_id')
-                ->references('id')
-                ->on('partners')
-                ->onDelete('cascade');
-
-            $table->index(['territory_id']);
-            $table->foreign('territory_id')
-                ->references('id')
-                ->on('territories')
-                ->onDelete('cascade');
+            $table->foreignId('partner_id')->constrained()->onDelete('cascade');
+            $table->foreignTerritoryId('territory_id');
 
             $table->primary(['partner_id', 'territory_id']);
         });
