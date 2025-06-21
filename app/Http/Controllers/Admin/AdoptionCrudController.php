@@ -8,6 +8,8 @@ use App\Http\Requests\AdoptionRequest as StoreRequest;
 use App\Http\Requests\AdoptionRequest as UpdateRequest;
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Request;
 
 /**
  * Class AdoptionCrudController
@@ -48,7 +50,7 @@ class AdoptionCrudController extends CrudController
             'data_source' => url('admin/process/ajax/search'),
             'placeholder' => __('Select a process'),
             'minimum_input_length' => 2,
-            'default' => \Request::get('process') ?: false,
+            'default' => Request::get('process') ?: false,
         ]);
 
         if (is('admin')) {
@@ -78,7 +80,7 @@ class AdoptionCrudController extends CrudController
             'data_source' => url('admin/fat/ajax/search/'),
             'placeholder' => __('Select a fat'),
             'minimum_input_length' => 2,
-            'default' => \Request::get('fat') ?: false,
+            'default' => Request::get('fat') ?: false,
         ]);
 
         $this->crud->addField([
@@ -583,9 +585,9 @@ class AdoptionCrudController extends CrudController
         return parent::updateCrud($request);
     }
 
-    public function sync()
+    public function sync(string $operation): void
     {
-        \Cache::forget('adoptions_count');
-        \Cache::forget('adoptions_districts_adoption');
+        Cache::forget('adoptions_count');
+        Cache::forget('adoptions_districts_adoption');
     }
 }

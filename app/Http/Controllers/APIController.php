@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Admin\Traits\LocalCache;
+use App\Helpers\LocalCache;
 use Illuminate\Support\Facades\Config;
 
 class APIController extends Controller

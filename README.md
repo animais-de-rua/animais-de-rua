@@ -8,46 +8,16 @@ GemaDigital Laravel Boilerplate
 
 ## Setup
 
-1) Install dependencies and copy the .env
+1. Setup
+
 ```bash
-composer install
-npm install
+composer run setup
 ```
 
-2) Copy the .env file, generate a key and the assets
+2. Serve
+
 ```bash
-php -r "copy('.env.example', '.env');"
-php artisan key:generate
-npm run prod
-```
-
-3) Create a database and fill the .env file with those details
-```code
-# .env
-DB_DATABASE=animaisderua
-DB_USERNAME=user
-DB_PASSWORD=password
-```
-
-If you are using docker, the database is already created and the credentials are:
-```code
-# .env
-DB_HOST=animais-de-rua.db
-DB_PORT=3306
-DB_DATABASE=animaisderua
-DB_USERNAME="root"
-DB_PASSWORD="root"
-```
-
-4) Run the migrations and create the admin user
-```bash
-php artisan migrate
-php artisan db:seed
-```
-
-5) Serve the project
-```bash
-php artisan serve
+composer run dev
 ```
 
 ---
@@ -96,12 +66,10 @@ direnv allow
 
 Then you can follow the setup steps as normal.
 
-
-
----
 ## Usefull commands
 
-- Packages a ready for production zip
+-   Packages a ready for production zip
+
 ```bash
 php artisan boilerplate:package
 ```

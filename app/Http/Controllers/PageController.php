@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\Animal\SpeciesEnum;
-use App\Http\Controllers\Admin\Traits\LocalCache;
+use App\Helpers\LocalCache;
 use App\Models\Adoption;
 use App\Models\Process;
 use Illuminate\Http\JsonResponse;
@@ -20,8 +20,6 @@ use Spatie\Newsletter\Facades\Newsletter;
 
 class PageController extends Controller
 {
-    use LocalCache;
-
     private $data = [];
 
     public function index($slug = 'home'): View
@@ -202,7 +200,7 @@ class PageController extends Controller
     }
 
     // API
-    public function getAnimalsAdoption(int $territory = 0, SpeciesEnum $specie = null): JsonResponse
+    public function getAnimalsAdoption(int $territory = 0, ?SpeciesEnum $specie = null): JsonResponse
     {
         $query = Adoption::query()
             ->select(['adoptions.id', 'adoptions.name', 'processes.specie', 'adoptions.images', 'adoptions.created_at', 'district.name as district', 'county.name as county'])

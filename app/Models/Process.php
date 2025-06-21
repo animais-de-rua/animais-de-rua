@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\RandomModelTrait;
 use App\User;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
@@ -17,6 +18,7 @@ class Process extends Model
     /** @use HasFactory<ProcessFactory> */
     use HasFactory;
     use HasTranslations;
+    use RandomModelTrait;
 
     protected $fillable = [
         'contact',

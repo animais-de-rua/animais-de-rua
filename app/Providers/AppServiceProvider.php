@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use DOMDocument;
+use Faker\Generator as FakerGenerator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -11,19 +11,22 @@ class AppServiceProvider extends ServiceProvider
      * @var array<string, string>
      */
     public $bindings = [
-        \Backpack\CRUD\app\Http\Controllers\Auth\LoginController::class => \App\Http\Controllers\Auth\LoginController::class,
-        \Backpack\CRUD\app\Http\Controllers\Auth\RegisterController::class => \App\Http\Controllers\Auth\RegisterController::class,
-        \Backpack\CRUD\app\Http\Controllers\Auth\ResetPasswordController::class => \App\Http\Controllers\Auth\ResetPasswordController::class,
-        \Backpack\CRUD\app\Http\Controllers\Auth\ForgotPasswordController::class => \App\Http\Controllers\Auth\ForgotPasswordController::class,
+        \Backpack\PermissionManager\app\Http\Controllers\UserCrudController::class => \GemaDigital\Http\Controllers\Admin\UserCrudController::class,
     ];
 
     /**
      * Register any application services.
      */
-    #[\Override]
     public function register(): void
     {
-        //
+        if ($this->app->environment('local')) {
+            $this->app->singleton(FakerGenerator::class, function () {
+                $faker = \Faker\Factory::create();
+                $faker->addProvider(new \App\Providers\FakerProvider($faker));
+
+                return $faker;
+            });
+        }
     }
 
     /**
@@ -31,10 +34,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        \GemaDigital\Macros\RequestMacros::register();
-        \GemaDigital\Macros\BuilderMacros::register();
-        \GemaDigital\Macros\DBMacros::register();
-
         \Illuminate\Support\Facades\Blade::directive('svg', function ($arguments) {
             // Parse the passed arguments: path, class, style
             [$path, $class, $style] = array_pad(explode(',', trim($arguments.',,', '() ')), 2, '');
@@ -49,7 +48,7 @@ class AppServiceProvider extends ServiceProvider
                 return '';  // Return an empty string if the file doesn't exist
             }
 
-            $svg = new DOMDocument;
+            $svg = new \DOMDocument;
             $svg->load($svgPath);
             $svgElement = $svg->documentElement;
 

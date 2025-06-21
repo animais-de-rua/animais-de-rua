@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\ProtocolRequestRequest as StoreRequest;
 use App\Http\Requests\ProtocolRequestRequest as UpdateRequest;
 use App\User;
+use Illuminate\Support\Facades\Request;
 
 /**
  * Class ProtocolRequestCrudController
@@ -154,7 +155,7 @@ class ProtocolRequestCrudController extends CrudController
             'data_source' => url('admin/protocol/ajax/search'),
             'placeholder' => __('Select a protocol'),
             'minimum_input_length' => 2,
-            'default' => \Request::get('protocol') ?: false,
+            'default' => Request::get('protocol') ?: false,
         ]);
 
         $this->crud->addField([
@@ -167,7 +168,7 @@ class ProtocolRequestCrudController extends CrudController
             'data_source' => url('admin/process/ajax/search'),
             'placeholder' => __('Select a process'),
             'minimum_input_length' => 2,
-            'default' => \Request::get('process') ?: false,
+            'default' => Request::get('process') ?: false,
         ]);
 
         if (is('admin')) {

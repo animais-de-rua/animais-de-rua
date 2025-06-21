@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Models\User;
 use GemaDigital\Http\Controllers\API\APIController as DefaultAPIController;
-use Illuminate\Http\Request;
+use GemaDigital\Http\Requests\API\GateCheckRequest;
 use Illuminate\Http\Response;
 
 class UserController extends DefaultAPIController
 {
     /**
-     * Get User.
+     * Read a User
      */
-    public function getUser(Request $request): Response
+    public function read(GateCheckRequest $request, User $user): Response
     {
-        return json_response([
-            'user' => $request->user(),
+        return response()->api([
+            'user' => $user,
         ]);
     }
 }

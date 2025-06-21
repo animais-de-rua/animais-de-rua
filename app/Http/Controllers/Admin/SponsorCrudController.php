@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Admin\Traits\Permissions;
 use App\Http\Requests\SponsorRequest as StoreRequest;
 use App\Http\Requests\SponsorRequest as UpdateRequest;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * Class SponsorCrudController
@@ -100,8 +101,8 @@ class SponsorCrudController extends CrudController
         return parent::updateCrud($request);
     }
 
-    public function sync()
+    public function sync(string $operation): void
     {
-        \Cache::forget('sponsors');
+        Cache::forget('sponsors');
     }
 }

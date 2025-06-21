@@ -5,9 +5,9 @@ namespace App\Http\Controllers\API;
 use App\Http\Requests\API\LoginRequest;
 use App\Models\User;
 use GemaDigital\Http\Controllers\API\APIController as DefaultAPIController;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
@@ -16,7 +16,7 @@ class AuthController extends DefaultAPIController
     /**
      * Login.
      */
-    public function login(LoginRequest $request): Response
+    public function login(LoginRequest $request): JsonResponse
     {
         $user = User::where('email', $request->email)->first();
 
@@ -26,16 +26,16 @@ class AuthController extends DefaultAPIController
             ]);
         }
 
-        return json_response([
+        return response()->json([
             'user' => $user,
-            'token' => $user->createToken($request->device_name ?? Config::get('app.name'))->plainTextToken,
+            'token' => $user->createToken($request->device_name ?? config('app.name'))->plainTextToken,
         ]);
     }
 
     /**
      * User register.
      */
-    public function register(Request $request): Response
+    public function register(Request $request): JsonResponse
     {
         $user = User::create([
             'name' => $request->name,
@@ -43,19 +43,19 @@ class AuthController extends DefaultAPIController
             'password' => bcrypt($request->password),
         ]);
 
-        return json_response([
+        return response()->json([
             'user' => $user,
-            'token' => $user->createToken($request->device_name ?? Config::get('app.name'))->plainTextToken,
+            'token' => $user->createToken($request->device_name ?? config('app.name'))->plainTextToken,
         ]);
     }
 
     /**
      * Logout.
      */
-    public function logout(Request $request): Response
+    public function logout(Request $request): JsonResponse
     {
-        user()->tokens()->delete();
+        Auth::user()->tokens()->delete();
 
-        return json_response(true);
+        return response()->json(true);
     }
 }

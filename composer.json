@@ -1,131 +1,132 @@
 {
-    "name": "laravel/laravel",
-    "type": "project",
-    "description": "The Laravel Framework.",
-    "keywords": [
-        "framework",
-        "laravel"
-    ],
-    "license": "MIT",
-    "require": {
-        "php": "^8.3|^8.4",
-        "archtechx/enums": "^1.0",
-        "automattic/woocommerce": "^3.1",
-        "backpack/pagemanager": "^3.3",
-        "backpack/settings": "^3.1",
-        "backpack/theme-tabler": "^1.0",
-        "blade-ui-kit/blade-icons": "^1.8",
-        "fakerphp/faker": "^1.14",
-        "gemadigital/framework": "^14.0",
-        "intervention/image": "^3.11",
-        "laravel/framework": "^12.0",
-        "laravel/sanctum": "^4.0",
-        "laravel/tinker": "^2.5",
-        "laravel/ui": "^4.0",
-        "livewire/livewire": "^3.4",
-        "spatie/laravel-cookie-consent": "^3.3",
-        "spatie/laravel-newsletter": "^5.2"
-    },
-    "require-dev": {
-        "backpack/generators": "^4.0",
-        "barryvdh/laravel-debugbar": "^3.2",
-        "larastan/larastan": "^3.0",
-        "laravel/pint": "^1.0",
-        "laravel/sail": "^1.0",
-        "mockery/mockery": "^1.0",
-        "nunomaduro/collision": "^8.8",
-        "phpunit/phpunit": "^12.0",
-        "rector/rector": "^2.0",
-        "spatie/laravel-ignition": "^2.0"
-    },
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://repo.backpackforlaravel.com/"
-        },
-        {
-            "type": "composer",
-            "url": "https://satis.spatie.be"
-        }
-    ],
-    "autoload": {
-        "psr-4": {
-            "App\\": "app/",
-            "Database\\Factories\\": "database/factories/",
-            "Database\\Seeders\\": "database/seeders/"
-        },
-        "files": [
-            "app/Helpers/AppHelper.php"
-        ]
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Tests\\": "tests/"
-        }
-    },
-    "scripts": {
-        "post-autoload-dump": [
-            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
-        ],
-        "post-update-cmd": [
-            "@php artisan vendor:publish --tag=laravel-assets --ansi"
-        ],
-        "post-root-package-install": [
-            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
-        ],
-        "post-create-project-cmd": [
-            "@php artisan key:generate --ansi"
-        ],
-        "post-install-cmd": [
-            "App\\Helpers\\ComposerScripts::postInstall",
-            "@php artisan storage:link --quiet"
-        ],
-        "analyse": [
-            "vendor/bin/phpstan analyse",
-            "vendor/bin/rector --dry-run",
-            "vendor/bin/pint --test"
-        ],
-        "analyse-stan": [
-            "vendor/bin/phpstan analyse"
-        ],
-        "analyse-rector": [
-            "vendor/bin/rector --dry-run"
-        ],
-        "analyse-pint": [
-            "vendor/bin/pint --test"
-        ],
-        "rector": [
-            "vendor/bin/rector"
-        ],
-        "pint": [
-            "vendor/bin/pint"
-        ],
-        "test": [
-            "@php artisan test"
-        ]
-    },
-    "extra": {
-        "laravel": {
-            "dont-discover": []
-        }
-    },
-    "config": {
-        "optimize-autoloader": true,
-        "preferred-install": "dist",
-        "sort-packages": true,
-        "allow-plugins": {
-            "composer/installers": true,
-            "composer/package-versions-deprecated": true
-        }
-    },
-    "suggest": {
-        "backpack/backupmanager": "Useful to backup the database.",
-        "backpack/filemanager": "Useful to manage files on the server.",
-        "backpack/pagemanager": "Useful to manage pages on the server.",
-        "backpack/settings": "Useful to manage settings on the server.",
-        "barryvdh/laravel-elfinder": "Goes along with backpack/filemanager to manage files on the server."
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+	"$schema": "https://getcomposer.org/schema.json",
+	"name": "gema/laravel-boilerplate",
+	"type": "project",
+	"description": "Gema Digital Laravel starter kit.",
+	"keywords": ["laravel", "framework"],
+	"license": "MIT",
+	"require": {
+		"php": "^8.3|^8.4",
+		"archtechx/enums": "^1.0",
+		"automattic/woocommerce": "^3.1",
+		"backpack/pagemanager": "^3.3",
+		"backpack/settings": "^3.1",
+		"backpack/theme-tabler": "^1.0",
+		"blade-ui-kit/blade-icons": "^1.8",
+		"gemadigital/framework": "v15.x-dev",
+		"knuckleswtf/scribe": "^5.1",
+		"intervention/image": "^3.11",
+		"laravel/framework": "^12.0",
+		"laravel/sanctum": "^4.0",
+		"laravel/socialite": "^5.20",
+		"laravel/tinker": "^2.10.1",
+		"spatie/laravel-newsletter": "^5.2"
+	},
+	"require-dev": {
+		"backpack/generators": "^4.0",
+		"barryvdh/laravel-debugbar": "^3.2",
+		"barryvdh/laravel-ide-helper": "^3.5",
+		"fakerphp/faker": "^1.23",
+		"larastan/larastan": "^3.0",
+		"laravel/pint": "^1.18",
+		"mockery/mockery": "^1.6",
+		"nunomaduro/collision": "^8.6",
+		"pestphp/pest": "^3.8",
+		"pestphp/pest-plugin-laravel": "^3.1",
+		"rector/rector": "^2.0",
+		"spatie/laravel-ignition": "^2.0"
+	},
+	"repositories": [
+		{
+			"type": "composer",
+			"url": "https://repo.backpackforlaravel.com/"
+		},
+		{
+			"type": "composer",
+			"url": "https://satis.spatie.be"
+		}
+	],
+	"autoload": {
+		"psr-4": {
+			"App\\": "app/",
+			"Database\\Factories\\": "database/factories/",
+			"Database\\Seeders\\": "database/seeders/"
+		},
+		"files": ["app/Helpers/AppHelper.php"]
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Tests\\": "tests/"
+		}
+	},
+	"scripts": {
+		"post-autoload-dump": [
+			"Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+			"@php artisan package:discover --ansi"
+		],
+		"post-update-cmd": [
+			"@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+		],
+		"post-root-package-install": [
+			"@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+		],
+		"post-create-project-cmd": [
+			"@php artisan key:generate --ansi",
+			"@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
+			"@php artisan migrate --graceful --ansi"
+		],
+		"post-install-cmd": [
+			"App\\Helpers\\ComposerScripts::postInstall",
+			"@php artisan storage:link --quiet"
+		],
+		"setup": [
+			"composer install",
+			"npm install",
+			"@php -r \"copy('.env.example', '.env');\"",
+			"@php artisan key:generate",
+			"@php artisan migrate",
+			"@php artisan db:seed"
+		],
+		"dev": [
+			"@php artisan ide-helper:generate",
+			"Composer\\Config::disableProcessTimeout",
+			"npx concurrently -c \"#93c5fd,#c4b5fd,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"npm run dev\" --names='server,queue,vite'"
+		],
+		"analyse": [
+			"vendor/bin/phpstan analyse",
+			"vendor/bin/rector --dry-run",
+			"vendor/bin/pint --test"
+		],
+		"analyse-stan": ["vendor/bin/phpstan analyse"],
+		"analyse-rector": ["vendor/bin/rector --dry-run"],
+		"analyse-pint": ["vendor/bin/pint --test"],
+		"rector": ["vendor/bin/rector"],
+		"pint": ["vendor/bin/pint"],
+		"test": ["@php artisan test"]
+	},
+	"extra": {
+		"laravel": {
+			"dont-discover": []
+		}
+	},
+	"config": {
+		"optimize-autoloader": true,
+		"preferred-install": "dist",
+		"sort-packages": true,
+		"allow-plugins": {
+			"composer/installers": true,
+			"composer/package-versions-deprecated": true,
+			"pestphp/pest-plugin": true,
+			"php-http/discovery": true
+		}
+	},
+	"suggest": {
+		"backpack/backupmanager": "Useful to backup the database.",
+		"backpack/filemanager": "Useful to manage files on the server.",
+		"backpack/pagemanager": "Useful to manage pages on the server.",
+		"backpack/settings": "Useful to manage settings on the server.",
+		"barryvdh/laravel-elfinder": "Goes along with backpack/filemanager to manage files on the server."
+	},
+	"minimum-stability": "stable",
+	"prefer-stable": true
 }

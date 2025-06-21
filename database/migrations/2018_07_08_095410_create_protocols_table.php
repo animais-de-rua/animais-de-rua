@@ -25,7 +25,7 @@ class CreateProtocolsTable extends Migration
 
         });
 
-        Schema::create('protocols_requests', function (Blueprint $table) {
+        Schema::create('protocol_requests', function (Blueprint $table) {
             $table->id();
             $table->string('council', 127);
             $table->string('name', 255);
@@ -49,7 +49,7 @@ class CreateProtocolsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('protocols_requests');
+        Schema::dropIfExists('protocol_requests');
         Schema::dropIfExists('protocols');
     }
 }

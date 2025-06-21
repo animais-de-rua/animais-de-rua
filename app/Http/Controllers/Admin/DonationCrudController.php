@@ -9,6 +9,7 @@ use App\Http\Requests\DonationRequest as UpdateRequest;
 use App\Models\Donation;
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Request;
 
 /**
  * Class DonationCrudController
@@ -58,7 +59,7 @@ class DonationCrudController extends CrudController
             'data_source' => url('admin/process/ajax/search'),
             'placeholder' => __('Select a process'),
             'minimum_input_length' => 2,
-            'default' => \Request::get('process') ?: false,
+            'default' => Request::get('process') ?: false,
         ]);
 
         $this->crud->addField([
@@ -82,7 +83,7 @@ class DonationCrudController extends CrudController
             'data_source' => url('admin/godfather/ajax/search'),
             'placeholder' => __('Select a godfather'),
             'minimum_input_length' => 2,
-            'default' => \Request::get('godfather') ?: false,
+            'default' => Request::get('godfather') ?: false,
             'attributes' => [
                 'donation_type_select' => 'private',
             ],
@@ -95,7 +96,7 @@ class DonationCrudController extends CrudController
             'entity' => 'headquarter',
             'attribute' => 'name',
             'model' => 'App\Models\Headquarter',
-            'default' => \Request::get('headquarter') ?: false,
+            'default' => Request::get('headquarter') ?: false,
             'attributes' => [
                 'donation_type_select' => 'headquarter',
             ],
@@ -111,7 +112,7 @@ class DonationCrudController extends CrudController
             'data_source' => url('admin/protocol/ajax/search'),
             'placeholder' => __('Select a protocol'),
             'minimum_input_length' => 2,
-            'default' => \Request::get('protocol') ?: false,
+            'default' => Request::get('protocol') ?: false,
             'attributes' => [
                 'donation_type_select' => 'protocol',
             ],

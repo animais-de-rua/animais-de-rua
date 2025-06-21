@@ -9,6 +9,8 @@ use App\Models\Appointment;
 use App\User;
 use Carbon\Carbon;
 use DB;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Session;
 
 /**
  * Class AppointmentCrudController
@@ -49,7 +51,7 @@ class AppointmentCrudController extends CrudController
             'data_source' => url('admin/process/ajax/search'),
             'placeholder' => __('Select a process'),
             'minimum_input_length' => 2,
-            'default' => \Request::get('process') ?: false,
+            'default' => Request::get('process') ?: false,
         ]);
 
         if (is('admin')) {
@@ -79,7 +81,7 @@ class AppointmentCrudController extends CrudController
             'data_source' => url('admin/vet/ajax/search'),
             'placeholder' => __('Select a vet'),
             'minimum_input_length' => 2,
-            'default' => \Request::get('vet') ?: false,
+            'default' => Request::get('vet') ?: false,
         ]);
 
         $this->crud->addField([
@@ -99,7 +101,7 @@ class AppointmentCrudController extends CrudController
             'data_source' => url('admin/vet/ajax/search'),
             'placeholder' => __('Select a vet'),
             'minimum_input_length' => 2,
-            'default' => \Request::get('vet') ?: false,
+            'default' => Request::get('vet') ?: false,
         ]);
 
         $this->crud->addField([
@@ -472,7 +474,7 @@ class AppointmentCrudController extends CrudController
             })->get();
         } else {
             // Headquarter filter
-            $headquarter_id = admin() ? \Session::get('headquarter', null) : user()->headquarter_id;
+            $headquarter_id = admin() ? Session::get('headquarter', null) : user()->headquarter_id;
             if ($headquarter_id) {
                 $this->crud->query->whereHas('process', function ($query) use ($headquarter_id) {
                     $query->where('headquarter_id', $headquarter_id);

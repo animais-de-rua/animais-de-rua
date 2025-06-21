@@ -7,6 +7,7 @@ use App\Http\Requests\HeadquarterRequest as StoreRequest;
 use App\Http\Requests\HeadquarterRequest as UpdateRequest;
 use App\Models\Territory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class HeadquarterCrudController extends CrudController
 {
@@ -142,9 +143,9 @@ class HeadquarterCrudController extends CrudController
         return parent::updateCrud($request);
     }
 
-    public function sync()
+    public function sync(string $operation): void
     {
-        \Cache::forget('headquarters');
-        \Cache::forget('headquarters_territories_acting');
+        Cache::forget('headquarters');
+        Cache::forget('headquarters_territories_acting');
     }
 }

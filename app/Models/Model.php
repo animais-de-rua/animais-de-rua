@@ -2,10 +2,17 @@
 
 namespace App\Models;
 
-use App\Models\Traits\RandomModelTrait;
 use GemaDigital\Models\Model as OriginalModel;
+use Override;
 
 class Model extends OriginalModel
 {
-    use RandomModelTrait;
+    /**
+     * Automatically eager load relationships when the model is retrieved.
+     */
+    #[Override]
+    protected static function booted()
+    {
+        self::automaticallyEagerLoadRelationships();
+    }
 }

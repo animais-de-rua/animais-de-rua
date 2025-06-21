@@ -24,7 +24,7 @@ class LocalCache
 {
     public static function page($slug, $locale): array
     {
-        return Cache::rememberForever("page_{$slug}_{$locale}", function () use ($slug) {
+        return Cache::rememberForever("page_{$slug}_{$locale}", function () use ($slug): array {
             $page = Page::findBySlug($slug);
 
             if (! $page) {
@@ -40,21 +40,21 @@ class LocalCache
 
     public static function treated(): int
     {
-        return Cache::rememberForever('treatments_affected_animals_new', function () {
-            return Treatment::selectRaw('SUM(affected_animals_new) as total')->where('status', 'approved')->first()->total;
+        return Cache::rememberForever('treatments_affected_animals_new', function (): int {
+            return Treatment::selectRaw('SUM(affected_animals_new) as total')->where('status', 'approved')->first()->total ?? 0;
         });
     }
 
     public static function adopted(): int
     {
-        return Cache::rememberForever('adoptions_count', function () {
-            return Adoption::selectRaw('COUNT(processed) as total')->where('processed', 0)->first()->total;
+        return Cache::rememberForever('adoptions_count', function (): int {
+            return Adoption::selectRaw('COUNT(processed) as total')->where('processed', 0)->first()->total ?? 0;
         });
     }
 
     public static function headquarters_territories_acting(): array
     {
-        return Cache::rememberForever('headquarters_territories_acting', function () {
+        return Cache::rememberForever('headquarters_territories_acting', function (): array {
             $activeHeadquarters = Headquarter::active()->pluck('id');
 
             $territoriesRaw = DB::table('headquarters_territories')
@@ -85,7 +85,7 @@ class LocalCache
 
     public static function territories_form_all(): array
     {
-        return Cache::rememberForever('territories_form_all', function () {
+        return Cache::rememberForever('territories_form_all', function (): array {
             return [
                 0 => Territory::select(['id', 'name'])->where('level', 1)->get()->toArray(), // Districts
                 1 => Territory::select(['id', 'name', 'parent_id'])->where('level', 2)->get()->toArray(), // County

@@ -11,6 +11,8 @@ use App\Models\Process;
 use App\Models\Treatment;
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Request;
 
 /**
  * Class TreatmentCrudController
@@ -124,7 +126,7 @@ class TreatmentCrudController extends CrudController
         ]);
 
         // ------ CRUD FIELDS
-        $appointment_id = \Request::get('appointment') ?: false;
+        $appointment_id = Request::get('appointment') ?: false;
         $treatment_id = $this->getEntryID();
         $attributes = ! $appointment_id && ! $treatment_id ? ['disabled' => 'disabled'] : [];
         $vet_id = false;
@@ -512,7 +514,7 @@ class TreatmentCrudController extends CrudController
         }
 
         // Force Date and Vet
-        $appointment = Appointment::find(\Request::get('appointment_id'));
+        $appointment = Appointment::find(Request::get('appointment_id'));
         $request->merge([
             'date' => $appointment->getApprovedDate(),
             'vet_id' => $appointment->getApprovedVetID(),
@@ -526,8 +528,8 @@ class TreatmentCrudController extends CrudController
         return parent::updateCrud($request);
     }
 
-    public function sync()
+    public function sync(string $operation): void
     {
-        \Cache::forget('treatments_affected_animals_new');
+        Cache::forget('treatments_affected_animals_new');
     }
 }

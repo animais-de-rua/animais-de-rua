@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Admin\Traits\Permissions;
 use App\Http\Requests\PartnerCategoryRequest as StoreRequest;
 use App\Http\Requests\PartnerCategoryRequest as UpdateRequest;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * Class PartnerCategoryCrudController
@@ -85,8 +86,8 @@ class PartnerCategoryCrudController extends CrudController
         return parent::updateCrud($request);
     }
 
-    public function sync()
+    public function sync(string $operation): void
     {
-        \Cache::forget('partners_categories');
+        Cache::forget('partners_categories');
     }
 }

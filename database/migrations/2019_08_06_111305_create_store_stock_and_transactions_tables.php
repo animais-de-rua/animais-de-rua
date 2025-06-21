@@ -13,7 +13,7 @@ class CreateStoreStockAndTransactionsTables extends Migration
      */
     public function up()
     {
-        Schema::create('store_stock', function (Blueprint $table) {
+        Schema::create('store_stocks', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
             $table->foreignId('store_product_id')->nullable()->constrained()->onDelete('cascade');
@@ -42,7 +42,7 @@ class CreateStoreStockAndTransactionsTables extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('store_stock');
+        Schema::dropIfExists('store_stocks');
         Schema::dropIfExists('store_transactions');
     }
 }

@@ -1,3 +1,4 @@
+$color: #e03322;
 $grey: #717171;
 
 html,
@@ -60,7 +61,7 @@ select {
 
 label,
 picture,
-picture>img {
+picture > img {
     display: block;
 }
 
@@ -140,7 +141,9 @@ input.btn {
     border: 2px solid $color;
     color: #fff;
     font-size: 1.35rem;
-    transition: background-color 0.2s, color 0.2s;
+    transition:
+        background-color 0.2s,
+        color 0.2s;
     line-height: 2rem;
 
     &:hover,
@@ -436,7 +439,7 @@ a {
         color: #fff;
         text-align: center;
 
-        >.card:last-child {
+        > .card:last-child {
             margin-right: 0px;
         }
     }
@@ -448,7 +451,9 @@ a {
         padding: 35px 4px;
         margin-right: 10px;
         cursor: pointer;
-        transition: height 0.2s, padding 0.2s;
+        transition:
+            height 0.2s,
+            padding 0.2s;
         position: relative;
 
         text-transform: uppercase;
@@ -476,7 +481,9 @@ a {
             width: 360px;
             height: 0;
             background-color: #e53625;
-            transition: height 0.3s, padding 0.3s;
+            transition:
+                height 0.3s,
+                padding 0.3s;
             overflow: hidden;
             z-index: 10;
             margin: 30px 0 0 calc(82px - 360px - 4px);
@@ -511,7 +518,10 @@ a {
         z-index: 1;
         background-color: #f7f7f7;
         overflow: hidden;
-        transition: transform 0.3s, left 0.3s, height 0.15s;
+        transition:
+            transform 0.3s,
+            left 0.3s,
+            height 0.15s;
         transform: translate(var(--x, "0px"));
 
         .list {
@@ -581,7 +591,9 @@ a {
             background-color: $color;
             display: flex;
             align-items: center;
-            transition: transform 0.3s, top 0.3s;
+            transition:
+                transform 0.3s,
+                top 0.3s;
         }
 
         @at-root {
@@ -833,7 +845,9 @@ footer {
         white-space: nowrap;
         margin-bottom: 0;
         font-size: 0;
-        transition: transform 0.4s, height 0.2s;
+        transition:
+            transform 0.4s,
+            height 0.2s;
         transform: translateX(calc(var(--x, 0px) - var(--page, 0) * 100%));
     }
 
@@ -881,7 +895,7 @@ footer {
     display: flex;
     flex-wrap: wrap;
 
-    &>a {
+    & > a {
         height: 100%;
         padding: 20px 12px;
     }
@@ -894,7 +908,9 @@ footer {
         background-color: #fff;
         box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
         border-bottom: 1px solid #fff;
-        transition: box-shadow 0.4s, border 0.4s;
+        transition:
+            box-shadow 0.4s,
+            border 0.4s;
         flex-direction: column;
         display: none;
 
@@ -1007,7 +1023,10 @@ footer {
 
     .box {
         position: relative;
-        transition: background 0.4s, border 0.4s, box-shadow 0.4s;
+        transition:
+            background 0.4s,
+            border 0.4s,
+            box-shadow 0.4s;
         padding-top: 20px;
         max-width: calc(25% - 10px);
         flex: 0 0 25%;
@@ -1123,12 +1142,12 @@ footer {
 }
 
 .three-slider {
-    >h1 {
+    > h1 {
         text-align: center;
         margin-bottom: 8px;
     }
 
-    >p {
+    > p {
         text-align: center;
         margin-bottom: 32px;
     }
@@ -1141,7 +1160,9 @@ footer {
         min-height: 475px;
         background-color: #fff;
         margin: 16px;
-        transition: box-shadow 0.2s, border 0.2s;
+        transition:
+            box-shadow 0.2s,
+            border 0.2s;
         cursor: pointer;
         position: relative;
         border-bottom: 1px solid #fff;
@@ -1282,7 +1303,7 @@ footer {
 .where {
     text-align: center;
 
-    >div {
+    > div {
         color: $grey;
         font-size: 1.4rem;
     }
@@ -1374,7 +1395,7 @@ footer {
         font-weight: 600;
     }
 
-    .column>div,
+    .column > div,
     .column img {
         margin-bottom: 24px;
     }
@@ -1401,7 +1422,9 @@ footer {
         background-color: #fff;
         box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
         border-bottom: 1px solid #fff;
-        transition: box-shadow 0.4s, border 0.4s;
+        transition:
+            box-shadow 0.4s,
+            border 0.4s;
         margin-top: 20px;
 
         &:hover {
@@ -1417,7 +1440,7 @@ footer {
         margin-bottom: 20px;
     }
 
-    &>p {
+    & > p {
         text-align: center;
         font-size: 1.4rem;
         margin-bottom: 4px;
@@ -1464,7 +1487,7 @@ footer {
     .card {
         perspective: 1000px;
 
-        &>div {
+        & > div {
             width: 425px;
             height: 270px;
             max-width: 100%;
@@ -1477,11 +1500,13 @@ footer {
             flex-direction: column;
             justify-content: space-between;
             margin: 20px auto;
-            text-shadow: 0 1px 1px rgba(0, 0, 0, .6);
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.6);
             overflow: hidden;
             transform: rotate3d(1, -1, 0, 10deg);
             transform-origin: 50%;
-            transition: transform .2s, box-shadow .2s;
+            transition:
+                transform 0.2s,
+                box-shadow 0.2s;
             box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
 
             &:hover {
@@ -1508,7 +1533,7 @@ footer {
 
         .number {
             font-size: 2.8rem;
-            margin-top: .2rem;
+            margin-top: 0.2rem;
         }
 
         .owner {
@@ -1684,13 +1709,13 @@ footer {
                     min-height: 24rem;
                     background-color: #ffffff;
                     padding: 1rem;
-                    border-radius: .4rem;
+                    border-radius: 0.4rem;
                     box-shadow: 1px 1px 4px #0002;
 
                     .card-image {
                         overflow: hidden;
                         position: relative;
-                        border-radius: .4rem;
+                        border-radius: 0.4rem;
                         height: 20rem;
 
                         img {
@@ -1705,7 +1730,7 @@ footer {
                             bottom: 0;
                             width: 100%;
                             height: 100%;
-                            background-image: linear-gradient(to bottom, rgba(0,0,0,0) 60%, rgba(0,0,0,0.2));
+                            background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.2));
                         }
 
                         .person {
@@ -1818,12 +1843,14 @@ footer {
                 height: 5.5rem;
                 width: 38rem;
                 margin-bottom: 0;
-                background-color: #E03322;
+                background-color: #e03322;
                 color: white;
                 font-size: 2rem;
                 border: none;
                 border-radius: 1rem;
-                box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+                box-shadow:
+                    0 20px 25px -5px rgb(0 0 0 / 0.1),
+                    0 8px 10px -6px rgb(0 0 0 / 0.1);
                 transition-duration: 200ms;
                 transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
                 animation: button-pop 0.25s ease-out;
@@ -1841,7 +1868,6 @@ footer {
             }
         }
     }
-
 }
 
 // Animals / Friends
@@ -2198,7 +2224,9 @@ footer {
         padding: 0 80px;
         background-color: #fff;
         color: #000;
-        transition: background-color 0.1s, color 0.1s;
+        transition:
+            background-color 0.1s,
+            color 0.1s;
 
         &:hover {
             background-color: #000;
@@ -2306,7 +2334,7 @@ footer {
         flex-direction: column;
         gap: 0.5rem;
 
-        input:not([type="text"]){
+        input:not([type="text"]) {
             cursor: pointer;
         }
 
@@ -2365,7 +2393,7 @@ footer {
             outline: solid #950000 1px;
             outline-offset: 3px;
 
-            &+.error-message {
+            & + .error-message {
                 color: red;
             }
 
@@ -2373,7 +2401,7 @@ footer {
             &:has(input:checked) {
                 outline: none;
 
-                &+.error-message {
+                & + .error-message {
                     display: none;
                 }
             }
@@ -2571,7 +2599,6 @@ footer {
     }
 
     .apply {
-
         input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]),
         select {
             height: 36px;
@@ -2613,7 +2640,7 @@ body {
     min-height: calc(100vh - 130px);
     margin-top: -28px;
 
-    &>div {
+    & > div {
         flex: 1;
         width: 50%;
     }
@@ -2664,12 +2691,12 @@ body {
                     user-select: all;
                 }
 
-                &>a {
+                & > a {
                     display: block;
                 }
 
-                &>div,
-                &>a {
+                & > div,
+                & > a {
                     padding: 1rem 2rem;
                 }
             }
@@ -2687,7 +2714,6 @@ body {
 
 // Wide screens
 @media (max-width: 1092px) {
-
     // Fix for top menu
     #navbar .left {
         display: inline;
@@ -2750,7 +2776,7 @@ body {
         flex: 0 0 100%;
     }
 
-    .column>picture>img {
+    .column > picture > img {
         width: 100%;
     }
 
@@ -2894,7 +2920,7 @@ body {
             margin-bottom: 10px !important;
         }
 
-        .scrollable>div {
+        .scrollable > div {
             max-width: 100%;
             flex: 100%;
             margin: 0;
@@ -2931,7 +2957,7 @@ body {
         flex-direction: column;
         min-height: calc(100vh - 68px);
 
-        &>div {
+        & > div {
             width: 100%;
         }
 
@@ -2956,7 +2982,7 @@ body {
             .image {
                 width: 100%;
 
-                +div {
+                + div {
                     width: 100%;
                     min-height: 160px;
                 }

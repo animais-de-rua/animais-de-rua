@@ -6,6 +6,7 @@ use App\Helpers\EnumHelper;
 use App\Http\Controllers\Admin\Traits\Permissions;
 use App\Http\Requests\TerritoryRequest as StoreRequest;
 use App\Http\Requests\TerritoryRequest as UpdateRequest;
+use Illuminate\Support\Facades\Cache;
 
 class TerritoryCrudController extends CrudController
 {
@@ -103,8 +104,8 @@ class TerritoryCrudController extends CrudController
         return parent::updateCrud($request);
     }
 
-    public function sync()
+    public function sync(string $operation): void
     {
-        \Cache::forget('territories_form_all');
+        Cache::forget('territories_form_all');
     }
 }

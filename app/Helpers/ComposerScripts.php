@@ -2,14 +2,15 @@
 
 namespace App\Helpers;
 
-use GemaDigital\Helpers\Composer\ComposerScripts as DefaultComposerScripts;
+use GemaDigital\Helpers\ComposerScripts as DefaultComposerScripts;
+use Override;
 
 class ComposerScripts extends DefaultComposerScripts
 {
     /**
      * Post install Unix
      */
-    #[\Override]
+    #[Override]
     public static function postInstallUnix(): void
     {
         //
@@ -18,7 +19,7 @@ class ComposerScripts extends DefaultComposerScripts
     /**
      * Post install Windows
      */
-    #[\Override]
+    #[Override]
     public static function postInstallWindows(): void
     {
         //

@@ -14,6 +14,7 @@ use App\Models\Territory;
 use App\Models\Treatment;
 use App\User;
 use DB;
+use Illuminate\Support\Facades\Cache;
 
 class ProcessCrudController extends CrudController
 {
@@ -736,10 +737,10 @@ class ProcessCrudController extends CrudController
         return parent::updateCrud($request);
     }
 
-    public function sync()
+    public function sync(string $operation): void
     {
-        \Cache::forget('processes_urgent');
-        \Cache::forget('processes_districts_godfather');
+        Cache::forget('processes_urgent');
+        Cache::forget('processes_districts_godfather');
     }
 
     // Table Helper

@@ -69,7 +69,7 @@ Route::group([
     Route::crud('store/user/transaction', StoreTransactionCrudController::class);
     Route::crud('store/supplier', SupplierCrudController::class);
     Route::crud('store/voucher', VoucherCrudController::class);
-    
+
     // Reports
     Route::get('/reports', [ReportController::class, 'report'])->name('reports');
     Route::post('/reports/{type}/{action}', [ReportController::class, 'action']);

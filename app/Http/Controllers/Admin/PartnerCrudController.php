@@ -10,6 +10,7 @@ use App\Models\Partner;
 use App\Models\Territory;
 use DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * Class PartnerCrudController
@@ -363,9 +364,9 @@ class PartnerCrudController extends CrudController
         return parent::updateCrud($request);
     }
 
-    public function sync()
+    public function sync(string $operation): void
     {
-        \Cache::forget('partners');
-        \Cache::forget('partners_territories');
+        Cache::forget('partners');
+        Cache::forget('partners_territories');
     }
 }

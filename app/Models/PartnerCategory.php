@@ -11,6 +11,7 @@ class PartnerCategory extends Model
     use CrudTrait;
     use HasTranslations;
 
+    protected $table = 'partner_category_list';
     protected $fillable = [
         'name',
         'description',

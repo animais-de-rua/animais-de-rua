@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\RandomModelTrait;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Database\Factories\TerritoryFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,6 +14,7 @@ class Territory extends Model
     use CrudTrait;
     /** @use HasFactory<TerritoryFactory> */
     use HasFactory;
+    use RandomModelTrait;
 
     public $timestamps = false;
     protected $fillable = [];

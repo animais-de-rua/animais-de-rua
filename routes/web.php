@@ -3,7 +3,6 @@
 use App\Enums\FormsEnum;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\PageController;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,9 +15,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-// Auth
-Auth::routes();
 
 // Welcome
 Route::get('/', [PageController::class, 'index'])

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Admin\Traits\Permissions;
 use App\Http\Requests\CampaignRequest as StoreRequest;
 use App\Http\Requests\CampaignRequest as UpdateRequest;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * Class CampaignCrudController
@@ -117,8 +118,8 @@ class CampaignCrudController extends CrudController
         return parent::updateCrud($request);
     }
 
-    public function sync()
+    public function sync(string $operation): void
     {
-        \Cache::forget('campaigns');
+        Cache::forget('campaigns');
     }
 }

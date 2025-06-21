@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Admin\Traits\Permissions;
 use App\Http\Requests\FriendCardModalityRequest as StoreRequest;
 use App\Http\Requests\FriendCardModalityRequest as UpdateRequest;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * Class FriendCardModalityCrudController
@@ -129,8 +130,8 @@ class FriendCardModalityCrudController extends CrudController
         return parent::updateCrud($request);
     }
 
-    public function sync()
+    public function sync(string $operation): void
     {
-        \Cache::forget('friend_card_modalities');
+        Cache::forget('friend_card_modalities');
     }
 }

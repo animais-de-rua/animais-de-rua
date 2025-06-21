@@ -105,13 +105,13 @@ return [
 
     // CSS files that are loaded in all pages, using Laravel's mix() helper
     'mix_styles' => [ // file_path => manifest_directory_path
-        'css/admin.css' => '',
+        // 'css/admin.css' => '',
     ],
 
     // CSS files that are loaded in all pages, using Laravel's @vite() helper
     // Please note that support for Vite was added in Laravel 9.19. Earlier versions are not able to use this feature.
     'vite_styles' => [ // resource file_path
-        // 'resources/css/app.css',
+        'resources/css/admin.css',
     ],
 
     // --------------
@@ -128,12 +128,12 @@ return [
 
     // JS files that are loaded in all pages, using Laravel's mix() helper
     'mix_scripts' => [ // file_path => manifest_directory_path
-        'js/admin.js' => '',
+        // 'js/admin.js' => '',
     ],
 
     // JS files that are loaded in all pages, using Laravel's @vite() helper
     'vite_scripts' => [ // resource file_path
-        // 'resources/js/app.js',
+        'resources/js/admin.js',
     ],
 
     'classes' => [

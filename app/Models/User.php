@@ -4,11 +4,14 @@ namespace App\Models;
 
 use App\Models\Traits\RandomModelTrait;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Creativeorange\Gravatar\Facades\Gravatar;
 use Database\Factories\UserFactory;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -24,6 +27,8 @@ class User extends Authenticatable
 
     /**
      * The attributes that are mass assignable.
+     *
+     * @var list<string>
      */
     protected $fillable = [
         'name',
@@ -33,6 +38,8 @@ class User extends Authenticatable
 
     /**
      * The attributes that should be hidden for serialization.
+     *
+     * @var list<string>
      */
     protected $hidden = [
         'password',
@@ -40,19 +47,42 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be cast.
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+            'socialite' => 'json',
+        ];
+    }
 
     /**
-     * Headquarters the user belongs to.
+     * Get the user's initials
+     */
+    public function initials(): string
+    {
+        return Str::of($this->name)
+            ->explode(' ')
+            ->map(fn (string $name) => Str::of($name)->substr(0, 1))
+            ->implode('');
+    }
+
+    /**
+     * Get the user's Gravatar URL.
      *
-     * @return BelongsToMany<Headquarter, $this>
+     * @return Attribute<string, never>
      */
     public function headquarters(): BelongsToMany
     {
         return $this->belongsToMany(Headquarter::class, 'users_headquarters');
+    }
+
+    public function gravatar(): Attribute
+    {
+        return Attribute::get(fn () => Gravatar::get($this->email));
     }
 }
