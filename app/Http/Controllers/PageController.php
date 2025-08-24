@@ -4,14 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Helpers\EnumHelper;
 use App\Http\Controllers\Admin\Traits\LocalCache;
-use App\Http\Controllers\Controller;
 use App\Models\Adoption;
-use App\Models\Page;
 use App\Models\Process;
 use DB;
-use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
-use Newsletter;
 use Validator;
 
 class PageController extends Controller
@@ -245,39 +240,6 @@ class PageController extends Controller
         }
 
         return response()->json($data->get());
-    }
-
-    public function subscribeNewsletter(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
-        ]);
-
-        $validator->validate();
-
-        // Check if subscribed
-        if (Newsletter::isSubscribed($request->email)) {
-            $validator->errors()->add('email', __('Your email is already subscribed.'));
-            throw new ValidationException($validator);
-        }
-
-        // Subscribe
-        Newsletter::subscribe($request->email, [
-            'FNAME' => strtok($request->email, '@'),
-        ]);
-
-        // Check if success
-        if (! Newsletter::lastActionSucceeded()) {
-            \Log::info(Newsletter::getApi()->getLastError());
-
-            $validator->errors()->add('email', __('Something went wrong, please try again later.'));
-            throw new ValidationException($validator);
-        }
-
-        return response()->json([
-            'errors' => false,
-            'message' => __('Thank you for subscribing to our newsletter.'),
-        ]);
     }
 
     public function login()

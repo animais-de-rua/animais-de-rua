@@ -35,6 +35,11 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    'brevo' => [
+        'api_key' => env('BREVO_API_KEY'),
+        'list_id' => env('BREVO_LIST_ID'),
+    ],
+
     /*
     * Laravel Socialite
     * login keys

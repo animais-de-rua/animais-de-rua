@@ -29,9 +29,10 @@ class PageCrudController extends \Backpack\PageManager\app\Http\Controllers\Admi
         return $result;
     }
 
-    public function update(UpdateRequest $request)
+    public function update()
     {
+        $request = $this->crud->getRequest();
         \Cache::forget("page_{$request->slug}_{$request->locale}");
-        return parent::update($request);
+        return parent::update();
     }
 }
