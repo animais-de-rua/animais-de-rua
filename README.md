@@ -13,6 +13,50 @@ It's a work in progress for the website [Animais de Rua](https://animaisderua.or
 It includes a backoffice for the organization and for the main website.
 
 
+## Running Locally
+
+**Requirements:** [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/)
+
+**1. Start the services**
+
+```bash
+docker compose up --build
+```
+
+This builds the app image and starts both the app (PHP/Apache) and a MySQL database. The first build takes a few minutes. On subsequent runs, `--build` can be omitted.
+
+**2. Open the app**
+
+- Website: http://localhost:8080
+- Admin panel: http://localhost:8080/admin/login
+  - Email: `promatik@gmail.com`
+  - Password: `password`
+
+The database is seeded automatically on first startup.
+
+**Test data**
+
+To populate the database with additonal test data (processes, treatments, adoptions, vets, godfathers, store orders, and more), run:
+
+```bash
+./docker/load-test-data.sh
+```
+
+
+**Stopping**
+
+```bash
+docker compose down
+```
+
+Data is persisted in a Docker volume (`mysql_data`). To wipe the database as well:
+
+```bash
+docker compose down -v
+```
+
+---
+
 ## Contributing
 
 Thank you for considering contributing to this platform!

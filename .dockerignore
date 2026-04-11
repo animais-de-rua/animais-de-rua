@@ -1,0 +1,15 @@
+vendor/
+node_modules/
+public/js/
+public/css/app.css
+public/css/app.css.map
+public/css/admin/reports.css
+public/css/admin/reports.css.map
+public/mix-manifest.json
+.env
+.git/
+storage/logs/*.log
+storage/framework/cache/data/
+storage/framework/sessions/*
+storage/framework/views/*.php
+bootstrap/cache/*.php

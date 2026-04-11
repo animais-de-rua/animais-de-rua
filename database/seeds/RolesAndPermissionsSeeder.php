@@ -21,7 +21,7 @@ class RolesAndPermissionsSeeder extends Seeder
 
         // Roles
         foreach (EnumHelper::values('user.roles') as $role) {
-            DB::table('roles')->insert(['created_at' => $date, 'updated_at' => $date, 'name' => $role]);
+            DB::table('roles')->insert(['created_at' => $date, 'updated_at' => $date, 'name' => $role, 'guard_name' => backpack_guard_name()]);
         }
 
         // Permissions
