@@ -14,7 +14,7 @@
                     (isset($field['default']) ? $field['default'][0] :'' )) }}"
                 @include('crud::inc.field_attributes')
             >
-            <div class="input-group-addon">{{ __("years") }}</div>
+            <div class="input-group-append"><span class="input-group-text">{{ __("years") }}</span></div>
         </div>
 
         <div class="input-group">
@@ -28,11 +28,11 @@
                     (isset($field['default']) ? $field['default'][1] :'' )) }}"
                 @include('crud::inc.field_attributes')
             >
-            <div class="input-group-addon">{{ __("months") }}</div>
+            <div class="input-group-append"><span class="input-group-text">{{ __("months") }}</span></div>
         </div>
     </div>
 
     @if (isset($field['hint']))
-        <p class="help-block">{!! $field['hint'] !!}</p>
+        <small class="form-text text-muted">{!! $field['hint'] !!}</small>
     @endif
 </div>

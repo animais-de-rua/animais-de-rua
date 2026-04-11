@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\CrudTrait;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
 
 class Treatment extends Model
 {
@@ -35,16 +35,16 @@ class Treatment extends Model
             $disabled = false;
         }
 
-        return '<a href=' . url("admin/treatment/{$this->id}/edit") . " class='btn btn-xs btn-default " . ($disabled ? 'disabled' : '') . "'><i class='fa fa-edit'></i> " . __('backpack::crud.edit') . '</a>';
+        return '<a href=' . url("admin/treatment/{$this->id}/edit") . " class='btn btn-sm btn-secondary " . ($disabled ? 'disabled' : '') . "'><i class='fa fa-edit'></i> " . __('backpack::crud.edit') . '</a>';
     }
 
     public function approveTreatment()
     {
         $disabled = $this->status == 'approved';
-        $btn_color = $disabled ? 'btn-default' : 'btn-primary';
+        $btn_color = $disabled ? 'btn-secondary' : 'btn-primary';
 
         return '
-      <button type="button" ' . ($disabled ? 'disabled' : '') . ' class="btn btn-xs ' . $btn_color . ' dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="return approveTreatment(this, ' . $this->id . ')">
+      <button type="button" ' . ($disabled ? 'disabled' : '') . ' class="btn btn-sm ' . $btn_color . ' dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="return approveTreatment(this, ' . $this->id . ')">
         <i class="fa fa-check"></i> ' . __('approve') . '
       </button>';
 
@@ -90,7 +90,7 @@ class Treatment extends Model
 
     public function getProcessLinkAttribute()
     {
-        return $this->getLink($this->appointment ? $this->appointment->process : null, true, '', 'id_name');
+        return $this->getLink($this->appointment ? $this->appointment->process : null, true, 'show', 'id_name');
     }
 
     public function getVetLinkAttribute()

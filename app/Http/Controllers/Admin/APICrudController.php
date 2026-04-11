@@ -20,7 +20,7 @@ use App\Models\Treatment;
 use App\Models\TreatmentType;
 use App\Models\Vet;
 use App\User as UserBase;
-use Backpack\Base\app\Models\BackpackUser as User;
+use Backpack\CRUD\app\Models\BackpackUser as User;
 use DB;
 use Illuminate\Http\Request;
 

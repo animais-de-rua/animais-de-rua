@@ -32,7 +32,7 @@ if (is_array($items)) {
 
     <div class="array-container form-group">
 
-        <table class="table table-bordered table-striped m-b-0" ng-init="field = '#{{ $field['name'] }}'; items = {{ $items }}; max = {{$max}}; min = {{$min}}; maxErrorTitle = '{{trans('backpack::crud.table_cant_add', ['entity' => $item_name])}}'; maxErrorMessage = '{{trans('backpack::crud.table_max_reached', ['max' => $max])}}'">
+        <table class="table table-bordered table-striped mb-0" ng-init="field = '#{{ $field['name'] }}'; items = {{ $items }}; max = {{$max}}; min = {{$min}}; maxErrorTitle = '{{trans('backpack::crud.table_cant_add', ['entity' => $item_name])}}'; maxErrorMessage = '{{trans('backpack::crud.table_max_reached', ['max' => $max])}}'">
 
             <thead>
                 <tr>
@@ -110,10 +110,10 @@ if (is_array($items)) {
 
                     @if(!$field['readonly'])
                     <td ng-if="max == -1 || max > 1">
-                        <span class="btn btn-sm btn-default sort-handle"><span class="sr-only">sort item</span><i class="fa fa-sort" role="presentation" aria-hidden="true"></i></span>
+                        <span class="btn btn-sm btn-secondary sort-handle"><span class="sr-only">sort item</span><i class="fa fa-sort" role="presentation" aria-hidden="true"></i></span>
                     </td>
                     <td ng-if="max == -1 || max > 1">
-                        <button ng-hide="min > -1 && $index < min" class="btn btn-sm btn-default" type="button" ng-click="removeItem(item);"><span class="sr-only">delete item</span><i class="fa fa-trash" role="presentation" aria-hidden="true"></i></button>
+                        <button ng-hide="min > -1 && $index < min" class="btn btn-sm btn-secondary" type="button" ng-click="removeItem(item);"><span class="sr-only">delete item</span><i class="fa fa-trash" role="presentation" aria-hidden="true"></i></button>
                     </td>
                     @endif
                 </tr>
@@ -123,8 +123,8 @@ if (is_array($items)) {
         </table>
 
         @if(!$field['readonly'])
-        <div class="array-controls btn-group m-t-10">
-            <button ng-if="max == -1 || items.length < max" class="btn btn-sm btn-default" type="button" ng-click="addItem()"><i class="fa fa-plus"></i> {{trans('backpack::crud.add')}} {{ $item_name }}</button>
+        <div class="array-controls btn-group mt-2">
+            <button ng-if="max == -1 || items.length < max" class="btn btn-sm btn-secondary" type="button" ng-click="addItem()"><i class="fa fa-plus"></i> {{trans('backpack::crud.add')}} {{ $item_name }}</button>
         </div>
         @endif
 
@@ -132,7 +132,7 @@ if (is_array($items)) {
 
     {{-- HINT --}}
     @if (isset($field['hint']))
-        <p class="help-block">{!! $field['hint'] !!}</p>
+        <small class="form-text text-muted">{!! $field['hint'] !!}</small>
     @endif
 </div>
 

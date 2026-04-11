@@ -13,6 +13,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // Doctrine DBAL doesn't know about MySQL's enum type; map it to string.
+        \DB::connection()->getDoctrineConnection()
+            ->getDatabasePlatform()
+            ->registerDoctrineTypeMapping('enum', 'string');
         // Set up Faker default languages
         $this->app->singleton(\Faker\Generator::class, function () {
             return \Faker\Factory::create('pt_PT');

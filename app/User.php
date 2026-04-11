@@ -2,8 +2,8 @@
 
 namespace App;
 
-use Backpack\Base\app\Notifications\ResetPasswordNotification as ResetPasswordNotification;
-use Backpack\CRUD\CrudTrait;
+use Backpack\CRUD\app\Notifications\ResetPasswordNotification as ResetPasswordNotification;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use DB;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;

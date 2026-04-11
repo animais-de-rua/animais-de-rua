@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\CrudTrait;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
 
 class Adoption extends Model
 {
@@ -34,7 +34,7 @@ class Adoption extends Model
         $disabled = $this->status != 'open';
 
         return '
-        <a class="btn btn-xs btn-' . ($disabled ? 'default' : 'primary') . ' ' . ($disabled ? 'disabled' : '') . '" href="/admin/adoption/' . $this->id . '/edit" title="' . __('Add adopter') . '">
+        <a class="btn btn-sm btn-' . ($disabled ? 'secondary' : 'primary') . ' ' . ($disabled ? 'disabled' : '') . '" href="/admin/adoption/' . $this->id . '/edit" title="' . __('Add adopter') . '">
         <i class="fa fa-plus"></i> ' . ucfirst(__('adopter')) . '
         </a>';
     }
@@ -78,12 +78,12 @@ class Adoption extends Model
     */
     public function getNameLinkAttribute()
     {
-        return $this->getLink($this, true, '');
+        return $this->getLink($this, true, 'show');
     }
 
     public function getProcessLinkAttribute()
     {
-        return $this->getLink($this->process, true, '');
+        return $this->getLink($this->process, true, 'show');
     }
 
     public function getAdopterLinkAttribute()

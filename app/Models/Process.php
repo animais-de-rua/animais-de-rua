@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\CrudTrait;
-use Backpack\CRUD\ModelTraits\SpatieTranslatable\HasTranslations;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
 
 class Process extends Model
 {
@@ -37,7 +37,7 @@ class Process extends Model
         $disabled = !in_array($this->status, ['waiting_godfather', 'waiting_capture', 'open']);
 
         return '
-        <a class="btn btn-xs btn-' . ($disabled ? 'default' : 'primary') . ' ' . ($disabled ? 'disabled' : '') . '" href="/admin/appointment/create?process=' . $this->id . '" title="' . __('Add appointment') . '">
+        <a class="btn btn-sm btn-' . ($disabled ? 'secondary' : 'primary') . ' ' . ($disabled ? 'disabled' : '') . '" href="/admin/appointment/create?process=' . $this->id . '" title="' . __('Add appointment') . '">
         <i class="fa fa-plus"></i> ' . ucfirst(__('appointment')) . '
         </a>';
     }
@@ -47,7 +47,7 @@ class Process extends Model
         return '
         <a href="#"
             title="' . ($this->contacted ? __('Contacted') : __('Not yet contacted')) . '"
-            class="btn btn-xs btn-' . ($this->contacted ? 'success' : 'default') . '"
+            class="btn btn-sm btn-' . ($this->contacted ? 'success' : 'secondary') . '"
             onclick="return toggleContacted(this, ' . $this->id . ')">
         <i class="fa fa-phone"></i>
         </a>';
@@ -118,7 +118,7 @@ class Process extends Model
 
     public function getNameLinkAttribute()
     {
-        return $this->getLink($this, true, '');
+        return $this->getLink($this, true, 'show');
     }
 
     public function getDateAttribute()

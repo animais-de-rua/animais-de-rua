@@ -14,10 +14,6 @@ return [
     // Project name. Shown in the breadcrumbs and a few other places.
     'project_name' => 'Animais de Rua',
 
-    // Menu logos
-    'logo_lg' => '<b>Animais</b> de Rua',
-    'logo_mini' => '<b>AR</b>',
-
     // Developer or company name. Shown in footer.
     'developer_name' => 'Animais de Rua',
 
@@ -27,9 +23,8 @@ return [
     // Show powered by Laravel Backpack in the footer?
     'show_powered_by' => false,
 
-    // The AdminLTE skin. Affects menu color and primary/secondary colors used throughout the application.
-    'skin' => 'skin-red',
-    // Options: skin-black, skin-blue, skin-purple, skin-red, skin-yellow, skin-green, skin-blue-light, skin-black-light, skin-purple-light, skin-green-light, skin-red-light, skin-yellow-light
+    // Show / hide breadcrumbs on admin panel pages.
+    'breadcrumbs' => true,
 
     // Date & Datetime Format Syntax: https://github.com/jenssegers/date#usage
     // (same as Carbon)
@@ -39,10 +34,47 @@ return [
     // Content of the HTML meta robots tag to prevent indexing and link following
     'meta_robots_content' => 'noindex, nofollow',
 
-    // Overlays - CSS files that change the look and feel of the admin panel
-    'overlays' => [
-        // 'vendor/backpack/overlays/backpack.bold.css',
+    // ------
+    // ASSETS
+    // ------
+
+    // CSS files to load in all admin panel pages (after CoreUI bundle).
+    'styles' => [
+        'packages/backpack/base/css/bundle.css',
+        'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css',
+        'packages/line-awesome/css/line-awesome.min.css',
+        'css/admin/icomoon/style.css',
+        'css/admin/admin.css',
     ],
+    'mix_styles' => [],
+
+    // JS files to load in all admin panel pages.
+    'scripts' => [
+        'packages/backpack/base/js/bundle.js',
+    ],
+    'mix_scripts' => [],
+
+    // Cache-busting string appended to all asset URLs.
+    'cachebusting_string' => \PackageVersions\Versions::getVersion('backpack/crud'),
+
+    // ------
+    // LAYOUT
+    // ------
+
+    // URL to link to when clicking the project logo in the header.
+    'home_link' => '',
+
+    // HTML for the project logo shown in the top navbar.
+    'project_logo' => '<img src="/img/logo/logo-text.svg" style="filter: brightness(0) invert(1); max-height: 30px; width: auto;">',
+
+    // <body> classes for the admin layout.
+    'body_class' => 'app aside-menu-fixed sidebar-lg-show',
+
+    // Classes for the top navbar.
+    'header_class' => 'app-header navbar navbar-dark border-0',
+
+    // Classes for the sidebar.
+    'sidebar_class' => 'sidebar bg-dark',
 
     /*
     |--------------------------------------------------------------------------
@@ -87,12 +119,12 @@ return [
     */
 
     // Fully qualified namespace of the User model
-    'user_model_fqn' => \Backpack\Base\app\Models\BackpackUser::class,
+    'user_model_fqn' => \Backpack\CRUD\app\Models\BackpackUser::class,
 
     // The classes for the middleware to check if the visitor is an admin
     // Can be a single class or an array of clases
     'middleware_class' => [
-        \Backpack\Base\app\Http\Middleware\CheckIfAdmin::class,
+        \Backpack\CRUD\app\Http\Middleware\CheckIfAdmin::class,
         \App\Http\Middleware\AdminPanelAccess::class,
     ],
 

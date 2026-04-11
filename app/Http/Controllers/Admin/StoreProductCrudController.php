@@ -161,6 +161,8 @@ class StoreProductCrudController extends CrudController
         // add asterisk for fields that are required in StoreProductsRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
+        $this->crud->setValidation(StoreRequest::class);
+        $this->crud->setValidation(UpdateRequest::class);
     }
 
     public function showDetailsRow($id)
@@ -172,13 +174,13 @@ class StoreProductCrudController extends CrudController
             </div>";
     }
 
-    public function store(StoreRequest $request)
+    public function store()
     {
-        return parent::storeCrud($request);
+        return parent::store();
     }
 
-    public function update(UpdateRequest $request)
+    public function update()
     {
-        return parent::updateCrud($request);
+        return parent::update();
     }
 }

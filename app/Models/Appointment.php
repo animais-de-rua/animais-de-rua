@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\CrudTrait;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Carbon\Carbon;
 
 class Appointment extends Model
@@ -58,10 +58,10 @@ class Appointment extends Model
             $disabled = true;
         }
 
-        $btn_color = $disabled ? 'btn-default' : ($this->getTreatmentsCountValue() ? 'btn-primary' : 'btn-warning');
+        $btn_color = $disabled ? 'btn-secondary' : ($this->getTreatmentsCountValue() ? 'btn-primary' : 'btn-warning');
 
         return '
-        <a class="btn btn-xs ' . $btn_color . ' ' . ($disabled ? 'disabled' : '') . '" href="/admin/treatment/create?appointment=' . $this->id . '" title="' . __('Add treatment') . '">
+        <a class="btn btn-sm ' . $btn_color . ' ' . ($disabled ? 'disabled' : '') . '" href="/admin/treatment/create?appointment=' . $this->id . '" title="' . __('Add treatment') . '">
         <i class="fa fa-plus"></i> ' . ucfirst(__('treatment')) . '
         </a>';
     }
@@ -69,11 +69,11 @@ class Appointment extends Model
     public function approveAppointment()
     {
         $disabled = $this->status != 'approving';
-        $btn_color = $disabled ? 'btn-default' : 'btn-primary';
+        $btn_color = $disabled ? 'btn-secondary' : 'btn-primary';
 
         return '
     <div class="btn-group">
-      <button type="button" ' . ($disabled ? 'disabled' : '') . ' class="btn btn-xs ' . $btn_color . ' dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <button type="button" ' . ($disabled ? 'disabled' : '') . ' class="btn btn-sm ' . $btn_color . ' dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="fa fa-check"></i> ' . __('approve') . '
         <span class="caret" style="margin-left:2px"></span>
         <span class="sr-only">Toggle Dropdown</span>
@@ -131,7 +131,7 @@ class Appointment extends Model
 
     public function getProcessLinkAttribute()
     {
-        return $this->getLink($this->process, true, '');
+        return $this->getLink($this->process, true, 'show');
     }
 
     public function getUserLinkAttribute()

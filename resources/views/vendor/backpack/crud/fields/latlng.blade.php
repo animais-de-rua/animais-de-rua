@@ -1,13 +1,9 @@
 <div class="form-group col-md-8">
     <label>{{ $field['label'] }}</label>
     <div class="input-group">          
-        <div class="input-group-addon">
-            <i class="fa fa-map-marker"></i>
-        </div>
+        <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-map-marker"></i></span></div>
         <input id="search_address" class="form-control" type="text" placeholder="{{ __('Location') }}" />
-        <div id="geolocate" class="input-group-addon btn btn-primary">
-            <i class="fa fa-compass"></i>
-        </div>
+        <div class="input-group-append"><button id="geolocate" class="btn btn-primary" type="button"><i class="fa fa-compass"></i></button></div>
     </div>
 </div>
 <div class="form-group col-md-4">

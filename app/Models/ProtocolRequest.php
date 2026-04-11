@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\CrudTrait;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
 
 class ProtocolRequest extends Model
 {
@@ -73,7 +73,7 @@ class ProtocolRequest extends Model
 
     public function getProcessLinkAttribute()
     {
-        return $this->getLink($this->process, true, '');
+        return $this->getLink($this->process, true, 'show');
     }
 
     public function getProtocolLinkAttribute()

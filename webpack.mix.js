@@ -17,5 +17,6 @@ mix
   .babel('resources/assets/js/sw.js', 'public/sw.js')
 
   .js('resources/assets/js/admin/reports.js', 'public/js/admin')
+  .sass('resources/assets/sass/admin/admin.scss', 'public/css/admin')
   .sass('resources/assets/sass/admin/reports.scss', 'public/css/admin')
   .version();

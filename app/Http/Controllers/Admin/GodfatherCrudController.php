@@ -242,6 +242,8 @@ class GodfatherCrudController extends CrudController
         // Add asterisk for fields that are required
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
+        $this->crud->setValidation(StoreRequest::class);
+        $this->crud->setValidation(UpdateRequest::class);
     }
 
     public function showDetailsRow($id)
@@ -253,14 +255,16 @@ class GodfatherCrudController extends CrudController
             </div>";
     }
 
-    public function store(StoreRequest $request)
+    public function store()
     {
+        $request = $this->crud->getRequest();
+
         // Add user
         $request->merge([
             'user_id' => backpack_user()->id,
         ]);
 
-        $store = parent::storeCrud($request);
+        $store = parent::store();
 
         // Add headquarters
         $headquarters = restrictToHeadquarters();
@@ -272,8 +276,8 @@ class GodfatherCrudController extends CrudController
         return $store;
     }
 
-    public function update(UpdateRequest $request)
+    public function update()
     {
-        return parent::updateCrud($request);
+        return parent::update();
     }
 }

@@ -9,7 +9,7 @@ return [
     |
     */
     'models' => [
-        'user' => Backpack\Base\app\Models\BackpackUser::class,
+        'user' => Backpack\CRUD\app\Models\BackpackUser::class,
         'permission' => Backpack\PermissionManager\app\Models\Permission::class,
         'role' => Backpack\PermissionManager\app\Models\Role::class,
     ],

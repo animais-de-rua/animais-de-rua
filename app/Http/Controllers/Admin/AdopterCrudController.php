@@ -34,8 +34,6 @@ class AdopterCrudController extends CrudController
         */
 
         // ------ CRUD FIELDS
-        $this->crud->addFields(['territory_id', 'name', 'email', 'phone', 'address', 'zip_code', 'id_card']);
-
         $this->crud->addField([
             'label' => ucfirst(__('territory')),
             'name' => 'territory_id',
@@ -80,7 +78,7 @@ class AdopterCrudController extends CrudController
             'type' => 'text',
         ]);
 
-        if (is('admin')) {
+        if (is('admin') && $this->crud->getCurrentOperation() === 'update') {
             $this->crud->addField([
                 'label' => ucfirst(__('volunteer')),
                 'name' => 'user_id',
@@ -94,7 +92,7 @@ class AdopterCrudController extends CrudController
                 'attributes' => [
                     'disabled' => 'disabled',
                 ],
-            ], 'update');
+            ]);
         }
 
         // ------ CRUD COLUMNS
@@ -160,6 +158,7 @@ class AdopterCrudController extends CrudController
             $this->wantsJSON() ? null : api()->territoryList(),
             function ($values) {
                 $values = json_decode($values);
+                if ($values === null) return;
                 $where = join(' OR ', array_fill(0, count($values), 'territory_id LIKE ?'));
                 $values = array_map(function ($field) {return $field . '%';}, $values);
 
@@ -198,18 +197,22 @@ class AdopterCrudController extends CrudController
         // add asterisk for fields that are required in AdopterRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
+        $this->crud->setValidation(StoreRequest::class);
+        $this->crud->setValidation(UpdateRequest::class);
     }
 
-    public function store(StoreRequest $request)
+    public function store()
     {
+        $request = $this->crud->getRequest();
+
         // Add user
         $request->merge(['user_id' => backpack_user()->id]);
 
-        return parent::storeCrud($request);
+        return parent::store();
     }
 
-    public function update(UpdateRequest $request)
+    public function update()
     {
-        return parent::updateCrud($request);
+        return parent::update();
     }
 }

@@ -17,7 +17,7 @@ $crud->route = $column['route'];
 
     <div class="array-container form-group">
 
-        <table class="table table-bordered table-striped m-b-0">
+        <table class="table table-bordered table-striped mb-0">
 
             <thead>
                 <tr>
@@ -61,9 +61,9 @@ $crud->route = $column['route'];
         @endphp
 
         @if(in_array('add', $column['buttons']))
-        <div class="array-controls btn-group m-t-10">
+        <div class="array-controls btn-group mt-2">
             <a href="{{ $url }}">
-                <button class="btn btn-sm btn-default" type="button"><i class="fa fa-plus"></i> {{trans('backpack::crud.add')}}</button>
+                <button class="btn btn-sm btn-secondary" type="button"><i class="fa fa-plus"></i> {{trans('backpack::crud.add')}}</button>
             </a>
         </div>
         @endif

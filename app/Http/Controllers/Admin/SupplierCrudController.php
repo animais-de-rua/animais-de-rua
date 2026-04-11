@@ -6,7 +6,7 @@ use App\Helpers\EnumHelper;
 use App\Http\Requests\SupplierRequest as StoreRequest;
 use App\Http\Requests\SupplierRequest as UpdateRequest;
 use App\Models\Supplier;
-use Backpack\CRUD\CrudPanel;
+use Backpack\CRUD\app\Library\CrudPanel\CrudPanel;
 
 /**
  * Class SupplierCrudController
@@ -74,8 +74,6 @@ class SupplierCrudController extends CrudController
 
         // ----------
         // Fields
-        $this->crud->addFields(['reference', 'store_order_id', 'store_product_id', 'invoice', 'notes', 'status']);
-
         $this->crud->addField([
             'label' => __('Reference'),
             'name' => 'reference',
@@ -156,7 +154,7 @@ class SupplierCrudController extends CrudController
         ],
             EnumHelper::translate('store.supplier'),
             function ($values) {
-                $this->crud->addClause('whereIn', 'status', json_decode($values));
+                $this->crud->addClause('whereIn', 'status', json_decode($values) ?: []);
             });
 
         // ------ CRUD DETAILS ROW
@@ -177,6 +175,8 @@ class SupplierCrudController extends CrudController
         // add asterisk for fields that are required in SupplierRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
+        $this->crud->setValidation(StoreRequest::class);
+        $this->crud->setValidation(UpdateRequest::class);
     }
 
     public function showDetailsRow($id)
@@ -193,13 +193,13 @@ class SupplierCrudController extends CrudController
             </div>';
     }
 
-    public function store(StoreRequest $request)
+    public function store()
     {
-        return parent::storeCrud($request);
+        return parent::store();
     }
 
-    public function update(UpdateRequest $request)
+    public function update()
     {
-        return parent::updateCrud($request);
+        return parent::update();
     }
 }

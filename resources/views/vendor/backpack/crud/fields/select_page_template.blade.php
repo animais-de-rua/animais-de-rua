@@ -29,7 +29,7 @@
 	</select>
 
     @if (isset($field['hint']))
-        <p class="help-block">{!! $field['hint'] !!}</p>
+        <small class="form-text text-muted">{!! $field['hint'] !!}</small>
     @endif
   </div>
 

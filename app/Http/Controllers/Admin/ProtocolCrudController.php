@@ -69,8 +69,6 @@ class ProtocolCrudController extends CrudController
             ]);
         }
 
-        $this->crud->addFields(['name', 'territory_id']);
-
         $this->crud->addField([
             'label' => __('Name'),
             'name' => 'name',
@@ -95,7 +93,9 @@ class ProtocolCrudController extends CrudController
                 'model' => 'App\Models\Headquarter',
                 'default' => $headquarters && count($headquarters) ? $headquarters[0] : null,
             ]);
+        }
 
+        if (is('admin') && $this->crud->getCurrentOperation() === 'update') {
             $this->crud->addField([
                 'label' => ucfirst(__('volunteer')),
                 'name' => 'user_id',
@@ -109,7 +109,7 @@ class ProtocolCrudController extends CrudController
                 'attributes' => [
                     'disabled' => 'disabled',
                 ],
-            ], 'update');
+            ]);
         }
 
         // Filters
@@ -122,6 +122,7 @@ class ProtocolCrudController extends CrudController
             $this->wantsJSON() ? null : api()->territoryList(),
             function ($values) {
                 $values = json_decode($values);
+                if ($values === null) return;
                 $where = join(' OR ', array_fill(0, count($values), 'territory_id LIKE ?'));
                 $values = array_map(function ($field) {return $field . '%';}, $values);
 
@@ -137,7 +138,7 @@ class ProtocolCrudController extends CrudController
             ],
                 $this->wantsJSON() ? null : api()->headquarterList(),
                 function ($values) {
-                    $this->crud->addClause('whereIn', 'headquarter_id', json_decode($values));
+                    $this->crud->addClause('whereIn', 'headquarter_id', json_decode($values) ?: []);
                 });
         }
 
@@ -165,18 +166,22 @@ class ProtocolCrudController extends CrudController
         // add asterisk for fields that are required in ProtocolRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
+        $this->crud->setValidation(StoreRequest::class);
+        $this->crud->setValidation(UpdateRequest::class);
     }
 
-    public function store(StoreRequest $request)
+    public function store()
     {
+        $request = $this->crud->getRequest();
+
         // Add user to the partner
         $request->merge(['user_id' => backpack_user()->id]);
 
-        return parent::storeCrud($request);
+        return parent::store();
     }
 
-    public function update(UpdateRequest $request)
+    public function update()
     {
-        return parent::updateCrud($request);
+        return parent::update();
     }
 }

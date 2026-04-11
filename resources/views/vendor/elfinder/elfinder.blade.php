@@ -1,4 +1,4 @@
-@extends('backpack::layout')
+@extends(backpack_view('blank'))
 
 @section('after_scripts')
     <!-- jQuery and jQuery UI (REQUIRED) -->

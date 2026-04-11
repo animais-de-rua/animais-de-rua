@@ -8,7 +8,7 @@
 
     <div class="array-container form-group">
 
-        <table class="table table-bordered table-striped m-b-0">
+        <table class="table table-bordered table-striped mb-0">
             <tbody class="table-striped">
                 @foreach( $field['rows'] as $item)
                 <tr class="array-row">

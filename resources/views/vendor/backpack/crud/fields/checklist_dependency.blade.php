@@ -63,7 +63,7 @@
 
     <div class="row" >
 
-        <div class="col-xs-12">
+        <div class="col-12">
             <label>{!! $primary_dependency['label'] !!}</label>
         </div>
 
@@ -110,7 +110,7 @@
     </div>
 
     <div class="row">
-        <div class="col-xs-12">
+        <div class="col-12">
             <label>{!! $secondary_dependency['label'] !!}</label>
         </div>
 
@@ -160,7 +160,7 @@
 
     {{-- HINT --}}
     @if (isset($field['hint']))
-        <p class="help-block">{!! $field['hint'] !!}</p>
+        <small class="form-text text-muted">{!! $field['hint'] !!}</small>
     @endif
 
   </div>

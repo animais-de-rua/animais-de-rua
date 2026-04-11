@@ -2,16 +2,14 @@
 
 <li filter-name="{{ $filter->name }}"
 	filter-type="{{ $filter->type }}"
-	class="dropdown {{ Request::get($filter->name)?'active':'' }}">
-	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ $filter->label }} <span class="caret"></span></a>
+	class="nav-item dropdown {{ Request::get($filter->name)?'active':'' }}">
+	<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ $filter->label }} <span class="caret"></span></a>
 	<div class="dropdown-menu">
-		<div class="form-group backpack-filter m-b-0">
+		<div class="form-group backpack-filter mb-0">
 			<div class="input-group date">
-		        <div class="input-group-addon">
-		          <i class="fa fa-calendar"></i>
-		        </div>
-		        <input class="form-control pull-right"
-		        		id="daterangepicker-{{ str_slug($filter->name) }}"
+		        <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-calendar"></i></span></div>
+		        <input class="form-control"
+		        		id="daterangepicker-{{ Str::slug($filter->name) }}"
 		        		type="text"
 		        		@if ($filter->currentValue)
 							@php
@@ -26,8 +24,8 @@
 					        placeholder="{{ $date_range }}"
 						@endif
 		        		>
-		        <div class="input-group-addon daterangepicker-{{ str_slug($filter->name) }}-clear-button">
-		          <a class="" href=""><i class="fa fa-times"></i></a>
+		        <div class="input-group-append daterangepicker-{{ Str::slug($filter->name) }}-clear-button">
+		          <button class="btn btn-outline-secondary" type="button"><i class="fa fa-times"></i></button>
 		        </div>
 		    </div>
 		</div>
@@ -62,7 +60,7 @@
 	<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
   <script>
 
-  		function applyDateRangeFilter{{camel_case($filter->name)}}(start, end) {
+  		function applyDateRangeFilter{{Str::camel($filter->name)}}(start, end) {
   			if (start && end) {
   				var dates = {
 					'from': start.format('YYYY-MM-DD'),
@@ -98,7 +96,7 @@
   		}
 
 		jQuery(document).ready(function($) {
-			var dateRangeInput = $('#daterangepicker-{{ str_slug($filter->name) }}').daterangepicker({
+			var dateRangeInput = $('#daterangepicker-{{ Str::slug($filter->name) }}').daterangepicker({
 				timePicker: false,
 		        ranges: {
 		            '{{ __('Today') }}': [moment().startOf('day'), moment().endOf('day')],
@@ -147,7 +145,7 @@
 			});
 
 			dateRangeInput.on('apply.daterangepicker', function(ev, picker) {
-				applyDateRangeFilter{{camel_case($filter->name)}}(picker.startDate, picker.endDate);
+				applyDateRangeFilter{{Str::camel($filter->name)}}(picker.startDate, picker.endDate);
 			});
 
 			$('li[filter-name={{ $filter->name }}]').on('hide.bs.dropdown', function () {
@@ -162,9 +160,9 @@
 			});
 
 			// datepicker clear button
-			$(".daterangepicker-{{ str_slug($filter->name) }}-clear-button").click(function(e) {
+			$(".daterangepicker-{{ Str::slug($filter->name) }}-clear-button").click(function(e) {
 				e.preventDefault();
-				applyDateRangeFilter{{camel_case($filter->name)}}(null, null);
+				applyDateRangeFilter{{Str::camel($filter->name)}}(null, null);
 			})
 		});
   </script>

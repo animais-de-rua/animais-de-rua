@@ -68,23 +68,17 @@ RUN cp .env.example .env
 # Install PHP dependencies; skip post-install scripts (they need artisan/storage)
 RUN composer install --no-dev --no-scripts --optimize-autoloader --no-interaction
 
-# Now that vendor/ is ready, generate key and discover packages
-RUN php artisan key:generate \
-    && php artisan package:discover --ansi
-
-# Publish only AdminLTE public assets (not views, which are already in the repo)
-RUN php artisan vendor:publish --provider="Backpack\Base\BaseServiceProvider" --tag=adminlte --force \
-    && php artisan vendor:publish --provider="Backpack\Base\BaseServiceProvider" --tag=public --force
-
 # Remove HTTPS-only redirect from .htaccess (not needed for local HTTP dev)
 RUN sed -i '/# HTTPS/{N;N;d;}' public/.htaccess
 
 # Copy compiled frontend assets from stage 1.
 # CSS is copied file-by-file (not as a directory) to avoid Docker's opaque overlay behaviour,
 # which would otherwise shadow public/css/admin/icomoon/ that is a static committed asset.
-COPY --from=frontend /app/public/css/app.css          ./public/css/app.css
-COPY --from=frontend /app/public/css/admin/reports.css ./public/css/admin/reports.css
-COPY --from=frontend /app/public/js    ./public/js
+COPY --from=frontend /app/public/css/app.css                    ./public/css/app.css
+COPY --from=frontend /app/public/css/admin/reports.css          ./public/css/admin/reports.css
+COPY --from=frontend /app/public/css/admin/admin.css            ./public/css/admin/admin.css
+COPY --from=frontend /app/public/js/app.js       ./public/js/app.js
+COPY --from=frontend /app/public/js/admin        ./public/js/admin
 COPY --from=frontend /app/public/fonts ./public/fonts
 COPY --from=frontend /app/public/sw.js ./public/sw.js
 COPY --from=frontend /app/public/mix-manifest.json ./public/mix-manifest.json

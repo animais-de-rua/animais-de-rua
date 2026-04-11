@@ -6,6 +6,7 @@ use App\Helpers\EnumHelper;
 use App\Http\Controllers\Admin\Traits\Permissions;
 use App\Http\Requests\ProcessRequest as StoreRequest;
 use App\Http\Requests\ProcessRequest as UpdateRequest;
+use Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 use App\Models\Adoption;
 use App\Models\Appointment;
 use App\Models\Donation;
@@ -18,6 +19,7 @@ use DB;
 class ProcessCrudController extends CrudController
 {
     use Permissions;
+    use ShowOperation { show as traitShow; }
 
     public function setup()
     {
@@ -37,8 +39,6 @@ class ProcessCrudController extends CrudController
         */
 
         // ------ CRUD FIELDS
-        $this->crud->addFields(['name', 'contact', 'phone', 'email', 'address', 'territory_id', 'specie', 'amount_males', 'amount_females', 'amount_other', 'status', 'images', 'history', 'notes', 'donations', 'treatments', 'stats']);
-
         $this->crud->addField([
             'label' => __('Name'),
             'name' => 'name',
@@ -58,6 +58,12 @@ class ProcessCrudController extends CrudController
             'label' => __('Email'),
             'type' => 'email',
             'name' => 'email',
+        ]);
+
+        $this->crud->addField([
+            'label' => __('Address'),
+            'name' => 'address',
+            'type' => 'text',
         ]);
 
         $this->crud->addField([
@@ -120,18 +126,14 @@ class ProcessCrudController extends CrudController
             ],
         ]);
 
-        if (is('admin')) {
-            $this->crud->addField([
-                'label' => __('Urgent'),
-                'type' => 'checkbox',
-                'name' => 'urgent',
-            ]);
-        }
-
         $this->crud->addField([
-            'label' => __('Address'),
-            'name' => 'address',
-            'type' => 'text',
+            'name' => 'images',
+            'label' => __('Images'),
+            'type' => 'dropzone',
+            'upload-url' => '/admin/dropzone/images/process',
+            'thumb' => 340,
+            'size' => 800,
+            'quality' => 82,
         ]);
 
         $this->crud->addField([
@@ -146,17 +148,15 @@ class ProcessCrudController extends CrudController
             'name' => 'notes',
         ]);
 
-        $this->crud->addField([
-            'name' => 'images',
-            'label' => __('Images'),
-            'type' => 'dropzone',
-            'upload-url' => '/admin/dropzone/images/process',
-            'thumb' => 340,
-            'size' => 800,
-            'quality' => 82,
-        ]);
-
         if (is('admin')) {
+            $this->crud->addField([
+                'label' => __('Urgent'),
+                'type' => 'checkbox',
+                'name' => 'urgent',
+            ]);
+        }
+
+        if (is('admin') && $this->crud->getCurrentOperation() === 'update') {
             $this->crud->addField([
                 'label' => ucfirst(__('volunteer')),
                 'name' => 'user_id',
@@ -170,7 +170,7 @@ class ProcessCrudController extends CrudController
                 'attributes' => [
                     'disabled' => 'disabled',
                 ],
-            ], 'update');
+            ]);
         }
 
         $this->separator();
@@ -380,6 +380,7 @@ class ProcessCrudController extends CrudController
             $this->wantsJSON() ? null : api()->rangeTerritoryList(),
             function ($values) {
                 $values = json_decode($values);
+                if ($values === null) return;
                 $where = join(' OR ', array_fill(0, count($values), 'territory_id LIKE ?'));
                 $values = array_map(function ($field) {return $field . '%';}, $values);
 
@@ -395,7 +396,7 @@ class ProcessCrudController extends CrudController
             ],
                 $this->wantsJSON() ? null : api()->headquarterList(),
                 function ($values) {
-                    $this->crud->addClause('whereIn', 'headquarter_id', json_decode($values));
+                    $this->crud->addClause('whereIn', 'headquarter_id', json_decode($values) ?: []);
                 });
         }
 
@@ -420,7 +421,7 @@ class ProcessCrudController extends CrudController
         ],
             EnumHelper::translate('process.status'),
             function ($values) {
-                $this->crud->addClause('whereIn', 'status', json_decode($values));
+                $this->crud->addClause('whereIn', 'status', json_decode($values) ?: []);
             });
 
         $this->crud->addFilter([
@@ -431,7 +432,7 @@ class ProcessCrudController extends CrudController
         ],
             EnumHelper::translate('process.specie'),
             function ($values) {
-                $this->crud->addClause('whereIn', 'specie', json_decode($values));
+                $this->crud->addClause('whereIn', 'specie', json_decode($values) ?: []);
             });
 
         $this->crud->addFilter([
@@ -618,21 +619,25 @@ class ProcessCrudController extends CrudController
         $this->crud->addClause('orderBy', 'processes.id', 'DESC');
 
         // Checks if status filter is in use
-        if (!$this->crud->filters->pluck('currentValue', 'name')['status']) {
+        if (!$this->crud->filters()->pluck('currentValue', 'name')['status']) {
             $this->crud->addClause('where', 'processes.status', 'NOT LIKE', 'archived');
         }
 
         $this->crud->allowAccess('show');
-        $this->crud->removeButton('show');
+        $this->crud->operation('list', function () {
+            $this->crud->removeButton('show');
+        });
 
         // Add asterisk for fields that are required
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
+        $this->crud->setValidation(StoreRequest::class);
+        $this->crud->setValidation(UpdateRequest::class);
     }
 
     public function show($id)
     {
-        $content = parent::show($id);
+        $content = $this->traitShow($id);
 
         $this->crud->removeColumn('total_donations');
         $this->crud->removeColumn('total_expenses');
@@ -704,8 +709,10 @@ class ProcessCrudController extends CrudController
             </div>";
     }
 
-    public function store(StoreRequest $request)
+    public function store()
     {
+        $request = $this->crud->getRequest();
+
         // Add user
         $request->merge(['user_id' => backpack_user()->id]);
 
@@ -717,7 +724,7 @@ class ProcessCrudController extends CrudController
             $request->merge(['status' => 'approving']);
         }
 
-        $save = parent::storeCrud($request);
+        $save = parent::store();
 
         // Force translations in all languages
         $entry = $this->crud->entry;
@@ -729,9 +736,9 @@ class ProcessCrudController extends CrudController
         return $save;
     }
 
-    public function update(UpdateRequest $request)
+    public function update()
     {
-        return parent::updateCrud($request);
+        return parent::update();
     }
 
     public function sync()
