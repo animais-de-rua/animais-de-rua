@@ -20,20 +20,20 @@
     ],
     "require": {
         "php": "^7.4",
-        "backpack/backupmanager": "^2.0",
+        "backpack/backupmanager": "^3.0",
         "backpack/crud": "^4.0",
-        "backpack/langfilemanager": "^2.0",
-        "backpack/logmanager": "^3.0",
-        "backpack/pagemanager": "^2.0",
+        "backpack/langfilemanager": "^3.0",
+        "backpack/logmanager": "^4.0",
+        "backpack/pagemanager": "^3.0",
         "backpack/permissionmanager": "^5.0",
         "backpack/settings": "^3.0",
-        "barryvdh/laravel-debugbar": "^3.1",
+        "barryvdh/laravel-debugbar": "^3.6",
         "barryvdh/laravel-elfinder": "^0.4",
         "dompdf/dompdf": "^2.0",
-        "fideloper/proxy": "^4.0",
-        "laravel/framework": "^6.0",
+        "laravel/framework": "^8.0",
         "laravel/helpers": "^1.5",
-        "laravel/socialite": "^4.0",
+        "laravel/ui": "^3.0",
+        "laravel/socialite": "^5.0",
         "laravel/tinker": "^2.0",
         "maatwebsite/excel": "^3.1",
         "mpdf/mpdf": "^8.0",
@@ -43,7 +43,7 @@
         "spatie/laravel-translatable": "^4.1"
     },
     "require-dev": {
-        "backpack/generators": "^2.0",
+        "backpack/generators": "^3.0",
         "filp/whoops": "^2.0",
         "fakerphp/faker": "^1.14",
         "laracasts/generators": "^2.0",
@@ -54,11 +54,11 @@
             "app/Helpers/AppHelper.php"
         ],
         "classmap": [
-            "database/seeds",
-            "database/factories"
+            "database/seeds"
         ],
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/"
         }
     },
     "autoload-dev": {

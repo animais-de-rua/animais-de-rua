@@ -2,7 +2,7 @@
     if(!isset($entry))
         return;
 ?>
-<div @include('crud::inc.field_wrapper_attributes') >
+@include('crud::fields.inc.wrapper_start')
 
     <h3 style="margin-top:0">{!! $field['label'] !!}</h3>
 
@@ -20,4 +20,5 @@
         </table>
 
     </div>
-</div>
+
+@include('crud::fields.inc.wrapper_end')

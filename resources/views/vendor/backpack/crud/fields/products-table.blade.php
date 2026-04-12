@@ -23,110 +23,114 @@ if (is_array($items)) {
 }
 
 ?>
-<div ng-app="backPackTableApp" ng-controller="tableController" @include('crud::inc.field_wrapper_attributes') >
+@include('crud::fields.inc.wrapper_start')
 
-    <label>{{ __('Cart') }}</label>
-    @include('crud::inc.field_translatable_icon')
+    <div ng-app="backPackTableApp" ng-controller="tableController">
 
-    <input class="array-json" type="hidden" id="{{ $field['name'] }}" name="{{ $field['name'] }}">
+        <label>{{ __('Cart') }}</label>
+        @include('crud::fields.inc.translatable_icon')
 
-    <div class="array-container form-group">
+        <input class="array-json" type="hidden" id="{{ $field['name'] }}" name="{{ $field['name'] }}">
 
-        <table class="table table-bordered table-striped mb-0" ng-init="field = '#{{ $field['name'] }}'; items = {{ $items }}; max = {{$max}}; min = {{$min}}; maxErrorTitle = '{{trans('backpack::crud.table_cant_add', ['entity' => $item_name])}}'; maxErrorMessage = '{{trans('backpack::crud.table_max_reached', ['max' => $max])}}'">
+        <div class="array-container form-group">
 
-            <thead>
-                <tr>
-                    <th style="font-weight: 600!important; min-width: 200px;">
-                        {{ ucfirst(__('product')) }}
-                    </th>
-                    <th style="font-weight: 600!important; min-width: 100px;">
-                        {{ __('Quantity') }}
-                    </th>
-                    <th style="font-weight: 600!important; min-width: 100px;">
-                        {{ __('Discount') }} ({{ __('with :vat% VAT', ['vat' => \Config::get('settings.vat')]) }})
-                    </th>
-                    <th style="font-weight: 600!important; min-width: 100px;">
-                        {{ __('Discount') }} ({{ __("no VAT") }})
-                    </th>
+            <table class="table table-bordered table-striped mb-0" ng-init="field = '#{{ $field['name'] }}'; items = {{ $items }}; max = {{$max}}; min = {{$min}}; maxErrorTitle = '{{trans('backpack::crud.table_cant_add', ['entity' => $item_name])}}'; maxErrorMessage = '{{trans('backpack::crud.table_max_reached', ['max' => $max])}}'">
 
-                    @if(!$field['readonly'])
-                    <th style="width: 50px;" class="text-center" ng-if="max == -1 || max > 1"> {{-- <i class="fa fa-sort"></i> --}} </th>
-                    <th style="width: 50px;" class="text-center" ng-if="max == -1 || max > 1"> {{-- <i class="fa fa-trash"></i> --}} </th>
-                    @endif
-                </tr>
-            </thead>
+                <thead>
+                    <tr>
+                        <th style="font-weight: 600!important; min-width: 200px;">
+                            {{ ucfirst(__('product')) }}
+                        </th>
+                        <th style="font-weight: 600!important; min-width: 100px;">
+                            {{ __('Quantity') }}
+                        </th>
+                        <th style="font-weight: 600!important; min-width: 100px;">
+                            {{ __('Discount') }} ({{ __('with :vat% VAT', ['vat' => \Config::get('settings.vat')]) }})
+                        </th>
+                        <th style="font-weight: 600!important; min-width: 100px;">
+                            {{ __('Discount') }} ({{ __("no VAT") }})
+                        </th>
 
-            <tbody ui-sortable="sortableOptions" ng-model="items" class="table-striped">
+                        @if(!$field['readonly'])
+                        <th style="width: 50px;" class="text-center" ng-if="max == -1 || max > 1"> {{-- <i class="fa fa-sort"></i> --}} </th>
+                        <th style="width: 50px;" class="text-center" ng-if="max == -1 || max > 1"> {{-- <i class="fa fa-trash"></i> --}} </th>
+                        @endif
+                    </tr>
+                </thead>
 
-                <tr ng-repeat="item in items" class="array-row">
+                <tbody ui-sortable="sortableOptions" ng-model="items" class="table-striped">
 
-                    {{-- Select 2 field --}}
-                    <td>
-                        <select ng-model="item.pivot.store_product_id"
-                            style="width: 100%"
-                            @include('crud::inc.field_attributes', ['default_class' => 'form-control select2_from_array'])>
-                            @foreach ($field['options'] as $key => $value)
-                            <option
-                                ng-selected="item.id == {{ $key }}"
-                                ng-value="{{ $key }}">{{ $value }}</option>
-                            @endforeach
-                        </select>
-                    </td>
+                    <tr ng-repeat="item in items" class="array-row">
 
-                    <td>
-                        <input
-                            @include('crud::inc.field_attributes', ['default_class' => 'form-control input-sm'])
-                            type="number" string-to-number
-                            step="1"
-                            ng-model="item.pivot.quantity"
-                            style="height: 34px;">
-                    </td>
+                        {{-- Select 2 field --}}
+                        <td>
+                            <select ng-model="item.pivot.store_product_id"
+                                style="width: 100%"
+                                @include('crud::fields.inc.attributes', ['default_class' => 'form-control select2_from_array'])>
+                                @foreach ($field['options'] as $key => $value)
+                                <option
+                                    ng-selected="item.id == {{ $key }}"
+                                    ng-value="{{ $key }}">{{ $value }}</option>
+                                @endforeach
+                            </select>
+                        </td>
 
-                    <td>
-                        <div style="display:flex">
+                        <td>
                             <input
-                                @include('crud::inc.field_attributes', ['default_class' => 'input-vat form-control input-sm'])
+                                @include('crud::fields.inc.attributes', ['default_class' => 'form-control input-sm'])
                                 type="number" string-to-number
-                                step="0.01"
-                                ng-model="item.pivot.discount"
-                                min="0"
-                                ng-change="calcTax(item)"
-                                style="height: 34px;"> <span style="margin: 6px;">€</span>
-                        </div>
-                    </td>
+                                step="1"
+                                ng-model="item.pivot.quantity"
+                                style="height: 34px;">
+                        </td>
 
-                    <td>
-                        <div style="display:flex">
-                            <input
-                                @include('crud::inc.field_attributes', ['default_class' => 'input-no-vat form-control input-sm'])
-                                type="number" string-to-number
-                                step="0.01"
-                                ng-model="item.pivot.discount_no_vat"
-                                min="0"
-                                readonly
-                                style="height: 34px;"> <span style="margin: 6px;">€</span>
-                        </div>
-                    </td>
+                        <td>
+                            <div style="display:flex">
+                                <input
+                                    @include('crud::fields.inc.attributes', ['default_class' => 'input-vat form-control input-sm'])
+                                    type="number" string-to-number
+                                    step="0.01"
+                                    ng-model="item.pivot.discount"
+                                    min="0"
+                                    ng-change="calcTax(item)"
+                                    style="height: 34px;"> <span style="margin: 6px;">€</span>
+                            </div>
+                        </td>
 
-                    @if(!$field['readonly'])
-                    <td ng-if="max == -1 || max > 1">
-                        <span class="btn btn-sm btn-secondary sort-handle"><span class="sr-only">sort item</span><i class="fa fa-sort" role="presentation" aria-hidden="true"></i></span>
-                    </td>
-                    <td ng-if="max == -1 || max > 1">
-                        <button ng-hide="min > -1 && $index < min" class="btn btn-sm btn-secondary" type="button" ng-click="removeItem(item);"><span class="sr-only">delete item</span><i class="fa fa-trash" role="presentation" aria-hidden="true"></i></button>
-                    </td>
-                    @endif
-                </tr>
+                        <td>
+                            <div style="display:flex">
+                                <input
+                                    @include('crud::fields.inc.attributes', ['default_class' => 'input-no-vat form-control input-sm'])
+                                    type="number" string-to-number
+                                    step="0.01"
+                                    ng-model="item.pivot.discount_no_vat"
+                                    min="0"
+                                    readonly
+                                    style="height: 34px;"> <span style="margin: 6px;">€</span>
+                            </div>
+                        </td>
 
-            </tbody>
+                        @if(!$field['readonly'])
+                        <td ng-if="max == -1 || max > 1">
+                            <span class="btn btn-sm btn-secondary sort-handle"><span class="sr-only">sort item</span><i class="fa fa-sort" role="presentation" aria-hidden="true"></i></span>
+                        </td>
+                        <td ng-if="max == -1 || max > 1">
+                            <button ng-hide="min > -1 && $index < min" class="btn btn-sm btn-secondary" type="button" ng-click="removeItem(item);"><span class="sr-only">delete item</span><i class="fa fa-trash" role="presentation" aria-hidden="true"></i></button>
+                        </td>
+                        @endif
+                    </tr>
 
-        </table>
+                </tbody>
 
-        @if(!$field['readonly'])
-        <div class="array-controls btn-group mt-2">
-            <button ng-if="max == -1 || items.length < max" class="btn btn-sm btn-secondary" type="button" ng-click="addItem()"><i class="fa fa-plus"></i> {{trans('backpack::crud.add')}} {{ $item_name }}</button>
+            </table>
+
+            @if(!$field['readonly'])
+            <div class="array-controls btn-group mt-2">
+                <button ng-if="max == -1 || items.length < max" class="btn btn-sm btn-secondary" type="button" ng-click="addItem()"><i class="fa fa-plus"></i> {{trans('backpack::crud.add')}} {{ $item_name }}</button>
+            </div>
+            @endif
+
         </div>
-        @endif
 
     </div>
 
@@ -134,7 +138,8 @@ if (is_array($items)) {
     @if (isset($field['hint']))
         <small class="form-text text-muted">{!! $field['hint'] !!}</small>
     @endif
-</div>
+
+@include('crud::fields.inc.wrapper_end')
 
 {{-- ########################################## --}}
 {{-- Extra CSS and JS for this particular field --}}
@@ -149,7 +154,6 @@ if (is_array($items)) {
 
     {{-- FIELD JS - will be loaded in the after_scripts section --}}
     @push('crud_fields_scripts')
-        {{-- YOUR JS HERE --}}
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-sortable/0.14.3/sortable.min.js"></script>

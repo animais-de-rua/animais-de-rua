@@ -28,6 +28,11 @@ class Treatment extends Model
     |--------------------------------------------------------------------------
     */
 
+    protected static function newFactory()
+    {
+        return \Database\Factories\TreatmentsFactory::new();
+    }
+
     public function customUpdateButton()
     {
         $disabled = !is('admin', 'treatments') || (is('volunteer', 'treatments') && $this->status == 'approved');

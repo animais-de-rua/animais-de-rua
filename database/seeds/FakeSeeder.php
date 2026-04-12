@@ -19,7 +19,7 @@ use App\Models\Supplier;
 use App\Models\Treatment;
 use App\Models\Vet;
 use App\Models\Voucher;
-use Backpack\Base\app\Models\BackpackUser as User;
+use App\User;
 use Backpack\PermissionManager\app\Models\Permission;
 use Backpack\PermissionManager\app\Models\Role;
 use Illuminate\Database\Seeder;
@@ -60,7 +60,7 @@ class FakeSeeder extends Seeder
 
         // Users
         $this->log('Users');
-        factory(User::class, 24)->create()->each(function ($user) use ($permissions, $headquarters_count) {
+        User::factory(24)->create()->each(function ($user) use ($permissions, $headquarters_count) {
             // 66% change to be a volunteer
             if (rand(0, 2)) {
                 $user->roles()->save(Role::where('id', 2)->first());
@@ -88,54 +88,54 @@ class FakeSeeder extends Seeder
 
         // Processes
         $this->log('Processes');
-        factory(Process::class, 50)->create();
+        Process::factory(50)->create();
 
         // Godfathers
         $this->log('Godfathers');
-        factory(Godfather::class, 50)->create()->each(function ($godfather) {
+        Godfather::factory(50)->create()->each(function ($godfather) {
             // One donation per godfather
-            $godfather->donations()->save(factory(Donation::class)->make());
+            $godfather->donations()->save(Donation::factory()->make());
         });
 
         // Protocols
         $this->log('Protocols');
-        factory(Protocol::class, 6)->create();
-        factory(ProtocolRequest::class, 80)->create();
+        Protocol::factory(6)->create();
+        ProtocolRequest::factory(80)->create();
 
         // Donations
         $this->log('Donations');
-        factory(Donation::class, 30)->create();
+        Donation::factory(30)->create();
 
         // Vets
         $this->log('Vets');
-        factory(Vet::class, 50)->create();
+        Vet::factory(50)->create();
 
         // Appointments
         $this->log('Appointments');
-        factory(Appointment::class, 100)->create();
+        Appointment::factory(100)->create();
 
         // Treatments
         $this->log('Treatments');
-        factory(Treatment::class, 120)->create();
+        Treatment::factory(120)->create();
 
         // Fats
         $this->log('Fats');
-        factory(Fat::class, 50)->create();
+        Fat::factory(50)->create();
 
         // Adopters
         $this->log('Adopters');
-        factory(Adopter::class, 50)->create();
+        Adopter::factory(50)->create();
 
         // Adoptions
         $this->log('Adoptions');
-        factory(Adoption::class, 100)->create();
+        Adoption::factory(100)->create();
 
         // Store
         $this->log('Store Products');
-        factory(StoreProduct::class, 8)->create();
+        StoreProduct::factory(8)->create();
 
         $this->log('Store Orders');
-        factory(StoreOrder::class, 80)->create()->each(function ($order) {
+        StoreOrder::factory(80)->create()->each(function ($order) {
             $products = StoreProduct::inRandomOrder()->get();
             for ($i = 0; $i < rand(1, 5); $i++) {
                 $order->products()->attach([$products[$i]->id => ['quantity' => rand(1, 3)]]);
@@ -144,19 +144,19 @@ class FakeSeeder extends Seeder
 
         // Store Stock
         $this->log('Store Stock');
-        factory(StoreStock::class, 50)->create();
+        StoreStock::factory(50)->create();
 
         // Store Transactions
         $this->log('Store Transactions');
-        factory(StoreTransaction::class, 30)->create();
+        StoreTransaction::factory(30)->create();
 
         // Supliers
         $this->log('Suppliers');
-        factory(Supplier::class, 30)->create();
+        Supplier::factory(30)->create();
 
         // Vouchers
         $this->log('Vouchers');
-        factory(Voucher::class, 30)->create();
+        Voucher::factory(30)->create();
     }
 
     public function log($entity)

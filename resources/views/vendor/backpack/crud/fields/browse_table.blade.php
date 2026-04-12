@@ -23,56 +23,60 @@ if (isset($field['mimes']) && is_array($field['mimes'])) {
 }
 @endphp
 
-<div ng-app="backPackTableApp" ng-controller="tableController" @include('crud::inc.field_wrapper_attributes') >
+@include('crud::fields.inc.wrapper_start')
 
     <label>{!! $field['label'] !!}</label>
-    @include('crud::inc.field_translatable_icon')
+    @include('crud::fields.inc.translatable_icon')
 
-    <input class="array-json" type="hidden" id="{{ $field['name'] }}" name="{{ $field['name'] }}">
+    <div ng-app="backPackTableApp" ng-controller="tableController">
 
-    <div class="array-container form-group">
+        <input class="array-json" type="hidden" id="{{ $field['name'] }}" name="{{ $field['name'] }}">
 
-        <table class="table table-bordered table-striped mb-0" ng-init="field = '#{{ $field['name'] }}'; items = {{ $items }}; max = {{$max}}; min = {{$min}}; maxErrorTitle = '{{trans('backpack::crud.table_cant_add', ['entity' => $item_name])}}'; maxErrorMessage = '{{trans('backpack::crud.table_max_reached', ['max' => $max])}}'">
+        <div class="array-container form-group">
 
-            <thead>
-                <tr>
-                    @foreach( $field['columns'] as $prop )
-                    <th style="font-weight: 600!important;">
-                        {{ $prop }}
-                    </th>
-                    @endforeach
-                    <th style="width:120px" class="text-center" ng-if="max == -1 || max > 1"> {{-- <i class="fa fa-cloud-upload"></i> --}} </th>
-                    <th style="width: 30px" class="text-center" ng-if="max == -1 || max > 1"> {{-- <i class="fa fa-sort"></i> --}} </th>
-                    <th style="width: 30px" class="text-center" ng-if="max == -1 || max > 1"> {{-- <i class="fa fa-trash"></i> --}} </th>
-                </tr>
-            </thead>
+            <table class="table table-bordered table-striped mb-0" ng-init="field = '#{{ $field['name'] }}'; items = {{ $items }}; max = {{$max}}; min = {{$min}}; maxErrorTitle = '{{trans('backpack::crud.table_cant_add', ['entity' => $item_name])}}'; maxErrorMessage = '{{trans('backpack::crud.table_max_reached', ['max' => $max])}}'">
 
-            <tbody ui-sortable="sortableOptions" ng-model="items" class="table-striped">
+                <thead>
+                    <tr>
+                        @foreach( $field['columns'] as $prop )
+                        <th style="font-weight: 600!important;">
+                            {{ $prop }}
+                        </th>
+                        @endforeach
+                        <th style="width:120px" class="text-center" ng-if="max == -1 || max > 1"> {{-- <i class="fa fa-cloud-upload"></i> --}} </th>
+                        <th style="width: 30px" class="text-center" ng-if="max == -1 || max > 1"> {{-- <i class="fa fa-sort"></i> --}} </th>
+                        <th style="width: 30px" class="text-center" ng-if="max == -1 || max > 1"> {{-- <i class="fa fa-trash"></i> --}} </th>
+                    </tr>
+                </thead>
 
-                <tr ng-repeat="item in items" class="array-row">
+                <tbody ui-sortable="sortableOptions" ng-model="items" class="table-striped">
 
-                    @foreach( $field['columns'] as $prop => $label)
-                    <td>
-                        <input class="form-control input-sm" type="text" ng-model="item.{{ $prop }}">
-                    </td>
-                    @endforeach
-                    <td>
-                        <button type="button" ng-click="browseItem('{{ $field['name'] }}', {{ $mimes }}, item, $index)" class="btn btn-sm btn-secondary popup_selector"><i class="fa fa-cloud-upload"></i> {{ trans('backpack::crud.browse_uploads') }}</button>
-                    </td>
-                    <td ng-if="max == -1 || max > 1">
-                        <span class="btn btn-sm btn-secondary sort-handle"><span class="sr-only">sort item</span><i class="fa fa-sort" role="presentation" aria-hidden="true"></i></span>
-                    </td>
-                    <td ng-if="max == -1 || max > 1">
-                        <button ng-hide="min > -1 && $index < min" class="btn btn-sm btn-secondary" type="button" ng-click="removeItem(item);"><span class="sr-only">delete item</span><i class="fa fa-trash" role="presentation" aria-hidden="true"></i></button>
-                    </td>
-                </tr>
+                    <tr ng-repeat="item in items" class="array-row">
 
-            </tbody>
+                        @foreach( $field['columns'] as $prop => $label)
+                        <td>
+                            <input class="form-control input-sm" type="text" ng-model="item.{{ $prop }}">
+                        </td>
+                        @endforeach
+                        <td>
+                            <button type="button" ng-click="browseItem('{{ $field['name'] }}', {{ $mimes }}, item, $index)" class="btn btn-sm btn-secondary popup_selector"><i class="fa fa-cloud-upload"></i> {{ trans('backpack::crud.browse_uploads') }}</button>
+                        </td>
+                        <td ng-if="max == -1 || max > 1">
+                            <span class="btn btn-sm btn-secondary sort-handle"><span class="sr-only">sort item</span><i class="fa fa-sort" role="presentation" aria-hidden="true"></i></span>
+                        </td>
+                        <td ng-if="max == -1 || max > 1">
+                            <button ng-hide="min > -1 && $index < min" class="btn btn-sm btn-secondary" type="button" ng-click="removeItem(item);"><span class="sr-only">delete item</span><i class="fa fa-trash" role="presentation" aria-hidden="true"></i></button>
+                        </td>
+                    </tr>
 
-        </table>
+                </tbody>
 
-        <div class="array-controls btn-group mt-2">
-            <button ng-if="max == -1 || items.length < max" class="btn btn-sm btn-secondary" type="button" ng-click="addItem()"><i class="fa fa-plus"></i> {{trans('backpack::crud.add')}} {{ $item_name }}</button>
+            </table>
+
+            <div class="array-controls btn-group mt-2">
+                <button ng-if="max == -1 || items.length < max" class="btn btn-sm btn-secondary" type="button" ng-click="addItem()"><i class="fa fa-plus"></i> {{trans('backpack::crud.add')}} {{ $item_name }}</button>
+            </div>
+
         </div>
 
     </div>
@@ -81,7 +85,8 @@ if (isset($field['mimes']) && is_array($field['mimes'])) {
     @if (isset($field['hint']))
         <small class="form-text text-muted">{!! $field['hint'] !!}</small>
     @endif
-</div>
+
+@include('crud::fields.inc.wrapper_end')
 
 {{-- ########################################## --}}
 {{-- Extra CSS and JS for this particular field --}}
@@ -97,12 +102,10 @@ if (isset($field['mimes']) && is_array($field['mimes'])) {
                 background: transparent;
             }
         </style>
-        {{-- YOUR CSS HERE --}}
     @endpush
 
     {{-- FIELD JS - will be loaded in the after_scripts section --}}
     @push('crud_fields_scripts')
-        {{-- YOUR JS HERE --}}
         <script type="text/javascript" src="{{ asset('vendor/backpack/colorbox/jquery.colorbox-min.js') }}"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>

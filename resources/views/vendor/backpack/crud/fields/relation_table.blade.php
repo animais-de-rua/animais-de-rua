@@ -11,7 +11,7 @@ $crudRouteOriginal = $crud->route;
 $crud->route = $field['route'];
 ?>
 
-<div @include('crud::inc.field_wrapper_attributes') >
+@include('crud::fields.inc.wrapper_start')
 
     <h3 style="margin-top:0">{!! $field['label'] !!}</h3>
 
@@ -69,6 +69,7 @@ $crud->route = $field['route'];
         @endif
 
     </div>
-</div>
+
+@include('crud::fields.inc.wrapper_end')
 
 <?php $crud->route = $crudRouteOriginal;?>

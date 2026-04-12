@@ -5,7 +5,7 @@
     $old_value = old(square_brackets_to_dots($field['name'])) ?? $field['value'] ?? $field['default'] ?? false;
 @endphp
 
-<div @include('crud::inc.field_wrapper_attributes') >
+@include('crud::fields.inc.wrapper_start')
     <label>{!! $field['label'] !!}</label>
     <?php $entity_model = $crud->model; ?>
 
@@ -13,7 +13,7 @@
         name="{{ $field['name'] }}"
         style="width: 100%"
         id="select2_ajax_{{ $field['name'] }}"
-        @include('crud::inc.field_attributes', ['default_class' =>  'form-control'])
+        @include('crud::fields.inc.attributes', ['default_class' =>  'form-control'])
         >
 
         @if ($old_value)
@@ -40,7 +40,7 @@
     @if (isset($field['hint']))
         <small class="form-text text-muted">{!! $field['hint'] !!}</small>
     @endif
-</div>
+@include('crud::fields.inc.wrapper_end')
 
 {{-- ########################################## --}}
 {{-- Extra CSS and JS for this particular field --}}

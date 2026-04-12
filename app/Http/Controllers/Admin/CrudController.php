@@ -20,7 +20,7 @@ class CrudController extends \Backpack\CRUD\app\Http\Controllers\CrudController
 
     public function wantsJSON()
     {
-        return $this->request && strpos($this->request->headers->get('accept'), 'application/json') === 0;
+        return strpos(request()->headers->get('accept', ''), 'application/json') === 0;
     }
 
     private $i = 0;

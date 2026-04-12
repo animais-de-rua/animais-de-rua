@@ -28,6 +28,11 @@ class ProtocolRequest extends Model
     |--------------------------------------------------------------------------
     */
 
+    protected static function newFactory()
+    {
+        return \Database\Factories\ProtocolsRequestFactory::new();
+    }
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONS

@@ -1,30 +1,33 @@
 <?php
 
+namespace Database\Factories;
+
 use App\Models\Headquarter;
 use App\Models\Protocol;
 use App\Models\Territory;
 use App\User;
-use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-/*
-|--------------------------------------------------------------------------
-| Protocol Model Factories
-|--------------------------------------------------------------------------
-*/
+class ProtocolsFactory extends Factory
+{
+    protected $model = Protocol::class;
 
-$factory->define(Protocol::class, function (Faker $faker) {
-    $faker->addProvider(new \App\Providers\FakerServiceProvider($faker));
+    public function definition()
+    {
+        $faker = $this->faker;
+        $faker->addProvider(new \App\Providers\FakerServiceProvider($faker));
 
-    $date = $faker->dateTimeBetween('-2 months', 'now');
+        $date = $faker->dateTimeBetween('-2 months', 'now');
 
-    return [
-        'name' => 'Município de ' . $faker->district,
-        'email' => $faker->unique()->safeEmail,
-        'phone' => $faker->phoneNumber,
-        'territory_id' => $faker->randomElement(Territory::all()->pluck('id')->toArray()),
-        'headquarter_id' => $faker->randomElement(Headquarter::all()->pluck('id')->toArray()),
-        'user_id' => $faker->randomElement(User::all()->pluck('id')->toArray()),
-        'created_at' => $date,
-        'updated_at' => $date,
-    ];
-});
+        return [
+            'name' => 'Município de ' . $faker->district,
+            'email' => $faker->unique()->safeEmail,
+            'phone' => $faker->phoneNumber,
+            'territory_id' => $faker->randomElement(Territory::all()->pluck('id')->toArray()),
+            'headquarter_id' => $faker->randomElement(Headquarter::all()->pluck('id')->toArray()),
+            'user_id' => $faker->randomElement(User::all()->pluck('id')->toArray()),
+            'created_at' => $date,
+            'updated_at' => $date,
+        ];
+    }
+}

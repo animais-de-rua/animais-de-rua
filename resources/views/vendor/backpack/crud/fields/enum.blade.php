@@ -1,13 +1,13 @@
 <!-- enum -->
-<div @include('crud::inc.field_wrapper_attributes') >
+@include('crud::fields.inc.wrapper_start')
     <label>{!! $field['label'] !!}</label>
-    @include('crud::inc.field_translatable_icon')
+    @include('crud::fields.inc.translatable_icon')
     <?php $entity_model = $crud->model; ?>
     <select
         name="{{ $field['name'] }}"
         style="width: 100%"
         data-init-function="bpFieldInitSelect2EnumElement"
-        @include('crud::inc.field_attributes', ['default_class' => 'form-control select2'])
+        @include('crud::fields.inc.attributes', ['default_class' => 'form-control select2'])
         >
 
         @if ($entity_model::isColumnNullable($field['name']))
@@ -29,7 +29,7 @@
     @if (isset($field['hint']))
         <small class="form-text text-muted">{!! $field['hint'] !!}</small>
     @endif
-</div>
+@include('crud::fields.inc.wrapper_end')
 
 {{-- ########################################## --}}
 {{-- Extra CSS and JS for this particular field --}}

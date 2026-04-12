@@ -29,6 +29,11 @@ class Appointment extends Model
     |--------------------------------------------------------------------------
     */
 
+    protected static function newFactory()
+    {
+        return \Database\Factories\AppointmentsFactory::new();
+    }
+
     public function addTreatment()
     {
         switch ($this->status) {

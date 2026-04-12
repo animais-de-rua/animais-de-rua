@@ -28,6 +28,11 @@ class Protocol extends Model
     |--------------------------------------------------------------------------
     */
 
+    protected static function newFactory()
+    {
+        return \Database\Factories\ProtocolsFactory::new();
+    }
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONS
