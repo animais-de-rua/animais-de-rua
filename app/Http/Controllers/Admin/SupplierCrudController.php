@@ -34,8 +34,6 @@ class SupplierCrudController extends CrudController
 
         // ----------
         // Columns
-        $this->crud->setColumns(['reference', 'store_order_id', 'store_product_id', 'notes', 'status']);
-
         $this->crud->addColumn([
             'name' => 'reference',
             'label' => __('Reference'),
@@ -57,13 +55,15 @@ class SupplierCrudController extends CrudController
             'function_name' => 'getProductLinkAttribute',
         ]);
 
-        $this->crud->setColumnDetails('status', [
-            'type' => 'trans',
-            'label' => __('Status'),
+        $this->crud->addColumn([
+            'name' => 'notes',
+            'label' => __('Notes'),
         ]);
 
-        $this->crud->setColumnDetails('notes', [
-            'label' => __('Notes'),
+        $this->crud->addColumn([
+            'name' => 'status',
+            'type' => 'trans',
+            'label' => __('Status'),
         ]);
 
         $this->crud->addColumn([

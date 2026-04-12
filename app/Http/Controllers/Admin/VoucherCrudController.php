@@ -33,8 +33,6 @@ class VoucherCrudController extends CrudController
 
         // ----------
         // Columns
-        $this->crud->setColumns(['reference', 'voucher', 'valueText', 'percentText', 'client_name', 'client_email', 'expiration', 'status']);
-
         $this->crud->addColumn([
             'label' => __('Reference'),
             'name' => 'reference',

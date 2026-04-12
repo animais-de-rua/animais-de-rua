@@ -41,8 +41,8 @@ class StoreOrder extends Model
     public function openAll()
     {
         return '
-        <a class="openall btn btn-primary ladda-button" data-style="zoom-in">
-            <span class="ladda-label"><i class="fa fa-plus-square-o"></i> ' . ucfirst(__('Open All')) . '</span>
+        <a class="openall btn btn-secondary" href="javascript:void(0)" onclick="$(\'#crudTable tbody td .details-control\').trigger(\'click\')">
+            <i class="la la-plus-square-o"></i> ' . ucfirst(__('Open All')) . '
         </a>';
     }
 
