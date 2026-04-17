@@ -12,7 +12,10 @@
 */
 
 // Home
-Route::get('/', 'PageController@index', 'home');
+// Route::get('/', 'PageController@index', 'home');
+Route::get('/', function () {
+    return Redirect::to('/admin', 301);
+});
 
 // Donation
 Route::get('doar', function () {
