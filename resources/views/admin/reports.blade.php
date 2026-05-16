@@ -12,17 +12,20 @@ use App\User;
 use App\Helpers\EnumHelper;
 @endphp
 
-@extends('backpack::layout')
+@extends(backpack_view('blank'))
+
+@php
+    $breadcrumbs = [
+        config('backpack.base.project_name') => backpack_url(),
+        __('Reports') => false,
+    ];
+@endphp
 
 @section('header')
 <section class="content-header">
-    <h1>
-        {{ __('Reports') }}
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="{{ backpack_url() }}">{{ config('backpack.base.project_name') }}</a></li>
-        <li class="active">{{ trans('backpack::base.dashboard') }}</li>
-    </ol>
+    <div class="container-fluid mb-3">
+        <h1>{{ __('Reports') }}</h1>
+    </div>
 </section>
 @endsection
 
@@ -31,9 +34,9 @@ use App\Helpers\EnumHelper;
 <script src="{{ mix('js/admin/reports.js') }}"></script>
 @endsection
 
-@section('style')
+@push('before_styles')
 <link rel="stylesheet" href="{{ mix('css/admin/reports.css') }}" />
-@endsection
+@endpush
 
 @section('content')
 

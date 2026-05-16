@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\CrudTrait;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
 
 class Protocol extends Model
 {
@@ -27,6 +27,11 @@ class Protocol extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+
+    protected static function newFactory()
+    {
+        return \Database\Factories\ProtocolsFactory::new();
+    }
 
     /*
     |--------------------------------------------------------------------------

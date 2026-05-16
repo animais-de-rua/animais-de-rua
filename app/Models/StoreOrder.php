@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\CrudTrait;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
 
 class StoreOrder extends Model
 {
@@ -33,7 +33,7 @@ class StoreOrder extends Model
         $disabled = $this->status == 'shipped';
 
         return '
-        <a class="btn btn-xs btn-' . ($disabled ? 'default' : 'primary') . ' ' . ($disabled ? 'disabled' : '') . '" href="/admin/store/orders/' . $this->id . '/edit" title="' . __('Add shipment') . '">
+        <a class="btn btn-sm btn-' . ($disabled ? 'secondary' : 'primary') . ' ' . ($disabled ? 'disabled' : '') . '" href="/admin/store/orders/' . $this->id . '/edit" title="' . __('Add shipment') . '">
         <i class="fa fa-plus"></i> ' . ucfirst(__('shipment')) . '
         </a>';
     }
@@ -41,8 +41,8 @@ class StoreOrder extends Model
     public function openAll()
     {
         return '
-        <a class="openall btn btn-primary ladda-button" data-style="zoom-in">
-            <span class="ladda-label"><i class="fa fa-plus-square-o"></i> ' . ucfirst(__('Open All')) . '</span>
+        <a class="openall btn btn-secondary" href="javascript:void(0)" onclick="$(\'#crudTable tbody td .details-control\').trigger(\'click\')">
+            <i class="la la-plus-square-o"></i> ' . ucfirst(__('Open All')) . '
         </a>';
     }
 

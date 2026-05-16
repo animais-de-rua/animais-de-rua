@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Backpack\CRUD\ModelTraits\SpatieTranslatable\HasTranslations;
+use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
 
 class Page extends \Backpack\PageManager\app\Models\Page
 {

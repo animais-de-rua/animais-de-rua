@@ -8,6 +8,7 @@ use App\Http\Requests\AdoptionRequest as StoreRequest;
 use App\Http\Requests\AdoptionRequest as UpdateRequest;
 use App\Models\Adoption;
 use App\User;
+use Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 use Carbon\Carbon;
 
 /**
@@ -18,6 +19,7 @@ use Carbon\Carbon;
 class AdoptionCrudController extends CrudController
 {
     use Permissions;
+    use ShowOperation { show as traitShow; }
 
     public function setup()
     {
@@ -37,8 +39,6 @@ class AdoptionCrudController extends CrudController
         */
 
         // ------ CRUD FIELDS
-        $this->crud->addFields(['process_id', 'fat_id', 'name', 'name_after', 'age', 'gender', 'microchip', 'sterilized', 'vaccinated', 'processed', 'individual', 'docile', 'abandoned', 'foal', 'images', 'history', 'adopter_id', 'adoption_date', 'status']);
-
         $this->crud->addField([
             'label' => ucfirst(__('process')),
             'name' => 'process_id',
@@ -52,7 +52,7 @@ class AdoptionCrudController extends CrudController
             'default' => \Request::get('process') ?: false,
         ]);
 
-        if (is('admin')) {
+        if (is('admin') && $this->crud->getCurrentOperation() === 'update') {
             $this->crud->addField([
                 'label' => ucfirst(__('volunteer')),
                 'name' => 'user_id',
@@ -66,7 +66,7 @@ class AdoptionCrudController extends CrudController
                 'attributes' => [
                     'disabled' => 'disabled',
                 ],
-            ], 'update');
+            ]);
         }
 
         $this->crud->addField([
@@ -172,13 +172,6 @@ class AdoptionCrudController extends CrudController
         $this->separator()->afterField('history');
 
         $this->crud->addField([
-            'label' => __('Adoption Date'),
-            'name' => 'adoption_date',
-            'type' => 'date',
-            'default' => Carbon::today()->toDateString(),
-        ]);
-
-        $this->crud->addField([
             'label' => ucfirst(__('adopter')),
             'name' => 'adopter_id',
             'type' => 'select2_from_ajax',
@@ -188,6 +181,13 @@ class AdoptionCrudController extends CrudController
             'data_source' => url('admin/adopter/ajax/search'),
             'placeholder' => __('Select an adopter'),
             'minimum_input_length' => 2,
+        ]);
+
+        $this->crud->addField([
+            'label' => __('Adoption Date'),
+            'name' => 'adoption_date',
+            'type' => 'date',
+            'default' => Carbon::today()->toDateString(),
         ]);
 
         $this->crud->addField([
@@ -352,7 +352,7 @@ class AdoptionCrudController extends CrudController
                 $this->wantsJSON() ? null : api()->headquarterList(),
                 function ($values) {
                     $this->crud->addClause('whereHas', 'process', function ($query) use ($values) {
-                        $query->whereIn('headquarter_id', json_decode($values));
+                        $query->whereIn('headquarter_id', json_decode($values) ?: []);
                     })->get();
                 });
         }
@@ -366,6 +366,7 @@ class AdoptionCrudController extends CrudController
             $this->wantsJSON() ? null : api()->rangeTerritoryList(),
             function ($values) {
                 $values = json_decode($values);
+                if ($values === null) return;
                 $where = join(' OR ', array_fill(0, count($values), 'territory_id LIKE ?'));
                 $values = array_map(function ($field) {return $field . '%';}, $values);
 
@@ -487,12 +488,14 @@ class AdoptionCrudController extends CrudController
         ],
             EnumHelper::translate('adoption.status'),
             function ($values) {
-                $this->crud->addClause('whereIn', 'status', json_decode($values));
+                $this->crud->addClause('whereIn', 'status', json_decode($values) ?: []);
             });
 
         // ------ CRUD ACCESS
         $this->crud->allowAccess('show');
-        $this->crud->removeButton('show');
+        $this->crud->operation('list', function () {
+            $this->crud->removeButton('show');
+        });
 
         if (!is(['admin', 'volunteer'])) {
             $this->crud->denyAccess(['list', 'show']);
@@ -524,13 +527,15 @@ class AdoptionCrudController extends CrudController
         // add asterisk for fields that are required in AdoptionRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
+        $this->crud->setValidation(StoreRequest::class);
+        $this->crud->setValidation(UpdateRequest::class);
 
         $this->crud->enableExportButtons();
     }
 
     public function show($id)
     {
-        $content = parent::show($id);
+        $content = $this->traitShow($id);
 
         $this->crud->setColumnDetails('history', [
             'label' => __('History'),
@@ -569,17 +574,19 @@ class AdoptionCrudController extends CrudController
         return $content;
     }
 
-    public function store(StoreRequest $request)
+    public function store()
     {
+        $request = $this->crud->getRequest();
+
         // Add user
         $request->merge(['user_id' => backpack_user()->id]);
 
-        return parent::storeCrud($request);
+        return parent::store();
     }
 
-    public function update(UpdateRequest $request)
+    public function update()
     {
-        return parent::updateCrud($request);
+        return parent::update();
     }
 
     public function sync()

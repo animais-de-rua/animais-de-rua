@@ -153,8 +153,6 @@ class PartnerCrudController extends CrudController
         ]);
 
         // ------ CRUD FIELDS
-        $this->crud->addFields(['name', 'benefit', 'categories', 'territories', 'email', 'phone1', 'phone1_info', 'phone2', 'phone2_info', 'url', 'facebook', 'instagram', 'address', 'address_info', 'image', 'notes', 'promo_code', 'status']);
-
         $this->crud->addField([
             'label' => __('Name'),
             'name' => 'name',
@@ -272,7 +270,7 @@ class PartnerCrudController extends CrudController
             'type' => 'checkbox',
         ]);
 
-        if (is('admin')) {
+        if (is('admin') && $this->crud->getCurrentOperation() === 'update') {
             $this->crud->addField([
                 'label' => ucfirst(__('volunteer')),
                 'name' => 'user_id',
@@ -286,7 +284,7 @@ class PartnerCrudController extends CrudController
                 'attributes' => [
                     'disabled' => 'disabled',
                 ],
-            ], 'update');
+            ]);
         }
 
         // Filters
@@ -299,7 +297,7 @@ class PartnerCrudController extends CrudController
             api()->territoryList(Territory::DISTRITO | Territory::CONCELHO),
             function ($values) {
                 $ids = DB::table('partners_territories')->select('partner_id');
-                foreach (json_decode($values) as $value) {
+                foreach (json_decode($values) ?: [] as $value) {
                     $ids->orWhere('territory_id', 'LIKE', "$value%");
                 }
                 $this->crud->query->whereIn('id', $ids->pluck('partner_id')->toArray());
@@ -314,7 +312,7 @@ class PartnerCrudController extends CrudController
             api()->partnerCategoryList(),
             function ($values) {
                 $ids = DB::table('partners_categories')->select('partner_id');
-                foreach (json_decode($values) as $value) {
+                foreach (json_decode($values) ?: [] as $value) {
                     $ids->orWhere('partner_category_list_id', 'LIKE', "$value%");
                 }
                 $this->crud->query->whereIn('id', $ids->pluck('partner_id')->toArray());
@@ -348,19 +346,23 @@ class PartnerCrudController extends CrudController
         // add asterisk for fields that are required in PartnerRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
+        $this->crud->setValidation(StoreRequest::class);
+        $this->crud->setValidation(UpdateRequest::class);
     }
 
-    public function store(StoreRequest $request)
+    public function store()
     {
+        $request = $this->crud->getRequest();
+
         // Add user to the partner
         $request->merge(['user_id' => backpack_user()->id]);
 
-        return parent::storeCrud($request);
+        return parent::store();
     }
 
-    public function update(UpdateRequest $request)
+    public function update()
     {
-        return parent::updateCrud($request);
+        return parent::update();
     }
 
     public function sync()

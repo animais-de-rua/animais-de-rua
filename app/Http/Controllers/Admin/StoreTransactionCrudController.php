@@ -68,8 +68,6 @@ class StoreTransactionCrudController extends CrudController
 
         // ----------
         // Fields
-        $this->crud->addFields(['description', 'user_id', 'amount', 'invoice', 'notes']);
-
         $this->crud->addField([
             'label' => __('Description'),
             'type' => 'textarea',
@@ -190,19 +188,23 @@ class StoreTransactionCrudController extends CrudController
         // add asterisk for fields that are required in StoreTransactionRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
+        $this->crud->setValidation(StoreRequest::class);
+        $this->crud->setValidation(UpdateRequest::class);
     }
 
-    public function store(StoreRequest $request)
+    public function store()
     {
+        $request = $this->crud->getRequest();
+
         if (!is(['admin'])) {
             $request->merge(['user_id' => backpack_user()->id]);
         }
 
-        return parent::storeCrud($request);
+        return parent::store();
     }
 
-    public function update(UpdateRequest $request)
+    public function update()
     {
-        return parent::updateCrud($request);
+        return parent::update();
     }
 }

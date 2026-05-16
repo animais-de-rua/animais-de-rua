@@ -37,8 +37,6 @@ class AppointmentCrudController extends CrudController
         */
 
         // ------ CRUD FIELDS
-        $this->crud->addFields(['process_id', 'vet_id_1', 'date_1', 'vet_id_2', 'date_2', 'amount_males', 'amount_females', 'amount_other', 'notes_deliver', 'notes_collect', 'notes_contact', 'notes_godfather', 'notes_info', 'notes', 'status']);
-
         $this->crud->addField([
             'label' => ucfirst(__('process')),
             'name' => 'process_id',
@@ -52,7 +50,7 @@ class AppointmentCrudController extends CrudController
             'default' => \Request::get('process') ?: false,
         ]);
 
-        if (is('admin')) {
+        if (is('admin') && $this->crud->getCurrentOperation() === 'update') {
             $this->crud->addField([
                 'label' => ucfirst(__('volunteer')),
                 'name' => 'user_id',
@@ -66,7 +64,7 @@ class AppointmentCrudController extends CrudController
                 'attributes' => [
                     'disabled' => 'disabled',
                 ],
-            ], 'update');
+            ]);
         }
 
         $this->crud->addField([
@@ -439,6 +437,7 @@ class AppointmentCrudController extends CrudController
             ],
             function ($values) {
                 $values = json_decode($values);
+                if ($values === null) return;
                 if (in_array('approved', $values)) {
                     $values = array_merge($values, ['approved_option_1', 'approved_option_2']);
                 }
@@ -515,7 +514,7 @@ class AppointmentCrudController extends CrudController
             'label' => __('Archive'),
         ], false, function ($value) {});
 
-        foreach ($this->crud->filters as $filter) {
+        foreach ($this->crud->filters() as $filter) {
             if ($filter->name == 'archive' && $filter->currentValue == null) {
 
                 // Treatments created more than 1 Day ago
@@ -528,6 +527,8 @@ class AppointmentCrudController extends CrudController
         // add asterisk for fields that are required in AppointmentRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
+        $this->crud->setValidation(StoreRequest::class);
+        $this->crud->setValidation(UpdateRequest::class);
     }
 
     public function destroy($id)
@@ -549,16 +550,18 @@ class AppointmentCrudController extends CrudController
         return parent::destroy($id);
     }
 
-    public function store(StoreRequest $request)
+    public function store()
     {
+        $request = $this->crud->getRequest();
+
         // Add user
         $request->merge(['user_id' => backpack_user()->id]);
 
-        return parent::storeCrud($request);
+        return parent::store();
     }
 
-    public function update(UpdateRequest $request)
+    public function update()
     {
-        return parent::updateCrud($request);
+        return parent::update();
     }
 }

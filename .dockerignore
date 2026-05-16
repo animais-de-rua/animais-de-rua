@@ -1,10 +1,14 @@
 vendor/
 node_modules/
-public/js/
+public/js/app.js
+public/js/app.js.map
+public/js/admin/
 public/css/app.css
 public/css/app.css.map
 public/css/admin/reports.css
 public/css/admin/reports.css.map
+public/css/admin/admin.css
+public/css/admin/admin.css.map
 public/mix-manifest.json
 .env
 .git/

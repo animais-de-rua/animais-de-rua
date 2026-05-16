@@ -174,7 +174,7 @@ class VetCrudController extends CrudController
         ],
             EnumHelper::translate('vet.status'),
             function ($values) {
-                $this->crud->addClause('whereIn', 'status', json_decode($values));
+                $this->crud->addClause('whereIn', 'status', json_decode($values) ?: []);
             });
 
         $this->crud->addFilter([
@@ -259,15 +259,17 @@ class VetCrudController extends CrudController
         // Add asterisk for fields that are required
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
+        $this->crud->setValidation(StoreRequest::class);
+        $this->crud->setValidation(UpdateRequest::class);
     }
 
-    public function store(StoreRequest $request)
+    public function store()
     {
-        return parent::storeCrud($request);
+        return parent::store();
     }
 
-    public function update(UpdateRequest $request)
+    public function update()
     {
-        return parent::updateCrud($request);
+        return parent::update();
     }
 }

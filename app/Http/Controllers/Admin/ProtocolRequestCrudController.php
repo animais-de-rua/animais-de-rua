@@ -101,7 +101,31 @@ class ProtocolRequestCrudController extends CrudController
             'visibleInTable' => false,
         ]);
 
-        $this->crud->addFields(['protocol_id', 'process_id', 'council', 'name', 'email', 'phone', 'address', 'territory_id', 'description']);
+        $this->crud->addField([
+            'label' => ucfirst(__('protocol')),
+            'name' => 'protocol_id',
+            'type' => 'select2_from_ajax',
+            'entity' => 'protocol',
+            'attribute' => 'name',
+            'model' => '\App\Models\Protocol',
+            'data_source' => url('admin/protocol/ajax/search'),
+            'placeholder' => __('Select a protocol'),
+            'minimum_input_length' => 2,
+            'default' => \Request::get('protocol') ?: false,
+        ]);
+
+        $this->crud->addField([
+            'label' => ucfirst(__('process')),
+            'name' => 'process_id',
+            'type' => 'select2_from_ajax',
+            'entity' => 'process',
+            'attribute' => 'detail',
+            'model' => '\App\Models\Process',
+            'data_source' => url('admin/process/ajax/search'),
+            'placeholder' => __('Select a process'),
+            'minimum_input_length' => 2,
+            'default' => \Request::get('process') ?: false,
+        ]);
 
         $this->crud->addField([
             'label' => 'ID ' . ucfirst(__('request')),
@@ -131,12 +155,6 @@ class ProtocolRequestCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'label' => __('Description'),
-            'name' => 'description',
-            'type' => 'textarea',
-        ]);
-
-        $this->crud->addField([
             'label' => ucfirst(__('territory')),
             'name' => 'territory_id',
             'type' => 'select2_from_array',
@@ -145,32 +163,12 @@ class ProtocolRequestCrudController extends CrudController
         ]);
 
         $this->crud->addField([
-            'label' => ucfirst(__('protocol')),
-            'name' => 'protocol_id',
-            'type' => 'select2_from_ajax',
-            'entity' => 'protocol',
-            'attribute' => 'name',
-            'model' => '\App\Models\Protocol',
-            'data_source' => url('admin/protocol/ajax/search'),
-            'placeholder' => __('Select a protocol'),
-            'minimum_input_length' => 2,
-            'default' => \Request::get('protocol') ?: false,
+            'label' => __('Description'),
+            'name' => 'description',
+            'type' => 'textarea',
         ]);
 
-        $this->crud->addField([
-            'label' => ucfirst(__('process')),
-            'name' => 'process_id',
-            'type' => 'select2_from_ajax',
-            'entity' => 'process',
-            'attribute' => 'detail',
-            'model' => '\App\Models\Process',
-            'data_source' => url('admin/process/ajax/search'),
-            'placeholder' => __('Select a process'),
-            'minimum_input_length' => 2,
-            'default' => \Request::get('process') ?: false,
-        ]);
-
-        if (is('admin')) {
+        if (is('admin') && $this->crud->getCurrentOperation() === 'update') {
             $this->crud->addField([
                 'label' => ucfirst(__('volunteer')),
                 'name' => 'user_id',
@@ -184,7 +182,7 @@ class ProtocolRequestCrudController extends CrudController
                 'attributes' => [
                     'disabled' => 'disabled',
                 ],
-            ], 'update');
+            ]);
         }
 
         // Filters
@@ -197,6 +195,7 @@ class ProtocolRequestCrudController extends CrudController
             $this->wantsJSON() ? null : api()->territoryList(),
             function ($values) {
                 $values = json_decode($values);
+                if ($values === null) return;
                 $where = join(' OR ', array_fill(0, count($values), 'territory_id LIKE ?'));
                 $values = array_map(function ($field) {return $field . '%';}, $values);
 
@@ -262,18 +261,22 @@ class ProtocolRequestCrudController extends CrudController
         // add asterisk for fields that are required in ProtocolRequestRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
+        $this->crud->setValidation(StoreRequest::class);
+        $this->crud->setValidation(UpdateRequest::class);
     }
 
-    public function store(StoreRequest $request)
+    public function store()
     {
+        $request = $this->crud->getRequest();
+
         // Add user to the partner
         $request->merge(['user_id' => backpack_user()->id]);
 
-        return parent::storeCrud($request);
+        return parent::store();
     }
 
-    public function update(UpdateRequest $request)
+    public function update()
     {
-        return parent::updateCrud($request);
+        return parent::update();
     }
 }

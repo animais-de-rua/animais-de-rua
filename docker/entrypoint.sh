@@ -17,6 +17,24 @@ new PDO(
 done
 echo "Database ready."
 
+# Generate app key if not already configured.
+# Also export it so Apache inherits the value — docker-compose passes APP_KEY= (empty)
+# from .env.example, which would otherwise prevent dotenv from reading the generated key.
+if [ -z "$APP_KEY" ]; then
+    grep -qE "^APP_KEY=.+" .env || php artisan key:generate --force
+    export APP_KEY=$(grep "^APP_KEY=" .env | cut -d= -f2-)
+fi
+
+# Discover packages if cache not yet built
+if [ ! -f bootstrap/cache/packages.php ]; then
+    php artisan package:discover --ansi
+fi
+
+# Publish Backpack CRUD assets (CoreUI bundle, datatables, select2, etc.) if not yet published
+if [ ! -d public/packages/backpack ]; then
+    php artisan vendor:publish --provider="Backpack\CRUD\BackpackServiceProvider" --tag=public --force
+fi
+
 # Run migrations (idempotent)
 php artisan migrate --force
 

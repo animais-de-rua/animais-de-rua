@@ -1,11 +1,11 @@
 <!-- select2 multiple -->
-<div @include('crud::inc.field_wrapper_attributes') >
+@include('crud::fields.inc.wrapper_start')
     <label>{!! $field['label'] !!}</label>
-    @include('crud::inc.field_translatable_icon')
+    @include('crud::fields.inc.translatable_icon')
     <select
         name="{{ $field['name'] }}[]"
         style="width: 100%"
-        @include('crud::inc.field_attributes', ['default_class' =>  'form-control select2_multiple'])
+        @include('crud::fields.inc.attributes', ['default_class' =>  'form-control select2_multiple'])
         multiple>
 
         @if (isset($field['allows_null']) && $field['allows_null']==true)
@@ -24,15 +24,15 @@
     </select>
 
     @if(isset($field['select_all']) && $field['select_all'])
-        <a class="btn btn-xs btn-default select_all" style="margin-top: 5px;"><i class="fa fa-check-square-o"></i> {{ trans('backpack::crud.select_all') }}</a>
-        <a class="btn btn-xs btn-default clear" style="margin-top: 5px;"><i class="fa fa-times"></i> {{ trans('backpack::crud.clear') }}</a>
+        <a class="btn btn-sm btn-secondary select_all" style="margin-top: 5px;"><i class="fa fa-check-square-o"></i> {{ trans('backpack::crud.select_all') }}</a>
+        <a class="btn btn-sm btn-secondary clear" style="margin-top: 5px;"><i class="fa fa-times"></i> {{ trans('backpack::crud.clear') }}</a>
     @endif
 
     {{-- HINT --}}
     @if (isset($field['hint']))
-        <p class="help-block">{!! $field['hint'] !!}</p>
+        <small class="form-text text-muted">{!! $field['hint'] !!}</small>
     @endif
-</div>
+@include('crud::fields.inc.wrapper_end')
 
 
 {{-- ########################################## --}}

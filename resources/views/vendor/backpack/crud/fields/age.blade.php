@@ -1,6 +1,6 @@
-<div @include('crud::inc.field_wrapper_attributes') >
+@include('crud::fields.inc.wrapper_start')
     <label>{!! $field['label'] !!}</label>
-    @include('crud::inc.field_translatable_icon')
+    @include('crud::fields.inc.translatable_icon')
 
     <div style="max-width: 200px">
         <div class="input-group" style="margin-bottom: 4px">
@@ -12,9 +12,9 @@
                 value="{{ old($field['name']) ? old($field['name'])[0] :
                     (isset($field['value']) ? $field['value'][0] :
                     (isset($field['default']) ? $field['default'][0] :'' )) }}"
-                @include('crud::inc.field_attributes')
+                @include('crud::fields.inc.attributes')
             >
-            <div class="input-group-addon">{{ __("years") }}</div>
+            <div class="input-group-append"><span class="input-group-text">{{ __("years") }}</span></div>
         </div>
 
         <div class="input-group">
@@ -26,13 +26,13 @@
                 value="{{ old($field['name']) ? old($field['name'])[1] :
                     (isset($field['value']) ? $field['value'][1] :
                     (isset($field['default']) ? $field['default'][1] :'' )) }}"
-                @include('crud::inc.field_attributes')
+                @include('crud::fields.inc.attributes')
             >
-            <div class="input-group-addon">{{ __("months") }}</div>
+            <div class="input-group-append"><span class="input-group-text">{{ __("months") }}</span></div>
         </div>
     </div>
 
     @if (isset($field['hint']))
-        <p class="help-block">{!! $field['hint'] !!}</p>
+        <small class="form-text text-muted">{!! $field['hint'] !!}</small>
     @endif
-</div>
+@include('crud::fields.inc.wrapper_end')

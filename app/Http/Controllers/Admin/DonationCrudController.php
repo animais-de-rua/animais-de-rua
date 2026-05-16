@@ -37,17 +37,6 @@ class DonationCrudController extends CrudController
         */
 
         // ------ CRUD FIELDS
-        $this->crud->addFields(['process_id', 'type', 'godfather_id', 'headquarter_id', 'protocol_id', 'value', 'date']);
-
-        $this->crud->addField([
-            'label' => __('Value'),
-            'name' => 'value',
-            'type' => 'number',
-            'default' => 0,
-            'attributes' => ['min' => 0, 'max' => 1000000, 'step' => .01],
-            'prefix' => '€',
-        ]);
-
         $this->crud->addField([
             'label' => ucfirst(__('process')),
             'name' => 'process_id',
@@ -120,6 +109,15 @@ class DonationCrudController extends CrudController
         $this->separator()->afterField('protocol_id');
 
         $this->crud->addField([
+            'label' => __('Value'),
+            'name' => 'value',
+            'type' => 'number',
+            'default' => 0,
+            'attributes' => ['min' => 0, 'max' => 1000000, 'step' => .01],
+            'prefix' => '€',
+        ]);
+
+        $this->crud->addField([
             'label' => __('Date'),
             'name' => 'date',
             'type' => 'date',
@@ -132,7 +130,7 @@ class DonationCrudController extends CrudController
             'type' => 'textarea',
         ]);
 
-        if (is('admin')) {
+        if (is('admin') && $this->crud->getCurrentOperation() === 'update') {
             $this->crud->addField([
                 'label' => ucfirst(__('volunteer')),
                 'name' => 'user_id',
@@ -146,7 +144,7 @@ class DonationCrudController extends CrudController
                 'attributes' => [
                     'disabled' => 'disabled',
                 ],
-            ], 'update');
+            ]);
         }
 
         // ------ CRUD COLUMNS
@@ -363,6 +361,8 @@ class DonationCrudController extends CrudController
         // Add asterisk for fields that are required
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
+        $this->crud->setValidation(StoreRequest::class);
+        $this->crud->setValidation(UpdateRequest::class);
     }
 
     public function showDetailsRow($id)
@@ -374,12 +374,14 @@ class DonationCrudController extends CrudController
             </div>";
     }
 
-    public function store(StoreRequest $request)
+    public function store()
     {
+        $request = $this->crud->getRequest();
+
         // Add user
         $request->merge(['user_id' => backpack_user()->id]);
 
-        $redirect = parent::storeCrud($request);
+        $redirect = parent::store();
 
         if ($request->save_action == 'save_and_new') {
             $referer = $request->header('referer');
@@ -389,8 +391,8 @@ class DonationCrudController extends CrudController
         return $redirect;
     }
 
-    public function update(UpdateRequest $request)
+    public function update()
     {
-        return parent::updateCrud($request);
+        return parent::update();
     }
 }

@@ -5,7 +5,7 @@
     $old_value = old(square_brackets_to_dots($field['name'])) ?? $field['value'] ?? $field['default'] ?? false;
 @endphp
 
-<div @include('crud::inc.field_wrapper_attributes') >
+@include('crud::fields.inc.wrapper_start')
     <label>{!! $field['label'] !!}</label>
     <?php $entity_model = $crud->model; ?>
 
@@ -13,7 +13,7 @@
         name="{{ $field['name'] }}"
         style="width: 100%"
         id="select2_ajax_{{ $field['name'] }}"
-        @include('crud::inc.field_attributes', ['default_class' =>  'form-control'])
+        @include('crud::fields.inc.attributes', ['default_class' =>  'form-control'])
         >
 
         @if ($old_value)
@@ -38,9 +38,9 @@
 
     {{-- HINT --}}
     @if (isset($field['hint']))
-        <p class="help-block">{!! $field['hint'] !!}</p>
+        <small class="form-text text-muted">{!! $field['hint'] !!}</small>
     @endif
-</div>
+@include('crud::fields.inc.wrapper_end')
 
 {{-- ########################################## --}}
 {{-- Extra CSS and JS for this particular field --}}
@@ -49,9 +49,6 @@
 
     {{-- FIELD CSS - will be loaded in the after_styles section --}}
     @push('crud_fields_styles')
-    <!-- include select2 css-->
-    <link href="{{ asset('vendor/adminlte/bower_components/select2/dist/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
     {{-- allow clear --}}
     @if ($entity_model::isColumnNullable($field['name']))
     <style type="text/css">
@@ -60,12 +57,6 @@
         }
     </style>
     @endif
-    @endpush
-
-    {{-- FIELD JS - will be loaded in the after_scripts section --}}
-    @push('crud_fields_scripts')
-    <!-- include select2 js-->
-    <script src="{{ asset('vendor/adminlte/bower_components/select2/dist/js/select2.min.js') }}"></script>
     @endpush
 
 @endif
@@ -81,7 +72,6 @@
             if (!$(obj).hasClass("select2-hidden-accessible"))
             {
                 $(obj).select2({
-                    theme: 'bootstrap',
                     multiple: false,
                     placeholder: "{{ $field['placeholder'] }}",
                     minimumInputLength: "{{ $field['minimum_input_length'] }}",

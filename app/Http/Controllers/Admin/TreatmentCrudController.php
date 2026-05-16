@@ -262,7 +262,7 @@ class TreatmentCrudController extends CrudController
             ],
         ]);
 
-        if (is('admin')) {
+        if (is('admin') && $this->crud->getCurrentOperation() === 'update') {
             $this->crud->addField([
                 'label' => ucfirst(__('volunteer')),
                 'name' => 'user_id',
@@ -276,7 +276,7 @@ class TreatmentCrudController extends CrudController
                 'attributes' => [
                     'disabled' => 'disabled',
                 ],
-            ], 'update');
+            ]);
         }
 
         $this->crud->addField([
@@ -310,7 +310,7 @@ class TreatmentCrudController extends CrudController
                 function ($values) {
                     $this->crud->addClause('whereHas', 'appointment', function ($query) use ($values) {
                         $query->whereHas('process', function ($query) use ($values) {
-                            $query->whereIn('headquarter_id', json_decode($values));
+                            $query->whereIn('headquarter_id', json_decode($values) ?: []);
                         });
                     });
                 });
@@ -325,6 +325,7 @@ class TreatmentCrudController extends CrudController
             $this->wantsJSON() ? null : api()->rangeTerritoryList(),
             function ($values) {
                 $values = json_decode($values);
+                if ($values === null) return;
                 $where = join(' OR ', array_fill(0, count($values), 'territory_id LIKE ?'));
                 $values = array_map(function ($field) {return $field . '%';}, $values);
 
@@ -341,7 +342,7 @@ class TreatmentCrudController extends CrudController
         ],
             $this->wantsJSON() ? null : api()->treatmentTypeList(),
             function ($values) {
-                $this->crud->addClause('whereIn', 'treatment_type_id', json_decode($values));
+                $this->crud->addClause('whereIn', 'treatment_type_id', json_decode($values) ?: []);
             });
 
         $this->crud->addFilter([
@@ -408,7 +409,7 @@ class TreatmentCrudController extends CrudController
         ],
             EnumHelper::translate('treatment.status'),
             function ($values) {
-                $this->crud->addClause('whereIn', 'status', json_decode($values));
+                $this->crud->addClause('whereIn', 'status', json_decode($values) ?: []);
             });
 
         $this->crud->addFilter([
@@ -421,7 +422,7 @@ class TreatmentCrudController extends CrudController
             function ($values) {
                 $this->crud->addClause('whereHas', 'appointment', function ($query) use ($values) {
                     $query->whereHas('process', function ($query) use ($values) {
-                        $query->whereIn('specie', json_decode($values));
+                        $query->whereIn('specie', json_decode($values) ?: []);
                     });
                 });
             });
@@ -474,6 +475,8 @@ class TreatmentCrudController extends CrudController
         // add asterisk for fields that are required in TreatmentRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
+        $this->crud->setValidation(StoreRequest::class);
+        $this->crud->setValidation(UpdateRequest::class);
     }
 
     public function showDetailsRow($id)
@@ -497,12 +500,14 @@ class TreatmentCrudController extends CrudController
         return parent::destroy($id);
     }
 
-    public function store(StoreRequest $request)
+    public function store()
     {
+        $request = $this->crud->getRequest();
+
         // Add user
         $request->merge(['user_id' => backpack_user()->id]);
 
-        $redirect = parent::storeCrud($request);
+        $redirect = parent::store();
 
         if ($request->save_action == 'save_and_new') {
             $referer = $request->header('referer');
@@ -519,9 +524,9 @@ class TreatmentCrudController extends CrudController
         return $redirect;
     }
 
-    public function update(UpdateRequest $request)
+    public function update()
     {
-        return parent::updateCrud($request);
+        return parent::update();
     }
 
     public function sync()

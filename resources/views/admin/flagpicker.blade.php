@@ -1,8 +1,10 @@
 <style>
-.flags-list li a {
+.flags-list .dropdown-item {
 	width: 100%;
+	display: flex;
+	align-items: center;
 }
-.flags-list li p {
+.flags-list .dropdown-item p {
 	display: inline-block;
 	margin: 0;
 }
@@ -15,14 +17,10 @@
 	background-position: center;
 	vertical-align: middle;
 }
-.flags-list li a {
-	display: flex;
-	align-items: center;
-}
-.dropdown-menu > .active > a {
+.flags-list .dropdown-item.active {
 	pointer-events: none;
 }
-.dropdown-menu>.active>a, .dropdown-menu>.active>a:focus, .dropdown-menu>.active>a:hover {
+.flags-list .dropdown-item.active, .flags-list .dropdown-item.active:focus, .flags-list .dropdown-item.active:hover {
 	background-color: #d2d6de;
 	color: #000;
 }
@@ -32,20 +30,17 @@
 $lang = Session::get('locale', 'en');
 $locales = config('backpack.crud.locales');
 @endphp
-<li class="dropdown flags-list">
-	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+<li class="nav-item dropdown flags-list">
+	<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
 		<div class="flag" style="background-image: url({{ asset("img/flags/$lang.png") }}); height: 20px;"></div>
 		{{-- {{ $locales[$lang] }} --}}
-		<span class="caret"></span>
 	</a>
-	<ul class="dropdown-menu" role="menu">
+	<div class="dropdown-menu">
 		@foreach($locales as $local => $label)
-		<li class="{{ $local == $lang ? "active" : "" }}">
-			<a href="{{ route('lang', ['locale' => $local]) }}">
-				<div class="flag" style="background-image: url({{ asset("img/flags/$local.png") }})"></div>
-				<p>{{ $label }}</p>
-			</a>
-		</li>
+		<a class="dropdown-item {{ $local == $lang ? 'active' : '' }}" href="{{ route('lang', ['locale' => $local]) }}">
+			<div class="flag" style="background-image: url({{ asset("img/flags/$local.png") }})"></div>
+			<p>{{ $label }}</p>
+		</a>
 		@endforeach
-	</ul>
+	</div>
 </li>

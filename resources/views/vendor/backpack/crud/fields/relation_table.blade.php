@@ -11,13 +11,13 @@ $crudRouteOriginal = $crud->route;
 $crud->route = $field['route'];
 ?>
 
-<div @include('crud::inc.field_wrapper_attributes') >
+@include('crud::fields.inc.wrapper_start')
 
     <h3 style="margin-top:0">{!! $field['label'] !!}</h3>
 
     <div class="array-container form-group">
 
-        <table class="table table-bordered table-striped m-b-0">
+        <table class="table table-bordered table-striped mb-0">
 
             <thead>
                 <tr>
@@ -61,14 +61,15 @@ $crud->route = $field['route'];
         @endphp
 
         @if(in_array('add', $field['buttons']))
-        <div class="array-controls btn-group m-t-10">
+        <div class="array-controls btn-group mt-2">
             <a href="{{ $url }}">
-                <button class="btn btn-sm btn-default" type="button"><i class="fa fa-plus"></i> {{trans('backpack::crud.add')}}</button>
+                <button class="btn btn-sm btn-secondary" type="button"><i class="fa fa-plus"></i> {{trans('backpack::crud.add')}}</button>
             </a>
         </div>
         @endif
 
     </div>
-</div>
+
+@include('crud::fields.inc.wrapper_end')
 
 <?php $crud->route = $crudRouteOriginal;?>

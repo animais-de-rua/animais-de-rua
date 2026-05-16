@@ -263,7 +263,7 @@ class UserCrudController extends CrudController
                     $this->crud->query->whereHas('roles', function ($query) use ($values) {
                         $query
                             ->selectRaw('role_id')
-                            ->whereIn('role_id', json_decode($values));
+                            ->whereIn('role_id', json_decode($values) ?: []);
                     });
                 });
 
@@ -278,7 +278,7 @@ class UserCrudController extends CrudController
                     $this->crud->query->whereHas('permissions', function ($query) use ($values) {
                         $query
                             ->selectRaw('permission_id')
-                            ->whereIn('permission_id', json_decode($values));
+                            ->whereIn('permission_id', json_decode($values) ?: []);
                     });
                 });
 
@@ -313,7 +313,7 @@ class UserCrudController extends CrudController
         ],
             api()->friendCardModalitiesList(),
             function ($values) {
-                $this->crud->addClause('whereIn', 'friend_card_modality_id', json_decode($values));
+                $this->crud->addClause('whereIn', 'friend_card_modality_id', json_decode($values) ?: []);
             });
 
         $this->crud->addFilter([
@@ -325,7 +325,7 @@ class UserCrudController extends CrudController
             EnumHelper::translate('user.petsitting.roles'),
             function ($values) {
                 $roleList = EnumHelper::get('user.petsitting.roles');
-                $selectedRoles = array_intersect_key($roleList, array_flip(json_decode($values)));
+                $selectedRoles = array_intersect_key($roleList, array_flip(json_decode($values) ?: []));
                 $this->crud->addClause('whereIn', 'petsitting_role', array_values($selectedRoles));
             }
         );
@@ -369,6 +369,9 @@ class UserCrudController extends CrudController
                 $this->crud->removeColumn('permissions');
             }
         }
+
+        $this->crud->setValidation(StoreRequest::class);
+        $this->crud->setValidation(UpdateRequest::class);
     }
 
     public function showDetailsRow($id)
@@ -380,42 +383,20 @@ class UserCrudController extends CrudController
             </div>";
     }
 
-    public function terminal()
+    public function store()
     {
-        return view('auth.terminal', []);
-    }
-
-    public function terminal_run(Request $request)
-    {
-        if (admin()) {
-            echo shell_exec($request->input('cmd'));
-        }
-    }
-
-    public function symlink()
-    {
-        return view('auth.symlink', []);
-    }
-
-    public function symlink_run(Request $request)
-    {
-        if (admin()) {
-            echo symlink(base_path() . $request->input('target'), base_path() . $request->input('link')) ? 'Success' : 'Error';
-        }
-    }
-
-    public function store(StoreRequest $request)
-    {
+        $request = $this->crud->getRequest();
         $this->handleInputs($request);
 
-        return parent::storeCrud($request);
+        return parent::store();
     }
 
-    public function update(UpdateRequest $request)
+    public function update()
     {
+        $request = $this->crud->getRequest();
         $this->handleInputs($request);
 
-        return parent::updateCrud($request);
+        return parent::update();
     }
 
     protected function handleInputs(Request $request)

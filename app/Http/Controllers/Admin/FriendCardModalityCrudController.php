@@ -34,8 +34,6 @@ class FriendCardModalityCrudController extends CrudController
         */
 
         // ------ CRUD FIELDS
-        $this->crud->addFields(['name', 'description', 'paypal_code', 'amount', 'type']);
-
         $this->crud->addField([
             'label' => __('Name'),
             'name' => 'name',
@@ -118,16 +116,18 @@ class FriendCardModalityCrudController extends CrudController
         // add asterisk for fields that are required in FriendCardModalityRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
+        $this->crud->setValidation(StoreRequest::class);
+        $this->crud->setValidation(UpdateRequest::class);
     }
 
-    public function store(StoreRequest $request)
+    public function store()
     {
-        return parent::storeCrud($request);
+        return parent::store();
     }
 
-    public function update(UpdateRequest $request)
+    public function update()
     {
-        return parent::updateCrud($request);
+        return parent::update();
     }
 
     public function sync()

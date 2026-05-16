@@ -35,8 +35,8 @@ class UsersSeeder extends Seeder
 
         // Super Admin Role
         DB::table('user_has_roles')->insert([
-            ['role_id' => 1, 'model_type' => 'Backpack\Base\app\Models\BackpackUser', 'model_id' => 1],
-            ['role_id' => 1, 'model_type' => 'Backpack\Base\app\Models\BackpackUser', 'model_id' => 2],
+            ['role_id' => 1, 'model_type' => 'App\User', 'model_id' => 1],
+            ['role_id' => 1, 'model_type' => 'App\User', 'model_id' => 2],
         ]);
     }
 }

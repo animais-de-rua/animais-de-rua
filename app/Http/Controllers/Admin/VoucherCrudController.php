@@ -5,8 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Helpers\EnumHelper;
 use App\Http\Requests\VoucherRequest as StoreRequest;
 use App\Http\Requests\VoucherRequest as UpdateRequest;
-use Backpack\CRUD\app\Http\Controllers\CrudController;
-use Backpack\CRUD\CrudPanel;
+use Backpack\CRUD\app\Library\CrudPanel\CrudPanel;
 
 /**
  * Class VoucherCrudController
@@ -34,8 +33,6 @@ class VoucherCrudController extends CrudController
 
         // ----------
         // Columns
-        $this->crud->setColumns(['reference', 'voucher', 'valueText', 'percentText', 'client_name', 'client_email', 'expiration', 'status']);
-
         $this->crud->addColumn([
             'label' => __('Reference'),
             'name' => 'reference',
@@ -86,8 +83,6 @@ class VoucherCrudController extends CrudController
 
         // ----------
         // Fields
-        $this->crud->addFields(['reference', 'voucher', 'value', 'percent', 'client_name', 'client_email', 'expiration', 'status']);
-
         $this->crud->addField([
             'label' => __('Reference'),
             'name' => 'reference',
@@ -146,7 +141,7 @@ class VoucherCrudController extends CrudController
         ],
             EnumHelper::translate('store.voucher'),
             function ($values) {
-                $this->crud->addClause('whereIn', 'status', json_decode($values));
+                $this->crud->addClause('whereIn', 'status', json_decode($values) ?: []);
             });
 
         $this->crud->addFilter([
@@ -214,15 +209,17 @@ class VoucherCrudController extends CrudController
         // add asterisk for fields that are required in VoucherRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
+        $this->crud->setValidation(StoreRequest::class);
+        $this->crud->setValidation(UpdateRequest::class);
     }
 
-    public function store(StoreRequest $request)
+    public function store()
     {
-        return parent::storeCrud($request);
+        return parent::store();
     }
 
-    public function update(UpdateRequest $request)
+    public function update()
     {
-        return parent::updateCrud($request);
+        return parent::update();
     }
 }

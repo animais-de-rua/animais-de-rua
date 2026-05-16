@@ -55,7 +55,7 @@
     </style>
 @endpush
 
-<div @include('crud::inc.field_wrapper_attributes') >
+@include('crud::fields.inc.wrapper_start')
     <label>{{ $field['label'] }}</label>
     <div id="{{ $field['name'] }}-existing" class="dropzone dropzone-previews">
     	@foreach(old($field['name']) ?? $field['value'] ?? $field['default'] ?? [] as $key => $file_path)
@@ -70,7 +70,7 @@
     </div>
     <div id="{{ $field['name'] }}-dropzone" class="dropzone dropzone-target"></div>
     <div id="{{ $field['name'] }}-hidden-input" class="hidden"></div>
-</div>
+@include('crud::fields.inc.wrapper_end')
 
 @push('crud_fields_scripts')
     <script src="{{ asset('js/vendor/dropzone.min.js') }}"></script>

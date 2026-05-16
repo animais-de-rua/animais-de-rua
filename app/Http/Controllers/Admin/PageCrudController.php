@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Admin\Traits\Permissions;
-use Backpack\PageManager\app\Http\Requests\PageRequest as UpdateRequest;
-
 class PageCrudController extends \Backpack\PageManager\app\Http\Controllers\Admin\PageCrudController
 {
     use Permissions;
@@ -29,9 +27,10 @@ class PageCrudController extends \Backpack\PageManager\app\Http\Controllers\Admi
         return $result;
     }
 
-    public function update(UpdateRequest $request)
+    public function update()
     {
+        $request = $this->crud->getRequest();
         \Cache::forget("page_{$request->slug}_{$request->locale}");
-        return parent::update($request);
+        return parent::update();
     }
 }

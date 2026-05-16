@@ -275,7 +275,7 @@ class StoreOrderCrudController extends CrudController
         ],
             EnumHelper::translate('store.order'),
             function ($values) {
-                $this->crud->addClause('whereIn', 'status', json_decode($values));
+                $this->crud->addClause('whereIn', 'status', json_decode($values) ?: []);
             });
 
         // ------ CRUD DETAILS ROW
@@ -324,6 +324,8 @@ class StoreOrderCrudController extends CrudController
         // add asterisk for fields that are required in StoreOrdersRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
+        $this->crud->setValidation(StoreRequest::class);
+        $this->crud->setValidation(UpdateRequest::class);
     }
 
     public function showDetailsRow($id)
@@ -384,22 +386,26 @@ class StoreOrderCrudController extends CrudController
             </div>";
     }
 
-    public function store(StoreRequest $request)
+    public function store()
     {
-        $result = parent::storeCrud($request);
+        $request = $this->crud->getRequest();
+
+        $result = parent::store();
 
         $this->inserProductRelation($this->crud->entry->id, $request);
 
         return $result;
     }
 
-    public function update(UpdateRequest $request)
+    public function update()
     {
+        $request = $this->crud->getRequest();
+
         $this->inserProductRelation($request->id, $request);
 
         // Clean up request in case the user has not the required permissions
         if (!is('admin', 'store orders')) {
-            $request = new \Illuminate\Http\Request([
+            $request->replace([
                 'id' => $request->id,
                 'status' => $request->status,
                 'shipment_date' => $request->shipment_date,
@@ -417,7 +423,7 @@ class StoreOrderCrudController extends CrudController
             ]);
         }
 
-        return parent::updateCrud($request);
+        return parent::update();
     }
 
     private function inserProductRelation($id, $request)
